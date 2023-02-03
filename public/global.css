@@ -1,0 +1,33 @@
+*, ::before, ::after {
+    box-sizing: border-box;
+    font-family: "Roboto Symbol", "Noto Sans", "Noto Sans JP", "Yu Gothic UI", "Hiragino Sans", "Noto Color Emoji", sans-serif;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #888;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    border: solid 3px transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    box-shadow: inset 0 0 9px 9px #888;
+    border: solid 3px transparent;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:active {
+    box-shadow: inset 0 0 9px 9px #777;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}

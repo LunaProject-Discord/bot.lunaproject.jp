@@ -1,0 +1,3 @@
+User-agent: *
+# Disallow: /punish
+# Disallow: /punish.php

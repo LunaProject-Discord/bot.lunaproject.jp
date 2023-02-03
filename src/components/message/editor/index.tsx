@@ -1,0 +1,63 @@
+import { AddOutlined } from '@mui/icons-material';
+import { Box, Button, Divider } from '@mui/material';
+import React from 'react';
+import { EditableEmbed, EditableMessage } from '../../../interfaces/message';
+import { getNewEmbed } from '../../../libs/message';
+import { TextArea } from '../text_area';
+import { EmbedEditor } from './embed';
+
+
+interface Props {
+    message: EditableMessage;
+    setMessage: (value: EditableMessage | ((prevValue: EditableMessage) => EditableMessage)) => void;
+}
+
+export const Editor = ({ message, setMessage }: Props) => {
+    const addEmbed = () => setMessage((msg) => ({ ...msg, embeds: [...msg.embeds, getNewEmbed()] }));
+
+    const removeEmbed = (i: number) => setMessage((msg) => {
+        let data = [...msg.embeds];
+        data.splice(i, 1);
+        return { ...msg, embeds: data };
+    });
+
+    const updateEmbed = (i: number, embed: EditableEmbed) => setMessage((msg) => {
+        let data = [...msg.embeds];
+        data[i] = embed;
+        return { ...msg, embeds: data };
+    });
+
+    return (
+        <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextArea
+                value={message.content}
+                setValue={(content) => setMessage({ ...message, content })}
+                limit={2000}
+                rows={8}
+            />
+            <Divider flexItem />
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Button
+                        onClick={addEmbed}
+                        disabled={message.embeds.length > 9}
+                        disableElevation
+                        variant="contained"
+                        startIcon={<AddOutlined />}
+                    >
+                        Embed を追加
+                    </Button>
+                </Box>
+                {message.embeds.map((embed, i) => (
+                    <EmbedEditor
+                        key={embed._id}
+                        id={i}
+                        embed={embed}
+                        removeEmbed={() => removeEmbed(i)}
+                        onChange={(data) => updateEmbed(i, data)}
+                    />
+                ))}
+            </Box>
+        </Box>
+    );
+};
