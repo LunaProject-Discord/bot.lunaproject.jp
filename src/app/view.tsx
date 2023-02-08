@@ -1,5 +1,7 @@
 'use client';
 
+import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject-discord/web-core';
+import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord';
 import {
     AnalyticsOutlined,
     AutoAwesomeOutlined,
@@ -30,11 +32,9 @@ import NextLink from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { SyntheticEvent, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
-import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '../components/gallery';
 import { PageContent } from '../components/layout';
 import { Section } from '../components/section';
 import { FeaturedGuild } from '../interfaces/bot';
-import { OAuthGuild, OAuthUser } from '../interfaces/discord';
 import { TranslatableViewProps } from '../interfaces/view';
 import { getGuildIcon } from '../utils/discord';
 import { fetchWithUser } from '../utils/swr';

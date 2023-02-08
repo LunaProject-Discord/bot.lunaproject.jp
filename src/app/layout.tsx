@@ -1,5 +1,7 @@
 'use client';
 
+import { MuiPalette, MuiTypography, StyleProvider } from '@lunaproject-discord/web-core';
+import { OAuthUser } from '@lunaproject-discord/web-discord';
 import {
     AnalyticsOutlined,
     ArrowBackOutlined,
@@ -46,12 +48,10 @@ import useSWRImmutable from 'swr/immutable';
 import '../../public/fonts/style.css';
 import '../../public/global.css';
 import { Body, PageContainer } from '../components/layout';
-import { OAuthUser } from '../interfaces/discord';
-import { useTranslation } from '../languages/client';
+import { LanguageType } from '../languages';
+import { useLanguage, useTranslation } from '../languages/client';
 import { COOKIE_APPEARANCE, COOKIE_LANGUAGE } from '../utils/cookie';
 import { fetchWithUser } from '../utils/swr';
-import RootStyleRegistry from './emotion';
-import { MuiPalette, MuiTypography } from './theme';
 
 const NavigationBar = styled('nav')(({ theme }) => ({
     width: 56,
@@ -102,7 +102,6 @@ const ListItemIcon = styled(MuiListItemIcon)(({ theme }) => ({
 }));
 
 type AppearanceType = 'system' | 'light' | 'dark';
-type LanguageType = 'ja' | 'en';
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
@@ -119,9 +118,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     });
 
     const translations = useTranslation();
+    const language = useLanguage();
 
     const cookies = parseCookies();
-    const language = cookies[COOKIE_LANGUAGE] as LanguageType | undefined ?? 'ja';
     const token = cookies['token'];
 
     const { data, error } = useSWRImmutable<OAuthUser>(
@@ -168,7 +167,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <html lang="ja">
         <head />
         <Body>
-            <RootStyleRegistry>
+            <StyleProvider>
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
                     <NavigationBar>
@@ -374,7 +373,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
                         </Fragment>}
                     </Popover>
                 </ThemeProvider>
-            </RootStyleRegistry>
+            </StyleProvider>
         </Body>
         </html>
     );

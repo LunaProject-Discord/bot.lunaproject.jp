@@ -1,6 +1,7 @@
 'use client';
 
-import { Menu } from '@lunaproject-discord/web-core';
+import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText, Menu } from '@lunaproject-discord/web-core';
+import { OAuthGuild } from '@lunaproject-discord/web-discord';
 import {
     AddOutlined,
     FormatListBulletedOutlined,
@@ -25,10 +26,8 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 import React, { MouseEvent, useState } from 'react';
-import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '../../components/gallery';
 import { PageContent, PageHeader } from '../../components/layout';
 import { Section } from '../../components/section';
-import { OAuthGuild } from '../../interfaces/discord';
 import { TranslatableViewProps } from '../../interfaces/view';
 import { useTranslation } from '../../languages/client';
 import { getGuildIcon } from '../../utils/discord';
@@ -37,7 +36,7 @@ interface GuildListProps {
     guilds: OAuthGuild[];
 }
 
-const GuildListGalleryView = ({ guilds }: GuildListProps) => (
+const GuildListGallery = ({ guilds }: GuildListProps) => (
     <Gallery>
         {guilds.map((guild) => (
             <GalleryItem key={guild.id}>
@@ -56,7 +55,7 @@ const GuildListGalleryView = ({ guilds }: GuildListProps) => (
     </Gallery>
 );
 
-const GuildListTableView = ({ guilds }: GuildListProps) => (
+const GuildListTable = ({ guilds }: GuildListProps) => (
     <List>
         {guilds.map((guild) => (
             <ListItemButton
@@ -135,9 +134,9 @@ export const View = ({ guilds, mutualGuilds }: Props) => {
             </PageHeader>
             <Section sx={{ p: 0 }}>
                 {viewAs === 'gallery' ? (
-                    <GuildListGalleryView guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
+                    <GuildListGallery guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
                 ) : (
-                    <GuildListTableView guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
+                    <GuildListTable guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
                 )}
             </Section>
 

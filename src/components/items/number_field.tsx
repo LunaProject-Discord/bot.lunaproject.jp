@@ -1,5 +1,5 @@
+import { NumberField } from '@lunaproject-discord/web-core';
 import React from 'react';
-import { NumberField } from '../number_field';
 import {
     ItemContainer,
     ItemDisabledProps,
@@ -32,6 +32,12 @@ export const NumberFieldItem = ({ icon, primary, secondary, value, setValue, ste
                 min={min}
                 max={max}
                 disabled={disabled}
+                sx={{
+                    width: {
+                        xs: '100%',
+                        md: 300
+                    }
+                }}
             />
         </ItemFormContainer>
     </ItemContainer>

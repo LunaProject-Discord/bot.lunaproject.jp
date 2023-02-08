@@ -1,4 +1,5 @@
-import { MenuItem, Select as MuiSelect, SelectChangeEvent, styled } from '@mui/material';
+import { Select } from '@lunaproject-discord/web-core';
+import { MenuItem } from '@mui/material';
 import React, { ReactNode } from 'react';
 import {
     ItemContainer,
@@ -11,13 +12,6 @@ import {
     ItemTextBlockProps,
     ItemVariableProps
 } from './index';
-
-const Test = styled(MuiSelect)(({ theme }) => ({
-    '& .MuiPaper-root': {
-        border: `solid 1px ${theme.palette.divider}`,
-        boxShadow: '0 .3rem .5rem rgb(0 0 0 / 15%)'
-    }
-})) as unknown as typeof MuiSelect;
 
 interface Props<T> extends ItemTextBlockProps, ItemIconProps, ItemDisabledProps, ItemVariableProps<T> {
     choices: ({ value: T; children?: ReactNode; })[];
@@ -40,9 +34,9 @@ export const SelectItem = <T, >(
             <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
         </ItemRowContainer>
         <ItemFormContainer>
-            <Test<T>
+            <Select<T>
                 value={value}
-                onChange={(e: SelectChangeEvent<T>) => setValue(e.target.value as T)}
+                onChange={(e) => setValue(e.target.value as T)}
                 disabled={disabled}
                 fullWidth
                 size="small"
@@ -53,7 +47,7 @@ export const SelectItem = <T, >(
                         {choice.children}
                     </MenuItem>
                 ))}
-            </Test>
+            </Select>
         </ItemFormContainer>
     </ItemContainer>
 );

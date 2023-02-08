@@ -1,25 +1,20 @@
 'use client';
 
+import { useResettableState } from '@lunaproject-discord/web-core';
+import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { APIGuildForumChannel, APIGuildStageVoiceChannel, APIRole, ChannelType } from 'discord-api-types/v10';
-import countries from 'i18n-iso-countries';
-import ISO6391JP from 'iso-639-1-jp';
 import React, { MouseEvent, useState } from 'react';
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../../../components/dialog';
-import { ActionItem, SelectItem, SwitchItem } from '../../../../components/items';
+import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { Section, SectionContent } from '../../../../components/section';
 import { GuildSettingsTranslate } from '../../../../interfaces/bot';
-import { APIGuildChannel } from '../../../../interfaces/discord';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { useResettableState } from '../../../../utils/state';
 import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
-
-countries.registerLocale(require('i18n-iso-countries/langs/ja.json'));
-countries.registerLocale(require('i18n-iso-countries/langs/en.json'));
 
 interface Props extends GuildSettingsViewProps {
     channels: APIGuildChannel[];
@@ -37,8 +32,7 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
     const toObject = (): GuildSettingsTranslate => ({
         enabled,
         reaction,
-        disabled: translate.disabled,
-        mappings: translate.mappings
+        disabled: translate.disabled
     });
 
     const handleClickDisabledChannelsDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, channels: string[]) => saveGuildSettings(
@@ -113,23 +107,6 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
                         onAction={() => setOpenDisabledRolesDialog(true)}
                         disabled={!enabled}
                     />
-                </SectionContent>
-            </Section>
-            <Section>
-                <SectionContent>
-                    {translate.mappings.filter((mapping) => mapping.__choices.length > 1).map((mapping) => (
-                        <SelectItem
-                            key={mapping.country}
-                            primary={countries.getName(mapping.country, 'ja')}
-                            value={mapping.languages[0]}
-                            setValue={() => {
-                            }}
-                            choices={mapping.__choices.map((choice) => ({
-                                value: choice,
-                                children: ISO6391JP.getName(choice)
-                            }))}
-                        />
-                    ))}
                 </SectionContent>
             </Section>
             <ManageDisabledChannelsDialog

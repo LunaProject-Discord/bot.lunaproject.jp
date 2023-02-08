@@ -9,6 +9,7 @@ import {
     StyledUl,
     TemporaryDrawer
 } from '@lunaproject-discord/web-core';
+import { OAuthGuild } from '@lunaproject-discord/web-discord';
 import {
     ArrowBackOutlined,
     DriveFileRenameOutlineOutlined,
@@ -28,7 +29,6 @@ import { Avatar, ButtonBase, IconButton, ListItemIcon, ListItemText, styled, Too
 import Image from 'next/image';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEventHandler, useState } from 'react';
-import { OAuthGuild } from '../../../interfaces/discord';
 import { Translation } from '../../../interfaces/language';
 
 interface Props {
@@ -52,7 +52,7 @@ const Header = ({ onDrawerToggleClick }: HeaderProps) => {
                 >
                     <MenuOutlined />
                 </IconButton>
-                <Image src="/logo/Yudzuki.svg" alt="" width={158} height={40} />
+                <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
             </Toolbar>
         </AppBar>
     );

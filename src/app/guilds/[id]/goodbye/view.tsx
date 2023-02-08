@@ -1,17 +1,17 @@
 'use client';
 
+import { useResettableState } from '@lunaproject-discord/web-core';
+import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { APIGuildForumChannel, APIVoiceChannelBase, ChannelType } from 'discord-api-types/v10';
-import React from 'react';
+import React, { useState } from 'react';
 import { ChannelItem, MessageItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { Section, SectionContent } from '../../../../components/section';
 import { GuildSettingsGoodbye } from '../../../../interfaces/bot';
-import { APIGuildChannel } from '../../../../interfaces/discord';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { useResettableState } from '../../../../utils/state';
 import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
 
@@ -20,6 +20,8 @@ interface Props extends GuildSettingsViewProps {
 }
 
 export const View = ({ guild, channels, settings, translations }: Props) => {
+    const [openMessageBuilder, setOpenMessageBuilder] = useState(false);
+
     const goodbye = settings.goodbye;
     const [enabled, setEnabled, resetEnabled] = useResettableState(goodbye.enabled);
     const [channelId, setChannelId, resetChannelId] = useResettableState(goodbye.channel_id);
@@ -69,6 +71,8 @@ export const View = ({ guild, channels, settings, translations }: Props) => {
                         value={message}
                         setValue={setMessage}
                         disabled={!enabled}
+                        open={openMessageBuilder}
+                        setOpen={setOpenMessageBuilder}
                     >
                         {translations.goodbye_message_hint}
                     </MessageItem>
@@ -76,6 +80,7 @@ export const View = ({ guild, channels, settings, translations }: Props) => {
             </Section>
             <SaveConfirm
                 open={!deepEqual(goodbye, toObject(), { strict: true })}
+                disableKeyboardShortcuts={openMessageBuilder}
                 onSave={handleActionSave}
                 onCancel={handleActionCancel}
             />

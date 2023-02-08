@@ -1,5 +1,5 @@
+import { getGuildById } from '@lunaproject-discord/web-discord';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getGuildById } from '../../../../libs/discord';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const id = req.query.id as string;

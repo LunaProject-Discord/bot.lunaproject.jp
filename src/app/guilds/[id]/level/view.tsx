@@ -1,5 +1,7 @@
 'use client';
 
+import { useResettableState } from '@lunaproject-discord/web-core';
+import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import {
@@ -31,9 +33,7 @@ import {
     GuildSettingsLevelNotificationType,
     GuildSettingsLevelRewardType
 } from '../../../../interfaces/bot';
-import { APIGuildChannel } from '../../../../interfaces/discord';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { useResettableState } from '../../../../utils/state';
 import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
 
@@ -45,6 +45,8 @@ interface Props extends GuildSettingsViewProps {
 export const View = ({ guild, channels, roles, settings, translations }: Props) => {
     const [openDisabledChannelsDialog, setOpenDisabledChannelsDialog] = useState(false);
     const [openDisabledRolesDialog, setOpenDisabledRolesDialog] = useState(false);
+
+    const [openMessageBuilder, setOpenMessageBuilder] = useState(false);
 
     const level = settings.level;
     const [enabled, setEnabled, resetEnabled] = useResettableState(level.enabled);
@@ -238,6 +240,8 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
                         value={notificationMessage}
                         setValue={setNotificationMessage}
                         disabled={!enabled}
+                        open={openMessageBuilder}
+                        setOpen={setOpenMessageBuilder}
                     >
                         {translations.goodbye_message_hint}
                     </MessageItem>
@@ -291,6 +295,7 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
             />
             <SaveConfirm
                 open={!deepEqual(level, toObject(), { strict: true })}
+                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openMessageBuilder}
                 onSave={handleActionSave}
                 onCancel={handleActionCancel}
             />

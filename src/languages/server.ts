@@ -1,8 +1,10 @@
 import { cookies } from 'next/headers';
-import { Translation } from '../interfaces/language';
-import { getTranslationByName } from './index';
+import { COOKIE_LANGUAGE } from '../utils/cookie';
+import { getTranslationByName, LanguageType } from './index';
 
-export const getTranslation = (): Translation => {
+export const getLanguage = (): LanguageType => {
     const nextCookies = cookies();
-    return getTranslationByName(nextCookies.get('language')?.value);
+    return nextCookies.get(COOKIE_LANGUAGE)?.value as LanguageType | undefined ?? 'ja';
 };
+
+export const getTranslation = () => getTranslationByName(getLanguage());

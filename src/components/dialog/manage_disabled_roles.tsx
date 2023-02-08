@@ -1,3 +1,4 @@
+import { Dialog, DialogActions, DialogHeader, DialogProps } from '@lunaproject-discord/web-core';
 import { CloseOutlined, SaveOutlined, SearchOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, DialogContent, InputBase, ListItemText, Switch, switchClasses } from '@mui/material';
@@ -8,7 +9,6 @@ import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
 import { useTranslation } from '../../languages/client';
 import { filterPredicateRole, sortRoles } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
-import { Dialog, DialogActions, DialogHeader, DialogProps } from './index';
 
 interface Props extends DialogProps {
     choices: APIRole[];

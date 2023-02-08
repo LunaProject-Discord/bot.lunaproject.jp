@@ -1,90 +1,24 @@
+import { Embed, Message, MessageAuthor } from '@lunaproject-discord/web-discord';
 import Color from 'color';
 import { nanoid } from 'nanoid';
-import {
-    EditableEmbed,
-    EditableEmbedField,
-    EditableMessage,
-    EditableMessageAuthor,
-    SendableEmbed,
-    SendableMessage
-} from '../interfaces/message';
+import { DataEmbed, DataMessage } from '../interfaces/message';
 
-const MAX_FIELDS_PER_ROW = 3;
-const FIELD_GRID_SIZE = 12;
-
-export const getFieldGridColumn = (field: EditableEmbedField, embed: EditableEmbed): string => {
-    const fields = embed.fields ?? [];
-    const fieldIndex = fields.indexOf(field);
-
-    if (!field.inline)
-        return `1 / ${FIELD_GRID_SIZE + 1}`;
-
-    let startingField = fieldIndex;
-    while (startingField > 0 && fields[startingField - 1].inline)
-        startingField -= 1;
-
-    let totalInlineFields = 0;
-    while (fields.length > startingField + totalInlineFields && fields[startingField + totalInlineFields].inline)
-        totalInlineFields += 1;
-
-    const indexInSequence = fieldIndex - startingField;
-    const currentRow = indexInSequence / MAX_FIELDS_PER_ROW;
-    const indexOnRow = indexInSequence % MAX_FIELDS_PER_ROW;
-    const totalOnLastRow = totalInlineFields % MAX_FIELDS_PER_ROW || MAX_FIELDS_PER_ROW;
-    const fullRows = (totalInlineFields - totalOnLastRow) / MAX_FIELDS_PER_ROW;
-    const totalOnRow = currentRow >= fullRows ? totalOnLastRow : MAX_FIELDS_PER_ROW;
-
-    const columnSpan = FIELD_GRID_SIZE / totalOnRow;
-    const start = indexOnRow * columnSpan + 1;
-    const end = start + columnSpan;
-
-    return `${start} / ${end}`;
-};
-
-export const toEditableMessage = (
-    message: SendableMessage,
-    author: EditableMessageAuthor = {
+export const toMessage = (
+    message: DataMessage,
+    author: MessageAuthor = {
         name: '結月 -ゆづき-',
         avatarUrl: '/avatars/yudzuki.webp',
         badge: 'Bot'
     }
-): EditableMessage => ({
+): Message => ({
     content: message.content ?? '',
     attachments: [],
-    embeds: (message.embeds ?? []).map((embed) => toEditableEmbed(embed)),
+    embeds: (message.embeds ?? []).map((embed) => toEmbed(embed)),
     author: author,
     timestamp: new Date()
 });
 
-export const toSendableMessage = (message: EditableMessage): SendableMessage => ({
-    content: message.content,
-    embeds: message.embeds.map((embed) => toSendableEmbed(embed))
-});
-
-export const getNewEmbed = (): EditableEmbed => ({
-    _id: nanoid(),
-    title: '',
-    description: '',
-    url: '',
-    color: Color(0xffffff),
-    timestamp: null,
-    author: {
-        name: '',
-        url: '',
-        iconUrl: ''
-    },
-    fields: [],
-    image: {
-        images: [],
-        thumbnail: ''
-    },
-    footer: {
-        text: '',
-        iconUrl: ''
-    }
-});
-
-export const toEditableEmbed = (
+export const toEmbed = (
     {
         title,
         description,
@@ -95,8 +29,8 @@ export const toEditableEmbed = (
         fields,
         image,
         footer
-    }: SendableEmbed
-): EditableEmbed => {
+    }: DataEmbed
+): Embed => {
     const date = new Date();
     date.setTime(parseInt(timestamp ?? Date.now().toString(), 10));
 
@@ -127,7 +61,35 @@ export const toEditableEmbed = (
     };
 };
 
-export const toSendableEmbed = (
+export const getNewEmbed = (): Embed => ({
+    _id: nanoid(),
+    title: '',
+    description: '',
+    url: '',
+    color: Color(0xffffff),
+    timestamp: null,
+    author: {
+        name: '',
+        url: '',
+        iconUrl: ''
+    },
+    fields: [],
+    image: {
+        images: [],
+        thumbnail: ''
+    },
+    footer: {
+        text: '',
+        iconUrl: ''
+    }
+});
+
+export const toDataMessage = (message: Message): DataMessage => ({
+    content: message.content,
+    embeds: message.embeds.map((embed) => toDataEmbed(embed))
+});
+
+export const toDataEmbed = (
     {
         title,
         description,
@@ -138,8 +100,8 @@ export const toSendableEmbed = (
         fields,
         image,
         footer
-    }: EditableEmbed
-): SendableEmbed => ({
+    }: Embed
+): DataEmbed => ({
     title,
     description,
     url: parseUrl(url),

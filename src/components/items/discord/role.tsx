@@ -1,9 +1,9 @@
+import { Popover } from '@lunaproject-discord/web-core';
 import { Box, ListItemButtonProps, ListItemText, PopoverProps, Typography } from '@mui/material';
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
 import React, { Fragment, MouseEvent, useState } from 'react';
 import { filterPredicateRole, sortRoles } from '../../../utils/discord';
-import { Popover } from '../../popover';
 import {
     ItemContainer,
     ItemDisabledProps,

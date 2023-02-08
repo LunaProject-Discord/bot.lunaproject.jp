@@ -1,15 +1,15 @@
+import { Embed, Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { AddOutlined } from '@mui/icons-material';
 import { Box, Button, Divider } from '@mui/material';
 import React from 'react';
-import { EditableEmbed, EditableMessage } from '../../../interfaces/message';
 import { getNewEmbed } from '../../../libs/message';
 import { TextArea } from '../text_area';
 import { EmbedEditor } from './embed';
 
 
 interface Props {
-    message: EditableMessage;
-    setMessage: (value: EditableMessage | ((prevValue: EditableMessage) => EditableMessage)) => void;
+    message: Message;
+    setMessage: (value: Message | ((prevValue: Message) => Message)) => void;
 }
 
 export const Editor = ({ message, setMessage }: Props) => {
@@ -21,7 +21,7 @@ export const Editor = ({ message, setMessage }: Props) => {
         return { ...msg, embeds: data };
     });
 
-    const updateEmbed = (i: number, embed: EditableEmbed) => setMessage((msg) => {
+    const updateEmbed = (i: number, embed: Embed) => setMessage((msg) => {
         let data = [...msg.embeds];
         data[i] = embed;
         return { ...msg, embeds: data };

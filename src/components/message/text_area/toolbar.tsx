@@ -1,5 +1,6 @@
 import { $convertToMarkdownString } from '@lexical/markdown';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { ButtonBase } from '@lunaproject-discord/web-core';
 import {
     EmojiEmotionsOutlined,
     FormatBoldOutlined,
@@ -10,7 +11,6 @@ import {
 import { Box, styled, Typography } from '@mui/material';
 import { $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND } from 'lexical';
 import { MouseEvent, useEffect, useState } from 'react';
-import { ButtonBase } from '../../button_base';
 import { TRANSFORMERS } from './lexical/transformers';
 
 const Container = styled(Box)(({ theme }) => ({

@@ -1,5 +1,6 @@
 'use client';
 
+import { useResettableState } from '@lunaproject-discord/web-core';
 import { BadgeOutlined, TagOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, Typography } from '@mui/material';
 import React from 'react';
@@ -8,7 +9,6 @@ import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { Section, SectionContent } from '../../../../components/section';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { useResettableState } from '../../../../utils/state';
 import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
 

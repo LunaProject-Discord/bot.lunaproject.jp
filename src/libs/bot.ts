@@ -1,7 +1,6 @@
+import { Cache, OAuthGuild } from '@lunaproject-discord/web-discord';
 import { addSeconds } from 'date-fns';
 import { GuildLevel, GuildSettings, GuildSettingsLanguage, PartialUser } from '../interfaces/bot';
-import { Cache } from '../interfaces/cache';
-import { OAuthGuild } from '../interfaces/discord';
 import { TimeZone } from '../utils/timezone';
 import prisma from './prisma';
 

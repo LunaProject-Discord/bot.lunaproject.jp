@@ -1,5 +1,5 @@
+import { OAuthGuild } from '@lunaproject-discord/web-discord';
 import { GuildSettings } from './bot';
-import { OAuthGuild } from './discord';
 import { Translation } from './language';
 
 export interface TranslatableViewProps {

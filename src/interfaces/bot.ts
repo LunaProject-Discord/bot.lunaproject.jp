@@ -1,6 +1,6 @@
+import { OAuthGuild } from '@lunaproject-discord/web-discord';
 import { TimeZone } from '../utils/timezone';
-import { OAuthGuild } from './discord';
-import { SendableMessage } from './message';
+import { DataMessage } from './message';
 
 export interface PartialUser {
     id: string;
@@ -90,7 +90,7 @@ export interface GuildSettingsCommandLocalizationText {
 
 export interface GuildSettingsWelcome extends GuildSettingsComponent {
     channel_id: string;
-    message: SendableMessage;
+    message: DataMessage;
     roles: GuildSettingsWelcomeRole[];
 }
 
@@ -100,7 +100,7 @@ export interface GuildSettingsWelcomeRole {
 
 export interface GuildSettingsGoodbye extends GuildSettingsComponent {
     channel_id: string;
-    message: SendableMessage;
+    message: DataMessage;
 }
 
 export interface GuildSettingsActivity extends GuildSettingsComponent {
@@ -149,7 +149,7 @@ export interface GuildSettingsLevelRole {
 export interface GuildSettingsLevelNotification {
     type: GuildSettingsLevelNotificationType;
     channel_id: string;
-    message: SendableMessage;
+    message: DataMessage;
 }
 
 export type GuildSettingsLevelNotificationType = 'DISABLED' | 'DIRECT_MESSAGE' | 'CURRENT_CHANNEL' | 'CUSTOM_CHANNEL';
@@ -163,13 +163,6 @@ export interface GuildSettingsLevelLeaderboard {
 export interface GuildSettingsTranslate extends GuildSettingsComponent {
     reaction: boolean;
     disabled: GuildSettingsAccessControlComponent;
-    mappings: GuildSettingsTranslateMapping[];
-}
-
-export interface GuildSettingsTranslateMapping extends GuildSettingsComponent {
-    country: string;
-    languages: string[];
-    __choices: string[];
 }
 
 export interface GuildSettingsQuote extends GuildSettingsComponent {

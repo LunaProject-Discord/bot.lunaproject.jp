@@ -1,3 +1,15 @@
+import {
+    AnnouncementChannelIcon,
+    Dialog,
+    DialogActions,
+    DialogHeader,
+    DialogProps,
+    ForumChannelIcon,
+    StageChannelIcon,
+    TextChannelIcon,
+    VoiceChannelIcon
+} from '@lunaproject-discord/web-core';
+import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import { ChevronRightOutlined, CloseOutlined, SaveOutlined, SearchOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
@@ -21,22 +33,13 @@ import { APIGuildCategoryChannel, APITextBasedChannel, APIVoiceChannelBase, Chan
 import { useRouter } from 'next/navigation';
 import { ellipsis } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
-import { APIGuildChannel } from '../../interfaces/discord';
 import { useTranslation } from '../../languages/client';
 import { filterPredicateChannel, sortChannels } from '../../utils/discord';
-import {
-    AnnouncementChannelIcon,
-    ForumChannelIcon,
-    StageChannelIcon,
-    TextChannelIcon,
-    VoiceChannelIcon
-} from '../icons/channels';
 import { ListItemButton, ListItemIcon } from '../items';
-import { Dialog, DialogActions, DialogHeader, DialogProps } from './index';
 
 const Accordion = styled(
     (props: AccordionProps) => <MuiAccordion disableGutters elevation={0} {...props} />
-)<AccordionProps>(({ theme }) => ({
+)<AccordionProps>({
     border: 'none',
     [`&.${accordionClasses.disabled}`]: {
         backgroundColor: 'inherit'
@@ -44,7 +47,7 @@ const Accordion = styled(
     '&::before': {
         display: 'none'
     }
-}));
+});
 
 const AccordionSummary = styled(
     (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<ChevronRightOutlined />} {...props} />
@@ -62,11 +65,11 @@ const AccordionSummary = styled(
     }
 }));
 
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+const AccordionDetails = styled(MuiAccordionDetails)({
     padding: 0,
     display: 'flex',
     flexDirection: 'column'
-}));
+});
 
 interface Props extends DialogProps {
     choices: APIGuildChannel[];

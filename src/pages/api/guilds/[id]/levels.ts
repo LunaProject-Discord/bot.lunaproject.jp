@@ -1,9 +1,8 @@
+import { getGuildById, hasPermission } from '@lunaproject-discord/web-discord';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PartialGuildLevel } from '../../../../interfaces/bot';
 import { getGuildLevels, getGuildSettings } from '../../../../libs/bot';
-import { getGuildById } from '../../../../libs/discord';
 import prisma from '../../../../libs/prisma';
-import { hasPermission } from '../../../../utils/discord';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const after = parseInt(req.query.after as string, 10) || 0;

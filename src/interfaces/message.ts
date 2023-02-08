@@ -1,118 +1,38 @@
-import Color from 'color';
-
-export interface EditableMessage {
+export interface DataMessage {
     content: string;
-    attachments: File[];
-    embeds: EditableEmbed[];
-    author: EditableMessageAuthor;
-    timestamp: Date;
+    embeds?: DataEmbed[];
 }
 
-export interface EditableMessageAuthor {
-    name: string;
-    avatarUrl: string;
-    badge?: string | null;
-}
-
-export interface EditableEmbed {
-    _id?: string;
-    title: string;
-    description: string;
-    url: string;
-    color: Color;
-    timestamp: Date | null;
-    author: EditableEmbedAuthor;
-    fields: EditableEmbedField[];
-    image: EditableEmbedImage;
-    footer: EditableEmbedFooter;
-}
-
-export interface EditableEmbedAuthor {
-    name: string;
-    url: string;
-    iconUrl: string;
-}
-
-export interface EditableEmbedField {
-    name: string;
-    value: string;
-    inline: boolean;
-}
-
-export interface EditableEmbedImage {
-    images: string[];
-    thumbnail: string;
-}
-
-export interface EditableEmbedFooter {
-    text: string;
-    iconUrl: string;
-}
-
-
-export interface SendableMessage extends Omit<EditableMessage, 'attachments' | 'embeds' | 'author' | 'timestamp'> {
-    embeds?: SendableEmbed[];
-}
-
-export interface SendableEmbed {
+export interface DataEmbed {
     title: string;
     description: string;
     url: string | null;
     color: string | null;
     timestamp: string | null;
-    author: SendableEmbedAuthor | null;
-    fields: SendableEmbedField[] | null;
-    image: SendableEmbedImage | null;
-    footer: SendableEmbedFooter | null;
+    author: DataEmbedAuthor | null;
+    fields: DataEmbedField[] | null;
+    image: DataEmbedImage | null;
+    footer: DataEmbedFooter | null;
 }
 
-export interface SendableEmbedAuthor {
+export interface DataEmbedAuthor {
     name: string;
     url: string | null;
     iconUrl: string | null;
 }
 
-export interface SendableEmbedField {
+export interface DataEmbedField {
     name: string;
     value: string;
     inline: boolean | null;
 }
 
-export interface SendableEmbedImage {
+export interface DataEmbedImage {
     images: string[];
     thumbnail: string | null;
 }
 
-export interface SendableEmbedFooter {
+export interface DataEmbedFooter {
     text: string;
     iconUrl: string | null;
 }
-
-
-export const DefaultEmbed: EditableEmbed = {
-    title: '',
-    description: '',
-    url: '',
-    color: Color(0xffffff),
-    timestamp: null,
-    author: {
-        name: '',
-        url: '',
-        iconUrl: ''
-    },
-    fields: [],
-    image: {
-        images: [],
-        thumbnail: ''
-    },
-    footer: {
-        text: '',
-        iconUrl: ''
-    }
-};
-
-export const DefaultField: EditableEmbedField = {
-    name: '',
-    value: '',
-    inline: false
-};

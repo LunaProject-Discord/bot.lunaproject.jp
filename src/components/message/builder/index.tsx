@@ -1,18 +1,18 @@
 import { Theme, ThemeProvider } from '@emotion/react';
+import { Preview, THEMES } from '@lunaproject-discord/web-core';
+import { Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { CloseOutlined, DeleteOutlined, EditOutlined, PreviewOutlined, SaveOutlined } from '@mui/icons-material';
 import { AppBar, Box, Button, Dialog, Divider, Tab, Tabs, Toolbar, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { EditableMessage, SendableMessage } from '../../../interfaces/message';
+import { DataMessage } from '../../../interfaces/message';
 import { useTranslation } from '../../../languages/client';
-import { toEditableEmbed, toEditableMessage, toSendableMessage } from '../../../libs/message';
-import { THEMES } from '../../../styles/discord/constants';
+import { toDataMessage, toEmbed, toMessage } from '../../../libs/message';
 import { Editor } from '../editor';
-import { Preview } from '../preview';
 import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } from './styles';
 
 interface Props {
-    message: SendableMessage;
-    setMessage: (value: SendableMessage | ((prevValue: SendableMessage) => SendableMessage)) => void;
+    message: DataMessage;
+    setMessage: (value: DataMessage | ((prevValue: DataMessage) => DataMessage)) => void;
 
     open: boolean;
     onClose: () => void;
@@ -36,13 +36,13 @@ export const MessageBuilder = ({ message, setMessage, open, onClose }: Props) =>
 
     const [tabState, setTabState] = useState<'editor' | 'preview'>('editor');
 
-    const [editableMessage, setEditableMessage] = useState<EditableMessage>(toEditableMessage(message));
+    const [editableMessage, setEditableMessage] = useState<Message>(toMessage(message));
 
     useEffect(() => {
         setEditableMessage((msg) => ({
             ...msg,
             content: message?.content ?? '',
-            embeds: (message?.embeds ?? []).map((embed) => toEditableEmbed(embed))
+            embeds: (message?.embeds ?? []).map((embed) => toEmbed(embed))
         }));
     }, [open]);
 
@@ -55,7 +55,7 @@ export const MessageBuilder = ({ message, setMessage, open, onClose }: Props) =>
     };
 
     const handleSaveClick = () => {
-        setMessage(toSendableMessage(editableMessage));
+        setMessage(toDataMessage(editableMessage));
         onClose();
     };
 

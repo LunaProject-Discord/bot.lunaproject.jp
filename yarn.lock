@@ -654,10 +654,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lunaproject-discord/web-core@npm:2.0.8":
-  version: 2.0.8
-  resolution: "@lunaproject-discord/web-core@npm:2.0.8::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40LunaProject-Discord%2Fweb-core%2F2.0.8%2Fe0078a34c0f5155354f4cc621cdb935c4f4e9e13"
-  checksum: a2ad1946c654d1fee63167f14d5c5f51912781a47169307e1c7ffcddc0f3b940ff0f7facababdc88c5320d9bb5e2dbe111d63998dcb73f37ebcf9f42ee2a9913
+"@lunaproject-discord/web-core@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@lunaproject-discord/web-core@npm:1.0.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40lunaproject-discord%2Fweb-core%2F1.0.3%2F7cf72a5a496d626936df3ed981c50e38be202f84"
+  checksum: 203c3f9301a3e5b7f2d4ec678b0ddf66650faa3f1ff9f480ae4da0e2016d72d327ccb6875831dc82541df63f26fd0df73646c64137fb5168900f52a4cbd754b1
+  languageName: node
+  linkType: hard
+
+"@lunaproject-discord/web-discord@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@lunaproject-discord/web-discord@npm:1.0.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40lunaproject-discord%2Fweb-discord%2F1.0.1%2F0bbfffcec6d6d9aa5009c565b6e6a47b5a3d68b1"
+  checksum: 17c990c9f9341a41e457945f702d127f78eda014ee01d904566870d96e92a84aa2baff424e38d3bb495714a875b461bcc9e3e53f4f0f7632baa7d591d2da9aff
   languageName: node
   linkType: hard
 
@@ -1539,7 +1546,8 @@ __metadata:
     "@emotion/styled": 11.10.5
     "@lexical/markdown": 0.7.6
     "@lexical/react": 0.7.6
-    "@lunaproject-discord/web-core": 2.0.8
+    "@lunaproject-discord/web-core": 1.0.3
+    "@lunaproject-discord/web-discord": 1.0.1
     "@mui/icons-material": 5.11.0
     "@mui/lab": 5.0.0-alpha.118
     "@mui/material": 5.11.7
@@ -1555,10 +1563,11 @@ __metadata:
     "@types/react-dom": 18.0.10
     clsx: 1.2.1
     color: 4.2.3
+    country-code-emoji: 2.3.0
     date-fns: 2.29.3
     deep-equal: 2.2.0
-    discord-api-types: 0.37.29
-    emoji-mart: 5.5.1
+    discord-api-types: 0.37.31
+    emoji-mart: 5.5.2
     eslint: 8.31.0
     eslint-config-next: 13.1.1
     highlight.js: 10.7.3
@@ -1761,6 +1770,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"country-code-emoji@npm:2.3.0":
+  version: 2.3.0
+  resolution: "country-code-emoji@npm:2.3.0"
+  checksum: 6b61e13787c9133526ac45758775e3566869c0de4ee3fa4c3eac85e6077e57faf1f98173ccdb07440994c2cb1ac2757e4585cb40a64059b3ec725c5edef6f657
+  languageName: node
+  linkType: hard
+
 "cross-spawn@npm:^7.0.2, cross-spawn@npm:^7.0.3":
   version: 7.0.3
   resolution: "cross-spawn@npm:7.0.3"
@@ -1888,7 +1904,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-api-types@npm:0.37.29, discord-api-types@npm:^0.37.23":
+"discord-api-types@npm:0.37.31":
+  version: 0.37.31
+  resolution: "discord-api-types@npm:0.37.31"
+  checksum: 8886a4c320b2abd1fd32cb573d688a9b677b6d82107efe9ea70c6d571dc5eb04d27741320d5e2ae46b316282248176a82c2212de2d11fc32d1f5a869b6519f03
+  languageName: node
+  linkType: hard
+
+"discord-api-types@npm:^0.37.23":
   version: 0.37.29
   resolution: "discord-api-types@npm:0.37.29"
   checksum: f523f40e95f19dd9de164d9ae2b5714aefb2dd0caf1e22d0ae939e346fe93041a3f2de85756cde6e3060a55b472a1eca0cb7d256335cd16cafa16da90b807b64
@@ -1923,10 +1946,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-mart@npm:5.5.1":
-  version: 5.5.1
-  resolution: "emoji-mart@npm:5.5.1"
-  checksum: 97a4a10e1534ac2014c6197048ce2c322b9094b5ea2cab63c0a8680b634c2566a83c33b40061b4469b532e998c1628dca6d275780b6729b59ef1672228505e81
+"emoji-mart@npm:5.5.2":
+  version: 5.5.2
+  resolution: "emoji-mart@npm:5.5.2"
+  checksum: a9d8db731443581baebafbcb8494086e9d02b1475ddee9901fc657a7e8f08c14594a810605a3abe8d52627b75f5d78ea19adf3166fb0f38cea174694f86635f9
   languageName: node
   linkType: hard
 
@@ -4303,11 +4326,11 @@ __metadata:
 
 "typescript@patch:typescript@4.9.5#~builtin<compat/typescript>":
   version: 4.9.5
-  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=ad5954"
+  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 8f6260acc86b56bfdda6004bc53f32ea548f543e8baef7071c8e34d29d292f3e375c8416556c8de10b24deef6933cd1c16a8233dc84a3dd43a13a13265d0faab
+  checksum: ab417a2f398380c90a6cf5a5f74badd17866adf57f1165617d6a551f059c3ba0a3e4da0d147b3ac5681db9ac76a303c5876394b13b3de75fdd5b1eaa06181c9d
   languageName: node
   linkType: hard
 

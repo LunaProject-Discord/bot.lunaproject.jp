@@ -1,10 +1,9 @@
+import { getGuildById, hasPermission } from '@lunaproject-discord/web-discord';
 import { Prisma } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { GuildSettings } from '../../../../interfaces/bot';
 import { getGuildSettings } from '../../../../libs/bot';
-import { getGuildById } from '../../../../libs/discord';
 import prisma from '../../../../libs/prisma';
-import { hasPermission } from '../../../../utils/discord';
 
 type valueOf<T> = T[keyof T];
 

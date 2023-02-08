@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+import { DefaultField, Embed as EmbedData, EmbedField } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { AddOutlined, ClearOutlined, ExpandMoreOutlined } from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,
@@ -28,7 +29,6 @@ import Color from 'color';
 import { ja } from 'date-fns/locale';
 import React, { ReactNode, useState } from 'react';
 import { ChromePicker } from 'react-color';
-import { DefaultField, EditableEmbed as EmbedData, EditableEmbedField } from '../../../interfaces/message';
 import { TextArea } from '../text_area';
 
 const isValidHexColor = (value: string) => /^#([0-9A-F]{3}){1,2}$/i.test(value);
@@ -187,7 +187,7 @@ export const EmbedEditor = ({ id, embed, onChange, removeEmbed }: Props) => {
         onChange({ ...embed, fields: data });
     };
 
-    const updateField = (i: number, field: EditableEmbedField) => {
+    const updateField = (i: number, field: EmbedField) => {
         let data = [...embed.fields];
         data[i] = field;
         onChange({ ...embed, fields: data });

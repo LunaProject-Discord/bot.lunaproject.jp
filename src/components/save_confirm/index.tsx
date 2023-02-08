@@ -1,22 +1,23 @@
 'use client';
 
+import { MuiDarkTheme, MuiLightTheme } from '@lunaproject-discord/web-core';
 import { DeleteOutlined, SaveOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProvider, useTheme } from '@mui/material';
 import Mousetrap from 'mousetrap';
 import { useRouter } from 'next/navigation';
 import React, { MouseEvent, useEffect, useRef, useState, useTransition } from 'react';
-import { MuiDarkTheme, MuiLightTheme } from '../../app/theme';
 import { useTranslation } from '../../languages/client';
 import { Hotkey } from '../text';
 
 interface Props {
     open: boolean;
+    disableKeyboardShortcuts?: boolean;
     onSave: () => Promise<boolean>;
     onCancel: () => void;
 }
 
-export const SaveConfirm = ({ open, onSave, onCancel }: Props) => {
+export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }: Props) => {
     const router = useRouter();
 
     const translations = useTranslation();
@@ -34,7 +35,7 @@ export const SaveConfirm = ({ open, onSave, onCancel }: Props) => {
         Mousetrap.bind('s', (e) => {
             e.preventDefault();
 
-            if (!open || loading || pending || !saveButton.current)
+            if (!open || disableKeyboardShortcuts || loading || pending || !saveButton.current)
                 return;
 
             saveButton.current?.click();
@@ -42,7 +43,7 @@ export const SaveConfirm = ({ open, onSave, onCancel }: Props) => {
         Mousetrap.bind('r c', (e) => {
             e.preventDefault();
 
-            if (!open || !cancelButton.current)
+            if (!open || disableKeyboardShortcuts || !cancelButton.current)
                 return;
 
             cancelButton.current?.click();
@@ -52,7 +53,7 @@ export const SaveConfirm = ({ open, onSave, onCancel }: Props) => {
             Mousetrap.unbind('s');
             Mousetrap.unbind('r c');
         };
-    }, [open, loading]);
+    }, [open, disableKeyboardShortcuts, loading]);
 
     const handleClickSaveButton = async (e: MouseEvent<HTMLButtonElement>) => {
         setLoading(true);

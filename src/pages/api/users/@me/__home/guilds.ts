@@ -1,8 +1,7 @@
+import { getGuilds, getUser, hasPermission, sortOAuthGuilds } from '@lunaproject-discord/web-discord';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { FeaturedGuild, GuildFeature } from '../../../../../interfaces/bot';
 import { getGuildSettings, getMutualGuilds } from '../../../../../libs/bot';
-import { getGuilds, getUser } from '../../../../../libs/discord';
-import { hasPermission, sortOAuthGuilds } from '../../../../../utils/discord';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'GET')

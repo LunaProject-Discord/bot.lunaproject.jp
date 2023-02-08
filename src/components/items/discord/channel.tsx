@@ -1,17 +1,17 @@
+import {
+    AnnouncementChannelIcon,
+    ForumChannelIcon,
+    Popover,
+    StageChannelIcon,
+    TextChannelIcon,
+    VoiceChannelIcon
+} from '@lunaproject-discord/web-core';
+import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import { ListItemButtonProps, ListItemText, PopoverProps, Typography } from '@mui/material';
 import { APIGuildCategoryChannel, APITextBasedChannel, APIVoiceChannelBase, ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
 import React, { Fragment, MouseEvent, useState } from 'react';
-import { APIGuildChannel } from '../../../interfaces/discord';
 import { filterPredicateChannel, sortChannels } from '../../../utils/discord';
-import {
-    AnnouncementChannelIcon,
-    ForumChannelIcon,
-    StageChannelIcon,
-    TextChannelIcon,
-    VoiceChannelIcon
-} from '../../icons/channels';
-import { Popover } from '../../popover';
 import {
     ItemContainer,
     ItemDisabledProps,

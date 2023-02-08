@@ -1,10 +1,12 @@
 'use client';
 
 import { parseCookies } from 'nookies';
-import { Translation } from '../interfaces/language';
-import { getTranslationByName } from './index';
+import { COOKIE_LANGUAGE } from '../utils/cookie';
+import { getTranslationByName, LanguageType } from './index';
 
-export const useTranslation = (): Translation => {
+export const useLanguage = (): LanguageType => {
     const cookies = parseCookies();
-    return getTranslationByName(cookies['language']);
+    return cookies[COOKIE_LANGUAGE] as LanguageType | undefined ?? 'ja';
 };
+
+export const useTranslation = () => getTranslationByName(useLanguage());

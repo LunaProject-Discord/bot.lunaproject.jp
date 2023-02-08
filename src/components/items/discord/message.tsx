@@ -1,14 +1,12 @@
 import { ThemeProvider } from '@emotion/react';
+import { MessageContainer, MessagePreview, THEMES } from '@lunaproject-discord/web-core';
 import { EditOutlined } from '@mui/icons-material';
 import { Box, Button, styled, Typography, useTheme } from '@mui/material';
-import React, { Fragment, ReactNode, useState } from 'react';
-import { SendableMessage } from '../../../interfaces/message';
+import React, { Dispatch, Fragment, ReactNode, SetStateAction, useState } from 'react';
+import { DataMessage } from '../../../interfaces/message';
 import { useTranslation } from '../../../languages/client';
-import { toEditableMessage } from '../../../libs/message';
-import { THEMES } from '../../../styles/discord/constants';
+import { toMessage } from '../../../libs/message';
 import { MessageBuilder } from '../../message/builder';
-import { MessageContainer } from '../../message/preview/MessageContainer';
-import { MessagePreview } from '../../message/preview/MessagePreview';
 import {
     ItemDisabledProps,
     ItemIcon,
@@ -46,19 +44,33 @@ const ItemGridContainer = styled(Box)(({ theme }) => ({
     }
 }));
 
-interface Props extends ItemTextBlockProps, ItemIconProps, ItemDisabledProps, ItemVariableProps<SendableMessage> {
+interface Props extends ItemTextBlockProps, ItemIconProps, ItemDisabledProps, ItemVariableProps<DataMessage> {
+    open?: boolean;
+    setOpen?: Dispatch<SetStateAction<boolean>>;
     children?: ReactNode;
 }
 
-export const MessageItem = ({ icon, primary, secondary, value, setValue, disabled, children }: Props) => {
+export const MessageItem = (
+    {
+        icon,
+        primary,
+        secondary,
+        value,
+        setValue,
+        disabled,
+        open,
+        setOpen,
+        children
+    }: Props
+) => {
     const translations = useTranslation();
     const theme = useTheme();
 
-    const [open, setOpen] = useState(false);
+    const [__open, __setOpen] = useState(false);
 
-    const handleDialogClose = () => setOpen(false);
+    const handleDialogClose = () => (setOpen ?? __setOpen)(false);
 
-    const setMessage = (message: SendableMessage | ((prevValue: SendableMessage) => SendableMessage)) => {
+    const setMessage = (message: DataMessage | ((prevValue: DataMessage) => DataMessage)) => {
         setValue(typeof message === 'function' ? message(value) : message);
     };
 
@@ -82,7 +94,7 @@ export const MessageItem = ({ icon, primary, secondary, value, setValue, disable
                             }}
                         >
                             <MessageContainer style={{ height: '100%' }}>
-                                <MessagePreview message={toEditableMessage(value)} />
+                                <MessagePreview message={toMessage(value)} />
                             </MessageContainer>
                         </ThemeProvider>
                     </Box>
@@ -97,7 +109,7 @@ export const MessageItem = ({ icon, primary, secondary, value, setValue, disable
                     >
                         {children && <Typography variant="body1">{children}</Typography>}
                         <Button
-                            onClick={() => setOpen(true)}
+                            onClick={() => (setOpen ?? __setOpen)(true)}
                             disabled={disabled}
                             disableElevation
                             variant="contained"
@@ -113,7 +125,7 @@ export const MessageItem = ({ icon, primary, secondary, value, setValue, disable
             <MessageBuilder
                 message={value}
                 setMessage={setMessage}
-                open={open}
+                open={open ?? __open}
                 onClose={handleDialogClose}
             />
         </Fragment>

@@ -1,15 +1,14 @@
 'use client';
 
+import { NumberField, useResettableState } from '@lunaproject-discord/web-core';
 import { Avatar, Box, styled, Typography } from '@mui/material';
 import React from 'react';
 import { ItemFormContainer, ItemIcon, ItemRowContainer, ItemTextBlock } from '../../../../../components/items';
 import { PageContent, PageHeader } from '../../../../../components/layout';
-import { NumberField } from '../../../../../components/number_field';
 import { SaveConfirm } from '../../../../../components/save_confirm';
 import { Section } from '../../../../../components/section';
 import { GuildLevel, PartialGuildLevel, PartialUser } from '../../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../../interfaces/view';
-import { useResettableState } from '../../../../../utils/state';
 import { StyledToolbar } from '../../navigation';
 
 const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
@@ -69,6 +68,12 @@ export const LevelItem = ({ user, value, setValue }: LevelItemProps) => {
                     <NumberField
                         value={value.level}
                         setValue={(level) => setValue({ ...value, level })}
+                        sx={{
+                            width: {
+                                xs: '100%',
+                                md: 300
+                            }
+                        }}
                     />
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -76,6 +81,12 @@ export const LevelItem = ({ user, value, setValue }: LevelItemProps) => {
                     <NumberField
                         value={value.xp}
                         setValue={(xp) => setValue({ ...value, xp })}
+                        sx={{
+                            width: {
+                                xs: '100%',
+                                md: 300
+                            }
+                        }}
                     />
                 </Box>
             </ItemFormContainer>

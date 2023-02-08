@@ -1,5 +1,5 @@
+import { getGuilds } from '@lunaproject-discord/web-discord';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getGuilds } from '../../../../libs/discord';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'GET')
