@@ -1,6 +1,6 @@
 'use client';
 
-import { useResettableState } from '@lunaproject-discord/web-core';
+import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { ScheduleOutlined, TranslateOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import React, { ReactNode } from 'react';

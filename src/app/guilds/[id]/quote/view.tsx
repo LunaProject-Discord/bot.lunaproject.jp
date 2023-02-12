@@ -11,7 +11,7 @@ import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { Section, SectionContent } from '../../../../components/section';
-import { GuildSettingsTranslate } from '../../../../interfaces/bot';
+import { GuildSettingsQuote } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
@@ -25,23 +25,29 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
     const [openDisabledChannelsDialog, setOpenDisabledChannelsDialog] = useState(false);
     const [openDisabledRolesDialog, setOpenDisabledRolesDialog] = useState(false);
 
-    const translate = settings.translate;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(translate.enabled);
-    const [reaction, setReaction, resetReaction] = useResettableState(translate.reaction);
+    const quote = settings.quote;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(quote.enabled);
+    const [reaction, setReaction, resetReaction] = useResettableState(quote.reaction);
+    const [message, setMessage, resetMessage] = useResettableState(quote.message);
+    const [otherGuildToThisGuild, setOtherGuildToThisGuild, resetOtherGuildToThisGuild] = useResettableState(quote.other_guild_to_this_guild);
+    const [thisGuildToOtherGuild, setThisGuildToOtherGuild, resetThisGuildToOtherGuild] = useResettableState(quote.this_guild_to_other_guild);
 
-    const toObject = (): GuildSettingsTranslate => ({
+    const toObject = (): GuildSettingsQuote => ({
         enabled,
         reaction,
-        disabled: translate.disabled
+        message,
+        other_guild_to_this_guild: otherGuildToThisGuild,
+        this_guild_to_other_guild: thisGuildToOtherGuild,
+        disabled: quote.disabled
     });
 
     const handleClickDisabledChannelsDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, channels: string[]) => saveGuildSettings(
         guild.id,
         {
-            translate: {
-                ...translate,
+            quote: {
+                ...quote,
                 disabled: {
-                    ...translate.disabled,
+                    ...quote.disabled,
                     channels
                 }
             }
@@ -52,9 +58,9 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
         guild.id,
         {
             translate: {
-                ...translate,
+                ...quote,
                 disabled: {
-                    ...translate.disabled,
+                    ...quote.disabled,
                     roles
                 }
             }
@@ -64,13 +70,16 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
     const handleActionSave = () => saveGuildSettings(
         guild.id,
         {
-            translate: toObject()
+            quote: toObject()
         }
     );
 
     const handleActionCancel = () => {
         resetEnabled();
         resetReaction();
+        resetMessage();
+        resetOtherGuildToThisGuild();
+        resetThisGuildToOtherGuild();
     };
 
     return (
@@ -78,32 +87,50 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
             <StyledToolbar />
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.translate}</Typography>
-                    <Typography variant="body1">{translations.translate_description}</Typography>
+                    <Typography variant="h4">{translations.quote}</Typography>
+                    <Typography variant="body1">{translations.quote_description}</Typography>
                 </Box>
             </PageHeader>
             <Section>
                 <SectionContent>
                     <SwitchItem
-                        primary={translations.translate_enabled}
+                        primary={translations.quote_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
                     <SwitchItem
-                        primary={translations.translate_reaction}
+                        primary={translations.quote_reaction}
                         checked={reaction}
                         setChecked={setReaction}
                         disabled={!enabled}
                     />
+                    <SwitchItem
+                        primary={translations.quote_message}
+                        checked={message}
+                        setChecked={setMessage}
+                        disabled={!enabled}
+                    />
+                    <SwitchItem
+                        primary={translations.quote_other_guild_to_this_guild}
+                        checked={otherGuildToThisGuild}
+                        setChecked={setOtherGuildToThisGuild}
+                        disabled={!enabled}
+                    />
+                    <SwitchItem
+                        primary={translations.quote_this_guild_to_other_guild}
+                        checked={thisGuildToOtherGuild}
+                        setChecked={setThisGuildToOtherGuild}
+                        disabled={!enabled}
+                    />
                     <ActionItem
                         primary={translations.manage_disabled_channels}
-                        secondary={translations.translate_manage_disabled_channels_description}
+                        secondary={translations.quote_manage_disabled_channels_description}
                         onAction={() => setOpenDisabledChannelsDialog(true)}
                         disabled={!enabled}
                     />
                     <ActionItem
                         primary={translations.manage_disabled_roles}
-                        secondary={translations.translate_manage_disabled_roles_description}
+                        secondary={translations.quote_manage_disabled_roles_description}
                         onAction={() => setOpenDisabledRolesDialog(true)}
                         disabled={!enabled}
                     />
@@ -113,18 +140,18 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
                 open={openDisabledChannelsDialog}
                 onClose={() => setOpenDisabledChannelsDialog(false)}
                 choices={channels.filter((channel): channel is Exclude<APIGuildChannel, APIGuildForumChannel | APIGuildStageVoiceChannel> => channel.type !== ChannelType.GuildForum && channel.type !== ChannelType.GuildStageVoice)}
-                values={translate.disabled.channels}
+                values={quote.disabled.channels}
                 onClickSaveButton={handleClickDisabledChannelsDialogSaveButton}
             />
             <ManageDisabledRolesDialog
                 open={openDisabledRolesDialog}
                 onClose={() => setOpenDisabledRolesDialog(false)}
                 choices={roles}
-                values={translate.disabled.roles}
+                values={quote.disabled.roles}
                 onClickSaveButton={handleClickDisabledRolesDialogSaveButton}
             />
             <SaveConfirm
-                open={!deepEqual(translate, toObject(), { strict: true })}
+                open={!deepEqual(quote, toObject(), { strict: true })}
                 onSave={handleActionSave}
                 onCancel={handleActionCancel}
             />

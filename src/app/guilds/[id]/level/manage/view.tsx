@@ -1,14 +1,16 @@
 'use client';
 
 import { NumberField, useResettableState } from '@lunaproject-discord/web-core';
-import { Avatar, Box, styled, Typography } from '@mui/material';
+import { ClearAllOutlined } from '@mui/icons-material';
+import { Avatar, Box, BoxProps, Button, styled, Typography } from '@mui/material';
+import clsx from 'clsx';
 import React from 'react';
-import { ItemFormContainer, ItemIcon, ItemRowContainer, ItemTextBlock } from '../../../../../components/items';
+import { ItemIcon, ItemRowContainer, ItemTextBlock } from '../../../../../components/items';
 import { PageContent, PageHeader } from '../../../../../components/layout';
 import { SaveConfirm } from '../../../../../components/save_confirm';
 import { Section } from '../../../../../components/section';
 import { GuildLevel, PartialGuildLevel, PartialUser } from '../../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../../interfaces/view';
+import { GuildSettingsViewProps, TranslatableViewProps } from '../../../../../interfaces/view';
 import { StyledToolbar } from '../../navigation';
 
 const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
@@ -30,23 +32,44 @@ const ItemContainer = styled(Box)(({ theme }) => ({
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
-    gap: theme.spacing(1.5),
     borderRadius: theme.shape.borderRadius,
     transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color', 'color'], {
         duration: theme.transitions.duration.shortest
-    }),
+    })
+}));
+
+const ItemFormContainer = styled(
+    ({ className, ...props }: BoxProps) => <Box {...props} className={clsx(className, 'form-container')} />
+)<BoxProps>(({ theme }) => ({
+    height: 50,
+    display: 'flex',
+    flexShrink: 0,
+    placeItems: 'center',
+    placeContent: 'center',
+    gap: theme.spacing(2),
     [theme.breakpoints.down('md')]: {
-        gap: theme.spacing(.5)
+        height: 'auto',
+        padding: 0,
+        flexDirection: 'column',
+        gap: theme.spacing(1)
     }
 }));
 
-interface LevelItemProps {
+const ItemFormGroup = styled(Box)(({ theme }) => ({
+    width: '100%',
+    display: 'flex',
+    placeItems: 'center',
+    placeContent: 'center',
+    gap: theme.spacing(1)
+}));
+
+interface LevelItemProps extends TranslatableViewProps {
     user: PartialUser;
     value: PartialGuildLevel;
     setValue: (value: PartialGuildLevel) => void;
 }
 
-export const LevelItem = ({ user, value, setValue }: LevelItemProps) => {
+export const LevelItem = ({ user, value, setValue, translations }: LevelItemProps) => {
     return (
         <ItemContainer>
             <ItemRowContainer>
@@ -63,11 +86,12 @@ export const LevelItem = ({ user, value, setValue }: LevelItemProps) => {
                 />
             </ItemRowContainer>
             <ItemFormContainer>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Typography variant="body2">レベル</Typography>
+                <ItemFormGroup>
+                    <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.level}</Typography>
                     <NumberField
                         value={value.level}
                         setValue={(level) => setValue({ ...value, level })}
+                        min={0}
                         sx={{
                             width: {
                                 xs: '100%',
@@ -75,12 +99,14 @@ export const LevelItem = ({ user, value, setValue }: LevelItemProps) => {
                             }
                         }}
                     />
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Typography variant="body2">経験値</Typography>
+                </ItemFormGroup>
+                <ItemFormGroup>
+                    <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.experience}</Typography>
                     <NumberField
                         value={value.xp}
                         setValue={(xp) => setValue({ ...value, xp })}
+                        min={0}
+                        max={20 * Math.max(value.level, 1)}
                         sx={{
                             width: {
                                 xs: '100%',
@@ -88,7 +114,18 @@ export const LevelItem = ({ user, value, setValue }: LevelItemProps) => {
                             }
                         }}
                     />
-                </Box>
+                </ItemFormGroup>
+                <ItemFormGroup sx={{ width: 'auto', flexShrink: 0 }}>
+                    <Button
+                        onClick={() => setValue({ ...value, level: 0, xp: 0 })}
+                        fullWidth
+                        variant="text"
+                        color="error"
+                        startIcon={<ClearAllOutlined />}
+                    >
+                        {translations.reset}
+                    </Button>
+                </ItemFormGroup>
             </ItemFormContainer>
         </ItemContainer>
     );
@@ -136,11 +173,11 @@ export const View = ({ guild, levels, translations }: Props) => {
             <StyledToolbar />
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.level}</Typography>
+                    <Typography variant="h4">{translations.level_manage}</Typography>
                     <Typography variant="body1">{translations.level_description}</Typography>
                 </Box>
             </PageHeader>
-            <Section>
+            <Section sx={{ gap: 1 }}>
                 {levels.map((level) => {
                     const data = values.find((value) => value.user_id === level.user.id);
                     return (
@@ -149,6 +186,7 @@ export const View = ({ guild, levels, translations }: Props) => {
                             user={level.user}
                             value={data ?? { user_id: level.user.id, level: level.level, xp: level.xp }}
                             setValue={updateValue}
+                            translations={translations}
                         />
                     );
                 })}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useResettableState } from '@lunaproject-discord/web-core';
+import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
@@ -10,6 +10,7 @@ import { ChannelItem, MessageItem, SwitchItem } from '../../../../components/ite
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { Section, SectionContent } from '../../../../components/section';
+import { CodeStyleContainer } from '../../../../components/text';
 import { GuildSettingsWelcome } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { StyledToolbar } from '../navigation';
@@ -68,15 +69,15 @@ export const View = ({ guild, channels, settings, translations }: Props) => {
                         disabled={!enabled}
                     />
                     <MessageItem
-                        primary={translations.edit_message}
-                        secondary="ユーザーがサーバーに参加したときに送信されるメッセージをカスタマイズできます。"
+                        primary={translations.customize_message}
+                        secondary={translations.welcome_message_edit_description}
                         value={message}
                         setValue={setMessage}
                         disabled={!enabled}
                         open={openMessageBuilder}
                         setOpen={setOpenMessageBuilder}
                     >
-                        {translations.welcome_message_hint}
+                        <CodeStyleContainer>{translations.welcome_message_edit_hint}</CodeStyleContainer>
                     </MessageItem>
                 </SectionContent>
             </Section>

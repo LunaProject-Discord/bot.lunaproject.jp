@@ -8,6 +8,7 @@ import { DataMessage } from '../../../interfaces/message';
 import { useTranslation } from '../../../languages/client';
 import { toDataMessage, toEmbed, toMessage } from '../../../libs/message';
 import { Editor } from '../editor';
+import { MessagePreviewContainer } from '../preview';
 import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } from './styles';
 
 interface Props {
@@ -125,7 +126,9 @@ export const MessageBuilder = ({ message, setMessage, open, onClose }: Props) =>
                             <Editor message={editableMessage} setMessage={setEditableMessage} />
                         </MessageEditorSection>
                         <MessageEditorSection active={tabState === 'preview'}>
-                            <Preview message={editableMessage} />
+                            <MessagePreviewContainer>
+                                <Preview message={editableMessage} />
+                            </MessagePreviewContainer>
                         </MessageEditorSection>
                     </MessageEditorWrapper>
                 </ThemeProvider>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useResettableState } from '@lunaproject-discord/web-core';
+import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
@@ -28,6 +28,7 @@ import { NumberFieldItem } from '../../../../components/items/number_field';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { Section, SectionContent, SectionParagraph, SectionTitle } from '../../../../components/section';
+import { CodeStyleContainer } from '../../../../components/text';
 import {
     GuildSettingsLevel,
     GuildSettingsLevelNotificationType,
@@ -243,7 +244,7 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
                         open={openMessageBuilder}
                         setOpen={setOpenMessageBuilder}
                     >
-                        {translations.goodbye_message_hint}
+                        <CodeStyleContainer>{translations.goodbye_message_edit_hint}</CodeStyleContainer>
                     </MessageItem>
                 </SectionContent>
             </Section>

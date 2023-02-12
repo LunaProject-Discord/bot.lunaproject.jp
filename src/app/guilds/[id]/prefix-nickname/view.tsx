@@ -1,6 +1,6 @@
 'use client';
 
-import { useResettableState } from '@lunaproject-discord/web-core';
+import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { BadgeOutlined, TagOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, Typography } from '@mui/material';
 import React from 'react';
@@ -8,6 +8,7 @@ import { TextFieldItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { Section, SectionContent } from '../../../../components/section';
+import { CodeStyleContainer } from '../../../../components/text';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
@@ -54,7 +55,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                     />
                     <Alert severity="info" sx={{ userSelect: 'none' }}>
                         <AlertTitle>{translations.about_this_settings}</AlertTitle>
-                        {translations.nickname_hint}
+                        <CodeStyleContainer>{translations.nickname_hint}</CodeStyleContainer>
                     </Alert>
                 </SectionContent>
             </Section>

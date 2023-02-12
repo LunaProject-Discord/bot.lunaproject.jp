@@ -7,6 +7,7 @@ import { DataMessage } from '../../../interfaces/message';
 import { useTranslation } from '../../../languages/client';
 import { toMessage } from '../../../libs/message';
 import { MessageBuilder } from '../../message/builder';
+import { MessagePreviewContainer } from '../../message/preview';
 import {
     ItemDisabledProps,
     ItemIcon,
@@ -93,9 +94,11 @@ export const MessageItem = (
                                 }
                             }}
                         >
-                            <MessageContainer style={{ height: '100%' }}>
-                                <MessagePreview message={toMessage(value)} />
-                            </MessageContainer>
+                            <MessagePreviewContainer sx={{ height: '100%' }}>
+                                <MessageContainer style={{ height: '100%' }}>
+                                    <MessagePreview message={toMessage(value)} />
+                                </MessageContainer>
+                            </MessagePreviewContainer>
                         </ThemeProvider>
                     </Box>
                     <Box
@@ -107,7 +110,7 @@ export const MessageItem = (
                             gap: 1
                         }}
                     >
-                        {children && <Typography variant="body1">{children}</Typography>}
+                        {children && <Typography component="div" variant="body1">{children}</Typography>}
                         <Button
                             onClick={() => (setOpen ?? __setOpen)(true)}
                             disabled={disabled}

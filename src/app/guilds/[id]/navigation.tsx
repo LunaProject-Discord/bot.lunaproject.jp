@@ -8,10 +8,11 @@ import {
     PermanentDrawer,
     StyledUl,
     TemporaryDrawer
-} from '@lunaproject-discord/web-core';
+} from '@lunaproject-discord/web-core/dist/components';
 import { OAuthGuild } from '@lunaproject-discord/web-discord';
 import {
     ArrowBackOutlined,
+    DirectionsRunOutlined,
     DriveFileRenameOutlineOutlined,
     EmojiEventsOutlined,
     FormatQuoteOutlined,
@@ -22,6 +23,7 @@ import {
     PollOutlined,
     RecordVoiceOverOutlined,
     ScheduleOutlined,
+    SellOutlined,
     TextSnippetOutlined,
     TranslateOutlined
 } from '@mui/icons-material';
@@ -128,7 +130,7 @@ const Drawer = ({ guild, translations, open, onDrawerToggleClick }: DrawerProps)
                         depth={1}
                     />
                 </DrawerItem>
-                <DrawerItem label={translations.settings_features_and_options} openImmediately>
+                <DrawerItem label={translations.settings_server_management} openImmediately>
                     <DrawerItem
                         href={`/guilds/${guild.id}/welcome`}
                         icon={<PersonAddOutlined />}
@@ -141,6 +143,20 @@ const Drawer = ({ guild, translations, open, onDrawerToggleClick }: DrawerProps)
                         label={translations.goodbye_message}
                         depth={1}
                     />
+                    <DrawerItem
+                        href={`/guilds/${guild.id}/activity`}
+                        icon={<DirectionsRunOutlined />}
+                        label={translations.activity}
+                        depth={1}
+                    />
+                    <DrawerItem
+                        href={`/guilds/${guild.id}/role-panels`}
+                        icon={<SellOutlined />}
+                        label={translations.role_panels}
+                        depth={1}
+                    />
+                </DrawerItem>
+                <DrawerItem label={translations.settings_features_and_options} openImmediately>
                     <DrawerItem
                         href={`/guilds/${guild.id}/level`}
                         icon={<EmojiEventsOutlined />}

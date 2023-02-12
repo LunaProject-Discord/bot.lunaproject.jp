@@ -1,6 +1,12 @@
 'use client';
 
-import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText, Menu } from '@lunaproject-discord/web-core';
+import {
+    Gallery,
+    GalleryItem,
+    GalleryItemIcon,
+    GalleryItemText,
+    Menu
+} from '@lunaproject-discord/web-core/dist/components';
 import { OAuthGuild } from '@lunaproject-discord/web-discord';
 import {
     AddOutlined,
@@ -102,6 +108,8 @@ export const View = ({ guilds, mutualGuilds }: Props) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    console.log(guilds, mutualGuilds);
 
     return (
         <PageContent display="flex">

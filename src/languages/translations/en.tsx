@@ -1,7 +1,4 @@
-'use client';
-
 import React, { Fragment } from 'react';
-import { Code } from '../../components/text';
 import { Translation } from '../../interfaces/language';
 
 const En: Translation = {
@@ -22,7 +19,6 @@ const En: Translation = {
     save: 'Save',
     reset: 'Reset',
 
-
     home: 'Home',
     status: 'Status',
     leaderboard: 'Leaderboard',
@@ -34,7 +30,7 @@ const En: Translation = {
     prefix: 'Prefix',
     nickname: 'Nickname',
     nickname_hint: <Fragment>
-        You can use <Code>%p</Code> to replace the prefix currently set and <Code>%n</Code> to replace the Bot&#39;s
+        You can use <code>%p</code> to replace the prefix currently set and <code>%n</code> to replace the Bot&#39;s
         name.
     </Fragment>,
     time_and_language: 'Time & Language',
@@ -43,39 +39,48 @@ const En: Translation = {
     timezone: 'Time Zone',
     timezone_description: 'If you set the time zone to a geographic area you speak frequently, the date and time will be displayed for that area.',
     language_description: 'Server-specific functions, such as the log function, will send messages in the language set here.',
-    settings_features_and_options: 'Features & Options',
+    settings_server_management: 'Server Management',
     welcome_message: 'Welcome Message',
     welcome_message_description: 'Messages can be sent when a user joins the server.',
     welcome_message_enabled: 'Enable Welcome Message',
-    welcome_message_hint: <Fragment>
+    welcome_message_edit_description: 'Customize the message sent when a user joins the server.',
+    welcome_message_edit_hint: <Fragment>
         <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
         <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
-            <li>Server ID: <Code>{'{'}guild:id{'}'}</Code></li>
-            <li>Server Name: <Code>{'{'}guild:name{'}'}</Code></li>
-            <li>Server Members Count: <Code>{'{'}guild:members{'}'}</Code></li>
-            <li>Rule channel mentions (if set): <Code>{'{'}guild:rules{'}'}</Code></li>
-            <li>User ID: <Code>{'{'}user:id{'}'}</Code></li>
-            <li>User Name: <Code>{'{'}user:name{'}'}</Code></li>
-            <li>User Discriminator: <Code>{'{'}user:discriminator{'}'}</Code></li>
-            <li>User Mention: <Code>{'{'}user:mention{'}'}</Code></li>
+            <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
+            <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
+            <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
+            <li>Rule channel mentions (if set): <code>{'{'}guild:rules{'}'}</code></li>
+            <li>User ID: <code>{'{'}user:id{'}'}</code></li>
+            <li>User Name: <code>{'{'}user:name{'}'}</code></li>
+            <li>User Discriminator: <code>{'{'}user:discriminator{'}'}</code></li>
+            <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
     goodbye_message: 'Goodbye Message',
     goodbye_message_description: 'A message can be sent when a user leaves the server.',
     goodbye_message_enabled: 'Enable Goodbye Message',
-    goodbye_message_hint: <Fragment>
+    goodbye_message_edit_description: 'Customize the message sent when a user leaves the server.',
+    goodbye_message_edit_hint: <Fragment>
         <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
         <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
-            <li>Server ID: <Code>{'{'}guild:id{'}'}</Code></li>
-            <li>Server Name: <Code>{'{'}guild:name{'}'}</Code></li>
-            <li>Server Members Count: <Code>{'{'}guild:members{'}'}</Code></li>
-            <li>User ID: <Code>{'{'}user:id{'}'}</Code></li>
-            <li>User Name: <Code>{'{'}user:name{'}'}</Code></li>
-            <li>User Discriminator: <Code>{'{'}user:discriminator{'}'}</Code></li>
-            <li>User Mention: <Code>{'{'}user:mention{'}'}</Code></li>
+            <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
+            <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
+            <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
+            <li>User ID: <code>{'{'}user:id{'}'}</code></li>
+            <li>User Name: <code>{'{'}user:name{'}'}</code></li>
+            <li>User Discriminator: <code>{'{'}user:discriminator{'}'}</code></li>
+            <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+    activity: 'Activity Roles',
+    activity_description: 'Roles can be assigned during game play or music playback.',
+    activity_enabled: 'Enable Activity Roles',
+    activity_manage_roles: 'Manage Roles',
+    role_panels: 'Role Panels',
+    settings_features_and_options: 'Features & Options',
     level: 'Level',
+    experience: 'Experience',
     level_description: 'Experience is awarded based on the number of statements made by members, which can be used to activate the server.',
     level_enabled: 'Enable Level',
     level_experience_per_message: 'Experience per message',
@@ -109,7 +114,17 @@ const En: Translation = {
     translate_manage_disabled_channels_description: 'Disables translation using reactions on the set channel.',
     translate_manage_disabled_roles_description: 'If one of the configured roles is assigned to a user, he/she will not be able to translate using reactions.',
     vote: 'Vote (Poll)',
+    vote_description: 'Command to create a poll and get member input.',
+    vote_enabled: 'Enable Vote (Poll)',
     quote: 'Quote',
+    quote_description: 'You can quote and share messages.',
+    quote_enabled: 'Enable Quote',
+    quote_reaction: 'Add 📝 reactions to messages to allow quoting',
+    quote_message: 'Message sent Read the link and be able to quote it',
+    quote_other_guild_to_this_guild: 'Allow users to quote messages sent to other servers',
+    quote_this_guild_to_other_guild: 'Allow messages sent to this server to be quoted on other servers',
+    quote_manage_disabled_channels_description: 'Disables quoting on the set channel.',
+    quote_manage_disabled_roles_description: 'If one of the set positions is assigned to the user, the user will not be able to quote.',
     music: 'Music',
     text_to_speech: 'Text to Speech',
     logging: 'Logging',
@@ -117,6 +132,7 @@ const En: Translation = {
     manage_disabled_channels: 'Manage Disabled Channels',
     manage_disabled_roles: 'Manage Disabled Roles',
     message_builder: 'Message Builder',
+    customize_message: 'Customize Message',
     edit_message: 'Edit Message',
     about_this_settings: 'About this settings',
     site_settings: 'Site Settings',

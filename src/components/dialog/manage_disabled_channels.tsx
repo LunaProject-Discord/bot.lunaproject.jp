@@ -38,8 +38,11 @@ import { filterPredicateChannel, sortChannels } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
 
 const Accordion = styled(
-    (props: AccordionProps) => <MuiAccordion disableGutters elevation={0} {...props} />
+    ({ children, ...props }: AccordionProps) => <MuiAccordion disableGutters elevation={0} {...props}>
+        {children}
+    </MuiAccordion>
 )<AccordionProps>({
+    backgroundColor: 'unset',
     border: 'none',
     [`&.${accordionClasses.disabled}`]: {
         backgroundColor: 'inherit'

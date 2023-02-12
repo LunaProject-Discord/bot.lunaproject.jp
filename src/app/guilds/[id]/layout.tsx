@@ -1,3 +1,4 @@
+import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React, { Fragment, ReactNode } from 'react';
 import { WithIdParamProps } from '../../../interfaces/page';
 import { getTranslation } from '../../../languages/server';
@@ -7,7 +8,38 @@ import { getGuildById } from '../../utils';
 import { Navigation } from './navigation';
 import { ForbiddenView, NotFoundView } from './view';
 
-const Layout = async ({ children, params: { id } }: WithIdParamProps & { children: ReactNode; }) => {
+export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
+    const translations = getTranslation();
+
+    const guild = await getGuildById(id);
+    if (!guild || !hasPermission(guild))
+        return parent;
+
+    const metadata = await parent;
+    return {
+        ...metadata,
+        title: {
+            default: `${translations.server_settings} » ${guild.name}`,
+            template: `%s [${guild.name}] | 結月 -ゆづき-`
+        },
+        openGraph: {
+            ...metadata.openGraph,
+            title: {
+                default: `${translations.server_settings} » ${guild.name}`,
+                template: `%s [${guild.name}]`
+            }
+        },
+        twitter: {
+            ...metadata.twitter,
+            title: {
+                default: `${translations.server_settings} » ${guild.name}`,
+                template: `%s [${guild.name}]`
+            }
+        }
+    };
+};
+
+const Layout = async ({ children, params: { id } }: WithIdParamProps & { children: ReactNode }) => {
     const translations = getTranslation();
 
     const guildData = getGuildById(id);
