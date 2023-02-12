@@ -35,6 +35,10 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
                 default: `${translations.server_settings} » ${guild.name}`,
                 template: `%s [${guild.name}]`
             }
+        },
+        robots: {
+            ...metadata.robots,
+            index: false
         }
     };
 };
