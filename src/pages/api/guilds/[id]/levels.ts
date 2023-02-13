@@ -6,7 +6,7 @@ import prisma from '../../../../libs/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const after = parseInt(req.query.after as string, 10) || 0;
-    const limit = parseInt(req.query.limit as string, 10) || 100;
+    const limit = parseInt(req.query.limit as string, 10) || 50;
     const id = req.query.id as string;
 
     const guild = await getGuildById(id, req.cookies['token']);

@@ -9,8 +9,16 @@ import {
     TextChannelIcon,
     VoiceChannelIcon
 } from '@lunaproject-discord/web-core';
+import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { APIGuildChannel } from '@lunaproject-discord/web-discord';
-import { ChevronRightOutlined, CloseOutlined, SaveOutlined, SearchOutlined } from '@mui/icons-material';
+import {
+    BackspaceOutlined,
+    ChevronRightOutlined,
+    CloseOutlined,
+    DeleteOutlined,
+    SaveOutlined,
+    SearchOutlined
+} from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
     Accordion as MuiAccordion,
@@ -23,12 +31,16 @@ import {
     Box,
     Button,
     DialogContent,
+    IconButton,
     InputBase,
     ListItemText,
     styled,
     Switch,
-    switchClasses
+    switchClasses,
+    Theme,
+    useMediaQuery
 } from '@mui/material';
+import deepEqual from 'deep-equal';
 import { APIGuildCategoryChannel, APITextBasedChannel, APIVoiceChannelBase, ChannelType } from 'discord-api-types/v10';
 import { useRouter } from 'next/navigation';
 import { ellipsis } from 'polished';
@@ -93,12 +105,14 @@ export const ManageDisabledChannelsDialog = (
 
     const translations = useTranslation();
 
+    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+
     const [loading, setLoading] = useState(false);
     const [pending, startTransition] = useTransition();
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch, resetSearch] = useResettableState('');
 
-    const [channelIds, setChannelIds] = useState(values);
+    const [channelIds, setChannelIds] = useResettableState(values);
 
     const guildChannels = sortChannels(choices);
     const categories = guildChannels.filter((channel): channel is APIGuildCategoryChannel => channel.type === ChannelType.GuildCategory);
@@ -108,6 +122,8 @@ export const ManageDisabledChannelsDialog = (
 
     const [expandedCategories, setExpandedCategories] = useState<string[]>(categories.map((category) => category.id));
 
+    const isChanged = () => !deepEqual(channelIds, values);
+
     const handleClose = () => {
         setSearch('');
         setChannelIds(values);
@@ -115,7 +131,7 @@ export const ManageDisabledChannelsDialog = (
     };
 
     const handleDialogClose = (_: {}, reason: 'backdropClick' | 'escapeKeyDown') => {
-        if (reason === 'backdropClick')
+        if ((reason === 'backdropClick' || reason === 'escapeKeyDown') && isChanged())
             return;
 
         handleClose();
@@ -144,7 +160,15 @@ export const ManageDisabledChannelsDialog = (
 
     return (
         <Fragment>
-            <Dialog open={open} onClose={handleDialogClose} maxWidth="sm" fullWidth sx={{ maxWidth: 1400 }}>
+            <Dialog
+                open={open}
+                onClose={handleDialogClose}
+                disableEscapeKeyDown={isChanged()}
+                fullScreen={isMobile}
+                fullWidth
+                maxWidth="sm"
+                sx={{ maxWidth: 1400 }}
+            >
                 <DialogHeader>
                     {translations.manage_disabled_channels}
                 </DialogHeader>
@@ -167,13 +191,16 @@ export const ManageDisabledChannelsDialog = (
                             bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
                         }}
                     >
-                        <SearchOutlined />
+                        <SearchOutlined color="action" />
                         <InputBase
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="チャンネルを検索..."
+                            placeholder={translations.search_channels as string}
                             fullWidth
                         />
+                        {search.length > 0 && <IconButton onClick={() => resetSearch()} sx={{ my: -.5, mr: -.5 }}>
+                            <BackspaceOutlined color="action" sx={{ transform: 'rotate(180deg)' }} />
+                        </IconButton>}
                     </Box>
                     <Box sx={{ height: { xs: 'auto', md: 500 }, p: 2, overflowY: 'auto' }}>
                         {[undefined, ...categories].filter((category) => search.length < 1 || channels.some((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search))).map((category) => (
@@ -218,7 +245,11 @@ export const ManageDisabledChannelsDialog = (
                                                     onChange={() => toggleEnabled(channel.id)}
                                                     disableRipple
                                                     tabIndex={-1}
-                                                    sx={{ [`& .${switchClasses.switchBase}`]: { backgroundColor: 'transparent !important' } }}
+                                                    sx={{
+                                                        [`& .${switchClasses.switchBase}`]: {
+                                                            backgroundColor: 'transparent !important'
+                                                        }
+                                                    }}
                                                 />
                                             </Box>
                                         </ListItemButton>
@@ -229,18 +260,27 @@ export const ManageDisabledChannelsDialog = (
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} startIcon={<CloseOutlined />}>
-                        {translations.cancel}
-                    </Button>
-                    <LoadingButton
-                        onClick={handleClickSaveButton}
-                        loading={loading || pending}
-                        loadingPosition="start"
-                        startIcon={<SaveOutlined />}
-                        variant="contained"
-                    >
-                        {translations.save}
-                    </LoadingButton>
+                    {isChanged() ? <Fragment>
+                        <Button
+                            onClick={handleClose}
+                            disabled={loading || pending}
+                            color="inherit"
+                            startIcon={<DeleteOutlined />}
+                        >
+                            {translations.reset}
+                        </Button>
+                        <LoadingButton
+                            onClick={handleClickSaveButton}
+                            loading={loading || pending}
+                            loadingPosition="start"
+                            variant="contained"
+                            startIcon={<SaveOutlined />}
+                        >
+                            {translations.save}
+                        </LoadingButton>
+                    </Fragment> : <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
+                        {translations.close}
+                    </Button>}
                 </DialogActions>
             </Dialog>
         </Fragment>

@@ -9,6 +9,8 @@ const Ja: Translation = {
     loading: '読み込み中…',
     login: 'ログイン',
     logout: 'ログアウト',
+    yes: 'はい',
+    no: 'いいえ',
     enabled: '有効',
     disabled: '無効',
     add: '追加',
@@ -18,6 +20,13 @@ const Ja: Translation = {
     cancel: 'キャンセル',
     save: '保存',
     reset: 'リセット',
+    open: '開く',
+    close: '閉じる',
+
+    search: '検索',
+    search_channels: 'チャンネルを検索...',
+    search_roles: '役職を検索...',
+    search_members: 'メンバーを検索...',
 
     home: 'ホーム',
     status: 'ステータス',

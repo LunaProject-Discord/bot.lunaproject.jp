@@ -43,6 +43,7 @@ import {
     Tooltip,
     Typography
 } from '@mui/material';
+import { enUS, jaJP } from '@mui/material/locale';
 import Link from 'next/link';
 import { parseCookies, setCookie } from 'nookies';
 import React, { Fragment, MouseEvent, ReactNode, useEffect, useState } from 'react';
@@ -109,18 +110,21 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     const [appearance, setAppearance] = useState<AppearanceType>('system');
     const [darkMode, setDarkMode] = useState(false);
 
-    const theme = createTheme({
-        palette: {
-            ...MuiPalette,
-            mode: darkMode ? 'dark' : 'light'
-        },
-        typography: {
-            fontFamily: fontFamily
-        }
-    });
-
     const translations = useTranslation();
     const language = useLanguage();
+
+    const theme = createTheme(
+        {
+            palette: {
+                ...MuiPalette,
+                mode: darkMode ? 'dark' : 'light'
+            },
+            typography: {
+                fontFamily: fontFamily
+            }
+        },
+        language === 'ja' ? jaJP : enUS
+    );
 
     const cookies = parseCookies();
     const token = cookies['token'];
@@ -224,7 +228,10 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title={translations.login} placement="right">
-                                <IconButton component={Link} href="https://accounts.lunaproject.jp/login">
+                                <IconButton
+                                    component={Link}
+                                    href={`https://accounts.lunaproject.jp/login?redirect=${window.location.href}`}
+                                >
                                     <LoginOutlined />
                                 </IconButton>
                             </Tooltip>
@@ -331,10 +338,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                     {panelState === null && <Fragment>
                         {data && <Fragment>
                             <Box sx={{ p: 1.5, display: 'flex', gap: 1 }}>
-                                <Avatar
-                                    src={`https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}`}
-                                    sx={{ pointerEvents: 'none' }}
-                                />
+                                <Avatar src={getUserAvatar(data)} sx={{ pointerEvents: 'none' }} />
                                 <Box sx={{
                                     width: '100%',
                                     display: 'flex',

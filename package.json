@@ -17,7 +17,7 @@
         "@lexical/markdown": "0.7.6",
         "@lexical/react": "0.7.6",
         "@lunaproject-discord/web-core": "1.0.4",
-        "@lunaproject-discord/web-discord": "1.0.3",
+        "@lunaproject-discord/web-discord": "1.0.6",
         "@mui/icons-material": "5.11.0",
         "@mui/lab": "5.0.0-alpha.118",
         "@mui/material": "5.11.7",

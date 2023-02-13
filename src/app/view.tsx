@@ -1,6 +1,11 @@
 'use client';
 
-import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject-discord/web-core';
+import {
+    Gallery,
+    GalleryItem,
+    GalleryItemIcon,
+    GalleryItemText
+} from '@lunaproject-discord/web-core/dist/components/Gallery';
 import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord';
 import {
     AnalyticsOutlined,
@@ -28,6 +33,7 @@ import {
     TabProps,
     Typography
 } from '@mui/material';
+import Link from 'next/link';
 import NextLink from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { SyntheticEvent, useState } from 'react';
@@ -202,6 +208,8 @@ export const View = ({ user, translations }: Props) => {
                         下のボタンからログインをしてください。
                     </Box>
                     <Button
+                        component={Link}
+                        href={`https://accounts.lunaproject.jp/login?redirect=${window.location.href}`}
                         variant="contained"
                         disableElevation
                         startIcon={<LoginOutlined />}

@@ -32,10 +32,10 @@ export const getMutualGuilds = async (id: string): Promise<OAuthGuild[]> => {
         return cached.data;
 
     const res = await fetch(
-        `https://yudzuki-api.lunaproject.jp/v2/users/${id}/guilds`,
+        `${process.env.NEXT_PUBLIC_BOT_API_ORIGIN}/v2/users/${id}/guilds`,
         {
             headers: {
-                Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBdXRoZW50aWNhdGlvbiIsImlzcyI6Ill1ZHp1a2lCb3QiLCJpZCI6NTUzODQxMTk0Njk5MDYzMzE5LCJzZWNyZXQiOiJ6d012aFBXVWQ1dXdFbmFwQ1VHclhZRW5oVXpKUFFld0FhNHBXbkxMRjFObTA4ZFZFbmg4OGs3cjVCWjZNNDNFIn0.FN0sFTf4ntGbUU-hxHYuV0StpzoAHHfW2TkddHKerT4`
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_BOT_API_TOKEN}`
             }
         }
     );
@@ -92,7 +92,7 @@ export const getGuildSettings = async (id: string): Promise<GuildSettings | unde
     };
 };
 
-export const getGuildLevels = async (id: string): Promise<GuildLevel[]> => {
+export const getGuildLevels = async (id: string, fetchUser: boolean = true): Promise<GuildLevel[]> => {
     const results: any[] = await prisma.$queryRaw`
         SELECT *, RANK() OVER(ORDER BY \`level\` DESC, \`xp\` DESC) AS \`rank\`
         FROM \`guilds_levels\`
@@ -102,8 +102,9 @@ export const getGuildLevels = async (id: string): Promise<GuildLevel[]> => {
 
     const levels: GuildLevel[] = [];
     for (const level of results) {
+        const userId = String(level.user_id);
         levels.push({
-            user: await getUser(String(level.user_id)),
+            user: fetchUser ? await getUser(userId) : { id: userId },
             rank: Number(level.rank),
             level: Number(level.level),
             xp: Number(level.xp)

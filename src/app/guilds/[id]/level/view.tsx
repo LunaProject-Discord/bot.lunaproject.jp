@@ -236,7 +236,7 @@ export const View = ({ guild, channels, roles, settings, translations }: Props) 
                         disabled={!enabled || notificationType !== 'CUSTOM_CHANNEL'}
                     />
                     <MessageItem
-                        primary={translations.edit_message}
+                        primary={translations.customize_message}
                         secondary="メンバーのレベルが上がったときに送信されるメッセージをカスタマイズできます。"
                         value={notificationMessage}
                         setValue={setNotificationMessage}

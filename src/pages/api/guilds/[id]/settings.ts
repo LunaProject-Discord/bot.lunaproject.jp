@@ -57,6 +57,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
                     }
                 });
 
+                await fetch(
+                    `${process.env.NEXT_PUBLIC_BOT_API_ORIGIN}/v2/guilds/${id}`,
+                    {
+                        method: 'PATCH',
+                        headers: {
+                            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BOT_API_TOKEN}`
+                        }
+                    }
+                );
+
                 return res.status(200).json(await getGuildSettings(id));
             } catch (e) {
                 console.error(e);

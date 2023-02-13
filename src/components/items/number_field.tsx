@@ -1,4 +1,4 @@
-import { NumberField } from '@lunaproject-discord/web-core';
+import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
 import React from 'react';
 import {
     ItemContainer,

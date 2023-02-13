@@ -1,7 +1,20 @@
 import { Dialog, DialogActions, DialogHeader, DialogProps } from '@lunaproject-discord/web-core';
-import { CloseOutlined, SaveOutlined, SearchOutlined } from '@mui/icons-material';
+import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
+import { BackspaceOutlined, CloseOutlined, DeleteOutlined, SaveOutlined, SearchOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, DialogContent, InputBase, ListItemText, Switch, switchClasses } from '@mui/material';
+import {
+    Box,
+    Button,
+    DialogContent,
+    IconButton,
+    InputBase,
+    ListItemText,
+    Switch,
+    switchClasses,
+    Theme,
+    useMediaQuery
+} from '@mui/material';
+import deepEqual from 'deep-equal';
 import { APIRole } from 'discord-api-types/v10';
 import { useRouter } from 'next/navigation';
 import { ellipsis, size } from 'polished';
@@ -29,14 +42,18 @@ export const ManageDisabledRolesDialog = (
 
     const translations = useTranslation();
 
+    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+
     const [loading, setLoading] = useState(false);
     const [pending, startTransition] = useTransition();
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch, resetSearch] = useResettableState('');
 
-    const [roleIds, setRoleIds] = useState(values);
+    const [roleIds, setRoleIds] = useResettableState(values);
 
-    const roles = sortRoles(choices);
+    const roles = sortRoles(choices).filter((role) => role.position !== 0);
+
+    const isChanged = () => !deepEqual(roleIds, values);
 
     const handleClose = () => {
         setSearch('');
@@ -45,7 +62,7 @@ export const ManageDisabledRolesDialog = (
     };
 
     const handleDialogClose = (_: {}, reason: 'backdropClick' | 'escapeKeyDown') => {
-        if (reason === 'backdropClick')
+        if ((reason === 'backdropClick' || reason === 'escapeKeyDown') && isChanged())
             return;
 
         handleClose();
@@ -67,7 +84,15 @@ export const ManageDisabledRolesDialog = (
 
     return (
         <Fragment>
-            <Dialog open={open} onClose={handleDialogClose} maxWidth="sm" fullWidth sx={{ maxWidth: 1400 }}>
+            <Dialog
+                open={open}
+                onClose={handleDialogClose}
+                disableEscapeKeyDown={isChanged()}
+                fullScreen={isMobile}
+                fullWidth
+                maxWidth="sm"
+                sx={{ maxWidth: 1400 }}
+            >
                 <DialogHeader>
                     {translations.manage_disabled_roles}
                 </DialogHeader>
@@ -90,13 +115,16 @@ export const ManageDisabledRolesDialog = (
                             bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
                         }}
                     >
-                        <SearchOutlined />
+                        <SearchOutlined color="action" />
                         <InputBase
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            placeholder="役職を検索..."
+                            placeholder={translations.search_roles as string}
                             fullWidth
                         />
+                        {search.length > 0 && <IconButton onClick={() => resetSearch()} sx={{ my: -.5, mr: -.5 }}>
+                            <BackspaceOutlined color="action" sx={{ transform: 'rotate(180deg)' }} />
+                        </IconButton>}
                     </Box>
                     <Box sx={{ height: { xs: 'auto', md: 500 }, p: 2, overflowY: 'auto' }}>
                         {roles.filter((role) => filterPredicateRole(role, search)).map((role) => (
@@ -132,7 +160,11 @@ export const ManageDisabledRolesDialog = (
                                         onChange={() => toggleEnabled(role.id)}
                                         disableRipple
                                         tabIndex={-1}
-                                        sx={{ [`& .${switchClasses.switchBase}`]: { backgroundColor: 'transparent !important' } }}
+                                        sx={{
+                                            [`& .${switchClasses.switchBase}`]: {
+                                                backgroundColor: 'transparent !important'
+                                            }
+                                        }}
                                     />
                                 </Box>
                             </ListItemButton>
@@ -140,18 +172,27 @@ export const ManageDisabledRolesDialog = (
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} startIcon={<CloseOutlined />}>
-                        {translations.cancel}
-                    </Button>
-                    <LoadingButton
-                        onClick={handleClickSaveButton}
-                        loading={loading || pending}
-                        loadingPosition="start"
-                        startIcon={<SaveOutlined />}
-                        variant="contained"
-                    >
-                        {translations.save}
-                    </LoadingButton>
+                    {isChanged() ? <Fragment>
+                        <Button
+                            onClick={handleClose}
+                            disabled={loading || pending}
+                            color="inherit"
+                            startIcon={<DeleteOutlined />}
+                        >
+                            {translations.reset}
+                        </Button>
+                        <LoadingButton
+                            onClick={handleClickSaveButton}
+                            loading={loading || pending}
+                            loadingPosition="start"
+                            variant="contained"
+                            startIcon={<SaveOutlined />}
+                        >
+                            {translations.save}
+                        </LoadingButton>
+                    </Fragment> : <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
+                        {translations.close}
+                    </Button>}
                 </DialogActions>
             </Dialog>
         </Fragment>

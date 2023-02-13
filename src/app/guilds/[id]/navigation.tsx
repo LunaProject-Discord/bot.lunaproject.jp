@@ -32,6 +32,7 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEventHandler, useState } from 'react';
 import { Translation } from '../../../interfaces/language';
+import { getGuildIcon } from '../../../utils/discord';
 
 interface Props {
     guild: OAuthGuild;
@@ -108,10 +109,7 @@ const Drawer = ({ guild, translations, open, onDrawerToggleClick }: DrawerProps)
                         }}
                     >
                         <ListItemIcon sx={{ minWidth: 46 }}>
-                            <Avatar
-                                src={guild.icon ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}` : undefined}
-                                alt={guild.name}
-                            />
+                            <Avatar src={getGuildIcon(guild)} />
                         </ListItemIcon>
                         <ListItemText primary={guild.name} sx={{ m: 0 }} />
                     </ButtonBase>

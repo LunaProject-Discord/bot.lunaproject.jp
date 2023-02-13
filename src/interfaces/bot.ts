@@ -19,8 +19,6 @@ export interface PartialGuildLevel {
 export interface GuildLevel extends Omit<PartialGuildLevel, 'user_id'> {
     user: PartialUser;
     rank: number;
-    level: number;
-    xp: number;
 }
 
 

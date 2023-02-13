@@ -8,16 +8,18 @@ import { Layout } from './layout_view';
 export const generateMetadata = () => {
     const language = getLanguage();
 
+    const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN as string;
+
     return {
         icons: {
             icon: [
                 {
                     type: 'image/vnd.microsoft.icon',
-                    url: 'http://localhost:3000/icons/yudzuki.ico'
+                    url: `${origin}/icons/yudzuki.ico`
                 },
                 {
                     type: 'image/svg+xml',
-                    url: 'http://localhost:3000/icons/yudzuki.svg'
+                    url: `${origin}/icons/yudzuki.svg`
                 }
             ]
         },
@@ -31,13 +33,13 @@ export const generateMetadata = () => {
             type: 'website',
             locale: language === 'ja' ? 'ja-JP' : 'en-US',
             siteName: '結月 -ゆづき-',
-            url: 'http://localhost:3000',
+            url: origin,
             title: '結月 -ゆづき-',
             description: 'Discord向けの多機能Bot「結月 -ゆづき-」の公式ホームページです。あなたも導入してみませんか？\nThis is the official website of "結月 -ゆづき-" the multifunctional bot for Discord.',
             images: [
                 {
-                    url: 'http://localhost:3000/thumbnail.png',
-                    secureUrl: 'http://localhost:3000/thumbnail.png'
+                    url: `${origin}/thumbnail.png`,
+                    secureUrl: `${origin}/thumbnail.png`
                 }
             ]
         },
@@ -48,7 +50,7 @@ export const generateMetadata = () => {
             siteId: '1216350706103246849',
             creator: '@Yudzuki_Discord',
             creatorId: '1216350706103246849',
-            images: ['http://localhost:3000/thumbnail.png']
+            images: [`${origin}/thumbnail.png`]
         }
     };
 };

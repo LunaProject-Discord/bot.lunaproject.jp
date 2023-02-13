@@ -1,4 +1,4 @@
-import { Select } from '@lunaproject-discord/web-core';
+import { Select } from '@lunaproject-discord/web-core/dist/components/Select';
 import { MenuItem } from '@mui/material';
 import React, { ReactNode } from 'react';
 import {

@@ -131,7 +131,7 @@ export const SearchBox = (props: InputBaseProps) => (
             bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
         }}
     >
-        <SearchOutlined />
+        <SearchOutlined color="action" />
         <InputBase {...props} fullWidth />
     </Box>
 );

@@ -1,3 +1,4 @@
+import { getGuildMembersById, GuildMember } from '@lunaproject-discord/web-discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { WithIdParamProps } from '../../../../../interfaces/page';
@@ -31,27 +32,40 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     };
 };
 
-const Page = async ({ params: { id } }: WithIdParamProps) => {
+interface Props extends WithIdParamProps {
+    searchParams?: {
+        after?: number;
+        limit?: number;
+    };
+}
+
+const Page = async ({ params: { id }, searchParams }: Props) => {
     const translations = getTranslation();
 
     const guildData = getGuildById(id);
-    const guildLevelsData = getGuildLevels(id);
+    const guildMembersData = getGuildMembersById(id);
 
+    const guildLevelsData = getGuildLevels(id, false);
     const guildSettingsData = getGuildSettings(id);
 
-    const [guild, guildLevels, guildSettings] = await Promise.all([
+    const [guild, guildMembers, guildLevels, guildSettings] = await Promise.all([
         guildData,
+        guildMembersData,
         guildLevelsData,
         guildSettingsData
     ]);
 
-    if (!guild || !guildLevels || !guildSettings)
+    if (!guild || !guildMembers || !guildLevels || !guildSettings)
         return (<NotFoundView />);
+
+    const filteredMembers = guildMembers.filter((member): member is GuildMember => member.user !== undefined);
+    const memberIds = filteredMembers.map(({ user }) => user.id);
 
     return (
         <View
             guild={guild}
-            levels={guildLevels}
+            members={filteredMembers}
+            levels={guildLevels.filter(({ user }) => memberIds.includes(user.id))}
             settings={guildSettings}
             translations={translations}
         />

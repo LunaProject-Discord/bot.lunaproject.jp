@@ -8,26 +8,31 @@ datasource db {
 }
 
 model globalchats_groups {
-  id                       Int      @id @default(autoincrement())
-  owner_id                 BigInt
-  name                     String   @db.VarChar(50)
-  description              String   @default("") @db.Text
-  cooltime                 Int      @default(5)
-  password                 String   @default("") @db.VarChar(50)
-  max_lines_count          Int      @default(15)
-  max_emotes_count         Int      @default(10)
-  minimum_guild_created_at Int      @default(0)
-  minimum_user_created_at  Int      @default(60)
-  updated_at               DateTime @db.DateTime(0)
-  created_at               DateTime @db.DateTime(0)
+  id                          Int                           @id @default(autoincrement())
+  owner_id                    BigInt
+  name                        String                        @db.VarChar(50)
+  description                 String                        @default("") @db.Text
+  cooltime                    Int                           @default(5)
+  password                    String                        @default("") @db.VarChar(50)
+  max_lines_count             Int                           @default(15)
+  max_emotes_count            Int                           @default(10)
+  minimum_guild_created_at    Int                           @default(0)
+  minimum_user_created_at     Int                           @default(60)
+  updated_at                  DateTime                      @db.DateTime(0)
+  created_at                  DateTime                      @db.DateTime(0)
+  globalchats_groups_channels globalchats_groups_channels[]
+  globalchats_messages        globalchats_messages[]
 }
 
 model globalchats_groups_channels {
-  group_id   Int
-  guild_id   BigInt
-  channel_id BigInt   @id
-  updated_at DateTime @db.DateTime(0)
-  created_at DateTime @db.DateTime(0)
+  group_id           Int
+  guild_id           BigInt
+  channel_id         BigInt             @id
+  updated_at         DateTime           @db.DateTime(0)
+  created_at         DateTime           @db.DateTime(0)
+  globalchats_groups globalchats_groups @relation(fields: [group_id], references: [id], onUpdate: Restrict, map: "globalchats_groups_channels_ibfk_1")
+
+  @@unique([group_id, guild_id, channel_id], map: "UNIQUE")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
@@ -41,17 +46,20 @@ model globalchats_groups_ngwords {
 }
 
 model globalchats_messages {
-  id           String   @id @db.VarChar(10)
-  group_id     Int      @default(0)
-  guild_id     BigInt
-  channel_id   BigInt
-  user_id      BigInt
-  message_id   BigInt
-  is_api       Boolean  @default(false)
-  message      String   @db.Text
-  destinations String   @db.Text
-  updated_at   DateTime @db.DateTime(0)
-  created_at   DateTime @db.DateTime(0)
+  id                 String             @id @db.VarChar(10)
+  group_id           Int                @default(0)
+  guild_id           BigInt
+  channel_id         BigInt
+  user_id            BigInt
+  message_id         BigInt
+  is_api             Boolean            @default(false)
+  message            String             @db.LongText
+  destinations       String             @db.LongText
+  updated_at         DateTime           @db.DateTime(0)
+  created_at         DateTime           @db.DateTime(0)
+  globalchats_groups globalchats_groups @relation(fields: [group_id], references: [id], onUpdate: Restrict, map: "globalchat_group_id")
+
+  @@unique([group_id, guild_id, channel_id, user_id, message_id], map: "UNIQUE")
 }
 
 model guilds {
@@ -80,6 +88,8 @@ model guilds_levels {
   xp         Int      @default(0)
   updated_at DateTime @db.DateTime(0)
   created_at DateTime @db.DateTime(0)
+
+  @@unique([guild_id, user_id], map: "UNIQUE")
 }
 
 model guilds_profiles {
@@ -138,7 +148,7 @@ model guilds_settings {
   global_chat    String   @default("{\"enabled\":true}") @db.Text
   global_ban     String   @default("{\"enabled\":false,\"minimum_evaluate_value\":4.0}") @db.Text
   level          String   @default("{\"enabled\":false,\"experience_per_message\":1,\"disabled\":{\"channels\":[],\"roles\":[]},\"reward\":{\"type\":\"STACK_PREVIOUS_ROLES\",\"remove_role_demoted\":false,\"roles\":[]},\"notification\":{\"type\":\"CURRENT_CHANNEL\",\"channel_id\":\"0\",\"message\":\"\"},\"leaderboard\":{\"public\":false,\"allow_join\":false,\"vanity_code\":null}}") @db.Text
-  translate      String   @default("{\"enabled\":true,\"reaction\":false,\"disabled\":{\"channels\":[],\"roles\":[]}}") @db.Text
+  translate      String   @default("{\"enabled\":true,\"reaction\":false,\"disabled\":{\"channels\":[],\"roles\":[]}}") @db.LongText
   vote           String   @default("{\"enabled\":true,\"votes\":[]}") @db.Text
   quote          String   @default("{\"enabled\":false,\"reaction\":true,\"message\":false,\"other_guild_to_this_guild\":false,\"this_guild_to_other_guild\":false,\"disabled\":{\"channels\":[],\"roles\":[]}}") @db.Text
   music          String   @default("{\"enabled\":true,\"web_panel\":true,\"sources\":{\"youtube\":true,\"niconico\":true,\"soundcloud\":true,\"twitch\":true,\"bandcamp\":true,\"vimeo\":true}}") @db.Text

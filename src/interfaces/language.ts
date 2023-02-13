@@ -8,6 +8,8 @@ export type TranslationKeys =
     | 'loading'
     | 'login'
     | 'logout'
+    | 'yes'
+    | 'no'
     | 'enabled'
     | 'disabled'
     | 'add'
@@ -17,6 +19,13 @@ export type TranslationKeys =
     | 'cancel'
     | 'save'
     | 'reset'
+    | 'open'
+    | 'close'
+
+    | 'search'
+    | 'search_channels'
+    | 'search_roles'
+    | 'search_members'
 
     | 'home'
     | 'status'

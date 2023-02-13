@@ -77,6 +77,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                             <Button
                                 ref={cancelButton}
                                 onClick={onCancel}
+                                disabled={loading || pending}
                                 color="inherit"
                                 startIcon={<DeleteOutlined />}
                                 sx={{
@@ -104,6 +105,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                     </ThemeProvider>
                 }
                 sx={{
+                    zIndex: (theme) => !disableKeyboardShortcuts ? theme.zIndex.snackbar : -1,
                     [`& .${snackbarContentClasses.root}`]: {
                         border: `solid 1px ${theme.palette.divider}`,
                         boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
