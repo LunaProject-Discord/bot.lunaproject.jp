@@ -255,6 +255,25 @@ model users {
   created_at     DateTime @db.DateTime(0)
 }
 
+model users_activities {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  title      String   @db.Text
+  channel_id BigInt
+  status     Int      @default(1)
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
+}
+
+model users_activities_details {
+  count      Int      @id @default(autoincrement())
+  id         Int
+  user_id    BigInt
+  message    String   @db.Text
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
+}
+
 model users_command_logs {
   count      Int      @id @default(autoincrement())
   id         BigInt
@@ -318,25 +337,6 @@ model users_settings {
   token_secret  String   @default("") @db.LongText
   updated_at    DateTime @db.DateTime(0)
   created_at    DateTime @db.DateTime(0)
-}
-
-model users_activities {
-  id         Int      @id @default(autoincrement())
-  user_id    BigInt
-  title      String   @db.Text
-  channel_id BigInt
-  status     Int      @default(1)
-  updated_at DateTime @db.DateTime(0)
-  created_at DateTime @db.DateTime(0)
-}
-
-model users_activities_details {
-  count      Int      @id @default(autoincrement())
-  id         Int
-  user_id    BigInt
-  message    String   @db.Text
-  updated_at DateTime @db.DateTime(0)
-  created_at DateTime @db.DateTime(0)
 }
 
 enum users_notifications_type {
