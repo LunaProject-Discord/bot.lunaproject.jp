@@ -68,8 +68,8 @@ model globalchats_messages {
 model guilds {
   id         BigInt   @id
   prefix     String   @default("s#") @db.VarChar(20)
-  flags      String   @default("{\"verified\":false,\"partner\":false,\"tester\":false}") @db.LongText
-  prohibit   String   @default("{\"enabled\":false,\"type\":\"CUSTOM\",\"reason\":null,\"expired_at\":null}") @db.LongText
+  flags      String   @default("{\"verified\":false,\"partner\":false,\"tester\":false}") @db.Text
+  prohibit   String   @default("{\"enabled\":false,\"type\":\"CUSTOM\",\"reason\":null,\"expired_at\":null}") @db.Text
   updated_at DateTime @db.DateTime(0)
   created_at DateTime @db.DateTime(0)
 }
@@ -77,8 +77,8 @@ model guilds {
 model guilds_dictionaries {
   count      Int      @id
   id         BigInt
-  from       String   @db.LongText
-  to         String   @db.LongText
+  from       String   @db.Text
+  to         String   @db.Text
   updated_at DateTime @db.DateTime(0)
   created_at DateTime @db.DateTime(0)
 }
@@ -123,7 +123,7 @@ model guilds_notifications_reads {
 model guilds_profiles {
   id         BigInt   @id
   name       String   @db.VarChar(100)
-  icon_url   String   @db.LongText
+  icon_url   String   @db.Text
   updated_at DateTime @db.DateTime(0)
   created_at DateTime @db.DateTime(0)
 }
@@ -132,7 +132,7 @@ model guilds_punishments_bans {
   count      Int       @id @default(autoincrement())
   guild_id   BigInt
   user_id    BigInt
-  reason     String    @db.LongText
+  reason     String    @db.Text
   by_user_id BigInt
   is_active  Boolean   @default(true)
   expired_at DateTime? @db.DateTime(0)
@@ -144,7 +144,7 @@ model guilds_punishments_mutes {
   count      Int       @id @default(autoincrement())
   guild_id   BigInt
   user_id    BigInt
-  reason     String    @db.LongText
+  reason     String    @db.Text
   by_user_id BigInt
   is_active  Boolean   @default(true)
   expired_at DateTime? @db.DateTime(0)
@@ -156,7 +156,7 @@ model guilds_punishments_warns {
   count      Int       @id @default(autoincrement())
   guild_id   BigInt
   user_id    BigInt
-  reason     String    @db.LongText
+  reason     String    @db.Text
   by_user_id BigInt
   is_active  Boolean   @default(true)
   expired_at DateTime? @db.DateTime(0)
@@ -170,18 +170,18 @@ model guilds_settings {
   language       String   @default("ja-JP") @db.VarChar(10)
   timezone       String   @default("Asia/Tokyo") @db.VarChar(30)
   commands       String   @default("{\"disabled\":{\"channels\":[],\"roles\":[]},\"commands\":[{\"enabled\":true,\"name\":\"about\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"BOT\",\"aliases\":[\"version\",\"ver\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"help\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"BOT\",\"aliases\":[\"?\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"ping\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"BOT\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"status\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"BOT\",\"aliases\":[\"debug\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"follow\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"BOT\",\"aliases\":[],\"permissions\":\"16\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"language\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"CONFIGURATION\",\"aliases\":[\"lang\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"levelmanager\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"CONFIGURATION\",\"aliases\":[\"lm\"],\"permissions\":\"32\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"level\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"FUN\",\"aliases\":[\"lv\",\"xp\",\"rank\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"leaderboard\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"FUN\",\"aliases\":[\"lb\",\"ranks\",\"levels\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"translate\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"FUN\",\"aliases\":[\"t\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"vote\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"FUN\",\"aliases\":[\"poll\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"neko\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"FUN\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"play\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[\"p\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"pause\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"resume\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"stop\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"skip\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"loop\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[\"repeat\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"queue\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[\"q\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"nowplaying\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[\"np\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"volume\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[\"vol\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"disconnect\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MUSIC\",\"aliases\":[\"dc\",\"dis\",\"leave\"],\"permissions\":\"16777216\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"speech\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"TEXT_TO_SPEECH\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"character\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"TEXT_TO_SPEECH\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"search\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"server\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[\"serverinfo\",\"si\",\"guild\",\"guildinfo\",\"gi\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"channel\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[\"channelinfo\",\"ci\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"role\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[\"roleinfo\",\"ri\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"emoji\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[\"emojiinfo\",\"ei\",\"emote\",\"emoteinfo\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"invite\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[\"inviteinfo\",\"ii\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"user\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[\"userinfo\",\"ui\"],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"check\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"lookup\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MISCELLANEOUS\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"clear\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MODERATION\",\"aliases\":[\"clean\",\"purge\"],\"permissions\":\"8192\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"mute\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MODERATION\",\"aliases\":[],\"permissions\":\"1099511627776\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"unmute\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MODERATION\",\"aliases\":[],\"permissions\":\"1099511627776\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"kick\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MODERATION\",\"aliases\":[],\"permissions\":\"2\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"ban\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MODERATION\",\"aliases\":[],\"permissions\":\"4\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"unban\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MODERATION\",\"aliases\":[],\"permissions\":\"4\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"eval\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MANAGEMENT\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}},{\"enabled\":true,\"name\":\"evaluate\",\"descriptions\":[{\"language\":\"ja\",\"text\":\"\"},{\"language\":\"en\",\"text\":\"\"}],\"category\":\"MANAGEMENT\",\"aliases\":[],\"permissions\":\"0\",\"allowed\":{\"channels\":[],\"roles\":[]},\"denied\":{\"channels\":[],\"roles\":[]}}]}") @db.LongText
-  welcome        String   @default("{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"\",\"embeds\":[]},\"roles\":[]}") @db.LongText
-  goodbye        String   @default("{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"\",\"embeds\":[]}}") @db.LongText
+  welcome        String   @default("{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"ようこそ！**{user:name}** さんが参加しました。\",\"embeds\":[]},\"roles\":[]}") @db.Text
+  goodbye        String   @default("{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"さようなら…。**{user:name}** さんが退出しました。\",\"embeds\":[]}}") @db.Text
   activity       String   @default("{\"enabled\":false,\"roles\":[]}") @db.LongText
   global_chat    String   @default("{\"enabled\":true}") @db.LongText
   global_ban     String   @default("{\"enabled\":false,\"minimum_evaluate_value\":4.0}") @db.LongText
-  level          String   @default("{\"enabled\":false,\"experience_per_message\":1,\"disabled\":{\"channels\":[],\"roles\":[]},\"reward\":{\"type\":\"STACK_PREVIOUS_ROLES\",\"remove_role_demoted\":false,\"roles\":[]},\"notification\":{\"type\":\"CURRENT_CHANNEL\",\"channel_id\":\"0\",\"message\":\"\"},\"leaderboard\":{\"public\":false,\"allow_join\":false,\"vanity_code\":null}}") @db.LongText
+  level          String   @default("{\"enabled\":false,\"experience_per_message\":1,\"disabled\":{\"channels\":[],\"roles\":[]},\"reward\":{\"type\":\"STACK_PREVIOUS_ROLES\",\"remove_role_demoted\":false,\"roles\":[]},\"notification\":{\"type\":\"CURRENT_CHANNEL\",\"channel_id\":\"0\",\"message\":{\"content\":\"おめでとう！**{user:name}** さんがレベルアップしました！ ?\",\"embeds\":[{\"title\":\"レベル情報\",\"description\":\"\",\"url\":null,\"color\":\"#959ac0\",\"timestamp\":null,\"author\":null,\"fields\":[{\"name\":\"暫定順位\",\"value\":\"{rank:new}\",\"inline\":true},{\"name\":\"レベル\",\"value\":\"{level:new}\",\"inline\":true},{\"name\":\"経験値 (最大)\",\"value\":\"{xp:new} ({max_xp:new})\",\"inline\":true}],\"image\":null,\"footer\":null}]}},\"leaderboard\":{\"public\":false,\"allow_join\":false,\"vanity_code\":null}}") @db.Text
   translate      String   @default("{\"enabled\":true,\"reaction\":false,\"disabled\":{\"channels\":[],\"roles\":[]}}") @db.LongText
-  vote           String   @default("{\"enabled\":true,\"votes\":[]}") @db.LongText
+  vote           String   @default("{\"enabled\":true,\"votes\":[]}") @db.Text
   quote          String   @default("{\"enabled\":false,\"reaction\":true,\"message\":false,\"other_guild_to_this_guild\":false,\"this_guild_to_other_guild\":false,\"disabled\":{\"channels\":[],\"roles\":[]}}") @db.LongText
   music          String   @default("{\"enabled\":true,\"web_panel\":true,\"sources\":{\"youtube\":true,\"niconico\":true,\"soundcloud\":true,\"twitch\":true,\"bandcamp\":true,\"vimeo\":true}}") @db.LongText
   text_to_speech String   @default("{\"enabled\":false,\"dictionaries\":[],\"plan\":\"TIER_0\",\"remaining_standard_count\":10000,\"remaining_wavenet_count\":5000}") @db.LongText
-  logging        String   @default("{\"enabled\":false,\"moderation\":{\"channel_id\":\"0\",\"update\":false,\"kick\":false,\"prune\":false,\"ban\":false,\"unban\":false},\"member\":{\"channel_id\":\"0\",\"join\":false,\"leave\":false,\"update\":false,\"role_add\":false,\"role_remove\":false},\"voice\":{\"channel_id\":\"0\",\"join\":false,\"leave\":false,\"move\":false,\"mute\":false,\"deafen\":false},\"category\":{\"channel_id\":\"0\",\"create\":false,\"delete\":false,\"update\":false,\"permissions_update\":false},\"text_channel\":{\"channel_id\":\"0\",\"create\":false,\"delete\":false,\"update\":false,\"permissions_update\":false},\"voice_channel\":{\"channel_id\":\"0\",\"create\":false,\"delete\":false,\"update\":false,\"permissions_update\":false},\"role\":{\"channel_id\":\"0\",\"create\":false,\"delete\":false,\"update\":false},\"emote\":{\"channel_id\":\"0\",\"create\":false,\"delete\":false,\"update\":false},\"invite\":{\"channel_id\":\"0\",\"create\":false,\"delete\":false,\"update\":false},\"webhook\":{\"channel_id\":\"0\",\"create\":false,\"delete\":false,\"update\":false},\"integration\":{\"channel_id\":\"0\",\"create\":false,\"delete\":false,\"update\":false},\"message\":{\"channel_id\":\"0\",\"update\":false,\"delete\":false,\"purge\":false,\"pin\":false,\"unpin\":false}}") @db.LongText
+  logging        String   @default("{\"enabled\":false,\"moderation\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"update\":false,\"kick\":false,\"prune\":false,\"ban\":false,\"unban\":false},\"member\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"join\":false,\"leave\":false,\"update\":false,\"role_add\":false,\"role_remove\":false},\"voice\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"join\":false,\"leave\":false,\"move\":false,\"mute\":false,\"deafen\":false},\"category\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"create\":false,\"delete\":false,\"update\":false,\"permissions_update\":false},\"text_channel\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"create\":false,\"delete\":false,\"update\":false,\"permissions_update\":false},\"voice_channel\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"create\":false,\"delete\":false,\"update\":false,\"permissions_update\":false},\"role\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"create\":false,\"delete\":false,\"update\":false},\"emote\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"create\":false,\"delete\":false,\"update\":false},\"invite\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"create\":false,\"delete\":false,\"update\":false},\"webhook\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"create\":false,\"delete\":false,\"update\":false},\"integration\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"create\":false,\"delete\":false,\"update\":false},\"message\":{\"enabled\":false,\"channel_id\":\"0\",\"color\":\"#959ac0\",\"update\":false,\"delete\":false,\"purge\":false,\"pin\":false,\"unpin\":false}}") @db.Text
   updated_at     DateTime @db.DateTime(0)
   created_at     DateTime @db.DateTime(0)
 }
@@ -318,6 +318,25 @@ model users_settings {
   token_secret  String   @default("") @db.LongText
   updated_at    DateTime @db.DateTime(0)
   created_at    DateTime @db.DateTime(0)
+}
+
+model users_activities {
+  id         Int      @id @default(autoincrement())
+  user_id    BigInt
+  title      String   @db.Text
+  channel_id BigInt
+  status     Int      @default(1)
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
+}
+
+model users_activities_details {
+  count      Int      @id @default(autoincrement())
+  id         Int
+  user_id    BigInt
+  message    String   @db.Text
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
 }
 
 enum users_notifications_type {
