@@ -8,52 +8,59 @@ datasource db {
 }
 
 model globalchats_groups {
-  id                       Int      @id @default(autoincrement())
-  owner_id                 BigInt
-  name                     String   @db.VarChar(50)
-  description              String   @default("") @db.LongText
-  cooltime                 Int      @default(5)
-  password                 String   @default("") @db.VarChar(50)
-  max_lines_count          Int      @default(15)
-  max_emotes_count         Int      @default(10)
-  minimum_guild_created_at Int      @default(0)
-  minimum_user_created_at  Int      @default(60)
-  updated_at               DateTime @db.DateTime(0)
-  created_at               DateTime @db.DateTime(0)
+  id                          Int                           @id @default(autoincrement())
+  owner_id                    BigInt
+  name                        String                        @db.VarChar(50)
+  description                 String                        @default("") @db.LongText
+  cooltime                    Int                           @default(5)
+  password                    String                        @default("") @db.VarChar(50)
+  max_lines_count             Int                           @default(15)
+  max_emotes_count            Int                           @default(10)
+  minimum_guild_created_at    Int                           @default(0)
+  minimum_user_created_at     Int                           @default(60)
+  updated_at                  DateTime                      @db.DateTime(0)
+  created_at                  DateTime                      @db.DateTime(0)
+  globalchats_groups_channels globalchats_groups_channels[]
+  globalchats_groups_ngwords  globalchats_groups_ngwords[]  @ignore
+  globalchats_messages        globalchats_messages[]
 }
 
 model globalchats_groups_channels {
-  group_id   Int
-  guild_id   BigInt
-  channel_id BigInt   @id
-  updated_at DateTime @db.DateTime(0)
-  created_at DateTime @db.DateTime(0)
+  group_id           Int
+  guild_id           BigInt
+  channel_id         BigInt             @id
+  updated_at         DateTime           @db.DateTime(0)
+  created_at         DateTime           @db.DateTime(0)
+  globalchats_groups globalchats_groups @relation(fields: [group_id], references: [id], onUpdate: Restrict, map: "fk_globalchats_groups_channels_group_id__id")
 
   @@unique([group_id, guild_id, channel_id], map: "UNIQUE")
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model globalchats_groups_ngwords {
-  group_id   Int
-  content    String   @db.LongText
-  updated_at DateTime @db.DateTime(0)
-  created_at DateTime @db.DateTime(0)
+  group_id           Int
+  content            String             @db.LongText
+  updated_at         DateTime           @db.DateTime(0)
+  created_at         DateTime           @db.DateTime(0)
+  globalchats_groups globalchats_groups @relation(fields: [group_id], references: [id], onUpdate: Restrict, map: "fk_globalchats_groups_ngwords_group_id__id")
 
+  @@index([group_id], map: "fk_globalchats_groups_ngwords_group_id__id")
   @@ignore
 }
 
 model globalchats_messages {
-  id           String   @id @db.VarChar(10)
-  group_id     Int      @default(0)
-  guild_id     BigInt
-  channel_id   BigInt
-  user_id      BigInt
-  message_id   BigInt
-  is_api       Boolean  @default(false)
-  message      String   @db.LongText
-  destinations String   @db.LongText
-  updated_at   DateTime @db.DateTime(0)
-  created_at   DateTime @db.DateTime(0)
+  id                 String             @id @db.VarChar(10)
+  group_id           Int
+  guild_id           BigInt
+  channel_id         BigInt
+  user_id            BigInt
+  message_id         BigInt
+  is_api             Boolean            @default(false)
+  message            String             @db.LongText
+  destinations       String             @db.LongText
+  updated_at         DateTime           @db.DateTime(0)
+  created_at         DateTime           @db.DateTime(0)
+  globalchats_groups globalchats_groups @relation(fields: [group_id], references: [id], onUpdate: Restrict, map: "fk_globalchats_messages_group_id__id")
 
   @@unique([group_id, guild_id, channel_id, user_id, message_id], map: "UNIQUE")
 }
@@ -86,6 +93,31 @@ model guilds_levels {
   created_at DateTime @db.DateTime(0)
 
   @@unique([guild_id, user_id], map: "UNIQUE")
+}
+
+model guilds_notifications {
+  id                         Int                          @id @default(autoincrement())
+  guild_id                   BigInt
+  name                       String                       @db.VarChar(32)
+  type                       guilds_notifications_type
+  title                      String                       @db.VarChar(64)
+  description                String                       @db.LongText
+  updated_at                 DateTime                     @db.DateTime(0)
+  created_at                 DateTime                     @db.DateTime(0)
+  guilds_notifications_reads guilds_notifications_reads[]
+
+  @@unique([guild_id, name], map: "UNIQUE")
+}
+
+model guilds_notifications_reads {
+  id                   Int
+  guild_id             BigInt
+  user_id              BigInt
+  updated_at           DateTime             @db.DateTime(0)
+  created_at           DateTime             @db.DateTime(0)
+  guilds_notifications guilds_notifications @relation(fields: [id], references: [id], onUpdate: Restrict, map: "fk_guilds_notifications_reads_id__id")
+
+  @@unique([id, guild_id, user_id], map: "UNIQUE")
 }
 
 model guilds_profiles {
@@ -252,6 +284,20 @@ model users_name_change_histories {
   created_at DateTime @db.DateTime(0)
 }
 
+model users_notifications {
+  id          Int                      @id @default(autoincrement())
+  user_id     BigInt
+  name        String                   @db.VarChar(32)
+  type        users_notifications_type
+  title       String                   @db.VarChar(64)
+  description String                   @db.LongText
+  is_read     Boolean                  @default(false)
+  updated_at  DateTime                 @db.DateTime(0)
+  created_at  DateTime                 @db.DateTime(0)
+
+  @@unique([user_id, name], map: "UNIQUE")
+}
+
 model users_profiles {
   id            BigInt   @id
   name          String   @db.VarChar(100)
@@ -272,4 +318,18 @@ model users_settings {
   token_secret  String   @default("") @db.LongText
   updated_at    DateTime @db.DateTime(0)
   created_at    DateTime @db.DateTime(0)
+}
+
+enum users_notifications_type {
+  success
+  warning
+  error
+  information
+}
+
+enum guilds_notifications_type {
+  success
+  warning
+  error
+  information
 }

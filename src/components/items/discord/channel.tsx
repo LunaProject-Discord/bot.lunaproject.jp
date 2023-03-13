@@ -11,6 +11,7 @@ import { ListItemButtonProps, ListItemText, PopoverProps, Typography } from '@mu
 import { APIGuildCategoryChannel, APITextBasedChannel, APIVoiceChannelBase, ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
 import React, { Fragment, MouseEvent, useState } from 'react';
+import { RedisChannel } from '../../../interfaces/redis';
 import { filterPredicateChannel, sortChannels } from '../../../utils/discord';
 import {
     ItemContainer,
@@ -44,7 +45,7 @@ const ListItem = ({ channel, ...props }: ListItemProps) => (
     </ListItemButton>
 );
 
-type Props = SnowflakeItemProps<APIGuildChannel>;
+type Props = SnowflakeItemProps<RedisChannel>;
 
 interface ChannelPopoverProps extends PopoverProps, Props {
     anchorEl: PopoverProps['anchorEl'];

@@ -10,10 +10,9 @@ import {
     VoiceChannelIcon
 } from '@lunaproject-discord/web-core';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
-import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import {
-    BackspaceOutlined,
     ChevronRightOutlined,
+    ClearOutlined,
     CloseOutlined,
     DeleteOutlined,
     SaveOutlined,
@@ -41,10 +40,11 @@ import {
     useMediaQuery
 } from '@mui/material';
 import deepEqual from 'deep-equal';
-import { APIGuildCategoryChannel, APITextBasedChannel, APIVoiceChannelBase, ChannelType } from 'discord-api-types/v10';
+import { ChannelType } from 'discord-api-types/v10';
 import { useRouter } from 'next/navigation';
 import { ellipsis } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
+import { RedisChannel } from '../../interfaces/redis';
 import { useTranslation } from '../../languages/client';
 import { filterPredicateChannel, sortChannels } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
@@ -87,7 +87,7 @@ const AccordionDetails = styled(MuiAccordionDetails)({
 });
 
 interface Props extends DialogProps {
-    choices: APIGuildChannel[];
+    choices: RedisChannel[];
     values: string[];
     onClickSaveButton: (e: MouseEvent<HTMLButtonElement>, channels: string[]) => Promise<boolean>;
 }
@@ -114,10 +114,10 @@ export const ManageDisabledChannelsDialog = (
 
     const [channelIds, setChannelIds] = useResettableState(values);
 
-    const guildChannels = sortChannels(choices);
-    const categories = guildChannels.filter((channel): channel is APIGuildCategoryChannel => channel.type === ChannelType.GuildCategory);
-    const textChannels = guildChannels.filter((channel): channel is Extract<APIGuildChannel, APITextBasedChannel<any>> => channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildAnnouncement || channel.type === ChannelType.GuildForum);
-    const voiceChannels = guildChannels.filter((channel): channel is Extract<APIGuildChannel, APIVoiceChannelBase<any>> => channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildStageVoice);
+    const guildChannels = sortChannels(choices) as RedisChannel[];
+    const categories = guildChannels.filter((channel) => channel.type === ChannelType.GuildCategory);
+    const textChannels = guildChannels.filter((channel) => channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildAnnouncement || channel.type === ChannelType.GuildForum);
+    const voiceChannels = guildChannels.filter((channel) => channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildStageVoice);
     const channels = [...textChannels, ...voiceChannels];
 
     const [expandedCategories, setExpandedCategories] = useState<string[]>(categories.map((category) => category.id));
@@ -167,7 +167,6 @@ export const ManageDisabledChannelsDialog = (
                 fullScreen={isMobile}
                 fullWidth
                 maxWidth="sm"
-                sx={{ maxWidth: 1400 }}
             >
                 <DialogHeader>
                     {translations.manage_disabled_channels}
@@ -199,7 +198,7 @@ export const ManageDisabledChannelsDialog = (
                             fullWidth
                         />
                         {search.length > 0 && <IconButton onClick={() => resetSearch()} sx={{ my: -.5, mr: -.5 }}>
-                            <BackspaceOutlined color="action" sx={{ transform: 'rotate(180deg)' }} />
+                            <ClearOutlined color="action" />
                         </IconButton>}
                     </Box>
                     <Box sx={{ height: { xs: 'auto', md: 500 }, p: 2, overflowY: 'auto' }}>

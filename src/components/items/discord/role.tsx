@@ -25,7 +25,7 @@ interface ListItemProps extends Omit<ListItemButtonProps, 'role'> {
 
 const ListItem = ({ role, ...props }: ListItemProps) => (
     <ListItemButton key={role.id} sx={{ gap: 1 }} {...props}>
-        <ListItemIcon>
+        <ListItemIcon sx={{ minWidth: 2 }}>
             <Box
                 sx={{
                     ...size(16),
@@ -58,7 +58,7 @@ export const RolePopover = (
 ) => {
     const [search, setSearch] = useState('');
 
-    const roles = sortRoles(choices);
+    const roles = sortRoles(choices) as APIRole[];
 
     const handlePopupClose = () => {
         setSearch('');

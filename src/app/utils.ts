@@ -1,11 +1,7 @@
-import {
-    getGuilds as getOriginalGuilds,
-    getUser as getOriginalUser,
-    OAuthGuild,
-    OAuthUser
-} from '@lunaproject-discord/web-discord';
+import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { cookies } from 'next/headers';
 import { getMutualGuilds as getOriginalMutualGuilds } from '../libs/bot';
+import { getGuilds as getOriginalGuilds, getUser as getOriginalUser } from '../libs/discord';
 
 export const getUser = async (): Promise<OAuthUser | undefined> => {
     const nextCookies = cookies();

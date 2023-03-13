@@ -5,9 +5,8 @@ import { getGuildLevels, getGuildSettings } from '../../../../libs/bot';
 import prisma from '../../../../libs/prisma';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const after = parseInt(req.query.after as string, 10) || 0;
-    const limit = parseInt(req.query.limit as string, 10) || 50;
     const id = req.query.id as string;
+    const fetchUser = Boolean(req.query.fetch_user);
 
     const guild = await getGuildById(id, req.cookies['token']);
     if (!guild)
@@ -19,7 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             if (!hasPermission(guild) || !guildSettings?.level.leaderboard.public)
                 return res.status(403).json({ message: 'Permission denied!' });
 
-            return res.status(200).json(await getGuildLevels(id));
+            return res.status(200).json(await getGuildLevels(id, fetchUser));
         case 'PATCH':
             if (!hasPermission(guild) || !guildSettings?.level.enabled)
                 return res.status(403).json({ message: 'Permission denied!' });

@@ -10,6 +10,23 @@ export interface PartialUser {
 }
 
 
+export interface UserNotification {
+    id: number;
+    name: string;
+    type: 'success' | 'warning' | 'error' | 'information';
+    title: string;
+    description: string;
+    read: boolean;
+    updatedAt: number;
+    createdAt: number;
+}
+
+
+export interface GuildNotification extends Omit<UserNotification, 'read'> {
+    reads: string[];
+}
+
+
 export interface PartialGuildLevel {
     user_id: string;
     level: number;
@@ -134,12 +151,12 @@ export interface GuildSettingsLevel extends GuildSettingsComponent {
 export interface GuildSettingsLevelReward {
     type: GuildSettingsLevelRewardType;
     remove_role_demoted: boolean;
-    roles: GuildSettingsLevelRole[];
+    roles: GuildSettingsLevelRewardRole[];
 }
 
 export type GuildSettingsLevelRewardType = 'STACK_PREVIOUS_ROLES' | 'REMOVE_PREVIOUS_ROLES';
 
-export interface GuildSettingsLevelRole {
+export interface GuildSettingsLevelRewardRole {
     id: string;
     level: number;
 }
@@ -202,9 +219,12 @@ export interface GuildSettingsLogging {
     message: GuildSettingsLoggingMessage;
 }
 
-export interface GuildSettingsLoggingModeration {
+export interface GuildSettingsLoggingComponent extends GuildSettingsComponent {
     channel_id: string;
+    color: string;
+}
 
+export interface GuildSettingsLoggingModeration extends GuildSettingsLoggingComponent {
     update: boolean;
     kick: boolean;
     prune: boolean;
@@ -212,9 +232,7 @@ export interface GuildSettingsLoggingModeration {
     unban: boolean;
 }
 
-export interface GuildSettingsLoggingMember {
-    channel_id: string;
-
+export interface GuildSettingsLoggingMember extends GuildSettingsLoggingComponent {
     join: boolean;
     leave: boolean;
     update: boolean;
@@ -222,9 +240,7 @@ export interface GuildSettingsLoggingMember {
     role_remove: boolean;
 }
 
-export interface GuildSettingsLoggingVoice {
-    channel_id: string;
-
+export interface GuildSettingsLoggingVoice extends GuildSettingsLoggingComponent {
     join: boolean;
     leave: boolean;
     move: boolean;
@@ -232,26 +248,20 @@ export interface GuildSettingsLoggingVoice {
     deafen: boolean;
 }
 
-export interface GuildSettingsLoggingChannel {
-    channel_id: string;
-
+export interface GuildSettingsLoggingChannel extends GuildSettingsLoggingComponent {
     create: boolean;
     delete: boolean;
     update: boolean;
     permissions_update: boolean;
 }
 
-export interface GuildSettingsLoggingObject {
-    channel_id: string;
-
+export interface GuildSettingsLoggingObject extends GuildSettingsLoggingComponent {
     create: boolean;
     delete: boolean;
     update: boolean;
 }
 
-export interface GuildSettingsLoggingMessage {
-    channel_id: string;
-
+export interface GuildSettingsLoggingMessage extends GuildSettingsLoggingComponent {
     update: boolean;
     delete: boolean;
     purge: boolean;

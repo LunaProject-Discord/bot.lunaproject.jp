@@ -131,59 +131,59 @@ export const Nunito = `
 `;
 
 export const M_Plus_Rounded_1c = `
-@font-face {
-    font-display: fallback;
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 100;
-    src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-100.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-100.woff') format('woff');
-}
-
-@font-face {
-    font-display: fallback;
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 300;
-    src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-300.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-300.woff') format('woff');
-}
-
-@font-face {
-    font-display: fallback;
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 400;
-    src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-400.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-400.woff') format('woff');
-}
-
-@font-face {
-    font-display: fallback;
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 500;
-    src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-500.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-500.woff') format('woff');
-}
-
-@font-face {
-    font-display: fallback;
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 700;
-    src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-700.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-700.woff') format('woff');
-}
-
-@font-face {
-    font-display: fallback;
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 800;
-    src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-800.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-800.woff') format('woff');
-}
-
-@font-face {
-    font-display: fallback;
-    font-family: 'M PLUS Rounded 1c';
-    font-style: normal;
-    font-weight: 900;
-    src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-900.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-900.woff') format('woff');
-}
+    @font-face {
+        font-display: fallback;
+        font-family: 'M PLUS Rounded 1c';
+        font-style: normal;
+        font-weight: 100;
+        src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-100.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-100.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'M PLUS Rounded 1c';
+        font-style: normal;
+        font-weight: 300;
+        src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-300.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-300.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'M PLUS Rounded 1c';
+        font-style: normal;
+        font-weight: 400;
+        src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-400.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-400.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'M PLUS Rounded 1c';
+        font-style: normal;
+        font-weight: 500;
+        src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-500.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-500.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'M PLUS Rounded 1c';
+        font-style: normal;
+        font-weight: 700;
+        src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-700.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-700.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'M PLUS Rounded 1c';
+        font-style: normal;
+        font-weight: 800;
+        src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-800.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-800.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'M PLUS Rounded 1c';
+        font-style: normal;
+        font-weight: 900;
+        src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-900.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c-900.woff') format('woff');
+    }
 `;

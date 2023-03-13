@@ -127,7 +127,7 @@ export const SearchBox = (props: InputBaseProps) => (
             py: 1.5,
             display: 'flex',
             alignItems: 'center',
-            gap: 1,
+            gap: 1.5,
             bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
         }}
     >

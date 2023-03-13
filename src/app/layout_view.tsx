@@ -44,6 +44,7 @@ import {
     Typography
 } from '@mui/material';
 import { enUS, jaJP } from '@mui/material/locale';
+import { enUS as datePickerEnUS, jaJP as datePickerJaJP } from '@mui/x-date-pickers';
 import Link from 'next/link';
 import { parseCookies, setCookie } from 'nookies';
 import React, { Fragment, MouseEvent, ReactNode, useEffect, useState } from 'react';
@@ -54,7 +55,7 @@ import { useLanguage, useTranslation } from '../languages/client';
 import { COOKIE_APPEARANCE, COOKIE_LANGUAGE } from '../utils/cookie';
 import { getUserAvatar } from '../utils/discord';
 import { fetchWithUser } from '../utils/swr';
-import { fontFamily } from './theme';
+import { fontFamily, M_Plus_Rounded_1c, Nunito } from './theme';
 
 const NavigationBar = styled('nav')(({ theme }) => ({
     width: 56,
@@ -123,7 +124,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                 fontFamily: fontFamily
             }
         },
-        language === 'ja' ? jaJP : enUS
+        language === 'ja' ? jaJP : enUS,
+        language === 'ja' ? datePickerJaJP : datePickerEnUS
     );
 
     const cookies = parseCookies();
@@ -131,7 +133,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
     const { data, error } = useSWRImmutable<OAuthUser>(
         token ? ['https://discord.com/api/v10/users/@me', token] : null,
-        ([url, token]) => fetchWithUser(url, token)
+        ([url, token]: string[]) => fetchWithUser(url, token)
     );
 
     useEffect(() => {
@@ -189,7 +191,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
         <StyleProvider>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <GlobalStyles styles={{ '*, ::before, ::after': { fontFamily: fontFamily } }} />
+                <GlobalStyles styles={{ Nunito, M_Plus_Rounded_1c, '*, ::before, ::after': { fontFamily } }} />
                 <NavigationBar>
                     <NavigationGroup>
                         <IconButton disabled>
@@ -214,14 +216,21 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={translations.server_settings} placement="right">
-                            <IconButton component={Link} href="/guilds">
+                            <IconButton component={Link} href="/dashboard">
                                 <SettingsOutlined />
                             </IconButton>
                         </Tooltip>
                     </NavigationGroup>
                     <Divider flexItem sx={{ mx: 1 }} />
                     <NavigationGroup>
-                        {!data ? <Fragment>
+                        {data ? <Tooltip title={data.username} placement="right">
+                            <IconButton sx={{ p: .5 }} onClick={handleClick}>
+                                <Avatar
+                                    src={getUserAvatar(data)}
+                                    sx={{ width: 32, height: 32, pointerEvents: 'none' }}
+                                />
+                            </IconButton>
+                        </Tooltip> : <Fragment>
                             <Tooltip title={translations.site_settings} placement="right">
                                 <IconButton onClick={handleClick}>
                                     <TuneOutlined />
@@ -230,19 +239,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                             <Tooltip title={translations.login} placement="right">
                                 <IconButton
                                     component={Link}
-                                    href={`https://accounts.lunaproject.jp/login?redirect=${window.location.href}`}
+                                    href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                                 >
                                     <LoginOutlined />
                                 </IconButton>
                             </Tooltip>
-                        </Fragment> : <Tooltip title={data.username} placement="right">
-                            <IconButton sx={{ p: .5 }} onClick={handleClick}>
-                                <Avatar
-                                    src={getUserAvatar(data)}
-                                    sx={{ width: 32, height: 32, pointerEvents: 'none' }}
-                                />
-                            </IconButton>
-                        </Tooltip>}
+                        </Fragment>}
                     </NavigationGroup>
                 </NavigationBar>
                 <PageContainer>
@@ -266,7 +268,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
                             component={Link}
                             href="/leaderboard"
                         />
-                        <BottomNavigationAction icon={<SettingsOutlined />} component={Link} href="/guilds" />
+                        <BottomNavigationAction icon={<SettingsOutlined />} component={Link} href="/dashboard" />
                     </BottomNavigation>
                 </Paper>
                 <Popover

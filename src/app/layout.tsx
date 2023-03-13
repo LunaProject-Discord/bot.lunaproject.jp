@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import React, { ReactNode } from 'react';
 import '../../public/fonts/style.css';
 import '../../public/global.css';
@@ -5,7 +6,7 @@ import { Body } from '../components/layout';
 import { getLanguage } from '../languages/server';
 import { Layout } from './layout_view';
 
-export const generateMetadata = () => {
+export const generateMetadata = (): Metadata => {
     const language = getLanguage();
 
     const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN as string;
@@ -60,7 +61,14 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
 
     return (
         <html lang={language}>
-        <head />
+        <head>
+            <link rel="preload" as="font" type="font/woff2" href="/fonts/nunito/nunito-400.woff2" />
+            <link rel="preload" as="font" type="font/woff2" href="/fonts/nunito/nunito-700.woff2" />
+            <link rel="preload" as="font" type="font/woff2"
+                  href="/fonts/m-plus-rounded-1c/m-plus-rounded-1c-400.woff2" />
+            <link rel="preload" as="font" type="font/woff2"
+                  href="/fonts/m-plus-rounded-1c/m-plus-rounded-1c-700.woff2" />
+        </head>
         <Body>
             <Layout>{children}</Layout>
         </Body>

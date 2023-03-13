@@ -1,6 +1,6 @@
 import { Cache, OAuthGuild } from '@lunaproject-discord/web-discord';
 import { addSeconds } from 'date-fns';
-import { GuildLevel, GuildSettings, GuildSettingsLanguage, PartialUser } from '../interfaces/bot';
+import { GuildLevel, GuildNotification, GuildSettings, GuildSettingsLanguage, PartialUser } from '../interfaces/bot';
 import { TimeZone } from '../utils/timezone';
 import prisma from './prisma';
 
@@ -40,6 +40,8 @@ export const getMutualGuilds = async (id: string): Promise<OAuthGuild[]> => {
         }
     );
 
+    console.log(res.ok, res.status);
+
     if (!res.ok)
         return cached?.data ?? [];
 
@@ -53,6 +55,101 @@ export const getMutualGuilds = async (id: string): Promise<OAuthGuild[]> => {
     );
 
     return data;
+};
+
+
+export const getGuildNotifications = async (id: string): Promise<GuildNotification[]> => {
+    const guildId = BigInt(id);
+    const guildNotifications = await prisma.guilds_notifications.findMany({
+        where: {
+            guild_id: guildId
+        }
+    });
+
+    const notifications: GuildNotification[] = [];
+    for (const notification of guildNotifications) {
+        const reads = await prisma.guilds_notifications_reads.findMany({
+            where: {
+                id: notification.id,
+                guild_id: guildId
+            }
+        });
+
+        notifications.push({
+            id: notification.id,
+            name: notification.name,
+            type: notification.type,
+            title: notification.title,
+            description: notification.description,
+            reads: reads.map((read) => read.user_id.toString()),
+            updatedAt: notification.updated_at.getTime(),
+            createdAt: notification.created_at.getTime()
+        });
+    }
+
+    return notifications;
+};
+
+export const getGuildNotificationById = async (id: number): Promise<GuildNotification | undefined> => {
+    const notification = await prisma.guilds_notifications.findUnique({
+        where: {
+            id: id
+        }
+    });
+
+    if (!notification)
+        return undefined;
+
+    const reads = await prisma.guilds_notifications_reads.findMany({
+        where: {
+            id: notification.id,
+            guild_id: notification.guild_id
+        }
+    });
+
+    return {
+        id: notification.id,
+        name: notification.name,
+        type: notification.type,
+        title: notification.title,
+        description: notification.description,
+        reads: reads.map((read) => read.user_id.toString()),
+        updatedAt: notification.updated_at.getTime(),
+        createdAt: notification.created_at.getTime()
+    };
+};
+
+export const getGuildNotificationByName = async (id: string, name: string): Promise<GuildNotification | undefined> => {
+    const guildId = BigInt(id);
+    const notification = await prisma.guilds_notifications.findUnique({
+        where: {
+            guild_id_name: {
+                guild_id: guildId,
+                name: name
+            }
+        }
+    });
+
+    if (!notification)
+        return undefined;
+
+    const reads = await prisma.guilds_notifications_reads.findMany({
+        where: {
+            id: notification.id,
+            guild_id: guildId
+        }
+    });
+
+    return {
+        id: notification.id,
+        name: notification.name,
+        type: notification.type,
+        title: notification.title,
+        description: notification.description,
+        reads: reads.map((read) => read.user_id.toString()),
+        updatedAt: notification.updated_at.getTime(),
+        createdAt: notification.created_at.getTime()
+    };
 };
 
 export const getGuildSettings = async (id: string): Promise<GuildSettings | undefined> => {

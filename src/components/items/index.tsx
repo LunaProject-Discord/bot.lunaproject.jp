@@ -146,5 +146,6 @@ export * from './radio';
 export * from './select';
 export * from './switch';
 export * from './text_field';
+export * from './number_field';
 
 export * from './discord';

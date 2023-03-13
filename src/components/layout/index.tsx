@@ -6,10 +6,7 @@ import { Property } from 'csstype';
 export const Body = styled('body')(({ theme }) => ({
     minHeight: '100vh',
     margin: 0,
-    padding: 0,
-    [theme.breakpoints.up('md')]: {
-        maxWidth: 1400
-    }
+    padding: 0
 }));
 
 export const PageContainer = styled(Box)(({ theme }) => ({
@@ -37,7 +34,11 @@ export const PageContent = styled(
     position: position ?? 'static',
     display: display ?? 'block',
     flexDirection: 'column',
-    gap: theme.spacing(3)
+    gap: theme.spacing(3),
+    [theme.breakpoints.up('md')]: {
+        maxWidth: 1200,
+        margin: '0 auto'
+    }
 }));
 
 export const PageHeader = styled(Box)(({ theme }) => ({

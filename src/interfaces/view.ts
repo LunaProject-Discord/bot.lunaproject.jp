@@ -1,13 +1,30 @@
-import { OAuthGuild } from '@lunaproject-discord/web-discord';
+import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { GuildSettings } from './bot';
 import { Translation } from './language';
+import { DataGuild, RedisChannel, RedisMember, RedisRole } from './redis';
 
 export interface TranslatableViewProps {
     translations: Translation;
 }
 
+export interface UserViewProps extends TranslatableViewProps {
+    user: OAuthUser;
+}
+
 export interface GuildViewProps extends TranslatableViewProps {
-    guild: OAuthGuild;
+    guild: DataGuild;
+}
+
+export interface GuildChannelListViewProps extends TranslatableViewProps {
+    channels: RedisChannel[];
+}
+
+export interface GuildRoleListViewProps extends TranslatableViewProps {
+    roles: RedisRole[];
+}
+
+export interface GuildMemberListViewProps extends TranslatableViewProps {
+    members: RedisMember[];
 }
 
 export interface GuildSettingsViewProps extends GuildViewProps {

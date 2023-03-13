@@ -1,6 +1,6 @@
 import { Dialog, DialogActions, DialogHeader, DialogProps } from '@lunaproject-discord/web-core';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
-import { BackspaceOutlined, CloseOutlined, DeleteOutlined, SaveOutlined, SearchOutlined } from '@mui/icons-material';
+import { ClearOutlined, CloseOutlined, DeleteOutlined, SaveOutlined, SearchOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
     Box,
@@ -15,16 +15,16 @@ import {
     useMediaQuery
 } from '@mui/material';
 import deepEqual from 'deep-equal';
-import { APIRole } from 'discord-api-types/v10';
 import { useRouter } from 'next/navigation';
 import { ellipsis, size } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
+import { RedisRole } from '../../interfaces/redis';
 import { useTranslation } from '../../languages/client';
 import { filterPredicateRole, sortRoles } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
 
 interface Props extends DialogProps {
-    choices: APIRole[];
+    choices: RedisRole[];
     values: string[];
     onClickSaveButton: (e: MouseEvent<HTMLButtonElement>, roles: string[]) => Promise<boolean>;
 }
@@ -91,7 +91,6 @@ export const ManageDisabledRolesDialog = (
                 fullScreen={isMobile}
                 fullWidth
                 maxWidth="sm"
-                sx={{ maxWidth: 1400 }}
             >
                 <DialogHeader>
                     {translations.manage_disabled_roles}
@@ -123,7 +122,7 @@ export const ManageDisabledRolesDialog = (
                             fullWidth
                         />
                         {search.length > 0 && <IconButton onClick={() => resetSearch()} sx={{ my: -.5, mr: -.5 }}>
-                            <BackspaceOutlined color="action" sx={{ transform: 'rotate(180deg)' }} />
+                            <ClearOutlined color="action" />
                         </IconButton>}
                     </Box>
                     <Box sx={{ height: { xs: 'auto', md: 500 }, p: 2, overflowY: 'auto' }}>

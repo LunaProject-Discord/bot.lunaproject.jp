@@ -64,7 +64,7 @@ const GuildListGalleryView = ({ guilds }: GuildListProps) => (
     <Gallery>
         {guilds.map((guild) => (
             <GalleryItem key={guild.id}>
-                <ButtonBase component={NextLink} href={`/guilds/${guild.id}`}>
+                <ButtonBase component={NextLink} href={`/dashboard/${guild.id}`}>
                     <GalleryItemIcon>
                         <Avatar
                             src={getGuildIcon(guild)}
@@ -85,7 +85,7 @@ const GuildListTableView = ({ guilds }: GuildListProps) => (
             <ListItemButton
                 key={guild.id}
                 component={NextLink}
-                href={`/guilds/${guild.id}`}
+                href={`/dashboard/${guild.id}`}
                 sx={{
                     borderBottom: (theme) => `solid 1px ${theme.palette.divider}`
                 }}
@@ -114,7 +114,7 @@ export const View = ({ user, translations }: Props) => {
 
     const { data: guilds } = useSWRImmutable<FeaturedGuild[]>(
         token ? ['/api/users/@me/__home/guilds', token] : null,
-        ([url, token]) => fetchWithUser(url, token)
+        ([url, token]: string[]) => fetchWithUser(url, token)
     );
 
     const [tabState, setTabState] = useState<TabState>('guilds');
@@ -175,7 +175,7 @@ export const View = ({ user, translations }: Props) => {
                                 </ListItemButton>
                                 <ListItemButton
                                     component={NextLink}
-                                    href="/guilds"
+                                    href="/dashboard"
                                     sx={{
                                         borderBottom: (theme) => `solid 1px ${theme.palette.divider}`
                                     }}
@@ -209,7 +209,7 @@ export const View = ({ user, translations }: Props) => {
                     </Box>
                     <Button
                         component={Link}
-                        href={`https://accounts.lunaproject.jp/login?redirect=${window.location.href}`}
+                        href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                         variant="contained"
                         disableElevation
                         startIcon={<LoginOutlined />}
