@@ -158,6 +158,7 @@ export type TranslationKeys =
     | 'logging'
     | 'logging_description'
     | 'logging_enabled'
+    | 'logging_channel'
     | 'logging_moderation'
     | 'logging_moderation_update'
     | 'logging_moderation_kick'
