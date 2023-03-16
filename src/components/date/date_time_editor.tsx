@@ -23,6 +23,7 @@ export const DateTimeEditor = ({ value, setValue }: Props) => {
                 <MobileDateTimePicker
                     value={value}
                     onChange={(date) => setValue(date)}
+                    views={['year', 'month', 'day', 'hours', 'minutes']}
                     slots={{ dialog: DatePickerModalDialog }}
                     slotProps={{
                         actionBar: { actions: ['today', 'cancel', 'accept'] },
@@ -70,6 +71,7 @@ export const DateTimeEditor = ({ value, setValue }: Props) => {
                     <StaticDateTimePicker
                         value={value}
                         onChange={(date) => setValue(date)}
+                        views={['year', 'month', 'day', 'hours', 'minutes']}
                         slotProps={{ actionBar: { actions: ['today'] } }}
                     />
                 </Popover>
