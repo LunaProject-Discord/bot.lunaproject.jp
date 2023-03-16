@@ -62,12 +62,30 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     return (
         <html lang={language}>
         <head>
-            <link rel="preload" as="font" type="font/woff2" href="/fonts/nunito/nunito-400.woff2" />
-            <link rel="preload" as="font" type="font/woff2" href="/fonts/nunito/nunito-700.woff2" />
-            <link rel="preload" as="font" type="font/woff2"
-                  href="/fonts/m-plus-rounded-1c/m-plus-rounded-1c-400.woff2" />
-            <link rel="preload" as="font" type="font/woff2"
-                  href="/fonts/m-plus-rounded-1c/m-plus-rounded-1c-700.woff2" />
+            <link
+                rel="preload"
+                as="font"
+                type="font/woff2"
+                href="/fonts/nunito/nunito_400_normal.woff2"
+            />
+            <link
+                rel="preload"
+                as="font"
+                type="font/woff2"
+                href="/fonts/nunito/nunito_700_normal.woff2"
+            />
+            <link
+                rel="preload"
+                as="font"
+                type="font/woff2"
+                href="/fonts/m-plus-rounded-1c/m-plus-rounded-1c_400_normal.woff2"
+            />
+            <link
+                rel="preload"
+                as="font"
+                type="font/woff2"
+                href="/fonts/m-plus-rounded-1c/m-plus-rounded-1c_700_normal.woff2"
+            />
         </head>
         <Body>
             <Layout>{children}</Layout>

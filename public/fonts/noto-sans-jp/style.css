@@ -1,0 +1,47 @@
+@font-face {
+    font-display: fallback;
+    font-family: 'Noto Sans JP';
+    font-style: normal;
+    font-weight: 100;
+    src: url('noto-sans-jp_100_normal.woff2') format('woff2'), url('noto-sans-jp_100_normal.woff') format('woff');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'Noto Sans JP';
+    font-style: normal;
+    font-weight: 300;
+    src: url('noto-sans-jp_300_normal.woff2') format('woff2'), url('noto-sans-jp_300_normal.woff') format('woff');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'Noto Sans JP';
+    font-style: normal;
+    font-weight: 400;
+    src: url('noto-sans-jp_400_normal.woff2') format('woff2'), url('noto-sans-jp_400_normal.woff') format('woff');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'Noto Sans JP';
+    font-style: normal;
+    font-weight: 500;
+    src: url('noto-sans-jp_500_normal.woff2') format('woff2'), url('noto-sans-jp_500_normal.woff') format('woff');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'Noto Sans JP';
+    font-style: normal;
+    font-weight: 700;
+    src: url('noto-sans-jp_700_normal.woff2') format('woff2'), url('noto-sans-jp_700_normal.woff') format('woff');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'Noto Sans JP';
+    font-style: normal;
+    font-weight: 900;
+    src: url('noto-sans-jp_900_normal.woff2') format('woff2'), url('noto-sans-jp_900_normal.woff') format('woff');
+}
