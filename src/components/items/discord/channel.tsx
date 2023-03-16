@@ -131,7 +131,7 @@ export const ChannelItem = ({ icon, primary, secondary, value, setValue, choices
     return (
         <Fragment>
             <ItemContainer>
-                <ItemRowContainer>
+                <ItemRowContainer size={secondary ? 'medium' : 'small'}>
                     <ItemIcon icon={icon} />
                     <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
                 </ItemRowContainer>

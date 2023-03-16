@@ -29,7 +29,7 @@ export const SelectItem = <T, >(
     }: Props<T>
 ) => (
     <ItemContainer>
-        <ItemRowContainer>
+        <ItemRowContainer size={secondary ? 'medium' : 'small'}>
             <ItemIcon icon={icon} />
             <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
         </ItemRowContainer>

@@ -113,7 +113,7 @@ export const RoleItem = ({ icon, primary, secondary, value, setValue, choices, d
     return (
         <Fragment>
             <ItemContainer>
-                <ItemRowContainer>
+                <ItemRowContainer size={secondary ? 'medium' : 'small'}>
                     <ItemIcon icon={icon} />
                     <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
                 </ItemRowContainer>

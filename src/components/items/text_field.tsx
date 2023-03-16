@@ -19,7 +19,7 @@ interface Props extends ItemTextBlockProps, ItemIconProps, ItemDisabledProps, It
 
 export const TextFieldItem = ({ icon, primary, secondary, value, setValue, minLength, maxLength, disabled }: Props) => (
     <ItemContainer>
-        <ItemRowContainer>
+        <ItemRowContainer size={secondary ? 'medium' : 'small'}>
             <ItemIcon icon={icon} />
             <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
         </ItemRowContainer>

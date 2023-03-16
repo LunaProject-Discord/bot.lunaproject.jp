@@ -41,7 +41,14 @@ export const ItemButtonBase = styled(MuiButtonBase)(({ theme }) => ({
     }
 }));
 
-export const ItemRowContainer = styled(Box)(({ theme }) => ({
+interface ItemRowContainerProps {
+    size?: 'small' | 'medium';
+}
+
+export const ItemRowContainer = styled(
+    Box,
+    { shouldForwardProp: (prop) => prop !== 'sx' && prop !== 'size' }
+)<ItemRowContainerProps>(({ theme, size = 'medium' }) => ({
     width: '100%',
     height: 50,
     display: 'flex',
@@ -50,7 +57,8 @@ export const ItemRowContainer = styled(Box)(({ theme }) => ({
     gap: theme.spacing(1.5),
     [theme.breakpoints.down('md')]: {
         height: 'auto',
-        minHeight: 50,
+        minHeight: size === 'small' ? 'auto' : 50,
+        paddingTop: size === 'small' ? theme.spacing(1.5) : 0,
         [`& + div.form-container`]: {
             width: '100%'
         }

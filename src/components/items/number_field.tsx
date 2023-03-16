@@ -20,7 +20,7 @@ interface Props extends ItemTextBlockProps, ItemIconProps, ItemDisabledProps, It
 
 export const NumberFieldItem = ({ icon, primary, secondary, value, setValue, step, min, max, disabled }: Props) => (
     <ItemContainer>
-        <ItemRowContainer>
+        <ItemRowContainer size={secondary ? 'medium' : 'small'}>
             <ItemIcon icon={icon} />
             <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
         </ItemRowContainer>
