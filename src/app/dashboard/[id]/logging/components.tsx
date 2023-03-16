@@ -101,6 +101,7 @@ export const Moderation = (
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -150,6 +151,7 @@ export const Member = ({ value, setValue, channels, disabled, translations }: Pr
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -199,6 +201,7 @@ export const Voice = ({ value, setValue, channels, disabled, translations }: Pro
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -248,6 +251,7 @@ export const Category = ({ value, setValue, channels, disabled, translations }: 
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -299,6 +303,7 @@ export const TextChannel = (
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -350,6 +355,7 @@ export const VoiceChannel = (
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -393,6 +399,7 @@ export const Role = ({ value, setValue, channels, disabled, translations }: Prop
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -430,6 +437,7 @@ export const Emote = ({ value, setValue, channels, disabled, translations }: Pro
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -467,6 +475,7 @@ export const Invite = ({ value, setValue, channels, disabled, translations }: Pr
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -504,6 +513,7 @@ export const Webhook = ({ value, setValue, channels, disabled, translations }: P
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -547,6 +557,7 @@ export const Integration = ({
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
@@ -584,6 +595,7 @@ export const Message = ({ value, setValue, channels, disabled, translations }: P
         />
         <ItemContent>
             <ChannelItem
+                primary={translations.logging_channel}
                 value={value.channel_id}
                 setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
                 choices={channels}
