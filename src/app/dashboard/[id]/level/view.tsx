@@ -1,7 +1,7 @@
 'use client';
 
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
-import { APIGuildChannel } from '@lunaproject-discord/web-discord';
+import { APIGuildChannel } from '@lunaproject-discord/web-discord/dist/interfaces';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { APIRole, ChannelType } from 'discord-api-types/v10';

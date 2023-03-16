@@ -1,6 +1,6 @@
 'use client';
 
-import { MuiDarkTheme, MuiLightTheme } from '@lunaproject-discord/web-core';
+import { MuiDarkTheme, MuiLightTheme } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { DeleteOutlined, SaveOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProvider, useTheme } from '@mui/material';
