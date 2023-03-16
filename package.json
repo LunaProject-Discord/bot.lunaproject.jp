@@ -1,6 +1,10 @@
 {
     "name": "bot.lunaproject.jp",
     "packageManager": "yarn@3.4.1",
+    "volta": {
+        "node": "18.15.0",
+        "yarn": "3.4.1"
+    },
     "scripts": {
         "dev": "next dev",
         "build": "next build",
