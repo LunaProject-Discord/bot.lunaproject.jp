@@ -1,3 +1,5 @@
+'use client';
+
 import { Checkbox, Switch, switchClasses } from '@mui/material';
 import React from 'react';
 import {

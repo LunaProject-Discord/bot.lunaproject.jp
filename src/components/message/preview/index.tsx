@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, styled } from '@mui/material';
 import '../../../../public/fonts/noto-sans-jp/style.css';
 import '../../../../public/fonts/noto-sans/style.css';

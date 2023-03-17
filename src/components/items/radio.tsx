@@ -1,3 +1,5 @@
+'use client';
+
 import { Radio } from '@mui/material';
 import React from 'react';
 import {

@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@emotion/react';
 import { Box, ButtonBase, OutlinedInput, Popover } from '@mui/material';
 import Color from 'color';

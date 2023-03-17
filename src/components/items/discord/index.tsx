@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowDropDownOutlined, ArrowDropUpOutlined, SearchOutlined } from '@mui/icons-material';
 import {
     alpha,

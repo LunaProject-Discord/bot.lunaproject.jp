@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, styled, Typography, TypographyProps } from '@mui/material';
 import React from 'react';
 

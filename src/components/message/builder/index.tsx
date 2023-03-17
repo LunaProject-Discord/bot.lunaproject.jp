@@ -1,3 +1,5 @@
+'use client';
+
 import { Theme, ThemeProvider } from '@emotion/react';
 import { Preview, THEMES } from '@lunaproject-discord/web-core';
 import { Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';

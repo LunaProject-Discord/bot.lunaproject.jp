@@ -1,3 +1,5 @@
+'use client';
+
 import { ChevronRightOutlined } from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,

@@ -1,3 +1,5 @@
+'use client';
+
 import { Embed, Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { AddOutlined } from '@mui/icons-material';
 import { Box, Button, Divider } from '@mui/material';

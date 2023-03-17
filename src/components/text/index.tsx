@@ -1,3 +1,5 @@
+'use client';
+
 import { Box, styled, Theme } from '@mui/material';
 
 const codeStyled = (theme: Theme) => ({

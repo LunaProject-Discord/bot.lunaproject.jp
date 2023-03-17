@@ -1,3 +1,5 @@
+'use client';
+
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { TodayOutlined } from '@mui/icons-material';
 import { IconButton, InputAdornment, Theme, useMediaQuery } from '@mui/material';

@@ -1,4 +1,6 @@
-import { Dialog, DialogActions, DialogHeader, DialogProps } from '@lunaproject-discord/web-core';
+'use client';
+
+import { Dialog, DialogActions, DialogHeader, DialogProps } from '@lunaproject-discord/web-core/dist/components/Dialog';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
 import { ClearOutlined, CloseOutlined, DeleteOutlined, SaveOutlined, SearchOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';

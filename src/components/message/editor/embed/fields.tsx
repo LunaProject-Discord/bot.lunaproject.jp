@@ -1,3 +1,5 @@
+'use client';
+
 import type { EmbedField } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { DefaultField } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import {

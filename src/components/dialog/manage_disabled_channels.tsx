@@ -1,14 +1,13 @@
+'use client';
+
+import { Dialog, DialogActions, DialogHeader, DialogProps } from '@lunaproject-discord/web-core/dist/components/Dialog';
 import {
     AnnouncementChannelIcon,
-    Dialog,
-    DialogActions,
-    DialogHeader,
-    DialogProps,
     ForumChannelIcon,
     StageChannelIcon,
     TextChannelIcon,
     VoiceChannelIcon
-} from '@lunaproject-discord/web-core';
+} from '@lunaproject-discord/web-core/dist/components/Icons';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import {
     ChevronRightOutlined,

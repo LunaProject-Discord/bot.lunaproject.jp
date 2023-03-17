@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@emotion/react';
 import { Embed as EmbedData } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { ClearOutlined, ExpandMoreOutlined } from '@mui/icons-material';

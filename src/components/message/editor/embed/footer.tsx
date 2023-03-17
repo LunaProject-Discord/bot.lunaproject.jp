@@ -1,3 +1,5 @@
+'use client';
+
 import { Embed } from '@lunaproject-discord/web-discord';
 import type { EmbedFooter } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';

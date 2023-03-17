@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRightOutlined } from '@mui/icons-material';
 import React, { MouseEvent } from 'react';
 import {

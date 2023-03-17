@@ -1,3 +1,5 @@
+'use client';
+
 import { ThemeProvider } from '@emotion/react';
 import { MessageContainer, MessagePreview, THEMES } from '@lunaproject-discord/web-core';
 import { EditOutlined } from '@mui/icons-material';

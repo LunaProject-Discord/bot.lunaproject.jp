@@ -1,3 +1,5 @@
+'use client';
+
 import type { EmbedAuthor } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
 import { TranslatableViewProps } from '../../../../interfaces/view';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowRightOutlined, OpenInNewOutlined } from '@mui/icons-material';
 import { useRouter } from 'next/navigation';
 import React, { HTMLAttributeAnchorTarget } from 'react';
