@@ -6,6 +6,7 @@ import { getGuildSettings } from '../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../libs/redis';
 import { hasPermission } from '../../../utils/discord';
 import { getUser } from '../../utils';
+import { UnauthorizedView } from '../../view';
 import { Navigation } from './navigation';
 import { ForbiddenView, NotFoundView } from './view';
 
@@ -60,7 +61,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const [user, guild, guildSettings] = await Promise.all([userData, guildData, guildSettingsData]);
 
     if (!user)
-        return (<ForbiddenView />);
+        return (<UnauthorizedView translations={translations} />);
 
     if (!guild || !guildSettings)
         return (<NotFoundView />);

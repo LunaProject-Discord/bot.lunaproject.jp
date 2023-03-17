@@ -5,6 +5,7 @@ import {
     CloudOffOutlined,
     ErrorOutlineOutlined,
     InfoOutlined,
+    LockPersonOutlined,
     TaskAltOutlined,
     WarningAmberOutlined
 } from '@mui/icons-material';
@@ -80,6 +81,29 @@ export const LoadingView = () => (
     </PageContent>
 );
 
+export const ForbiddenView = () => (
+    <PageContent display="flex">
+        <Box
+            sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                placeItems: 'center',
+                placeContent: 'center',
+                gap: 1
+            }}
+        >
+            <LockPersonOutlined sx={{ fontSize: '10rem' }} color="primary" />
+            <Typography variant="h4">権限がありません</Typography>
+            <Typography align="center">
+                このサーバーの設定を変更する権限がありません。<br />
+                このサーバーの設定を変更するには、サーバーのオーナーであるか、<b>サーバーの管理</b>権限が付与されている必要があります。<br />
+                あなたに設定を変更する権限があることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
+            </Typography>
+        </Box>
+    </PageContent>
+);
+
 export const NotFoundView = () => (
     <PageContent display="flex">
         <Box
@@ -97,30 +121,7 @@ export const NotFoundView = () => (
             <Typography align="center">
                 指定されたサーバーが見つかりませんでした。<br />
                 あなたはそのサーバーの管理者ではないか、サーバーが存在しない可能性があります。<br />
-                サーバーが存在していることが明らかな場合は、ほかのアカウントに切り替えてからお試しください。
-            </Typography>
-        </Box>
-    </PageContent>
-);
-
-export const ForbiddenView = () => (
-    <PageContent display="flex">
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
-            <CloudOffOutlined sx={{ fontSize: '10rem' }} color="primary" />
-            <Typography variant="h4">権限がありません</Typography>
-            <Typography align="center">
-                このサーバーの設定を変更する権限がありません。<br />
-                このサーバーの設定を変更するには、サーバーのオーナーであるか、<b>サーバーの管理</b>権限が付与されている必要があります。<br />
-                あなたに設定を変更する権限があることが明らかな場合は、ほかのアカウントに切り替えてからお試しください。
+                サーバーが存在していることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
             </Typography>
         </Box>
     </PageContent>

@@ -2,6 +2,16 @@ import { OAuthGuild } from '@lunaproject-discord/web-discord';
 import { TimeZone } from '../utils/timezone';
 import { DataMessage } from './message';
 
+
+export interface CalendarEvent {
+    title: string;
+    description?: string;
+    color: string;
+    start: Date;
+    end: Date;
+    allDay?: boolean;
+}
+
 export interface PartialUser {
     id: string;
     name?: string;
@@ -24,6 +34,16 @@ export interface UserNotification {
 
 export interface GuildNotification extends Omit<UserNotification, 'read'> {
     reads: string[];
+}
+
+
+export interface UserCalendarEvent {
+    title: string;
+    description?: string;
+    color: string;
+    start: Date;
+    end: Date;
+    allDay?: boolean;
 }
 
 

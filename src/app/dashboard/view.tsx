@@ -129,9 +129,9 @@ export const View = ({ guilds, mutualGuilds }: Props) => {
                     </ToggleButtonGroup>
                     <Button
                         onClick={handleClickInviteButton}
+                        disableElevation
                         variant="contained"
                         size="large"
-                        disableElevation
                         startIcon={<AddOutlined />}
                         endIcon={open ? <KeyboardArrowUpOutlined /> : <KeyboardArrowDownOutlined />}
                         sx={{ width: '100%', height: 48, px: 2 }}

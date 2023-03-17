@@ -1,6 +1,6 @@
 'use client';
 
-import { format } from '@lunaproject-discord/web-core/dist/utils';
+import { format } from '@lunaproject-discord/web-core/dist/utils/date';
 import { ErrorOutlineOutlined, InfoOutlined, TaskAltOutlined, WarningAmberOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
 import { enUS, ja } from 'date-fns/locale';

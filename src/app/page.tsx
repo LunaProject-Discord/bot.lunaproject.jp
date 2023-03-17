@@ -7,12 +7,7 @@ const Page = async () => {
 
     const user = await getUser();
 
-    return (
-        <View
-            user={user}
-            translations={translations}
-        />
-    );
+    return (<View user={user} translations={translations} />);
 };
 
 export default Page;

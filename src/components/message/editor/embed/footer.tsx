@@ -1,11 +1,10 @@
 'use client';
 
-import { Embed } from '@lunaproject-discord/web-discord';
-import type { EmbedFooter } from '@lunaproject-discord/web-discord/dist/interfaces/message';
+import type { Embed, EmbedFooter } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
 import React from 'react';
 import { TranslatableViewProps } from '../../../../interfaces/view';
-import { DateTimeEditor } from '../../../date/date_time_editor';
+import { DateTimeEditor } from '../../../date';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';

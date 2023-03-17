@@ -12,7 +12,9 @@ import {
     AutoAwesomeOutlined,
     DnsOutlined,
     LeaderboardOutlined,
+    LockPersonOutlined,
     LoginOutlined,
+    PersonOffOutlined,
     SettingsOutlined
 } from '@mui/icons-material';
 import { TabContext, TabList, TabPanel as MuiTabPanel } from '@mui/lab';
@@ -210,8 +212,8 @@ export const View = ({ user, translations }: Props) => {
                     <Button
                         component={Link}
                         href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
-                        variant="contained"
                         disableElevation
+                        variant="contained"
                         startIcon={<LoginOutlined />}
                         sx={{ px: 2 }}
                     >
@@ -222,3 +224,57 @@ export const View = ({ user, translations }: Props) => {
         </PageContent>
     );
 };
+
+
+export const UnauthorizedView = ({ translations }: TranslatableViewProps) => (
+    <PageContent display="flex">
+        <Box
+            sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                placeItems: 'center',
+                placeContent: 'center',
+                gap: 1
+            }}
+        >
+            <PersonOffOutlined sx={{ fontSize: '10rem' }} color="primary" />
+            <Typography variant="h4">ログインが必要です</Typography>
+            <Typography align="center">
+                このページにアクセスするにはログインが必要です。<br />
+                下のボタンを押してログインをしてください。
+            </Typography>
+            <Button
+                component={Link}
+                href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+                variant="contained"
+                size="large"
+                startIcon={<LoginOutlined />}
+            >
+                {translations.login}
+            </Button>
+        </Box>
+    </PageContent>
+);
+
+export const ForbiddenView = () => (
+    <PageContent display="flex">
+        <Box
+            sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                placeItems: 'center',
+                placeContent: 'center',
+                gap: 1
+            }}
+        >
+            <LockPersonOutlined sx={{ fontSize: '10rem' }} color="primary" />
+            <Typography variant="h4">権限がありません</Typography>
+            <Typography align="center">
+                このページにアクセスするための権限がありません。<br />
+                あなたに権限が付与されていることが確実な場合は、ほかのアカウントに切り替えて再度お試しください。
+            </Typography>
+        </Box>
+    </PageContent>
+);
