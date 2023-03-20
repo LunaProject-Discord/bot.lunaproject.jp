@@ -35,7 +35,6 @@ import React, { MouseEvent, useState } from 'react';
 import { PageContent, PageHeader } from '../../components/layout';
 import { Section } from '../../components/section';
 import { TranslatableViewProps } from '../../interfaces/view';
-import { useTranslation } from '../../languages/client';
 import { getGuildIcon } from '../../utils/discord';
 
 interface GuildListProps {
@@ -86,14 +85,12 @@ const GuildListTable = ({ guilds }: GuildListProps) => (
 
 type ViewType = 'gallery' | 'table';
 
-interface Props {
+interface Props extends TranslatableViewProps {
     guilds: OAuthGuild[];
     mutualGuilds: string[];
 }
 
-export const View = ({ guilds, mutualGuilds }: Props) => {
-    const translations = useTranslation();
-
+export const View = ({ guilds, mutualGuilds, translations }: Props) => {
     const [viewAs, setViewAs] = useState<ViewType>('gallery');
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);

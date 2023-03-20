@@ -60,3 +60,12 @@ export interface RedisUser extends RedisSnowflake {
     system: boolean;
     flags: number;
 }
+
+export interface RedisUserGuildList extends RedisSnowflake {
+    guilds: RedisUserGuild[];
+}
+
+export interface RedisUserGuild extends RedisSnowflake {
+    owner: boolean;
+    permissions: string;
+}

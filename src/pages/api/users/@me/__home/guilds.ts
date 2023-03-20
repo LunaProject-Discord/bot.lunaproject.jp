@@ -1,7 +1,8 @@
 import { getGuilds, getUser, hasPermission, sortOAuthGuilds } from '@lunaproject-discord/web-discord';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { FeaturedGuild, GuildFeature } from '../../../../../interfaces/bot';
-import { getGuildSettings, getMutualGuilds } from '../../../../../libs/bot';
+import { getGuildSettings } from '../../../../../libs/bot';
+import { getAndRequestUserGuildListById } from '../../../../../libs/redis';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method !== 'GET')
@@ -12,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         return res.status(404).json({ message: 'User not found!' });
 
     const guilds = await getGuilds(req.cookies['token']);
-    const mutualGuilds = await getMutualGuilds(user.id);
+    const mutualGuilds = await getAndRequestUserGuildListById(user.id);
     const mutualGuildIds = mutualGuilds.map((guild) => guild.id);
 
     const sortedGuilds = sortOAuthGuilds(guilds);

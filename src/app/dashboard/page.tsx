@@ -1,8 +1,11 @@
 import { hasPermission } from '@lunaproject-discord/web-discord/dist/utils';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import React from 'react';
 import { getTranslation } from '../../languages/server';
+import { getAndRequestUserGuildListById } from '../../libs/redis';
 import { sortOAuthGuilds } from '../../utils/discord';
-import { getGuilds, getMutualGuilds } from '../utils';
+import { getGuilds, getUser } from '../utils';
+import { UnauthorizedView } from '../view';
 import { View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
@@ -24,14 +27,27 @@ export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
 };
 
 const Page = async () => {
-    const guildList = getGuilds();
-    const mutualGuildList = getMutualGuilds();
+    const translations = getTranslation();
 
-    const [guilds, mutualGuilds] = await Promise.all([guildList, mutualGuildList]);
+    const userData = getUser();
+    const guildList = getGuilds();
+
+    const [user, guilds] = await Promise.all([userData, guildList]);
+
+    if (!user)
+        return (<UnauthorizedView translations={translations} />);
+
+    const mutualGuilds = await getAndRequestUserGuildListById(user.id);
 
     const sortedGuilds = sortOAuthGuilds(guilds.filter((guild) => hasPermission(guild)));
 
-    return (<View guilds={sortedGuilds} mutualGuilds={mutualGuilds.map((mutualGuild) => mutualGuild.id)} />);
+    return (
+        <View
+            guilds={sortedGuilds}
+            mutualGuilds={mutualGuilds.map((mutualGuild) => mutualGuild.id)}
+            translations={translations}
+        />
+    );
 };
 
 export default Page;
