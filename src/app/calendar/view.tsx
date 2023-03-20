@@ -18,43 +18,7 @@ const AppBar = styled('header')(({ theme }) => ({
     borderBottom: `solid 1px ${theme.palette.divider}`
 }));
 
-const events: CalendarEvent[] = [
-    {
-        title: 'どまんなか得の市',
-        color: '#e60014',
-        start: new Date(2023, 2, 17),
-        end: new Date(2023, 2, 20),
-        allDay: true
-    },
-    {
-        title: 'いち・に・さんの市',
-        color: '#094',
-        start: new Date(2023, 2, 1),
-        end: new Date(2023, 2, 3),
-        allDay: true
-    },
-    {
-        title: 'nanaco新規入会キャンペーン',
-        color: '#ff9800',
-        start: new Date(2023, 2, 1),
-        end: new Date(2023, 2, 13),
-        allDay: true
-    },
-    {
-        title: 'ナナコ新規入会キャンペーン',
-        color: '#959ac0',
-        start: new Date(2023, 2, 3),
-        end: new Date(2023, 2, 4),
-        allDay: true
-    },
-    {
-        title: '休日',
-        color: '#ff00ff',
-        start: new Date(2023, 2, 4),
-        end: new Date(2023, 2, 5),
-        allDay: true
-    }
-];
+const events: CalendarEvent[] = [];
 
 export const View = ({ translations }: TranslatableViewProps) => {
     const [date, setDate] = useState(new Date());

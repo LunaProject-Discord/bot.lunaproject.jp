@@ -90,11 +90,7 @@ export const Day = ({ day, selectedDate, events, columnWidth }: DayProps) => {
             return bDays.length - aDays.length;
         });
 
-    if (sortedEvents.length > 0)
-        console.log(day, sortedEvents);
-
     const index = sortedEvents.filter((event) => !isSameDay(day, event.start) && !isSunday(day)).length;
-
 
     const isMonth = selectedDate.getFullYear() === day.getFullYear() && selectedDate.getMonth() === day.getMonth();
     return (
@@ -164,10 +160,19 @@ export const Month = ({ year, month, events, visible = true }: MonthProps) => {
 
     const [columnWidth, setColumnWidth] = useState(0);
 
+    const handleResize = () => {
+        if (ref.current)
+            setColumnWidth(Number((ref.current!!.clientWidth / 7).toFixed(3)));
+    };
+
     useEffect(() => {
         if (ref.current)
             setColumnWidth(Number((ref.current!!.clientWidth / 7).toFixed(3)));
-    }, [ref.current]);
+
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const date = new Date(year, month, 1);
     const sundays = eachWeekOfInterval({
