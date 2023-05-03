@@ -7,7 +7,7 @@ import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProv
 import Mousetrap from 'mousetrap';
 import { useRouter } from 'next/navigation';
 import React, { MouseEvent, useEffect, useRef, useState, useTransition } from 'react';
-import { useTranslation } from '../../languages/client';
+import { useTranslation } from '../../localizations/client';
 import { Hotkey } from '../text';
 
 interface Props {
@@ -95,8 +95,8 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                                 onClick={handleClickSaveButton}
                                 loading={loading || pending}
                                 loadingPosition="start"
-                                startIcon={<SaveOutlined />}
                                 variant="contained"
+                                startIcon={<SaveOutlined />}
                             >
                                 {translations.save}
                                 <Hotkey sx={{ ml: 1, mr: -.5 }}>s</Hotkey>

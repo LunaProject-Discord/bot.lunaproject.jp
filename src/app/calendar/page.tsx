@@ -1,4 +1,4 @@
-import { getTranslation } from '../../languages/server';
+import { getTranslation } from '../../localizations/server';
 import { View } from './view';
 
 const Page = async () => {

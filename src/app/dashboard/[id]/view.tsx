@@ -1,5 +1,6 @@
 'use client';
 
+import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import {
     ArrowForwardOutlined,
     CloudOffOutlined,
@@ -14,10 +15,8 @@ import NextLink from 'next/link';
 import React, { Fragment } from 'react';
 import { RouteLinkItem } from '../../../components/items';
 import { PageContent, PageHeader } from '../../../components/layout';
-import { Section, SectionContent, SectionTitle } from '../../../components/section';
 import { GuildNotification } from '../../../interfaces/bot';
 import { GuildViewProps, UserViewProps } from '../../../interfaces/view';
-import { StyledToolbar } from './navigation';
 
 interface Props extends UserViewProps, GuildViewProps {
     notifications: GuildNotification[];
@@ -25,7 +24,6 @@ interface Props extends UserViewProps, GuildViewProps {
 
 export const View = ({ user, guild, notifications, translations }: Props) => (
     <PageContent>
-        <StyledToolbar />
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">

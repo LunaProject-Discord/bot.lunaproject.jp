@@ -21,7 +21,7 @@ import { useRouter } from 'next/navigation';
 import { ellipsis, size } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
 import { RedisRole } from '../../interfaces/redis';
-import { useTranslation } from '../../languages/client';
+import { useTranslation } from '../../localizations/client';
 import { filterPredicateRole, sortRoles } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
 

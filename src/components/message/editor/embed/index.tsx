@@ -15,7 +15,7 @@ import {
     Tooltip
 } from '@mui/material';
 import React from 'react';
-import { useTranslation } from '../../../../languages/client';
+import { useTranslation } from '../../../../localizations/client';
 import { EmbedAccordionSummary } from './accordion';
 import { EmbedAuthorEditor } from './author';
 import { EmbedBodyEditor } from './body';
@@ -99,7 +99,7 @@ export const EmbedEditor = ({ id, embed, onChange, removeEmbed }: Props) => {
             >
                 {translations.embeds} #{id + 1}{embed.title && ` — ${embed.title}`}
                 <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: .5 }}>
-                    <Tooltip title={translations.remove}>
+                    <Tooltip title={translations.remove} placement="top">
                         <IconButton
                             onClick={(e) => {
                                 e.stopPropagation();

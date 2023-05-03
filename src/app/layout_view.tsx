@@ -3,129 +3,56 @@
 import { StyleProvider } from '@lunaproject-discord/web-core/dist/components/StyleProvider';
 import { MuiPalette } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject-discord/web-discord';
-import {
-    AnalyticsOutlined,
-    ArrowBackOutlined,
-    BrushOutlined,
-    CheckOutlined,
-    ChevronRightOutlined,
-    HomeOutlined,
-    LeaderboardOutlined,
-    LoginOutlined,
-    LogoutOutlined,
-    NightlightRounded,
-    SettingsOutlined,
-    TranslateOutlined,
-    TuneOutlined
-} from '@mui/icons-material';
-import {
-    alpha,
-    Avatar,
-    BottomNavigation,
-    BottomNavigationAction,
-    Box,
-    createTheme,
-    CssBaseline,
-    Divider,
-    getOverlayAlpha,
-    GlobalStyles,
-    IconButton,
-    List,
-    ListItemButton as MuiListItemButton,
-    ListItemButtonProps,
-    ListItemIcon as MuiListItemIcon,
-    ListItemText,
-    ListSubheader,
-    Paper,
-    Popover,
-    styled,
-    ThemeProvider,
-    Tooltip,
-    Typography
-} from '@mui/material';
-import { enUS, jaJP } from '@mui/material/locale';
-import { enUS as datePickerEnUS, jaJP as datePickerJaJP } from '@mui/x-date-pickers';
-import Link from 'next/link';
-import { parseCookies, setCookie } from 'nookies';
-import React, { Fragment, MouseEvent, ReactNode, useEffect, useState } from 'react';
+import { createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
+import { indigo } from '@mui/material/colors';
+import { parseCookies } from 'nookies';
+import React, { ReactNode, useEffect } from 'react';
+import { RecoilRoot, useRecoilState } from 'recoil';
 import useSWRImmutable from 'swr/immutable';
 import { PageContainer } from '../components/layout';
-import { LanguageType } from '../languages';
-import { useLanguage, useTranslation } from '../languages/client';
-import { COOKIE_APPEARANCE, COOKIE_LANGUAGE } from '../utils/cookie';
-import { getUserAvatar } from '../utils/discord';
+import { LocalizationProps } from '../interfaces/localization';
+import { getMuiDateLocalizationByName, getMuiLocalizationByName } from '../localizations';
+import { appearanceAtom, AppearanceType } from '../states/appearance';
+import { COOKIE_APPEARANCE } from '../utils/cookie';
 import { fetchWithUser } from '../utils/swr';
+import { Navigation } from './(navigation)';
 import { fontFamily, M_Plus_Rounded_1c, Nunito } from './theme';
 
-const NavigationBar = styled('nav')(({ theme }) => ({
-    width: 56,
-    height: '100%',
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    borderRight: `solid 1px ${theme.palette.divider}`,
-    [theme.breakpoints.down('md')]: {
-        display: 'none'
-    }
-}));
-
-const NavigationGroup = styled(Box)(({ theme }) => ({
-    padding: theme.spacing(1),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: theme.spacing(1)
-}));
-
-const ListItemButton = styled(MuiListItemButton)(({ theme }) => ({
-    padding: theme.spacing(.5, 1.5),
-    gap: theme.spacing(1.5)
-}));
-
-
-interface ListItemSwitchProps extends ListItemButtonProps {
-    checked: boolean;
-    primary: ReactNode;
-    secondary?: ReactNode;
+interface LayoutProps extends LocalizationProps {
+    children: ReactNode;
 }
 
-const ListItemSwitch = ({ checked, primary, secondary, ...props }: ListItemSwitchProps) => (
-    <ListItemButton dense {...props}>
-        <ListItemIcon>
-            {checked && <CheckOutlined />}
-        </ListItemIcon>
-        <ListItemText primary={primary} secondary={secondary} />
-    </ListItemButton>
-);
+const RootLayout = ({ children, localization }: LayoutProps) => {
+    const { locale } = localization;
 
-const ListItemIcon = styled(MuiListItemIcon)(({ theme }) => ({
-    minWidth: theme.spacing(3)
-}));
-
-type AppearanceType = 'system' | 'light' | 'dark';
-
-export const Layout = ({ children }: { children: ReactNode }) => {
-    const [appearance, setAppearance] = useState<AppearanceType>('system');
-    const [darkMode, setDarkMode] = useState(false);
-
-    const translations = useTranslation();
-    const language = useLanguage();
+    const [{ isDarkMode }, setAppearance] = useRecoilState(appearanceAtom);
 
     const theme = createTheme(
         {
+            components: {
+                MuiTooltip: {
+                    styleOverrides: {
+                        popper: {
+                            userSelect: 'none'
+                        }
+                    }
+                }
+            },
             palette: {
                 ...MuiPalette,
-                mode: darkMode ? 'dark' : 'light'
+                primary: {
+                    light: indigo[isDarkMode ? 'A200' : 300],
+                    main: indigo[isDarkMode ? 'A400' : 500],
+                    dark: indigo[isDarkMode ? 'A700' : 700]
+                },
+                mode: isDarkMode ? 'dark' : 'light'
             },
             typography: {
                 fontFamily: fontFamily
             }
         },
-        language === 'ja' ? jaJP : enUS,
-        language === 'ja' ? datePickerJaJP : datePickerEnUS
+        getMuiLocalizationByName(locale),
+        getMuiDateLocalizationByName(locale)
     );
 
     const cookies = parseCookies();
@@ -138,269 +65,49 @@ export const Layout = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         const appearance = cookies[COOKIE_APPEARANCE] as AppearanceType | undefined ?? 'system';
-        setAppearance(appearance);
-        setDarkMode(appearance === 'dark' || appearance === 'system' && window.matchMedia('@media (prefers-color-scheme: dark)').matches);
-    }, []);
 
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-    const open = Boolean(anchorEl);
-
-    const [panelState, setPanelState] = useState<'appearance' | 'language' | null>(null);
-
-    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(e.currentTarget);
-        setPanelState(null);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleChangeAppearance = (type: AppearanceType) => {
         const isBrowserDarkScheme = window.matchMedia('@media (prefers-color-scheme: dark)').matches;
-        setAppearance(type);
-        setDarkMode(type === 'dark' || (type === 'system' && isBrowserDarkScheme));
-        setCookie(
-            null,
-            COOKIE_APPEARANCE,
-            type,
-            {
-                domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN as string,
-                path: '/'
-            }
-        );
+        setAppearance({
+            appearance: appearance,
+            isDarkMode: appearance === 'dark' || (appearance === 'system' && isBrowserDarkScheme)
+        });
 
-        setAnchorEl(null);
-    };
-
-    const handleChangeLanguage = (type: LanguageType) => {
-        setCookie(
-            null,
-            COOKIE_LANGUAGE,
-            type,
-            {
-                domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN as string,
-                path: '/'
-            }
+        console.log(
+            '%c警告',
+            'font-size: 10rem; font-weight: 700; color: red; -webkit-text-stroke: 3px black; text-stroke: 3px black;'
         );
-        setAnchorEl(null);
-        window.location.reload();
-    };
+        console.log(
+            '%cもし誰かからここに貼り付けるように指示されている場合、その行為はあなたのアカウントを危険にさらす可能性があります！',
+            'font-size: 1.5rem; font-weight: 700; color: red;'
+        );
+        console.log(
+            '%c何をしようとしているか分からない場合、速やかにこのウィンドウを閉じることをおすすめします。',
+            'font-size: 1.5rem; font-weight: 700; color: red;'
+        );
+        console.log(
+            'あなたが何をしているのか完全に理解しているのであれば、Bot や Web の開発を一緒にやってみませんか？\n',
+            '公式サポートサーバーにてお待ちしております。 https://lunaproject.jp/support'
+        );
+    }, []);
 
     return (
         <StyleProvider>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles styles={{ Nunito, M_Plus_Rounded_1c, '*, ::before, ::after': { fontFamily } }} />
-                <NavigationBar>
-                    <NavigationGroup>
-                        <IconButton disabled>
-                            <NightlightRounded sx={{ color: '#ffc636' }} />
-                        </IconButton>
-                    </NavigationGroup>
-                    <Divider flexItem sx={{ mx: 1 }} />
-                    <NavigationGroup sx={{ height: '100%' }}>
-                        <Tooltip title={translations.home} placement="right">
-                            <IconButton component={Link} href="/">
-                                <HomeOutlined />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title={translations.status} placement="right">
-                            <IconButton component={Link} href="/status">
-                                <AnalyticsOutlined />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title={translations.leaderboard} placement="right">
-                            <IconButton component={Link} href="/leaderboard">
-                                <LeaderboardOutlined />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title={translations.server_settings} placement="right">
-                            <IconButton component={Link} href="/dashboard">
-                                <SettingsOutlined />
-                            </IconButton>
-                        </Tooltip>
-                    </NavigationGroup>
-                    <Divider flexItem sx={{ mx: 1 }} />
-                    <NavigationGroup>
-                        {data ? <Tooltip title={data.username} placement="right">
-                            <IconButton sx={{ p: .5 }} onClick={handleClick}>
-                                <Avatar
-                                    src={getUserAvatar(data)}
-                                    sx={{ width: 32, height: 32, pointerEvents: 'none' }}
-                                />
-                            </IconButton>
-                        </Tooltip> : <Fragment>
-                            <Tooltip title={translations.site_settings} placement="right">
-                                <IconButton onClick={handleClick}>
-                                    <TuneOutlined />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={translations.login} placement="right">
-                                <IconButton
-                                    component={Link}
-                                    href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
-                                >
-                                    <LoginOutlined />
-                                </IconButton>
-                            </Tooltip>
-                        </Fragment>}
-                    </NavigationGroup>
-                </NavigationBar>
+                <Navigation user={data} localization={localization} />
                 <PageContainer>
                     {children}
                 </PageContainer>
-                <Paper
-                    elevation={3}
-                    sx={{
-                        position: 'fixed',
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        display: { xs: 'block', md: 'none' }
-                    }}
-                >
-                    <BottomNavigation>
-                        <BottomNavigationAction icon={<HomeOutlined />} component={Link} href="/" />
-                        <BottomNavigationAction icon={<AnalyticsOutlined />} component={Link} href="/status" />
-                        <BottomNavigationAction
-                            icon={<LeaderboardOutlined />}
-                            component={Link}
-                            href="/leaderboard"
-                        />
-                        <BottomNavigationAction icon={<SettingsOutlined />} component={Link} href="/dashboard" />
-                    </BottomNavigation>
-                </Paper>
-                <Popover
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-                    transformOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                    PaperProps={{
-                        sx: {
-                            width: 300,
-                            left: '8px !important',
-                            border: (theme) => `solid 1px ${theme.palette.divider}`,
-                            boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
-                        }
-                    }}
-                >
-                    {panelState === 'appearance' && <Fragment>
-                        <List>
-                            <ListItemButton dense onClick={() => setPanelState(null)}>
-                                <ListItemIcon sx={{ minWidth: 'unset' }}>
-                                    <ArrowBackOutlined />
-                                </ListItemIcon>
-                                <ListItemText primary={translations.design_and_appearance} />
-                            </ListItemButton>
-                        </List>
-                        <Divider />
-                        <List>
-                            <ListItemSwitch
-                                checked={appearance === 'system'}
-                                primary={translations.device_theme}
-                                onClick={() => handleChangeAppearance('system')}
-                            />
-                            <ListItemSwitch
-                                checked={appearance === 'light'}
-                                primary={translations.light_theme}
-                                onClick={() => handleChangeAppearance('light')}
-                            />
-                            <ListItemSwitch
-                                checked={appearance === 'dark'}
-                                primary={translations.dark_theme}
-                                onClick={() => handleChangeAppearance('dark')}
-                            />
-                        </List>
-                    </Fragment>}
-                    {panelState === 'language' && <Fragment>
-                        <List>
-                            <ListItemButton dense onClick={() => setPanelState(null)}>
-                                <ListItemIcon sx={{ minWidth: 'unset' }}>
-                                    <ArrowBackOutlined />
-                                </ListItemIcon>
-                                <ListItemText primary={translations.language} />
-                            </ListItemButton>
-                        </List>
-                        <Divider />
-                        <List>
-                            <ListItemSwitch
-                                checked={language === 'ja'}
-                                primary={translations.japanese}
-                                onClick={() => handleChangeLanguage('ja')}
-                            />
-                            <ListItemSwitch
-                                checked={language === 'en'}
-                                primary={translations.english}
-                                onClick={() => handleChangeLanguage('en')}
-                            />
-                        </List>
-                    </Fragment>}
-                    {panelState === null && <Fragment>
-                        {data && <Fragment>
-                            <Box sx={{ p: 1.5, display: 'flex', gap: 1 }}>
-                                <Avatar src={getUserAvatar(data)} sx={{ pointerEvents: 'none' }} />
-                                <Box sx={{
-                                    width: '100%',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    justifyContent: 'space-between'
-                                }}>
-                                    <Typography variant="h6" sx={{ fontSize: '1.2rem', lineHeight: 1.2 }}>
-                                        {data.username}
-                                    </Typography>
-                                    <Typography variant="body2" sx={{ fontFamily: 'Renner', lineHeight: 1.1 }}>
-                                        #{data.discriminator}
-                                    </Typography>
-                                </Box>
-                                <Tooltip title={translations.logout}>
-                                    <IconButton component={Link} href="https://accounts.lunaproject.jp/logout">
-                                        <LogoutOutlined />
-                                    </IconButton>
-                                </Tooltip>
-                            </Box>
-                            <Divider />
-                        </Fragment>}
-                        <List subheader={data ? (
-                            <ListSubheader
-                                component="div"
-                                sx={{
-                                    pt: 1,
-                                    pb: .5,
-                                    px: 1.5,
-                                    lineHeight: 'unset',
-                                    userSelect: 'none',
-                                    backgroundImage: (theme) => theme.palette.mode === 'dark' ? `linear-gradient(${alpha(
-                                        '#fff',
-                                        Number(getOverlayAlpha(8))
-                                    )}, ${alpha(
-                                        '#fff',
-                                        Number(getOverlayAlpha(8))
-                                    )})` : 'none'
-                                }}
-                            >
-                                {translations.site_settings}
-                            </ListSubheader>
-                        ) : undefined}>
-                            <ListItemButton dense onClick={() => setPanelState('appearance')}>
-                                <ListItemIcon>
-                                    <BrushOutlined />
-                                </ListItemIcon>
-                                <ListItemText primary={translations.design_and_appearance} />
-                                <ChevronRightOutlined color="action" />
-                            </ListItemButton>
-                            <ListItemButton dense onClick={() => setPanelState('language')}>
-                                <ListItemIcon>
-                                    <TranslateOutlined />
-                                </ListItemIcon>
-                                <ListItemText primary={translations.language} />
-                                <ChevronRightOutlined color="action" />
-                            </ListItemButton>
-                        </List>
-                    </Fragment>}
-                </Popover>
             </ThemeProvider>
         </StyleProvider>
+    );
+};
+
+export const Layout = ({ children, localization }: LayoutProps) => {
+    return (
+        <RecoilRoot>
+            <RootLayout localization={localization}>{children}</RootLayout>
+        </RecoilRoot>
     );
 };

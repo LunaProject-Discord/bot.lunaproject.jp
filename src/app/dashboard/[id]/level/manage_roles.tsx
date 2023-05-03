@@ -11,7 +11,7 @@ import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
 import { NumberFieldItem, RolePopover } from '../../../../components/items';
 import { GuildSettingsLevelRewardRole } from '../../../../interfaces/bot';
 import { RedisRole } from '../../../../interfaces/redis';
-import { useTranslation } from '../../../../languages/client';
+import { useTranslation } from '../../../../localizations/client';
 import { sortRoles } from '../../../../utils/discord';
 
 interface Props extends DialogProps {

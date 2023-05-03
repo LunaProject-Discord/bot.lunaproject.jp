@@ -1,14 +1,13 @@
 'use client';
 
 import {
-    AppBar,
     DrawerContainer,
     DrawerContent,
     DrawerItem,
     PermanentDrawer,
     StyledUl,
     TemporaryDrawer
-} from '@lunaproject-discord/web-core/dist/components';
+} from '@lunaproject-discord/web-core/dist/components/Drawer';
 import {
     DirectionsRunOutlined,
     DriveFileRenameOutlineOutlined,
@@ -25,40 +24,34 @@ import {
     TextSnippetOutlined,
     TranslateOutlined
 } from '@mui/icons-material';
-import { Avatar, ButtonBase, IconButton, ListItemIcon, ListItemText, styled, Toolbar, Typography } from '@mui/material';
+import { Avatar, ButtonBase, IconButton, ListItemIcon, ListItemText, styled, Typography } from '@mui/material';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEventHandler, useState } from 'react';
-import { Translation } from '../../../interfaces/language';
+import { AppBar, Toolbar } from '../../../components/appbar';
+import { Translations } from '../../../interfaces/localization';
 import { DataGuild, RedisGuild } from '../../../interfaces/redis';
 import { getGuildIcon } from '../../../utils/cdn';
 
 interface Props {
     guild: RedisGuild | DataGuild;
-    translations: Translation;
+    translations: Translations;
 }
 
 interface HeaderProps {
     onDrawerToggleClick: MouseEventHandler;
 }
 
-const Header = ({ onDrawerToggleClick }: HeaderProps) => {
-    return (
-        <AppBar position="fixed" color="default" elevation={0} sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <Toolbar>
-                <IconButton
-                    onClick={onDrawerToggleClick}
-                    edge="start"
-                    color="inherit"
-                    sx={{ mr: 2 }}
-                >
-                    <MenuOutlined />
-                </IconButton>
-                <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
-            </Toolbar>
-        </AppBar>
-    );
-};
+const Header = ({ onDrawerToggleClick }: HeaderProps) => (
+    <AppBar>
+        <Toolbar>
+            <IconButton onClick={onDrawerToggleClick} color="inherit">
+                <MenuOutlined />
+            </IconButton>
+            <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+        </Toolbar>
+    </AppBar>
+);
 
 const DrawerHeader = styled('li')(({ theme }) => ({
     padding: theme.spacing(1),
@@ -84,7 +77,7 @@ const Drawer = ({ guild, translations, open, onDrawerToggleClick }: DrawerProps)
                     <IconButton onClick={onDrawerToggleClick} sx={{ display: { md: 'none' } }}>
                         <MenuOutlined />
                     </IconButton>
-                    <Typography variant="h5">{translations.server_settings}</Typography>
+                    <Typography variant="h5">{translations.guild_settings}</Typography>
                 </DrawerHeader>
                 <HeaderButtonContainer>
                     <ButtonBase
@@ -125,7 +118,7 @@ const Drawer = ({ guild, translations, open, onDrawerToggleClick }: DrawerProps)
                         depth={1}
                     />
                 </DrawerItem>
-                <DrawerItem label={translations.settings_server_management} openImmediately>
+                <DrawerItem label={translations.settings_guild_management} openImmediately>
                     <DrawerItem
                         href={`/dashboard/${guild.id}/welcome`}
                         icon={<PersonAddOutlined />}
@@ -216,17 +209,10 @@ const Drawer = ({ guild, translations, open, onDrawerToggleClick }: DrawerProps)
     );
 };
 
-export const StyledToolbar = styled(Toolbar)(({ theme }) => ({
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-        display: 'none'
-    }
-}));
-
 export const Navigation = ({ guild, translations }: Props) => {
     const [open, setOpen] = useState(false);
 
-    const handleDrawerToggle = () => setOpen(!open);
+    const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
 
     return (
         <Fragment>

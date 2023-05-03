@@ -1,5 +1,6 @@
 'use client';
 
+import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import { format } from '@lunaproject-discord/web-core/dist/utils/date';
 import { ErrorOutlineOutlined, InfoOutlined, TaskAltOutlined, WarningAmberOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
@@ -7,11 +8,9 @@ import { enUS, ja } from 'date-fns/locale';
 import React, { Fragment } from 'react';
 import { RouteLinkItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
-import { Section, SectionContent, SectionTitle } from '../../../../components/section';
 import { GuildNotification } from '../../../../interfaces/bot';
 import { GuildViewProps } from '../../../../interfaces/view';
-import { useLanguage } from '../../../../languages/client';
-import { StyledToolbar } from '../navigation';
+import { useLocale } from '../../../../localizations/client';
 
 interface Props extends GuildViewProps {
     notifications: GuildNotification[];
@@ -19,7 +18,7 @@ interface Props extends GuildViewProps {
 
 
 export const View = ({ guild, notifications, translations }: Props) => {
-    const language = useLanguage();
+    const language = useLocale();
 
     const guildNotifications: Record<string, GuildNotification[]> = {};
 
@@ -33,7 +32,6 @@ export const View = ({ guild, notifications, translations }: Props) => {
 
     return (
         <PageContent>
-            <StyledToolbar />
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.notifications}</Typography>

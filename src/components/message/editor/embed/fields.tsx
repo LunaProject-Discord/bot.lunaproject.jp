@@ -45,12 +45,12 @@ export const EmbedFieldEditor = (
         <EmbedAccordionSummary>
             {translations.embed_field} #{index + 1}{value.name && ` — ${value.name}`}
             <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: .5 }}>
-                {visibleMoveUpButton && <Tooltip title={translations.move_up}>
+                {visibleMoveUpButton && <Tooltip title={translations.move_up} placement="top">
                     <IconButton onClick={moveUp} size="small" sx={{ width: 36, height: 36 }}>
                         <KeyboardArrowUpOutlined />
                     </IconButton>
                 </Tooltip>}
-                {visibleMoveDownButton && <Tooltip title={translations.move_down}>
+                {visibleMoveDownButton && <Tooltip title={translations.move_down} placement="top">
                     <IconButton onClick={moveDown} size="small" sx={{ width: 36, height: 36 }}>
                         <KeyboardArrowDownOutlined />
                     </IconButton>
@@ -58,7 +58,7 @@ export const EmbedFieldEditor = (
                 <IconButton size="small" sx={{ width: 36, height: 36 }}>
                     <ContentCopyOutlined fontSize="small" />
                 </IconButton>
-                <Tooltip title={translations.remove}>
+                <Tooltip title={translations.remove} placement="top">
                     <IconButton onClick={remove} size="small" color="error" sx={{ width: 36, height: 36 }}>
                         <ClearOutlined fontSize="small" />
                     </IconButton>

@@ -7,8 +7,8 @@ import { CloseOutlined, DeleteOutlined, EditOutlined, PreviewOutlined, SaveOutli
 import { AppBar, Box, Button, Dialog, Divider, Tab, Tabs, Toolbar, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { DataMessage } from '../../../interfaces/message';
-import { useTranslation } from '../../../languages/client';
 import { toDataMessage, toEmbed, toMessage } from '../../../libs/message';
+import { useTranslation } from '../../../localizations/client';
 import { Editor } from '../editor';
 import { MessagePreviewContainer } from '../preview';
 import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } from './styles';

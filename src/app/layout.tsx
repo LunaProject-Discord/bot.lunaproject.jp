@@ -3,27 +3,15 @@ import React, { ReactNode } from 'react';
 import '../../public/fonts/style.css';
 import '../../public/global.css';
 import { Body } from '../components/layout';
-import { getLanguage } from '../languages/server';
+import { getLocale, getLocalization } from '../localizations/server';
 import { Layout } from './layout_view';
 
 export const generateMetadata = (): Metadata => {
-    const language = getLanguage();
+    const locale = getLocale();
 
     const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN as string;
 
     return {
-        icons: {
-            icon: [
-                {
-                    type: 'image/vnd.microsoft.icon',
-                    url: `${origin}/icons/yudzuki.ico`
-                },
-                {
-                    type: 'image/svg+xml',
-                    url: `${origin}/icons/yudzuki.svg`
-                }
-            ]
-        },
         title: {
             default: '結月 -ゆづき-',
             template: '%s | 結月 -ゆづき-'
@@ -32,7 +20,7 @@ export const generateMetadata = (): Metadata => {
         themeColor: '#959ac0',
         openGraph: {
             type: 'website',
-            locale: language === 'ja' ? 'ja-JP' : 'en-US',
+            locale: locale === 'ja' ? 'ja-JP' : 'en-US',
             siteName: '結月 -ゆづき-',
             url: origin,
             title: '結月 -ゆづき-',
@@ -57,10 +45,11 @@ export const generateMetadata = (): Metadata => {
 };
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
-    const language = getLanguage();
+    const localization = getLocalization();
+    const { locale } = localization;
 
     return (
-        <html lang={language}>
+        <html lang={locale}>
         <head>
             <link
                 rel="preload"
@@ -88,7 +77,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
             />
         </head>
         <Body>
-            <Layout>{children}</Layout>
+            <Layout localization={localization}>{children}</Layout>
         </Body>
         </html>
     );

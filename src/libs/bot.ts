@@ -189,7 +189,7 @@ export const getGuildSettings = async (id: string): Promise<GuildSettings | unde
     };
 };
 
-export const getGuildLevels = async (id: string, fetchUser: boolean = true): Promise<GuildLevel[]> => {
+export const getGuildLevels = async (id: string, isFetchUser: boolean = true): Promise<GuildLevel[]> => {
     const results: any[] = await prisma.$queryRaw`
         SELECT *, RANK() OVER(ORDER BY \`level\` DESC, \`xp\` DESC) AS \`rank\`
         FROM \`guilds_levels\`
@@ -201,7 +201,7 @@ export const getGuildLevels = async (id: string, fetchUser: boolean = true): Pro
     for (const level of results) {
         const userId = String(level.user_id);
         levels.push({
-            user: fetchUser ? await getUser(userId) : { id: userId },
+            user: isFetchUser ? await getUser(userId) : { id: userId },
             rank: Number(level.rank),
             level: Number(level.level),
             xp: Number(level.xp)

@@ -1,5 +1,6 @@
 'use client';
 
+import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { BadgeOutlined, TagOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, Typography } from '@mui/material';
@@ -7,10 +8,8 @@ import React from 'react';
 import { TextFieldItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { Section, SectionContent } from '../../../../components/section';
 import { CodeStyleContainer } from '../../../../components/text';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
 
 export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
@@ -31,8 +30,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
     };
 
     return (
-        <PageContent position="relative">
-            <StyledToolbar />
+        <PageContent>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.prefix_and_nickname}</Typography>
@@ -53,7 +51,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                         value={nickname}
                         setValue={setNickname}
                     />
-                    <Alert severity="info" sx={{ userSelect: 'none' }}>
+                    <Alert severity="info">
                         <AlertTitle>{translations.about_this_settings}</AlertTitle>
                         <CodeStyleContainer>{translations.nickname_hint}</CodeStyleContainer>
                     </Alert>

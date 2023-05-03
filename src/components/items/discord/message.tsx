@@ -6,8 +6,8 @@ import { EditOutlined } from '@mui/icons-material';
 import { Box, Button, styled, Typography, useTheme } from '@mui/material';
 import React, { Dispatch, Fragment, ReactNode, SetStateAction, useState } from 'react';
 import { DataMessage } from '../../../interfaces/message';
-import { useTranslation } from '../../../languages/client';
 import { toMessage } from '../../../libs/message';
+import { useTranslation } from '../../../localizations/client';
 import { MessageBuilder } from '../../message/builder';
 import { MessagePreviewContainer } from '../../message/preview';
 import {

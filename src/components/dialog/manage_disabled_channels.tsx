@@ -44,7 +44,7 @@ import { useRouter } from 'next/navigation';
 import { ellipsis } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
 import { RedisChannel } from '../../interfaces/redis';
-import { useTranslation } from '../../languages/client';
+import { useTranslation } from '../../localizations/client';
 import { filterPredicateChannel, sortChannels } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
 

@@ -4,7 +4,7 @@ import { LocalizationProvider, LocalizationProviderProps } from '@mui/x-date-pic
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { enUS, ja } from 'date-fns/locale';
 import { ReactNode } from 'react';
-import { useLanguage } from '../../languages/client';
+import { useLocale } from '../../localizations/client';
 
 interface Props {
     children: ReactNode;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const DateLocalizationProvider = ({ children, dateFormats }: Props) => {
-    const language = useLanguage();
+    const language = useLocale();
 
     return (
         <LocalizationProvider

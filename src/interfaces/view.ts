@@ -1,10 +1,10 @@
 import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { GuildSettings } from './bot';
-import { Translation } from './language';
+import { Translations } from './localization';
 import { DataGuild, RedisChannel, RedisMember, RedisRole } from './redis';
 
 export interface TranslatableViewProps {
-    translations: Translation;
+    translations: Translations;
 }
 
 export interface UserViewProps extends TranslatableViewProps {

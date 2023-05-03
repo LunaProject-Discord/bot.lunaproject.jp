@@ -4,10 +4,12 @@ import {
     Gallery,
     GalleryItem,
     GalleryItemIcon,
-    GalleryItemText,
-    Menu
-} from '@lunaproject-discord/web-core/dist/components';
-import { OAuthGuild } from '@lunaproject-discord/web-discord';
+    GalleryItemText
+} from '@lunaproject-discord/web-core/dist/components/Gallery';
+import { Menu } from '@lunaproject-discord/web-core/dist/components/Menu';
+import { Section } from '@lunaproject-discord/web-core/dist/components/Section';
+import { SegmentedControl } from '@lunaproject-discord/web-core/dist/components/SegmentedControl';
+import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import {
     AddOutlined,
     FormatListBulletedOutlined,
@@ -26,14 +28,11 @@ import {
     ListItemIcon,
     ListItemText,
     MenuItem,
-    ToggleButton,
-    ToggleButtonGroup,
     Typography
 } from '@mui/material';
 import NextLink from 'next/link';
 import React, { MouseEvent, useState } from 'react';
 import { PageContent, PageHeader } from '../../components/layout';
-import { Section } from '../../components/section';
 import { TranslatableViewProps } from '../../interfaces/view';
 import { getGuildIcon } from '../../utils/discord';
 
@@ -96,36 +95,35 @@ export const View = ({ guilds, mutualGuilds, translations }: Props) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = Boolean(anchorEl);
 
-    const handleChangeViewAs = (e: MouseEvent<HTMLElement>, newViewAs: ViewType) => {
+    const handleViewAsChange = (e: MouseEvent<HTMLElement>, newViewAs: ViewType) => {
         if (newViewAs)
             setViewAs(newViewAs);
     };
 
-    const handleClickInviteButton = (e: MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
+    const handleInviteButtonClick = (e: MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
+
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    console.log(guilds, mutualGuilds);
 
     return (
         <PageContent display="flex">
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.server_settings}</Typography>
-                    <Typography variant="body1">{translations.choose_server_settings}</Typography>
+                    <Typography variant="h4">{translations.guild_settings}</Typography>
+                    <Typography variant="body1">{translations.choose_guild_settings}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>
-                    <ToggleButtonGroup value={viewAs} onChange={handleChangeViewAs} exclusive>
-                        <ToggleButton value="gallery">
-                            <GridViewOutlined />
-                        </ToggleButton>
-                        <ToggleButton value="table">
-                            <FormatListBulletedOutlined />
-                        </ToggleButton>
-                    </ToggleButtonGroup>
+                    <SegmentedControl<ViewType>
+                        value={viewAs}
+                        setValue={setViewAs}
+                        choices={[
+                            { value: 'gallery', children: (<GridViewOutlined />) },
+                            { value: 'table', children: (<FormatListBulletedOutlined />) }
+                        ]}
+                    />
                     <Button
-                        onClick={handleClickInviteButton}
+                        onClick={handleInviteButtonClick}
                         disableElevation
                         variant="contained"
                         size="large"
@@ -173,8 +171,8 @@ export const LoadingView = ({ translations }: TranslatableViewProps) => (
     <PageContent display="flex">
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.server_settings}</Typography>
-                <Typography variant="body1">{translations.choose_server_settings}</Typography>
+                <Typography variant="h4">{translations.guild_settings}</Typography>
+                <Typography variant="body1">{translations.choose_guild_settings}</Typography>
             </Box>
         </PageHeader>
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>

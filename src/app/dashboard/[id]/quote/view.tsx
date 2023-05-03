@@ -1,5 +1,6 @@
 'use client';
 
+import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
@@ -9,10 +10,8 @@ import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../.
 import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { Section, SectionContent } from '../../../../components/section';
 import { GuildSettingsQuote } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
 
 export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
@@ -77,8 +76,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
     };
 
     return (
-        <PageContent position="relative">
-            <StyledToolbar />
+        <PageContent>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.quote}</Typography>

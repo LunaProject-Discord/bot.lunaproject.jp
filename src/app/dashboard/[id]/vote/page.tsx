@@ -1,9 +1,9 @@
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { WithIdParamProps } from '../../../../interfaces/page';
-import { getTranslation } from '../../../../languages/server';
 import { getGuildSettings } from '../../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../../libs/redis';
+import { getTranslation } from '../../../../localizations/server';
 import { hasPermission } from '../../../../utils/discord';
 import { getUser } from '../../../utils';
 import { NotFoundView } from '../view';

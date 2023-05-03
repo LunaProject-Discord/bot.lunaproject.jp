@@ -1,15 +1,15 @@
+import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
 import React, { ReactNode } from 'react';
 import {
+    ButtonItemRoot,
     ChannelItem,
-    ItemButtonBase,
     ItemDisabledProps,
     ItemFormContainer,
     ItemRowContainer,
     ItemVariableProps,
     SwitchItem
 } from '../../../../components/items';
-import { Section, SectionContent } from '../../../../components/section';
 import {
     GuildSettingsLoggingChannel,
     GuildSettingsLoggingComponent,
@@ -55,7 +55,7 @@ interface ItemHeaderProps extends ItemDisabledProps {
 }
 
 const ItemHeader = ({ label, enabled, setEnabled, disabled }: ItemHeaderProps) => (
-    <ItemButtonBase
+    <ButtonItemRoot
         onClick={() => setEnabled(!enabled)}
         disabled={disabled}
         sx={{
@@ -76,7 +76,7 @@ const ItemHeader = ({ label, enabled, setEnabled, disabled }: ItemHeaderProps) =
                 />
             </ItemFormContainer>
         </ItemRowContainer>
-    </ItemButtonBase>
+    </ButtonItemRoot>
 );
 
 interface Props<T extends GuildSettingsLoggingComponent> extends ItemDisabledProps, ItemVariableProps<T>, TranslatableViewProps {

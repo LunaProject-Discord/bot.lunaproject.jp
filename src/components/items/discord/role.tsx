@@ -7,11 +7,11 @@ import { ellipsis, size } from 'polished';
 import React, { Fragment, MouseEvent, useState } from 'react';
 import { filterPredicateRole, sortRoles } from '../../../utils/discord';
 import {
-    ItemContainer,
     ItemDisabledProps,
     ItemFormContainer,
     ItemIcon,
     ItemIconProps,
+    ItemRoot,
     ItemRowContainer,
     ItemTextBlock,
     ItemTextBlockProps,
@@ -114,7 +114,7 @@ export const RoleItem = ({ icon, primary, secondary, value, setValue, choices, d
     const currentRole = choices.find((role) => role.id === value);
     return (
         <Fragment>
-            <ItemContainer>
+            <ItemRoot>
                 <ItemRowContainer size={secondary ? 'medium' : 'small'}>
                     <ItemIcon icon={icon} />
                     <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
@@ -143,7 +143,7 @@ export const RoleItem = ({ icon, primary, secondary, value, setValue, choices, d
                         </Fragment>}
                     </Select>
                 </ItemFormContainer>
-            </ItemContainer>
+            </ItemRoot>
 
             <RolePopover
                 open={open}

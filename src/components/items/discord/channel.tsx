@@ -16,11 +16,11 @@ import React, { Fragment, MouseEvent, useState } from 'react';
 import { RedisChannel } from '../../../interfaces/redis';
 import { filterPredicateChannel, sortChannels } from '../../../utils/discord';
 import {
-    ItemContainer,
     ItemDisabledProps,
     ItemFormContainer,
     ItemIcon,
     ItemIconProps,
+    ItemRoot,
     ItemRowContainer,
     ItemTextBlock,
     ItemTextBlockProps,
@@ -132,7 +132,7 @@ export const ChannelItem = ({ icon, primary, secondary, value, setValue, choices
     const currentChannel = choices.find((channel) => channel.id === value);
     return (
         <Fragment>
-            <ItemContainer>
+            <ItemRoot>
                 <ItemRowContainer size={secondary ? 'medium' : 'small'}>
                     <ItemIcon icon={icon} />
                     <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
@@ -159,7 +159,7 @@ export const ChannelItem = ({ icon, primary, secondary, value, setValue, choices
                         </Fragment>}
                     </Select>
                 </ItemFormContainer>
-            </ItemContainer>
+            </ItemRoot>
 
             <ChannelPopover
                 open={open}

@@ -2,17 +2,18 @@ import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord/dist/int
 import { cookies } from 'next/headers';
 import { getMutualGuilds as getOriginalMutualGuilds } from '../libs/bot';
 import { getGuilds as getOriginalGuilds, getUser as getOriginalUser } from '../libs/discord';
+import { COOKIE_TOKEN } from '../utils/cookie';
 
 export const getUser = async (): Promise<OAuthUser | undefined> => {
     const nextCookies = cookies();
-    const token = nextCookies.get('token')?.value;
+    const token = nextCookies.get(COOKIE_TOKEN)?.value;
 
     return getOriginalUser(token);
 };
 
 export const getGuilds = async (): Promise<OAuthGuild[]> => {
     const nextCookies = cookies();
-    const token = nextCookies.get('token')?.value;
+    const token = nextCookies.get(COOKIE_TOKEN)?.value;
 
     return getOriginalGuilds(token);
 };

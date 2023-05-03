@@ -1,5 +1,11 @@
 'use client';
 
+import {
+    Section,
+    SectionContent,
+    SectionParagraph,
+    SectionTitle
+} from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { APIGuildChannel } from '@lunaproject-discord/web-discord/dist/interfaces';
 import { Box, Typography } from '@mui/material';
@@ -21,7 +27,6 @@ import {
 } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { Section, SectionContent, SectionParagraph, SectionTitle } from '../../../../components/section';
 import { CodeStyleContainer } from '../../../../components/text';
 import {
     GuildSettingsLevel,
@@ -30,7 +35,6 @@ import {
     GuildSettingsLevelRewardType
 } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
 import { ManageRolesDialog } from './manage_roles';
 
@@ -157,8 +161,7 @@ export const View = (
     };
 
     return (
-        <PageContent position="relative">
-            <StyledToolbar />
+        <PageContent>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.level}</Typography>

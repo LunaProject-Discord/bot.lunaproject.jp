@@ -12,7 +12,7 @@ export const Body = styled('body')(({ theme }) => ({
 export const PageContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
     [theme.breakpoints.down('md')]: {
-        marginBottom: 56
+        marginTop: 56
     },
     [theme.breakpoints.up('md')]: {
         marginLeft: 56
@@ -45,7 +45,6 @@ export const PageHeader = styled(Box)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacing(3),
-    userSelect: 'none',
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
         alignItems: 'stretch'

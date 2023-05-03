@@ -112,7 +112,6 @@ export const ListItemIcon = styled(MuiListItemIcon)(({ theme }) => ({
 export const ListSubheader = styled(MuiListSubheader)(({ theme }) => ({
     padding: theme.spacing(1, 1.5, .5),
     lineHeight: 'unset',
-    userSelect: 'none',
     backgroundImage: theme.palette.mode === 'dark' ? `linear-gradient(${alpha(
         '#fff',
         Number(getOverlayAlpha(8))

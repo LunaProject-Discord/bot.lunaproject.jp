@@ -1,5 +1,11 @@
 'use client';
 
+import {
+    Section,
+    SectionContent,
+    SectionParagraph,
+    SectionTitle
+} from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { ScheduleOutlined, TranslateOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
@@ -8,11 +14,9 @@ import spacetime from 'spacetime';
 import { SelectItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { Section, SectionContent, SectionParagraph, SectionTitle } from '../../../../components/section';
 import { GuildSettingsLanguage } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { TimeZone, TimeZones } from '../../../../utils/timezone';
-import { StyledToolbar } from '../navigation';
 import { saveGuildSettings } from '../utils';
 
 export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
@@ -33,8 +37,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
     };
 
     return (
-        <PageContent position="relative">
-            <StyledToolbar />
+        <PageContent>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.time_and_language}</Typography>
@@ -50,7 +53,11 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                         primary={translations.timezone}
                         value={timezone}
                         setValue={setTimezone}
-                        choices={Object.entries(TimeZones).map(([id, label]): { value: TimeZone; children?: ReactNode; offset: number; } => {
+                        choices={Object.entries(TimeZones).map(([id, label]): {
+                            value: TimeZone;
+                            children?: ReactNode;
+                            offset: number;
+                        } => {
                             const now = spacetime.now(id);
                             const tz = now.timezone();
 

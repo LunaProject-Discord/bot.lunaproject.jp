@@ -17,6 +17,10 @@ const HASH_MEMBERS = 'members';
 const HASH_USERS = 'users';
 const HASH_USERS_GUILDS = 'users_guilds';
 
+const PUBSUB_USERS_GUILDS = HASH_USERS_GUILDS;
+const PUBSUB_GUILDS_SETTINGS = 'guilds_settings';
+const PUBSUB_USERS_SETTINGS = 'users_settings';
+
 const redis = new Redis({
     port: Number(process.env.REDIS_PORT || 6379),
     host: process.env.REDIS_HOST,
@@ -103,7 +107,7 @@ export const getUserGuildListById = async (id: string): Promise<RedisUserGuildLi
 };
 
 export const requestUserGuildListById = async (id: string): Promise<void> => {
-    await redis.publish(HASH_USERS_GUILDS, id);
+    await redis.publish(PUBSUB_USERS_GUILDS, id);
 };
 
 const getUserGuilds = async (id: string): Promise<RedisUserGuild[] | undefined> => (await getUserGuildListById(id))?.guilds;
@@ -118,4 +122,12 @@ export const getAndRequestUserGuildListById = async (id: string): Promise<RedisU
     }
 
     return guilds;
+};
+
+export const updateGuildSettingsById = async (id: string): Promise<void> => {
+    await redis.publish(PUBSUB_GUILDS_SETTINGS, id);
+};
+
+export const updateUserSettingsById = async (id: string): Promise<void> => {
+    await redis.publish(PUBSUB_USERS_SETTINGS, id);
 };

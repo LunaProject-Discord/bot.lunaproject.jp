@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 
-export const fontFamily = `'Nunito', 'M Plus Rounded 1c', 'Noto Color Emoji', sans-serif`;
+export const fontFamily = `'Nunito', 'M PLUS Rounded 1c', 'Noto Color Emoji', sans-serif`;
 
 export const Nunito = css`
     @font-face {

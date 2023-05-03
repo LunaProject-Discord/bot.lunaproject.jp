@@ -1,6 +1,7 @@
 'use client';
 
 import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
+import { Section } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
 import { borderAndBoxShadow } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { ClearAllOutlined, CloudOffOutlined, SearchOutlined, TableRowsOutlined } from '@mui/icons-material';
@@ -21,13 +22,11 @@ import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
 import { ItemIcon, ItemRowContainer, ItemTextBlock } from '../../../../../components/items';
 import { PageContent, PageHeader } from '../../../../../components/layout';
 import { SaveConfirm } from '../../../../../components/save_confirm';
-import { Section } from '../../../../../components/section';
 import { GuildLevel, PartialGuildLevel } from '../../../../../interfaces/bot';
 import { DataGuild, RedisMember } from '../../../../../interfaces/redis';
 import { GuildSettingsViewProps, TranslatableViewProps } from '../../../../../interfaces/view';
 import { getMemberAvatar } from '../../../../../utils/cdn';
 import { filterPredicateMember } from '../../../../../utils/discord';
-import { StyledToolbar } from '../../navigation';
 
 const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
     const res = await fetch(
@@ -86,77 +85,71 @@ interface LevelItemProps extends TranslatableViewProps {
     setValue: (value: PartialGuildLevel) => void;
 }
 
-export const LevelItem = ({ guild, member, value, setValue, translations }: LevelItemProps) => {
-    return (
-        <ItemContainer>
-            <ItemRowContainer>
-                <ItemIcon
-                    icon={
-                        <Avatar
-                            src={getMemberAvatar(member, guild)}
-                            sx={{ pointerEvents: 'none' }}
-                        />
-                    }
-                />
-                <ItemTextBlock
-                    primary={member.nick ?? member.user.name}
-                    secondary={member.nick ? <Fragment>
-                        <Box component="span" sx={{ color: (theme) => theme.palette.text.primary }}>
-                            {member.user.name}
-                        </Box>
-                        #{member.user.discriminator}
-                    </Fragment> : `#${member.user.discriminator}`}
-                />
-            </ItemRowContainer>
-            <ItemFormContainer>
-                <ItemFormGroup>
-                    <Typography variant="body2" sx={{ flexShrink: 0, userSelect: 'none' }}>
-                        {translations.level}
-                    </Typography>
-                    <NumberField
-                        value={value.level}
-                        setValue={(level) => setValue({ ...value, level })}
-                        min={0}
-                        sx={{
-                            width: {
-                                xs: '100%',
-                                md: 300
-                            }
-                        }}
+export const LevelItem = ({ guild, member, value, setValue, translations }: LevelItemProps) => (
+    <ItemContainer>
+        <ItemRowContainer>
+            <ItemIcon
+                icon={
+                    <Avatar
+                        src={getMemberAvatar(member, guild)}
+                        sx={{ pointerEvents: 'none' }}
                     />
-                </ItemFormGroup>
-                <ItemFormGroup>
-                    <Typography variant="body2" sx={{ flexShrink: 0, userSelect: 'none' }}>
-                        {translations.experience}
-                    </Typography>
-                    <NumberField
-                        value={value.xp}
-                        setValue={(xp) => setValue({ ...value, xp })}
-                        min={0}
-                        max={20 * Math.max(value.level, 1)}
-                        sx={{
-                            width: {
-                                xs: '100%',
-                                md: 300
-                            }
-                        }}
-                    />
-                </ItemFormGroup>
-                <ItemFormGroup sx={{ width: 'auto', flexShrink: 0 }}>
-                    <Button
-                        onClick={() => setValue({ ...value, level: 0, xp: 0 })}
-                        fullWidth
-                        variant="text"
-                        color="error"
-                        startIcon={<ClearAllOutlined />}
-                    >
-                        {translations.reset}
-                    </Button>
-                </ItemFormGroup>
-            </ItemFormContainer>
-        </ItemContainer>
-    );
-};
+                }
+            />
+            <ItemTextBlock
+                primary={member.nick ?? member.user.name}
+                secondary={member.nick ? <Fragment>
+                    <Box component="span" sx={{ color: (theme) => theme.palette.text.primary }}>
+                        {member.user.name}
+                    </Box>
+                    #{member.user.discriminator}
+                </Fragment> : `#${member.user.discriminator}`}
+            />
+        </ItemRowContainer>
+        <ItemFormContainer>
+            <ItemFormGroup>
+                <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.level}</Typography>
+                <NumberField
+                    value={value.level}
+                    setValue={(level) => setValue({ ...value, level })}
+                    min={0}
+                    sx={{
+                        width: {
+                            xs: '100%',
+                            md: 300
+                        }
+                    }}
+                />
+            </ItemFormGroup>
+            <ItemFormGroup>
+                <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.experience}</Typography>
+                <NumberField
+                    value={value.xp}
+                    setValue={(xp) => setValue({ ...value, xp })}
+                    min={0}
+                    max={20 * Math.max(value.level, 1)}
+                    sx={{
+                        width: {
+                            xs: '100%',
+                            md: 300
+                        }
+                    }}
+                />
+            </ItemFormGroup>
+            <ItemFormGroup sx={{ width: 'auto', flexShrink: 0 }}>
+                <Button
+                    onClick={() => setValue({ ...value, level: 0, xp: 0 })}
+                    fullWidth
+                    variant="text"
+                    color="error"
+                    startIcon={<ClearAllOutlined />}
+                >
+                    {translations.reset}
+                </Button>
+            </ItemFormGroup>
+        </ItemFormContainer>
+    </ItemContainer>
+);
 
 interface Props extends GuildSettingsViewProps {
     levels: GuildLevel[];
@@ -215,7 +208,6 @@ export const View = ({ guild, levels, translations }: Props) => {
 
     return (
         <PageContent>
-            <StyledToolbar />
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.level_manage}</Typography>
