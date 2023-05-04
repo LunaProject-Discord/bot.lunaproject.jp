@@ -14,7 +14,9 @@ import { GuildSettingsGoodbye } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { saveGuildSettings } from '../utils';
 
-export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
+export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+    const { translations } = localization;
+
     const [openMessageBuilder, setOpenMessageBuilder] = useState(false);
 
     const goodbye = settings.goodbye;
@@ -67,11 +69,13 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                         disabled={!enabled}
                         open={openMessageBuilder}
                         setOpen={setOpenMessageBuilder}
+                        localization={localization}
                     >
                         <CodeStyleContainer>{translations.goodbye_message_edit_hint}</CodeStyleContainer>
                     </MessageItem>
                 </SectionContent>
             </Section>
+
             <SaveConfirm
                 open={!deepEqual(goodbye, toObject(), { strict: true })}
                 disableKeyboardShortcuts={openMessageBuilder}

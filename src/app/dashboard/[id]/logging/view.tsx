@@ -28,7 +28,9 @@ import {
     Webhook
 } from './components';
 
-export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
+export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+    const { translations } = localization;
+
     const logging = settings.logging;
     const [enabled, setEnabled, resetEnabled] = useResettableState(logging.enabled);
     const [moderation, setModeration, resetModeration] = useResettableState(logging.moderation);
@@ -108,86 +110,87 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                     setValue={setModeration}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Member
                     value={member}
                     setValue={setMember}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Voice
                     value={voice}
                     setValue={setVoice}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Category
                     value={category}
                     setValue={setCategory}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <TextChannel
                     value={textChannel}
                     setValue={setTextChannel}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <VoiceChannel
                     value={voiceChannel}
                     setValue={setVoiceChannel}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Role
                     value={role}
                     setValue={setRole}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Emote
                     value={emote}
                     setValue={setEmote}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Invite
                     value={invite}
                     setValue={setInvite}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Webhook
                     value={webhook}
                     setValue={setWebhook}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Integration
                     value={integration}
                     setValue={setIntegration}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
                 <Message
                     value={message}
                     setValue={setMessage}
                     channels={channels}
                     disabled={!enabled}
-                    translations={translations}
+                    localization={localization}
                 />
             </GridContainer>
+
             <SaveConfirm
                 open={!deepEqual(logging, toObject(), { strict: true })}
                 onSave={handleActionSave}

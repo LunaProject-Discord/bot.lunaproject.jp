@@ -221,7 +221,7 @@ interface MonthViewProps extends CalendarViewProps {
     setDate: Dispatch<SetStateAction<Date>>;
 }
 
-export const MonthView = ({ date, setDate, events, translations }: MonthViewProps) => {
+export const MonthView = ({ date, setDate, events, localization }: MonthViewProps) => {
     const [wheelAmount, setWheelAmount] = useState<number | null>(null);
 
     const handleMouseWheel = (e: WheelEvent) => {
@@ -243,20 +243,20 @@ export const MonthView = ({ date, setDate, events, translations }: MonthViewProp
                 month={subMonths(date, 1).getMonth()}
                 events={events}
                 visible={false}
-                translations={translations}
+                localization={localization}
             />
             <Month
                 year={date.getFullYear()}
                 month={date.getMonth()}
                 events={events}
-                translations={translations}
+                localization={localization}
             />
             <Month
                 year={addMonths(date, 1).getFullYear()}
                 month={addMonths(date, 1).getMonth()}
                 events={events}
                 visible={false}
-                translations={translations}
+                localization={localization}
             />
         </Box>
     );

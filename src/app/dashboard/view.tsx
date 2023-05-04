@@ -33,14 +33,14 @@ import {
 import NextLink from 'next/link';
 import React, { MouseEvent, useState } from 'react';
 import { PageContent, PageHeader } from '../../components/layout';
-import { TranslatableViewProps } from '../../interfaces/view';
+import { LocalizationProps } from '../../interfaces/localization';
 import { getGuildIcon } from '../../utils/discord';
 
-interface GuildListProps {
+interface GuildsProps {
     guilds: OAuthGuild[];
 }
 
-const GuildListGallery = ({ guilds }: GuildListProps) => (
+const GuildsGallery = ({ guilds }: GuildsProps) => (
     <Gallery>
         {guilds.map((guild) => (
             <GalleryItem key={guild.id}>
@@ -59,7 +59,7 @@ const GuildListGallery = ({ guilds }: GuildListProps) => (
     </Gallery>
 );
 
-const GuildListTable = ({ guilds }: GuildListProps) => (
+const GuildsTable = ({ guilds }: GuildsProps) => (
     <List>
         {guilds.map((guild) => (
             <ListItemButton
@@ -84,12 +84,12 @@ const GuildListTable = ({ guilds }: GuildListProps) => (
 
 type ViewType = 'gallery' | 'table';
 
-interface Props extends TranslatableViewProps {
+interface Props extends LocalizationProps {
     guilds: OAuthGuild[];
     mutualGuilds: string[];
 }
 
-export const View = ({ guilds, mutualGuilds, translations }: Props) => {
+export const View = ({ guilds, mutualGuilds, localization: { translations } }: Props) => {
     const [viewAs, setViewAs] = useState<ViewType>('gallery');
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -137,9 +137,9 @@ export const View = ({ guilds, mutualGuilds, translations }: Props) => {
             </PageHeader>
             <Section sx={{ p: 0 }}>
                 {viewAs === 'gallery' ? (
-                    <GuildListGallery guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
+                    <GuildsGallery guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
                 ) : (
-                    <GuildListTable guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
+                    <GuildsTable guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
                 )}
             </Section>
 
@@ -167,7 +167,7 @@ export const View = ({ guilds, mutualGuilds, translations }: Props) => {
     );
 };
 
-export const LoadingView = ({ translations }: TranslatableViewProps) => (
+export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <PageContent display="flex">
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>

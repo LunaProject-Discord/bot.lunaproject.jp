@@ -1,43 +1,44 @@
 import { hasPermission } from '@lunaproject-discord/web-discord/dist/utils';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
-import { getAndRequestUserGuildListById } from '../../libs/redis';
-import { getTranslation } from '../../localizations/server';
+import { getAndRequestUserGuildsById } from '../../libs/redis';
+import { getLocalization } from '../../localizations/server';
 import { sortOAuthGuilds } from '../../utils/discord';
 import { getGuilds, getUser } from '../utils';
 import { UnauthorizedView } from '../view';
 import { View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
-    const translations = getTranslation();
+    const { translations } = getLocalization();
+    const title = translations.guild_settings;
 
     const metadata = await parent;
     return {
         ...metadata,
-        title: translations.guild_settings,
+        title,
         openGraph: {
             ...metadata.openGraph,
-            title: translations.guild_settings
+            title
         },
         twitter: {
             ...metadata.twitter,
-            title: translations.guild_settings
+            title
         }
     };
 };
 
 const Page = async () => {
-    const translations = getTranslation();
+    const localization = getLocalization();
 
     const userData = getUser();
-    const guildList = getGuilds();
+    const guildsData = getGuilds();
 
-    const [user, guilds] = await Promise.all([userData, guildList]);
+    const [user, guilds] = await Promise.all([userData, guildsData]);
 
     if (!user)
-        return (<UnauthorizedView translations={translations} />);
+        return (<UnauthorizedView localization={localization} />);
 
-    const mutualGuilds = await getAndRequestUserGuildListById(user.id);
+    const mutualGuilds = await getAndRequestUserGuildsById(user.id);
 
     const sortedGuilds = sortOAuthGuilds(guilds.filter((guild) => hasPermission(guild)));
 
@@ -45,7 +46,7 @@ const Page = async () => {
         <View
             guilds={sortedGuilds}
             mutualGuilds={mutualGuilds.map((mutualGuild) => mutualGuild.id)}
-            translations={translations}
+            localization={localization}
         />
     );
 };

@@ -3,14 +3,14 @@ import React from 'react';
 import { WithIdParamProps } from '../../../../interfaces/page';
 import { getGuildSettings } from '../../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../../libs/redis';
-import { getTranslation } from '../../../../localizations/server';
+import { getLocalization } from '../../../../localizations/server';
 import { hasPermission } from '../../../../utils/discord';
 import { getUser } from '../../../utils';
 import { NotFoundView } from '../view';
 import { View } from './view';
 
 export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
-    const translations = getTranslation();
+    const { translations } = getLocalization();
     const title = translations.music;
 
     const user = await getUser();
@@ -38,7 +38,7 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
 };
 
 const Page = async ({ params: { id } }: WithIdParamProps) => {
-    const translations = getTranslation();
+    const localization = getLocalization();
 
     const guildData = getGuildById(id);
     const guildSettingsData = getGuildSettings(id);
@@ -48,7 +48,7 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
     if (!guild || !guildSettings)
         return (<NotFoundView />);
 
-    return (<View guild={guild} settings={guildSettings} translations={translations} />);
+    return (<View guild={guild} settings={guildSettings} localization={localization} />);
 };
 
 export default Page;

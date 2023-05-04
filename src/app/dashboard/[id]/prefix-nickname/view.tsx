@@ -12,7 +12,7 @@ import { CodeStyleContainer } from '../../../../components/text';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { saveGuildSettings } from '../utils';
 
-export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
+export const View = ({ guild, settings, localization: { translations } }: GuildSettingsViewProps) => {
     const [prefix, setPrefix, resetPrefix] = useResettableState(settings.prefix);
     const [nickname, setNickname, resetNickname] = useResettableState(settings.nickname);
 
@@ -57,6 +57,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                     </Alert>
                 </SectionContent>
             </Section>
+
             <SaveConfirm
                 open={prefix !== settings.prefix || nickname !== settings.nickname}
                 onSave={handleActionSave}

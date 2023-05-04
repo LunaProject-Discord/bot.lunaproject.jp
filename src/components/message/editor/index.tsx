@@ -4,17 +4,18 @@ import { Embed, Message } from '@lunaproject-discord/web-discord/dist/interfaces
 import { AddOutlined } from '@mui/icons-material';
 import { Box, Button, Divider } from '@mui/material';
 import React from 'react';
+import { LocalizationProps } from '../../../interfaces/localization';
 import { getNewEmbed } from '../../../libs/message';
 import { TextArea } from '../text_area';
 import { EmbedEditor } from './embed';
 
 
-interface Props {
+interface Props extends LocalizationProps {
     message: Message;
     setMessage: (value: Message | ((prevValue: Message) => Message)) => void;
 }
 
-export const Editor = ({ message, setMessage }: Props) => {
+export const Editor = ({ message, setMessage, localization }: Props) => {
     const addEmbed = () => setMessage((msg) => ({ ...msg, embeds: [...msg.embeds, getNewEmbed()] }));
 
     const removeEmbed = (i: number) => setMessage((msg) => {
@@ -57,6 +58,7 @@ export const Editor = ({ message, setMessage }: Props) => {
                         embed={embed}
                         removeEmbed={() => removeEmbed(i)}
                         onChange={(data) => updateEmbed(i, data)}
+                        localization={localization}
                     />
                 ))}
             </Box>

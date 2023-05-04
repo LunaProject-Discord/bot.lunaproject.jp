@@ -26,13 +26,13 @@ export interface UserNotification {
     type: 'success' | 'warning' | 'error' | 'information';
     title: string;
     description: string;
-    read: boolean;
+    isRead: boolean;
     updatedAt: number;
     createdAt: number;
 }
 
 
-export interface GuildNotification extends Omit<UserNotification, 'read'> {
+export interface GuildNotification extends Omit<UserNotification, 'isRead'> {
     reads: string[];
 }
 

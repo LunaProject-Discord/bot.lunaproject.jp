@@ -7,7 +7,7 @@ import {
     RedisRole,
     RedisUser,
     RedisUserGuild,
-    RedisUserGuildList
+    RedisUserGuilds
 } from '../interfaces/redis';
 
 const HASH_GUILDS = 'guilds';
@@ -98,7 +98,7 @@ export const getUserById = async (id: string): Promise<RedisUser | undefined> =>
     return JSON.parse(data);
 };
 
-export const getUserGuildListById = async (id: string): Promise<RedisUserGuildList | undefined> => {
+export const getUserGuildsById = async (id: string): Promise<RedisUserGuilds | undefined> => {
     const data = await redis.hget(HASH_USERS_GUILDS, id);
     if (!data)
         return undefined;
@@ -106,16 +106,16 @@ export const getUserGuildListById = async (id: string): Promise<RedisUserGuildLi
     return JSON.parse(data);
 };
 
-export const requestUserGuildListById = async (id: string): Promise<void> => {
+export const requestUserGuildsById = async (id: string): Promise<void> => {
     await redis.publish(PUBSUB_USERS_GUILDS, id);
 };
 
-const getUserGuilds = async (id: string): Promise<RedisUserGuild[] | undefined> => (await getUserGuildListById(id))?.guilds;
+const getUserGuilds = async (id: string): Promise<RedisUserGuild[] | undefined> => (await getUserGuildsById(id))?.guilds;
 
-export const getAndRequestUserGuildListById = async (id: string): Promise<RedisUserGuild[]> => {
+export const getAndRequestUserGuildsById = async (id: string): Promise<RedisUserGuild[]> => {
     const guilds = await getUserGuilds(id);
 
-    await requestUserGuildListById(id);
+    await requestUserGuildsById(id);
     if (!guilds) {
         await new Promise((resolve) => setTimeout(resolve, 1000 * 5));
         return await getUserGuilds(id) ?? [];

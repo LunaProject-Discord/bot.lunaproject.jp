@@ -24,34 +24,60 @@ import {
     TextSnippetOutlined,
     TranslateOutlined
 } from '@mui/icons-material';
-import { Avatar, ButtonBase, IconButton, ListItemIcon, ListItemText, styled, Typography } from '@mui/material';
+import { Avatar, Box, ButtonBase, IconButton, ListItemIcon, ListItemText, styled, Typography } from '@mui/material';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEventHandler, useState } from 'react';
+import { PopoverType } from '../../(navigation)';
+import { MobileNavigationAppBarMenu } from '../../(navigation)/mobile';
 import { AppBar, Toolbar } from '../../../components/appbar';
-import { Translations } from '../../../interfaces/localization';
 import { DataGuild, RedisGuild } from '../../../interfaces/redis';
+import { UserViewProps } from '../../../interfaces/view';
 import { getGuildIcon } from '../../../utils/cdn';
 
-interface Props {
+interface Props extends UserViewProps {
     guild: RedisGuild | DataGuild;
-    translations: Translations;
 }
 
-interface HeaderProps {
+interface HeaderProps extends Props {
     onDrawerToggleClick: MouseEventHandler;
 }
 
-const Header = ({ onDrawerToggleClick }: HeaderProps) => (
-    <AppBar>
-        <Toolbar>
-            <IconButton onClick={onDrawerToggleClick} color="inherit">
-                <MenuOutlined />
-            </IconButton>
-            <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
-        </Toolbar>
-    </AppBar>
-);
+const Header = ({ onDrawerToggleClick, user, localization }: HeaderProps) => {
+    const [popoverState, setPopoverState] = useState<PopoverType>(undefined);
+
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const open = popoverState !== undefined && Boolean(anchorEl);
+
+    const openPopover = (elem: HTMLButtonElement, type: PopoverType) => {
+        setPopoverState('user');
+        setAnchorEl(elem);
+    };
+
+    const closePopover = () => {
+        setPopoverState(undefined);
+        setAnchorEl(null);
+    };
+
+    return (
+        <AppBar>
+            <Toolbar>
+                <IconButton onClick={onDrawerToggleClick} color="inherit">
+                    <MenuOutlined />
+                </IconButton>
+                <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <MobileNavigationAppBarMenu
+                        openPopover={openPopover}
+                        closePopover={closePopover}
+                        user={user}
+                        localization={localization}
+                    />
+                </Box>
+            </Toolbar>
+        </AppBar>
+    );
+};
 
 const DrawerHeader = styled('li')(({ theme }) => ({
     padding: theme.spacing(1),
@@ -65,11 +91,11 @@ const HeaderButtonContainer = styled('li')(({ theme }) => ({
     display: 'block'
 }));
 
-interface DrawerProps extends Props, HeaderProps {
+interface DrawerProps extends HeaderProps {
     open: boolean;
 }
 
-const Drawer = ({ guild, translations, open, onDrawerToggleClick }: DrawerProps) => {
+const Drawer = ({ open, onDrawerToggleClick, guild, localization: { translations } }: DrawerProps) => {
     const drawer = (
         <DrawerContent>
             <StyledUl container>
@@ -209,15 +235,26 @@ const Drawer = ({ guild, translations, open, onDrawerToggleClick }: DrawerProps)
     );
 };
 
-export const Navigation = ({ guild, translations }: Props) => {
+export const Navigation = ({ user, guild, localization }: Props) => {
     const [open, setOpen] = useState(false);
 
     const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
 
     return (
         <Fragment>
-            <Header onDrawerToggleClick={handleDrawerToggle} />
-            <Drawer guild={guild} translations={translations} open={open} onDrawerToggleClick={handleDrawerToggle} />
+            <Header
+                onDrawerToggleClick={handleDrawerToggle}
+                user={user}
+                guild={guild}
+                localization={localization}
+            />
+            <Drawer
+                open={open}
+                onDrawerToggleClick={handleDrawerToggle}
+                user={user}
+                guild={guild}
+                localization={localization}
+            />
         </Fragment>
     );
 };

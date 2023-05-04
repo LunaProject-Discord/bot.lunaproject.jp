@@ -12,13 +12,13 @@ import {
 import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
 import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
-import { TranslatableViewProps } from '../../../../interfaces/view';
+import { LocalizationProps } from '../../../../interfaces/localization';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { TextArea } from '../../text_area';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
-interface EmbedFieldEditorProps extends ItemDisabledProps, ItemVariableProps<EmbedField>, TranslatableViewProps {
+interface EmbedFieldEditorProps extends ItemDisabledProps, ItemVariableProps<EmbedField>, LocalizationProps {
     index: number;
     remove: (e: MouseEvent<HTMLButtonElement>) => void;
     visibleMoveUpButton: boolean;
@@ -38,7 +38,7 @@ export const EmbedFieldEditor = (
         visibleMoveDownButton,
         moveUp,
         moveDown,
-        translations
+        localization: { translations }
     }: EmbedFieldEditorProps
 ) => (
     <EmbedAccordion sx={{ pr: 0 }}>
@@ -106,9 +106,10 @@ export const EmbedFieldEditor = (
     </EmbedAccordion>
 );
 
-type EmbedFieldListEditorProps = ItemDisabledProps & ItemVariableProps<EmbedField[]> & TranslatableViewProps;
+type EmbedFieldsEditorProps = ItemDisabledProps & ItemVariableProps<EmbedField[]> & LocalizationProps;
 
-export const EmbedFieldListEditor = ({ value, setValue, disabled, translations }: EmbedFieldListEditorProps) => {
+export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: EmbedFieldsEditorProps) => {
+    const { translations } = localization;
 
     const add = () => setValue([...value, { _id: nanoid(), ...DefaultField }]);
 
@@ -166,7 +167,7 @@ export const EmbedFieldListEditor = ({ value, setValue, disabled, translations }
                                 e.stopPropagation();
                                 moveDown(i);
                             }}
-                            translations={translations}
+                            localization={localization}
                         />
                     ))}
                     <Box sx={{ pt: 1, px: 1 }}>

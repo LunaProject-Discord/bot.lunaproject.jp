@@ -19,8 +19,8 @@ import {
     GuildSettingsLoggingObject,
     GuildSettingsLoggingVoice
 } from '../../../../interfaces/bot';
+import { LocalizationProps } from '../../../../interfaces/localization';
 import { RedisChannel } from '../../../../interfaces/redis';
-import { TranslatableViewProps } from '../../../../interfaces/view';
 
 export const GridContainer = styled(Section)(({ theme }) => ({
     display: 'grid',
@@ -79,7 +79,7 @@ const ItemHeader = ({ label, enabled, setEnabled, disabled }: ItemHeaderProps) =
     </ButtonItemRoot>
 );
 
-interface Props<T extends GuildSettingsLoggingComponent> extends ItemDisabledProps, ItemVariableProps<T>, TranslatableViewProps {
+interface Props<T extends GuildSettingsLoggingComponent> extends ItemDisabledProps, ItemVariableProps<T>, LocalizationProps {
     channels: RedisChannel[];
 }
 
@@ -89,7 +89,7 @@ export const Moderation = (
         setValue,
         channels,
         disabled,
-        translations
+        localization: { translations }
     }: Props<GuildSettingsLoggingModeration>
 ) => (
     <ItemContainer>
@@ -141,7 +141,15 @@ export const Moderation = (
     </ItemContainer>
 );
 
-export const Member = ({ value, setValue, channels, disabled, translations }: Props<GuildSettingsLoggingMember>) => (
+export const Member = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingMember>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_member}
@@ -191,7 +199,15 @@ export const Member = ({ value, setValue, channels, disabled, translations }: Pr
     </ItemContainer>
 );
 
-export const Voice = ({ value, setValue, channels, disabled, translations }: Props<GuildSettingsLoggingVoice>) => (
+export const Voice = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingVoice>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_voice}
@@ -241,7 +257,15 @@ export const Voice = ({ value, setValue, channels, disabled, translations }: Pro
     </ItemContainer>
 );
 
-export const Category = ({ value, setValue, channels, disabled, translations }: Props<GuildSettingsLoggingChannel>) => (
+export const Category = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingChannel>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_category}
@@ -291,7 +315,7 @@ export const TextChannel = (
         setValue,
         channels,
         disabled,
-        translations
+        localization: { translations }
     }: Props<GuildSettingsLoggingChannel>
 ) => (
     <ItemContainer>
@@ -343,7 +367,7 @@ export const VoiceChannel = (
         setValue,
         channels,
         disabled,
-        translations
+        localization: { translations }
     }: Props<GuildSettingsLoggingChannel>
 ) => (
     <ItemContainer>
@@ -389,7 +413,15 @@ export const VoiceChannel = (
     </ItemContainer>
 );
 
-export const Role = ({ value, setValue, channels, disabled, translations }: Props<GuildSettingsLoggingObject>) => (
+export const Role = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingObject>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_role}
@@ -427,7 +459,15 @@ export const Role = ({ value, setValue, channels, disabled, translations }: Prop
     </ItemContainer>
 );
 
-export const Emote = ({ value, setValue, channels, disabled, translations }: Props<GuildSettingsLoggingObject>) => (
+export const Emote = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingObject>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_emote}
@@ -465,7 +505,15 @@ export const Emote = ({ value, setValue, channels, disabled, translations }: Pro
     </ItemContainer>
 );
 
-export const Invite = ({ value, setValue, channels, disabled, translations }: Props<GuildSettingsLoggingObject>) => (
+export const Invite = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingObject>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_invite}
@@ -503,7 +551,15 @@ export const Invite = ({ value, setValue, channels, disabled, translations }: Pr
     </ItemContainer>
 );
 
-export const Webhook = ({ value, setValue, channels, disabled, translations }: Props<GuildSettingsLoggingObject>) => (
+export const Webhook = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingObject>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_webhook}
@@ -541,13 +597,15 @@ export const Webhook = ({ value, setValue, channels, disabled, translations }: P
     </ItemContainer>
 );
 
-export const Integration = ({
-                                value,
-                                setValue,
-                                channels,
-                                disabled,
-                                translations
-                            }: Props<GuildSettingsLoggingObject>) => (
+export const Integration = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingObject>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_integration}
@@ -585,7 +643,15 @@ export const Integration = ({
     </ItemContainer>
 );
 
-export const Message = ({ value, setValue, channels, disabled, translations }: Props<GuildSettingsLoggingMessage>) => (
+export const Message = (
+    {
+        value,
+        setValue,
+        channels,
+        disabled,
+        localization: { translations }
+    }: Props<GuildSettingsLoggingMessage>
+) => (
     <ItemContainer>
         <ItemHeader
             label={translations.logging_message}

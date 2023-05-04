@@ -61,7 +61,7 @@ export interface RedisUser extends RedisSnowflake {
     flags: number;
 }
 
-export interface RedisUserGuildList extends RedisSnowflake {
+export interface RedisUserGuilds extends RedisSnowflake {
     guilds: RedisUserGuild[];
 }
 

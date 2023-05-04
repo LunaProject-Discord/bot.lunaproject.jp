@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/material';
-import { TranslatableViewProps } from '../../../interfaces/view';
+import { LocalizationProps } from '../../../interfaces/localization';
 
 const Week = styled(Box)(({ theme }) => ({
     gridColumn: '1 / 8',
@@ -52,6 +52,6 @@ const DayOfWeek = styled(Day)(({ theme }) => ({
     placeContent: 'center'
 }));
 
-interface YearViewProps extends TranslatableViewProps {
+interface YearViewProps extends LocalizationProps {
     year: number;
 }

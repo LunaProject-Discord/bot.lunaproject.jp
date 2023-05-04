@@ -40,15 +40,15 @@ import React, { Fragment, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
 import { PageContent } from '../components/layout';
 import { FeaturedGuild } from '../interfaces/bot';
-import { TranslatableViewProps } from '../interfaces/view';
+import { LocalizationProps } from '../interfaces/localization';
 import { getGuildIcon } from '../utils/discord';
 import { fetchWithUser } from '../utils/swr';
 
-interface GuildListProps {
+interface GuildsProps {
     guilds: OAuthGuild[];
 }
 
-const GuildListGalleryView = ({ guilds }: GuildListProps) => (
+const GuildsGalleryView = ({ guilds }: GuildsProps) => (
     <Gallery>
         {guilds.map((guild) => (
             <GalleryItem key={guild.id}>
@@ -67,7 +67,7 @@ const GuildListGalleryView = ({ guilds }: GuildListProps) => (
     </Gallery>
 );
 
-const GuildListTableView = ({ guilds }: GuildListProps) => (
+const GuildsTableView = ({ guilds }: GuildsProps) => (
     <List>
         {guilds.map((guild) => (
             <ListItemButton
@@ -92,11 +92,11 @@ const GuildListTableView = ({ guilds }: GuildListProps) => (
 
 type ViewType = 'features' | 'guilds';
 
-interface Props extends TranslatableViewProps {
+interface Props extends LocalizationProps {
     user: OAuthUser | undefined;
 }
 
-export const View = ({ user, translations }: Props) => {
+export const View = ({ user, localization: { translations } }: Props) => {
     const cookies = parseCookies();
     const token = cookies['token'];
 
@@ -180,7 +180,7 @@ export const View = ({ user, translations }: Props) => {
                     </SectionContent>}
                     {viewState === 'guilds' && <SectionContent>
                         {guilds ? (
-                            <GuildListGalleryView
+                            <GuildsGalleryView
                                 guilds={guilds.filter((guild) => guild.features.length > 0).map((guild) => guild.guild)}
                             />
                         ) : (
@@ -214,7 +214,7 @@ export const View = ({ user, translations }: Props) => {
 };
 
 
-export const UnauthorizedView = ({ translations }: TranslatableViewProps) => (
+export const UnauthorizedView = ({ localization: { translations } }: LocalizationProps) => (
     <PageContent display="flex">
         <Box
             sx={{

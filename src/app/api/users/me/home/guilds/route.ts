@@ -2,7 +2,7 @@ import { hasPermission, sortOAuthGuilds } from '@lunaproject-discord/web-discord
 import { NextResponse } from 'next/server';
 import { FeaturedGuild, GuildFeature } from '../../../../../../interfaces/bot';
 import { getGuildSettings } from '../../../../../../libs/bot';
-import { getAndRequestUserGuildListById } from '../../../../../../libs/redis';
+import { getAndRequestUserGuildsById } from '../../../../../../libs/redis';
 import { getGuilds, getUser } from '../../../../../utils';
 
 export const GET = async (req: Request) => {
@@ -11,7 +11,7 @@ export const GET = async (req: Request) => {
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
 
     const guilds = await getGuilds();
-    const mutualGuilds = await getAndRequestUserGuildListById(user.id);
+    const mutualGuilds = await getAndRequestUserGuildsById(user.id);
     const mutualGuildIds = mutualGuilds.map((guild) => guild.id);
 
     const sortedGuilds = sortOAuthGuilds(guilds);

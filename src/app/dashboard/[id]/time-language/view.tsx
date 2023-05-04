@@ -19,7 +19,7 @@ import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { TimeZone, TimeZones } from '../../../../utils/timezone';
 import { saveGuildSettings } from '../utils';
 
-export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
+export const View = ({ guild, settings, localization: { translations } }: GuildSettingsViewProps) => {
     const [timezone, setTimezone, resetTimezone] = useResettableState(settings.timezone);
     const [language, setLanguage, resetLanguage] = useResettableState(settings.language);
 
@@ -89,6 +89,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                     />
                 </SectionContent>
             </Section>
+
             <SaveConfirm
                 open={timezone !== settings.timezone || language !== settings.language}
                 onSave={handleActionSave}

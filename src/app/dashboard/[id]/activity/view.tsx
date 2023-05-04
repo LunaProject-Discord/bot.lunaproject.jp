@@ -12,7 +12,7 @@ import { GuildSettingsActivity } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { saveGuildSettings } from '../utils';
 
-export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
+export const View = ({ guild, settings, localization: { translations } }: GuildSettingsViewProps) => {
     const activity = settings.activity;
     const [enabled, setEnabled, resetEnabled] = useResettableState(activity.enabled);
 
@@ -54,6 +54,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                     />
                 </SectionContent>
             </Section>
+
             <SaveConfirm
                 open={!deepEqual(activity, toObject(), { strict: true })}
                 onSave={handleActionSave}

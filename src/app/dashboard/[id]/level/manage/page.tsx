@@ -3,14 +3,14 @@ import React from 'react';
 import { WithIdParamProps } from '../../../../../interfaces/page';
 import { getGuildLevels, getGuildSettings } from '../../../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../../../libs/redis';
-import { getTranslation } from '../../../../../localizations/server';
+import { getLocalization } from '../../../../../localizations/server';
 import { hasPermission } from '../../../../../utils/discord';
 import { getUser } from '../../../../utils';
 import { NotFoundView } from '../../view';
 import { View } from './view';
 
 export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
-    const translations = getTranslation();
+    const { translations } = getLocalization();
     const title = translations.level_manage;
 
     const user = await getUser();
@@ -45,7 +45,7 @@ interface Props extends WithIdParamProps {
 }
 
 const Page = async ({ params: { id }, searchParams }: Props) => {
-    const translations = getTranslation();
+    const localization = getLocalization();
 
     const guildData = getGuildById(id);
     const guildLevelsData = getGuildLevels(id, false);
@@ -65,7 +65,7 @@ const Page = async ({ params: { id }, searchParams }: Props) => {
             guild={guild}
             levels={guildLevels}
             settings={guildSettings}
-            translations={translations}
+            localization={localization}
         />
     );
 };

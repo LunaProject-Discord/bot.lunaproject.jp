@@ -3,7 +3,7 @@
 import type { Embed, EmbedFooter } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
 import React from 'react';
-import { TranslatableViewProps } from '../../../../interfaces/view';
+import { LocalizationProps } from '../../../../interfaces/localization';
 import { DateTimeEditor } from '../../../date';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
@@ -12,9 +12,9 @@ import { EmbedFormContainer, EmbedFormItem } from './form';
 type Props =
     ItemDisabledProps
     & ItemVariableProps<{ timestamp: Embed['timestamp'] } & EmbedFooter>
-    & TranslatableViewProps;
+    & LocalizationProps;
 
-export const EmbedFooterEditor = ({ value, setValue, disabled, translations }: Props) => (
+export const EmbedFooterEditor = ({ value, setValue, disabled, localization: { translations } }: Props) => (
     <EmbedAccordion>
         <EmbedAccordionSummary>{translations.embed_footer}</EmbedAccordionSummary>
         <EmbedAccordionDetails>

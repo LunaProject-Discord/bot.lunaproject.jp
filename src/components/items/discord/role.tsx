@@ -1,20 +1,18 @@
 'use client';
 
-import { Popover } from '@lunaproject-discord/web-core';
+import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
+import { ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { Box, ListItemButtonProps, ListItemText, PopoverProps, Typography } from '@mui/material';
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
 import React, { Fragment, MouseEvent, useState } from 'react';
 import { filterPredicateRole, sortRoles } from '../../../utils/discord';
 import {
-    ItemDisabledProps,
     ItemFormContainer,
     ItemIcon,
-    ItemIconProps,
     ItemRoot,
     ItemRowContainer,
     ItemTextBlock,
-    ItemTextBlockProps,
     SearchBox,
     Select,
     SnowflakeItemProps
@@ -102,9 +100,23 @@ export const RolePopover = (
     );
 };
 
-type RoleItemProps = ItemTextBlockProps & ItemIconProps & ItemDisabledProps & Props;
+type RoleItemProps = ItemProps & Props;
 
-export const RoleItem = ({ icon, primary, secondary, value, setValue, choices, disabled }: RoleItemProps) => {
+export const RoleItem = (
+    {
+        icon,
+        iconSx,
+        primary,
+        secondary,
+        primaryTypographyProps,
+        secondaryTypographyProps,
+        value,
+        setValue,
+        choices,
+        disabled,
+        sx
+    }: RoleItemProps
+) => {
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
     const open = Boolean(anchorEl);
 
@@ -114,10 +126,16 @@ export const RoleItem = ({ icon, primary, secondary, value, setValue, choices, d
     const currentRole = choices.find((role) => role.id === value);
     return (
         <Fragment>
-            <ItemRoot>
+            <ItemRoot sx={sx}>
                 <ItemRowContainer size={secondary ? 'medium' : 'small'}>
-                    <ItemIcon icon={icon} />
-                    <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
+                    <ItemIcon icon={icon} iconSx={iconSx} />
+                    <ItemTextBlock
+                        primary={primary}
+                        secondary={secondary}
+                        primaryTypographyProps={primaryTypographyProps}
+                        secondaryTypographyProps={secondaryTypographyProps}
+                        disabled={disabled}
+                    />
                 </ItemRowContainer>
                 <ItemFormContainer>
                     <Select

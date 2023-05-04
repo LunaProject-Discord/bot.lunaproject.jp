@@ -17,7 +17,7 @@ interface Props extends GuildViewProps {
 }
 
 
-export const View = ({ guild, notifications, translations }: Props) => {
+export const View = ({ guild, notifications, localization: { translations } }: Props) => {
     const language = useLocale();
 
     const guildNotifications: Record<string, GuildNotification[]> = {};

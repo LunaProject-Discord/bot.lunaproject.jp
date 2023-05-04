@@ -22,7 +22,7 @@ interface Props extends UserViewProps, GuildViewProps {
     notifications: GuildNotification[];
 }
 
-export const View = ({ user, guild, notifications, translations }: Props) => (
+export const View = ({ user, guild, notifications, localization: { translations } }: Props) => (
     <PageContent>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>

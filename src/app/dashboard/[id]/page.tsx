@@ -2,12 +2,12 @@ import React from 'react';
 import { WithIdParamProps } from '../../../interfaces/page';
 import { getGuildNotifications } from '../../../libs/bot';
 import { getGuildById } from '../../../libs/redis';
-import { getTranslation } from '../../../localizations/server';
+import { getLocalization } from '../../../localizations/server';
 import { getUser } from '../../utils';
 import { NotFoundView, View } from './view';
 
 const Page = async ({ params: { id } }: WithIdParamProps) => {
-    const translations = getTranslation();
+    const localization = getLocalization();
 
     const userData = getUser();
 
@@ -24,7 +24,7 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
             user={user}
             guild={guild}
             notifications={guildNotifications}
-            translations={translations}
+            localization={localization}
         />
     );
 };

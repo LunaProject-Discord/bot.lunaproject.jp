@@ -2,14 +2,14 @@
 
 import type { EmbedImage } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
-import { TranslatableViewProps } from '../../../../interfaces/view';
+import { LocalizationProps } from '../../../../interfaces/localization';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
-type Props = ItemDisabledProps & ItemVariableProps<EmbedImage> & TranslatableViewProps;
+type Props = ItemDisabledProps & ItemVariableProps<EmbedImage> & LocalizationProps;
 
-export const EmbedImageEditor = ({ value, setValue, disabled, translations }: Props) => (
+export const EmbedImageEditor = ({ value, setValue, disabled, localization: { translations } }: Props) => (
     <EmbedAccordion>
         <EmbedAccordionSummary>{translations.embed_image}</EmbedAccordionSummary>
         <EmbedAccordionDetails>

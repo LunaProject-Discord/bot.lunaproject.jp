@@ -3,7 +3,7 @@ import React from 'react';
 import { WithIdParamProps } from '../../../../../interfaces/page';
 import { getGuildNotificationById, getGuildNotificationByName } from '../../../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../../../libs/redis';
-import { getTranslation } from '../../../../../localizations/server';
+import { getLocalization } from '../../../../../localizations/server';
 import { hasPermission } from '../../../../../utils/discord';
 import { getUser } from '../../../../utils';
 import { NotFoundView } from '../../view';
@@ -45,7 +45,7 @@ export const generateMetadata = async ({ params: { id, idOrName } }: Props, pare
     };
 };
 const Page = async ({ params: { id, idOrName } }: Props) => {
-    const translations = getTranslation();
+    const localization = getLocalization();
 
     const guildData = getGuildById(id);
     const guildNotificationData = typeof idOrName === 'string' ? getGuildNotificationByName(id, idOrName) : getGuildNotificationById(idOrName);
@@ -55,13 +55,7 @@ const Page = async ({ params: { id, idOrName } }: Props) => {
     if (!guild || !guildNotification)
         return (<NotFoundView />);
 
-    return (
-        <View
-            guild={guild}
-            notification={guildNotification}
-            translations={translations}
-        />
-    );
+    return (<View guild={guild} notification={guildNotification} localization={localization} />);
 };
 
 export default Page;

@@ -1,6 +1,13 @@
 import { Cache, OAuthGuild } from '@lunaproject-discord/web-discord';
 import { addSeconds } from 'date-fns';
-import { GuildLevel, GuildNotification, GuildSettings, GuildSettingsLanguage, PartialUser } from '../interfaces/bot';
+import {
+    GuildLevel,
+    GuildNotification,
+    GuildSettings,
+    GuildSettingsLanguage,
+    PartialUser,
+    UserNotification
+} from '../interfaces/bot';
 import { TimeZone } from '../utils/timezone';
 import prisma from './prisma';
 
@@ -15,7 +22,7 @@ export const getUser = async (id: string): Promise<PartialUser> => {
         return { id };
 
     return {
-        id: id,
+        id,
         name: result.name,
         discriminator: result.discriminator,
         avatar: result.avatar_url
@@ -57,6 +64,77 @@ export const getMutualGuilds = async (id: string): Promise<OAuthGuild[]> => {
     return data;
 };
 
+export const getUserNotifications = async (id: string): Promise<UserNotification[]> => {
+    const userNotifications = await prisma.users_notifications.findMany({
+        where: {
+            user_id: BigInt(id)
+        }
+    });
+
+    const notifications: UserNotification[] = [];
+    for (const notification of userNotifications) {
+        notifications.push({
+            id: notification.id,
+            name: notification.name,
+            type: notification.type,
+            title: notification.title,
+            description: notification.description,
+            isRead: notification.is_read,
+            updatedAt: notification.updated_at.getTime(),
+            createdAt: notification.created_at.getTime()
+        });
+    }
+
+    return notifications;
+};
+
+export const getUserNotificationById = async (id: number): Promise<UserNotification | undefined> => {
+    const notification = await prisma.users_notifications.findUnique({
+        where: {
+            id
+        }
+    });
+
+    if (!notification)
+        return undefined;
+
+    return {
+        id: notification.id,
+        name: notification.name,
+        type: notification.type,
+        title: notification.title,
+        description: notification.description,
+        isRead: notification.is_read,
+        updatedAt: notification.updated_at.getTime(),
+        createdAt: notification.created_at.getTime()
+    };
+};
+
+export const getUserNotificationByName = async (id: string, name: string): Promise<UserNotification | undefined> => {
+    const notification = await prisma.users_notifications.findUnique({
+        where: {
+            user_id_name: {
+                user_id: BigInt(id),
+                name
+            }
+        }
+    });
+
+    if (!notification)
+        return undefined;
+
+    return {
+        id: notification.id,
+        name: notification.name,
+        type: notification.type,
+        title: notification.title,
+        description: notification.description,
+        isRead: notification.is_read,
+        updatedAt: notification.updated_at.getTime(),
+        createdAt: notification.created_at.getTime()
+    };
+};
+
 
 export const getGuildNotifications = async (id: string): Promise<GuildNotification[]> => {
     const guildId = BigInt(id);
@@ -93,7 +171,7 @@ export const getGuildNotifications = async (id: string): Promise<GuildNotificati
 export const getGuildNotificationById = async (id: number): Promise<GuildNotification | undefined> => {
     const notification = await prisma.guilds_notifications.findUnique({
         where: {
-            id: id
+            id
         }
     });
 
@@ -125,7 +203,7 @@ export const getGuildNotificationByName = async (id: string, name: string): Prom
         where: {
             guild_id_name: {
                 guild_id: guildId,
-                name: name
+                name
             }
         }
     });
@@ -169,7 +247,7 @@ export const getGuildSettings = async (id: string): Promise<GuildSettings | unde
         return undefined;
 
     return {
-        id: id,
+        id,
         prefix: guildData.prefix,
         nickname: guildSettingsData.nickname,
         language: guildSettingsData.language as GuildSettingsLanguage,

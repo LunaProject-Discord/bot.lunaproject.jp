@@ -1,10 +1,9 @@
-import { getTranslation } from '../../localizations/server';
+import { getLocalization } from '../../localizations/server';
 import { View } from './view';
 
 const Page = async () => {
-    const translations = getTranslation();
-
-    return (<View translations={translations} />);
+    const localization = getLocalization();
+    return (<View localization={localization} />);
 };
 
 export default Page;

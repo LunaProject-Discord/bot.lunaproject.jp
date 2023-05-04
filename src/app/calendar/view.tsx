@@ -7,7 +7,7 @@ import { addMonths, eachDayOfInterval, subMonths } from 'date-fns';
 import React, { useState } from 'react';
 import { PageContent } from '../../components/layout';
 import { CalendarEvent } from '../../interfaces/bot';
-import { TranslatableViewProps } from '../../interfaces/view';
+import { LocalizationProps } from '../../interfaces/localization';
 import { InternalCalendarEvent } from './components';
 import { MonthView } from './components/month';
 
@@ -20,7 +20,7 @@ const AppBar = styled('header')(({ theme }) => ({
 
 const events: CalendarEvent[] = [];
 
-export const View = ({ translations }: TranslatableViewProps) => {
+export const View = ({ localization }: LocalizationProps) => {
     const [date, setDate] = useState(new Date());
 
     const internalEvents = events.sort((a, b) => {
@@ -44,7 +44,7 @@ export const View = ({ translations }: TranslatableViewProps) => {
                     </IconButton>
                 </Box>
             </AppBar>
-            <MonthView date={date} setDate={setDate} events={internalEvents} translations={translations} />
+            <MonthView date={date} setDate={setDate} events={internalEvents} localization={localization} />
         </PageContent>
     );
 };

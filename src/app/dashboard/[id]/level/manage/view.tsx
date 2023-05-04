@@ -23,8 +23,9 @@ import { ItemIcon, ItemRowContainer, ItemTextBlock } from '../../../../../compon
 import { PageContent, PageHeader } from '../../../../../components/layout';
 import { SaveConfirm } from '../../../../../components/save_confirm';
 import { GuildLevel, PartialGuildLevel } from '../../../../../interfaces/bot';
+import { LocalizationProps } from '../../../../../interfaces/localization';
 import { DataGuild, RedisMember } from '../../../../../interfaces/redis';
-import { GuildSettingsViewProps, TranslatableViewProps } from '../../../../../interfaces/view';
+import { GuildSettingsViewProps } from '../../../../../interfaces/view';
 import { getMemberAvatar } from '../../../../../utils/cdn';
 import { filterPredicateMember } from '../../../../../utils/discord';
 
@@ -78,14 +79,14 @@ const ItemFormGroup = styled(Box)(({ theme }) => ({
     gap: theme.spacing(1)
 }));
 
-interface LevelItemProps extends TranslatableViewProps {
+interface LevelItemProps extends LocalizationProps {
     guild: DataGuild;
     member: RedisMember;
     value: PartialGuildLevel;
     setValue: (value: PartialGuildLevel) => void;
 }
 
-export const LevelItem = ({ guild, member, value, setValue, translations }: LevelItemProps) => (
+export const LevelItem = ({ guild, member, value, setValue, localization: { translations } }: LevelItemProps) => (
     <ItemContainer>
         <ItemRowContainer>
             <ItemIcon
@@ -155,7 +156,9 @@ interface Props extends GuildSettingsViewProps {
     levels: GuildLevel[];
 }
 
-export const View = ({ guild, levels, translations }: Props) => {
+export const View = ({ guild, levels, localization }: Props) => {
+    const { translations } = localization;
+
     const [pageIndex, setPageIndex] = useState(0);
     const [perPageLimit, setPerPageLimit] = useState(50);
 
@@ -204,7 +207,7 @@ export const View = ({ guild, levels, translations }: Props) => {
     };
 
     if (data.length < 1)
-        return (<NotFoundView translations={translations} />);
+        return (<NotFoundView localization={localization} />);
 
     return (
         <PageContent>
@@ -289,18 +292,19 @@ export const View = ({ guild, levels, translations }: Props) => {
                                 member={member}
                                 value={data ?? { user_id: level.user.id, level: level.level, xp: level.xp }}
                                 setValue={updateValue}
-                                translations={translations}
+                                localization={localization}
                             />
                         );
                     })
                 }
             </Section>
+
             <SaveConfirm open={values.length > 0} onSave={handleActionSave} onCancel={handleActionCancel} />
         </PageContent>
     );
 };
 
-export const LoadingView = ({ translations }: TranslatableViewProps) => (
+export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <PageContent display="flex">
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
@@ -314,7 +318,7 @@ export const LoadingView = ({ translations }: TranslatableViewProps) => (
     </PageContent>
 );
 
-export const NotFoundView = ({ translations }: TranslatableViewProps) => (
+export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <PageContent display="flex">
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>

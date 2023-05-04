@@ -43,8 +43,8 @@ import { ChannelType } from 'discord-api-types/v10';
 import { useRouter } from 'next/navigation';
 import { ellipsis } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
+import { LocalizationProps } from '../../interfaces/localization';
 import { RedisChannel } from '../../interfaces/redis';
-import { useTranslation } from '../../localizations/client';
 import { filterPredicateChannel, sortChannels } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
 
@@ -85,7 +85,7 @@ const AccordionDetails = styled(MuiAccordionDetails)({
     flexDirection: 'column'
 });
 
-interface Props extends DialogProps {
+interface Props extends DialogProps, LocalizationProps {
     choices: RedisChannel[];
     values: string[];
     onClickSaveButton: (e: MouseEvent<HTMLButtonElement>, channels: string[]) => Promise<boolean>;
@@ -97,12 +97,11 @@ export const ManageDisabledChannelsDialog = (
         onClose,
         choices,
         values,
-        onClickSaveButton
+        onClickSaveButton,
+        localization: { translations }
     }: Props
 ) => {
     const router = useRouter();
-
-    const translations = useTranslation();
 
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 

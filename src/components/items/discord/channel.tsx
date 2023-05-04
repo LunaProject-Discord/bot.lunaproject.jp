@@ -3,12 +3,13 @@
 import {
     AnnouncementChannelIcon,
     ForumChannelIcon,
-    Popover,
     StageChannelIcon,
     TextChannelIcon,
     VoiceChannelIcon
-} from '@lunaproject-discord/web-core';
-import { APIGuildChannel } from '@lunaproject-discord/web-discord';
+} from '@lunaproject-discord/web-core/dist/components/Icons/channels';
+import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
+import { ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { APIGuildChannel } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { ListItemButtonProps, ListItemText, PopoverProps, Typography } from '@mui/material';
 import { APIGuildCategoryChannel, APITextBasedChannel, APIVoiceChannelBase, ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
@@ -16,14 +17,11 @@ import React, { Fragment, MouseEvent, useState } from 'react';
 import { RedisChannel } from '../../../interfaces/redis';
 import { filterPredicateChannel, sortChannels } from '../../../utils/discord';
 import {
-    ItemDisabledProps,
     ItemFormContainer,
     ItemIcon,
-    ItemIconProps,
     ItemRoot,
     ItemRowContainer,
     ItemTextBlock,
-    ItemTextBlockProps,
     SearchBox,
     Select,
     SnowflakeItemProps
@@ -120,9 +118,23 @@ export const ChannelPopover = (
     );
 };
 
-type ChannelItemProps = ItemTextBlockProps & ItemIconProps & ItemDisabledProps & Props;
+type ChannelItemProps = ItemProps & Props;
 
-export const ChannelItem = ({ icon, primary, secondary, value, setValue, choices, disabled }: ChannelItemProps) => {
+export const ChannelItem = (
+    {
+        icon,
+        iconSx,
+        primary,
+        secondary,
+        primaryTypographyProps,
+        secondaryTypographyProps,
+        value,
+        setValue,
+        choices,
+        disabled,
+        sx
+    }: ChannelItemProps
+) => {
     const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
     const open = Boolean(anchorEl);
 
@@ -132,10 +144,16 @@ export const ChannelItem = ({ icon, primary, secondary, value, setValue, choices
     const currentChannel = choices.find((channel) => channel.id === value);
     return (
         <Fragment>
-            <ItemRoot>
+            <ItemRoot sx={sx}>
                 <ItemRowContainer size={secondary ? 'medium' : 'small'}>
-                    <ItemIcon icon={icon} />
-                    <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
+                    <ItemIcon icon={icon} iconSx={iconSx} />
+                    <ItemTextBlock
+                        primary={primary}
+                        secondary={secondary}
+                        primaryTypographyProps={primaryTypographyProps}
+                        secondaryTypographyProps={secondaryTypographyProps}
+                        disabled={disabled}
+                    />
                 </ItemRowContainer>
                 <ItemFormContainer>
                     <Select

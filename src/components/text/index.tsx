@@ -20,19 +20,20 @@ export const CodeStyleContainer = styled(Box)(({ theme }) => ({
 
 export const Code = styled('code')(({ theme }) => codeStyled(theme));
 
-const hotkeyStyled = (theme: Theme): CSSObject => ({
+const keyStyled = (theme: Theme): CSSObject => ({
     ...codeStyled(theme),
     color: theme.palette.text.primary,
     lineHeight: 'normal',
     textTransform: 'none',
     userSelect: 'none',
+    borderBottom: `solid 3px ${theme.palette.divider}`,
     [theme.breakpoints.down('md')]: {
         display: 'none'
     }
 });
 
-export const HotkeyStyleContainer = styled(Box)(({ theme }) => ({
-    '& kbd': hotkeyStyled(theme)
+export const KeyStyleContainer = styled(Box)(({ theme }) => ({
+    '& kbd': keyStyled(theme)
 }));
 
-export const Hotkey = styled(Code.withComponent('kbd'))(({ theme }) => hotkeyStyled(theme));
+export const Key = styled(Code.withComponent('kbd'))(({ theme }) => keyStyled(theme));

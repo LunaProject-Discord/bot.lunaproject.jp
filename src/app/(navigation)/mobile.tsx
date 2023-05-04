@@ -77,7 +77,45 @@ const MobileNavigationListSubHeader = styled(ListSubheader)(({ theme }) => ({
     lineHeight: 'unset'
 }));
 
-export const MobileNavigation = ({ openPopover, user, localization: { translations } }: NavigationRootProps) => {
+export const MobileNavigationAppBarMenu = (
+    {
+        openPopover,
+        user,
+        localization: { translations }
+    }: NavigationRootProps
+) => user ? (
+    <Tooltip title={user.username} placement="bottom">
+        <IconButton
+            onClick={({ currentTarget }) => openPopover(currentTarget, 'user')}
+            sx={{ p: .5 }}
+        >
+            <Avatar
+                src={getUserAvatar(user)}
+                sx={{ width: 32, height: 32, pointerEvents: 'none' }}
+            />
+        </IconButton>
+    </Tooltip>
+) : (
+    <Fragment>
+        <Tooltip title={translations.site_settings} placement="bottom">
+            <IconButton onClick={({ currentTarget }) => openPopover(currentTarget, 'user')}>
+                <TuneOutlined />
+            </IconButton>
+        </Tooltip>
+        <Tooltip title={translations.login} placement="bottom">
+            <IconButton
+                component={NextLink}
+                href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+            >
+                <LoginOutlined />
+            </IconButton>
+        </Tooltip>
+    </Fragment>
+);
+
+export const MobileNavigation = ({ openPopover, closePopover, user, localization }: NavigationRootProps) => {
+    const { translations } = localization;
+
     const [open, setOpen] = useState(false);
 
     const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
@@ -91,31 +129,12 @@ export const MobileNavigation = ({ openPopover, user, localization: { translatio
                     </IconButton>
                     <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
                     <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
-                        {user ? <Tooltip title={user.username} placement="bottom">
-                            <IconButton
-                                onClick={({ currentTarget }) => openPopover(currentTarget, 'user')}
-                                sx={{ p: .5 }}
-                            >
-                                <Avatar
-                                    src={getUserAvatar(user)}
-                                    sx={{ width: 32, height: 32, pointerEvents: 'none' }}
-                                />
-                            </IconButton>
-                        </Tooltip> : <Fragment>
-                            <Tooltip title={translations.site_settings} placement="bottom">
-                                <IconButton onClick={({ currentTarget }) => openPopover(currentTarget, 'user')}>
-                                    <TuneOutlined />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={translations.login} placement="bottom">
-                                <IconButton
-                                    component={NextLink}
-                                    href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
-                                >
-                                    <LoginOutlined />
-                                </IconButton>
-                            </Tooltip>
-                        </Fragment>}
+                        <MobileNavigationAppBarMenu
+                            openPopover={openPopover}
+                            closePopover={closePopover}
+                            user={user}
+                            localization={localization}
+                        />
                     </Box>
                 </Toolbar>
             </AppBar>

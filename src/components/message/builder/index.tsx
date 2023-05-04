@@ -2,27 +2,26 @@
 
 import { Theme, ThemeProvider } from '@emotion/react';
 import { Preview, THEMES } from '@lunaproject-discord/web-core';
+import { DialogProps } from '@lunaproject-discord/web-core/dist/components/Dialog';
 import { Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { CloseOutlined, DeleteOutlined, EditOutlined, PreviewOutlined, SaveOutlined } from '@mui/icons-material';
 import { AppBar, Box, Button, Dialog, Divider, Tab, Tabs, Toolbar, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { LocalizationProps } from '../../../interfaces/localization';
 import { DataMessage } from '../../../interfaces/message';
 import { toDataMessage, toEmbed, toMessage } from '../../../libs/message';
-import { useTranslation } from '../../../localizations/client';
 import { Editor } from '../editor';
 import { MessagePreviewContainer } from '../preview';
 import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } from './styles';
 
-interface Props {
+interface Props extends DialogProps, LocalizationProps {
     message: DataMessage;
     setMessage: (value: DataMessage | ((prevValue: DataMessage) => DataMessage)) => void;
-
-    open: boolean;
-    onClose: () => void;
 }
 
-export const MessageBuilder = ({ message, setMessage, open, onClose }: Props) => {
-    const translations = useTranslation();
+export const MessageBuilder = ({ open, onClose, message, setMessage, localization }: Props) => {
+    const { translations } = localization;
+
     const theme = useTheme();
 
     const [lightTheme, setLightTheme] = useState(theme.palette.mode === 'light');
@@ -125,7 +124,11 @@ export const MessageBuilder = ({ message, setMessage, open, onClose }: Props) =>
                 <ThemeProvider theme={defaultTheme}>
                     <MessageEditorWrapper>
                         <MessageEditorSection active={tabState === 'editor'}>
-                            <Editor message={editableMessage} setMessage={setEditableMessage} />
+                            <Editor
+                                message={editableMessage}
+                                setMessage={setEditableMessage}
+                                localization={localization}
+                            />
                         </MessageEditorSection>
                         <MessageEditorSection active={tabState === 'preview'}>
                             <MessagePreviewContainer>

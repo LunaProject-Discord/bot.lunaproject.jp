@@ -10,11 +10,11 @@ import { size } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
 import { NumberFieldItem, RolePopover } from '../../../../components/items';
 import { GuildSettingsLevelRewardRole } from '../../../../interfaces/bot';
+import { LocalizationProps } from '../../../../interfaces/localization';
 import { RedisRole } from '../../../../interfaces/redis';
-import { useTranslation } from '../../../../localizations/client';
 import { sortRoles } from '../../../../utils/discord';
 
-interface Props extends DialogProps {
+interface Props extends DialogProps, LocalizationProps {
     choices: RedisRole[];
     initialValues: GuildSettingsLevelRewardRole[];
     onClickSaveButton: (e: MouseEvent<HTMLButtonElement>, roles: GuildSettingsLevelRewardRole[]) => Promise<boolean>;
@@ -26,12 +26,11 @@ export const ManageRolesDialog = (
         onClose,
         choices,
         initialValues,
-        onClickSaveButton
+        onClickSaveButton,
+        localization: { translations }
     }: Props
 ) => {
     const router = useRouter();
-
-    const translations = useTranslation();
 
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 

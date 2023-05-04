@@ -15,11 +15,11 @@ import {
     Tooltip
 } from '@mui/material';
 import React from 'react';
-import { useTranslation } from '../../../../localizations/client';
+import { LocalizationProps } from '../../../../interfaces/localization';
 import { EmbedAccordionSummary } from './accordion';
 import { EmbedAuthorEditor } from './author';
 import { EmbedBodyEditor } from './body';
-import { EmbedFieldListEditor } from './fields';
+import { EmbedFieldsEditor } from './fields';
 import { EmbedFooterEditor } from './footer';
 import { EmbedImageEditor } from './image';
 
@@ -71,15 +71,15 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     padding: theme.spacing(0)
 }));
 
-interface Props {
+interface Props extends LocalizationProps {
     id: number;
     embed: EmbedData;
     onChange: (embed: EmbedData) => void;
     removeEmbed: () => void;
 }
 
-export const EmbedEditor = ({ id, embed, onChange, removeEmbed }: Props) => {
-    const translations = useTranslation();
+export const EmbedEditor = ({ id, embed, onChange, removeEmbed, localization }: Props) => {
+    const { translations } = localization;
 
     const theme = useTheme();
 
@@ -117,27 +117,27 @@ export const EmbedEditor = ({ id, embed, onChange, removeEmbed }: Props) => {
                 <EmbedAuthorEditor
                     value={embed.author}
                     setValue={(author) => onChange({ ...embed, author })}
-                    translations={translations}
+                    localization={localization}
                 />
                 <EmbedBodyEditor
                     value={{ color: embed.color, title: embed.title, description: embed.description, url: embed.url }}
                     setValue={(body) => onChange({ ...embed, ...body })}
-                    translations={translations}
+                    localization={localization}
                 />
-                <EmbedFieldListEditor
+                <EmbedFieldsEditor
                     value={embed.fields}
                     setValue={(fields) => onChange({ ...embed, fields })}
-                    translations={translations}
+                    localization={localization}
                 />
                 <EmbedImageEditor
                     value={embed.image}
                     setValue={(image) => onChange({ ...embed, image })}
-                    translations={translations}
+                    localization={localization}
                 />
                 <EmbedFooterEditor
                     value={{ timestamp: embed.timestamp, ...embed.footer }}
                     setValue={({ timestamp, ...footer }) => onChange({ ...embed, timestamp, footer })}
-                    translations={translations}
+                    localization={localization}
                 />
             </AccordionDetails>
         </ContainerAccordion>

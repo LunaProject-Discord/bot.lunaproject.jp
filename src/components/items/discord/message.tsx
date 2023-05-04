@@ -1,24 +1,18 @@
 'use client';
 
 import { ThemeProvider } from '@emotion/react';
-import { MessageContainer, MessagePreview, THEMES } from '@lunaproject-discord/web-core';
+import { MessageContainer, MessagePreview } from '@lunaproject-discord/web-core/dist/components/Message';
+import { ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { THEMES } from '@lunaproject-discord/web-core/dist/styles';
 import { EditOutlined } from '@mui/icons-material';
 import { Box, Button, styled, Typography, useTheme } from '@mui/material';
 import React, { Dispatch, Fragment, ReactNode, SetStateAction, useState } from 'react';
+import { LocalizationProps } from '../../../interfaces/localization';
 import { DataMessage } from '../../../interfaces/message';
 import { toMessage } from '../../../libs/message';
-import { useTranslation } from '../../../localizations/client';
 import { MessageBuilder } from '../../message/builder';
 import { MessagePreviewContainer } from '../../message/preview';
-import {
-    ItemDisabledProps,
-    ItemIcon,
-    ItemIconProps,
-    ItemRowContainer,
-    ItemTextBlock,
-    ItemTextBlockProps,
-    ItemVariableProps
-} from '../index';
+import { ItemIcon, ItemRowContainer, ItemTextBlock, ItemVariableProps } from '../index';
 
 const ItemContainer = styled(Box)(({ theme }) => ({
     padding: theme.spacing(0, 1.5),
@@ -47,7 +41,7 @@ const ItemGridContainer = styled(Box)(({ theme }) => ({
     }
 }));
 
-interface Props extends ItemTextBlockProps, ItemIconProps, ItemDisabledProps, ItemVariableProps<DataMessage> {
+interface Props extends ItemProps, ItemVariableProps<DataMessage>, LocalizationProps {
     open?: boolean;
     setOpen?: Dispatch<SetStateAction<boolean>>;
     children?: ReactNode;
@@ -56,17 +50,23 @@ interface Props extends ItemTextBlockProps, ItemIconProps, ItemDisabledProps, It
 export const MessageItem = (
     {
         icon,
+        iconSx,
         primary,
         secondary,
+        primaryTypographyProps,
+        secondaryTypographyProps,
         value,
         setValue,
         disabled,
         open,
         setOpen,
+        sx,
+        localization,
         children
     }: Props
 ) => {
-    const translations = useTranslation();
+    const { translations } = localization;
+
     const theme = useTheme();
 
     const [__open, __setOpen] = useState(false);
@@ -79,10 +79,16 @@ export const MessageItem = (
 
     return (
         <Fragment>
-            <ItemContainer>
+            <ItemContainer sx={sx}>
                 <ItemRowContainer>
-                    <ItemIcon icon={icon} />
-                    <ItemTextBlock primary={primary} secondary={secondary} disabled={disabled} />
+                    <ItemIcon icon={icon} iconSx={iconSx} />
+                    <ItemTextBlock
+                        primary={primary}
+                        secondary={secondary}
+                        primaryTypographyProps={primaryTypographyProps}
+                        secondaryTypographyProps={secondaryTypographyProps}
+                        disabled={disabled}
+                    />
                 </ItemRowContainer>
                 <ItemGridContainer>
                     <Box sx={{ width: { xs: '100%', md: '60%' } }}>
@@ -128,10 +134,11 @@ export const MessageItem = (
             </ItemContainer>
 
             <MessageBuilder
-                message={value}
-                setMessage={setMessage}
                 open={open ?? __open}
                 onClose={handleDialogClose}
+                message={value}
+                setMessage={setMessage}
+                localization={localization}
             />
         </Fragment>
     );

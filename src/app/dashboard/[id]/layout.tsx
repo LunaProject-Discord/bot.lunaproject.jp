@@ -3,7 +3,7 @@ import React, { Fragment, ReactNode } from 'react';
 import { WithIdParamProps } from '../../../interfaces/page';
 import { getGuildSettings } from '../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../libs/redis';
-import { getTranslation } from '../../../localizations/server';
+import { getLocalization } from '../../../localizations/server';
 import { hasPermission } from '../../../utils/discord';
 import { getUser } from '../../utils';
 import { UnauthorizedView } from '../../view';
@@ -11,7 +11,7 @@ import { Navigation } from './navigation';
 import { ForbiddenView, NotFoundView } from './view';
 
 export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
-    const translations = getTranslation();
+    const { translations } = getLocalization();
 
     const user = await getUser();
     const guild = await getGuildById(id);
@@ -51,7 +51,7 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
 };
 
 const Layout = async ({ children, params: { id } }: WithIdParamProps & { children: ReactNode }) => {
-    const translations = getTranslation();
+    const localization = getLocalization();
 
     const userData = getUser();
 
@@ -61,7 +61,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const [user, guild, guildSettings] = await Promise.all([userData, guildData, guildSettingsData]);
 
     if (!user)
-        return (<UnauthorizedView translations={translations} />);
+        return (<UnauthorizedView localization={localization} />);
 
     if (!guild || !guildSettings)
         return (<NotFoundView />);
@@ -72,7 +72,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
 
     return (
         <Fragment>
-            <Navigation guild={guild} translations={translations} />
+            <Navigation user={user} guild={guild} localization={localization} />
             {children}
         </Fragment>
     );

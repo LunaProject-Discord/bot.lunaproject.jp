@@ -5,7 +5,7 @@ import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
-import React, { MouseEvent, useState } from 'react';
+import React, { Fragment, MouseEvent, useState } from 'react';
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../../../components/dialog';
 import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
@@ -14,7 +14,9 @@ import { GuildSettingsQuote } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { saveGuildSettings } from '../utils';
 
-export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
+export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+    const { translations } = localization;
+
     const [openDisabledChannelsDialog, setOpenDisabledChannelsDialog] = useState(false);
     const [openDisabledRolesDialog, setOpenDisabledRolesDialog] = useState(false);
 
@@ -76,64 +78,75 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
     };
 
     return (
-        <PageContent>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.quote}</Typography>
-                    <Typography variant="body1">{translations.quote_description}</Typography>
-                </Box>
-            </PageHeader>
-            <Section>
-                <SectionContent>
-                    <SwitchItem
-                        primary={translations.quote_enabled}
-                        checked={enabled}
-                        setChecked={setEnabled}
-                    />
-                    <SwitchItem
-                        primary={translations.quote_reaction}
-                        checked={reaction}
-                        setChecked={setReaction}
-                        disabled={!enabled}
-                    />
-                    <SwitchItem
-                        primary={translations.quote_message}
-                        checked={message}
-                        setChecked={setMessage}
-                        disabled={!enabled}
-                    />
-                    <SwitchItem
-                        primary={translations.quote_other_guild_to_this_guild}
-                        checked={otherGuildToThisGuild}
-                        setChecked={setOtherGuildToThisGuild}
-                        disabled={!enabled}
-                    />
-                    <SwitchItem
-                        primary={translations.quote_this_guild_to_other_guild}
-                        checked={thisGuildToOtherGuild}
-                        setChecked={setThisGuildToOtherGuild}
-                        disabled={!enabled}
-                    />
-                    <ActionItem
-                        primary={translations.manage_disabled_channels}
-                        secondary={translations.quote_manage_disabled_channels_description}
-                        onAction={() => setOpenDisabledChannelsDialog(true)}
-                        disabled={!enabled}
-                    />
-                    <ActionItem
-                        primary={translations.manage_disabled_roles}
-                        secondary={translations.quote_manage_disabled_roles_description}
-                        onAction={() => setOpenDisabledRolesDialog(true)}
-                        disabled={!enabled}
-                    />
-                </SectionContent>
-            </Section>
+        <Fragment>
+            <PageContent>
+                <PageHeader>
+                    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
+                        <Typography variant="h4">{translations.quote}</Typography>
+                        <Typography variant="body1">{translations.quote_description}</Typography>
+                    </Box>
+                </PageHeader>
+                <Section>
+                    <SectionContent>
+                        <SwitchItem
+                            primary={translations.quote_enabled}
+                            checked={enabled}
+                            setChecked={setEnabled}
+                        />
+                        <SwitchItem
+                            primary={translations.quote_reaction}
+                            checked={reaction}
+                            setChecked={setReaction}
+                            disabled={!enabled}
+                        />
+                        <SwitchItem
+                            primary={translations.quote_message}
+                            checked={message}
+                            setChecked={setMessage}
+                            disabled={!enabled}
+                        />
+                        <SwitchItem
+                            primary={translations.quote_other_guild_to_this_guild}
+                            checked={otherGuildToThisGuild}
+                            setChecked={setOtherGuildToThisGuild}
+                            disabled={!enabled}
+                        />
+                        <SwitchItem
+                            primary={translations.quote_this_guild_to_other_guild}
+                            checked={thisGuildToOtherGuild}
+                            setChecked={setThisGuildToOtherGuild}
+                            disabled={!enabled}
+                        />
+                        <ActionItem
+                            primary={translations.manage_disabled_channels}
+                            secondary={translations.quote_manage_disabled_channels_description}
+                            onAction={() => setOpenDisabledChannelsDialog(true)}
+                            disabled={!enabled}
+                        />
+                        <ActionItem
+                            primary={translations.manage_disabled_roles}
+                            secondary={translations.quote_manage_disabled_roles_description}
+                            onAction={() => setOpenDisabledRolesDialog(true)}
+                            disabled={!enabled}
+                        />
+                    </SectionContent>
+                </Section>
+
+                <SaveConfirm
+                    open={!deepEqual(quote, toObject(), { strict: true })}
+                    disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
+                    onSave={handleActionSave}
+                    onCancel={handleActionCancel}
+                />
+            </PageContent>
+
             <ManageDisabledChannelsDialog
                 open={openDisabledChannelsDialog}
                 onClose={() => setOpenDisabledChannelsDialog(false)}
                 choices={guild.channels.filter((channel) => channel.type !== ChannelType.GuildForum && channel.type !== ChannelType.GuildStageVoice)}
                 values={quote.disabled.channels}
                 onClickSaveButton={handleClickDisabledChannelsDialogSaveButton}
+                localization={localization}
             />
             <ManageDisabledRolesDialog
                 open={openDisabledRolesDialog}
@@ -141,13 +154,8 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                 choices={guild.roles}
                 values={quote.disabled.roles}
                 onClickSaveButton={handleClickDisabledRolesDialogSaveButton}
+                localization={localization}
             />
-            <SaveConfirm
-                open={!deepEqual(quote, toObject(), { strict: true })}
-                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
-                onSave={handleActionSave}
-                onCancel={handleActionCancel}
-            />
-        </PageContent>
+        </Fragment>
     );
 };

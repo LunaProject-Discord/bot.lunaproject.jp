@@ -5,7 +5,7 @@ import { Box, ButtonBase, OutlinedInput, Popover } from '@mui/material';
 import Color from 'color';
 import React, { MouseEvent, useState } from 'react';
 import { ChromePicker } from 'react-color';
-import { TranslatableViewProps } from '../../../../interfaces/view';
+import { LocalizationProps } from '../../../../interfaces/localization';
 import { isValidHexColor } from '../../../../utils/color';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { TextArea } from '../../text_area';
@@ -19,16 +19,9 @@ interface EmbedBody {
     url: string;
 }
 
-type Props = ItemDisabledProps & ItemVariableProps<EmbedBody> & TranslatableViewProps;
+type Props = ItemDisabledProps & ItemVariableProps<EmbedBody> & LocalizationProps;
 
-export const EmbedBodyEditor = (
-    {
-        value,
-        setValue,
-        disabled,
-        translations
-    }: Props
-) => {
+export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { translations } }: Props) => {
     const theme = useTheme();
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -124,7 +117,6 @@ export const EmbedBodyEditor = (
                                 onChange={(e) => setColor(e.target.value)}
                                 type="text"
                                 disabled={disabled}
-                                // fullWidth
                                 size="small"
                                 margin="none"
                             />

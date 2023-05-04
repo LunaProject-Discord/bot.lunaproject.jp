@@ -12,7 +12,7 @@ import { GuildSettingsMusic } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { saveGuildSettings } from '../utils';
 
-export const View = ({ guild, settings, translations }: GuildSettingsViewProps) => {
+export const View = ({ guild, settings, localization: { translations } }: GuildSettingsViewProps) => {
     const music = settings.music;
     const [enabled, setEnabled, resetEnabled] = useResettableState(music.enabled);
     const [webPanel, setWebPanel, resetWebPanel] = useResettableState(music.web_panel);
@@ -118,6 +118,7 @@ export const View = ({ guild, settings, translations }: GuildSettingsViewProps) 
                     />
                 </SectionContent>
             </Section>
+
             <SaveConfirm
                 open={!deepEqual(music, toObject(), { strict: true })}
                 onSave={handleActionSave}

@@ -20,12 +20,12 @@ import deepEqual from 'deep-equal';
 import { useRouter } from 'next/navigation';
 import { ellipsis, size } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
+import { LocalizationProps } from '../../interfaces/localization';
 import { RedisRole } from '../../interfaces/redis';
-import { useTranslation } from '../../localizations/client';
 import { filterPredicateRole, sortRoles } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
 
-interface Props extends DialogProps {
+interface Props extends DialogProps, LocalizationProps {
     choices: RedisRole[];
     values: string[];
     onClickSaveButton: (e: MouseEvent<HTMLButtonElement>, roles: string[]) => Promise<boolean>;
@@ -37,12 +37,11 @@ export const ManageDisabledRolesDialog = (
         onClose,
         choices,
         values,
-        onClickSaveButton
+        onClickSaveButton,
+        localization: { translations }
     }: Props
 ) => {
     const router = useRouter();
-
-    const translations = useTranslation();
 
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 
