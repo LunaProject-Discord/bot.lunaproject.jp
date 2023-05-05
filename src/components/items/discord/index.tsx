@@ -76,7 +76,7 @@ const SelectOutline = styled(
     borderRadius: theme.shape.borderRadius
 }));
 
-interface SelectProps extends BoxProps {
+export interface SelectProps extends BoxProps {
     children?: React.ReactNode;
     open?: boolean;
     disabled?: boolean;

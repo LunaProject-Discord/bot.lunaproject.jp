@@ -8,13 +8,16 @@ import {
     StyledUl,
     TemporaryDrawer
 } from '@lunaproject-discord/web-core/dist/components/Drawer';
+import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import {
     DirectionsRunOutlined,
     DriveFileRenameOutlineOutlined,
     EmojiEventsOutlined,
     FormatQuoteOutlined,
+    HomeOutlined,
     MenuOutlined,
     MusicNoteOutlined,
+    NotificationsOutlined,
     PersonAddOutlined,
     PersonRemoveOutlined,
     PollOutlined,
@@ -24,22 +27,26 @@ import {
     TextSnippetOutlined,
     TranslateOutlined
 } from '@mui/icons-material';
-import { Avatar, Box, ButtonBase, IconButton, ListItemIcon, ListItemText, styled, Typography } from '@mui/material';
+import { Box, IconButton, styled, Typography } from '@mui/material';
 import Image from 'next/image';
-import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { Fragment, MouseEventHandler, useState } from 'react';
 import { PopoverType } from '../../(navigation)';
 import { MobileNavigationAppBarMenu } from '../../(navigation)/mobile';
+import { UserPopover } from '../../(popovers)/user';
 import { AppBar, Toolbar } from '../../../components/appbar';
 import { DataGuild, RedisGuild } from '../../../interfaces/redis';
 import { UserViewProps } from '../../../interfaces/view';
-import { getGuildIcon } from '../../../utils/cdn';
+import { GuildSelect } from './components';
 
 interface Props extends UserViewProps {
     guild: RedisGuild | DataGuild;
+
+    guilds: OAuthGuild[];
+    mutualGuilds: string[];
 }
 
-interface HeaderProps extends Props {
+interface HeaderProps extends Omit<Props, 'guilds' | 'mutualGuilds'> {
     onDrawerToggleClick: MouseEventHandler;
 }
 
@@ -60,22 +67,32 @@ const Header = ({ onDrawerToggleClick, user, localization }: HeaderProps) => {
     };
 
     return (
-        <AppBar>
-            <Toolbar>
-                <IconButton onClick={onDrawerToggleClick} color="inherit">
-                    <MenuOutlined />
-                </IconButton>
-                <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
-                <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <MobileNavigationAppBarMenu
-                        openPopover={openPopover}
-                        closePopover={closePopover}
-                        user={user}
-                        localization={localization}
-                    />
-                </Box>
-            </Toolbar>
-        </AppBar>
+        <Fragment>
+            <AppBar>
+                <Toolbar>
+                    <IconButton onClick={onDrawerToggleClick} color="inherit">
+                        <MenuOutlined />
+                    </IconButton>
+                    <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                    <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <MobileNavigationAppBarMenu
+                            openPopover={openPopover}
+                            closePopover={closePopover}
+                            user={user}
+                            localization={localization}
+                        />
+                    </Box>
+                </Toolbar>
+            </AppBar>
+
+            <UserPopover
+                open={popoverState === 'user' && open}
+                anchorEl={anchorEl}
+                onClose={closePopover}
+                user={user}
+                localization={localization}
+            />
+        </Fragment>
     );
 };
 
@@ -91,45 +108,53 @@ const HeaderButtonContainer = styled('li')(({ theme }) => ({
     display: 'block'
 }));
 
-interface DrawerProps extends HeaderProps {
+interface DrawerProps extends Props, HeaderProps {
     open: boolean;
 }
 
-const Drawer = ({ open, onDrawerToggleClick, guild, localization: { translations } }: DrawerProps) => {
+const Drawer = (
+    {
+        open,
+        onDrawerToggleClick,
+        guild,
+        guilds,
+        mutualGuilds,
+        localization: { translations }
+    }: DrawerProps
+) => {
+    const router = useRouter();
+
     const drawer = (
         <DrawerContent>
             <StyledUl container>
-                <DrawerHeader>
+                <DrawerHeader sx={{ p: { md: 1.5 } }}>
                     <IconButton onClick={onDrawerToggleClick} sx={{ display: { md: 'none' } }}>
                         <MenuOutlined />
                     </IconButton>
                     <Typography variant="h5">{translations.guild_settings}</Typography>
                 </DrawerHeader>
                 <HeaderButtonContainer>
-                    <ButtonBase
-                        component={NextLink}
-                        href={`/dashboard/${guild.id}`}
-                        disableRipple
-                        sx={{
-                            width: '100%',
-                            height: 60,
-                            p: 1,
-                            borderRadius: 1,
-                            transition: 'color 150ms cubic-bezier(.4, 0, .2, 1) 0ms, background-color 150ms cubic-bezier(.4, 0, .2, 1) 0ms',
-                            '&:hover': {
-                                bgcolor: 'action.hover'
-                            },
-                            '&:active': {
-                                bgcolor: 'action.focus'
-                            }
-                        }}
-                    >
-                        <ListItemIcon sx={{ minWidth: 46 }}>
-                            <Avatar src={getGuildIcon(guild)} />
-                        </ListItemIcon>
-                        <ListItemText primary={guild.name} sx={{ m: 0 }} />
-                    </ButtonBase>
+                    <GuildSelect
+                        value={guild.id}
+                        setValue={(value) => router.push(`/dashboard/${value}`)}
+                        guilds={guilds}
+                        mutualGuilds={mutualGuilds}
+                    />
                 </HeaderButtonContainer>
+                <StyledUl sx={{ px: 1 }}>
+                    <DrawerItem
+                        href={`/dashboard/${guild.id}`}
+                        icon={<HomeOutlined />}
+                        label={translations.home}
+                        depth={1}
+                    />
+                    <DrawerItem
+                        href={`/dashboard/${guild.id}/notifications`}
+                        icon={<NotificationsOutlined />}
+                        label={translations.notifications}
+                        depth={1}
+                    />
+                </StyledUl>
                 <DrawerItem label={translations.settings_basic} openImmediately>
                     <DrawerItem
                         href={`/dashboard/${guild.id}/prefix-nickname`}
@@ -235,7 +260,7 @@ const Drawer = ({ open, onDrawerToggleClick, guild, localization: { translations
     );
 };
 
-export const Navigation = ({ user, guild, localization }: Props) => {
+export const Navigation = ({ guild, user, guilds, mutualGuilds, localization }: Props) => {
     const [open, setOpen] = useState(false);
 
     const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
@@ -244,15 +269,17 @@ export const Navigation = ({ user, guild, localization }: Props) => {
         <Fragment>
             <Header
                 onDrawerToggleClick={handleDrawerToggle}
-                user={user}
                 guild={guild}
+                user={user}
                 localization={localization}
             />
             <Drawer
                 open={open}
                 onDrawerToggleClick={handleDrawerToggle}
-                user={user}
                 guild={guild}
+                user={user}
+                guilds={guilds}
+                mutualGuilds={mutualGuilds}
                 localization={localization}
             />
         </Fragment>

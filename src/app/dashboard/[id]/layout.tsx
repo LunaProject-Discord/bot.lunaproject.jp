@@ -1,11 +1,12 @@
+import { hasPermission as hasPermissionForOAuthGuild } from '@lunaproject-discord/web-discord/dist/utils';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React, { Fragment, ReactNode } from 'react';
 import { WithIdParamProps } from '../../../interfaces/page';
 import { getGuildSettings } from '../../../libs/bot';
-import { getGuildById, getMemberById } from '../../../libs/redis';
+import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '../../../libs/redis';
 import { getLocalization } from '../../../localizations/server';
-import { hasPermission } from '../../../utils/discord';
-import { getUser } from '../../utils';
+import { hasPermission, sortOAuthGuilds } from '../../../utils/discord';
+import { getGuilds, getUser } from '../../utils';
 import { UnauthorizedView } from '../../view';
 import { Navigation } from './navigation';
 import { ForbiddenView, NotFoundView } from './view';
@@ -54,11 +55,12 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const localization = getLocalization();
 
     const userData = getUser();
+    const guildsData = getGuilds();
 
     const guildData = getGuildById(id);
     const guildSettingsData = getGuildSettings(id);
 
-    const [user, guild, guildSettings] = await Promise.all([userData, guildData, guildSettingsData]);
+    const [user, guilds, guild, guildSettings] = await Promise.all([userData, guildsData, guildData, guildSettingsData]);
 
     if (!user)
         return (<UnauthorizedView localization={localization} />);
@@ -70,9 +72,19 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     if (!member || !hasPermission(guild, member))
         return (<ForbiddenView />);
 
+    const mutualGuilds = await getAndRequestUserGuildsById(user.id);
+
+    const sortedGuilds = sortOAuthGuilds(guilds.filter((guild) => hasPermissionForOAuthGuild(guild)));
+
     return (
         <Fragment>
-            <Navigation user={user} guild={guild} localization={localization} />
+            <Navigation
+                guild={guild}
+                user={user}
+                guilds={sortedGuilds}
+                mutualGuilds={mutualGuilds.map((mutualGuild) => mutualGuild.id)}
+                localization={localization}
+            />
             {children}
         </Fragment>
     );

@@ -1,5 +1,5 @@
 import { APIGuildChannel } from '@lunaproject-discord/web-discord';
-import { GuildMember } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { GuildMember, OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { APIRole } from 'discord-api-types/v10';
 import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole } from '../interfaces/redis';
 
@@ -10,6 +10,8 @@ export const hasPermission = (guild: RedisGuild | DataGuild, member: RedisMember
 export const sortChannels = (channels: (APIGuildChannel | RedisChannel)[]) => (channels?.slice() ?? []).sort((a, b) => a.position - b.position);
 
 export const sortRoles = (roles: (APIRole | RedisRole)[]) => (roles?.slice() ?? []).sort((a, b) => b.position - a.position);
+
+export const filterPredicateGuild = (guild: OAuthGuild | APIRole | RedisRole, keyword: string) => keyword.length < 1 || guild.id.includes(keyword) || guild.name.toLowerCase().includes(keyword.toLowerCase());
 
 export const filterPredicateChannel = (channel: APIGuildChannel | RedisChannel, keyword: string) => keyword.length < 1 || channel.id.includes(keyword) || channel.name.toLowerCase().includes(keyword.toLowerCase());
 
