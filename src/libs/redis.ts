@@ -5,6 +5,7 @@ import {
     RedisGuild,
     RedisMember,
     RedisRole,
+    RedisSnowflake,
     RedisUser,
     RedisUserGuild,
     RedisUserGuilds
@@ -107,7 +108,8 @@ export const getUserGuildsById = async (id: string): Promise<RedisUserGuilds | u
 };
 
 export const requestUserGuildsById = async (id: string): Promise<void> => {
-    await redis.publish(PUBSUB_USERS_GUILDS, id);
+    const data: RedisSnowflake = { id };
+    await redis.publish(PUBSUB_USERS_GUILDS, JSON.stringify(data));
 };
 
 const getUserGuilds = async (id: string): Promise<RedisUserGuild[] | undefined> => (await getUserGuildsById(id))?.guilds;
@@ -125,9 +127,11 @@ export const getAndRequestUserGuildsById = async (id: string): Promise<RedisUser
 };
 
 export const updateGuildSettingsById = async (id: string): Promise<void> => {
-    await redis.publish(PUBSUB_GUILDS_SETTINGS, id);
+    const data: RedisSnowflake = { id };
+    await redis.publish(PUBSUB_GUILDS_SETTINGS, JSON.stringify(data));
 };
 
 export const updateUserSettingsById = async (id: string): Promise<void> => {
-    await redis.publish(PUBSUB_USERS_SETTINGS, id);
+    const data: RedisSnowflake = { id };
+    await redis.publish(PUBSUB_USERS_SETTINGS, JSON.stringify(data));
 };

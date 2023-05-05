@@ -1,4 +1,4 @@
-interface RedisSnowflake {
+export interface RedisSnowflake {
     id: string;
 }
 
