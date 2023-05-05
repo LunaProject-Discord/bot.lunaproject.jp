@@ -222,7 +222,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                     width: '100%',
                     py: 3,
                     position: 'sticky',
-                    top: { xs: 57, md: 0 },
+                    top: { xs: 56, md: 0 },
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
                     alignItems: 'center',
