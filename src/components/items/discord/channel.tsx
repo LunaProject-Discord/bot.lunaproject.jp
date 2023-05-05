@@ -10,10 +10,10 @@ import {
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { APIGuildChannel } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import { ListItemButtonProps, ListItemText, PopoverProps, Typography } from '@mui/material';
+import { ListItemButtonProps, ListItemText, PopoverProps, Theme, Typography, useMediaQuery } from '@mui/material';
 import { APIGuildCategoryChannel, APITextBasedChannel, APIVoiceChannelBase, ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
-import React, { Fragment, MouseEvent, useState } from 'react';
+import React, { Fragment, MouseEvent, useEffect, useState } from 'react';
 import { RedisChannel } from '../../../interfaces/redis';
 import { filterPredicateChannel, sortChannels } from '../../../utils/discord';
 import {
@@ -63,6 +63,8 @@ export const ChannelPopover = (
         ...props
     }: ChannelPopoverProps
 ) => {
+    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+
     const [search, setSearch] = useState('');
 
     const guildChannels = sortChannels(choices);
@@ -81,6 +83,11 @@ export const ChannelPopover = (
         handlePopupClose();
     };
 
+    useEffect(() => {
+        if (open && isDesktop)
+            setTimeout(() => document.getElementById('popover-search')?.focus());
+    }, [open]);
+
     return (
         <Popover
             open={open}
@@ -93,6 +100,7 @@ export const ChannelPopover = (
             {...props}
         >
             <SearchBox
+                id="popover-search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="チャンネルを検索..."

@@ -2,10 +2,10 @@
 
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
-import { Box, ListItemButtonProps, ListItemText, PopoverProps, Typography } from '@mui/material';
+import { Box, ListItemButtonProps, ListItemText, PopoverProps, Theme, Typography, useMediaQuery } from '@mui/material';
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
-import React, { Fragment, MouseEvent, useState } from 'react';
+import React, { Fragment, MouseEvent, useEffect, useState } from 'react';
 import { filterPredicateRole, sortRoles } from '../../../utils/discord';
 import {
     ItemFormContainer,
@@ -56,6 +56,8 @@ export const RolePopover = (
         ...props
     }: RolePopoverProps
 ) => {
+    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+
     const [search, setSearch] = useState('');
 
     const roles = sortRoles(choices) as APIRole[];
@@ -70,6 +72,11 @@ export const RolePopover = (
         handlePopupClose();
     };
 
+    useEffect(() => {
+        if (open && isDesktop)
+            setTimeout(() => document.getElementById('popover-search')?.focus());
+    }, [open]);
+
     return (
         <Popover
             open={open}
@@ -82,6 +89,7 @@ export const RolePopover = (
             {...props}
         >
             <SearchBox
+                id="popover-search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="役職を検索..."
