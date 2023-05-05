@@ -12,7 +12,9 @@ import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord';
 import {
     AnalyticsOutlined,
     AutoAwesomeOutlined,
+    CloudOffOutlined,
     DnsOutlined,
+    HomeOutlined,
     LeaderboardOutlined,
     LockPersonOutlined,
     LoginOutlined,
@@ -263,6 +265,38 @@ export const ForbiddenView = () => (
                 このページにアクセスするための権限がありません。<br />
                 あなたに権限が付与されていることが確実な場合は、ほかのアカウントに切り替えて再度お試しください。
             </Typography>
+        </Box>
+    </PageContent>
+);
+
+
+export const NotFoundView = () => (
+    <PageContent display="flex">
+        <Box
+            sx={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                placeItems: 'center',
+                placeContent: 'center',
+                gap: 1
+            }}
+        >
+            <CloudOffOutlined sx={{ fontSize: '10rem' }} color="primary" />
+            <Typography variant="h4">ページが見つかりません</Typography>
+            <Typography align="center">
+                指定されたページが見つかりませんでした。<br />
+                ページのURLが変更されたか、ページそのものが削除された可能性があります。<br />
+                お手数ですが、下のボタンからホームに戻ってください。
+            </Typography>
+            <Button
+                href="/"
+                variant="contained"
+                size="large"
+                startIcon={<HomeOutlined />}
+            >
+                ホームに戻る
+            </Button>
         </Box>
     </PageContent>
 );

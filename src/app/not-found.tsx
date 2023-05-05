@@ -1,10 +1,5 @@
-const NotFound = () => {
-    return (
-        <div>
-            <p>Something went wrong!</p>
-            <button>Reset error boundary</button>
-        </div>
-    );
-};
+import { NotFoundView } from './view';
+
+const NotFound = () => (<NotFoundView />);
 
 export default NotFound;
