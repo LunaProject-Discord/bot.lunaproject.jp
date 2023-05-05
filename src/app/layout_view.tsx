@@ -22,7 +22,7 @@ interface LayoutProps extends LocalizationProps {
     children: ReactNode;
 }
 
-const RootLayout = ({ children, localization }: LayoutProps) => {
+const Layout = ({ children, localization }: LayoutProps) => {
     const { locale } = localization;
 
     const [{ isDarkMode }, setAppearance] = useRecoilState(appearanceAtom);
@@ -48,7 +48,7 @@ const RootLayout = ({ children, localization }: LayoutProps) => {
                 mode: isDarkMode ? 'dark' : 'light'
             },
             typography: {
-                fontFamily: fontFamily
+                fontFamily
             }
         },
         getMuiLocalizationByName(locale),
@@ -104,10 +104,8 @@ const RootLayout = ({ children, localization }: LayoutProps) => {
     );
 };
 
-export const Layout = ({ children, localization }: LayoutProps) => {
-    return (
-        <RecoilRoot>
-            <RootLayout localization={localization}>{children}</RootLayout>
-        </RecoilRoot>
-    );
-};
+export const LayoutView = ({ children, localization }: LayoutProps) => (
+    <RecoilRoot>
+        <Layout localization={localization}>{children}</Layout>
+    </RecoilRoot>
+);

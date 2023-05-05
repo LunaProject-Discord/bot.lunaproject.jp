@@ -4,7 +4,7 @@ import '../../public/fonts/style.css';
 import '../../public/global.css';
 import { Body } from '../components/layout';
 import { getLocale, getLocalization } from '../localizations/server';
-import { Layout } from './layout_view';
+import { LayoutView } from './layout_view';
 
 export const generateMetadata = (): Metadata => {
     const locale = getLocale();
@@ -77,7 +77,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
             />
         </head>
         <Body>
-            <Layout localization={localization}>{children}</Layout>
+            <LayoutView localization={localization}>{children}</LayoutView>
         </Body>
         </html>
     );
