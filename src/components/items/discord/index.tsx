@@ -83,9 +83,16 @@ interface SelectProps extends BoxProps {
 }
 
 export const Select = ({ children, open, disabled, onClick, ...props }: SelectProps) => (
-    <SelectContainer open={open} disabled={disabled} onClick={!disabled ? onClick : undefined} {...props}>
+    <SelectContainer open={open} disabled={disabled} tabIndex={0} onClick={!disabled ? onClick : undefined} {...props}>
         <SelectContent>{children}</SelectContent>
-        <Box sx={{ position: 'absolute', right: 7, display: 'flex' }}>
+        <Box
+            sx={{
+                position: 'absolute',
+                right: 7,
+                display: 'flex',
+                color: !disabled ? 'action.active' : 'action.disabled'
+            }}
+        >
             {open ? <ArrowDropUpOutlined /> : <ArrowDropDownOutlined />}
         </Box>
         <SelectOutline />
@@ -93,7 +100,7 @@ export const Select = ({ children, open, disabled, onClick, ...props }: SelectPr
 );
 
 export const List = styled(MuiList)({
-    maxHeight: 300,
+    height: 300,
     ['overflowY' as any]: 'overlay',
     '& ul': {
         padding: 0
