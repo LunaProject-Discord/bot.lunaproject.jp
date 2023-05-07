@@ -6,7 +6,7 @@ import { Box, ListItemButtonProps, ListItemText, PopoverProps, Theme, Typography
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
 import React, { Fragment, MouseEvent, useEffect, useState } from 'react';
-import { filterPredicateRole, sortRoles } from '../../../utils/discord';
+import { filterPredicateRole, getRoleColor, sortRoles } from '../../../utils/discord';
 import {
     ItemFormContainer,
     ItemIcon,
@@ -26,13 +26,7 @@ interface ListItemProps extends Omit<ListItemButtonProps, 'role'> {
 const ListItem = ({ role, ...props }: ListItemProps) => (
     <ListItemButton key={role.id} sx={{ gap: 1 }} {...props}>
         <ListItemIcon sx={{ minWidth: 2 }}>
-            <Box
-                sx={{
-                    ...size(16),
-                    bgcolor: `#${role.color.toString(16).padStart(6, '0')}`,
-                    borderRadius: '50%'
-                }}
-            />
+            <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
         </ListItemIcon>
         <ListItemText primary={role.name} primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }} />
     </ListItemButton>
@@ -158,13 +152,7 @@ export const RoleItem = (
                         }}
                     >
                         {currentRole && <Fragment>
-                            <Box
-                                sx={{
-                                    ...size(16),
-                                    bgcolor: `#${currentRole.color.toString(16).padStart(6, '0')}`,
-                                    borderRadius: '50%'
-                                }}
-                            />
+                            <Box sx={{ ...size(16), bgcolor: getRoleColor(currentRole), borderRadius: '50%' }} />
                             <Typography variant="body2">{currentRole.name}</Typography>
                         </Fragment>}
                     </Select>

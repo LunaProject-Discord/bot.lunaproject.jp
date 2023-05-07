@@ -1,6 +1,5 @@
 import { errorWithName } from '@lunaproject-discord/web-core/dist/utils/logger';
 import { getGuildById } from '@lunaproject-discord/web-discord/dist/libs';
-import { hasPermission } from '@lunaproject-discord/web-discord/dist/utils';
 import { Prisma } from '@prisma/client';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -10,6 +9,7 @@ import { getGuildSettings } from '../../../../../libs/bot';
 import prisma from '../../../../../libs/prisma';
 import { updateGuildSettingsById } from '../../../../../libs/redis';
 import { COOKIE_TOKEN } from '../../../../../utils/cookie';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '../../../../../utils/discord';
 
 type valueOf<T> = T[keyof T];
 
@@ -23,7 +23,7 @@ export const GET = async (req: Request, { params: { id } }: WithIdParamProps) =>
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    if (!hasPermission(guild))
+    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
     return NextResponse.json(await getGuildSettings(id), { status: 200 });
@@ -39,7 +39,7 @@ export const PATCH = async (req: Request, { params: { id } }: WithIdParamProps) 
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    if (!hasPermission(guild))
+    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
     const data: Partial<GuildSettings> = await req.json();

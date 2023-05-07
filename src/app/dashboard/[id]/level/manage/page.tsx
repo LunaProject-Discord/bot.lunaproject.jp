@@ -4,7 +4,7 @@ import { WithIdParamProps } from '../../../../../interfaces/page';
 import { getGuildLevels, getGuildSettings } from '../../../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../../../libs/redis';
 import { getLocalization } from '../../../../../localizations/server';
-import { hasPermission } from '../../../../../utils/discord';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '../../../../../utils/discord';
 import { getUser } from '../../../../utils';
 import { NotFoundView } from '../../view';
 import { View } from './view';
@@ -19,7 +19,7 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
         return parent;
 
     const member = await getMemberById(user.id, guild.id);
-    if (!member || !hasPermission(guild, member))
+    if (!member || !someCheckMemberPermissions(guild, member, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return parent;
 
     const metadata = await parent;
@@ -37,14 +37,7 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     };
 };
 
-interface Props extends WithIdParamProps {
-    searchParams?: {
-        after?: number;
-        limit?: number;
-    };
-}
-
-const Page = async ({ params: { id }, searchParams }: Props) => {
+const Page = async ({ params: { id } }: WithIdParamProps) => {
     const localization = getLocalization();
 
     const guildData = getGuildById(id);

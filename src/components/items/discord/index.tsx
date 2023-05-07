@@ -27,7 +27,7 @@ interface SelectContainerProps {
     disabled?: boolean;
 }
 
-const SelectContainer = styled(Box)<SelectContainerProps>(({ theme, open, disabled }) => ({
+const SelectRoot = styled(Box)<SelectContainerProps>(({ theme, open, disabled }) => ({
     height: 40,
     padding: theme.spacing('8.5px', 4, '8.5px', 1.75),
     position: 'relative',
@@ -35,6 +35,7 @@ const SelectContainer = styled(Box)<SelectContainerProps>(({ theme, open, disabl
     alignItems: 'center',
     gap: theme.spacing(1),
     cursor: !disabled ? 'pointer' : 'default',
+    userSelect: 'none',
     color: !disabled ? theme.palette.text.primary : theme.palette.text.disabled,
     ...(!disabled && {
         '&:hover div.select-outline': {
@@ -83,7 +84,7 @@ export interface SelectProps extends BoxProps {
 }
 
 export const Select = ({ children, open, disabled, onClick, ...props }: SelectProps) => (
-    <SelectContainer open={open} disabled={disabled} tabIndex={0} onClick={!disabled ? onClick : undefined} {...props}>
+    <SelectRoot open={open} disabled={disabled} tabIndex={0} onClick={!disabled ? onClick : undefined} {...props}>
         <SelectContent>{children}</SelectContent>
         <Box
             sx={{
@@ -96,7 +97,7 @@ export const Select = ({ children, open, disabled, onClick, ...props }: SelectPr
             {open ? <ArrowDropUpOutlined /> : <ArrowDropDownOutlined />}
         </Box>
         <SelectOutline />
-    </SelectContainer>
+    </SelectRoot>
 );
 
 export const List = styled(MuiList)({

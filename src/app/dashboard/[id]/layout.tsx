@@ -5,7 +5,7 @@ import { WithIdParamProps } from '../../../interfaces/page';
 import { getGuildSettings } from '../../../libs/bot';
 import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '../../../libs/redis';
 import { getLocalization } from '../../../localizations/server';
-import { hasPermission, sortOAuthGuilds } from '../../../utils/discord';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions, sortOAuthGuilds } from '../../../utils/discord';
 import { getGuilds, getUser } from '../../utils';
 import { UnauthorizedView } from '../../view';
 import { Navigation } from './navigation';
@@ -20,7 +20,7 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
         return parent;
 
     const member = await getMemberById(user.id, guild.id);
-    if (!member || !hasPermission(guild, member))
+    if (!member || !someCheckMemberPermissions(guild, member, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return parent;
 
     const metadata = await parent;
@@ -69,7 +69,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
         return (<NotFoundView />);
 
     const member = await getMemberById(user.id, guild.id);
-    if (!member || !hasPermission(guild, member))
+    if (!member || !someCheckMemberPermissions(guild, member, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return (<ForbiddenView />);
 
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);

@@ -12,7 +12,7 @@ import { NumberFieldItem, RolePopover } from '../../../../components/items';
 import { GuildSettingsLevelRewardRole } from '../../../../interfaces/bot';
 import { LocalizationProps } from '../../../../interfaces/localization';
 import { RedisRole } from '../../../../interfaces/redis';
-import { sortRoles } from '../../../../utils/discord';
+import { getRoleColor, sortRoles } from '../../../../utils/discord';
 
 interface Props extends DialogProps, LocalizationProps {
     choices: RedisRole[];
@@ -127,7 +127,7 @@ export const ManageRolesDialog = (
                                             <Box
                                                 sx={{
                                                     ...size(16),
-                                                    bgcolor: `#${role.color.toString(16).padStart(6, '0')}`,
+                                                    bgcolor: getRoleColor(role),
                                                     borderRadius: '50%'
                                                 }}
                                             />

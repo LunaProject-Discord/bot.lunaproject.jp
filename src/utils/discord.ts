@@ -1,11 +1,28 @@
 import { APIGuildChannel } from '@lunaproject-discord/web-discord';
 import { GuildMember, OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import { APIRole } from 'discord-api-types/v10';
+import { APIGuild, APIRole } from 'discord-api-types/v10';
 import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole } from '../interfaces/redis';
 
 export * from '@lunaproject-discord/web-discord/dist/utils';
 
-export const hasPermission = (guild: RedisGuild | DataGuild, member: RedisMember, permission: number = 0x20) => guild.owner === member.id || (Number(member.permissions) & permission) === permission;
+export const ADMINISTRATOR_OR_MANAGE_GUILD = [0x4, 0x20];
+
+export const checkPermission = (permissions: string | number | undefined, permission: number) => (Number(permissions ?? 0) & permission) === permission;
+
+export const someCheckPermissions = (guild: OAuthGuild | APIGuild, ...permissions: number[]) => guild.owner || permissions.some((permission) => checkPermission(guild.permissions, permission));
+
+export const someCheckMemberPermissions = (guild: RedisGuild | DataGuild, member: RedisMember, ...permissions: number[]) => guild.owner === member.id || permissions.some((permission) => checkPermission(member.permissions, permission));
+
+export const everyCheckPermissions = (guild: OAuthGuild | APIGuild, ...permissions: number[]) => guild.owner || permissions.every((permission) => checkPermission(guild.permissions, permission));
+
+export const everyCheckMemberPermissions = (guild: RedisGuild | DataGuild, member: RedisMember, ...permissions: number[]) => guild.owner === member.id || permissions.every((permission) => checkPermission(member.permissions, permission));
+
+export const hasPermission = (guild: RedisGuild | DataGuild, member: RedisMember, permission: number = 0x20) => guild.owner === member.id || checkPermission(member.permissions, permission);
+
+export const getRoleColor = (role: RedisRole | APIRole) => {
+    const hexColor = role.color.toString(16).padStart(6, '0');
+    return `#${hexColor !== '1fffffff' ? hexColor : '99aab5'}`;
+};
 
 export const sortChannels = (channels: (APIGuildChannel | RedisChannel)[]) => (channels?.slice() ?? []).sort((a, b) => a.position - b.position);
 

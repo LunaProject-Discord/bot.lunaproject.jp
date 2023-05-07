@@ -22,7 +22,7 @@ import { ellipsis, size } from 'polished';
 import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
 import { LocalizationProps } from '../../interfaces/localization';
 import { RedisRole } from '../../interfaces/redis';
-import { filterPredicateRole, sortRoles } from '../../utils/discord';
+import { filterPredicateRole, getRoleColor, sortRoles } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
 
 interface Props extends DialogProps, LocalizationProps {
@@ -134,13 +134,7 @@ export const ManageDisabledRolesDialog = (
                                 sx={{ px: 1.5, borderRadius: 1 }}
                             >
                                 <ListItemIcon sx={{ placeItems: 'center', placeContent: 'center' }}>
-                                    <Box
-                                        sx={{
-                                            ...size(16),
-                                            bgcolor: `#${role.color.toString(16).padStart(6, '0')}`,
-                                            borderRadius: '50%'
-                                        }}
-                                    />
+                                    <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
                                 </ListItemIcon>
                                 <ListItemText
                                     primary={role.name}

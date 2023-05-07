@@ -1,9 +1,8 @@
-import { hasPermission } from '@lunaproject-discord/web-discord/dist/utils';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { getAndRequestUserGuildsById } from '../../libs/redis';
 import { getLocalization } from '../../localizations/server';
-import { sortOAuthGuilds } from '../../utils/discord';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortOAuthGuilds } from '../../utils/discord';
 import { getGuilds, getUser } from '../utils';
 import { UnauthorizedView } from '../view';
 import { View } from './view';
@@ -40,7 +39,7 @@ const Page = async () => {
 
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);
 
-    const sortedGuilds = sortOAuthGuilds(guilds.filter((guild) => hasPermission(guild)));
+    const sortedGuilds = sortOAuthGuilds(guilds.filter((guild) => someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD)));
 
     return (
         <View

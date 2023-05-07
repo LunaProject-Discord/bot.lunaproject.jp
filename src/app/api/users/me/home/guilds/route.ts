@@ -1,8 +1,9 @@
-import { hasPermission, sortOAuthGuilds } from '@lunaproject-discord/web-discord';
+import { sortOAuthGuilds } from '@lunaproject-discord/web-discord';
 import { NextResponse } from 'next/server';
 import { FeaturedGuild, GuildFeature } from '../../../../../../interfaces/bot';
 import { getGuildSettings } from '../../../../../../libs/bot';
 import { getAndRequestUserGuildsById } from '../../../../../../libs/redis';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '../../../../../../utils/discord';
 import { getGuilds, getUser } from '../../../../../utils';
 
 export const GET = async (req: Request) => {
@@ -21,7 +22,7 @@ export const GET = async (req: Request) => {
     for (const guild of filteredGuilds) {
         const features: GuildFeature[] = [];
 
-        if (hasPermission(guild))
+        if (someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
             features.push('manage');
 
         const guildSettings = await getGuildSettings(guild.id);

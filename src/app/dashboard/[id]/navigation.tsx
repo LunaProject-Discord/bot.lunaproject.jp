@@ -3,7 +3,9 @@
 import {
     DrawerContainer,
     DrawerContent,
-    DrawerItem,
+    DrawerGroup,
+    DrawerRouteLinkItem,
+    DrawerRouteLinkItemProps,
     PermanentDrawer,
     StyledUl,
     TemporaryDrawer
@@ -30,7 +32,7 @@ import {
 import { Box, IconButton, styled, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { Fragment, MouseEventHandler, useState } from 'react';
+import React, { Dispatch, Fragment, MouseEventHandler, SetStateAction, useState } from 'react';
 import { PopoverType } from '../../(navigation)';
 import { MobileNavigationAppBarMenu } from '../../(navigation)/mobile';
 import { UserPopover } from '../../(popovers)/user';
@@ -56,7 +58,7 @@ const Header = ({ onDrawerToggleClick, user, localization }: HeaderProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const open = popoverState !== undefined && Boolean(anchorEl);
 
-    const openPopover = (elem: HTMLButtonElement, type: PopoverType) => {
+    const openPopover = (elem: HTMLButtonElement) => {
         setPopoverState('user');
         setAnchorEl(elem);
     };
@@ -108,27 +110,62 @@ const HeaderButtonContainer = styled('li')(({ theme }) => ({
     display: 'block'
 }));
 
-interface DrawerProps extends Props, HeaderProps {
+interface DrawerProps {
     open: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>>;
 }
+
+const DrawerItem = (
+    {
+        icon,
+        label,
+        href,
+        exact,
+        open,
+        setOpen,
+        depth = 1,
+        ...props
+    }: Omit<DrawerRouteLinkItemProps, 'onClick'> & DrawerProps
+) => {
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push(href);
+        setOpen(false);
+    };
+
+    return (
+        <DrawerRouteLinkItem
+            icon={icon}
+            label={label}
+            href={href}
+            exact={exact}
+            onClick={handleClick}
+            depth={depth}
+            {...props}
+        />
+    );
+};
 
 const Drawer = (
     {
         open,
-        onDrawerToggleClick,
+        setOpen,
         guild,
         guilds,
         mutualGuilds,
         localization: { translations }
-    }: DrawerProps
+    }: DrawerProps & Props
 ) => {
     const router = useRouter();
+
+    const handleDrawerClose = () => setOpen(false);
 
     const drawer = (
         <DrawerContent>
             <StyledUl container>
                 <DrawerHeader sx={{ p: { md: 1.5 } }}>
-                    <IconButton onClick={onDrawerToggleClick} sx={{ display: { md: 'none' } }}>
+                    <IconButton onClick={handleDrawerClose} sx={{ display: { md: 'none' } }}>
                         <MenuOutlined />
                     </IconButton>
                     <Typography variant="h5">{translations.guild_settings}</Typography>
@@ -143,102 +180,118 @@ const Drawer = (
                 </HeaderButtonContainer>
                 <StyledUl sx={{ px: 1 }}>
                     <DrawerItem
-                        href={`/dashboard/${guild.id}`}
                         icon={<HomeOutlined />}
                         label={translations.home}
-                        depth={1}
+                        href={`/dashboard/${guild.id}`}
+                        exact
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/notifications`}
                         icon={<NotificationsOutlined />}
                         label={translations.notifications}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/notifications`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                 </StyledUl>
-                <DrawerItem label={translations.settings_basic} openImmediately>
+                <DrawerGroup label={translations.settings_basic}>
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/prefix-nickname`}
                         icon={<DriveFileRenameOutlineOutlined />}
                         label={translations.prefix_and_nickname}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/prefix-nickname`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/time-language`}
                         icon={<ScheduleOutlined />}
                         label={translations.time_and_language}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/time-language`}
+                        open={open}
+                        setOpen={setOpen}
                     />
-                </DrawerItem>
-                <DrawerItem label={translations.settings_guild_management} openImmediately>
+                </DrawerGroup>
+                <DrawerGroup label={translations.settings_guild_management}>
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/welcome`}
                         icon={<PersonAddOutlined />}
                         label={translations.welcome_message}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/welcome`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/goodbye`}
                         icon={<PersonRemoveOutlined />}
                         label={translations.goodbye_message}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/goodbye`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/activity`}
                         icon={<DirectionsRunOutlined />}
                         label={translations.activity}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/activity`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/role-panels`}
                         icon={<SellOutlined />}
                         label={translations.role_panels}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/role-panels`}
+                        open={open}
+                        setOpen={setOpen}
                     />
-                </DrawerItem>
-                <DrawerItem label={translations.settings_features_and_options} openImmediately>
+                </DrawerGroup>
+                <DrawerGroup label={translations.settings_features_and_options}>
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/level`}
                         icon={<EmojiEventsOutlined />}
                         label={translations.level}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/level`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/translate`}
                         icon={<TranslateOutlined />}
                         label={translations.translate}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/translate`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/vote`}
                         icon={<PollOutlined />}
                         label={translations.vote}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/vote`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/quote`}
                         icon={<FormatQuoteOutlined />}
                         label={translations.quote}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/quote`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/music`}
                         icon={<MusicNoteOutlined />}
                         label={translations.music}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/music`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/text-to-speech`}
                         icon={<RecordVoiceOverOutlined />}
                         label={translations.text_to_speech}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/text-to-speech`}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <DrawerItem
-                        href={`/dashboard/${guild.id}/logging`}
                         icon={<TextSnippetOutlined />}
                         label={translations.logging}
-                        depth={1}
+                        href={`/dashboard/${guild.id}/logging`}
+                        open={open}
+                        setOpen={setOpen}
                     />
-                </DrawerItem>
+                </DrawerGroup>
             </StyledUl>
         </DrawerContent>
     );
@@ -248,7 +301,7 @@ const Drawer = (
             <TemporaryDrawer
                 variant="temporary"
                 open={open}
-                onClose={onDrawerToggleClick}
+                onClose={handleDrawerClose}
                 ModalProps={{ keepMounted: true }}
             >
                 {drawer}
@@ -275,7 +328,7 @@ export const Navigation = ({ guild, user, guilds, mutualGuilds, localization }: 
             />
             <Drawer
                 open={open}
-                onDrawerToggleClick={handleDrawerToggle}
+                setOpen={setOpen}
                 guild={guild}
                 user={user}
                 guilds={guilds}

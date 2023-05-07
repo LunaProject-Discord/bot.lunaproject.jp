@@ -4,7 +4,7 @@ import { WithIdParamProps } from '../../../../../interfaces/page';
 import { getGuildNotificationById, getGuildNotificationByName } from '../../../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../../../libs/redis';
 import { getLocalization } from '../../../../../localizations/server';
-import { hasPermission } from '../../../../../utils/discord';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '../../../../../utils/discord';
 import { getUser } from '../../../../utils';
 import { NotFoundView } from '../../view';
 import { View } from './view';
@@ -27,7 +27,7 @@ export const generateMetadata = async ({ params: { id, idOrName } }: Props, pare
         return parent;
 
     const member = await getMemberById(user.id, guild.id);
-    if (!member || !hasPermission(guild, member))
+    if (!member || !someCheckMemberPermissions(guild, member, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return parent;
 
     const metadata = await parent;
