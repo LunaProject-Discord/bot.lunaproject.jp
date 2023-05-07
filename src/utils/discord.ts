@@ -5,7 +5,7 @@ import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole } from '../
 
 export * from '@lunaproject-discord/web-discord/dist/utils';
 
-export const ADMINISTRATOR_OR_MANAGE_GUILD = [0x4, 0x20];
+export const ADMINISTRATOR_OR_MANAGE_GUILD = [0x8, 0x20];
 
 export const checkPermission = (permissions: string | number | undefined, permission: number) => (Number(permissions ?? 0) & permission) === permission;
 
