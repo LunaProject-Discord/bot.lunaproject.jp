@@ -1,6 +1,7 @@
 'use client';
 
 import { TemporaryDrawer } from '@lunaproject-discord/web-core/dist/components/Drawer';
+import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
 import {
     AnalyticsOutlined,
     HomeOutlined,
@@ -21,13 +22,12 @@ import {
     ListItemText,
     ListSubheader,
     styled,
-    Tooltip,
-    useTheme
+    Tooltip
 } from '@mui/material';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import { usePathname } from 'next/navigation';
-import React, { Fragment, ReactNode, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { Dispatch, Fragment, MouseEvent, ReactNode, SetStateAction, useState } from 'react';
 import { AppBar, Toolbar } from '../../components/appbar';
 import { getUserAvatar } from '../../utils/discord';
 import { NavigationItemProps, NavigationRootProps } from './index';
@@ -39,22 +39,32 @@ const MobileNavigationGroup = styled(List)(({ theme }) => ({
 interface MobileNavigationItemProps extends NavigationItemProps {
     primary?: ReactNode;
     secondary?: ReactNode;
+    open: boolean;
+    setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const MobileNavigationItem = ({ href, icon, primary, secondary }: MobileNavigationItemProps) => {
+const MobileNavigationItem = ({ href, icon, primary, secondary, setOpen }: MobileNavigationItemProps) => {
+    const router = useRouter();
+
     const pathname = usePathname();
     const loweredPathname = pathname.toLowerCase();
     const loweredHref = href.toLowerCase();
     const isMatch = href === '/' ? loweredPathname === loweredHref : loweredPathname.startsWith(loweredHref);
 
-    const { palette: { mode } } = useTheme();
     const color = isMatch ? 'primary.main' : 'action.active';
+
+    const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        router.push(href);
+        setOpen(false);
+    };
 
     return (
         <ListItemButton
             component={NextLink}
             href={href}
             selected={isMatch}
+            onClick={handleClick}
             sx={{ px: 1.5, py: 1, gap: 1.5, borderRadius: 1 }}
         >
             <ListItemIcon sx={{ minWidth: 24, color }}>{icon}</ListItemIcon>
@@ -127,7 +137,9 @@ export const MobileNavigation = ({ openPopover, closePopover, user, localization
                     <IconButton onClick={handleDrawerToggle} color="inherit">
                         <MenuOutlined />
                     </IconButton>
-                    <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                    <RouteLink href="/">
+                        <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                    </RouteLink>
                     <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
                         <MobileNavigationAppBarMenu
                             openPopover={openPopover}
@@ -147,28 +159,38 @@ export const MobileNavigation = ({ openPopover, closePopover, user, localization
                     <IconButton onClick={handleDrawerToggle} color="inherit">
                         <MenuOutlined />
                     </IconButton>
-                    <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                    <RouteLink href="/">
+                        <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                    </RouteLink>
                 </Toolbar>
                 <MobileNavigationGroup>
                     <MobileNavigationItem
                         href="/"
                         icon={<HomeOutlined />}
                         primary={translations.home}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <MobileNavigationItem
                         href="/status"
                         icon={<AnalyticsOutlined />}
                         primary={translations.status}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <MobileNavigationItem
                         href="/leaderboard"
                         icon={<LeaderboardOutlined />}
                         primary={translations.leaderboard}
+                        open={open}
+                        setOpen={setOpen}
                     />
                     <MobileNavigationItem
                         href="/dashboard"
                         icon={<SettingsOutlined />}
                         primary={translations.guild_settings}
+                        open={open}
+                        setOpen={setOpen}
                     />
                 </MobileNavigationGroup>
             </TemporaryDrawer>

@@ -10,6 +10,7 @@ import {
     StyledUl,
     TemporaryDrawer
 } from '@lunaproject-discord/web-core/dist/components/Drawer';
+import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
 import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import {
     DirectionsRunOutlined,
@@ -32,7 +33,7 @@ import {
 import { Box, IconButton, styled, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { Dispatch, Fragment, MouseEventHandler, SetStateAction, useState } from 'react';
+import React, { Dispatch, Fragment, MouseEvent, MouseEventHandler, SetStateAction, useState } from 'react';
 import { PopoverType } from '../../(navigation)';
 import { MobileNavigationAppBarMenu } from '../../(navigation)/mobile';
 import { UserPopover } from '../../(popovers)/user';
@@ -75,7 +76,9 @@ const Header = ({ onDrawerToggleClick, user, localization }: HeaderProps) => {
                     <IconButton onClick={onDrawerToggleClick} color="inherit">
                         <MenuOutlined />
                     </IconButton>
-                    <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                    <RouteLink href="/">
+                        <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                    </RouteLink>
                     <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
                         <MobileNavigationAppBarMenu
                             openPopover={openPopover}
@@ -121,7 +124,6 @@ const DrawerItem = (
         label,
         href,
         exact,
-        open,
         setOpen,
         depth = 1,
         ...props
@@ -129,7 +131,8 @@ const DrawerItem = (
 ) => {
     const router = useRouter();
 
-    const handleClick = () => {
+    const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
         router.push(href);
         setOpen(false);
     };
