@@ -15,7 +15,7 @@ import { getMuiDateLocalizationByName, getMuiLocalizationByName } from '../local
 import { appearanceAtom, AppearanceType } from '../states/appearance';
 import { COOKIE_APPEARANCE } from '../utils/cookie';
 import { fetchWithUser } from '../utils/swr';
-import { Navigation } from './(navigation)';
+import { Navigation } from './_navigation';
 import { fontFamily, M_Plus_Rounded_1c, Nunito } from './theme';
 
 interface LayoutProps extends LocalizationProps {

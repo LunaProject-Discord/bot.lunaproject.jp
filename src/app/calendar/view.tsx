@@ -8,8 +8,8 @@ import React, { useState } from 'react';
 import { PageContent } from '../../components/layout';
 import { CalendarEvent } from '../../interfaces/bot';
 import { LocalizationProps } from '../../interfaces/localization';
-import { InternalCalendarEvent } from './components';
-import { MonthView } from './components/month';
+import { InternalCalendarEvent } from './_components';
+import { MonthView } from './_components/month';
 
 const AppBar = styled('header')(({ theme }) => ({
     height: 57,
