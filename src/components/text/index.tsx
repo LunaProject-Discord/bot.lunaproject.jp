@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, CSSObject, styled, Theme } from '@mui/material';
+import { Box, CSSObject, styled, Theme, Typography } from '@mui/material';
 
 const codeStyled = (theme: Theme): CSSObject => ({
     margin: theme.spacing(0, .25),
@@ -37,3 +37,30 @@ export const KeyStyleContainer = styled(Box)(({ theme }) => ({
 }));
 
 export const Key = styled(Code.withComponent('kbd'))(({ theme }) => keyStyled(theme));
+
+export const TranslatableTypography = styled(Typography)(({ theme }) => ({
+    '& br': {
+        '.mobile': {
+            [theme.breakpoints.up('md')]: {
+                display: 'none'
+            }
+        },
+        '.desktop': {
+            [theme.breakpoints.down('md')]: {
+                display: 'none'
+            }
+        }
+    }
+}));
+
+export const BrMobile = styled('br')(({ theme }) => ({
+    [theme.breakpoints.up('md')]: {
+        display: 'none'
+    }
+}));
+
+export const BrDesktop = styled('br')(({ theme }) => ({
+    [theme.breakpoints.down('md')]: {
+        display: 'none'
+    }
+}));
