@@ -46,11 +46,11 @@ const DayLabel = styled(
     borderRadius: '50%'
 }));
 
-const DayOfWeek = styled(Day)(({ theme }) => ({
+const DayOfWeek = styled(Day)({
     flexDirection: 'row',
     placeItems: 'center',
     placeContent: 'center'
-}));
+});
 
 interface YearViewProps extends LocalizationProps {
     year: number;
