@@ -121,7 +121,12 @@ export const GuildSelect = ({ value, setValue, guilds, mutualGuilds, disabled }:
                 open={open}
                 onClick={handlePopoverOpen}
                 disabled={disabled}
-                sx={{ pl: 1.5 }}
+                sx={{
+                    pl: 1.5,
+                    '& div:first-child': {
+                        gap: 1
+                    }
+                }}
             >
                 {currentGuild && <Fragment>
                     <Avatar
