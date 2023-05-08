@@ -316,7 +316,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
 
                 <SaveConfirm
                     open={!deepEqual(level, toObject(), { strict: true })}
-                    disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openMessageBuilder}
+                    disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openRolesDialog || openMessageBuilder}
                     onSave={handleActionSave}
                     onCancel={handleActionCancel}
                 />
