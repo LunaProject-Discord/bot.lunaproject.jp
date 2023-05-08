@@ -64,11 +64,11 @@ export const ManageRolesDialog = (
     const updateValue = (id: string, level: number) => setValues((values) => {
         let data = [...values];
 
-        const i = data.findIndex((level) => level.id === id);
+        const i = data.findIndex((role) => role.id === id);
         if (i !== -1)
             data.splice(i, 1);
 
-        const current = initialValues.find((level) => level.id === id);
+        const current = initialValues.find((role) => role.id === id);
         if (level !== current?.level)
             data.push({ id, level });
 
