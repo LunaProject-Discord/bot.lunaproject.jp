@@ -92,6 +92,7 @@ export const ManageDisabledRolesDialog = (
                 fullScreen={isMobile}
                 fullWidth
                 maxWidth="sm"
+                sx={{ zIndex: (theme) => theme.zIndex.modal + 100 }}
             >
                 <DialogHeader>
                     {translations.manage_disabled_roles}

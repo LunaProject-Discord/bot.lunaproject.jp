@@ -68,7 +68,7 @@ export const MessageBuilder = ({ open, onClose, message, setMessage, localizatio
             disableEscapeKeyDown
             fullScreen
             sx={{
-                zIndex: 1500,
+                zIndex: (theme) => theme.zIndex.modal + 100,
                 '& .MuiPaper-root': {
                     overflow: 'hidden'
                 }

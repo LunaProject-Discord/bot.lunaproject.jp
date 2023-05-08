@@ -95,6 +95,7 @@ export const ManageRolesDialog = (
                 fullScreen={isMobile}
                 fullWidth
                 maxWidth="sm"
+                sx={{ zIndex: (theme) => theme.zIndex.modal + 100 }}
             >
                 <DialogTitle sx={{ height: 64, m: 0, px: 2, display: 'flex', alignItems: 'center' }}>
                     {translations.level_reward_manage_roles}
