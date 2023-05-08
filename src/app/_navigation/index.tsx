@@ -30,7 +30,7 @@ export const Navigation = ({ user, localization }: NavigationProps) => {
     const open = popoverState !== undefined && Boolean(anchorEl);
 
     const openPopover = (elem: HTMLButtonElement, type: PopoverType) => {
-        setPopoverState('user');
+        setPopoverState(type);
         setAnchorEl(elem);
     };
 

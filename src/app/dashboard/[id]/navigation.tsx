@@ -59,8 +59,8 @@ const Header = ({ onDrawerToggleClick, user, localization }: HeaderProps) => {
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const open = popoverState !== undefined && Boolean(anchorEl);
 
-    const openPopover = (elem: HTMLButtonElement) => {
-        setPopoverState('user');
+    const openPopover = (elem: HTMLButtonElement, type: PopoverType) => {
+        setPopoverState(type);
         setAnchorEl(elem);
     };
 
