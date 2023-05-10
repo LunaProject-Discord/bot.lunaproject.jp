@@ -2,6 +2,7 @@
 
 import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
 import { Section } from '@lunaproject-discord/web-core/dist/components/Section';
+import { ItemIcon, ItemRowContainer, ItemTextBlock } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
 import { borderAndBoxShadow } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { ClearAllOutlined, CloudOffOutlined, SearchOutlined, TableRowsOutlined } from '@mui/icons-material';
@@ -19,7 +20,6 @@ import {
 } from '@mui/material';
 import clsx from 'clsx';
 import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
-import { ItemIcon, ItemRowContainer, ItemTextBlock } from '../../../../../components/items';
 import { PageContent, PageHeader } from '../../../../../components/layout';
 import { SaveConfirm } from '../../../../../components/save_confirm';
 import { GuildLevel, PartialGuildLevel } from '../../../../../interfaces/bot';
@@ -28,6 +28,7 @@ import { DataGuild, RedisMember } from '../../../../../interfaces/redis';
 import { GuildSettingsViewProps } from '../../../../../interfaces/view';
 import { getMemberAvatar } from '../../../../../utils/cdn';
 import { filterPredicateMember } from '../../../../../utils/discord';
+import { getStateActionValue } from '../../../../../utils/state';
 
 const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
     const res = await fetch(
@@ -112,7 +113,7 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                 <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.level}</Typography>
                 <NumberField
                     value={value.level}
-                    setValue={(level) => setValue({ ...value, level })}
+                    setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
                     min={0}
                     sx={{
                         width: {
@@ -126,7 +127,7 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                 <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.experience}</Typography>
                 <NumberField
                     value={value.xp}
-                    setValue={(xp) => setValue({ ...value, xp })}
+                    setValue={(action) => setValue({ ...value, xp: getStateActionValue(action, value.xp) })}
                     min={0}
                     max={20 * Math.max(value.level, 1)}
                     sx={{

@@ -1,21 +1,16 @@
 'use client';
 
-import {
-    AnnouncementChannelIcon,
-    ForumChannelIcon,
-    StageChannelIcon,
-    TextChannelIcon,
-    VoiceChannelIcon
-} from '@lunaproject-discord/web-core/dist/components/Icons/channels';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
-import { ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { ItemDisabledProps, ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { APIGuildChannel } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import { ListItemButtonProps, ListItemText, PopoverProps, Theme, Typography, useMediaQuery } from '@mui/material';
-import { APIGuildCategoryChannel, APITextBasedChannel, APIVoiceChannelBase, ChannelType } from 'discord-api-types/v10';
+import { ListItemButtonProps, ListItemText, Theme, Typography, useMediaQuery } from '@mui/material';
+import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
-import React, { Fragment, MouseEvent, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { PopoverProps } from '../../../interfaces/mui';
 import { RedisChannel } from '../../../interfaces/redis';
 import { filterPredicateChannel, sortChannels } from '../../../utils/discord';
+import { ChannelIcon } from '../../icons';
 import {
     ItemFormContainer,
     ItemIcon,
@@ -24,39 +19,32 @@ import {
     ItemTextBlock,
     SearchBox,
     Select,
-    SnowflakeItemProps
+    SnowflakeItemProps,
+    SnowflakeSelectProps
 } from '../index';
 import { List, ListItemButton, ListItemIcon, ListSubheader } from './index';
 
-interface ListItemProps extends ListItemButtonProps {
-    channel: APIGuildChannel;
+type Channel = APIGuildChannel | RedisChannel;
+
+export interface ChannelListItemProps extends ListItemButtonProps {
+    channel: Channel;
 }
 
-const ListItem = ({ channel, ...props }: ListItemProps) => (
+export const ChannelListItem = ({ channel, ...props }: ChannelListItemProps) => (
     <ListItemButton key={channel.id} sx={{ gap: 1 }} {...props}>
-        <ListItemIcon>
-            {channel.type === ChannelType.GuildText && <TextChannelIcon />}
-            {channel.type === ChannelType.GuildVoice && <VoiceChannelIcon />}
-            {channel.type === ChannelType.GuildAnnouncement && <AnnouncementChannelIcon />}
-            {channel.type === ChannelType.GuildStageVoice && <StageChannelIcon />}
-            {channel.type === ChannelType.GuildForum && <ForumChannelIcon />}
-        </ListItemIcon>
+        <ListItemIcon><ChannelIcon channel={channel} /></ListItemIcon>
         <ListItemText primary={channel.name} primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }} />
     </ListItemButton>
 );
 
-type Props = SnowflakeItemProps<RedisChannel>;
+export type ChannelProps = SnowflakeItemProps<Channel>;
 
-interface ChannelPopoverProps extends PopoverProps, Props {
-    anchorEl: PopoverProps['anchorEl'];
-    onPopupClose: () => void;
-}
+export type ChannelPopoverProps = PopoverProps & ChannelProps;
 
 export const ChannelPopover = (
     {
-        open,
         anchorEl,
-        onPopupClose,
+        setAnchorEl,
         value,
         setValue,
         choices,
@@ -65,20 +53,22 @@ export const ChannelPopover = (
 ) => {
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
 
+    const open = Boolean(anchorEl);
+
     const [search, setSearch] = useState('');
 
     const guildChannels = sortChannels(choices);
-    const categories = guildChannels.filter((channel): channel is APIGuildCategoryChannel => channel.type === ChannelType.GuildCategory);
-    const textChannels = guildChannels.filter((channel): channel is Extract<APIGuildChannel, APITextBasedChannel<any>> => channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildAnnouncement || channel.type === ChannelType.GuildForum);
-    const voiceChannels = guildChannels.filter((channel): channel is Extract<APIGuildChannel, APIVoiceChannelBase<any>> => channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildStageVoice);
+    const categories = guildChannels.filter((channel) => channel.type === ChannelType.GuildCategory);
+    const textChannels = guildChannels.filter((channel) => channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildAnnouncement || channel.type === ChannelType.GuildForum);
+    const voiceChannels = guildChannels.filter((channel) => channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildStageVoice);
     const channels = [...textChannels, ...voiceChannels];
 
     const handlePopupClose = () => {
         setSearch('');
-        onPopupClose();
+        setAnchorEl(null);
     };
 
-    const handleChange = (channel: APIGuildChannel) => {
+    const handleChange = (channel: Channel) => {
         setValue(channel.id);
         handlePopupClose();
     };
@@ -111,7 +101,7 @@ export const ChannelPopover = (
                         <ul>
                             {category && <ListSubheader>{category.name}</ListSubheader>}
                             {channels.filter((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search)).map((channel) => (
-                                <ListItem
+                                <ChannelListItem
                                     key={channel.id}
                                     channel={channel}
                                     selected={value === channel.id}
@@ -126,7 +116,39 @@ export const ChannelPopover = (
     );
 };
 
-type ChannelItemProps = ItemProps & Props;
+export type ChannelSelectProps = ItemDisabledProps & ChannelProps & SnowflakeSelectProps<ChannelPopoverProps>;
+
+export const ChannelSelect = ({ value, setValue, choices, disabled, selectSx, popoverProps }: ChannelSelectProps) => {
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+    const channel = choices.find((channel) => channel.id === value);
+    return (
+        <Fragment>
+            <Select
+                open={Boolean(anchorEl)}
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+                disabled={disabled}
+                sx={selectSx}
+            >
+                {channel && <Fragment>
+                    <ChannelIcon channel={channel} />
+                    <Typography variant="body1">{channel.name}</Typography>
+                </Fragment>}
+            </Select>
+
+            <ChannelPopover
+                anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
+                value={value}
+                setValue={setValue}
+                choices={choices}
+                {...popoverProps}
+            />
+        </Fragment>
+    );
+};
+
+export type ChannelItemProps = ItemProps & ChannelProps;
 
 export const ChannelItem = (
     {
@@ -142,59 +164,31 @@ export const ChannelItem = (
         disabled,
         sx
     }: ChannelItemProps
-) => {
-    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
-    const open = Boolean(anchorEl);
-
-    const handlePopoverOpen = (e: MouseEvent<HTMLDivElement>) => setAnchorEl(e.currentTarget);
-    const handlePopoverClose = () => setAnchorEl(null);
-
-    const currentChannel = choices.find((channel) => channel.id === value);
-    return (
-        <Fragment>
-            <ItemRoot sx={sx}>
-                <ItemRowContainer size={secondary ? 'medium' : 'small'}>
-                    <ItemIcon icon={icon} iconSx={iconSx} />
-                    <ItemTextBlock
-                        primary={primary}
-                        secondary={secondary}
-                        primaryTypographyProps={primaryTypographyProps}
-                        secondaryTypographyProps={secondaryTypographyProps}
-                        disabled={disabled}
-                    />
-                </ItemRowContainer>
-                <ItemFormContainer>
-                    <Select
-                        open={open}
-                        onClick={handlePopoverOpen}
-                        disabled={disabled}
-                        sx={{
-                            width: {
-                                xs: '100%',
-                                md: 300
-                            }
-                        }}
-                    >
-                        {currentChannel && <Fragment>
-                            {currentChannel.type === ChannelType.GuildText && <TextChannelIcon />}
-                            {currentChannel.type === ChannelType.GuildVoice && <VoiceChannelIcon />}
-                            {currentChannel.type === ChannelType.GuildAnnouncement && <AnnouncementChannelIcon />}
-                            {currentChannel.type === ChannelType.GuildStageVoice && <StageChannelIcon />}
-                            {currentChannel.type === ChannelType.GuildForum && <ForumChannelIcon />}
-                            <Typography variant="body1">{currentChannel.name}</Typography>
-                        </Fragment>}
-                    </Select>
-                </ItemFormContainer>
-            </ItemRoot>
-
-            <ChannelPopover
-                open={open}
-                anchorEl={anchorEl}
-                onPopupClose={handlePopoverClose}
+) => (
+    <ItemRoot sx={sx}>
+        <ItemRowContainer size={secondary ? 'medium' : 'small'}>
+            <ItemIcon icon={icon} iconSx={iconSx} />
+            <ItemTextBlock
+                primary={primary}
+                secondary={secondary}
+                primaryTypographyProps={primaryTypographyProps}
+                secondaryTypographyProps={secondaryTypographyProps}
+                disabled={disabled}
+            />
+        </ItemRowContainer>
+        <ItemFormContainer>
+            <ChannelSelect
                 value={value}
                 setValue={setValue}
                 choices={choices}
+                disabled={disabled}
+                selectSx={{
+                    width: {
+                        xs: '100%',
+                        md: 300
+                    }
+                }}
             />
-        </Fragment>
-    );
-};
+        </ItemFormContainer>
+    </ItemRoot>
+);

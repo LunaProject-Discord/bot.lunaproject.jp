@@ -21,6 +21,7 @@ import {
 } from '../../../../interfaces/bot';
 import { LocalizationProps } from '../../../../interfaces/localization';
 import { RedisChannel } from '../../../../interfaces/redis';
+import { getStateActionValue } from '../../../../utils/state';
 
 export const GridContainer = styled(Section)(({ theme }) => ({
     display: 'grid',
@@ -103,7 +104,10 @@ export const Moderation = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -161,7 +165,10 @@ export const Member = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -219,7 +226,10 @@ export const Voice = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -277,7 +287,10 @@ export const Category = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -329,7 +342,10 @@ export const TextChannel = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -381,7 +397,10 @@ export const VoiceChannel = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -433,7 +452,10 @@ export const Role = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -479,7 +501,10 @@ export const Emote = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -525,7 +550,10 @@ export const Invite = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -571,7 +599,10 @@ export const Webhook = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -617,7 +648,10 @@ export const Integration = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />
@@ -663,7 +697,10 @@ export const Message = (
             <ChannelItem
                 primary={translations.logging_channel}
                 value={value.channel_id}
-                setValue={(channelId) => setValue({ ...value, channel_id: channelId })}
+                setValue={(action) => setValue({
+                    ...value,
+                    channel_id: getStateActionValue(action, value.channel_id)
+                })}
                 choices={channels}
                 disabled={disabled || !value.enabled}
             />

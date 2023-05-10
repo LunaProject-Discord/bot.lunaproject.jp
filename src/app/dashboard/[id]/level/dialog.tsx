@@ -1,115 +1,162 @@
-import { Dialog, DialogActions, DialogProps } from '@lunaproject-discord/web-core/dist/components/Dialog';
-import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
-import { AddOutlined, CloseOutlined, DeleteOutlined, SaveOutlined } from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
-import { Box, Button, DialogContent, DialogTitle, Theme, useMediaQuery } from '@mui/material';
-import deepEqual from 'deep-equal';
-import { APIRole } from 'discord-api-types/v10';
-import { useRouter } from 'next/navigation';
-import { size } from 'polished';
-import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
-import { NumberFieldItem, RolePopover } from '../../../../components/items';
-import { GuildSettingsLevelRewardRole } from '../../../../interfaces/bot';
-import { LocalizationProps } from '../../../../interfaces/localization';
-import { RedisRole } from '../../../../interfaces/redis';
-import { getRoleColor, sortRoles } from '../../../../utils/discord';
+'use client';
 
-interface Props extends DialogProps, LocalizationProps {
-    choices: RedisRole[];
-    initialValues: GuildSettingsLevelRewardRole[];
-    onClickSaveButton: (e: MouseEvent<HTMLButtonElement>, roles: GuildSettingsLevelRewardRole[]) => Promise<boolean>;
+import { Dialog, DialogActions } from '@lunaproject-discord/web-core/dist/components/Dialog';
+import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
+import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import {
+    AddOutlined,
+    ClearOutlined,
+    CloseOutlined,
+    KeyboardArrowDownOutlined,
+    KeyboardArrowUpOutlined,
+    LabelOffOutlined
+} from '@mui/icons-material';
+import {
+    Box,
+    Button,
+    dialogActionsClasses,
+    DialogContent,
+    DialogTitle,
+    IconButton,
+    Theme,
+    Tooltip,
+    Typography,
+    useMediaQuery
+} from '@mui/material';
+import { nanoid } from 'nanoid';
+import React, { Dispatch, Fragment, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { DialogProps } from '../../../../components/dialog';
+import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover, RoleSelect } from '../../../../components/items';
+import { BrMobile, Key } from '../../../../components/text';
+import { GuildSettingsLevelRewardRole } from '../../../../interfaces/bot';
+import { RedisRole } from '../../../../interfaces/redis';
+import { GuildRolesViewProps } from '../../../../interfaces/view';
+import { sortRoles } from '../../../../utils/discord';
+import { getStateActionValue, UniqueId } from '../../../../utils/state';
+
+type EditableObject = GuildSettingsLevelRewardRole & UniqueId;
+
+interface RoleItemProps extends ItemDisabledProps, GuildRolesViewProps {
+    value: EditableObject;
+    setValue: Dispatch<SetStateAction<EditableObject | undefined>>;
 }
+
+const RoleItem = (
+    {
+        value,
+        setValue,
+        roles,
+        disabled,
+        localization: { translations }
+    }: RoleItemProps
+) => (
+    <ItemRoot sx={{ p: 0 }}>
+        <ItemRowContainer>
+            <RoleSelect
+                value={value.id}
+                setValue={(action) => setValue({ ...value, id: getStateActionValue(action, value.id) })}
+                choices={roles}
+                selectSx={{ width: { xs: '100%', md: 300 } }}
+            />
+        </ItemRowContainer>
+        <ItemFormContainer>
+            <NumberField
+                value={value.level}
+                setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
+                min={0}
+                disabled={disabled}
+                sx={{ width: { xs: '100%', md: 300 } }}
+            />
+            <Tooltip title={translations.remove} placement="top">
+                <IconButton onClick={() => setValue(undefined)} color="error">
+                    <ClearOutlined />
+                </IconButton>
+            </Tooltip>
+        </ItemFormContainer>
+    </ItemRoot>
+);
+
+type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildSettingsLevelRewardRole[]> & GuildRolesViewProps;
 
 export const ManageRolesDialog = (
     {
         open,
-        onClose,
-        choices,
-        initialValues,
-        onClickSaveButton,
-        localization: { translations }
-    }: Props
+        setOpen,
+        value,
+        setValue,
+        roles: choices,
+        localization
+    }: ManageRolesDialogProps
 ) => {
-    const router = useRouter();
+    const { translations } = localization;
 
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 
-    const [loading, setLoading] = useState(false);
-    const [pending, startTransition] = useTransition();
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-    const [values, setValues] = useResettableState(initialValues);
+    const initialValues = useMemo(() => value.map((role): EditableObject => ({ _id: nanoid(), ...role })), [value]);
+    const [roles, setRoles] = useState(initialValues);
 
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-    const popoverOpen = Boolean(anchorEl);
+    const choiceRoles = (sortRoles(choices) as RedisRole[]).filter((role) => role.position !== 0);
 
-    const handlePopoverOpen = (e: MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
-    const handlePopoverClose = () => setAnchorEl(null);
-
-    const roles = sortRoles(choices).filter((role) => role.position !== 0) as APIRole[];
-
-    const isChanged = () => !deepEqual(values, initialValues);
+    const toRoles = (roles: EditableObject[]) => roles.map(({ _id, ...role }) => role);
 
     const handleClose = () => {
-        setValues(initialValues);
-        onClose();
+        setValue(toRoles(roles));
+        setOpen(false);
     };
 
-    const handleDialogClose = (_: {}, reason: 'backdropClick' | 'escapeKeyDown') => {
-        if ((reason === 'backdropClick' || reason === 'escapeKeyDown') && isChanged())
-            return;
-
-        handleClose();
-    };
-
-    const updateValue = (id: string, level: number) => setValues((values) => {
+    const updateValue = (id: string, role: EditableObject | undefined) => setRoles((values) => {
         let data = [...values];
 
-        const i = data.findIndex((role) => role.id === id);
+        const i = data.findIndex((role) => role._id === id);
         if (i !== -1)
             data.splice(i, 1);
 
-        const current = initialValues.find((role) => role.id === id);
-        if (level !== current?.level)
-            data.push({ id, level });
+        if (role)
+            data.push(role);
 
+        setValue(toRoles(data));
         return data;
     });
 
-    const handleClickSaveButton = async (e: MouseEvent<HTMLButtonElement>) => {
-        setLoading(true);
-
-        const result = await onClickSaveButton(e, values);
-        if (result)
-            startTransition(() => router.refresh());
-
-        setLoading(false);
-        onClose();
-    };
+    useEffect(() => {
+        if (!open)
+            setRoles(initialValues);
+    }, [open, value]);
 
     return (
         <Fragment>
             <Dialog
                 open={open}
-                onClose={handleDialogClose}
-                disableEscapeKeyDown={isChanged()}
+                onClose={handleClose}
                 fullScreen={isMobile}
                 fullWidth
-                maxWidth="sm"
-                sx={{ zIndex: (theme) => theme.zIndex.modal + 100 }}
+                maxWidth="md"
+                sx={{
+                    zIndex: (theme) => theme.zIndex.modal + 100,
+                    [`& .${dialogActionsClasses.root}`]: {
+                        mt: 'auto',
+                        p: 2,
+                        pt: 0,
+                        gap: 1.5
+                    }
+                }}
             >
-                <DialogTitle sx={{ height: 64, m: 0, px: 2, display: 'flex', alignItems: 'center' }}>
+                <DialogTitle sx={{ m: 0, p: 2, pb: 0, display: 'flex', alignItems: 'center' }}>
                     {translations.level_reward_manage_roles}
                     <Button
-                        onClick={handlePopoverOpen}
+                        onClick={(e) => setAnchorEl(e.currentTarget)}
+                        disableElevation
                         variant="contained"
                         startIcon={<AddOutlined />}
+                        endIcon={anchorEl ? <KeyboardArrowUpOutlined /> : <KeyboardArrowDownOutlined />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}
                     </Button>
                 </DialogTitle>
                 <DialogContent
-                    dividers
                     sx={{
                         p: '0 !important',
                         display: 'flex',
@@ -117,64 +164,50 @@ export const ManageRolesDialog = (
                         overflow: 'hidden'
                     }}
                 >
-                    <Box sx={{ height: { xs: 'auto', md: 500 }, p: 2, overflowY: 'auto' }}>
-                        {values.filter((level) => choices.some((choice) => choice.id === level.id))
-                            .map((level) => {
-                                const role = choices.find((choice) => choice.id === level.id)!!;
-                                return (
-                                    <NumberFieldItem
-                                        key={role.id}
-                                        icon={
-                                            <Box
-                                                sx={{
-                                                    ...size(16),
-                                                    bgcolor: getRoleColor(role),
-                                                    borderRadius: '50%'
-                                                }}
-                                            />
-                                        }
-                                        primary={role.name}
-                                        value={level.level}
-                                        setValue={(level) => updateValue(role.id, level)}
-                                        min={0}
-                                    />
-                                );
-                            })
-                        }
+                    <Box sx={{ height: { xs: '100%', md: 500 }, p: 2, overflowY: 'auto' }}>
+                        {roles.length > 0 ? roles.map((role) => (
+                            <RoleItem
+                                key={role._id}
+                                value={role}
+                                setValue={(action) => updateValue(role._id, getStateActionValue(action, role))}
+                                roles={choiceRoles}
+                                localization={localization}
+                            />
+                        )) : <Box
+                            sx={{
+                                height: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                placeItems: 'center',
+                                placeContent: 'center',
+                                gap: 1
+                            }}
+                        >
+                            <LabelOffOutlined sx={{ fontSize: '10rem' }} color="primary" />
+                            <Typography variant="h4" align="center">登録されている<BrMobile />役職がありません</Typography>
+                            <Typography align="center">
+                                右上のボタンから役職を追加できます。
+                            </Typography>
+                        </Box>}
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    {isChanged() ? <Fragment>
-                        <Button
-                            onClick={handleClose}
-                            disabled={loading || pending}
-                            color="inherit"
-                            startIcon={<DeleteOutlined />}
-                        >
-                            {translations.reset}
-                        </Button>
-                        <LoadingButton
-                            onClick={handleClickSaveButton}
-                            loading={loading || pending}
-                            loadingPosition="start"
-                            variant="contained"
-                            startIcon={<SaveOutlined />}
-                        >
-                            {translations.save}
-                        </LoadingButton>
-                    </Fragment> : <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
+                    <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
                         {translations.close}
-                    </Button>}
+                        <Key sx={{ ml: 1, mr: -.5 }}>Esc</Key>
+                    </Button>
                 </DialogActions>
             </Dialog>
 
             <RolePopover
-                open={popoverOpen}
                 anchorEl={anchorEl}
-                onPopupClose={handlePopoverClose}
+                setAnchorEl={setAnchorEl}
                 value=""
-                setValue={(id) => updateValue(id, 0)}
-                choices={roles}
+                setValue={(action) => {
+                    const _id = nanoid();
+                    updateValue(_id, { _id, id: getStateActionValue(action, ''), level: 1 });
+                }}
+                choices={choiceRoles}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             />

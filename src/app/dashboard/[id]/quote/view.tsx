@@ -4,8 +4,7 @@ import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/comp
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
-import { ChannelType } from 'discord-api-types/v10';
-import React, { Fragment, MouseEvent, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../../../components/dialog';
 import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
@@ -26,6 +25,8 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
     const [message, setMessage, resetMessage] = useResettableState(quote.message);
     const [otherGuildToThisGuild, setOtherGuildToThisGuild, resetOtherGuildToThisGuild] = useResettableState(quote.other_guild_to_this_guild);
     const [thisGuildToOtherGuild, setThisGuildToOtherGuild, resetThisGuildToOtherGuild] = useResettableState(quote.this_guild_to_other_guild);
+    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(quote.disabled.channels);
+    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(quote.disabled.roles);
 
     const toObject = (): GuildSettingsQuote => ({
         enabled,
@@ -33,34 +34,11 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
         message,
         other_guild_to_this_guild: otherGuildToThisGuild,
         this_guild_to_other_guild: thisGuildToOtherGuild,
-        disabled: quote.disabled
+        disabled: {
+            channels: disabledChannels,
+            roles: disabledRoles
+        }
     });
-
-    const handleClickDisabledChannelsDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, channels: string[]) => saveGuildSettings(
-        guild.id,
-        {
-            quote: {
-                ...quote,
-                disabled: {
-                    ...quote.disabled,
-                    channels
-                }
-            }
-        }
-    );
-
-    const handleClickDisabledRolesDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, roles: string[]) => saveGuildSettings(
-        guild.id,
-        {
-            translate: {
-                ...quote,
-                disabled: {
-                    ...quote.disabled,
-                    roles
-                }
-            }
-        }
-    );
 
     const handleActionSave = () => saveGuildSettings(
         guild.id,
@@ -75,6 +53,8 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
         resetMessage();
         resetOtherGuildToThisGuild();
         resetThisGuildToOtherGuild();
+        resetDisabledChannels();
+        resetDisabledRoles();
     };
 
     return (
@@ -142,18 +122,18 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
 
             <ManageDisabledChannelsDialog
                 open={openDisabledChannelsDialog}
-                onClose={() => setOpenDisabledChannelsDialog(false)}
-                choices={guild.channels.filter((channel) => channel.type !== ChannelType.GuildForum && channel.type !== ChannelType.GuildStageVoice)}
-                values={quote.disabled.channels}
-                onClickSaveButton={handleClickDisabledChannelsDialogSaveButton}
+                setOpen={setOpenDisabledChannelsDialog}
+                value={disabledChannels}
+                setValue={setDisabledChannels}
+                channels={guild.channels}
                 localization={localization}
             />
             <ManageDisabledRolesDialog
                 open={openDisabledRolesDialog}
-                onClose={() => setOpenDisabledRolesDialog(false)}
-                choices={guild.roles}
-                values={quote.disabled.roles}
-                onClickSaveButton={handleClickDisabledRolesDialogSaveButton}
+                setOpen={setOpenDisabledRolesDialog}
+                value={disabledRoles}
+                setValue={setDisabledRoles}
+                roles={guild.roles}
                 localization={localization}
             />
         </Fragment>

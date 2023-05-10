@@ -13,6 +13,7 @@ import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Too
 import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
 import { LocalizationProps } from '../../../../interfaces/localization';
+import { getStateActionValue } from '../../../../utils/state';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { TextArea } from '../../text_area';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
@@ -151,7 +152,7 @@ export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: E
                             key={field._id ?? i}
                             index={i}
                             value={field}
-                            setValue={(field) => edit(i, field)}
+                            setValue={(action) => edit(i, getStateActionValue(action, field))}
                             disabled={disabled}
                             remove={(e) => {
                                 e.stopPropagation();

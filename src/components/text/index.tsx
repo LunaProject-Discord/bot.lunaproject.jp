@@ -38,20 +38,22 @@ export const KeyStyleContainer = styled(Box)(({ theme }) => ({
 
 export const Key = styled(Code.withComponent('kbd'))(({ theme }) => keyStyled(theme));
 
-export const TranslatableTypography = styled(Typography)(({ theme }) => ({
+export const translatableTypographyStyled = (theme: Theme): CSSObject => ({
     '& br': {
-        '.mobile': {
+        '&.mobile': {
             [theme.breakpoints.up('md')]: {
                 display: 'none'
             }
         },
-        '.desktop': {
+        '&.desktop': {
             [theme.breakpoints.down('md')]: {
                 display: 'none'
             }
         }
     }
-}));
+});
+
+export const TranslatableTypography = styled(Typography)(({ theme }) => translatableTypographyStyled(theme));
 
 export const BrMobile = styled('br')(({ theme }) => ({
     [theme.breakpoints.up('md')]: {

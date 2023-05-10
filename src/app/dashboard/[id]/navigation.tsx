@@ -33,7 +33,7 @@ import {
 import { Box, IconButton, styled, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { Dispatch, Fragment, MouseEvent, MouseEventHandler, SetStateAction, useState } from 'react';
+import React, { Dispatch, Fragment, MouseEventHandler, SetStateAction, useState } from 'react';
 import { AppBar, Toolbar } from '../../../components/appbar';
 import { DataGuild, RedisGuild } from '../../../interfaces/redis';
 import { UserViewProps } from '../../../interfaces/view';
@@ -129,13 +129,7 @@ const DrawerItem = (
         ...props
     }: Omit<DrawerRouteLinkItemProps, 'onClick'> & DrawerProps
 ) => {
-    const router = useRouter();
-
-    const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        router.push(href);
-        setOpen(false);
-    };
+    const handleClick = () => setOpen(false);
 
     return (
         <DrawerRouteLinkItem

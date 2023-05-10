@@ -12,10 +12,13 @@ import {
     ListItemButton as MuiListItemButton,
     ListItemIcon as MuiListItemIcon,
     ListSubheader as MuiListSubheader,
-    styled
+    styled,
+    SxProps,
+    Theme
 } from '@mui/material';
 import clsx from 'clsx';
 import React from 'react';
+import { PopoverProps } from '../../../interfaces/mui';
 import { ItemVariableProps } from '../index';
 
 export interface SnowflakeItemProps<T> extends ItemVariableProps<string> {
@@ -81,6 +84,11 @@ export interface SelectProps extends BoxProps {
     children?: React.ReactNode;
     open?: boolean;
     disabled?: boolean;
+}
+
+export interface SnowflakeSelectProps<T extends PopoverProps> {
+    selectSx?: SxProps<Theme>;
+    popoverProps?: T;
 }
 
 export const Select = ({ children, open, disabled, onClick, ...props }: SelectProps) => (

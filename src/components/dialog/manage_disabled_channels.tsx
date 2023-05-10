@@ -1,23 +1,9 @@
 'use client';
 
-import { Dialog, DialogActions, DialogHeader, DialogProps } from '@lunaproject-discord/web-core/dist/components/Dialog';
-import {
-    AnnouncementChannelIcon,
-    ForumChannelIcon,
-    StageChannelIcon,
-    TextChannelIcon,
-    VoiceChannelIcon
-} from '@lunaproject-discord/web-core/dist/components/Icons';
+import { Dialog, DialogActions, DialogHeader } from '@lunaproject-discord/web-core/dist/components/Dialog';
+import { ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
-import {
-    ChevronRightOutlined,
-    ClearOutlined,
-    CloseOutlined,
-    DeleteOutlined,
-    SaveOutlined,
-    SearchOutlined
-} from '@mui/icons-material';
-import { LoadingButton } from '@mui/lab';
+import { ChevronRightOutlined, ClearOutlined, CloseOutlined, SearchOutlined } from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,
     accordionClasses,
@@ -38,15 +24,14 @@ import {
     Theme,
     useMediaQuery
 } from '@mui/material';
-import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
-import { useRouter } from 'next/navigation';
 import { ellipsis } from 'polished';
-import React, { Fragment, MouseEvent, useState, useTransition } from 'react';
-import { LocalizationProps } from '../../interfaces/localization';
-import { RedisChannel } from '../../interfaces/redis';
+import React, { Fragment, useState } from 'react';
+import { GuildChannelsViewProps } from '../../interfaces/view';
 import { filterPredicateChannel, sortChannels } from '../../utils/discord';
+import { ChannelIcon } from '../icons';
 import { ListItemButton, ListItemIcon } from '../items';
+import { DialogProps } from './index';
 
 const Accordion = styled(
     ({ children, ...props }: AccordionProps) => <MuiAccordion disableGutters elevation={0} {...props}>
@@ -71,6 +56,7 @@ const AccordionSummary = styled(
     flexDirection: 'row-reverse',
     gap: theme.spacing(.5),
     fontWeight: 600,
+    borderRadius: theme.shape.borderRadius,
     [`& .${accordionSummaryClasses.expandIconWrapper}.${accordionSummaryClasses.expanded}`]: {
         transform: 'rotate(90deg)'
     },
@@ -85,83 +71,49 @@ const AccordionDetails = styled(MuiAccordionDetails)({
     flexDirection: 'column'
 });
 
-interface Props extends DialogProps, LocalizationProps {
-    choices: RedisChannel[];
-    values: string[];
-    onClickSaveButton: (e: MouseEvent<HTMLButtonElement>, channels: string[]) => Promise<boolean>;
-}
+type ManageDisabledChannelsDialogProps = DialogProps & ItemVariableProps<string[]> & GuildChannelsViewProps;
 
 export const ManageDisabledChannelsDialog = (
     {
         open,
-        onClose,
-        choices,
-        values,
-        onClickSaveButton,
+        setOpen,
+        value,
+        setValue,
+        channels: choices,
         localization: { translations }
-    }: Props
+    }: ManageDisabledChannelsDialogProps
 ) => {
-    const router = useRouter();
-
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
-
-    const [loading, setLoading] = useState(false);
-    const [pending, startTransition] = useTransition();
 
     const [search, setSearch, resetSearch] = useResettableState('');
 
-    const [channelIds, setChannelIds] = useResettableState(values);
-
-    const guildChannels = sortChannels(choices) as RedisChannel[];
+    const guildChannels = sortChannels(choices);
     const categories = guildChannels.filter((channel) => channel.type === ChannelType.GuildCategory);
     const textChannels = guildChannels.filter((channel) => channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildAnnouncement || channel.type === ChannelType.GuildForum);
     const voiceChannels = guildChannels.filter((channel) => channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildStageVoice);
-    const channels = [...textChannels, ...voiceChannels];
+    const choiceChannels = [...textChannels, ...voiceChannels];
 
     const [expandedCategories, setExpandedCategories] = useState<string[]>(categories.map((category) => category.id));
 
-    const isChanged = () => !deepEqual(channelIds, values);
-
     const handleClose = () => {
-        setSearch('');
-        setChannelIds(values);
-        onClose();
+        resetSearch();
+        setOpen(false);
     };
 
-    const handleDialogClose = (_: {}, reason: 'backdropClick' | 'escapeKeyDown') => {
-        if ((reason === 'backdropClick' || reason === 'escapeKeyDown') && isChanged())
-            return;
-
-        handleClose();
-    };
-
-    const handleChangeExpandedCategory = (categoryId: string | undefined) => {
+    const handleCategoryExpandedChange = (categoryId: string | undefined) => {
         if (!categoryId || search.length > 0)
             return;
 
-        setExpandedCategories((ids) => ids.includes(categoryId) ? ids.filter((id) => id !== categoryId) : [...ids, categoryId]);
+        setExpandedCategories((categories) => categories.includes(categoryId) ? categories.filter((id) => id !== categoryId) : [...categories, categoryId]);
     };
 
-    const toggleEnabled = (channelId: string) => setChannelIds((ids) => channelIds.includes(channelId) ? ids.filter((id) => id !== channelId) : [...ids, channelId]);
-
-    const handleClickSaveButton = async (e: MouseEvent<HTMLButtonElement>) => {
-        setLoading(true);
-
-        const result = await onClickSaveButton(e, channelIds);
-        if (result)
-            startTransition(() => router.refresh());
-
-        setLoading(false);
-        setSearch('');
-        onClose();
-    };
+    const toggleEnabled = (channelId: string) => setValue((channels) => channels.includes(channelId) ? channels.filter((id) => id !== channelId) : [...channels, channelId]);
 
     return (
         <Fragment>
             <Dialog
                 open={open}
-                onClose={handleDialogClose}
-                disableEscapeKeyDown={isChanged()}
+                onClose={handleClose}
                 fullScreen={isMobile}
                 fullWidth
                 maxWidth="sm"
@@ -201,30 +153,23 @@ export const ManageDisabledChannelsDialog = (
                         </IconButton>}
                     </Box>
                     <Box sx={{ height: { xs: 'auto', md: 500 }, p: 2, overflowY: 'auto' }}>
-                        {[undefined, ...categories].filter((category) => search.length < 1 || channels.some((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search))).map((category) => (
+                        {[undefined, ...categories].filter((category) => search.length < 1 || choiceChannels.some((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search))).map((category) => (
                             <Accordion
                                 key={category?.id ?? 'no_parent'}
                                 expanded={search.length > 0 || !category || expandedCategories.includes(category.id)}
-                                onChange={() => handleChangeExpandedCategory(category?.id)}
+                                onChange={() => handleCategoryExpandedChange(category?.id)}
                                 defaultExpanded
                                 disabled={search.length > 0}
                             >
                                 {category && <AccordionSummary>{category.name}</AccordionSummary>}
                                 <AccordionDetails>
-                                    {channels.filter((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search)).map((channel) => (
+                                    {choiceChannels.filter((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search)).map((channel) => (
                                         <ListItemButton
                                             key={channel.id}
                                             onClick={() => toggleEnabled(channel.id)}
                                             sx={{ px: 1.5, borderRadius: 1 }}
                                         >
-                                            <ListItemIcon>
-                                                {channel.type === ChannelType.GuildText && <TextChannelIcon />}
-                                                {channel.type === ChannelType.GuildVoice && <VoiceChannelIcon />}
-                                                {channel.type === ChannelType.GuildAnnouncement &&
-                                                    <AnnouncementChannelIcon />}
-                                                {channel.type === ChannelType.GuildStageVoice && <StageChannelIcon />}
-                                                {channel.type === ChannelType.GuildForum && <ForumChannelIcon />}
-                                            </ListItemIcon>
+                                            <ListItemIcon><ChannelIcon channel={channel} /></ListItemIcon>
                                             <ListItemText
                                                 primary={channel.name}
                                                 primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }}
@@ -239,8 +184,7 @@ export const ManageDisabledChannelsDialog = (
                                                 }}
                                             >
                                                 <Switch
-                                                    checked={!channelIds.includes(channel.id)}
-                                                    onChange={() => toggleEnabled(channel.id)}
+                                                    checked={!value.includes(channel.id)}
                                                     disableRipple
                                                     tabIndex={-1}
                                                     sx={{
@@ -258,27 +202,9 @@ export const ManageDisabledChannelsDialog = (
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    {isChanged() ? <Fragment>
-                        <Button
-                            onClick={handleClose}
-                            disabled={loading || pending}
-                            color="inherit"
-                            startIcon={<DeleteOutlined />}
-                        >
-                            {translations.reset}
-                        </Button>
-                        <LoadingButton
-                            onClick={handleClickSaveButton}
-                            loading={loading || pending}
-                            loadingPosition="start"
-                            variant="contained"
-                            startIcon={<SaveOutlined />}
-                        >
-                            {translations.save}
-                        </LoadingButton>
-                    </Fragment> : <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
+                    <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
                         {translations.close}
-                    </Button>}
+                    </Button>
                 </DialogActions>
             </Dialog>
         </Fragment>

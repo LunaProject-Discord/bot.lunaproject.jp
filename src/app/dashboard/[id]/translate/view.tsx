@@ -4,8 +4,7 @@ import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/comp
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
-import { ChannelType } from 'discord-api-types/v10';
-import React, { Fragment, MouseEvent, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../../../components/dialog';
 import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
@@ -23,38 +22,17 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
     const translate = settings.translate;
     const [enabled, setEnabled, resetEnabled] = useResettableState(translate.enabled);
     const [reaction, setReaction, resetReaction] = useResettableState(translate.reaction);
+    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(translate.disabled.channels);
+    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(translate.disabled.roles);
 
     const toObject = (): GuildSettingsTranslate => ({
         enabled,
         reaction,
-        disabled: translate.disabled
+        disabled: {
+            channels: disabledChannels,
+            roles: disabledRoles
+        }
     });
-
-    const handleClickDisabledChannelsDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, channels: string[]) => saveGuildSettings(
-        guild.id,
-        {
-            translate: {
-                ...translate,
-                disabled: {
-                    ...translate.disabled,
-                    channels
-                }
-            }
-        }
-    );
-
-    const handleClickDisabledRolesDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, roles: string[]) => saveGuildSettings(
-        guild.id,
-        {
-            translate: {
-                ...translate,
-                disabled: {
-                    ...translate.disabled,
-                    roles
-                }
-            }
-        }
-    );
 
     const handleActionSave = () => saveGuildSettings(
         guild.id,
@@ -66,6 +44,8 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
     const handleActionCancel = () => {
         resetEnabled();
         resetReaction();
+        resetDisabledChannels();
+        resetDisabledRoles();
     };
 
     return (
@@ -115,18 +95,18 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
 
             <ManageDisabledChannelsDialog
                 open={openDisabledChannelsDialog}
-                onClose={() => setOpenDisabledChannelsDialog(false)}
-                choices={guild.channels.filter((channel) => channel.type !== ChannelType.GuildForum && channel.type !== ChannelType.GuildStageVoice)}
-                values={translate.disabled.channels}
-                onClickSaveButton={handleClickDisabledChannelsDialogSaveButton}
+                setOpen={setOpenDisabledChannelsDialog}
+                value={disabledChannels}
+                setValue={setDisabledChannels}
+                channels={guild.channels}
                 localization={localization}
             />
             <ManageDisabledRolesDialog
                 open={openDisabledRolesDialog}
-                onClose={() => setOpenDisabledRolesDialog(false)}
-                choices={guild.roles}
-                values={translate.disabled.roles}
-                onClickSaveButton={handleClickDisabledRolesDialogSaveButton}
+                setOpen={setOpenDisabledRolesDialog}
+                value={disabledRoles}
+                setValue={setDisabledRoles}
+                roles={guild.roles}
                 localization={localization}
             />
         </Fragment>

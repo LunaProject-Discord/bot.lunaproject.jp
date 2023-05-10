@@ -710,10 +710,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lunaproject-discord/web-core@npm:1.2.3":
-  version: 1.2.3
-  resolution: "@lunaproject-discord/web-core@npm:1.2.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40lunaproject-discord%2Fweb-core%2F1.2.3%2F69c8923755c6310d9b36695c33d82f30cf698e06"
-  checksum: 34359a4ccecde8d08b5043809fa41bffe3475321d47c195fc31bbd3ad49ded176bb3504d4e0d04e95ede5ee449214ac2bfd42524d6de47007bb0bc6a62974a84
+"@lunaproject-discord/web-core@npm:1.2.4":
+  version: 1.2.4
+  resolution: "@lunaproject-discord/web-core@npm:1.2.4::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40lunaproject-discord%2Fweb-core%2F1.2.4%2F48105af756839f99e34b63bd422f60cf4e9d00b1"
+  checksum: cae105ac7096319148980bfd26cb142eb028fa95061f4540b58b532bef9b117af1fb4c65a20578238cf601d736b28eee1f9dfb27623fa534397b97448a0aa923
   languageName: node
   linkType: hard
 
@@ -1584,7 +1584,7 @@ __metadata:
     "@emotion/styled": 11.10.6
     "@lexical/markdown": 0.10.0
     "@lexical/react": 0.10.0
-    "@lunaproject-discord/web-core": 1.2.3
+    "@lunaproject-discord/web-core": 1.2.4
     "@lunaproject-discord/web-discord": 1.0.8
     "@mui/icons-material": 5.11.16
     "@mui/lab": 5.0.0-alpha.128

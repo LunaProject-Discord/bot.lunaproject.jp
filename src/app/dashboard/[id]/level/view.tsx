@@ -7,11 +7,10 @@ import {
     SectionTitle
 } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
-import { APIGuildChannel } from '@lunaproject-discord/web-discord/dist/interfaces';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
-import { APIRole, ChannelType } from 'discord-api-types/v10';
-import React, { Fragment, MouseEvent, useEffect, useState } from 'react';
+import { ChannelType } from 'discord-api-types/v10';
+import React, { Fragment, useEffect, useState } from 'react';
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../../../components/dialog';
 import {
     ActionItem,
@@ -31,17 +30,11 @@ import { CodeStyleContainer } from '../../../../components/text';
 import {
     GuildSettingsLevel,
     GuildSettingsLevelNotificationType,
-    GuildSettingsLevelRewardRole,
     GuildSettingsLevelRewardType
 } from '../../../../interfaces/bot';
 import { GuildSettingsViewProps } from '../../../../interfaces/view';
 import { saveGuildSettings } from '../utils';
-import { ManageRolesDialog } from './manage_roles';
-
-interface Props extends GuildSettingsViewProps {
-    channels: APIGuildChannel[];
-    roles: APIRole[];
-}
+import { ManageRolesDialog } from './dialog';
 
 export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
     const { translations } = localization;
@@ -56,25 +49,31 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
     const level = settings.level;
     const [enabled, setEnabled, resetEnabled] = useResettableState(level.enabled);
     const [experiencePerMessage, setExperiencePerMessage, resetExperiencePerMessage] = useResettableState(level.experience_per_message);
+    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(level.disabled.channels);
+    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(level.disabled.roles);
     const [rewardType, setRewardType, resetRewardType] = useResettableState(level.reward.type);
     const [rewardRemoveRoleDemoted, setRewardRemoveRoleDemoted, resetRewardRemoveRoleDemoted] = useResettableState(level.reward.remove_role_demoted);
+    const [rewardRoles, setRewardRoles, resetRewardRoles] = useResettableState(level.reward.roles);
     const [notificationType, setNotificationType, resetNotificationType] = useResettableState(level.notification.type);
     const [notificationChannelId, setNotificationChannelId, resetNotificationChannelId] = useResettableState(level.notification.channel_id);
     const [notificationMessage, setNotificationMessage, resetNotificationMessage] = useResettableState(level.notification.message);
     const [leaderboardPublic, setLeaderboardPublic, resetLeaderboardPublic] = useResettableState(level.leaderboard.public);
     const [leaderboardAllowJoin, setLeaderboardAllowJoin, resetLeaderboardAllowJoin] = useResettableState(level.leaderboard.allow_join);
-    const [leaderboardVanityCode, setLeaderboardVanityCode, resetLeaderboardVanityCode] = useResettableState(level.leaderboard.vanity_code);
+    const [leaderboardVanityCode, setLeaderboardVanityCode, resetLeaderboardVanityCode] = useResettableState(level.leaderboard.vanity_code ?? '');
 
     useEffect(() => setOrigin(window.location.origin), []);
 
     const toObject = (): GuildSettingsLevel => ({
         enabled,
         experience_per_message: experiencePerMessage,
-        disabled: level.disabled,
+        disabled: {
+            channels: disabledChannels,
+            roles: disabledRoles
+        },
         reward: {
             type: rewardType,
             remove_role_demoted: rewardRemoveRoleDemoted,
-            roles: level.reward.roles
+            roles: rewardRoles
         },
         notification: {
             type: notificationType,
@@ -88,54 +87,6 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
         }
     });
 
-    const handleClickDisabledChannelsDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, channels: string[]) => saveGuildSettings(
-        guild.id,
-        {
-            level: {
-                ...level,
-                disabled: {
-                    ...level.disabled,
-                    channels
-                },
-                reward: level.reward,
-                notification: level.notification,
-                leaderboard: level.leaderboard
-            }
-        }
-    );
-
-    const handleClickDisabledRolesDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, roles: string[]) => saveGuildSettings(
-        guild.id,
-        {
-            level: {
-                ...level,
-                disabled: {
-                    ...level.disabled,
-                    roles
-                },
-                reward: level.reward,
-                notification: level.notification,
-                leaderboard: level.leaderboard
-            }
-        }
-    );
-
-    const handleClickRolesDialogSaveButton = (e: MouseEvent<HTMLButtonElement>, roles: GuildSettingsLevelRewardRole[]) => saveGuildSettings(
-        guild.id,
-        {
-            level: {
-                ...level,
-                disabled: level.disabled,
-                reward: {
-                    ...level.reward,
-                    roles
-                },
-                notification: level.notification,
-                leaderboard: level.leaderboard
-            }
-        }
-    );
-
     const handleActionSave = () => saveGuildSettings(
         guild.id,
         {
@@ -146,8 +97,11 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
     const handleActionCancel = () => {
         resetEnabled();
         resetExperiencePerMessage();
+        resetDisabledChannels();
+        resetDisabledRoles();
         resetRewardType();
         resetRewardRemoveRoleDemoted();
+        resetRewardRoles();
         resetNotificationType();
         resetNotificationChannelId();
         resetNotificationMessage();
@@ -201,8 +155,9 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
                 <Section>
                     <SectionTitle>{translations.level_reward}</SectionTitle>
                     <SectionContent>
-                        <SectionParagraph variant="h6"
-                                          fontWeight={400}>{translations.level_reward_type}</SectionParagraph>
+                        <SectionParagraph variant="h6" fontWeight={400}>
+                            {translations.level_reward_type}
+                        </SectionParagraph>
                         <RadioItem<GuildSettingsLevelRewardType>
                             primary={translations.level_reward_type_stack}
                             secondary={translations.level_reward_type_stack_description}
@@ -307,7 +262,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
                             secondary={<Fragment>
                                 {origin}/leaderboard/{leaderboardVanityCode && leaderboardVanityCode.length > 0 ? leaderboardVanityCode : guild.id}
                             </Fragment>}
-                            value={leaderboardVanityCode ?? ''}
+                            value={leaderboardVanityCode}
                             setValue={setLeaderboardVanityCode}
                             disabled={!enabled}
                         />
@@ -324,26 +279,26 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
 
             <ManageDisabledChannelsDialog
                 open={openDisabledChannelsDialog}
-                onClose={() => setOpenDisabledChannelsDialog(false)}
-                choices={guild.channels.filter((channel) => channel.type !== ChannelType.GuildForum && channel.type !== ChannelType.GuildStageVoice)}
-                values={level.disabled.channels}
-                onClickSaveButton={handleClickDisabledChannelsDialogSaveButton}
+                setOpen={setOpenDisabledChannelsDialog}
+                value={disabledChannels}
+                setValue={setDisabledChannels}
+                channels={guild.channels}
                 localization={localization}
             />
             <ManageDisabledRolesDialog
                 open={openDisabledRolesDialog}
-                onClose={() => setOpenDisabledRolesDialog(false)}
-                choices={guild.roles}
-                values={level.disabled.roles}
-                onClickSaveButton={handleClickDisabledRolesDialogSaveButton}
+                setOpen={setOpenDisabledRolesDialog}
+                value={disabledRoles}
+                setValue={setDisabledRoles}
+                roles={guild.roles}
                 localization={localization}
             />
             <ManageRolesDialog
                 open={openRolesDialog}
-                onClose={() => setOpenRolesDialog(false)}
-                choices={guild.roles}
-                initialValues={level.reward.roles}
-                onClickSaveButton={handleClickRolesDialogSaveButton}
+                setOpen={setOpenRolesDialog}
+                value={rewardRoles}
+                setValue={setRewardRoles}
+                roles={guild.roles}
                 localization={localization}
             />
         </Fragment>

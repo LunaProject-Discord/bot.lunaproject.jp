@@ -1,12 +1,12 @@
 'use client';
 
 import { MuiDarkTheme, MuiLightTheme } from '@lunaproject-discord/web-core/dist/utils/theme';
-import { DeleteOutlined, SaveOutlined } from '@mui/icons-material';
+import { RefreshOutlined, SaveOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProvider, useTheme } from '@mui/material';
 import Mousetrap from 'mousetrap';
 import { useRouter } from 'next/navigation';
-import React, { MouseEvent, useEffect, useRef, useState, useTransition } from 'react';
+import React, { useEffect, useRef, useState, useTransition } from 'react';
 import { useTranslation } from '../../localizations/client';
 import { Key } from '../text';
 
@@ -55,7 +55,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
         };
     }, [open, disableKeyboardShortcuts, loading]);
 
-    const handleClickSaveButton = async (e: MouseEvent<HTMLButtonElement>) => {
+    const handleSaveButtonClick = async () => {
         setLoading(true);
 
         const result = await onSave();
@@ -78,8 +78,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                                 ref={cancelButton}
                                 onClick={onCancel}
                                 disabled={loading || pending}
-                                color="inherit"
-                                startIcon={<DeleteOutlined />}
+                                startIcon={<RefreshOutlined sx={{ transform: 'scale(-1, 1)' }} />}
                                 sx={{
                                     gap: .5,
                                     [`& .${buttonClasses.startIcon}, & .${buttonClasses.endIcon}`]: {
@@ -87,12 +86,12 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                                     }
                                 }}
                             >
-                                {translations.reset}
+                                {translations.discard_changes}
                                 <Key>r c</Key>
                             </Button>
                             <LoadingButton
                                 ref={saveButton}
-                                onClick={handleClickSaveButton}
+                                onClick={handleSaveButtonClick}
                                 loading={loading || pending}
                                 loadingPosition="start"
                                 variant="contained"

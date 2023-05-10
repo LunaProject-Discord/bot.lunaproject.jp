@@ -1,6 +1,9 @@
 'use client';
 
-import type { Embed, EmbedFooter } from '@lunaproject-discord/web-discord/dist/interfaces/message';
+import type {
+    Embed,
+    EmbedFooter as OriginalEmbedFooter
+} from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
 import React from 'react';
 import { LocalizationProps } from '../../../../interfaces/localization';
@@ -9,10 +12,9 @@ import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
-type Props =
-    ItemDisabledProps
-    & ItemVariableProps<{ timestamp: Embed['timestamp'] } & EmbedFooter>
-    & LocalizationProps;
+export type EmbedFooter = { timestamp: Embed['timestamp'] } & OriginalEmbedFooter;
+
+type Props = ItemDisabledProps & ItemVariableProps<EmbedFooter> & LocalizationProps;
 
 export const EmbedFooterEditor = ({ value, setValue, disabled, localization: { translations } }: Props) => (
     <EmbedAccordion>

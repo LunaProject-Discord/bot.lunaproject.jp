@@ -16,11 +16,12 @@ import {
 } from '@mui/material';
 import React from 'react';
 import { LocalizationProps } from '../../../../interfaces/localization';
+import { getStateActionValue } from '../../../../utils/state';
 import { EmbedAccordionSummary } from './accordion';
 import { EmbedAuthorEditor } from './author';
-import { EmbedBodyEditor } from './body';
+import { EmbedBody, EmbedBodyEditor } from './body';
 import { EmbedFieldsEditor } from './fields';
-import { EmbedFooterEditor } from './footer';
+import { EmbedFooter, EmbedFooterEditor } from './footer';
 import { EmbedImageEditor } from './image';
 
 interface ContainerAccordionProps {
@@ -84,6 +85,8 @@ export const EmbedEditor = ({ id, embed, onChange, removeEmbed, localization }: 
     const theme = useTheme();
 
     const embedColor = embed.color.rgbNumber() === 0xffffff ? undefined : embed.color.hex();
+    const body: EmbedBody = { color: embed.color, title: embed.title, description: embed.description, url: embed.url };
+    const footer: EmbedFooter = { timestamp: embed.timestamp, ...embed.footer };
 
     return (
         <ContainerAccordion borderColor={embedColor || theme.background.tertiary}>
@@ -116,27 +119,27 @@ export const EmbedEditor = ({ id, embed, onChange, removeEmbed, localization }: 
             <AccordionDetails>
                 <EmbedAuthorEditor
                     value={embed.author}
-                    setValue={(author) => onChange({ ...embed, author })}
+                    setValue={(action) => onChange({ ...embed, author: getStateActionValue(action, embed.author) })}
                     localization={localization}
                 />
                 <EmbedBodyEditor
-                    value={{ color: embed.color, title: embed.title, description: embed.description, url: embed.url }}
-                    setValue={(body) => onChange({ ...embed, ...body })}
+                    value={body}
+                    setValue={(action) => onChange({ ...embed, ...getStateActionValue(action, body) })}
                     localization={localization}
                 />
                 <EmbedFieldsEditor
                     value={embed.fields}
-                    setValue={(fields) => onChange({ ...embed, fields })}
+                    setValue={(action) => onChange({ ...embed, fields: getStateActionValue(action, embed.fields) })}
                     localization={localization}
                 />
                 <EmbedImageEditor
                     value={embed.image}
-                    setValue={(image) => onChange({ ...embed, image })}
+                    setValue={(action) => onChange({ ...embed, image: getStateActionValue(action, embed.image) })}
                     localization={localization}
                 />
                 <EmbedFooterEditor
-                    value={{ timestamp: embed.timestamp, ...embed.footer }}
-                    setValue={({ timestamp, ...footer }) => onChange({ ...embed, timestamp, footer })}
+                    value={footer}
+                    setValue={(action) => onChange({ ...embed, ...getStateActionValue(action, footer) })}
                     localization={localization}
                 />
             </AccordionDetails>

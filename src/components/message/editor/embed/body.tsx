@@ -12,7 +12,7 @@ import { TextArea } from '../../text_area';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
-interface EmbedBody {
+export interface EmbedBody {
     color: Color;
     title: string;
     description: string;

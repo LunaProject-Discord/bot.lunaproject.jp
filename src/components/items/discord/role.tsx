@@ -1,11 +1,13 @@
 'use client';
 
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
-import { ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
-import { Box, ListItemButtonProps, ListItemText, PopoverProps, Theme, Typography, useMediaQuery } from '@mui/material';
+import { ItemDisabledProps, ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { Box, ListItemButtonProps, ListItemText, Theme, Typography, useMediaQuery } from '@mui/material';
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
-import React, { Fragment, MouseEvent, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { PopoverProps } from '../../../interfaces/mui';
+import { RedisRole } from '../../../interfaces/redis';
 import { filterPredicateRole, getRoleColor, sortRoles } from '../../../utils/discord';
 import {
     ItemFormContainer,
@@ -15,15 +17,18 @@ import {
     ItemTextBlock,
     SearchBox,
     Select,
-    SnowflakeItemProps
+    SnowflakeItemProps,
+    SnowflakeSelectProps
 } from '../index';
 import { List, ListItemButton, ListItemIcon } from './index';
 
-interface ListItemProps extends Omit<ListItemButtonProps, 'role'> {
-    role: APIRole;
+type Role = APIRole | RedisRole;
+
+export interface RoleListItemProps extends Omit<ListItemButtonProps, 'role'> {
+    role: Role;
 }
 
-const ListItem = ({ role, ...props }: ListItemProps) => (
+export const RoleListItem = ({ role, ...props }: RoleListItemProps) => (
     <ListItemButton key={role.id} sx={{ gap: 1 }} {...props}>
         <ListItemIcon sx={{ minWidth: 2 }}>
             <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
@@ -32,18 +37,14 @@ const ListItem = ({ role, ...props }: ListItemProps) => (
     </ListItemButton>
 );
 
-type Props = SnowflakeItemProps<APIRole>;
+export type RoleProps = SnowflakeItemProps<Role>;
 
-interface RolePopoverProps extends PopoverProps, Props {
-    anchorEl: PopoverProps['anchorEl'];
-    onPopupClose: () => void;
-}
+export type RolePopoverProps = PopoverProps & RoleProps;
 
 export const RolePopover = (
     {
-        open,
         anchorEl,
-        onPopupClose,
+        setAnchorEl,
         value,
         setValue,
         choices,
@@ -52,16 +53,18 @@ export const RolePopover = (
 ) => {
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
 
+    const open = Boolean(anchorEl);
+
     const [search, setSearch] = useState('');
 
-    const roles = sortRoles(choices) as APIRole[];
+    const roles = sortRoles(choices);
 
     const handlePopupClose = () => {
         setSearch('');
-        onPopupClose();
+        setAnchorEl(null);
     };
 
-    const handleChange = (role: APIRole) => {
+    const handleChange = (role: Role) => {
         setValue(role.id);
         handlePopupClose();
     };
@@ -90,7 +93,7 @@ export const RolePopover = (
             />
             <List>
                 {roles.filter((role) => filterPredicateRole(role, search)).map((role) => (
-                    <ListItem
+                    <RoleListItem
                         key={role.id}
                         role={role}
                         selected={value === role.id}
@@ -102,7 +105,39 @@ export const RolePopover = (
     );
 };
 
-type RoleItemProps = ItemProps & Props;
+export type RoleSelectProps = ItemDisabledProps & RoleProps & SnowflakeSelectProps<RolePopoverProps>;
+
+export const RoleSelect = ({ value, setValue, choices, disabled, selectSx, popoverProps }: RoleSelectProps) => {
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+    const role = choices.find((role) => role.id === value);
+    return (
+        <Fragment>
+            <Select
+                open={Boolean(anchorEl)}
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+                disabled={disabled}
+                sx={selectSx}
+            >
+                {role && <Fragment>
+                    <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
+                    <Typography variant="body2">{role.name}</Typography>
+                </Fragment>}
+            </Select>
+
+            <RolePopover
+                anchorEl={anchorEl}
+                setAnchorEl={setAnchorEl}
+                value={value}
+                setValue={setValue}
+                choices={choices}
+                {...popoverProps}
+            />
+        </Fragment>
+    );
+};
+
+export type RoleItemProps = ItemProps & RoleProps;
 
 export const RoleItem = (
     {
@@ -118,55 +153,33 @@ export const RoleItem = (
         disabled,
         sx
     }: RoleItemProps
-) => {
-    const [anchorEl, setAnchorEl] = useState<HTMLDivElement | null>(null);
-    const open = Boolean(anchorEl);
-
-    const handlePopoverOpen = (e: MouseEvent<HTMLDivElement>) => setAnchorEl(e.currentTarget);
-    const handlePopoverClose = () => setAnchorEl(null);
-
-    const currentRole = choices.find((role) => role.id === value);
-    return (
-        <Fragment>
-            <ItemRoot sx={sx}>
-                <ItemRowContainer size={secondary ? 'medium' : 'small'}>
-                    <ItemIcon icon={icon} iconSx={iconSx} />
-                    <ItemTextBlock
-                        primary={primary}
-                        secondary={secondary}
-                        primaryTypographyProps={primaryTypographyProps}
-                        secondaryTypographyProps={secondaryTypographyProps}
-                        disabled={disabled}
-                    />
-                </ItemRowContainer>
-                <ItemFormContainer>
-                    <Select
-                        open={open}
-                        onClick={handlePopoverOpen}
-                        disabled={disabled}
-                        sx={{
-                            width: {
-                                xs: '100%',
-                                md: 300
-                            }
-                        }}
-                    >
-                        {currentRole && <Fragment>
-                            <Box sx={{ ...size(16), bgcolor: getRoleColor(currentRole), borderRadius: '50%' }} />
-                            <Typography variant="body2">{currentRole.name}</Typography>
-                        </Fragment>}
-                    </Select>
-                </ItemFormContainer>
-            </ItemRoot>
-
-            <RolePopover
-                open={open}
-                anchorEl={anchorEl}
-                onPopupClose={handlePopoverClose}
-                value={value}
-                setValue={setValue}
-                choices={choices}
-            />
-        </Fragment>
-    );
-};
+) => (
+    <Fragment>
+        <ItemRoot sx={sx}>
+            <ItemRowContainer size={secondary ? 'medium' : 'small'}>
+                <ItemIcon icon={icon} iconSx={iconSx} />
+                <ItemTextBlock
+                    primary={primary}
+                    secondary={secondary}
+                    primaryTypographyProps={primaryTypographyProps}
+                    secondaryTypographyProps={secondaryTypographyProps}
+                    disabled={disabled}
+                />
+            </ItemRowContainer>
+            <ItemFormContainer>
+                <RoleSelect
+                    value={value}
+                    setValue={setValue}
+                    choices={choices}
+                    disabled={disabled}
+                    selectSx={{
+                        width: {
+                            xs: '100%',
+                            md: 300
+                        }
+                    }}
+                />
+            </ItemFormContainer>
+        </ItemRoot>
+    </Fragment>
+);
