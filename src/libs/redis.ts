@@ -19,8 +19,8 @@ const HASH_USERS = 'users';
 const HASH_USERS_GUILDS = 'users_guilds';
 
 const PUBSUB_USERS_GUILDS = HASH_USERS_GUILDS;
-const PUBSUB_GUILDS_SETTINGS = 'guilds_settings';
-const PUBSUB_USERS_SETTINGS = 'users_settings';
+const PUBSUB_GUILD_CONFIGURATION = 'guild_configuration';
+const PUBSUB_USER_CONFIGURATION = 'user_configuration';
 
 const redis = new Redis({
     port: Number(process.env.REDIS_PORT || 6379),
@@ -126,12 +126,12 @@ export const getAndRequestUserGuildsById = async (id: string): Promise<RedisUser
     return guilds;
 };
 
-export const updateGuildSettingsById = async (id: string): Promise<void> => {
+export const updateGuildConfigurationById = async (id: string): Promise<void> => {
     const data: RedisSnowflake = { id };
-    await redis.publish(PUBSUB_GUILDS_SETTINGS, JSON.stringify(data));
+    await redis.publish(PUBSUB_GUILD_CONFIGURATION, JSON.stringify(data));
 };
 
-export const updateUserSettingsById = async (id: string): Promise<void> => {
+export const updateUserConfigurationById = async (id: string): Promise<void> => {
     const data: RedisSnowflake = { id };
-    await redis.publish(PUBSUB_USERS_SETTINGS, JSON.stringify(data));
+    await redis.publish(PUBSUB_USER_CONFIGURATION, JSON.stringify(data));
 };

@@ -9,23 +9,23 @@ import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../.
 import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildSettingsTranslate } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationTranslate } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
 
     const [openDisabledChannelsDialog, setOpenDisabledChannelsDialog] = useState(false);
     const [openDisabledRolesDialog, setOpenDisabledRolesDialog] = useState(false);
 
-    const translate = settings.translate;
+    const translate = configuration.translate;
     const [enabled, setEnabled, resetEnabled] = useResettableState(translate.enabled);
     const [reaction, setReaction, resetReaction] = useResettableState(translate.reaction);
     const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(translate.disabled.channels);
     const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(translate.disabled.roles);
 
-    const toObject = (): GuildSettingsTranslate => ({
+    const toObject = (): GuildConfigurationTranslate => ({
         enabled,
         reaction,
         disabled: {
@@ -34,7 +34,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
         }
     });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             translate: toObject()

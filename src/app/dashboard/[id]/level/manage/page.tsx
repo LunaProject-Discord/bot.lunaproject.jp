@@ -1,7 +1,7 @@
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { WithIdParamProps } from '../../../../../interfaces/page';
-import { getGuildLevels, getGuildSettings } from '../../../../../libs/bot';
+import { getGuildConfiguration, getGuildLevels } from '../../../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../../../libs/redis';
 import { getLocalization } from '../../../../../localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '../../../../../utils/discord';
@@ -42,22 +42,22 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
 
     const guildData = getGuildById(id);
     const guildLevelsData = getGuildLevels(id, false);
-    const guildSettingsData = getGuildSettings(id);
+    const guildConfigurationData = getGuildConfiguration(id);
 
-    const [guild, guildLevels, guildSettings] = await Promise.all([
+    const [guild, guildLevels, guildConfiguration] = await Promise.all([
         guildData,
         guildLevelsData,
-        guildSettingsData
+        guildConfigurationData
     ]);
 
-    if (!guild || !guildLevels || !guildSettings)
+    if (!guild || !guildLevels || !guildConfiguration)
         return (<NotFoundView />);
 
     return (
         <View
             guild={guild}
             levels={guildLevels}
-            settings={guildSettings}
+            configuration={guildConfiguration}
             localization={localization}
         />
     );

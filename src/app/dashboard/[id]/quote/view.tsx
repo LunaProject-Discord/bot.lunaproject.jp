@@ -9,17 +9,17 @@ import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../.
 import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildSettingsQuote } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationQuote } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
 
     const [openDisabledChannelsDialog, setOpenDisabledChannelsDialog] = useState(false);
     const [openDisabledRolesDialog, setOpenDisabledRolesDialog] = useState(false);
 
-    const quote = settings.quote;
+    const quote = configuration.quote;
     const [enabled, setEnabled, resetEnabled] = useResettableState(quote.enabled);
     const [reaction, setReaction, resetReaction] = useResettableState(quote.reaction);
     const [message, setMessage, resetMessage] = useResettableState(quote.message);
@@ -28,7 +28,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
     const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(quote.disabled.channels);
     const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(quote.disabled.roles);
 
-    const toObject = (): GuildSettingsQuote => ({
+    const toObject = (): GuildConfigurationQuote => ({
         enabled,
         reaction,
         message,
@@ -40,7 +40,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
         }
     });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             quote: toObject()

@@ -14,16 +14,16 @@ import spacetime from 'spacetime';
 import { SelectItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildSettingsLanguage } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
+import { GuildConfigurationLanguage } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { TimeZone, TimeZones } from '../../../../utils/timezone';
-import { saveGuildSettings } from '../utils';
+import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, settings, localization: { translations } }: GuildSettingsViewProps) => {
-    const [timezone, setTimezone, resetTimezone] = useResettableState(settings.timezone);
-    const [language, setLanguage, resetLanguage] = useResettableState(settings.language);
+export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
+    const [timezone, setTimezone, resetTimezone] = useResettableState(configuration.timezone);
+    const [language, setLanguage, resetLanguage] = useResettableState(configuration.language);
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             timezone,
@@ -77,7 +77,7 @@ export const View = ({ guild, settings, localization: { translations } }: GuildS
                 <SectionTitle>{translations.language}</SectionTitle>
                 <SectionParagraph>{translations.language_description}</SectionParagraph>
                 <SectionContent>
-                    <SelectItem<GuildSettingsLanguage>
+                    <SelectItem<GuildConfigurationLanguage>
                         icon={<TranslateOutlined />}
                         primary={translations.language}
                         value={language}
@@ -91,7 +91,7 @@ export const View = ({ guild, settings, localization: { translations } }: GuildS
             </Section>
 
             <SaveConfirm
-                open={timezone !== settings.timezone || language !== settings.language}
+                open={timezone !== configuration.timezone || language !== configuration.language}
                 onSave={handleActionSave}
                 onCancel={handleActionCancel}
             />

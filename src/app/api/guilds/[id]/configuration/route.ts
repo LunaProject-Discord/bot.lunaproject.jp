@@ -2,12 +2,12 @@ import { errorWithName } from '@lunaproject-discord/web-core/dist/utils/logger';
 import { getGuildById } from '@lunaproject-discord/web-discord/dist/libs';
 import { Prisma } from '@prisma/client';
 import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
-import { GuildSettings } from '../../../../../interfaces/bot';
+import { NextRequest, NextResponse } from 'next/server';
+import { GuildConfiguration } from '../../../../../interfaces/bot';
 import { WithIdParamProps } from '../../../../../interfaces/page';
-import { getGuildSettings } from '../../../../../libs/bot';
+import { getGuildConfiguration } from '../../../../../libs/bot';
 import prisma from '../../../../../libs/prisma';
-import { updateGuildSettingsById } from '../../../../../libs/redis';
+import { updateGuildConfigurationById } from '../../../../../libs/redis';
 import { COOKIE_TOKEN } from '../../../../../utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '../../../../../utils/discord';
 
@@ -26,10 +26,10 @@ export const GET = async (req: Request, { params: { id } }: WithIdParamProps) =>
     if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    return NextResponse.json(await getGuildSettings(id), { status: 200 });
+    return NextResponse.json(await getGuildConfiguration(id), { status: 200 });
 };
 
-export const PATCH = async (req: Request, { params: { id } }: WithIdParamProps) => {
+export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamProps) => {
     const nextCookies = cookies();
     const token = nextCookies.get(COOKIE_TOKEN)?.value;
     if (!token)
@@ -42,7 +42,7 @@ export const PATCH = async (req: Request, { params: { id } }: WithIdParamProps) 
     if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    const data: Partial<GuildSettings> = await req.json();
+    const data: Partial<GuildConfiguration> = await req.json();
     delete data.id;
 
     try {
@@ -65,16 +65,16 @@ export const PATCH = async (req: Request, { params: { id } }: WithIdParamProps) 
 
             if (Object.keys(data).length > 0) {
                 const inputs: {
-                    [key: string]: valueOf<Prisma.XOR<Prisma.guilds_settingsUpdateInput, Prisma.guilds_settingsUncheckedUpdateInput>>
+                    [key: string]: valueOf<Prisma.XOR<Prisma.guilds_configurationsUpdateInput, Prisma.guilds_configurationsUncheckedUpdateInput>>
                 } = {};
 
-                const settings: { [key: string]: valueOf<GuildSettings> } = data;
-                for (const key in settings) {
-                    const value = settings[key];
-                    inputs[key] = typeof value === 'object' ? JSON.stringify(value) : value;
+                const configurationSections: { [key: string]: valueOf<GuildConfiguration> } = data;
+                for (const sectionKey in configurationSections) {
+                    const value = configurationSections[sectionKey];
+                    inputs[sectionKey] = typeof value === 'object' ? JSON.stringify(value) : value;
                 }
 
-                await prisma.guilds_settings.update({
+                await prisma.guilds_configurations.update({
                     where: {
                         id: guildId
                     },
@@ -86,12 +86,11 @@ export const PATCH = async (req: Request, { params: { id } }: WithIdParamProps) 
             }
         });
 
-        await updateGuildSettingsById(id);
+        await updateGuildConfigurationById(id);
 
-        return NextResponse.json(await getGuildSettings(id), { status: 200 });
+        return NextResponse.json(await getGuildConfiguration(id), { status: 200 });
     } catch (e) {
-        errorWithName(`(PATCH)/api/guilds/${id}/settings`, e);
-        console.error(e);
+        errorWithName(`(${req.method.toUpperCase()})${req.nextUrl.pathname}${req.nextUrl.search}${req.nextUrl.hash}`, e);
         return NextResponse.json({ message: 'Internal server error!' }, { status: 500 });
     }
 };

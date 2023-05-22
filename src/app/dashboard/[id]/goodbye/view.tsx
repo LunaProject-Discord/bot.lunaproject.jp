@@ -10,23 +10,23 @@ import { ChannelItem, MessageItem, SwitchItem } from '../../../../components/ite
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { CodeStyleContainer } from '../../../../components/text';
-import { GuildSettingsGoodbye } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationGoodbye } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
 
     const [openMessageBuilder, setOpenMessageBuilder] = useState(false);
 
-    const goodbye = settings.goodbye;
+    const goodbye = configuration.goodbye;
     const [enabled, setEnabled, resetEnabled] = useResettableState(goodbye.enabled);
     const [channelId, setChannelId, resetChannelId] = useResettableState(goodbye.channel_id);
     const [message, setMessage, resetMessage] = useResettableState(goodbye.message);
 
-    const toObject = (): GuildSettingsGoodbye => ({ enabled, channel_id: channelId, message });
+    const toObject = (): GuildConfigurationGoodbye => ({ enabled, channel_id: channelId, message });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             goodbye: toObject()

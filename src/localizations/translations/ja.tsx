@@ -64,6 +64,23 @@ export const translationsJa: Translations = {
     embed_footer_icon_url: 'フッターのアイコン URL',
     embed_footer_timestamp: 'タイムスタンプ',
 
+    error_unauthorized_title: 'ログインが必要です',
+    error_unauthorized_description: <Fragment>
+        このページにアクセスするにはログインが必要です。<br />
+        下のボタンを押してログインをしてください。
+    </Fragment>,
+    error_forbidden_title: '権限がありません',
+    error_forbidden_description: <Fragment>
+        このページにアクセスするための権限がありません。<br />
+        あなたに権限が付与されていることが確実な場合は、ほかのアカウントに切り替えて再度お試しください。
+    </Fragment>,
+    error_not_found_title: 'ページが見つかりません',
+    error_not_found_description: <Fragment>
+        指定されたページが見つかりませんでした。<br />
+        ページのURLが変更されたか、ページそのものが削除された可能性があります。<br />
+        お手数ですが、下のボタンからホームに戻ってください。
+    </Fragment>,
+
     welcome_to_name: 'ようこそ、%n さん！',
 
     home: 'ホーム',
@@ -136,9 +153,9 @@ export const translationsJa: Translations = {
     activity_type_watching_long: '動画を視聴中',
     activity_type_watching_short: '視聴中',
     activity_type_watching_description: '特定のタイトルの動画を視聴中に役職を付与します。',
-    activity_type_custom_long: 'カスタム ステータスを設定中',
-    activity_type_custom_short: '設定中',
-    activity_type_custom_description: <Fragment>
+    activity_type_custom_status_long: 'カスタム ステータスを設定中',
+    activity_type_custom_status_short: '設定中',
+    activity_type_custom_status_description: <Fragment>
         ユーザーのカスタム ステータスが<br className="desktop" />
         設定した名前と一致したときに役職を付与します。
     </Fragment>,

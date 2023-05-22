@@ -8,7 +8,7 @@ import { useLocale } from '../../localizations/client';
 
 interface Props {
     children: ReactNode;
-    dateFormats?: LocalizationProviderProps<Date>['dateFormats'];
+    dateFormats?: LocalizationProviderProps<Date, typeof ja>['dateFormats'];
 }
 
 export const DateLocalizationProvider = ({ children, dateFormats }: Props) => {

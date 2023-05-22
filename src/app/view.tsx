@@ -35,11 +35,11 @@ import {
     ListItemText,
     Typography
 } from '@mui/material';
-import Link from 'next/link';
 import NextLink from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { Fragment, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '../components/error';
 import { PageContent } from '../components/layout';
 import { FeaturedGuild } from '../interfaces/bot';
 import { LocalizationProps } from '../interfaces/localization';
@@ -200,7 +200,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                         下のボタンからログインをしてください。
                     </Box>
                     <Button
-                        component={Link}
+                        component={NextLink}
                         href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                         disableElevation
                         variant="contained"
@@ -218,24 +218,12 @@ export const View = ({ user, localization: { translations } }: Props) => {
 
 export const UnauthorizedView = ({ localization: { translations } }: LocalizationProps) => (
     <PageContent display="flex">
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
-            <PersonOffOutlined sx={{ fontSize: '10rem' }} color="primary" />
-            <Typography variant="h4">ログインが必要です</Typography>
-            <Typography align="center">
-                このページにアクセスするにはログインが必要です。<br />
-                下のボタンを押してログインをしてください。
-            </Typography>
+        <ErrorRoot>
+            <PersonOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <ErrorTitle>{translations.error_unauthorized_title}</ErrorTitle>
+            <ErrorDescription>{translations.error_unauthorized_description}</ErrorDescription>
             <Button
-                component={Link}
+                component={NextLink}
                 href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                 variant="contained"
                 size="large"
@@ -243,60 +231,37 @@ export const UnauthorizedView = ({ localization: { translations } }: Localizatio
             >
                 {translations.login}
             </Button>
-        </Box>
+        </ErrorRoot>
     </PageContent>
 );
 
-export const ForbiddenView = () => (
+export const ForbiddenView = ({ localization: { translations } }: LocalizationProps) => (
     <PageContent display="flex">
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
-            <LockPersonOutlined sx={{ fontSize: '10rem' }} color="primary" />
-            <Typography variant="h4">権限がありません</Typography>
-            <Typography align="center">
-                このページにアクセスするための権限がありません。<br />
-                あなたに権限が付与されていることが確実な場合は、ほかのアカウントに切り替えて再度お試しください。
-            </Typography>
-        </Box>
+        <ErrorRoot>
+            <LockPersonOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <ErrorTitle>{translations.error_forbidden_title}</ErrorTitle>
+            <ErrorDescription>{translations.error_forbidden_description}</ErrorDescription>
+        </ErrorRoot>
     </PageContent>
 );
 
 
-export const NotFoundView = () => (
+export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <PageContent display="flex">
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
-            <CloudOffOutlined sx={{ fontSize: '10rem' }} color="primary" />
-            <Typography variant="h4">ページが見つかりません</Typography>
-            <Typography align="center">
-                指定されたページが見つかりませんでした。<br />
-                ページのURLが変更されたか、ページそのものが削除された可能性があります。<br />
-                お手数ですが、下のボタンからホームに戻ってください。
-            </Typography>
+        <ErrorRoot>
+            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <ErrorTitle>{translations.error_not_found_title}</ErrorTitle>
+            <ErrorDescription>{translations.error_not_found_description}</ErrorDescription>
             <Button
+                component={NextLink}
                 href="/"
+                prefetch={false}
                 variant="contained"
                 size="large"
                 startIcon={<HomeOutlined />}
             >
                 ホームに戻る
             </Button>
-        </Box>
+        </ErrorRoot>
     </PageContent>
 );

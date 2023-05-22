@@ -1,10 +1,10 @@
 import { Cache, OAuthGuild } from '@lunaproject-discord/web-discord';
 import { addSeconds } from 'date-fns';
 import {
+    GuildConfiguration,
+    GuildConfigurationLanguage,
     GuildLevel,
     GuildNotification,
-    GuildSettings,
-    GuildSettingsLanguage,
     PartialUser,
     UserNotification
 } from '../interfaces/bot';
@@ -230,40 +230,40 @@ export const getGuildNotificationByName = async (id: string, name: string): Prom
     };
 };
 
-export const getGuildSettings = async (id: string): Promise<GuildSettings | undefined> => {
+export const getGuildConfiguration = async (id: string): Promise<GuildConfiguration | undefined> => {
     const guildId = BigInt(id);
     const guildData = await prisma.guilds.findUnique({
         where: {
             id: guildId
         }
     });
-    const guildSettingsData = await prisma.guilds_settings.findUnique({
+    const guildConfigurationData = await prisma.guilds_configurations.findUnique({
         where: {
             id: guildId
         }
     });
 
-    if (!guildData || !guildSettingsData)
+    if (!guildData || !guildConfigurationData)
         return undefined;
 
     return {
         id,
         prefix: guildData.prefix,
-        nickname: guildSettingsData.nickname,
-        language: guildSettingsData.language as GuildSettingsLanguage,
-        timezone: guildSettingsData.timezone as TimeZone,
-        commands: JSON.parse(guildSettingsData.commands),
-        welcome: JSON.parse(guildSettingsData.welcome),
-        goodbye: JSON.parse(guildSettingsData.goodbye),
-        activity: JSON.parse(guildSettingsData.activity),
-        global_chat: JSON.parse(guildSettingsData.global_chat),
-        global_ban: JSON.parse(guildSettingsData.global_ban),
-        level: JSON.parse(guildSettingsData.level),
-        translate: JSON.parse(guildSettingsData.translate),
-        vote: JSON.parse(guildSettingsData.vote),
-        quote: JSON.parse(guildSettingsData.quote),
-        music: JSON.parse(guildSettingsData.music),
-        logging: JSON.parse(guildSettingsData.logging)
+        nickname: guildConfigurationData.nickname,
+        language: guildConfigurationData.language as GuildConfigurationLanguage,
+        timezone: guildConfigurationData.timezone as TimeZone,
+        commands: JSON.parse(guildConfigurationData.commands),
+        welcome: JSON.parse(guildConfigurationData.welcome),
+        goodbye: JSON.parse(guildConfigurationData.goodbye),
+        activity: JSON.parse(guildConfigurationData.activity),
+        global_chat: JSON.parse(guildConfigurationData.global_chat),
+        global_ban: JSON.parse(guildConfigurationData.global_ban),
+        level: JSON.parse(guildConfigurationData.level),
+        translate: JSON.parse(guildConfigurationData.translate),
+        vote: JSON.parse(guildConfigurationData.vote),
+        quote: JSON.parse(guildConfigurationData.quote),
+        music: JSON.parse(guildConfigurationData.music),
+        logging: JSON.parse(guildConfigurationData.logging)
     };
 };
 

@@ -28,13 +28,13 @@ import React, { Dispatch, Fragment, SetStateAction, useEffect, useMemo, useState
 import { DialogProps } from '../../../../components/dialog';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover, RoleSelect } from '../../../../components/items';
 import { BrMobile, Key } from '../../../../components/text';
-import { GuildSettingsLevelRewardRole } from '../../../../interfaces/bot';
+import { GuildConfigurationLevelRewardRole } from '../../../../interfaces/bot';
 import { RedisRole } from '../../../../interfaces/redis';
 import { GuildRolesViewProps } from '../../../../interfaces/view';
 import { sortRoles } from '../../../../utils/discord';
 import { getStateActionValue, UniqueId } from '../../../../utils/state';
 
-type EditableObject = GuildSettingsLevelRewardRole & UniqueId;
+type EditableObject = GuildConfigurationLevelRewardRole & UniqueId;
 
 interface RoleItemProps extends ItemDisabledProps, GuildRolesViewProps {
     value: EditableObject;
@@ -76,7 +76,10 @@ const RoleItem = (
     </ItemRoot>
 );
 
-type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildSettingsLevelRewardRole[]> & GuildRolesViewProps;
+type ManageRolesDialogProps =
+    DialogProps
+    & ItemVariableProps<GuildConfigurationLevelRewardRole[]>
+    & GuildRolesViewProps;
 
 export const ManageRolesDialog = (
     {

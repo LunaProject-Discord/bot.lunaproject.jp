@@ -9,14 +9,14 @@ import { TextFieldItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { CodeStyleContainer } from '../../../../components/text';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, settings, localization: { translations } }: GuildSettingsViewProps) => {
-    const [prefix, setPrefix, resetPrefix] = useResettableState(settings.prefix);
-    const [nickname, setNickname, resetNickname] = useResettableState(settings.nickname);
+export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
+    const [prefix, setPrefix, resetPrefix] = useResettableState(configuration.prefix);
+    const [nickname, setNickname, resetNickname] = useResettableState(configuration.nickname);
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             prefix,
@@ -50,6 +50,7 @@ export const View = ({ guild, settings, localization: { translations } }: GuildS
                         primary={translations.nickname}
                         value={nickname}
                         setValue={setNickname}
+                        maxLength={32}
                     />
                     <Alert severity="info">
                         <AlertTitle>{translations.about_this_settings}</AlertTitle>
@@ -59,7 +60,7 @@ export const View = ({ guild, settings, localization: { translations } }: GuildS
             </Section>
 
             <SaveConfirm
-                open={prefix !== settings.prefix || nickname !== settings.nickname}
+                open={prefix !== configuration.prefix || nickname !== configuration.nickname}
                 onSave={handleActionSave}
                 onCancel={handleActionCancel}
             />

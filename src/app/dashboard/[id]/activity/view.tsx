@@ -8,23 +8,23 @@ import React, { Fragment, useState } from 'react';
 import { ActionItem, SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildSettingsActivity } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationActivity } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 import { ManageRolesDialog } from './dialog';
 
-export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
 
     const [openRolesDialog, setOpenRolesDialog] = useState(false);
 
-    const activity = settings.activity;
+    const activity = configuration.activity;
     const [enabled, setEnabled, resetEnabled] = useResettableState(activity.enabled);
     const [roles, setRoles, resetRoles] = useResettableState(activity.roles);
 
-    const toObject = (): GuildSettingsActivity => ({ enabled, roles });
+    const toObject = (): GuildConfigurationActivity => ({ enabled, roles });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             activity: toObject()

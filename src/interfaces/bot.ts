@@ -67,88 +67,88 @@ export interface FeaturedGuild {
 export type GuildFeature = 'manage' | 'level';
 
 
-export interface GuildSettings {
+export interface GuildConfiguration {
     id: string;
 
     prefix: string;
     nickname: string;
-    language: GuildSettingsLanguage;
+    language: GuildConfigurationLanguage;
     timezone: TimeZone;
 
-    commands: GuildSettingsCommands;
+    commands: GuildConfigurationCommands;
 
-    welcome: GuildSettingsWelcome;
-    goodbye: GuildSettingsGoodbye;
-    activity: GuildSettingsActivity;
+    welcome: GuildConfigurationWelcome;
+    goodbye: GuildConfigurationGoodbye;
+    activity: GuildConfigurationActivity;
 
-    global_chat: GuildSettingsComponent;
-    global_ban: GuildSettingsGlobalBan;
-    level: GuildSettingsLevel;
-    translate: GuildSettingsTranslate;
-    vote: GuildSettingsComponent;
-    quote: GuildSettingsQuote;
-    music: GuildSettingsMusic;
-    logging: GuildSettingsLogging;
+    global_chat: GuildConfigurationComponent;
+    global_ban: GuildConfigurationGlobalBan;
+    level: GuildConfigurationLevel;
+    translate: GuildConfigurationTranslate;
+    vote: GuildConfigurationComponent;
+    quote: GuildConfigurationQuote;
+    music: GuildConfigurationMusic;
+    logging: GuildConfigurationLogging;
 }
 
-export type GuildSettingsLanguage = 'ja-JP' | 'en-US';
+export type GuildConfigurationLanguage = 'ja-JP' | 'en-US';
 
-export interface GuildSettingsComponent {
+export interface GuildConfigurationComponent {
     enabled: boolean;
 }
 
-export interface GuildSettingsAccessControlComponent {
+export interface GuildConfigurationAccessControlComponent {
     channels: string[];
     roles: string[];
 }
 
-export interface GuildSettingsCommands {
-    disabled: GuildSettingsAccessControlComponent;
-    commands: GuildSettingsCommand[];
+export interface GuildConfigurationCommands {
+    disabled: GuildConfigurationAccessControlComponent;
+    commands: GuildConfigurationCommand[];
 }
 
-export interface GuildSettingsCommand {
+export interface GuildConfigurationCommand {
     enabled: boolean;
     name: string;
-    descriptions: GuildSettingsCommandLocalizationText[];
+    descriptions: GuildConfigurationCommandLocalizationText[];
     category: string;
     aliases: string[];
     permissions: string;
-    allowed: GuildSettingsAccessControlComponent;
-    denied: GuildSettingsAccessControlComponent;
+    allowed: GuildConfigurationAccessControlComponent;
+    denied: GuildConfigurationAccessControlComponent;
 }
 
-export interface GuildSettingsCommandLocalizationText {
+export interface GuildConfigurationCommandLocalizationText {
     language: string;
     text: string;
 }
 
-export interface GuildSettingsWelcome extends GuildSettingsComponent {
+export interface GuildConfigurationWelcome extends GuildConfigurationComponent {
     channel_id: string;
     message: DataMessage;
-    roles: GuildSettingsWelcomeRole[];
+    roles: GuildConfigurationWelcomeRole[];
 }
 
-export interface GuildSettingsWelcomeRole {
+export interface GuildConfigurationWelcomeRole {
     id: string;
 }
 
-export interface GuildSettingsGoodbye extends GuildSettingsComponent {
+export interface GuildConfigurationGoodbye extends GuildConfigurationComponent {
     channel_id: string;
     message: DataMessage;
 }
 
-export interface GuildSettingsActivity extends GuildSettingsComponent {
-    roles: GuildSettingsActivityRole[];
+export interface GuildConfigurationActivity extends GuildConfigurationComponent {
+    roles: GuildConfigurationActivityRole[];
 }
 
-export interface GuildSettingsActivityRole {
+export interface GuildConfigurationActivityRole {
     id: string;
     name: string;
-    type: GuildSettingsActivityRoleType;
+    type: GuildConfigurationActivityRoleType;
 }
 
-export type GuildSettingsActivityRoleType =
+export type GuildConfigurationActivityRoleType =
     'PLAYING'
     | 'STREAMING'
     | 'LISTENING'
@@ -156,64 +156,68 @@ export type GuildSettingsActivityRoleType =
     | 'CUSTOM_STATUS'
     | 'COMPETING';
 
-export interface GuildSettingsGlobalBan extends GuildSettingsComponent {
+export interface GuildConfigurationGlobalBan extends GuildConfigurationComponent {
     minimum_evaluate_value: number;
 }
 
-export interface GuildSettingsLevel extends GuildSettingsComponent {
+export interface GuildConfigurationLevel extends GuildConfigurationComponent {
     experience_per_message: number;
-    disabled: GuildSettingsAccessControlComponent;
-    reward: GuildSettingsLevelReward;
-    notification: GuildSettingsLevelNotification;
-    leaderboard: GuildSettingsLevelLeaderboard;
+    disabled: GuildConfigurationAccessControlComponent;
+    reward: GuildConfigurationLevelReward;
+    notification: GuildConfigurationLevelNotification;
+    leaderboard: GuildConfigurationLevelLeaderboard;
 }
 
-export interface GuildSettingsLevelReward {
-    type: GuildSettingsLevelRewardType;
+export interface GuildConfigurationLevelReward {
+    type: GuildConfigurationLevelRewardType;
     remove_role_demoted: boolean;
-    roles: GuildSettingsLevelRewardRole[];
+    roles: GuildConfigurationLevelRewardRole[];
 }
 
-export type GuildSettingsLevelRewardType = 'STACK_PREVIOUS_ROLES' | 'REMOVE_PREVIOUS_ROLES';
+export type GuildConfigurationLevelRewardType = 'STACK_PREVIOUS_ROLES' | 'REMOVE_PREVIOUS_ROLES';
 
-export interface GuildSettingsLevelRewardRole {
+export interface GuildConfigurationLevelRewardRole {
     id: string;
     level: number;
 }
 
-export interface GuildSettingsLevelNotification {
-    type: GuildSettingsLevelNotificationType;
+export interface GuildConfigurationLevelNotification {
+    type: GuildConfigurationLevelNotificationType;
     channel_id: string;
     message: DataMessage;
 }
 
-export type GuildSettingsLevelNotificationType = 'DISABLED' | 'DIRECT_MESSAGE' | 'CURRENT_CHANNEL' | 'CUSTOM_CHANNEL';
+export type GuildConfigurationLevelNotificationType =
+    'DISABLED'
+    | 'DIRECT_MESSAGE'
+    | 'CURRENT_CHANNEL'
+    | 'CUSTOM_CHANNEL';
 
-export interface GuildSettingsLevelLeaderboard {
+export interface GuildConfigurationLevelLeaderboard {
     public: boolean;
     allow_join: boolean;
     vanity_code: string | null;
 }
 
-export interface GuildSettingsTranslate extends GuildSettingsComponent {
+export interface GuildConfigurationTranslate extends GuildConfigurationComponent {
     reaction: boolean;
-    disabled: GuildSettingsAccessControlComponent;
+    disabled: GuildConfigurationAccessControlComponent;
 }
 
-export interface GuildSettingsQuote extends GuildSettingsComponent {
+export interface GuildConfigurationQuote extends GuildConfigurationComponent {
     reaction: boolean;
     message: boolean;
     other_guild_to_this_guild: boolean;
     this_guild_to_other_guild: boolean;
-    disabled: GuildSettingsAccessControlComponent;
+    disabled: GuildConfigurationAccessControlComponent;
 }
 
-export interface GuildSettingsMusic extends GuildSettingsComponent {
+export interface GuildConfigurationMusic extends GuildConfigurationComponent {
     web_panel: boolean;
-    sources: GuildSettingsMusicSources;
+    sources: GuildConfigurationMusicSources;
 }
 
-export interface GuildSettingsMusicSources {
+export interface GuildConfigurationMusicSources {
     youtube: boolean;
     niconico: boolean;
     soundcloud: boolean;
@@ -222,29 +226,29 @@ export interface GuildSettingsMusicSources {
     vimeo: boolean;
 }
 
-export interface GuildSettingsLogging {
+export interface GuildConfigurationLogging {
     enabled: boolean;
 
-    moderation: GuildSettingsLoggingModeration;
-    member: GuildSettingsLoggingMember;
-    voice: GuildSettingsLoggingVoice;
-    category: GuildSettingsLoggingChannel;
-    text_channel: GuildSettingsLoggingChannel;
-    voice_channel: GuildSettingsLoggingChannel;
-    role: GuildSettingsLoggingObject;
-    emote: GuildSettingsLoggingObject;
-    invite: GuildSettingsLoggingObject;
-    webhook: GuildSettingsLoggingObject;
-    integration: GuildSettingsLoggingObject;
-    message: GuildSettingsLoggingMessage;
+    moderation: GuildConfigurationLoggingModeration;
+    member: GuildConfigurationLoggingMember;
+    voice: GuildConfigurationLoggingVoice;
+    category: GuildConfigurationLoggingChannel;
+    text_channel: GuildConfigurationLoggingChannel;
+    voice_channel: GuildConfigurationLoggingChannel;
+    role: GuildConfigurationLoggingObject;
+    emote: GuildConfigurationLoggingObject;
+    invite: GuildConfigurationLoggingObject;
+    webhook: GuildConfigurationLoggingObject;
+    integration: GuildConfigurationLoggingObject;
+    message: GuildConfigurationLoggingMessage;
 }
 
-export interface GuildSettingsLoggingComponent extends GuildSettingsComponent {
+export interface GuildConfigurationLoggingComponent extends GuildConfigurationComponent {
     channel_id: string;
     color: string;
 }
 
-export interface GuildSettingsLoggingModeration extends GuildSettingsLoggingComponent {
+export interface GuildConfigurationLoggingModeration extends GuildConfigurationLoggingComponent {
     update: boolean;
     kick: boolean;
     prune: boolean;
@@ -252,7 +256,7 @@ export interface GuildSettingsLoggingModeration extends GuildSettingsLoggingComp
     unban: boolean;
 }
 
-export interface GuildSettingsLoggingMember extends GuildSettingsLoggingComponent {
+export interface GuildConfigurationLoggingMember extends GuildConfigurationLoggingComponent {
     join: boolean;
     leave: boolean;
     update: boolean;
@@ -260,7 +264,7 @@ export interface GuildSettingsLoggingMember extends GuildSettingsLoggingComponen
     role_remove: boolean;
 }
 
-export interface GuildSettingsLoggingVoice extends GuildSettingsLoggingComponent {
+export interface GuildConfigurationLoggingVoice extends GuildConfigurationLoggingComponent {
     join: boolean;
     leave: boolean;
     move: boolean;
@@ -268,20 +272,20 @@ export interface GuildSettingsLoggingVoice extends GuildSettingsLoggingComponent
     deafen: boolean;
 }
 
-export interface GuildSettingsLoggingChannel extends GuildSettingsLoggingComponent {
+export interface GuildConfigurationLoggingChannel extends GuildConfigurationLoggingComponent {
     create: boolean;
     delete: boolean;
     update: boolean;
     permissions_update: boolean;
 }
 
-export interface GuildSettingsLoggingObject extends GuildSettingsLoggingComponent {
+export interface GuildConfigurationLoggingObject extends GuildConfigurationLoggingComponent {
     create: boolean;
     delete: boolean;
     update: boolean;
 }
 
-export interface GuildSettingsLoggingMessage extends GuildSettingsLoggingComponent {
+export interface GuildConfigurationLoggingMessage extends GuildConfigurationLoggingComponent {
     update: boolean;
     delete: boolean;
     purge: boolean;

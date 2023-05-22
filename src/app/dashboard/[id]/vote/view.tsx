@@ -8,19 +8,19 @@ import React from 'react';
 import { SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildSettingsComponent } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationComponent } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, settings, localization: { translations } }: GuildSettingsViewProps) => {
-    const vote = settings.vote;
+export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
+    const vote = configuration.vote;
     const [enabled, setEnabled, resetEnabled] = useResettableState(vote.enabled);
 
-    const toObject = (): GuildSettingsComponent => ({
+    const toObject = (): GuildConfigurationComponent => ({
         enabled
     });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             vote: toObject()

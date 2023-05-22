@@ -10,24 +10,24 @@ import { ChannelItem, MessageItem, SwitchItem } from '../../../../components/ite
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { CodeStyleContainer } from '../../../../components/text';
-import { GuildSettingsWelcome } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationWelcome } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
 
     const [openMessageBuilder, setOpenMessageBuilder] = useState(false);
 
-    const welcome = settings.welcome;
+    const welcome = configuration.welcome;
     const [enabled, setEnabled, resetEnabled] = useResettableState(welcome.enabled);
     const [channelId, setChannelId, resetChannelId] = useResettableState(welcome.channel_id);
     const [message, setMessage, resetMessage] = useResettableState(welcome.message);
     const [roles, setRoles, resetRoles] = useResettableState(welcome.roles);
 
-    const toObject = (): GuildSettingsWelcome => ({ enabled, channel_id: channelId, message, roles });
+    const toObject = (): GuildConfigurationWelcome => ({ enabled, channel_id: channelId, message, roles });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             welcome: toObject()

@@ -9,9 +9,9 @@ import React from 'react';
 import { SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildSettingsLogging } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationLogging } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 import {
     Category,
     Emote,
@@ -28,10 +28,10 @@ import {
     Webhook
 } from './components';
 
-export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
 
-    const logging = settings.logging;
+    const logging = configuration.logging;
     const [enabled, setEnabled, resetEnabled] = useResettableState(logging.enabled);
     const [moderation, setModeration, resetModeration] = useResettableState(logging.moderation);
     const [member, setMember, resetMember] = useResettableState(logging.member);
@@ -48,7 +48,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
 
     const channels = guild.channels.filter((channel) => channel.type !== ChannelType.GuildForum && channel.type !== ChannelType.GuildVoice && channel.type !== ChannelType.GuildStageVoice);
 
-    const toObject = (): GuildSettingsLogging => ({
+    const toObject = (): GuildConfigurationLogging => ({
         enabled,
         moderation,
         member,
@@ -64,7 +64,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
         message
     });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             logging: toObject()

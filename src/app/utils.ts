@@ -27,5 +27,3 @@ export const getMutualGuilds = async (): Promise<OAuthGuild[]> => {
 
     return getOriginalMutualGuilds(user.id);
 };
-
-// export const getGuildSettings = cache(async (id: string): Promise<GuildSettings | undefined> => getOriginalGuildSettings(id));

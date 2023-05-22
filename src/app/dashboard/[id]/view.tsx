@@ -16,6 +16,7 @@ import React, { Fragment } from 'react';
 import { RouteLinkItem } from '../../../components/items';
 import { PageContent, PageHeader } from '../../../components/layout';
 import { GuildNotification } from '../../../interfaces/bot';
+import { LocalizationProps } from '../../../interfaces/localization';
 import { GuildViewProps, UserViewProps } from '../../../interfaces/view';
 
 interface Props extends UserViewProps, GuildViewProps {
@@ -65,12 +66,12 @@ export const View = ({ user, guild, notifications, localization: { translations 
     </PageContent>
 );
 
-export const LoadingView = () => (
+export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <PageContent display="flex">
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">サーバー設定</Typography>
-                <Typography variant="body1">設定したいサーバーを選択してください。</Typography>
+                <Typography variant="h4">{translations.guild_settings}</Typography>
+                <Typography variant="body1" />
             </Box>
         </PageHeader>
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>

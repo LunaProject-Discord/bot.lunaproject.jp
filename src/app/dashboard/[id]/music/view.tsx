@@ -8,12 +8,12 @@ import React from 'react';
 import { SwitchItem } from '../../../../components/items';
 import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildSettingsMusic } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationMusic } from '../../../../interfaces/bot';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, settings, localization: { translations } }: GuildSettingsViewProps) => {
-    const music = settings.music;
+export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
+    const music = configuration.music;
     const [enabled, setEnabled, resetEnabled] = useResettableState(music.enabled);
     const [webPanel, setWebPanel, resetWebPanel] = useResettableState(music.web_panel);
     const [youtube, setYoutube, resetYoutube] = useResettableState(music.sources.youtube);
@@ -23,7 +23,7 @@ export const View = ({ guild, settings, localization: { translations } }: GuildS
     const [bandcamp, setBandcamp, resetBandcamp] = useResettableState(music.sources.bandcamp);
     const [vimeo, setVimeo, resetVimeo] = useResettableState(music.sources.vimeo);
 
-    const toObject = (): GuildSettingsMusic => ({
+    const toObject = (): GuildConfigurationMusic => ({
         enabled,
         web_panel: webPanel,
         sources: {
@@ -36,7 +36,7 @@ export const View = ({ guild, settings, localization: { translations } }: GuildS
         }
     });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             music: toObject()

@@ -2,7 +2,7 @@
 
 import { $convertToMarkdownString } from '@lexical/markdown';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { ButtonBase } from '@lunaproject-discord/web-core';
+import { ButtonBase } from '@lunaproject-discord/web-core/dist/components/ButtonBase';
 import {
     EmojiEmotionsOutlined,
     FormatBoldOutlined,

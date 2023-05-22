@@ -25,7 +25,7 @@ import { SaveConfirm } from '../../../../../components/save_confirm';
 import { GuildLevel, PartialGuildLevel } from '../../../../../interfaces/bot';
 import { LocalizationProps } from '../../../../../interfaces/localization';
 import { DataGuild, RedisMember } from '../../../../../interfaces/redis';
-import { GuildSettingsViewProps } from '../../../../../interfaces/view';
+import { GuildConfigurationViewProps } from '../../../../../interfaces/view';
 import { getMemberAvatar } from '../../../../../utils/cdn';
 import { filterPredicateMember } from '../../../../../utils/discord';
 import { getStateActionValue } from '../../../../../utils/state';
@@ -153,7 +153,7 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
     </ItemContainer>
 );
 
-interface Props extends GuildSettingsViewProps {
+interface Props extends GuildConfigurationViewProps {
     levels: GuildLevel[];
 }
 

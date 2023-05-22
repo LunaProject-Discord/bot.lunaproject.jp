@@ -2,7 +2,7 @@ import { hasPermission as hasPermissionForOAuthGuild } from '@lunaproject-discor
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React, { Fragment, ReactNode } from 'react';
 import { WithIdParamProps } from '../../../interfaces/page';
-import { getGuildSettings } from '../../../libs/bot';
+import { getGuildConfiguration } from '../../../libs/bot';
 import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '../../../libs/redis';
 import { getLocalization } from '../../../localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions, sortOAuthGuilds } from '../../../utils/discord';
@@ -58,14 +58,19 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const guildsData = getGuilds();
 
     const guildData = getGuildById(id);
-    const guildSettingsData = getGuildSettings(id);
+    const guildConfigurationData = getGuildConfiguration(id);
 
-    const [user, guilds, guild, guildSettings] = await Promise.all([userData, guildsData, guildData, guildSettingsData]);
+    const [user, guilds, guild, guildConfiguration] = await Promise.all([
+        userData,
+        guildsData,
+        guildData,
+        guildConfigurationData
+    ]);
 
     if (!user)
         return (<UnauthorizedView localization={localization} />);
 
-    if (!guild || !guildSettings)
+    if (!guild || !guildConfiguration)
         return (<NotFoundView />);
 
     const member = await getMemberById(user.id, guild.id);

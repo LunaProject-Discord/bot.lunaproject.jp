@@ -28,15 +28,15 @@ import { PageContent, PageHeader } from '../../../../components/layout';
 import { SaveConfirm } from '../../../../components/save_confirm';
 import { CodeStyleContainer } from '../../../../components/text';
 import {
-    GuildSettingsLevel,
-    GuildSettingsLevelNotificationType,
-    GuildSettingsLevelRewardType
+    GuildConfigurationLevel,
+    GuildConfigurationLevelNotificationType,
+    GuildConfigurationLevelRewardType
 } from '../../../../interfaces/bot';
-import { GuildSettingsViewProps } from '../../../../interfaces/view';
-import { saveGuildSettings } from '../utils';
+import { GuildConfigurationViewProps } from '../../../../interfaces/view';
+import { saveGuildConfiguration } from '../utils';
 import { ManageRolesDialog } from './dialog';
 
-export const View = ({ guild, settings, localization }: GuildSettingsViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
 
     const [openDisabledChannelsDialog, setOpenDisabledChannelsDialog] = useState(false);
@@ -46,7 +46,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
 
     const [origin, setOrigin] = useState('');
 
-    const level = settings.level;
+    const level = configuration.level;
     const [enabled, setEnabled, resetEnabled] = useResettableState(level.enabled);
     const [experiencePerMessage, setExperiencePerMessage, resetExperiencePerMessage] = useResettableState(level.experience_per_message);
     const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(level.disabled.channels);
@@ -63,7 +63,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
 
     useEffect(() => setOrigin(window.location.origin), []);
 
-    const toObject = (): GuildSettingsLevel => ({
+    const toObject = (): GuildConfigurationLevel => ({
         enabled,
         experience_per_message: experiencePerMessage,
         disabled: {
@@ -87,7 +87,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
         }
     });
 
-    const handleActionSave = () => saveGuildSettings(
+    const handleActionSave = () => saveGuildConfiguration(
         guild.id,
         {
             level: toObject()
@@ -158,7 +158,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
                         <SectionParagraph variant="h6" fontWeight={400}>
                             {translations.level_reward_type}
                         </SectionParagraph>
-                        <RadioItem<GuildSettingsLevelRewardType>
+                        <RadioItem<GuildConfigurationLevelRewardType>
                             primary={translations.level_reward_type_stack}
                             secondary={translations.level_reward_type_stack_description}
                             name="reward_type"
@@ -167,7 +167,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
                             setSelected={setRewardType}
                             disabled={!enabled}
                         />
-                        <RadioItem<GuildSettingsLevelRewardType>
+                        <RadioItem<GuildConfigurationLevelRewardType>
                             primary={translations.level_reward_type_replace}
                             secondary={translations.level_reward_type_replace_description}
                             name="reward_type"
@@ -194,7 +194,7 @@ export const View = ({ guild, settings, localization }: GuildSettingsViewProps) 
                 <Section>
                     <SectionTitle>{translations.level_notification}</SectionTitle>
                     <SectionContent>
-                        <SelectItem<GuildSettingsLevelNotificationType>
+                        <SelectItem<GuildConfigurationLevelNotificationType>
                             primary={translations.level_notification_type}
                             value={notificationType}
                             setValue={setNotificationType}

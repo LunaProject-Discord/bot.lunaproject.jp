@@ -1,7 +1,7 @@
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { WithIdParamProps } from '../../../../interfaces/page';
-import { getGuildSettings } from '../../../../libs/bot';
+import { getGuildConfiguration } from '../../../../libs/bot';
 import { getGuildById, getMemberById } from '../../../../libs/redis';
 import { getLocalization } from '../../../../localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '../../../../utils/discord';
@@ -41,14 +41,14 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
     const localization = getLocalization();
 
     const guildData = getGuildById(id);
-    const guildSettingsData = getGuildSettings(id);
+    const guildConfigurationData = getGuildConfiguration(id);
 
-    const [guild, guildSettings] = await Promise.all([guildData, guildSettingsData]);
+    const [guild, guildConfiguration] = await Promise.all([guildData, guildConfigurationData]);
 
-    if (!guild || !guildSettings)
+    if (!guild || !guildConfiguration)
         return (<NotFoundView />);
 
-    return (<View guild={guild} settings={guildSettings} localization={localization} />);
+    return (<View guild={guild} configuration={guildConfiguration} localization={localization} />);
 };
 
 export default Page;

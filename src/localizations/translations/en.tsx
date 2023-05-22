@@ -64,6 +64,23 @@ export const translationsEn: Translations = {
     embed_footer_icon_url: 'Footer Icon URL',
     embed_footer_timestamp: 'Timestamp',
 
+    error_unauthorized_title: 'Login is required!',
+    error_unauthorized_description: <Fragment>
+        You must be logged in to access this page.<br />
+        Please click the button below to log in.
+    </Fragment>,
+    error_forbidden_title: 'Forbidden!',
+    error_forbidden_description: <Fragment>
+        You do not have authorization to access this page.<br />
+        If you are sure you are authorized, please switch to another account and try again.
+    </Fragment>,
+    error_not_found_title: 'Page not found!',
+    error_not_found_description: <Fragment>
+        The specified page could not be found.<br />
+        The URL of the page may have changed or the page itself may have been deleted.<br />
+        Please click the button below to return to the home page.
+    </Fragment>,
+
     welcome_to_name: 'Welcome to %n!',
 
     home: 'Home',
@@ -137,9 +154,9 @@ export const translationsEn: Translations = {
     activity_type_watching_long: 'Watching video',
     activity_type_watching_short: 'Watching',
     activity_type_watching_description: 'Assigns roles while watching videos of specific titles.',
-    activity_type_custom_long: 'Custom status being set',
-    activity_type_custom_short: 'set',
-    activity_type_custom_description: <Fragment>
+    activity_type_custom_status_long: 'Custom status being set',
+    activity_type_custom_status_short: 'set',
+    activity_type_custom_status_description: <Fragment>
         Grant a role when the user&apos;s custom status matches the name you set.
     </Fragment>,
     role_panels: 'Role Panels',

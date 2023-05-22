@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { PartialGuildLevel } from '../../../../../interfaces/bot';
 import { WithIdParamProps } from '../../../../../interfaces/page';
-import { getGuildLevels, getGuildSettings } from '../../../../../libs/bot';
+import { getGuildConfiguration, getGuildLevels } from '../../../../../libs/bot';
 import prisma from '../../../../../libs/prisma';
 import { COOKIE_TOKEN } from '../../../../../utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '../../../../../utils/discord';
@@ -20,8 +20,8 @@ export const GET = async (req: NextRequest, { params: { id } }: WithIdParamProps
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    const guildSettings = await getGuildSettings(id);
-    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD) || !guildSettings?.level.leaderboard.public)
+    const guildConfiguration = await getGuildConfiguration(id);
+    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD) || !guildConfiguration?.level.leaderboard.public)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
     return NextResponse.json(await getGuildLevels(id, isFetchUser), { status: 200 });
@@ -37,8 +37,8 @@ export const PATCH = async (req: Request, { params: { id } }: WithIdParamProps) 
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    const guildSettings = await getGuildSettings(id);
-    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD) || !guildSettings?.level.leaderboard.public)
+    const guildConfiguration = await getGuildConfiguration(id);
+    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD) || !guildConfiguration?.level.leaderboard.public)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
     const data: PartialGuildLevel[] = await req.json();

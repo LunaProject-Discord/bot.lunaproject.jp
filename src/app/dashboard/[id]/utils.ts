@@ -1,11 +1,11 @@
-import { GuildSettings } from '../../../interfaces/bot';
+import { GuildConfiguration } from '../../../interfaces/bot';
 
-export const saveGuildSettings = async (id: string, settings: Partial<GuildSettings>) => {
+export const saveGuildConfiguration = async (id: string, configuration: Partial<GuildConfiguration>) => {
     const res = await fetch(
-        `/api/guilds/${id}/settings`,
+        `/api/guilds/${id}/configuration`,
         {
             method: 'PATCH',
-            body: JSON.stringify(settings),
+            body: JSON.stringify(configuration),
             credentials: 'include'
         }
     );

@@ -65,6 +65,13 @@ export type TranslationKeys =
     | 'embed_footer_icon_url'
     | 'embed_footer_timestamp'
 
+    | 'error_unauthorized_title'
+    | 'error_unauthorized_description'
+    | 'error_forbidden_title'
+    | 'error_forbidden_description'
+    | 'error_not_found_title'
+    | 'error_not_found_description'
+
     | 'welcome_to_name'
 
     | 'home'
@@ -112,9 +119,9 @@ export type TranslationKeys =
     | 'activity_type_watching_long'
     | 'activity_type_watching_short'
     | 'activity_type_watching_description'
-    | 'activity_type_custom_long'
-    | 'activity_type_custom_short'
-    | 'activity_type_custom_description'
+    | 'activity_type_custom_status_long'
+    | 'activity_type_custom_status_short'
+    | 'activity_type_custom_status_description'
     | 'role_panels'
     | 'settings_features_and_options'
     | 'level'

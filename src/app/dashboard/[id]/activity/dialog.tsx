@@ -40,7 +40,7 @@ import React, { Dispatch, Fragment, ReactNode, SetStateAction, useEffect, useMem
 import { DialogProps } from '../../../../components/dialog';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '../../../../components/items';
 import { BrMobile, Key, translatableTypographyStyled } from '../../../../components/text';
-import { GuildSettingsActivityRole, GuildSettingsActivityRoleType } from '../../../../interfaces/bot';
+import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '../../../../interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '../../../../interfaces/localization';
 import { PopoverProps } from '../../../../interfaces/mui';
 import { RedisRole } from '../../../../interfaces/redis';
@@ -48,18 +48,18 @@ import { GuildRolesViewProps } from '../../../../interfaces/view';
 import { sortRoles } from '../../../../utils/discord';
 import { getStateActionValue, UniqueId } from '../../../../utils/state';
 
-type EditableObject = GuildSettingsActivityRole & UniqueId;
+type EditableObject = GuildConfigurationActivityRole & UniqueId;
 
 interface SelectActivityTypeMenuItem {
-    type: GuildSettingsActivityRoleType;
+    type: GuildConfigurationActivityRoleType;
     icon?: ReactNode;
     primary?: ReactNode;
     secondary?: ReactNode;
 }
 
 interface SelectActivityTypePopoverProps extends PopoverProps, LocalizationProps {
-    selected?: GuildSettingsActivityRoleType;
-    setSelected: Dispatch<SetStateAction<GuildSettingsActivityRoleType>>;
+    selected?: GuildConfigurationActivityRoleType;
+    setSelected: Dispatch<SetStateAction<GuildConfigurationActivityRoleType>>;
 }
 
 const SelectActivityTypePopover = (
@@ -76,7 +76,7 @@ const SelectActivityTypePopover = (
 
     const handleClose = () => setAnchorEl(null);
 
-    const handleSelect = (type: GuildSettingsActivityRoleType) => {
+    const handleSelect = (type: GuildConfigurationActivityRoleType) => {
         setSelected(type);
         handleClose();
     };
@@ -109,8 +109,8 @@ const SelectActivityTypePopover = (
         {
             type: 'CUSTOM_STATUS',
             icon: <TagOutlined />,
-            primary: translations.activity_type_custom_long,
-            secondary: translations.activity_type_custom_description
+            primary: translations.activity_type_custom_status_long,
+            secondary: translations.activity_type_custom_status_description
         }
     ];
 
@@ -210,7 +210,7 @@ const RoleItem = (
                                 }
                             }}
                         >
-                            {translations[`activity_type_${value.type === 'CUSTOM_STATUS' ? 'custom' : value.type.toLowerCase()}_short` as TranslationKeys]}
+                            {translations[`activity_type_${value.type === 'CUSTOM_STATUS' ? 'custom_status' : value.type.toLowerCase()}_short` as TranslationKeys]}
                         </Select>
                         <Tooltip title={translations.remove} placement="top">
                             <IconButton onClick={() => setValue(undefined)} color="error">
@@ -232,7 +232,7 @@ const RoleItem = (
     );
 };
 
-type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildSettingsActivityRole[]> & GuildRolesViewProps;
+type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildConfigurationActivityRole[]> & GuildRolesViewProps;
 
 export const ManageRolesDialog = (
     {
