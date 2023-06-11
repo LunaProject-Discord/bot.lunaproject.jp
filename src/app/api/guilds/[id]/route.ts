@@ -1,8 +1,8 @@
+import { WithIdParamProps } from '@interfaces/page';
 import { getGuildById } from '@lunaproject-discord/web-discord';
+import { COOKIE_TOKEN } from '@utils/cookie';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { WithIdParamProps } from '../../../../interfaces/page';
-import { COOKIE_TOKEN } from '../../../../utils/cookie';
 
 export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
     const nextCookies = cookies();

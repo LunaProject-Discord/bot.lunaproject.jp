@@ -1,5 +1,6 @@
 'use client';
 
+import { GuildRolesViewProps } from '@interfaces/view';
 import { Dialog, DialogActions, DialogHeader } from '@lunaproject-discord/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
@@ -16,10 +17,9 @@ import {
     Theme,
     useMediaQuery
 } from '@mui/material';
+import { filterPredicateRole, getRoleColor, sortRoles } from '@utils/discord';
 import { ellipsis, size } from 'polished';
 import React, { Fragment } from 'react';
-import { GuildRolesViewProps } from '../../interfaces/view';
-import { filterPredicateRole, getRoleColor, sortRoles } from '../../utils/discord';
 import { ListItemButton, ListItemIcon } from '../items';
 import { DialogProps } from './index';
 

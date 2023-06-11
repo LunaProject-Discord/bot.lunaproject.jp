@@ -1,30 +1,24 @@
 'use client';
 
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { CodeStyleContainer } from '@components/text';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { BadgeOutlined, TagOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, Typography } from '@mui/material';
 import React from 'react';
 import { TextFieldItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { CodeStyleContainer } from '../../../../components/text';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
     const [prefix, setPrefix, resetPrefix] = useResettableState(configuration.prefix);
     const [nickname, setNickname, resetNickname] = useResettableState(configuration.nickname);
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            prefix,
-            nickname
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { prefix, nickname });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetPrefix();
         resetNickname();
     };
@@ -61,8 +55,8 @@ export const View = ({ guild, configuration, localization: { translations } }: G
 
             <SaveConfirm
                 open={prefix !== configuration.prefix || nickname !== configuration.nickname}
-                onSave={handleActionSave}
-                onCancel={handleActionCancel}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
             />
         </PageContent>
     );

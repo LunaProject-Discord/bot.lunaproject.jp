@@ -1,10 +1,10 @@
-import { sortOAuthGuilds } from '@lunaproject-discord/web-discord';
+import { getGuilds, getUser } from '@app/utils';
+import { FeaturedGuild, GuildFeature } from '@interfaces/bot';
+import { getGuildConfiguration } from '@libs/bot';
+import { getAndRequestUserGuildsById } from '@libs/redis';
+import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@utils/discord';
 import { NextResponse } from 'next/server';
-import { FeaturedGuild, GuildFeature } from '../../../../../../interfaces/bot';
-import { getGuildConfiguration } from '../../../../../../libs/bot';
-import { getAndRequestUserGuildsById } from '../../../../../../libs/redis';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '../../../../../../utils/discord';
-import { getGuilds, getUser } from '../../../../../utils';
 
 export const GET = async (req: Request) => {
     const user = await getUser();
@@ -15,7 +15,7 @@ export const GET = async (req: Request) => {
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);
     const mutualGuildIds = mutualGuilds.map((guild) => guild.id);
 
-    const sortedGuilds = sortOAuthGuilds(guilds);
+    const sortedGuilds = sortGuilds(guilds) as OAuthGuild[];
     const filteredGuilds = sortedGuilds.filter((guild) => mutualGuildIds.includes(guild.id));
 
     const featuredGuilds: FeaturedGuild[] = [];

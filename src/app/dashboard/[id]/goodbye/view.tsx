@@ -1,17 +1,17 @@
 'use client';
 
+import { ChannelItem, MessageItem, SwitchItem } from '@components/items';
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { CodeStyleContainer } from '@components/text';
+import { GuildConfigurationGoodbye } from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { useState } from 'react';
-import { ChannelItem, MessageItem, SwitchItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { CodeStyleContainer } from '../../../../components/text';
-import { GuildConfigurationGoodbye } from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
@@ -19,21 +19,16 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     const [openMessageBuilder, setOpenMessageBuilder] = useState(false);
 
-    const goodbye = configuration.goodbye;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(goodbye.enabled);
-    const [channelId, setChannelId, resetChannelId] = useResettableState(goodbye.channel_id);
-    const [message, setMessage, resetMessage] = useResettableState(goodbye.message);
+    const goodbyeConfiguration = configuration.goodbye;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(goodbyeConfiguration.enabled);
+    const [channelId, setChannelId, resetChannelId] = useResettableState(goodbyeConfiguration.channel_id);
+    const [message, setMessage, resetMessage] = useResettableState(goodbyeConfiguration.message);
 
     const toObject = (): GuildConfigurationGoodbye => ({ enabled, channel_id: channelId, message });
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            goodbye: toObject()
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { goodbye: toObject() });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetEnabled();
         resetChannelId();
         resetMessage();
@@ -77,10 +72,10 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
 
             <SaveConfirm
-                open={!deepEqual(goodbye, toObject(), { strict: true })}
+                open={!deepEqual(goodbyeConfiguration, toObject(), { strict: true })}
                 disableKeyboardShortcuts={openMessageBuilder}
-                onSave={handleActionSave}
-                onCancel={handleActionCancel}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
             />
         </PageContent>
     );

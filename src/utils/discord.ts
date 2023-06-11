@@ -1,37 +1,58 @@
-import { APIGuildChannel } from '@lunaproject-discord/web-discord';
-import { GuildMember, OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import { APIGuild, APIRole } from 'discord-api-types/v10';
-import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole } from '../interfaces/redis';
+import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole, RedisUser } from '@interfaces/redis';
+import {
+    APIGuildChannel,
+    GuildMember,
+    OAuthGuild,
+    OAuthUser
+} from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { APIGuild, APIRole, APIUser, PermissionFlagsBits } from 'discord-api-types/v10';
 
 export * from '@lunaproject-discord/web-discord/dist/utils';
 
-export const ADMINISTRATOR_OR_MANAGE_GUILD = [0x8, 0x20];
+export const ADMINISTRATOR_OR_MANAGE_GUILD = [PermissionFlagsBits.Administrator, PermissionFlagsBits.ManageGuild];
 
-export const checkPermission = (permissions: string | number | undefined, permission: number) => (Number(permissions ?? 0) & permission) === permission;
+export const checkPermission = (permissions: string | bigint | undefined, permission: bigint) => (BigInt(permissions ?? 0) & permission) === permission;
 
-export const someCheckPermissions = (guild: OAuthGuild | APIGuild, ...permissions: number[]) => guild.owner || permissions.some((permission) => checkPermission(guild.permissions, permission));
+export const someCheckMemberPermissions = (guild: RedisGuild | DataGuild, member: RedisMember, ...permissions: bigint[]) => guild.owner === member.id || permissions.some((permission) => checkPermission(member.permissions, permission));
 
-export const someCheckMemberPermissions = (guild: RedisGuild | DataGuild, member: RedisMember, ...permissions: number[]) => guild.owner === member.id || permissions.some((permission) => checkPermission(member.permissions, permission));
+export const everyCheckMemberPermissions = (guild: RedisGuild | DataGuild, member: RedisMember, ...permissions: bigint[]) => guild.owner === member.id || permissions.every((permission) => checkPermission(member.permissions, permission));
 
-export const everyCheckPermissions = (guild: OAuthGuild | APIGuild, ...permissions: number[]) => guild.owner || permissions.every((permission) => checkPermission(guild.permissions, permission));
 
-export const everyCheckMemberPermissions = (guild: RedisGuild | DataGuild, member: RedisMember, ...permissions: number[]) => guild.owner === member.id || permissions.every((permission) => checkPermission(member.permissions, permission));
+export const getUserDisplayName = (user: RedisUser | APIUser | OAuthUser) => 'username' in user ? (user.global_name ?? user.username) : (user.display_name ?? user.name);
 
-export const hasPermission = (guild: RedisGuild | DataGuild, member: RedisMember, permission: number = 0x20) => guild.owner === member.id || checkPermission(member.permissions, permission);
+export const getMemberDisplayName = (member: GuildMember | RedisMember) => member.nick ?? getUserDisplayName(member.user);
+
 
 export const getRoleColor = (role: RedisRole | APIRole) => {
     const hexColor = role.color.toString(16).padStart(6, '0');
     return `#${hexColor !== '1fffffff' ? hexColor : '99aab5'}`;
 };
 
+
+export const sortGuilds = (guilds: (OAuthGuild | APIGuild | RedisGuild)[]) => (guilds?.slice() ?? []).sort((a, b) => a.name.localeCompare(b.name));
+
 export const sortChannels = (channels: (APIGuildChannel | RedisChannel)[]) => (channels?.slice() ?? []).sort((a, b) => a.position - b.position);
 
 export const sortRoles = (roles: (APIRole | RedisRole)[]) => (roles?.slice() ?? []).sort((a, b) => b.position - a.position);
 
-export const filterPredicateGuild = (guild: OAuthGuild | APIRole | RedisRole, keyword: string) => keyword.length < 1 || guild.id.includes(keyword) || guild.name.toLowerCase().includes(keyword.toLowerCase());
+export const sortMembers = (members: (GuildMember | RedisMember)[]) => (members?.slice() ?? []).sort((a, b) => (getMemberDisplayName(a)).localeCompare(getMemberDisplayName(b)));
 
-export const filterPredicateChannel = (channel: APIGuildChannel | RedisChannel, keyword: string) => keyword.length < 1 || channel.id.includes(keyword) || channel.name.toLowerCase().includes(keyword.toLowerCase());
 
-export const filterPredicateRole = (role: APIRole | RedisRole, keyword: string) => keyword.length < 1 || role.id.includes(keyword) || role.name.toLowerCase().includes(keyword.toLowerCase());
+export const filterPredicateGuild = (guild: OAuthGuild | APIGuild | RedisGuild, keyword: string) => keyword.length < 1
+    || guild.id.includes(keyword)
+    || guild.name.toLowerCase().includes(keyword.toLowerCase());
 
-export const filterPredicateMember = (member: GuildMember | RedisMember, keyword: string) => keyword.length < 1 || member.user.id.includes(keyword) || ('username' in member.user ? member.user.username : member.user.name).toLowerCase().includes(keyword.toLowerCase()) || member.user.discriminator.includes(keyword) || member.nick?.toLowerCase().includes(keyword.toLowerCase());
+export const filterPredicateChannel = (channel: APIGuildChannel | RedisChannel, keyword: string) => keyword.length < 1
+    || channel.id.includes(keyword)
+    || channel.name.toLowerCase().includes(keyword.toLowerCase());
+
+export const filterPredicateRole = (role: APIRole | RedisRole, keyword: string) => keyword.length < 1
+    || role.id.includes(keyword)
+    || role.name.toLowerCase().includes(keyword.toLowerCase());
+
+export const filterPredicateMember = (member: GuildMember | RedisMember, keyword: string) => keyword.length < 1
+    || member.user.id.includes(keyword)
+    || ('username' in member.user ? member.user.username : member.user.name).toLowerCase().includes(keyword.toLowerCase())
+    || ('global_name' in member.user ? member.user.global_name : member.user.display_name)?.toLowerCase().includes(keyword.toLowerCase())
+    || member.user.discriminator.includes(keyword)
+    || member.nick?.toLowerCase().includes(keyword.toLowerCase());

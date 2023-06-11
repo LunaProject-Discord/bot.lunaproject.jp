@@ -1,6 +1,6 @@
+import { LocaleType } from '@interfaces/localization';
+import { COOKIE_LOCALE } from '@utils/cookie';
 import { cookies } from 'next/headers';
-import { LocaleType } from '../interfaces/localization';
-import { COOKIE_LOCALE } from '../utils/cookie';
 import { getLocalizationByName, getTranslationByName } from './index';
 
 export const getLocale = (): LocaleType => {

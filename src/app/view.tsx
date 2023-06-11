@@ -1,5 +1,9 @@
 'use client';
 
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import { PageContent } from '@components/layout';
+import { FeaturedGuild } from '@interfaces/bot';
+import { LocalizationProps } from '@interfaces/localization';
 import {
     Gallery,
     GalleryItem,
@@ -35,16 +39,12 @@ import {
     ListItemText,
     Typography
 } from '@mui/material';
+import { getGuildIcon } from '@utils/discord';
+import { fetchWithUser } from '@utils/swr';
 import NextLink from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { Fragment, useState } from 'react';
 import useSWRImmutable from 'swr/immutable';
-import { ErrorDescription, ErrorRoot, ErrorTitle } from '../components/error';
-import { PageContent } from '../components/layout';
-import { FeaturedGuild } from '../interfaces/bot';
-import { LocalizationProps } from '../interfaces/localization';
-import { getGuildIcon } from '../utils/discord';
-import { fetchWithUser } from '../utils/swr';
 
 interface GuildsProps {
     guilds: OAuthGuild[];

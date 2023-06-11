@@ -1,7 +1,7 @@
-import Redis from 'ioredis';
 import {
     DataGuild,
     RedisChannel,
+    RedisCommand,
     RedisGuild,
     RedisMember,
     RedisRole,
@@ -9,7 +9,8 @@ import {
     RedisUser,
     RedisUserGuild,
     RedisUserGuilds
-} from '../interfaces/redis';
+} from '@interfaces/redis';
+import Redis from 'ioredis';
 
 const HASH_GUILDS = 'guilds';
 const HASH_CHANNELS = 'channels';
@@ -17,6 +18,7 @@ const HASH_ROLES = 'roles';
 const HASH_MEMBERS = 'members';
 const HASH_USERS = 'users';
 const HASH_USERS_GUILDS = 'users_guilds';
+const HASH_COMMANDS = 'commands';
 
 const PUBSUB_USERS_GUILDS = HASH_USERS_GUILDS;
 const PUBSUB_GUILD_CONFIGURATION = 'guild_configuration';
@@ -134,4 +136,20 @@ export const updateGuildConfigurationById = async (id: string): Promise<void> =>
 export const updateUserConfigurationById = async (id: string): Promise<void> => {
     const data: RedisSnowflake = { id };
     await redis.publish(PUBSUB_USER_CONFIGURATION, JSON.stringify(data));
+};
+
+export const getCommands = async (): Promise<RedisCommand[]> => {
+    const commands = await redis.hgetall(HASH_COMMANDS);
+    if (!commands)
+        return [];
+
+    return Object.values(commands).map((command) => JSON.parse(command));
+};
+
+export const getCommand = async (name: string): Promise<RedisCommand | undefined> => {
+    const data = await redis.hget(HASH_COMMANDS, name);
+    if (!data)
+        return undefined;
+
+    return JSON.parse(data);
 };

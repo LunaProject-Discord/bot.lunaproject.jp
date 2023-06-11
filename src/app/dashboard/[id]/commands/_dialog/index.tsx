@@ -1,0 +1,199 @@
+'use client';
+
+import { Channels, Group, GroupTitle, Members, Roles } from '@app/dashboard/[id]/commands/_dialog/_components';
+import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
+import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@app/dashboard/[id]/commands/utils';
+import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
+import { Code, Key } from '@components/text';
+import { GuildConfigurationCommand } from '@interfaces/bot';
+import { RedisChannel, RedisMember, RedisRole } from '@interfaces/redis';
+import { GuildViewProps } from '@interfaces/view';
+import { ItemFormContainer, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { CloseOutlined } from '@mui/icons-material';
+import { Box, Button, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
+import { sortChannels, sortMembers, sortRoles } from '@utils/discord';
+import { getStateActionValue } from '@utils/state';
+import deepEqual from 'deep-equal';
+import React, { Fragment, memo, SetStateAction, useCallback, useState } from 'react';
+
+type ManageCommandDialogProps = DialogProps & ItemVariableProps<GuildConfigurationCommand> & GuildViewProps;
+
+const ManageCommandDialog = memo<ManageCommandDialogProps>((
+    {
+        open,
+        setOpen,
+        value,
+        setValue,
+        guild,
+        localization
+    }
+) => {
+    const { translations } = localization;
+
+    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+
+    const choiceChannels = sortChannels(guild.channels) as RedisChannel[];
+    const choiceRoles = (sortRoles(guild.roles) as RedisRole[]).filter((role) => role.position !== 0);
+    const choiceMembers = sortMembers(guild.members) as RedisMember[];
+
+    const [defaultChannels, setDefaultChannels] = useState(value.permissions.channels.default);
+    const [defaultRoles, setDefaultRoles] = useState(value.permissions.roles.default);
+    const [overrideChannels, setOverrideChannels] = useState(asEditablePermissionOverrides(value.permissions.channels.overrides));
+    const [overrideRoles, setOverrideRoles] = useState(asEditablePermissionOverrides(value.permissions.roles.overrides));
+    const [members, setMembers] = useState(asEditablePermissionOverrides(value.permissions.members));
+
+    const updateChannelsValue = useCallback((defaultValue: boolean | null, overrides: EditablePermissionOverride[]) => setValue((
+        {
+            permissions,
+            ...command
+        }
+    ) => ({
+        ...command,
+        permissions: {
+            ...permissions,
+            channels: {
+                default: defaultValue,
+                overrides: asCommandPermissionOverrides(overrides)
+            }
+        }
+    })), [setValue]);
+
+    const updateRolesValue = useCallback((defaultValue: boolean | null, overrides: EditablePermissionOverride[]) => setValue((
+        {
+            permissions,
+            ...command
+        }
+    ) => ({
+        ...command,
+        permissions: {
+            ...permissions,
+            roles: {
+                default: defaultValue,
+                overrides: asCommandPermissionOverrides(overrides)
+            }
+        }
+    })), [setValue]);
+
+    const updateDefaultChannels = useCallback((action: SetStateAction<boolean | null>) => {
+        const value = getStateActionValue(action, defaultChannels);
+        setDefaultChannels(value);
+        updateChannelsValue(value, overrideChannels);
+    }, [defaultChannels, overrideChannels, updateChannelsValue]);
+
+    const updateDefaultRoles = useCallback((action: SetStateAction<boolean | null>) => {
+        const value = getStateActionValue(action, defaultRoles);
+        setDefaultRoles(value);
+        updateRolesValue(value, overrideRoles);
+    }, [defaultRoles, overrideRoles, updateRolesValue]);
+
+    const updateOverrideChannels = useCallback((action: SetStateAction<EditablePermissionOverride[]>) => {
+        const array = getStateActionValue(action, overrideChannels);
+        setOverrideChannels(array);
+        updateChannelsValue(defaultChannels, array);
+    }, [defaultChannels, overrideChannels, updateChannelsValue]);
+
+    const updateOverrideRoles = useCallback((action: SetStateAction<EditablePermissionOverride[]>) => {
+        const array = getStateActionValue(action, overrideRoles);
+        setOverrideRoles(array);
+        updateRolesValue(defaultRoles, array);
+    }, [defaultRoles, overrideRoles, updateRolesValue]);
+
+    const updateMembers = useCallback((action: SetStateAction<EditablePermissionOverride[]>) => {
+        const array = getStateActionValue(action, members);
+        setMembers(array);
+        setValue(({ permissions, ...command }) => ({
+            ...command,
+            permissions: {
+                ...permissions,
+                members: asCommandPermissionOverrides(array)
+            }
+        }));
+    }, [members, setValue]);
+
+    return (
+        <Fragment>
+            <Dialog
+                open={open}
+                onClose={() => setOpen(false)}
+                fullScreen={isMobile}
+                fullWidth
+                maxWidth="sm"
+            >
+                <DialogTitle sx={{ gap: 1 }}>
+                    {translations.command_manage}:
+                    <Code>{value.name}</Code>
+                </DialogTitle>
+                <DialogContent sx={{ p: 0, gap: 2 }}>
+                    <ButtonBase
+                        onClick={() => setValue(({ enabled, ...command }) => ({ ...command, enabled: !enabled }))}
+                        sx={{
+                            px: 2,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            gap: 1,
+                            color: 'common.white',
+                            bgcolor: 'primary.main'
+                        }}
+                    >
+                        <Typography>{translations.command_enabled}</Typography>
+                        <ItemFormContainer sx={{ mr: -.75 }}>
+                            <Switch
+                                checked={value.enabled}
+                                onChange={() => setValue(({ enabled, ...command }) => ({
+                                    ...command,
+                                    enabled: !enabled
+                                }))}
+                                disableRipple
+                                color="default"
+                                tabIndex={-1}
+                                sx={{ [`& .${switchClasses.switchBase}`]: { backgroundColor: 'transparent !important' } }}
+                            />
+                        </ItemFormContainer>
+                    </ButtonBase>
+                    <Box sx={{ px: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <Group>
+                            <GroupTitle>{translations.command_user_permissions}</GroupTitle>
+                        </Group>
+                        <Group>
+                            <GroupTitle>{translations.command_bot_permissions}</GroupTitle>
+                        </Group>
+                        <Channels
+                            default={defaultChannels}
+                            setDefault={updateDefaultChannels}
+                            overrides={overrideChannels}
+                            setOverrides={updateOverrideChannels}
+                            channels={choiceChannels}
+                            localization={localization}
+                        />
+                        <Roles
+                            default={defaultRoles}
+                            setDefault={updateDefaultRoles}
+                            overrides={overrideRoles}
+                            setOverrides={updateOverrideRoles}
+                            roles={choiceRoles}
+                            localization={localization}
+                        />
+                        <Members
+                            value={members}
+                            setValue={updateMembers}
+                            members={choiceMembers}
+                            localization={localization}
+                        />
+                    </Box>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setOpen(false)} variant="contained" startIcon={<CloseOutlined />}>
+                        {translations.close}
+                        <Key sx={{ ml: 1, mr: -.5 }}>Esc</Key>
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        </Fragment>
+    );
+}, (
+    { open: oldOpen, value: oldValue },
+    { open: newOpen, value: newValue }
+) => oldOpen === newOpen && deepEqual(oldValue, newValue, { strict: true }));
+ManageCommandDialog.displayName = 'ManageCommandDialog';
+export { ManageCommandDialog };

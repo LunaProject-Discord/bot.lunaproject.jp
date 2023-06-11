@@ -1,5 +1,6 @@
 'use client';
 
+import { AppBar, Toolbar } from '@components/appbar';
 import { TemporaryDrawer } from '@lunaproject-discord/web-core/dist/components/Drawer';
 import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
 import {
@@ -24,12 +25,11 @@ import {
     styled,
     Tooltip
 } from '@mui/material';
+import { getUserAvatar, getUserDisplayName } from '@utils/discord';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { Dispatch, Fragment, MouseEvent, ReactNode, SetStateAction, useState } from 'react';
-import { AppBar, Toolbar } from '../../components/appbar';
-import { getUserAvatar } from '../../utils/discord';
 import { NavigationItemProps, NavigationRootProps } from './index';
 
 const MobileNavigationGroup = styled(List)(({ theme }) => ({
@@ -94,7 +94,7 @@ export const MobileNavigationAppBarMenu = (
         localization: { translations }
     }: NavigationRootProps
 ) => user ? (
-    <Tooltip title={user.username} placement="bottom">
+    <Tooltip title={getUserDisplayName(user)} placement="bottom">
         <IconButton
             onClick={({ currentTarget }) => openPopover(currentTarget, 'user')}
             sx={{ p: .5 }}

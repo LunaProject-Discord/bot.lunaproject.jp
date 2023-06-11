@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es2020",
         "lib": [
             "dom",
             "dom.iterable",
@@ -24,6 +24,30 @@
                 "name": "next"
             }
         ],
+        "baseUrl": ".",
+        "paths": {
+            "@app/*": [
+                "src/app/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@interfaces/*": [
+                "src/interfaces/*"
+            ],
+            "@libs/*": [
+                "src/libs/*"
+            ],
+            "@localizations/*": [
+                "src/localizations/*"
+            ],
+            "@states/*": [
+                "src/states/*"
+            ],
+            "@utils/*": [
+                "src/utils/*"
+            ]
+        },
         "typeRoots": [
             "src/@types"
         ]

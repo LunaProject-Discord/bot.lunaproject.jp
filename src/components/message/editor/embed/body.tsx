@@ -1,12 +1,12 @@
 'use client';
 
 import { useTheme } from '@emotion/react';
+import { LocalizationProps } from '@interfaces/localization';
 import { Box, ButtonBase, OutlinedInput, Popover } from '@mui/material';
+import { isValidHexColor } from '@utils/color';
 import Color from 'color';
 import React, { MouseEvent, useState } from 'react';
 import { ChromePicker } from 'react-color';
-import { LocalizationProps } from '../../../../interfaces/localization';
-import { isValidHexColor } from '../../../../utils/color';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { TextArea } from '../../text_area';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';

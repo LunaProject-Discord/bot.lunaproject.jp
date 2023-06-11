@@ -1,7 +1,7 @@
+import { DataEmbed, DataMessage } from '@interfaces/message';
 import { Embed, Message, MessageAuthor } from '@lunaproject-discord/web-discord';
 import Color from 'color';
 import { nanoid } from 'nanoid';
-import { DataEmbed, DataMessage } from '../interfaces/message';
 
 export const toMessage = (
     message: DataMessage,

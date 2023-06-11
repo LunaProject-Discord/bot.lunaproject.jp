@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslation } from '@localizations/client';
 import { MuiDarkTheme, MuiLightTheme } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { RefreshOutlined, SaveOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
@@ -7,7 +8,6 @@ import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProv
 import Mousetrap from 'mousetrap';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState, useTransition } from 'react';
-import { useTranslation } from '../../localizations/client';
 import { Key } from '../text';
 
 interface Props {
@@ -104,7 +104,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                     </ThemeProvider>
                 }
                 sx={{
-                    zIndex: (theme) => theme.zIndex.snackbar - 100,
+                    zIndex: (theme) => theme.zIndex.snackbar - 101,
                     [`& .${snackbarContentClasses.root}`]: {
                         border: `solid 1px ${theme.palette.divider}`,
                         boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`

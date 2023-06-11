@@ -2,13 +2,13 @@
 
 import { Box, CSSObject, styled, Theme, Typography } from '@mui/material';
 
-const codeStyled = (theme: Theme): CSSObject => ({
+export const codeStyled = (theme: Theme): CSSObject => ({
     margin: theme.spacing(0, .25),
     padding: theme.spacing(.25, .5),
-    color: 'unset',
     fontFamily: 'HackGen, Consolas, monospace',
     fontSize: '.87em',
     userSelect: 'all',
+    color: 'unset',
     backgroundColor: theme.palette.mode === 'light' ? '#f8f8f8' : 'rgba(255, 255, 255, 0.12)',
     border: `solid 1px ${theme.palette.divider}`,
     borderRadius: theme.spacing(.5)
@@ -20,12 +20,17 @@ export const CodeStyleContainer = styled(Box)(({ theme }) => ({
 
 export const Code = styled('code')(({ theme }) => codeStyled(theme));
 
-const keyStyled = (theme: Theme): CSSObject => ({
+export const keyStyled = (theme: Theme): CSSObject => ({
     ...codeStyled(theme),
-    color: theme.palette.text.primary,
+    padding: theme.spacing(0, .5),
+    fontFamily: 'Renner, sans-serif',
+    fontWeight: 'bold',
     lineHeight: 'normal',
+    letterSpacing: .5,
     textTransform: 'none',
     userSelect: 'none',
+    color: theme.palette.text.secondary,
+    backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
     borderBottom: `solid 3px ${theme.palette.divider}`,
     [theme.breakpoints.down('md')]: {
         display: 'none'

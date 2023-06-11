@@ -1,5 +1,7 @@
 'use client';
 
+import { PageContent, PageHeader } from '@components/layout';
+import { LocalizationProps } from '@interfaces/localization';
 import {
     Gallery,
     GalleryItem,
@@ -32,8 +34,6 @@ import {
 } from '@mui/material';
 import NextLink from 'next/link';
 import React, { MouseEvent, useState } from 'react';
-import { PageContent, PageHeader } from '../../components/layout';
-import { LocalizationProps } from '../../interfaces/localization';
 import { getGuildIcon } from '../../utils/discord';
 
 interface GuildsProps {

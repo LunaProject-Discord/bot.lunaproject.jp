@@ -1,5 +1,6 @@
 'use client';
 
+import { PopoverProps } from '@interfaces/mui';
 import { ArrowDropDownOutlined, ArrowDropUpOutlined, SearchOutlined } from '@mui/icons-material';
 import {
     alpha,
@@ -11,14 +12,14 @@ import {
     List as MuiList,
     ListItemButton as MuiListItemButton,
     ListItemIcon as MuiListItemIcon,
+    ListProps,
     ListSubheader as MuiListSubheader,
     styled,
     SxProps,
     Theme
 } from '@mui/material';
 import clsx from 'clsx';
-import React from 'react';
-import { PopoverProps } from '../../../interfaces/mui';
+import React, { forwardRef } from 'react';
 import { ItemVariableProps } from '../index';
 
 export interface SnowflakeItemProps<T> extends ItemVariableProps<string> {
@@ -56,7 +57,7 @@ const SelectRoot = styled(Box)<SelectContainerProps>(({ theme, open, disabled })
 const SelectContent = styled(Box)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
-    gap: theme.spacing(.5),
+    gap: theme.spacing(1),
     overflow: 'hidden',
     '& .MuiTypography-root': {
         whiteSpace: 'nowrap',
@@ -87,12 +88,28 @@ export interface SelectProps extends BoxProps {
 }
 
 export interface SnowflakeSelectProps<T extends PopoverProps> {
-    selectSx?: SxProps<Theme>;
+    sx?: SxProps<Theme>;
     popoverProps?: T;
 }
 
-export const Select = ({ children, open, disabled, onClick, ...props }: SelectProps) => (
-    <SelectRoot open={open} disabled={disabled} tabIndex={0} onClick={!disabled ? onClick : undefined} {...props}>
+const Select = forwardRef<HTMLDivElement, SelectProps>((
+    {
+        open,
+        onClick,
+        disabled,
+        children,
+        ...props
+    },
+    ref
+) => (
+    <SelectRoot
+        ref={ref}
+        open={open}
+        onClick={!disabled ? onClick : undefined}
+        disabled={disabled}
+        tabIndex={0}
+        {...props}
+    >
         <SelectContent>{children}</SelectContent>
         <Box
             sx={{
@@ -106,19 +123,43 @@ export const Select = ({ children, open, disabled, onClick, ...props }: SelectPr
         </Box>
         <SelectOutline />
     </SelectRoot>
-);
+));
+Select.displayName = 'Select';
 
-export const List = styled(MuiList)({
+export const ListRoot = styled(MuiList)(({ theme }) => ({
     height: 300,
-    ['overflowY' as any]: 'overlay',
+    padding: theme.spacing(1),
+    overflowY: 'auto',
     '& ul': {
         padding: 0
     }
-});
+}));
+
+const List = forwardRef<HTMLUListElement, ListProps>(({ style, ...props }, ref) => (
+    <ListRoot
+        ref={ref}
+        style={{
+            ...style,
+            height: parseFloat(style!.height as string) + (8 * 2)
+        }}
+        {...props}
+    />
+));
+List.displayName = 'List';
+
+export { Select, List };
 
 export const ListItemButton = styled(MuiListItemButton)(({ theme }) => ({
-    padding: theme.spacing(.5, 3, .5, 1.5),
-    gap: theme.spacing(1.5)
+    width: `calc(100% - calc(${theme.spacing(1)} * 2)) !important`,
+    padding: theme.spacing(.5, 1),
+    left: `${theme.spacing(1)} !important`,
+    gap: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
+    [theme.breakpoints.down('sm')]: {
+        minHeight: theme.spacing(6),
+        padding: theme.spacing(.5, 1.5),
+        gap: theme.spacing(1.5)
+    }
 }));
 
 export const ListItemIcon = styled(MuiListItemIcon)(({ theme }) => ({
@@ -126,7 +167,7 @@ export const ListItemIcon = styled(MuiListItemIcon)(({ theme }) => ({
 }));
 
 export const ListSubheader = styled(MuiListSubheader)(({ theme }) => ({
-    padding: theme.spacing(1, 1.5, .5),
+    padding: theme.spacing(1, 1, .5),
     lineHeight: 'unset',
     backgroundImage: theme.palette.mode === 'dark' ? `linear-gradient(${alpha(
         '#fff',
@@ -134,7 +175,10 @@ export const ListSubheader = styled(MuiListSubheader)(({ theme }) => ({
     )}, ${alpha(
         '#fff',
         Number(getOverlayAlpha(8))
-    )})` : 'none'
+    )})` : 'none',
+    [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(1, 1.5, .5)
+    }
 }));
 
 export const SearchBox = (props: InputBaseProps) => (

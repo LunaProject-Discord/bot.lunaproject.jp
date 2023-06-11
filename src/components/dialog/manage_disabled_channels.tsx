@@ -1,5 +1,6 @@
 'use client';
 
+import { GuildChannelsViewProps } from '@interfaces/view';
 import { Dialog, DialogActions, DialogHeader } from '@lunaproject-discord/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
@@ -24,11 +25,10 @@ import {
     Theme,
     useMediaQuery
 } from '@mui/material';
+import { filterPredicateChannel, sortChannels } from '@utils/discord';
 import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
 import React, { Fragment, useState } from 'react';
-import { GuildChannelsViewProps } from '../../interfaces/view';
-import { filterPredicateChannel, sortChannels } from '../../utils/discord';
 import { ChannelIcon } from '../icons';
 import { ListItemButton, ListItemIcon } from '../items';
 import { DialogProps } from './index';

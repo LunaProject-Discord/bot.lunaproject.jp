@@ -1,10 +1,10 @@
+import { WithIdParamProps } from '@interfaces/page';
+import { getGuildNotifications } from '@libs/bot';
 import { getGuildById } from '@lunaproject-discord/web-discord';
+import { COOKIE_TOKEN } from '@utils/cookie';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { WithIdParamProps } from '../../../../../interfaces/page';
-import { getGuildNotifications } from '../../../../../libs/bot';
-import { COOKIE_TOKEN } from '../../../../../utils/cookie';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '../../../../../utils/discord';
 
 export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
     const nextCookies = cookies();

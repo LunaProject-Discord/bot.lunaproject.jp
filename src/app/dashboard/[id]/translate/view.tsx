@@ -1,16 +1,16 @@
 'use client';
 
+import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { GuildConfigurationTranslate } from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, useState } from 'react';
-import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../../../components/dialog';
 import { ActionItem, SwitchItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildConfigurationTranslate } from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
@@ -19,11 +19,11 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
     const [openDisabledChannelsDialog, setOpenDisabledChannelsDialog] = useState(false);
     const [openDisabledRolesDialog, setOpenDisabledRolesDialog] = useState(false);
 
-    const translate = configuration.translate;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(translate.enabled);
-    const [reaction, setReaction, resetReaction] = useResettableState(translate.reaction);
-    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(translate.disabled.channels);
-    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(translate.disabled.roles);
+    const translateConfiguration = configuration.translate;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(translateConfiguration.enabled);
+    const [reaction, setReaction, resetReaction] = useResettableState(translateConfiguration.reaction);
+    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(translateConfiguration.disabled.channels);
+    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(translateConfiguration.disabled.roles);
 
     const toObject = (): GuildConfigurationTranslate => ({
         enabled,
@@ -34,14 +34,9 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
         }
     });
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            translate: toObject()
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { translate: toObject() });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetEnabled();
         resetReaction();
         resetDisabledChannels();
@@ -86,10 +81,10 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </Section>
 
                 <SaveConfirm
-                    open={!deepEqual(translate, toObject(), { strict: true })}
+                    open={!deepEqual(translateConfiguration, toObject(), { strict: true })}
                     disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
-                    onSave={handleActionSave}
-                    onCancel={handleActionCancel}
+                    onSave={handleSaveAction}
+                    onCancel={handleCancelAction}
                 />
             </PageContent>
 

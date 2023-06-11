@@ -1,12 +1,12 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
 import type {
     Embed,
     EmbedFooter as OriginalEmbedFooter
 } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
 import React from 'react';
-import { LocalizationProps } from '../../../../interfaces/localization';
 import { DateTimeEditor } from '../../../date';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';

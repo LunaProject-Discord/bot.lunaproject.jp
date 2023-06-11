@@ -1,5 +1,6 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
 import type { EmbedField } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { DefaultField } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import {
@@ -10,10 +11,9 @@ import {
     KeyboardArrowUpOutlined
 } from '@mui/icons-material';
 import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
+import { getStateActionValue } from '@utils/state';
 import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
-import { LocalizationProps } from '../../../../interfaces/localization';
-import { getStateActionValue } from '../../../../utils/state';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { TextArea } from '../../text_area';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';

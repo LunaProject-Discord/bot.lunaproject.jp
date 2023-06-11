@@ -1,13 +1,18 @@
-import { hasPermission as hasPermissionForOAuthGuild } from '@lunaproject-discord/web-discord/dist/utils';
+import { getGuilds, getUser } from '@app/utils';
+import { UnauthorizedView } from '@app/view';
+import { WithIdParamProps } from '@interfaces/page';
+import { getGuildConfiguration } from '@libs/bot';
+import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@libs/redis';
+import { getLocalization } from '@localizations/server';
+import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import {
+    ADMINISTRATOR_OR_MANAGE_GUILD,
+    someCheckMemberPermissions,
+    someCheckPermissions,
+    sortGuilds
+} from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React, { Fragment, ReactNode } from 'react';
-import { WithIdParamProps } from '../../../interfaces/page';
-import { getGuildConfiguration } from '../../../libs/bot';
-import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '../../../libs/redis';
-import { getLocalization } from '../../../localizations/server';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions, sortOAuthGuilds } from '../../../utils/discord';
-import { getGuilds, getUser } from '../../utils';
-import { UnauthorizedView } from '../../view';
 import { Navigation } from './navigation';
 import { ForbiddenView, NotFoundView } from './view';
 
@@ -79,7 +84,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
 
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);
 
-    const sortedGuilds = sortOAuthGuilds(guilds.filter((guild) => hasPermissionForOAuthGuild(guild)));
+    const sortedGuilds = sortGuilds(guilds.filter((guild) => someCheckPermissions(guild))) as OAuthGuild[];
 
     return (
         <Fragment>

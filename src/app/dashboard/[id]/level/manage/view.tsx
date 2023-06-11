@@ -1,5 +1,11 @@
 'use client';
 
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { GuildLevel, PartialGuildLevel } from '@interfaces/bot';
+import { LocalizationProps } from '@interfaces/localization';
+import { DataGuild, RedisMember } from '@interfaces/redis';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
 import { Section } from '@lunaproject-discord/web-core/dist/components/Section';
 import { ItemIcon, ItemRowContainer, ItemTextBlock } from '@lunaproject-discord/web-core/dist/components/SectionItems';
@@ -18,17 +24,11 @@ import {
     tablePaginationClasses,
     Typography
 } from '@mui/material';
+import { getMemberAvatar } from '@utils/cdn';
+import { filterPredicateMember } from '@utils/discord';
+import { getStateActionValue } from '@utils/state';
 import clsx from 'clsx';
 import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
-import { PageContent, PageHeader } from '../../../../../components/layout';
-import { SaveConfirm } from '../../../../../components/save_confirm';
-import { GuildLevel, PartialGuildLevel } from '../../../../../interfaces/bot';
-import { LocalizationProps } from '../../../../../interfaces/localization';
-import { DataGuild, RedisMember } from '../../../../../interfaces/redis';
-import { GuildConfigurationViewProps } from '../../../../../interfaces/view';
-import { getMemberAvatar } from '../../../../../utils/cdn';
-import { filterPredicateMember } from '../../../../../utils/discord';
-import { getStateActionValue } from '../../../../../utils/state';
 
 const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
     const res = await fetch(
@@ -94,18 +94,34 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                 icon={
                     <Avatar
                         src={getMemberAvatar(member, guild)}
+                        alt=" "
                         sx={{ pointerEvents: 'none' }}
                     />
                 }
             />
             <ItemTextBlock
-                primary={member.nick ?? member.user.name}
-                secondary={member.nick ? <Fragment>
-                    <Box component="span" sx={{ color: (theme) => theme.palette.text.primary }}>
-                        {member.user.name}
+                primary={member.nick ?? member.user.display_name ?? <Fragment>
+                    {member.user.name}
+                    <Box component="span" sx={{ fontFamily: 'Renner', color: 'text.secondary' }}>
+                        #{member.user.discriminator}
                     </Box>
-                    #{member.user.discriminator}
-                </Fragment> : `#${member.user.discriminator}`}
+                </Fragment>}
+                secondary={Number(member.user.discriminator) === 0 ? `@${member.user.name}` : (
+                    (member.nick || member.user.display_name) ?
+                        <Fragment>
+                            {member.user.name}
+                            <Box component="span" sx={{ fontFamily: 'Renner', color: 'text.secondary' }}>
+                                #{member.user.discriminator}
+                            </Box>
+                        </Fragment>
+                        :
+                        undefined
+                )}
+                secondaryTypographyProps={{
+                    sx: {
+                        color: Number(member.user.discriminator) === 0 ? undefined : 'text.primary'
+                    }
+                }}
             />
         </ItemRowContainer>
         <ItemFormContainer>
@@ -167,8 +183,9 @@ export const View = ({ guild, levels, localization }: Props) => {
 
     const [search, setSearch] = useState('');
 
-    const levelPages = new Array(Math.ceil(levels.length / perPageLimit)).fill(undefined).map((_, i) => levels.slice(i * perPageLimit, (i + 1) * perPageLimit));
-    const data = (search.length < 1 ? levelPages[pageIndex] : levels) ?? [];
+    const filteredLevels = levels.filter((level) => guild.members.some((member) => member.user.id === level.user.id && filterPredicateMember(member, search)));
+    const levelPages = new Array(Math.ceil(filteredLevels.length / perPageLimit)).fill(undefined).map((_, i) => filteredLevels.slice(i * perPageLimit, (i + 1) * perPageLimit));
+    const data = (search.length < 1 ? levelPages[pageIndex] : filteredLevels) ?? [];
 
     const updateValue = (value: PartialGuildLevel) => setValues((values) => {
         let data = [...values];
@@ -177,7 +194,7 @@ export const View = ({ guild, levels, localization }: Props) => {
         if (i !== -1)
             data.splice(i, 1);
 
-        const current = levels.find((level) => level.user.id === value.user_id);
+        const current = filteredLevels.find((level) => level.user.id === value.user_id);
         if (value.level !== current?.level || value.xp !== current?.xp)
             data.push(value);
 
@@ -191,27 +208,23 @@ export const View = ({ guild, levels, localization }: Props) => {
         setPageIndex(0);
     };
 
-    const handleActionSave = async () => {
-        const result = await saveGuildLevels(
-            guild.id,
-            values
-        );
-
+    const handleSaveAction = async () => {
+        const result = await saveGuildLevels(guild.id, values);
         if (result)
             resetValues();
 
         return result;
     };
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetValues();
     };
 
-    if (data.length < 1)
+    if (search.length < 1 && data.length < 1)
         return (<NotFoundView localization={localization} />);
 
     return (
-        <PageContent>
+        <PageContent sx={search.length > 0 && data.length < 1 ? { display: 'flex', gap: 0 } : undefined}>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.level_manage}</Typography>
@@ -254,7 +267,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                 </Box>
                 <TablePagination
                     component={Box}
-                    count={levels.length}
+                    count={filteredLevels.length}
                     page={pageIndex}
                     onPageChange={handlePageIndexChange}
                     rowsPerPage={perPageLimit}
@@ -280,27 +293,41 @@ export const View = ({ guild, levels, localization }: Props) => {
                     }}
                 />
             </Box>
-            <Section sx={{ p: 0, gap: 1 }}>
-                {data.filter((level) => guild.members.some((member) => member.user.id === level.user.id && filterPredicateMember(member, search)))
-                    .map((level) => {
-                        const data = values.find((value) => value.user_id === level.user.id);
-                        const member = guild.members.find((member) => member.user.id === level.user.id)!!;
+            {data.length > 0 ? <Section sx={{ p: 0, gap: 1 }}>
+                {data.map((level) => {
+                    const data = values.find((value) => value.user_id === level.user.id);
+                    const member = guild.members.find((member) => member.user.id === level.user.id)!!;
 
-                        return (
-                            <LevelItem
-                                key={level.user.id}
-                                guild={guild}
-                                member={member}
-                                value={data ?? { user_id: level.user.id, level: level.level, xp: level.xp }}
-                                setValue={updateValue}
-                                localization={localization}
-                            />
-                        );
-                    })
-                }
-            </Section>
+                    return (
+                        <LevelItem
+                            key={level.user.id}
+                            guild={guild}
+                            member={member}
+                            value={data ?? { user_id: level.user.id, level: level.level, xp: level.xp }}
+                            setValue={updateValue}
+                            localization={localization}
+                        />
+                    );
+                })}
+            </Section> : <Box
+                sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    placeItems: 'center',
+                    placeContent: 'center',
+                    gap: 1
+                }}
+            >
+                <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+                <Typography variant="h4">メンバーが見つかりません</Typography>
+                <Typography align="center">
+                    指定したキーワードに合うメンバーが見つかりませんでした。<br />
+                    検索キーワードを変更して再度お試しください。
+                </Typography>
+            </Box>}
 
-            <SaveConfirm open={values.length > 0} onSave={handleActionSave} onCancel={handleActionCancel} />
+            <SaveConfirm open={values.length > 0} onSave={handleSaveAction} onCancel={handleCancelAction} />
         </PageContent>
     );
 };
@@ -337,7 +364,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 gap: 1
             }}
         >
-            <CloudOffOutlined sx={{ fontSize: '10rem' }} color="primary" />
+            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
             <Typography variant="h4">データがありません</Typography>
             <Typography align="center">
                 このサーバーではまだ誰も発言していないようです…<br />

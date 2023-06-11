@@ -1,11 +1,11 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
+import { getNewEmbed } from '@libs/message';
 import { Embed, Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { AddOutlined } from '@mui/icons-material';
 import { Box, Button, Divider } from '@mui/material';
 import React from 'react';
-import { LocalizationProps } from '../../../interfaces/localization';
-import { getNewEmbed } from '../../../libs/message';
 import { TextArea } from '../text_area';
 import { EmbedEditor } from './embed';
 

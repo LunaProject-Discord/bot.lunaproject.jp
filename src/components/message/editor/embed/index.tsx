@@ -1,6 +1,7 @@
 'use client';
 
 import { useTheme } from '@emotion/react';
+import { LocalizationProps } from '@interfaces/localization';
 import { Embed as EmbedData } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { ClearOutlined, ExpandMoreOutlined } from '@mui/icons-material';
 import {
@@ -14,9 +15,8 @@ import {
     styled,
     Tooltip
 } from '@mui/material';
+import { getStateActionValue } from '@utils/state';
 import React from 'react';
-import { LocalizationProps } from '../../../../interfaces/localization';
-import { getStateActionValue } from '../../../../utils/state';
 import { EmbedAccordionSummary } from './accordion';
 import { EmbedAuthorEditor } from './author';
 import { EmbedBody, EmbedBodyEditor } from './body';

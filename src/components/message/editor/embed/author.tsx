@@ -1,8 +1,8 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
 import type { EmbedAuthor } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
-import { LocalizationProps } from '../../../../interfaces/localization';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';

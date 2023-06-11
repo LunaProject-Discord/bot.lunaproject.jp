@@ -1,6 +1,6 @@
+import { getUser } from '@app/utils';
+import { getUserNotifications } from '@libs/bot';
 import { NextResponse } from 'next/server';
-import { getUserNotifications } from '../../../../../libs/bot';
-import { getUser } from '../../../../utils';
 
 export const GET = async (req: Request) => {
     const user = await getUser();

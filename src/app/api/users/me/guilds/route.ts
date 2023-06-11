@@ -1,5 +1,5 @@
+import { getGuilds, getUser } from '@app/utils';
 import { NextResponse } from 'next/server';
-import { getGuilds, getUser } from '../../../../utils';
 
 export const GET = async (req: Request) => {
     const user = await getUser();

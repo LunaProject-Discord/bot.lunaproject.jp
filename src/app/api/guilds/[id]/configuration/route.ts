@@ -1,15 +1,16 @@
+import { GuildConfiguration } from '@interfaces/bot';
+import { WithIdParamProps } from '@interfaces/page';
+import { getGuildConfiguration } from '@libs/bot';
+import { updateGuildConfigurationById } from '@libs/redis';
 import { errorWithName } from '@lunaproject-discord/web-core/dist/utils/logger';
 import { getGuildById } from '@lunaproject-discord/web-discord/dist/libs';
 import { Prisma } from '@prisma/client';
+import { COOKIE_TOKEN } from '@utils/cookie';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
+import { addHours } from 'date-fns';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { GuildConfiguration } from '../../../../../interfaces/bot';
-import { WithIdParamProps } from '../../../../../interfaces/page';
-import { getGuildConfiguration } from '../../../../../libs/bot';
 import prisma from '../../../../../libs/prisma';
-import { updateGuildConfigurationById } from '../../../../../libs/redis';
-import { COOKIE_TOKEN } from '../../../../../utils/cookie';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '../../../../../utils/discord';
 
 type valueOf<T> = T[keyof T];
 
@@ -47,7 +48,7 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
 
     try {
         const guildId = BigInt(id);
-        const now = new Date();
+        const now = addHours(new Date(), 9);
 
         await prisma.$transaction(async (prisma) => {
             if (data.prefix) {

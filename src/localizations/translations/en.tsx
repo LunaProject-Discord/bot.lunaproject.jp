@@ -1,5 +1,5 @@
+import { Localization, Translations } from '@interfaces/localization';
 import React, { Fragment } from 'react';
-import { Localization, Translations } from '../../interfaces/localization';
 
 export const translationsEn: Translations = {
     success: 'Success',
@@ -29,14 +29,17 @@ export const translationsEn: Translations = {
     move_up: 'Move Up',
     move_down: 'Move Down',
 
+
     pattern_date: 'yyyy/MM/dd (E)',
     pattern_time: 'HH:mm',
     pattern_datetime: 'yyyy/MM/dd (E) HH:mm',
+
 
     search: 'Search',
     search_channels: 'Search channels...',
     search_roles: 'Search roles...',
     search_members: 'Search members...',
+
 
     embeds: 'Embeds',
     embed: 'Embed',
@@ -64,6 +67,7 @@ export const translationsEn: Translations = {
     embed_footer_icon_url: 'Footer Icon URL',
     embed_footer_timestamp: 'Timestamp',
 
+
     error_unauthorized_title: 'Login is required!',
     error_unauthorized_description: <Fragment>
         You must be logged in to access this page.<br />
@@ -81,14 +85,21 @@ export const translationsEn: Translations = {
         Please click the button below to return to the home page.
     </Fragment>,
 
+
     welcome_to_name: 'Welcome to %n!',
+
 
     home: 'Home',
     status: 'Status',
     leaderboard: 'Leaderboard',
+
+
     guild_settings: 'Server Settings',
     choose_guild_settings: 'Select the server you wish to configure.',
     settings_basic: 'Basic Settings',
+    settings_guild_management: 'Server Management',
+    settings_features_and_options: 'Features & Options',
+
     prefix_and_nickname: 'Prefix & Nickname',
     prefix_and_nickname_description: 'You can set how the Bot is called and its nickname.',
     prefix: 'Prefix',
@@ -97,13 +108,29 @@ export const translationsEn: Translations = {
         You can use <code>%p</code> to replace the prefix currently set and <code>%n</code> to replace the Bot&#39;s
         name.
     </Fragment>,
+
     time_and_language: 'Time & Language',
     time_and_language_description: 'You can set the date & time, language used for some functions.',
     date_and_time: 'Date & Time',
     timezone: 'Time Zone',
     timezone_description: 'If you set the time zone to a geographic area you speak frequently, the date and time will be displayed for that area.',
     language_description: 'Server-specific functions, such as the log function, will send messages in the language set here.',
-    settings_guild_management: 'Server Management',
+
+    commands: 'Commands',
+    commands_description: 'You can override command permissions and other settings.',
+    commands_permissions_channels: 'Channel Permissions',
+    commands_permissions_all_channels: 'All Channels',
+    commands_permissions_roles: 'Role Permissions',
+    commands_permissions_all_roles: '@everyone',
+    commands_permissions_members: 'Member Permissions',
+    command_manage: 'Manage Command',
+    command_enabled: 'Enable Command',
+    command_user_permissions: 'Required User Permissions',
+    command_bot_permissions: 'Required Bot Permissions',
+    command_permissions_channels: 'Channel Permissions Override',
+    command_permissions_roles: 'Role Permissions Override',
+    command_permissions_members: 'Member Permissions Override',
+
     welcome_message: 'Welcome Message',
     welcome_message_description: 'Messages can be sent when a user joins the server.',
     welcome_message_enabled: 'Enable Welcome Message',
@@ -121,6 +148,7 @@ export const translationsEn: Translations = {
             <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+
     goodbye_message: 'Goodbye Message',
     goodbye_message_description: 'A message can be sent when a user leaves the server.',
     goodbye_message_enabled: 'Enable Goodbye Message',
@@ -137,6 +165,7 @@ export const translationsEn: Translations = {
             <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+
     activity: 'Activity Roles',
     activity_description: 'Roles can be assigned during game play or music playback.',
     activity_enabled: 'Enable Activity Roles',
@@ -159,8 +188,9 @@ export const translationsEn: Translations = {
     activity_type_custom_status_description: <Fragment>
         Grant a role when the user&apos;s custom status matches the name you set.
     </Fragment>,
+
     role_panels: 'Role Panels',
-    settings_features_and_options: 'Features & Options',
+
     level: 'Level',
     experience: 'Experience',
     level_description: 'Experience is awarded based on the number of statements made by members, which can be used to activate the server.',
@@ -209,15 +239,18 @@ export const translationsEn: Translations = {
     level_leaderboard_public: 'Make leaderboards available to users who have not joined the server',
     level_leaderboard_allow_join: 'Allow people to join the server from the leaderboard',
     level_leaderboard_vanity_code: 'Custom Invitation Codes for Leaderboards',
+
     translate: 'Translate',
     translate_description: 'You can translate text using commands and flag reactions.',
     translate_enabled: 'Enable Translate',
     translate_reaction: 'Add reactions to messages to allow translation',
     translate_manage_disabled_channels_description: 'Disables translation using reactions on the set channel.',
     translate_manage_disabled_roles_description: 'If one of the configured roles is assigned to a user, he/she will not be able to translate using reactions.',
+
     vote: 'Vote (Poll)',
     vote_description: 'Command to create a poll and get member input.',
     vote_enabled: 'Enable Vote (Poll)',
+
     quote: 'Quote',
     quote_description: 'You can quote and share messages.',
     quote_enabled: 'Enable Quote',
@@ -227,6 +260,7 @@ export const translationsEn: Translations = {
     quote_this_guild_to_other_guild: 'Allow messages sent to this server to be quoted on other servers',
     quote_manage_disabled_channels_description: 'Disables quoting on the set channel.',
     quote_manage_disabled_roles_description: 'If one of the set positions is assigned to the user, the user will not be able to quote.',
+
     music: 'Music',
     music_description: 'Media uploaded on YouTube and other sites can be played on the voice channel.',
     music_enabled: 'Enable Music',
@@ -238,7 +272,9 @@ export const translationsEn: Translations = {
     music_source_twitch: 'Twitch',
     music_source_bandcamp: 'Bandcamp',
     music_source_vimeo: 'Vimeo',
+
     text_to_speech: 'Text to Speech',
+
     logging: 'Logging',
     logging_description: 'Events that happen on the server can be sent to a set channel.',
     logging_enabled: 'Enable Logging',
@@ -279,7 +315,11 @@ export const translationsEn: Translations = {
     logging_message_purge: 'Purge Messages',
     logging_message_pin: 'Pinning Message',
     logging_message_unpin: 'Unpin a Message',
+
+
     user_settings: 'User Settings',
+
+
     send_message_channel: 'Channel to send message',
     manage_disabled_channels: 'Manage Disabled Channels',
     manage_disabled_roles: 'Manage Disabled Roles',
@@ -289,11 +329,15 @@ export const translationsEn: Translations = {
     about_this_settings: 'About this settings',
     notifications: 'Notifications',
     manage_account: 'Manage Account',
+
+
     site_settings: 'Site Settings',
+
     design_and_appearance: 'Design & Appearance',
     device_theme: 'Use device theme',
     light_theme: 'Light Theme',
     dark_theme: 'Dark Theme',
+
     language: 'Language',
     japanese: '🇯🇵 日本語 (日本)',
     english: '🇺🇸 English (United States)'

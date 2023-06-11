@@ -1,15 +1,15 @@
 'use client';
 
+import { PopoverProps } from '@interfaces/mui';
+import { RedisChannel } from '@interfaces/redis';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { APIGuildChannel } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import { ListItemButtonProps, ListItemText, Theme, Typography, useMediaQuery } from '@mui/material';
+import { ListItemButtonProps, ListItemText, popoverClasses, Theme, Typography, useMediaQuery } from '@mui/material';
+import { filterPredicateChannel, sortChannels } from '@utils/discord';
 import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
-import React, { Fragment, useEffect, useState } from 'react';
-import { PopoverProps } from '../../../interfaces/mui';
-import { RedisChannel } from '../../../interfaces/redis';
-import { filterPredicateChannel, sortChannels } from '../../../utils/discord';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { ChannelIcon } from '../../icons';
 import {
     ItemFormContainer,
@@ -17,12 +17,13 @@ import {
     ItemRoot,
     ItemRowContainer,
     ItemTextBlock,
+    ListRoot,
     SearchBox,
     Select,
     SnowflakeItemProps,
     SnowflakeSelectProps
 } from '../index';
-import { List, ListItemButton, ListItemIcon, ListSubheader } from './index';
+import { ListItemButton, ListItemIcon, ListSubheader } from './index';
 
 type Channel = APIGuildChannel | RedisChannel;
 
@@ -31,7 +32,7 @@ export interface ChannelListItemProps extends ListItemButtonProps {
 }
 
 export const ChannelListItem = ({ channel, ...props }: ChannelListItemProps) => (
-    <ListItemButton key={channel.id} sx={{ gap: 1 }} {...props}>
+    <ListItemButton key={channel.id} sx={{ width: '100% !important', left: '0 !important' }} {...props}>
         <ListItemIcon><ChannelIcon channel={channel} /></ListItemIcon>
         <ListItemText primary={channel.name} primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }} />
     </ListItemButton>
@@ -76,7 +77,7 @@ export const ChannelPopover = (
     useEffect(() => {
         if (open && isDesktop)
             setTimeout(() => document.getElementById('popover-search')?.focus());
-    }, [open]);
+    }, [open, isDesktop]);
 
     return (
         <Popover
@@ -95,7 +96,7 @@ export const ChannelPopover = (
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="チャンネルを検索..."
             />
-            <List subheader={<li style={{ height: 8 }} />}>
+            <ListRoot subheader={<li style={{ height: 8 }} />} sx={{ pt: 0 }}>
                 {[undefined, ...categories].filter((category) => search.length < 1 || channels.some((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search))).map((category) => (
                     <li key={category?.id ?? 'no_parent'}>
                         <ul>
@@ -111,28 +112,31 @@ export const ChannelPopover = (
                         </ul>
                     </li>
                 ))}
-            </List>
+            </ListRoot>
         </Popover>
     );
 };
 
 export type ChannelSelectProps = ItemDisabledProps & ChannelProps & SnowflakeSelectProps<ChannelPopoverProps>;
 
-export const ChannelSelect = ({ value, setValue, choices, disabled, selectSx, popoverProps }: ChannelSelectProps) => {
+export const ChannelSelect = ({ value, setValue, choices, disabled, sx, popoverProps }: ChannelSelectProps) => {
+    const ref = useRef<HTMLDivElement | null>(null);
+
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const channel = choices.find((channel) => channel.id === value);
     return (
         <Fragment>
             <Select
+                ref={ref}
                 open={Boolean(anchorEl)}
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 disabled={disabled}
-                sx={selectSx}
+                sx={sx}
             >
                 {channel && <Fragment>
-                    <ChannelIcon channel={channel} />
-                    <Typography variant="body1">{channel.name}</Typography>
+                    <ChannelIcon channel={channel} color="action" />
+                    <Typography>{channel.name}</Typography>
                 </Fragment>}
             </Select>
 
@@ -142,6 +146,11 @@ export const ChannelSelect = ({ value, setValue, choices, disabled, selectSx, po
                 value={value}
                 setValue={setValue}
                 choices={choices}
+                sx={{
+                    [`& .${popoverClasses.paper}`]: {
+                        minWidth: ref.current?.offsetWidth
+                    }
+                }}
                 {...popoverProps}
             />
         </Fragment>
@@ -182,7 +191,7 @@ export const ChannelItem = (
                 setValue={setValue}
                 choices={choices}
                 disabled={disabled}
-                selectSx={{
+                sx={{
                     width: {
                         xs: '100%',
                         md: 300

@@ -1,27 +1,27 @@
 'use client';
 
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { GuildConfigurationMusic } from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React from 'react';
 import { SwitchItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildConfigurationMusic } from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
-    const music = configuration.music;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(music.enabled);
-    const [webPanel, setWebPanel, resetWebPanel] = useResettableState(music.web_panel);
-    const [youtube, setYoutube, resetYoutube] = useResettableState(music.sources.youtube);
-    const [niconico, setNiconico, resetNiconico] = useResettableState(music.sources.niconico);
-    const [soundcloud, setSoundcloud, resetSoundcloud] = useResettableState(music.sources.soundcloud);
-    const [twitch, setTwitch, resetTwitch] = useResettableState(music.sources.twitch);
-    const [bandcamp, setBandcamp, resetBandcamp] = useResettableState(music.sources.bandcamp);
-    const [vimeo, setVimeo, resetVimeo] = useResettableState(music.sources.vimeo);
+    const musicConfiguration = configuration.music;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(musicConfiguration.enabled);
+    const [webPanel, setWebPanel, resetWebPanel] = useResettableState(musicConfiguration.web_panel);
+    const [youtube, setYoutube, resetYoutube] = useResettableState(musicConfiguration.sources.youtube);
+    const [niconico, setNiconico, resetNiconico] = useResettableState(musicConfiguration.sources.niconico);
+    const [soundcloud, setSoundcloud, resetSoundcloud] = useResettableState(musicConfiguration.sources.soundcloud);
+    const [twitch, setTwitch, resetTwitch] = useResettableState(musicConfiguration.sources.twitch);
+    const [bandcamp, setBandcamp, resetBandcamp] = useResettableState(musicConfiguration.sources.bandcamp);
+    const [vimeo, setVimeo, resetVimeo] = useResettableState(musicConfiguration.sources.vimeo);
 
     const toObject = (): GuildConfigurationMusic => ({
         enabled,
@@ -36,14 +36,9 @@ export const View = ({ guild, configuration, localization: { translations } }: G
         }
     });
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            music: toObject()
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { music: toObject() });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetEnabled();
         resetWebPanel();
         resetYoutube();
@@ -120,9 +115,9 @@ export const View = ({ guild, configuration, localization: { translations } }: G
             </Section>
 
             <SaveConfirm
-                open={!deepEqual(music, toObject(), { strict: true })}
-                onSave={handleActionSave}
-                onCancel={handleActionCancel}
+                open={!deepEqual(musicConfiguration, toObject(), { strict: true })}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
             />
         </PageContent>
     );

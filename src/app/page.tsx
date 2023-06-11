@@ -1,4 +1,4 @@
-import { getLocalization } from '../localizations/server';
+import { getLocalization } from '@localizations/server';
 import { getUser } from './utils';
 import { View } from './view';
 

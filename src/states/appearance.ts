@@ -1,5 +1,5 @@
+import { COOKIE_APPEARANCE } from '@utils/cookie';
 import { atom } from 'recoil';
-import { COOKIE_APPEARANCE } from '../utils/cookie';
 
 export type AppearanceType = 'system' | 'light' | 'dark';
 

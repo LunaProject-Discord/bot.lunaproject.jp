@@ -30,14 +30,17 @@ export type TranslationKeys =
     | 'move_up'
     | 'move_down'
 
+
     | 'pattern_date'
     | 'pattern_time'
     | 'pattern_datetime'
+
 
     | 'search'
     | 'search_channels'
     | 'search_roles'
     | 'search_members'
+
 
     | 'embeds'
     | 'embed'
@@ -65,6 +68,7 @@ export type TranslationKeys =
     | 'embed_footer_icon_url'
     | 'embed_footer_timestamp'
 
+
     | 'error_unauthorized_title'
     | 'error_unauthorized_description'
     | 'error_forbidden_title'
@@ -72,36 +76,61 @@ export type TranslationKeys =
     | 'error_not_found_title'
     | 'error_not_found_description'
 
+
     | 'welcome_to_name'
+
 
     | 'home'
     | 'status'
     | 'leaderboard'
+
+
     | 'guild_settings'
     | 'choose_guild_settings'
     | 'settings_basic'
+    | 'settings_guild_management'
+    | 'settings_features_and_options'
+
     | 'prefix_and_nickname'
     | 'prefix_and_nickname_description'
     | 'prefix'
     | 'nickname'
     | 'nickname_hint'
+
     | 'time_and_language'
     | 'time_and_language_description'
     | 'date_and_time'
     | 'timezone'
     | 'timezone_description'
     | 'language_description'
-    | 'settings_guild_management'
+
+    | 'commands'
+    | 'commands_description'
+    | 'commands_permissions_channels'
+    | 'commands_permissions_all_channels'
+    | 'commands_permissions_roles'
+    | 'commands_permissions_all_roles'
+    | 'commands_permissions_members'
+    | 'command_manage'
+    | 'command_enabled'
+    | 'command_user_permissions'
+    | 'command_bot_permissions'
+    | 'command_permissions_channels'
+    | 'command_permissions_roles'
+    | 'command_permissions_members'
+
     | 'welcome_message'
     | 'welcome_message_description'
     | 'welcome_message_enabled'
     | 'welcome_message_edit_description'
     | 'welcome_message_edit_hint'
+
     | 'goodbye_message'
     | 'goodbye_message_description'
     | 'goodbye_message_enabled'
     | 'goodbye_message_edit_description'
     | 'goodbye_message_edit_hint'
+
     | 'activity'
     | 'activity_description'
     | 'activity_enabled'
@@ -122,8 +151,9 @@ export type TranslationKeys =
     | 'activity_type_custom_status_long'
     | 'activity_type_custom_status_short'
     | 'activity_type_custom_status_description'
+
     | 'role_panels'
-    | 'settings_features_and_options'
+
     | 'level'
     | 'experience'
     | 'level_description'
@@ -154,12 +184,14 @@ export type TranslationKeys =
     | 'level_leaderboard_public'
     | 'level_leaderboard_allow_join'
     | 'level_leaderboard_vanity_code'
+
     | 'translate'
     | 'translate_description'
     | 'translate_enabled'
     | 'translate_reaction'
     | 'translate_manage_disabled_channels_description'
     | 'translate_manage_disabled_roles_description'
+
     | 'vote'
     | 'vote_description'
     | 'vote_enabled'
@@ -172,6 +204,7 @@ export type TranslationKeys =
     | 'quote_this_guild_to_other_guild'
     | 'quote_manage_disabled_channels_description'
     | 'quote_manage_disabled_roles_description'
+
     | 'music'
     | 'music_description'
     | 'music_enabled'
@@ -183,7 +216,9 @@ export type TranslationKeys =
     | 'music_source_twitch'
     | 'music_source_bandcamp'
     | 'music_source_vimeo'
+
     | 'text_to_speech'
+
     | 'logging'
     | 'logging_description'
     | 'logging_enabled'
@@ -224,7 +259,11 @@ export type TranslationKeys =
     | 'logging_message_purge'
     | 'logging_message_pin'
     | 'logging_message_unpin'
+
+
     | 'user_settings'
+
+
     | 'send_message_channel'
     | 'manage_disabled_channels'
     | 'manage_disabled_roles'
@@ -234,11 +273,15 @@ export type TranslationKeys =
     | 'about_this_settings'
     | 'notifications'
     | 'manage_account'
+
+
     | 'site_settings'
+
     | 'design_and_appearance'
     | 'device_theme'
     | 'light_theme'
     | 'dark_theme'
+
     | 'language'
     | 'japanese'
     | 'english';

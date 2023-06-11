@@ -54,6 +54,7 @@ export interface RedisMember extends RedisSnowflake {
 
 export interface RedisUser extends RedisSnowflake {
     name: string;
+    display_name: string | null;
     discriminator: string;
     avatar: string | null;
     bot: boolean;
@@ -67,5 +68,15 @@ export interface RedisUserGuilds extends RedisSnowflake {
 
 export interface RedisUserGuild extends RedisSnowflake {
     owner: boolean;
+    permissions: string;
+}
+
+export interface RedisCommand {
+    index: number;
+    name: string;
+    description: string;
+    category: string;
+    aliases: string[];
+    usages: string[];
     permissions: string;
 }

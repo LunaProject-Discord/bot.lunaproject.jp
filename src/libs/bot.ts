@@ -1,5 +1,3 @@
-import { Cache, OAuthGuild } from '@lunaproject-discord/web-discord';
-import { addSeconds } from 'date-fns';
 import {
     GuildConfiguration,
     GuildConfigurationLanguage,
@@ -7,8 +5,10 @@ import {
     GuildNotification,
     PartialUser,
     UserNotification
-} from '../interfaces/bot';
-import { TimeZone } from '../utils/timezone';
+} from '@interfaces/bot';
+import { Cache, OAuthGuild } from '@lunaproject-discord/web-discord';
+import { TimeZone } from '@utils/timezone';
+import { addSeconds } from 'date-fns';
 import prisma from './prisma';
 
 export const getUser = async (id: string): Promise<PartialUser> => {

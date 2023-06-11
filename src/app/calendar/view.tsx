@@ -1,13 +1,13 @@
 'use client';
 
+import { PageContent } from '@components/layout';
+import { CalendarEvent } from '@interfaces/bot';
+import { LocalizationProps } from '@interfaces/localization';
 import { format } from '@lunaproject-discord/web-core/dist/utils/date';
 import { KeyboardArrowLeftOutlined, KeyboardArrowRightOutlined } from '@mui/icons-material';
 import { Box, IconButton, styled, Typography } from '@mui/material';
 import { addMonths, eachDayOfInterval, subMonths } from 'date-fns';
 import React, { useState } from 'react';
-import { PageContent } from '../../components/layout';
-import { CalendarEvent } from '../../interfaces/bot';
-import { LocalizationProps } from '../../interfaces/localization';
 import { InternalCalendarEvent } from './_components';
 import { MonthView } from './_components/month';
 

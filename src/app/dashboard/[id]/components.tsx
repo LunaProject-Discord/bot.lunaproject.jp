@@ -3,7 +3,6 @@
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemDisabledProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import { sortOAuthGuilds } from '@lunaproject-discord/web-discord/dist/utils';
 import {
     Avatar,
     ListItemButtonProps,
@@ -13,19 +12,24 @@ import {
     Typography,
     useMediaQuery
 } from '@mui/material';
+import { filterPredicateGuild, getGuildIcon, sortGuilds } from '@utils/discord';
 import { ellipsis } from 'polished';
 import React, { Fragment, MouseEvent, useEffect, useState } from 'react';
+import { FixedSizeList } from 'react-window';
 import { ItemVariableProps, List, ListItemButton, ListItemIcon, SearchBox, Select } from '../../../components/items';
-import { filterPredicateGuild, getGuildIcon } from '../../../utils/discord';
 
 interface ListItemProps extends ListItemButtonProps {
     guild: OAuthGuild;
 }
 
 const ListItem = ({ guild, ...props }: ListItemProps) => (
-    <ListItemButton key={guild.id} sx={{ gap: 1 }} {...props}>
+    <ListItemButton key={guild.id} {...props}>
         <ListItemIcon>
-            <Avatar src={getGuildIcon(guild)} sx={{ width: 24, height: 24, pointerEvents: 'none' }} />
+            <Avatar
+                src={getGuildIcon(guild)}
+                alt=" "
+                sx={{ width: 24, height: 24, pointerEvents: 'none' }}
+            />
         </ListItemIcon>
         <ListItemText primary={guild.name} primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }} />
     </ListItemButton>
@@ -48,16 +52,17 @@ export const GuildPopover = (
         onPopupClose,
         value,
         setValue,
-        guilds,
+        guilds: choices,
         mutualGuilds,
         ...props
     }: GuildPopoverProps
 ) => {
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
     const [search, setSearch] = useState('');
 
-    const sortedGuilds = sortOAuthGuilds(guilds);
+    const guilds = sortGuilds(choices).filter((guild) => mutualGuilds.includes(guild.id) && filterPredicateGuild(guild, search)) as OAuthGuild[];
 
     const handlePopupClose = () => {
         setSearch('');
@@ -91,16 +96,29 @@ export const GuildPopover = (
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="サーバーを検索..."
             />
-            <List>
-                {sortedGuilds.filter((guild) => mutualGuilds.includes(guild.id) && filterPredicateGuild(guild, search)).map((guild) => (
-                    <ListItem
-                        key={guild.id}
-                        guild={guild}
-                        selected={value === guild.id}
-                        onClick={() => handleChange(guild)}
-                    />
-                ))}
-            </List>
+            <FixedSizeList
+                width="100%"
+                height={300}
+                innerElementType={List}
+                itemCount={guilds.length}
+                itemSize={8 * (isSmall ? 6 : 5)}
+            >
+                {({ index, style }) => {
+                    const guild = guilds[index];
+                    return (
+                        <ListItem
+                            key={guild.id}
+                            guild={guild}
+                            selected={value === guild.id}
+                            onClick={() => handleChange(guild)}
+                            style={{
+                                ...style,
+                                top: parseFloat(style.top as string) + 8
+                            }}
+                        />
+                    );
+                }}
+            </FixedSizeList>
         </Popover>
     );
 };
@@ -131,9 +149,10 @@ export const GuildSelect = ({ value, setValue, guilds, mutualGuilds, disabled }:
                 {currentGuild && <Fragment>
                     <Avatar
                         src={getGuildIcon(currentGuild)}
+                        alt=" "
                         sx={{ width: 24, height: 24, pointerEvents: 'none' }}
                     />
-                    <Typography variant="body2">{currentGuild.name}</Typography>
+                    <Typography>{currentGuild.name}</Typography>
                 </Fragment>}
             </Select>
 

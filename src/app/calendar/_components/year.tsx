@@ -1,5 +1,5 @@
+import { LocalizationProps } from '@interfaces/localization';
 import { Box, styled } from '@mui/material';
-import { LocalizationProps } from '../../../interfaces/localization';
 
 const Week = styled(Box)(({ theme }) => ({
     gridColumn: '1 / 8',

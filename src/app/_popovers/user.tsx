@@ -1,5 +1,6 @@
 'use client';
 
+import { LocaleType, LocalizationProps } from '@interfaces/localization';
 import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import {
     ArrowBackOutlined,
@@ -27,13 +28,12 @@ import {
     Typography,
     useMediaQuery
 } from '@mui/material';
+import { appearanceAtom, AppearanceType } from '@states/appearance';
+import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '@utils/cookie';
 import NextLink from 'next/link';
 import { setCookie } from 'nookies';
 import React, { Fragment, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { LocaleType, LocalizationProps } from '../../interfaces/localization';
-import { appearanceAtom, AppearanceType } from '../../states/appearance';
-import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '../../utils/cookie';
 import { getUserAvatar } from '../../utils/discord';
 import {
     PopoverListItemButton,
@@ -201,7 +201,11 @@ export const UserPopover = ({ open, anchorEl, onClose, user, localization }: Use
             {panelState === null && <Fragment>
                 {user && <Fragment>
                     <Box sx={{ p: 1.5, display: 'flex', gap: 1 }}>
-                        <Avatar src={getUserAvatar(user)} sx={{ pointerEvents: 'none' }} />
+                        <Avatar
+                            src={getUserAvatar(user)}
+                            alt=" "
+                            sx={{ pointerEvents: 'none' }}
+                        />
                         <Box sx={{
                             width: '100%',
                             display: 'flex',
@@ -209,10 +213,10 @@ export const UserPopover = ({ open, anchorEl, onClose, user, localization }: Use
                             justifyContent: 'space-between'
                         }}>
                             <Typography variant="h6" sx={{ fontSize: '1.2rem', lineHeight: 1.2 }}>
-                                {user.username}
+                                {user.global_name ?? user.username}
                             </Typography>
                             <Typography variant="body2" sx={{ fontFamily: 'Renner', lineHeight: 1.1 }}>
-                                #{user.discriminator}
+                                {user.global_name ? `@${user.username}` : `#${user.discriminator}`}
                             </Typography>
                         </Box>
                         <Tooltip title={translations.user_settings} placement="top">

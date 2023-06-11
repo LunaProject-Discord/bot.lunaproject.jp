@@ -1,9 +1,9 @@
+import { getUser } from '@app/utils';
+import { WithIdParamProps } from '@interfaces/page';
+import { getGuildNotifications } from '@libs/bot';
+import { getGuildById } from '@libs/redis';
+import { getLocalization } from '@localizations/server';
 import React from 'react';
-import { WithIdParamProps } from '../../../interfaces/page';
-import { getGuildNotifications } from '../../../libs/bot';
-import { getGuildById } from '../../../libs/redis';
-import { getLocalization } from '../../../localizations/server';
-import { getUser } from '../../utils';
 import { NotFoundView, View } from './view';
 
 const Page = async ({ params: { id } }: WithIdParamProps) => {

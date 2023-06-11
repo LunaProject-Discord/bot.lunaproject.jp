@@ -1,16 +1,16 @@
 'use client';
 
+import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { GuildConfigurationQuote } from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, useState } from 'react';
-import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../../../components/dialog';
 import { ActionItem, SwitchItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildConfigurationQuote } from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
@@ -19,14 +19,14 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
     const [openDisabledChannelsDialog, setOpenDisabledChannelsDialog] = useState(false);
     const [openDisabledRolesDialog, setOpenDisabledRolesDialog] = useState(false);
 
-    const quote = configuration.quote;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(quote.enabled);
-    const [reaction, setReaction, resetReaction] = useResettableState(quote.reaction);
-    const [message, setMessage, resetMessage] = useResettableState(quote.message);
-    const [otherGuildToThisGuild, setOtherGuildToThisGuild, resetOtherGuildToThisGuild] = useResettableState(quote.other_guild_to_this_guild);
-    const [thisGuildToOtherGuild, setThisGuildToOtherGuild, resetThisGuildToOtherGuild] = useResettableState(quote.this_guild_to_other_guild);
-    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(quote.disabled.channels);
-    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(quote.disabled.roles);
+    const quoteConfiguration = configuration.quote;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(quoteConfiguration.enabled);
+    const [reaction, setReaction, resetReaction] = useResettableState(quoteConfiguration.reaction);
+    const [message, setMessage, resetMessage] = useResettableState(quoteConfiguration.message);
+    const [otherGuildToThisGuild, setOtherGuildToThisGuild, resetOtherGuildToThisGuild] = useResettableState(quoteConfiguration.other_guild_to_this_guild);
+    const [thisGuildToOtherGuild, setThisGuildToOtherGuild, resetThisGuildToOtherGuild] = useResettableState(quoteConfiguration.this_guild_to_other_guild);
+    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(quoteConfiguration.disabled.channels);
+    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(quoteConfiguration.disabled.roles);
 
     const toObject = (): GuildConfigurationQuote => ({
         enabled,
@@ -40,14 +40,9 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
         }
     });
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            quote: toObject()
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { quote: toObject() });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetEnabled();
         resetReaction();
         resetMessage();
@@ -113,10 +108,10 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </Section>
 
                 <SaveConfirm
-                    open={!deepEqual(quote, toObject(), { strict: true })}
+                    open={!deepEqual(quoteConfiguration, toObject(), { strict: true })}
                     disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
-                    onSave={handleActionSave}
-                    onCancel={handleActionCancel}
+                    onSave={handleSaveAction}
+                    onCancel={handleCancelAction}
                 />
             </PageContent>
 

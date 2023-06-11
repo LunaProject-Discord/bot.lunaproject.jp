@@ -1,14 +1,23 @@
 'use client';
 
+import { PopoverProps } from '@interfaces/mui';
+import { RedisRole } from '@interfaces/redis';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
-import { Box, ListItemButtonProps, ListItemText, Theme, Typography, useMediaQuery } from '@mui/material';
+import {
+    Box,
+    ListItemButtonProps,
+    ListItemText,
+    popoverClasses,
+    Theme,
+    Typography,
+    useMediaQuery
+} from '@mui/material';
+import { filterPredicateRole, getRoleColor, sortRoles } from '@utils/discord';
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
-import React, { Fragment, useEffect, useState } from 'react';
-import { PopoverProps } from '../../../interfaces/mui';
-import { RedisRole } from '../../../interfaces/redis';
-import { filterPredicateRole, getRoleColor, sortRoles } from '../../../utils/discord';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { FixedSizeList } from 'react-window';
 import {
     ItemFormContainer,
     ItemIcon,
@@ -29,8 +38,8 @@ export interface RoleListItemProps extends Omit<ListItemButtonProps, 'role'> {
 }
 
 export const RoleListItem = ({ role, ...props }: RoleListItemProps) => (
-    <ListItemButton key={role.id} sx={{ gap: 1 }} {...props}>
-        <ListItemIcon sx={{ minWidth: 2 }}>
+    <ListItemButton key={role.id} sx={{ px: { xs: 2, sm: 1.5 }, gap: 1.5 }} {...props}>
+        <ListItemIcon sx={{ minWidth: 0 }}>
             <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
         </ListItemIcon>
         <ListItemText primary={role.name} primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }} />
@@ -52,12 +61,13 @@ export const RolePopover = (
     }: RolePopoverProps
 ) => {
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
     const open = Boolean(anchorEl);
 
     const [search, setSearch] = useState('');
 
-    const roles = sortRoles(choices);
+    const roles = sortRoles(choices).filter((role) => filterPredicateRole(role, search));
 
     const handlePopupClose = () => {
         setSearch('');
@@ -72,7 +82,7 @@ export const RolePopover = (
     useEffect(() => {
         if (open && isDesktop)
             setTimeout(() => document.getElementById('popover-search')?.focus());
-    }, [open]);
+    }, [open, isDesktop]);
 
     return (
         <Popover
@@ -91,37 +101,53 @@ export const RolePopover = (
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="役職を検索..."
             />
-            <List>
-                {roles.filter((role) => filterPredicateRole(role, search)).map((role) => (
-                    <RoleListItem
-                        key={role.id}
-                        role={role}
-                        selected={value === role.id}
-                        onClick={() => handleChange(role)}
-                    />
-                ))}
-            </List>
+            <FixedSizeList
+                width="100%"
+                height={300}
+                innerElementType={List}
+                itemCount={roles.length}
+                itemSize={8 * (isSmall ? 6 : 5)}
+            >
+                {({ index, style }) => {
+                    const role = roles[index];
+                    return (
+                        <RoleListItem
+                            key={role.id}
+                            role={role}
+                            selected={value === role.id}
+                            onClick={() => handleChange(role)}
+                            style={{
+                                ...style,
+                                top: parseFloat(style.top as string) + 8
+                            }}
+                        />
+                    );
+                }}
+            </FixedSizeList>
         </Popover>
     );
 };
 
 export type RoleSelectProps = ItemDisabledProps & RoleProps & SnowflakeSelectProps<RolePopoverProps>;
 
-export const RoleSelect = ({ value, setValue, choices, disabled, selectSx, popoverProps }: RoleSelectProps) => {
+export const RoleSelect = ({ value, setValue, choices, disabled, sx, popoverProps }: RoleSelectProps) => {
+    const ref = useRef<HTMLDivElement | null>(null);
+
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const role = choices.find((role) => role.id === value);
     return (
         <Fragment>
             <Select
+                ref={ref}
                 open={Boolean(anchorEl)}
                 onClick={(e) => setAnchorEl(e.currentTarget)}
                 disabled={disabled}
-                sx={selectSx}
+                sx={sx}
             >
                 {role && <Fragment>
                     <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
-                    <Typography variant="body2">{role.name}</Typography>
+                    <Typography>{role.name}</Typography>
                 </Fragment>}
             </Select>
 
@@ -131,6 +157,11 @@ export const RoleSelect = ({ value, setValue, choices, disabled, selectSx, popov
                 value={value}
                 setValue={setValue}
                 choices={choices}
+                sx={{
+                    [`& .${popoverClasses.paper}`]: {
+                        minWidth: ref.current?.offsetWidth
+                    }
+                }}
                 {...popoverProps}
             />
         </Fragment>
@@ -172,7 +203,7 @@ export const RoleItem = (
                     setValue={setValue}
                     choices={choices}
                     disabled={disabled}
-                    selectSx={{
+                    sx={{
                         width: {
                             xs: '100%',
                             md: 300

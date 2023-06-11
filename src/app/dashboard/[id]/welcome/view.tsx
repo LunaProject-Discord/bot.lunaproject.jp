@@ -1,17 +1,17 @@
 'use client';
 
+import { ChannelItem, MessageItem, SwitchItem } from '@components/items';
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { CodeStyleContainer } from '@components/text';
+import { GuildConfigurationWelcome } from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { useState } from 'react';
-import { ChannelItem, MessageItem, SwitchItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { CodeStyleContainer } from '../../../../components/text';
-import { GuildConfigurationWelcome } from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
@@ -19,22 +19,17 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     const [openMessageBuilder, setOpenMessageBuilder] = useState(false);
 
-    const welcome = configuration.welcome;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(welcome.enabled);
-    const [channelId, setChannelId, resetChannelId] = useResettableState(welcome.channel_id);
-    const [message, setMessage, resetMessage] = useResettableState(welcome.message);
-    const [roles, setRoles, resetRoles] = useResettableState(welcome.roles);
+    const welcomeConfiguration = configuration.welcome;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(welcomeConfiguration.enabled);
+    const [channelId, setChannelId, resetChannelId] = useResettableState(welcomeConfiguration.channel_id);
+    const [message, setMessage, resetMessage] = useResettableState(welcomeConfiguration.message);
+    const [roles, setRoles, resetRoles] = useResettableState(welcomeConfiguration.roles);
 
     const toObject = (): GuildConfigurationWelcome => ({ enabled, channel_id: channelId, message, roles });
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            welcome: toObject()
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { welcome: toObject() });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetEnabled();
         resetChannelId();
         resetMessage();
@@ -79,10 +74,10 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
 
             <SaveConfirm
-                open={!deepEqual(welcome, toObject(), { strict: true })}
+                open={!deepEqual(welcomeConfiguration, toObject(), { strict: true })}
                 disableKeyboardShortcuts={openMessageBuilder}
-                onSave={handleActionSave}
-                onCancel={handleActionCancel}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
             />
         </PageContent>
     );

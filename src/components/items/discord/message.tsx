@@ -1,15 +1,15 @@
 'use client';
 
 import { ThemeProvider } from '@emotion/react';
+import { LocalizationProps } from '@interfaces/localization';
+import { DataMessage } from '@interfaces/message';
+import { toMessage } from '@libs/message';
 import { MessageContainer, MessagePreview } from '@lunaproject-discord/web-core/dist/components/Message';
 import { ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { THEMES } from '@lunaproject-discord/web-core/dist/styles';
 import { EditOutlined } from '@mui/icons-material';
 import { Box, Button, styled, Typography, useTheme } from '@mui/material';
 import React, { Dispatch, Fragment, ReactNode, SetStateAction, useState } from 'react';
-import { LocalizationProps } from '../../../interfaces/localization';
-import { DataMessage } from '../../../interfaces/message';
-import { toMessage } from '../../../libs/message';
 import { MessageBuilder } from '../../message/builder';
 import { MessagePreviewContainer } from '../../message/preview';
 import { ItemIcon, ItemRowContainer, ItemTextBlock, ItemVariableProps } from '../index';

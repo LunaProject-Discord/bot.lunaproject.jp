@@ -1,6 +1,6 @@
+import { getUser } from '@app/utils';
+import { getUserNotificationById, getUserNotificationByName } from '@libs/bot';
 import { NextResponse } from 'next/server';
-import { getUserNotificationById, getUserNotificationByName } from '../../../../../../libs/bot';
-import { getUser } from '../../../../../utils';
 
 type Props = {
     params: {

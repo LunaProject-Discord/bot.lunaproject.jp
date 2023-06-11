@@ -9,11 +9,11 @@ import {
     TuneOutlined
 } from '@mui/icons-material';
 import { alpha, Avatar, Divider, IconButton, styled, Tooltip } from '@mui/material';
+import { getUserAvatar, getUserDisplayName } from '@utils/discord';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { Fragment, ReactNode } from 'react';
-import { getUserAvatar } from '../../utils/discord';
 import Icon from '../icon.svg';
 import { NavigationItemProps, NavigationRootProps } from './index';
 
@@ -98,10 +98,11 @@ export const DesktopNavigation = ({ openPopover, user, localization: { translati
         </DesktopNavigationGroup>
         <Divider flexItem sx={{ mx: 1 }} />
         <DesktopNavigationGroup>
-            {user ? <Tooltip title={user.username} placement="right">
+            {user ? <Tooltip title={getUserDisplayName(user)} placement="right">
                 <IconButton onClick={({ currentTarget }) => openPopover(currentTarget, 'user')} sx={{ p: .5 }}>
                     <Avatar
                         src={getUserAvatar(user)}
+                        alt=" "
                         sx={{ width: 32, height: 32, pointerEvents: 'none' }}
                     />
                 </IconButton>

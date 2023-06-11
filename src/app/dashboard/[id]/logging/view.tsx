@@ -1,5 +1,9 @@
 'use client';
 
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { GuildConfigurationLogging } from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
@@ -7,10 +11,6 @@ import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
 import React from 'react';
 import { SwitchItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildConfigurationLogging } from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 import {
     Category,
@@ -31,20 +31,20 @@ import {
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
 
-    const logging = configuration.logging;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(logging.enabled);
-    const [moderation, setModeration, resetModeration] = useResettableState(logging.moderation);
-    const [member, setMember, resetMember] = useResettableState(logging.member);
-    const [voice, setVoice, resetVoice] = useResettableState(logging.voice);
-    const [category, setCategory, resetCategory] = useResettableState(logging.category);
-    const [textChannel, setTextChannel, resetTextChannel] = useResettableState(logging.text_channel);
-    const [voiceChannel, setVoiceChannel, resetVoiceChannel] = useResettableState(logging.voice_channel);
-    const [role, setRole, resetRole] = useResettableState(logging.role);
-    const [emote, setEmote, resetEmote] = useResettableState(logging.emote);
-    const [invite, setInvite, resetInvite] = useResettableState(logging.invite);
-    const [webhook, setWebhook, resetWebhook] = useResettableState(logging.webhook);
-    const [integration, setIntegration, resetIntegration] = useResettableState(logging.integration);
-    const [message, setMessage, resetMessage] = useResettableState(logging.message);
+    const loggingConfiguration = configuration.logging;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(loggingConfiguration.enabled);
+    const [moderation, setModeration, resetModeration] = useResettableState(loggingConfiguration.moderation);
+    const [member, setMember, resetMember] = useResettableState(loggingConfiguration.member);
+    const [voice, setVoice, resetVoice] = useResettableState(loggingConfiguration.voice);
+    const [category, setCategory, resetCategory] = useResettableState(loggingConfiguration.category);
+    const [textChannel, setTextChannel, resetTextChannel] = useResettableState(loggingConfiguration.text_channel);
+    const [voiceChannel, setVoiceChannel, resetVoiceChannel] = useResettableState(loggingConfiguration.voice_channel);
+    const [role, setRole, resetRole] = useResettableState(loggingConfiguration.role);
+    const [emote, setEmote, resetEmote] = useResettableState(loggingConfiguration.emote);
+    const [invite, setInvite, resetInvite] = useResettableState(loggingConfiguration.invite);
+    const [webhook, setWebhook, resetWebhook] = useResettableState(loggingConfiguration.webhook);
+    const [integration, setIntegration, resetIntegration] = useResettableState(loggingConfiguration.integration);
+    const [message, setMessage, resetMessage] = useResettableState(loggingConfiguration.message);
 
     const channels = guild.channels.filter((channel) => channel.type !== ChannelType.GuildForum && channel.type !== ChannelType.GuildVoice && channel.type !== ChannelType.GuildStageVoice);
 
@@ -64,14 +64,9 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
         message
     });
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            logging: toObject()
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { logging: toObject() });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetEnabled();
         resetModeration();
         resetMember();
@@ -192,9 +187,9 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </GridContainer>
 
             <SaveConfirm
-                open={!deepEqual(logging, toObject(), { strict: true })}
-                onSave={handleActionSave}
-                onCancel={handleActionCancel}
+                open={!deepEqual(loggingConfiguration, toObject(), { strict: true })}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
             />
         </PageContent>
     );

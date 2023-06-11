@@ -1,5 +1,9 @@
 'use client';
 
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { GuildConfigurationLanguage } from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import {
     Section,
     SectionContent,
@@ -9,29 +13,19 @@ import {
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { ScheduleOutlined, TranslateOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
+import { TimeZone, TimeZones } from '@utils/timezone';
 import React, { ReactNode } from 'react';
 import spacetime from 'spacetime';
 import { SelectItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildConfigurationLanguage } from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
-import { TimeZone, TimeZones } from '../../../../utils/timezone';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
     const [timezone, setTimezone, resetTimezone] = useResettableState(configuration.timezone);
     const [language, setLanguage, resetLanguage] = useResettableState(configuration.language);
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            timezone,
-            language
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { timezone, language });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetTimezone();
         resetLanguage();
     };
@@ -92,8 +86,8 @@ export const View = ({ guild, configuration, localization: { translations } }: G
 
             <SaveConfirm
                 open={timezone !== configuration.timezone || language !== configuration.language}
-                onSave={handleActionSave}
-                onCancel={handleActionCancel}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
             />
         </PageContent>
     );

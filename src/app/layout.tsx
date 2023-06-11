@@ -1,9 +1,9 @@
+import { Body } from '@components/layout';
+import { getLocale, getLocalization } from '@localizations/server';
 import { Metadata } from 'next';
 import React, { ReactNode } from 'react';
 import '../../public/fonts/style.css';
 import '../../public/global.css';
-import { Body } from '../components/layout';
-import { getLocale, getLocalization } from '../localizations/server';
 import { LayoutView } from './layout_view';
 
 export const generateMetadata = (): Metadata => {

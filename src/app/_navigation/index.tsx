@@ -1,8 +1,8 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
 import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import React, { Fragment, ReactNode, useState } from 'react';
-import { LocalizationProps } from '../../interfaces/localization';
 import { UserPopover } from '../_popovers/user';
 import { DesktopNavigation } from './desktop';
 import { MobileNavigation } from './mobile';

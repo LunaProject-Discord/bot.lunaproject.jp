@@ -1,5 +1,15 @@
 'use client';
 
+import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { CodeStyleContainer } from '@components/text';
+import {
+    GuildConfigurationLevel,
+    GuildConfigurationLevelNotificationType,
+    GuildConfigurationLevelRewardType
+} from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import {
     Section,
     SectionContent,
@@ -11,7 +21,6 @@ import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useEffect, useState } from 'react';
-import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '../../../../components/dialog';
 import {
     ActionItem,
     ChannelItem,
@@ -24,15 +33,6 @@ import {
     SwitchItem,
     TextFieldItem
 } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { CodeStyleContainer } from '../../../../components/text';
-import {
-    GuildConfigurationLevel,
-    GuildConfigurationLevelNotificationType,
-    GuildConfigurationLevelRewardType
-} from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 import { ManageRolesDialog } from './dialog';
 
@@ -87,14 +87,9 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
         }
     });
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            level: toObject()
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { level: toObject() });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetEnabled();
         resetExperiencePerMessage();
         resetDisabledChannels();
@@ -272,8 +267,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 <SaveConfirm
                     open={!deepEqual(level, toObject(), { strict: true })}
                     disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openRolesDialog || openMessageBuilder}
-                    onSave={handleActionSave}
-                    onCancel={handleActionCancel}
+                    onSave={handleSaveAction}
+                    onCancel={handleCancelAction}
                 />
             </PageContent>
 

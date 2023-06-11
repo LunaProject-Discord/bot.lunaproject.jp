@@ -1,5 +1,9 @@
 'use client';
 
+import { PageContent, PageHeader } from '@components/layout';
+import { GuildNotification } from '@interfaces/bot';
+import { LocalizationProps } from '@interfaces/localization';
+import { GuildViewProps, UserViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import {
     ArrowForwardOutlined,
@@ -11,13 +15,10 @@ import {
     WarningAmberOutlined
 } from '@mui/icons-material';
 import { Box, CircularProgress, Divider, Link, Typography } from '@mui/material';
+import { getUserDisplayName } from '@utils/discord';
 import NextLink from 'next/link';
 import React, { Fragment } from 'react';
 import { RouteLinkItem } from '../../../components/items';
-import { PageContent, PageHeader } from '../../../components/layout';
-import { GuildNotification } from '../../../interfaces/bot';
-import { LocalizationProps } from '../../../interfaces/localization';
-import { GuildViewProps, UserViewProps } from '../../../interfaces/view';
 
 interface Props extends UserViewProps, GuildViewProps {
     notifications: GuildNotification[];
@@ -28,7 +29,7 @@ export const View = ({ user, guild, notifications, localization: { translations 
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">
-                    {String(translations.welcome_to_name).replace('%n', user.username)}
+                    {String(translations.welcome_to_name).replace('%n', getUserDisplayName(user))}
                 </Typography>
                 <Typography variant="body1">ここは {guild.name} の設定ページです。</Typography>
             </Box>
@@ -92,7 +93,7 @@ export const ForbiddenView = () => (
                 gap: 1
             }}
         >
-            <LockPersonOutlined sx={{ fontSize: '10rem' }} color="primary" />
+            <LockPersonOutlined color="primary" sx={{ fontSize: '10rem' }} />
             <Typography variant="h4">権限がありません</Typography>
             <Typography align="center">
                 このサーバーの設定を変更する権限がありません。<br />
@@ -115,7 +116,7 @@ export const NotFoundView = () => (
                 gap: 1
             }}
         >
-            <CloudOffOutlined sx={{ fontSize: '10rem' }} color="primary" />
+            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
             <Typography variant="h4">サーバーが見つかりません</Typography>
             <Typography align="center">
                 指定されたサーバーが見つかりませんでした。<br />

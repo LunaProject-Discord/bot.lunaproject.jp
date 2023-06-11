@@ -1,20 +1,20 @@
 'use client';
 
+import { PageContainer } from '@components/layout';
+import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject-discord/web-core/dist/components/StyleProvider';
 import { MuiPalette } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject-discord/web-discord';
 import { createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { indigo } from '@mui/material/colors';
+import { appearanceAtom, AppearanceType } from '@states/appearance';
+import { COOKIE_APPEARANCE } from '@utils/cookie';
+import { fetchWithUser } from '@utils/swr';
 import { parseCookies } from 'nookies';
 import React, { ReactNode, useEffect } from 'react';
 import { RecoilRoot, useRecoilState } from 'recoil';
 import useSWRImmutable from 'swr/immutable';
-import { PageContainer } from '../components/layout';
-import { LocalizationProps } from '../interfaces/localization';
 import { getMuiDateLocalizationByName, getMuiLocalizationByName } from '../localizations';
-import { appearanceAtom, AppearanceType } from '../states/appearance';
-import { COOKIE_APPEARANCE } from '../utils/cookie';
-import { fetchWithUser } from '../utils/swr';
 import { Navigation } from './_navigation';
 import { fontFamily, M_Plus_Rounded_1c, Nunito } from './theme';
 

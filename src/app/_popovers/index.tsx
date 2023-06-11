@@ -1,5 +1,6 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
 import { CheckOutlined } from '@mui/icons-material';
 import {
     ListItemButton as MuiListItemButton,
@@ -10,7 +11,6 @@ import {
 } from '@mui/material';
 import NextLink, { LinkProps } from 'next/link';
 import React, { ReactNode } from 'react';
-import { LocalizationProps } from '../../interfaces/localization';
 
 export interface PopoverProps extends LocalizationProps {
     open: boolean;

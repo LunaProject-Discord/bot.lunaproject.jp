@@ -1,5 +1,5 @@
 import { OAuthGuild } from '@lunaproject-discord/web-discord';
-import { TimeZone } from '../utils/timezone';
+import { TimeZone } from '@utils/timezone';
 import { DataMessage } from './message';
 
 
@@ -103,24 +103,27 @@ export interface GuildConfigurationAccessControlComponent {
 }
 
 export interface GuildConfigurationCommands {
-    disabled: GuildConfigurationAccessControlComponent;
+    permissions: GuildConfigurationCommandsPermissions;
     commands: GuildConfigurationCommand[];
 }
 
-export interface GuildConfigurationCommand {
-    enabled: boolean;
-    name: string;
-    descriptions: GuildConfigurationCommandLocalizationText[];
-    category: string;
-    aliases: string[];
-    permissions: string;
-    allowed: GuildConfigurationAccessControlComponent;
-    denied: GuildConfigurationAccessControlComponent;
+export interface GuildConfigurationCommandsPermissions {
+    channels: GuildConfigurationCommandsPermission;
+    roles: GuildConfigurationCommandsPermission;
+    members: { [key in string]: boolean };
 }
 
-export interface GuildConfigurationCommandLocalizationText {
-    language: string;
-    text: string;
+export interface GuildConfigurationCommandsPermission {
+    default: boolean | null;
+    overrides: GuildConfigurationCommandsPermissionOverrides;
+}
+
+export type GuildConfigurationCommandsPermissionOverrides = { [key in string]: boolean };
+
+export interface GuildConfigurationCommand {
+    name: string;
+    enabled: boolean;
+    permissions: GuildConfigurationCommandsPermissions;
 }
 
 export interface GuildConfigurationWelcome extends GuildConfigurationComponent {

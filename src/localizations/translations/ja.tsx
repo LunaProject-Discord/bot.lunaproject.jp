@@ -1,5 +1,5 @@
+import { Localization, Translations } from '@interfaces/localization';
 import React, { Fragment } from 'react';
-import { Localization, Translations } from '../../interfaces/localization';
 
 export const translationsJa: Translations = {
     success: '成功',
@@ -29,14 +29,17 @@ export const translationsJa: Translations = {
     move_up: '上に移動',
     move_down: '下に移動',
 
+
     pattern_date: 'yyyy年M月d日 (E)',
     pattern_time: 'HH:mm',
     pattern_datetime: 'yyyy年M月d日 (E) HH:mm',
+
 
     search: '検索',
     search_channels: 'チャンネルを検索...',
     search_roles: '役職を検索...',
     search_members: 'メンバーを検索...',
+
 
     embeds: 'Embeds',
     embed: 'Embed',
@@ -64,6 +67,7 @@ export const translationsJa: Translations = {
     embed_footer_icon_url: 'フッターのアイコン URL',
     embed_footer_timestamp: 'タイムスタンプ',
 
+
     error_unauthorized_title: 'ログインが必要です',
     error_unauthorized_description: <Fragment>
         このページにアクセスするにはログインが必要です。<br />
@@ -81,14 +85,21 @@ export const translationsJa: Translations = {
         お手数ですが、下のボタンからホームに戻ってください。
     </Fragment>,
 
+
     welcome_to_name: 'ようこそ、%n さん！',
+
 
     home: 'ホーム',
     status: 'ステータス',
     leaderboard: 'リーダーボード',
+
+
     guild_settings: 'サーバー設定',
-    settings_basic: '基本の設定',
     choose_guild_settings: '設定したいサーバーを選択してください。',
+    settings_basic: '基本の設定',
+    settings_guild_management: 'サーバー管理',
+    settings_features_and_options: '機能とオプション',
+
     prefix_and_nickname: 'プレフィックスとニックネーム',
     prefix_and_nickname_description: 'Bot の呼び出し方やニックネームを設定できます。',
     prefix: 'プレフィックス',
@@ -96,13 +107,29 @@ export const translationsJa: Translations = {
     nickname_hint: <Fragment>
         <code>%p</code> で設定中のプレフィックスへ、<code>%n</code> で Bot の名前へ置き換えができます。
     </Fragment>,
+
     time_and_language: '時刻と言語',
     time_and_language_description: '一部の機能で使用される日時や言語の設定ができます。',
     date_and_time: '日付と時刻',
     timezone: 'タイムゾーン',
     timezone_description: 'タイムゾーンをよく話す地域圏に設定すると、その地域に合わせた日時が表示されます。',
     language_description: 'ログ機能などのサーバー専用の機能では、ここで設定した言語でメッセージが送信されます。',
-    settings_guild_management: 'サーバー管理',
+
+    commands: 'コマンド',
+    commands_description: 'コマンドの権限などの設定を上書きすることができます。',
+    commands_permissions_channels: 'チャンネルの権限',
+    commands_permissions_all_channels: 'すべてのチャンネル',
+    commands_permissions_roles: '役職の権限',
+    commands_permissions_all_roles: '@everyone',
+    commands_permissions_members: 'メンバーの権限',
+    command_manage: 'コマンドの管理',
+    command_enabled: 'コマンドを有効にする',
+    command_user_permissions: 'このコマンドを使うのに必要な権限',
+    command_bot_permissions: 'Bot に必要な権限',
+    command_permissions_channels: 'チャンネルの権限オーバーライド',
+    command_permissions_roles: '役職の権限オーバーライド',
+    command_permissions_members: 'メンバーの権限オーバーライド',
+
     welcome_message: 'ようこそメッセージ (参加)',
     welcome_message_description: 'ユーザーがサーバーに参加したときにメッセージを送信できます。',
     welcome_message_enabled: 'ようこそメッセージを有効にする',
@@ -120,6 +147,7 @@ export const translationsJa: Translations = {
             <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+
     goodbye_message: 'さよならメッセージ (退出)',
     goodbye_message_description: 'ユーザーがサーバーから退出したときにメッセージを送信できます。',
     goodbye_message_enabled: 'さよならメッセージを有効にする',
@@ -136,6 +164,7 @@ export const translationsJa: Translations = {
             <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+
     activity: 'アクティビティ ロール',
     activity_description: 'ゲームのプレイ中や音楽の再生中に役職を付与することができます。',
     activity_enabled: 'アクティビティ ロールを有効にする',
@@ -159,8 +188,9 @@ export const translationsJa: Translations = {
         ユーザーのカスタム ステータスが<br className="desktop" />
         設定した名前と一致したときに役職を付与します。
     </Fragment>,
+
     role_panels: '役職 (ロール) パネル',
-    settings_features_and_options: '機能とオプション',
+
     level: 'レベル',
     experience: '経験値',
     level_description: 'メンバーの発言数に応じた経験値を付与し、サーバーのアクティブ化に役立てることができます。',
@@ -209,15 +239,18 @@ export const translationsJa: Translations = {
     level_leaderboard_public: 'サーバーに参加していないユーザーに向けてリーダーボードを公開する',
     level_leaderboard_allow_join: 'リーダーボードからサーバーに参加できるようにする',
     level_leaderboard_vanity_code: 'リーダーボードのカスタム招待コード',
+
     translate: '翻訳',
     translate_description: 'コマンドや国旗のリアクションを使ってテキストを翻訳できます。',
     translate_enabled: '翻訳を有効にする',
     translate_reaction: 'メッセージにリアクションを追加して翻訳をできるようにする',
     translate_manage_disabled_channels_description: '設定されたチャンネルではリアクションを使用した翻訳をできないようにします。',
     translate_manage_disabled_roles_description: '設定された役職のいずれかがユーザーに付与されている場合、リアクションを使用した翻訳をできないようにします。',
+
     vote: '投票',
     vote_description: 'コマンドで投票を作成してメンバーの意見を聞くことができます。',
     vote_enabled: '投票を有効にする',
+
     quote: '引用',
     quote_description: '送信されたメッセージを引用して共有することができます。',
     quote_enabled: '引用を有効にする',
@@ -227,6 +260,7 @@ export const translationsJa: Translations = {
     quote_this_guild_to_other_guild: 'このサーバーに送信されたメッセージをほかのサーバーで引用できるようにする',
     quote_manage_disabled_channels_description: '設定されたチャンネルでは引用をできないようにします。',
     quote_manage_disabled_roles_description: '設定された役職のいずれかがユーザーに付与されている場合、引用をできないようにします。',
+
     music: '音楽',
     music_description: 'YouTube などにアップロードされているメディアをボイスチャンネルで再生することができます。',
     music_enabled: '音楽を有効にする',
@@ -238,7 +272,9 @@ export const translationsJa: Translations = {
     music_source_twitch: 'Twitch',
     music_source_bandcamp: 'Bandcamp',
     music_source_vimeo: 'Vimeo',
+
     text_to_speech: 'メッセージの読み上げ',
+
     logging: 'ログ',
     logging_description: 'サーバーで起きたできごとを設定したチャンネルに送信することができます。',
     logging_enabled: 'ログを有効にする',
@@ -279,7 +315,11 @@ export const translationsJa: Translations = {
     logging_message_purge: 'メッセージの一括削除',
     logging_message_pin: 'メッセージのピン留め',
     logging_message_unpin: 'メッセージのピン留め解除',
+
+
     user_settings: 'ユーザー設定',
+
+
     send_message_channel: 'メッセージを送信するチャンネル',
     manage_disabled_channels: '無効なチャンネルの管理',
     manage_disabled_roles: '無効な役職の管理',
@@ -289,11 +329,15 @@ export const translationsJa: Translations = {
     about_this_settings: 'この設定について',
     notifications: '通知',
     manage_account: 'アカウントの管理',
+
+
     site_settings: 'サイトの設定',
+
     design_and_appearance: 'デザインと外観',
     device_theme: 'デバイスのモードを利用する',
     light_theme: 'ライトテーマ',
     dark_theme: 'ダークテーマ',
+
     language: '言語',
     japanese: '🇯🇵 日本語 (日本)',
     english: '🇺🇸 English (United States)'

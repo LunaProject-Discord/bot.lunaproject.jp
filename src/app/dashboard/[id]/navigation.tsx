@@ -1,5 +1,12 @@
 'use client';
 
+import { PopoverType } from '@app/_navigation';
+import { MobileNavigationAppBarMenu } from '@app/_navigation/mobile';
+import { UserPopover } from '@app/_popovers/user';
+import { AppBar, Toolbar } from '@components/appbar';
+import { CommandBoxIcon } from '@components/icons';
+import { DataGuild, RedisGuild } from '@interfaces/redis';
+import { UserViewProps } from '@interfaces/view';
 import {
     DrawerContainer,
     DrawerContent,
@@ -34,12 +41,6 @@ import { Box, IconButton, styled, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { Dispatch, Fragment, MouseEventHandler, SetStateAction, useState } from 'react';
-import { AppBar, Toolbar } from '../../../components/appbar';
-import { DataGuild, RedisGuild } from '../../../interfaces/redis';
-import { UserViewProps } from '../../../interfaces/view';
-import { PopoverType } from '../../_navigation';
-import { MobileNavigationAppBarMenu } from '../../_navigation/mobile';
-import { UserPopover } from '../../_popovers/user';
 import { GuildSelect } from './components';
 
 interface Props extends UserViewProps {
@@ -204,6 +205,13 @@ const Drawer = (
                         icon={<ScheduleOutlined />}
                         label={translations.time_and_language}
                         href={`/dashboard/${guild.id}/time-language`}
+                        open={open}
+                        setOpen={setOpen}
+                    />
+                    <DrawerItem
+                        icon={<CommandBoxIcon />}
+                        label={translations.commands}
+                        href={`/dashboard/${guild.id}/commands`}
                         open={open}
                         setOpen={setOpen}
                     />

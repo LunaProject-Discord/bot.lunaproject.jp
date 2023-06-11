@@ -1,33 +1,28 @@
 'use client';
 
+import { PageContent, PageHeader } from '@components/layout';
+import { SaveConfirm } from '@components/save_confirm';
+import { GuildConfigurationComponent } from '@interfaces/bot';
+import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React from 'react';
 import { SwitchItem } from '../../../../components/items';
-import { PageContent, PageHeader } from '../../../../components/layout';
-import { SaveConfirm } from '../../../../components/save_confirm';
-import { GuildConfigurationComponent } from '../../../../interfaces/bot';
-import { GuildConfigurationViewProps } from '../../../../interfaces/view';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
-    const vote = configuration.vote;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(vote.enabled);
+    const voteConfiguration = configuration.vote;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(voteConfiguration.enabled);
 
     const toObject = (): GuildConfigurationComponent => ({
         enabled
     });
 
-    const handleActionSave = () => saveGuildConfiguration(
-        guild.id,
-        {
-            vote: toObject()
-        }
-    );
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { vote: toObject() });
 
-    const handleActionCancel = () => {
+    const handleCancelAction = () => {
         resetEnabled();
     };
 
@@ -50,9 +45,9 @@ export const View = ({ guild, configuration, localization: { translations } }: G
             </Section>
 
             <SaveConfirm
-                open={!deepEqual(vote, toObject(), { strict: true })}
-                onSave={handleActionSave}
-                onCancel={handleActionCancel}
+                open={!deepEqual(voteConfiguration, toObject(), { strict: true })}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
             />
         </PageContent>
     );

@@ -1,11 +1,11 @@
+import { getUser } from '@app/utils';
+import { WithIdParamProps } from '@interfaces/page';
+import { getGuildNotifications } from '@libs/bot';
+import { getGuildById, getMemberById } from '@libs/redis';
+import { getLocalization } from '@localizations/server';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
-import { WithIdParamProps } from '../../../../interfaces/page';
-import { getGuildNotifications } from '../../../../libs/bot';
-import { getGuildById, getMemberById } from '../../../../libs/redis';
-import { getLocalization } from '../../../../localizations/server';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '../../../../utils/discord';
-import { getUser } from '../../../utils';
 import { NotFoundView } from '../view';
 import { View } from './view';
 
