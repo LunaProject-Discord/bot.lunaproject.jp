@@ -10,12 +10,13 @@ import {
 import { LocalizationProps } from '@interfaces/localization';
 import { RedisChannel } from '@interfaces/redis';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
-import { buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
+import { Box, buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
 import React, { ReactNode } from 'react';
 import {
     ButtonItemRoot,
-    ChannelItem,
+    ChannelItem as OriginalChannelItem,
+    ChannelItemProps,
     ItemDisabledProps,
     ItemFormContainer,
     ItemRowContainer,
@@ -27,7 +28,7 @@ export const GridContainer = styled(Section)(({ theme }) => ({
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gridGap: theme.spacing(2),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
         gridTemplateColumns: '1fr'
     }
 }));
@@ -78,6 +79,31 @@ const ItemHeader = ({ label, enabled, setEnabled, disabled }: ItemHeaderProps) =
             </ItemFormContainer>
         </ItemRowContainer>
     </ButtonItemRoot>
+);
+
+const ChannelItem = (props: ChannelItemProps) => (
+    <Box
+        sx={(theme) => ({
+            containerType: 'inline-size',
+            [`@container (max-width: ${(200 + 300 + ((8 * 1.5) * 3)) - .05}px)`]: {
+                [`& > div`]: {
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    justifyContent: 'center',
+                    '& > div:not(.form-container)': {
+                        height: 'auto',
+                        minHeight: 'auto',
+                        pt: 1.5
+                    },
+                    '& > div.form-container, & > div.form-container > div': {
+                        width: '100%'
+                    }
+                }
+            }
+        })}
+    >
+        <OriginalChannelItem {...props} />
+    </Box>
 );
 
 interface Props<T extends GuildConfigurationLoggingComponent> extends ItemDisabledProps, ItemVariableProps<T>, LocalizationProps {
