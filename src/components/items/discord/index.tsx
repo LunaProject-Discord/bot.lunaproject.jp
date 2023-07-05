@@ -169,11 +169,14 @@ export const ListItemIcon = styled(MuiListItemIcon)(({ theme }) => ({
 export const ListSubheader = styled(MuiListSubheader)(({ theme }) => ({
     padding: theme.spacing(1, 1, .5),
     lineHeight: 'unset',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
     backgroundImage: theme.palette.mode === 'dark' ? `linear-gradient(${alpha(
-        '#fff',
+        theme.palette.common.white,
         Number(getOverlayAlpha(8))
     )}, ${alpha(
-        '#fff',
+        theme.palette.common.white,
         Number(getOverlayAlpha(8))
     )})` : 'none',
     [theme.breakpoints.down('sm')]: {

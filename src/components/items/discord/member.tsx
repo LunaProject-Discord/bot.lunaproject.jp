@@ -17,7 +17,7 @@ import {
 import { getMemberAvatar, getUserAvatar } from '@utils/cdn';
 import { filterPredicateMember, getMemberDisplayName, sortMembers } from '@utils/discord';
 import { ellipsis } from 'polished';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import {
     ItemFormContainer,
@@ -68,23 +68,60 @@ export const MemberPopover = (
         ...props
     }: MemberPopoverProps
 ) => {
+    const ref = useRef<FixedSizeList | null>(null);
+
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
     const open = Boolean(anchorEl);
 
     const [search, setSearch] = useState('');
+    const [selectedIndex, setSelectedIndex] = useState(-1);
 
     const members = sortMembers(choices).filter((member) => filterPredicateMember(member, search));
 
     const handlePopupClose = () => {
         setSearch('');
+        setSelectedIndex(-1);
         setAnchorEl(null);
     };
 
     const handleChange = (member: Member) => {
         setValue(member.user.id);
         handlePopupClose();
+    };
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+        setSelectedIndex(-1);
+    };
+
+    const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.nativeEvent.isComposing || members.length < 1) return;
+
+        switch (e.key) {
+            case 'Enter':
+                e.preventDefault();
+                if (selectedIndex > -1)
+                    handleChange(members[selectedIndex]);
+                return;
+            case 'ArrowUp':
+                e.preventDefault();
+                setSelectedIndex((index) => {
+                    const i = index > 0 ? index - 1 : members.length - 1;
+                    ref.current?.scrollToItem(i);
+                    return i;
+                });
+                return;
+            case 'ArrowDown':
+                e.preventDefault();
+                setSelectedIndex((index) => {
+                    const i = index < members.length - 1 ? index + 1 : 0;
+                    ref.current?.scrollToItem(i);
+                    return i;
+                });
+                return;
+        }
     };
 
     useEffect(() => {
@@ -106,10 +143,12 @@ export const MemberPopover = (
             <SearchBox
                 id="popover-search"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handleInputChange}
+                onKeyDown={handleInputKeyDown}
                 placeholder="メンバーを検索..."
             />
             <FixedSizeList
+                ref={ref}
                 width="100%"
                 height={300}
                 innerElementType={List}
@@ -124,6 +163,7 @@ export const MemberPopover = (
                             member={member}
                             selected={value === member.user.id}
                             onClick={() => handleChange(member)}
+                            sx={{ bgcolor: selectedIndex === index ? 'action.selected' : 'transparent' }}
                             style={{
                                 ...style,
                                 top: parseFloat(style.top as string) + 8

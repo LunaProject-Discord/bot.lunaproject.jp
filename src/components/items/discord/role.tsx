@@ -16,7 +16,7 @@ import {
 import { filterPredicateRole, getRoleColor, sortRoles } from '@utils/discord';
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FixedSizeList } from 'react-window';
 import {
     ItemFormContainer,
@@ -37,8 +37,8 @@ export interface RoleListItemProps extends Omit<ListItemButtonProps, 'role'> {
     role: Role;
 }
 
-export const RoleListItem = ({ role, ...props }: RoleListItemProps) => (
-    <ListItemButton key={role.id} sx={{ px: { xs: 2, sm: 1.5 }, gap: 1.5 }} {...props}>
+export const RoleListItem = ({ role, sx, ...props }: RoleListItemProps) => (
+    <ListItemButton key={role.id} sx={{ px: { xs: 2, sm: 1.5 }, gap: 1.5, ...sx }} {...props}>
         <ListItemIcon sx={{ minWidth: 0 }}>
             <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
         </ListItemIcon>
@@ -60,23 +60,60 @@ export const RolePopover = (
         ...props
     }: RolePopoverProps
 ) => {
+    const ref = useRef<FixedSizeList | null>(null);
+
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
     const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
     const open = Boolean(anchorEl);
 
     const [search, setSearch] = useState('');
+    const [selectedIndex, setSelectedIndex] = useState(-1);
 
     const roles = sortRoles(choices).filter((role) => filterPredicateRole(role, search));
 
     const handlePopupClose = () => {
         setSearch('');
+        setSelectedIndex(-1);
         setAnchorEl(null);
     };
 
     const handleChange = (role: Role) => {
         setValue(role.id);
         handlePopupClose();
+    };
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+        setSelectedIndex(-1);
+    };
+
+    const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.nativeEvent.isComposing || roles.length < 1) return;
+
+        switch (e.key) {
+            case 'Enter':
+                e.preventDefault();
+                if (selectedIndex > -1)
+                    handleChange(roles[selectedIndex]);
+                return;
+            case 'ArrowUp':
+                e.preventDefault();
+                setSelectedIndex((index) => {
+                    const i = index > 0 ? index - 1 : roles.length - 1;
+                    ref.current?.scrollToItem(i);
+                    return i;
+                });
+                return;
+            case 'ArrowDown':
+                e.preventDefault();
+                setSelectedIndex((index) => {
+                    const i = index < roles.length - 1 ? index + 1 : 0;
+                    ref.current?.scrollToItem(i);
+                    return i;
+                });
+                return;
+        }
     };
 
     useEffect(() => {
@@ -98,10 +135,12 @@ export const RolePopover = (
             <SearchBox
                 id="popover-search"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handleInputChange}
+                onKeyDown={handleInputKeyDown}
                 placeholder="役職を検索..."
             />
             <FixedSizeList
+                ref={ref}
                 width="100%"
                 height={300}
                 innerElementType={List}
@@ -116,6 +155,7 @@ export const RolePopover = (
                             role={role}
                             selected={value === role.id}
                             onClick={() => handleChange(role)}
+                            sx={{ bgcolor: selectedIndex === index ? 'action.selected' : 'transparent' }}
                             style={{
                                 ...style,
                                 top: parseFloat(style.top as string) + 8

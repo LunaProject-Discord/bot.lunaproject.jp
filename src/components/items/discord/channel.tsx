@@ -9,7 +9,7 @@ import { ListItemButtonProps, ListItemText, popoverClasses, Theme, Typography, u
 import { filterPredicateChannel, sortChannels } from '@utils/discord';
 import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { ChannelIcon } from '../../icons';
 import {
     ItemFormContainer,
@@ -31,12 +31,52 @@ export interface ChannelListItemProps extends ListItemButtonProps {
     channel: Channel;
 }
 
-export const ChannelListItem = ({ channel, ...props }: ChannelListItemProps) => (
-    <ListItemButton key={channel.id} sx={{ width: '100% !important', left: '0 !important' }} {...props}>
+export const ChannelListItem = ({ channel, sx, ...props }: ChannelListItemProps) => (
+    <ListItemButton key={channel.id} sx={{ width: '100% !important', left: '0 !important', ...sx }} {...props}>
         <ListItemIcon><ChannelIcon channel={channel} /></ListItemIcon>
         <ListItemText primary={channel.name} primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }} />
     </ListItemButton>
 );
+
+export interface ChannelListProps {
+    category: Channel | undefined;
+    channels: Channel[];
+    selected: string;
+    selectedIndex: number;
+    onChange: (channel: Channel) => void;
+}
+
+export const ChannelList = ({ category, channels, selected, selectedIndex, onChange }: ChannelListProps) => {
+    const ref = useRef<HTMLLIElement | null>(null);
+
+    const [height, setHeight] = useState<number | undefined>(0);
+
+    useEffect(() => {
+        setHeight(ref.current?.clientHeight);
+    }, [ref.current?.clientHeight]);
+
+    return (
+        <li key={category?.id ?? 'no_parent'}>
+            <ul>
+                {category && <ListSubheader ref={ref}>{category.name}</ListSubheader>}
+                {channels.filter((channel) => channel.parent_id == category?.id).map((channel) => (
+                    <ChannelListItem
+                        key={channel.id}
+                        id={channel.id}
+                        channel={channel}
+                        selected={selected === channel.id}
+                        onClick={() => onChange(channel)}
+                        sx={{
+                            scrollMarginTop: height,
+                            bgcolor: selectedIndex === channels.indexOf(channel) ? 'action.selected' : 'transparent'
+                        }}
+                    />
+                ))}
+            </ul>
+        </li>
+    );
+};
+
 
 export type ChannelProps = SnowflakeItemProps<Channel>;
 
@@ -57,21 +97,59 @@ export const ChannelPopover = (
     const open = Boolean(anchorEl);
 
     const [search, setSearch] = useState('');
+    const [selectedIndex, setSelectedIndex] = useState(-1);
 
     const guildChannels = sortChannels(choices);
     const categories = guildChannels.filter((channel) => channel.type === ChannelType.GuildCategory);
     const textChannels = guildChannels.filter((channel) => channel.type === ChannelType.GuildText || channel.type === ChannelType.GuildAnnouncement || channel.type === ChannelType.GuildForum);
     const voiceChannels = guildChannels.filter((channel) => channel.type === ChannelType.GuildVoice || channel.type === ChannelType.GuildStageVoice);
-    const channels = [...textChannels, ...voiceChannels];
+    const channels = [...textChannels, ...voiceChannels].filter((channel) => filterPredicateChannel(channel, search));
+
+    const filteredCategories = [undefined, ...categories].filter((category) => search.length < 1 || channels.some((channel) => channel.parent_id == category?.id));
+    const filteredChannels = filteredCategories.flatMap((category) => channels.filter((channel) => channel.parent_id == category?.id));
 
     const handlePopupClose = () => {
         setSearch('');
+        setSelectedIndex(-1);
         setAnchorEl(null);
     };
 
     const handleChange = (channel: Channel) => {
         setValue(channel.id);
         handlePopupClose();
+    };
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+        setSelectedIndex(-1);
+    };
+
+    const handleInputKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.nativeEvent.isComposing || channels.length < 1) return;
+
+        switch (e.key) {
+            case 'Enter':
+                e.preventDefault();
+                if (selectedIndex > -1)
+                    handleChange(filteredChannels[selectedIndex]);
+                return;
+            case 'ArrowUp':
+                e.preventDefault();
+                setSelectedIndex((index) => {
+                    const i = index > 0 ? index - 1 : filteredChannels.length - 1;
+                    document.getElementById(filteredChannels[i].id)?.scrollIntoView({ block: 'nearest' });
+                    return i;
+                });
+                return;
+            case 'ArrowDown':
+                e.preventDefault();
+                setSelectedIndex((index) => {
+                    const i = index < filteredChannels.length - 1 ? index + 1 : 0;
+                    document.getElementById(filteredChannels[i].id)?.scrollIntoView({ block: 'nearest' });
+                    return i;
+                });
+                return;
+        }
     };
 
     useEffect(() => {
@@ -93,24 +171,20 @@ export const ChannelPopover = (
             <SearchBox
                 id="popover-search"
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={handleInputChange}
+                onKeyDown={handleInputKeyDown}
                 placeholder="チャンネルを検索..."
             />
             <ListRoot subheader={<li style={{ height: 8 }} />} sx={{ pt: 0 }}>
-                {[undefined, ...categories].filter((category) => search.length < 1 || channels.some((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search))).map((category) => (
-                    <li key={category?.id ?? 'no_parent'}>
-                        <ul>
-                            {category && <ListSubheader>{category.name}</ListSubheader>}
-                            {channels.filter((channel) => channel.parent_id == category?.id && filterPredicateChannel(channel, search)).map((channel) => (
-                                <ChannelListItem
-                                    key={channel.id}
-                                    channel={channel}
-                                    selected={value === channel.id}
-                                    onClick={() => handleChange(channel)}
-                                />
-                            ))}
-                        </ul>
-                    </li>
+                {filteredCategories.map((category) => (
+                    <ChannelList
+                        key={category?.id ?? 'no_parent'}
+                        category={category}
+                        channels={filteredChannels}
+                        selected={value}
+                        selectedIndex={selectedIndex}
+                        onChange={handleChange}
+                    />
                 ))}
             </ListRoot>
         </Popover>
