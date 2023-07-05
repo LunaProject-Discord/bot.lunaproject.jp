@@ -18,12 +18,39 @@ export const someCheckMemberPermissions = (guild: RedisGuild | DataGuild, member
 export const everyCheckMemberPermissions = (guild: RedisGuild | DataGuild, member: RedisMember, ...permissions: bigint[]) => guild.owner === member.id || permissions.every((permission) => checkPermission(member.permissions, permission));
 
 
-export const getUserDisplayName = (user: RedisUser | APIUser | OAuthUser) => 'username' in user ? (user.global_name ?? user.username) : (user.display_name ?? user.name);
+export const getUserDisplayName = (user: OAuthUser | APIUser | RedisUser) => 'username' in user ? (user.global_name ?? user.username) : (user.display_name ?? user.name);
 
 export const getMemberDisplayName = (member: GuildMember | RedisMember) => member.nick ?? getUserDisplayName(member.user);
 
+export const getUserDisplay = (user: OAuthUser | APIUser | RedisUser): [string, string | undefined] => {
+    const name = 'username' in user ? user.username : user.name;
+    const displayName = ('username' in user ? user.global_name : user.display_name) ?? undefined;
+    const isTransferCompleted = Number(user.discriminator) === 0;
 
-export const getRoleColor = (role: RedisRole | APIRole) => {
+    if (isTransferCompleted) {
+        return [displayName ?? `@${name}`, displayName ? `@${name}` : undefined];
+    } else {
+        const tag = `${name}#${user.discriminator}`;
+        return [displayName && displayName !== name ? displayName : tag, displayName ? tag : undefined];
+    }
+};
+
+export const getMemberDisplay = (member: GuildMember | RedisMember): [string, string | undefined] => {
+    const name = 'username' in member.user ? member.user.username : member.user.name;
+    const isTransferCompleted = Number(member.user.discriminator) === 0;
+
+    const nick = member.nick ?? undefined;
+
+    if (nick) {
+        const tag = `${name}#${member.user.discriminator}`;
+        return [nick, isTransferCompleted ? `@${name}` : tag];
+    } else {
+        return getUserDisplay(member.user);
+    }
+};
+
+
+export const getRoleColor = (role: APIRole | RedisRole) => {
     const hexColor = role.color.toString(16).padStart(6, '0');
     return `#${hexColor !== '1fffffff' ? hexColor : '99aab5'}`;
 };
