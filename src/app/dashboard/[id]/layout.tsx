@@ -84,7 +84,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
 
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);
 
-    const sortedGuilds = sortGuilds(guilds.filter((guild) => someCheckPermissions(guild))) as OAuthGuild[];
+    const sortedGuilds = sortGuilds(guilds.filter((guild) => someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))) as OAuthGuild[];
 
     return (
         <Fragment>
