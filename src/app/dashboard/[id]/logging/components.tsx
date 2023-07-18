@@ -36,6 +36,7 @@ export const GridContainer = styled(Section)(({ theme }) => ({
 const ItemContainer = styled(Paper)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
+    backgroundImage: 'none',
     border: `solid 1px ${theme.palette.divider}`,
     boxShadow: 'none'
 }));
