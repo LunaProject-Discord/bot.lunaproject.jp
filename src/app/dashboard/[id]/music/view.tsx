@@ -4,6 +4,7 @@ import { PageContent, PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationMusic } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
+import { NumberFieldItem } from '@lunaproject-discord/web-core';
 import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
@@ -16,6 +17,9 @@ export const View = ({ guild, configuration, localization: { translations } }: G
     const musicConfiguration = configuration.music;
     const [enabled, setEnabled, resetEnabled] = useResettableState(musicConfiguration.enabled);
     const [webPanel, setWebPanel, resetWebPanel] = useResettableState(musicConfiguration.web_panel);
+    const [defaultVolume, setDefaultVolume, resetDefaultVolume] = useResettableState(musicConfiguration.default_volume);
+    const [timeoutSeconds, setTimeoutSeconds, resetTimeoutSeconds] = useResettableState(musicConfiguration.timeout_seconds);
+    const [nextMediaNotification, setNextMediaNotification, resetNextMediaNotification] = useResettableState(musicConfiguration.next_media_notification);
     const [youtube, setYoutube, resetYoutube] = useResettableState(musicConfiguration.sources.youtube);
     const [niconico, setNiconico, resetNiconico] = useResettableState(musicConfiguration.sources.niconico);
     const [soundcloud, setSoundcloud, resetSoundcloud] = useResettableState(musicConfiguration.sources.soundcloud);
@@ -26,6 +30,9 @@ export const View = ({ guild, configuration, localization: { translations } }: G
     const toObject = (): GuildConfigurationMusic => ({
         enabled,
         web_panel: webPanel,
+        default_volume: defaultVolume,
+        timeout_seconds: timeoutSeconds,
+        next_media_notification: nextMediaNotification,
         sources: {
             youtube,
             niconico,
@@ -41,6 +48,9 @@ export const View = ({ guild, configuration, localization: { translations } }: G
     const handleCancelAction = () => {
         resetEnabled();
         resetWebPanel();
+        resetDefaultVolume();
+        resetTimeoutSeconds();
+        resetNextMediaNotification();
         resetYoutube();
         resetNiconico();
         resetSoundcloud();
@@ -68,6 +78,29 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                         primary={translations.music_web_panel}
                         checked={webPanel}
                         setChecked={setWebPanel}
+                        disabled={!enabled}
+                    />
+                    <NumberFieldItem
+                        primary={translations.music_default_volume}
+                        value={defaultVolume}
+                        setValue={setDefaultVolume}
+                        min={0}
+                        max={100}
+                        disabled={!enabled}
+                    />
+                    <NumberFieldItem
+                        primary={translations.music_timeout_seconds}
+                        value={timeoutSeconds}
+                        setValue={setTimeoutSeconds}
+                        min={0}
+                        max={300}
+                        disabled={!enabled}
+                    />
+                    <SwitchItem
+                        primary={translations.music_next_media_notification}
+                        secondary={translations.music_next_media_notification_description}
+                        checked={nextMediaNotification}
+                        setChecked={setNextMediaNotification}
                         disabled={!enabled}
                     />
                 </SectionContent>

@@ -217,6 +217,9 @@ export interface GuildConfigurationQuote extends GuildConfigurationComponent {
 
 export interface GuildConfigurationMusic extends GuildConfigurationComponent {
     web_panel: boolean;
+    default_volume: number;
+    timeout_seconds: number;
+    next_media_notification: boolean;
     sources: GuildConfigurationMusicSources;
 }
 
