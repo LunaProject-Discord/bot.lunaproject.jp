@@ -12,7 +12,7 @@ import { Section } from '@lunaproject-discord/web-core/dist/components/Section';
 import { ItemIcon, ItemRowContainer, ItemTextBlock } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
 import { borderAndBoxShadow } from '@lunaproject-discord/web-core/dist/utils/theme';
-import { ClearAllOutlined, CloudOffOutlined, SearchOutlined, TableRowsOutlined } from '@mui/icons-material';
+import { CloudOffOutlined, DeleteOutlined, SearchOutlined, TableRowsOutlined } from '@mui/icons-material';
 import {
     Avatar,
     Box,
@@ -141,7 +141,7 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                         fullWidth
                         variant="text"
                         color="error"
-                        startIcon={<ClearAllOutlined />}
+                        startIcon={<DeleteOutlined />}
                     >
                         {translations.reset}
                     </Button>
