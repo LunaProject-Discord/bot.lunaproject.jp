@@ -3,6 +3,7 @@
 import { RedisMember, RedisUser } from '@interfaces/redis';
 import { GuildMember, OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { Box } from '@mui/material';
+import { getUserDisplayName } from '@utils/discord';
 import { APIUser } from 'discord-api-types/v10';
 import { Fragment, ReactNode } from 'react';
 
@@ -34,7 +35,7 @@ export const getUserDisplay = (user: OAuthUser | APIUser | RedisUser): [ReactNod
     const secondaryFallback = getFallbackUserDisplay(user, 'secondary');
 
     if (isTransferCompleted) {
-        return [displayName ?? primaryFallback, displayName ? secondaryFallback : undefined];
+        return [getUserDisplayName(user), secondaryFallback];
     } else {
         const isVisibleDisplayName = displayName !== undefined && displayName !== name;
         return [isVisibleDisplayName ? displayName : primaryFallback, isVisibleDisplayName ? secondaryFallback : undefined];

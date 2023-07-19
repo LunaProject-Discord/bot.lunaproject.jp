@@ -215,7 +215,11 @@ export const UserPopover = ({ open, anchorEl, onClose, user, localization }: Use
                             <Typography variant="h6" sx={{ fontSize: '1.2rem', lineHeight: 1.2 }}>
                                 {user.global_name ?? user.username}
                             </Typography>
-                            <Typography variant="body2" sx={{ fontFamily: 'Renner', lineHeight: 1.1 }}>
+                            <Typography
+                                variant="body2"
+                                color="text.secondary"
+                                sx={{ fontFamily: 'Renner', lineHeight: 1.1 }}
+                            >
                                 {user.global_name ? `@${user.username}` : `#${user.discriminator}`}
                             </Typography>
                         </Box>

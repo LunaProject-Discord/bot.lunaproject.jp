@@ -28,7 +28,7 @@ export const getUserDisplay = (user: OAuthUser | APIUser | RedisUser): [string, 
     const isTransferCompleted = Number(user.discriminator) === 0;
 
     if (isTransferCompleted) {
-        return [displayName ?? `@${name}`, displayName ? `@${name}` : undefined];
+        return [getUserDisplayName(user), `@${name}`];
     } else {
         const tag = `${name}#${user.discriminator}`;
         return [displayName && displayName !== name ? displayName : tag, displayName ? tag : undefined];
