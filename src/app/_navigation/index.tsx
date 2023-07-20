@@ -18,8 +18,11 @@ export interface NavigationRootProps extends NavigationProps {
     closePopover: () => void;
 }
 
+export type NavigationItemPredicate = (pathname: string, href: string) => boolean;
+
 export interface NavigationItemProps {
     href: string;
+    predicate?: NavigationItemPredicate;
     icon?: ReactNode;
 }
 

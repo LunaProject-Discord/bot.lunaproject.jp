@@ -1,5 +1,6 @@
 'use client';
 
+import { defaultPredicate } from '@app/_navigation/utils';
 import {
     AnalyticsOutlined,
     HomeOutlined,
@@ -44,11 +45,11 @@ interface DesktopNavigationItemProps extends NavigationItemProps {
     label?: ReactNode;
 }
 
-const DesktopNavigationItem = ({ href, icon, label }: DesktopNavigationItemProps) => {
+const DesktopNavigationItem = ({ href, predicate, icon, label }: DesktopNavigationItemProps) => {
     const pathname = usePathname();
     const loweredPathname = pathname.toLowerCase();
     const loweredHref = href.toLowerCase();
-    const isMatch = href === '/' ? loweredPathname === loweredHref : loweredPathname.startsWith(loweredHref);
+    const isMatch = (predicate ? predicate : defaultPredicate)(loweredPathname, loweredHref);
 
     return (
         <Tooltip title={label} placement="right">
@@ -92,6 +93,7 @@ export const DesktopNavigation = ({ openPopover, user, localization: { translati
             />
             <DesktopNavigationItem
                 href="/dashboard"
+                predicate={(pathname, href) => pathname.startsWith(href) && !pathname.startsWith('/dashboard/me')}
                 icon={<SettingsOutlined />}
                 label={translations.guild_settings}
             />

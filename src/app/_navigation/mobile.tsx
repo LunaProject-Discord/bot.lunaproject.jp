@@ -1,5 +1,6 @@
 'use client';
 
+import { defaultPredicate } from '@app/_navigation/utils';
 import { AppBar, Toolbar } from '@components/appbar';
 import { TemporaryDrawer } from '@lunaproject-discord/web-core/dist/components/Drawer';
 import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
@@ -43,13 +44,13 @@ interface MobileNavigationItemProps extends NavigationItemProps {
     setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const MobileNavigationItem = ({ href, icon, primary, secondary, setOpen }: MobileNavigationItemProps) => {
+const MobileNavigationItem = ({ href, predicate, icon, primary, secondary, setOpen }: MobileNavigationItemProps) => {
     const router = useRouter();
 
     const pathname = usePathname();
     const loweredPathname = pathname.toLowerCase();
     const loweredHref = href.toLowerCase();
-    const isMatch = href === '/' ? loweredPathname === loweredHref : loweredPathname.startsWith(loweredHref);
+    const isMatch = (predicate ? predicate : defaultPredicate)(loweredPathname, loweredHref);
 
     const color = isMatch ? 'primary.main' : 'action.active';
 
@@ -187,6 +188,7 @@ export const MobileNavigation = ({ openPopover, closePopover, user, localization
                     />
                     <MobileNavigationItem
                         href="/dashboard"
+                        predicate={(pathname, href) => pathname.startsWith(href) && !pathname.startsWith('/dashboard/me')}
                         icon={<SettingsOutlined />}
                         primary={translations.guild_settings}
                         open={open}
