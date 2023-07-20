@@ -9,6 +9,7 @@ import {
 } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { RedisChannel } from '@interfaces/redis';
+import { sectionItemClasses } from '@lunaproject-discord/web-core';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { Box, buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
@@ -86,17 +87,18 @@ const ChannelItem = (props: ChannelItemProps) => (
     <Box
         sx={(theme) => ({
             containerType: 'inline-size',
+            // アイテムのラベル: 200px, チャンネルのセレクトボックス: 300px, パディングとギャップ: 8 * 1.5 * 3
             [`@container (max-width: ${(200 + 300 + ((8 * 1.5) * 3)) - .05}px)`]: {
-                [`& > div`]: {
+                [`& > .${sectionItemClasses.root}`]: {
                     flexDirection: 'column',
                     alignItems: 'flex-start',
                     justifyContent: 'center',
-                    '& > div:not(.form-container)': {
+                    [`& > :not(.${sectionItemClasses.formContainer})`]: {
                         height: 'auto',
                         minHeight: 'auto',
                         pt: 1.5
                     },
-                    '& > div.form-container, & > div.form-container > div': {
+                    [`& > .${sectionItemClasses.formContainer}, & > .${sectionItemClasses.formContainer} > div`]: {
                         width: '100%'
                     }
                 }

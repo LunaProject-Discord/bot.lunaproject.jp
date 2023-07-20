@@ -4,12 +4,7 @@ import { PageContent, PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationLanguage } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
-import {
-    Section,
-    SectionContent,
-    SectionParagraph,
-    SectionTitle
-} from '@lunaproject-discord/web-core/dist/components/Section';
+import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { ScheduleOutlined, TranslateOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
@@ -35,16 +30,16 @@ export const View = ({ guild, configuration, localization: { translations } }: G
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.time_and_language}</Typography>
-                    <Typography variant="body1">{translations.time_and_language_description}</Typography>
+                    <Typography variant="body1">{translations.guild_time_and_language_description}</Typography>
                 </Box>
             </PageHeader>
             <Section>
                 <SectionTitle>{translations.date_and_time}</SectionTitle>
-                <SectionParagraph>{translations.timezone_description}</SectionParagraph>
                 <SectionContent>
                     <SelectItem<TimeZone>
                         icon={<ScheduleOutlined />}
                         primary={translations.timezone}
+                        secondary={translations.timezone_description}
                         value={timezone}
                         setValue={setTimezone}
                         choices={Object.entries(TimeZones).map(([id, label]): {
@@ -69,11 +64,11 @@ export const View = ({ guild, configuration, localization: { translations } }: G
             </Section>
             <Section>
                 <SectionTitle>{translations.language}</SectionTitle>
-                <SectionParagraph>{translations.language_description}</SectionParagraph>
                 <SectionContent>
                     <SelectItem<GuildConfigurationLanguage>
                         icon={<TranslateOutlined />}
                         primary={translations.language}
+                        secondary={translations.guild_language_description}
                         value={language}
                         setValue={setLanguage}
                         choices={[

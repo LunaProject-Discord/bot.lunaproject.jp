@@ -30,6 +30,20 @@ const ItemContainer = styled(Box)(({ theme }) => ({
     }
 }));
 
+const ItemQueryContainer = styled(Box)(({ theme }) => ({
+    width: '100%',
+    containerType: 'inline-size',
+    [`@container (max-width: ${750 - .05}px)`]: {
+        '& > div': {
+            flexDirection: 'column',
+            gap: theme.spacing(1),
+            '& > div': {
+                width: '100%'
+            }
+        }
+    }
+}));
+
 const ItemGridContainer = styled(Box)(({ theme }) => ({
     width: '100%',
     display: 'flex',
@@ -90,47 +104,49 @@ export const MessageItem = (
                         disabled={disabled}
                     />
                 </ItemRowContainer>
-                <ItemGridContainer>
-                    <Box sx={{ width: { xs: '100%', md: '60%' } }}>
-                        <ThemeProvider
-                            theme={{
-                                ...THEMES[theme.palette.mode],
-                                appearance: {
-                                    color: theme.palette.mode,
-                                    display: 'cozy',
-                                    fontSize: 16
-                                }
+                <ItemQueryContainer>
+                    <ItemGridContainer>
+                        <Box sx={{ width: { xs: '100%', md: '60%' } }}>
+                            <ThemeProvider
+                                theme={{
+                                    ...THEMES[theme.palette.mode],
+                                    appearance: {
+                                        color: theme.palette.mode,
+                                        display: 'cozy',
+                                        fontSize: 16
+                                    }
+                                }}
+                            >
+                                <MessagePreviewContainer sx={{ height: '100%' }}>
+                                    <MessageContainer style={{ height: '100%' }}>
+                                        <MessagePreview message={toMessage(value)} />
+                                    </MessageContainer>
+                                </MessagePreviewContainer>
+                            </ThemeProvider>
+                        </Box>
+                        <Box
+                            sx={{
+                                width: { xs: '100%', md: '40%' },
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                gap: 1
                             }}
                         >
-                            <MessagePreviewContainer sx={{ height: '100%' }}>
-                                <MessageContainer style={{ height: '100%' }}>
-                                    <MessagePreview message={toMessage(value)} />
-                                </MessageContainer>
-                            </MessagePreviewContainer>
-                        </ThemeProvider>
-                    </Box>
-                    <Box
-                        sx={{
-                            width: { xs: '100%', md: '40%' },
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            gap: 1
-                        }}
-                    >
-                        {children && <Typography component="div" variant="body1">{children}</Typography>}
-                        <Button
-                            onClick={() => (setOpen ?? __setOpen)(true)}
-                            disabled={disabled}
-                            disableElevation
-                            variant="contained"
-                            size="large"
-                            startIcon={<EditOutlined />}
-                        >
-                            {translations.edit_message}
-                        </Button>
-                    </Box>
-                </ItemGridContainer>
+                            {children && <Typography component="div" variant="body1">{children}</Typography>}
+                            <Button
+                                onClick={() => (setOpen ?? __setOpen)(true)}
+                                disabled={disabled}
+                                disableElevation
+                                variant="contained"
+                                size="large"
+                                startIcon={<EditOutlined />}
+                            >
+                                {translations.edit_message}
+                            </Button>
+                        </Box>
+                    </ItemGridContainer>
+                </ItemQueryContainer>
             </ItemContainer>
 
             <MessageBuilder

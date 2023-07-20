@@ -254,9 +254,12 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         />
                         <TextFieldItem
                             primary={translations.level_leaderboard_vanity_code}
-                            secondary={<Fragment>
-                                {origin}/leaderboard/{leaderboardVanityCode && leaderboardVanityCode.length > 0 ? leaderboardVanityCode : guild.id}
-                            </Fragment>}
+                            secondary={`${origin}/leaderboard/${leaderboardVanityCode && leaderboardVanityCode.length > 0 ? leaderboardVanityCode : guild.id}`}
+                            secondaryTypographyProps={{
+                                sx: {
+                                    wordBreak: 'break-all'
+                                }
+                            }}
                             value={leaderboardVanityCode}
                             setValue={setLeaderboardVanityCode}
                             disabled={!enabled}
