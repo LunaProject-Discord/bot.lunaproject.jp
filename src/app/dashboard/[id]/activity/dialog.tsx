@@ -5,7 +5,6 @@ import { BrMobile, Key, translatableTypographyStyled } from '@components/text';
 import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
-import { RedisRole } from '@interfaces/redis';
 import { GuildRolesViewProps } from '@interfaces/view';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
@@ -249,7 +248,7 @@ export const ManageRolesDialog = (
     const initialValues = useMemo(() => value.map((role): EditableObject => ({ _id: nanoid(), ...role })), [value]);
     const [roles, setRoles] = useState(initialValues);
 
-    const choiceRoles = (sortRoles(choices) as RedisRole[]).filter((role) => role.position !== 0);
+    const choiceRoles = sortRoles(choices).filter((role) => role.position !== 0);
 
     const toRoles = (roles: EditableObject[]) => roles.map(({ _id, ...role }) => role);
 

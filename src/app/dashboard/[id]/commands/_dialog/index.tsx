@@ -6,7 +6,6 @@ import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@ap
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { Code, Key } from '@components/text';
 import { GuildConfigurationCommand } from '@interfaces/bot';
-import { RedisChannel, RedisMember, RedisRole } from '@interfaces/redis';
 import { GuildViewProps } from '@interfaces/view';
 import { ItemFormContainer, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { CloseOutlined } from '@mui/icons-material';
@@ -32,9 +31,9 @@ const ManageCommandDialog = memo<ManageCommandDialogProps>((
 
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 
-    const choiceChannels = sortChannels(guild.channels) as RedisChannel[];
-    const choiceRoles = (sortRoles(guild.roles) as RedisRole[]).filter((role) => role.position !== 0);
-    const choiceMembers = sortMembers(guild.members) as RedisMember[];
+    const choiceChannels = sortChannels(guild.channels);
+    const choiceRoles = sortRoles(guild.roles).filter((role) => role.position !== 0);
+    const choiceMembers = sortMembers(guild.members);
 
     const [defaultChannels, setDefaultChannels] = useState(value.permissions.channels.default);
     const [defaultRoles, setDefaultRoles] = useState(value.permissions.roles.default);

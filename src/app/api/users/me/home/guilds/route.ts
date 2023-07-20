@@ -2,7 +2,6 @@ import { getGuilds, getUser } from '@app/utils';
 import { FeaturedGuild, GuildFeature } from '@interfaces/bot';
 import { getGuildConfiguration } from '@libs/bot';
 import { getAndRequestUserGuildsById } from '@libs/redis';
-import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@utils/discord';
 import { NextResponse } from 'next/server';
 
@@ -15,7 +14,7 @@ export const GET = async (req: Request) => {
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);
     const mutualGuildIds = mutualGuilds.map((guild) => guild.id);
 
-    const sortedGuilds = sortGuilds(guilds) as OAuthGuild[];
+    const sortedGuilds = sortGuilds(guilds);
     const filteredGuilds = sortedGuilds.filter((guild) => mutualGuildIds.includes(guild.id));
 
     const featuredGuilds: FeaturedGuild[] = [];

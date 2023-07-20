@@ -3,7 +3,6 @@
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { BrMobile, Key } from '@components/text';
 import { GuildConfigurationLevelRewardRole } from '@interfaces/bot';
-import { RedisRole } from '@interfaces/redis';
 import { GuildRolesViewProps } from '@interfaces/view';
 import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
@@ -88,7 +87,7 @@ export const ManageRolesDialog = (
     const initialValues = useMemo(() => value.map((role): EditableObject => ({ _id: nanoid(), ...role })), [value]);
     const [roles, setRoles] = useState(initialValues);
 
-    const choiceRoles = (sortRoles(choices) as RedisRole[]).filter((role) => role.position !== 0);
+    const choiceRoles = sortRoles(choices).filter((role) => role.position !== 0);
 
     const toRoles = (roles: EditableObject[]) => roles.map(({ _id, ...role }) => role);
 
