@@ -19,7 +19,6 @@ import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
 import { HomeOutlined, MenuOutlined, NotificationsOutlined, ScheduleOutlined } from '@mui/icons-material';
 import { Box, IconButton, styled, Typography } from '@mui/material';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import React, { Dispatch, Fragment, MouseEventHandler, SetStateAction, useState } from 'react';
 
 interface HeaderProps extends UserViewProps {
@@ -74,7 +73,7 @@ const Header = ({ onDrawerToggleClick, user, localization }: HeaderProps) => {
     );
 };
 
-const DrawerHeader = styled('li')(({ theme }) => ({
+const DrawerHeader = styled('header')(({ theme }) => ({
     padding: theme.spacing(1),
     display: 'flex',
     alignItems: 'center',
@@ -119,47 +118,47 @@ const Drawer = (
         localization: { translations }
     }: DrawerProps & UserViewProps
 ) => {
-    const router = useRouter();
-
     const handleDrawerClose = () => setOpen(false);
 
     const drawer = (
-        <DrawerContent>
-            <StyledUl container>
-                <DrawerHeader sx={{ p: { md: 1.5 } }}>
-                    <IconButton onClick={handleDrawerClose} sx={{ display: { md: 'none' } }}>
-                        <MenuOutlined />
-                    </IconButton>
-                    <Typography variant="h5">{translations.user_settings}</Typography>
-                </DrawerHeader>
-                <StyledUl sx={{ px: 1 }}>
-                    <DrawerItem
-                        icon={<HomeOutlined />}
-                        label={translations.home}
-                        href="/dashboard/me"
-                        exact
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<NotificationsOutlined />}
-                        label={translations.notifications}
-                        href="/dashboard/me/notifications"
-                        open={open}
-                        setOpen={setOpen}
-                    />
+        <Fragment>
+            <DrawerHeader sx={{ p: { md: 1.5 } }}>
+                <IconButton onClick={handleDrawerClose} sx={{ display: { md: 'none' } }}>
+                    <MenuOutlined />
+                </IconButton>
+                <Typography variant="h5">{translations.user_settings}</Typography>
+            </DrawerHeader>
+            <DrawerContent>
+                <StyledUl container>
+                    <StyledUl sx={{ px: 1 }}>
+                        <DrawerItem
+                            icon={<HomeOutlined />}
+                            label={translations.home}
+                            href="/dashboard/me"
+                            exact
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<NotificationsOutlined />}
+                            label={translations.notifications}
+                            href="/dashboard/me/notifications"
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                    </StyledUl>
+                    <DrawerGroup label={translations.settings_basic}>
+                        <DrawerItem
+                            icon={<ScheduleOutlined />}
+                            label={translations.time_and_language}
+                            href="/dashboard/me/time-and-language"
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                    </DrawerGroup>
                 </StyledUl>
-                <DrawerGroup label={translations.settings_basic}>
-                    <DrawerItem
-                        icon={<ScheduleOutlined />}
-                        label={translations.time_and_language}
-                        href="/dashboard/me/time-and-language"
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                </DrawerGroup>
-            </StyledUl>
-        </DrawerContent>
+            </DrawerContent>
+        </Fragment>
     );
 
     return (

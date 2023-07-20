@@ -104,7 +104,7 @@ const Header = ({ onDrawerToggleClick, user, localization }: HeaderProps) => {
     );
 };
 
-const DrawerHeader = styled('li')(({ theme }) => ({
+const DrawerHeader = styled('header')(({ theme }) => ({
     padding: theme.spacing(1),
     display: 'flex',
     alignItems: 'center',
@@ -163,145 +163,147 @@ const Drawer = (
     const handleDrawerClose = () => setOpen(false);
 
     const drawer = (
-        <DrawerContent>
-            <StyledUl container>
-                <DrawerHeader sx={{ p: { md: 1.5 } }}>
-                    <IconButton onClick={handleDrawerClose} sx={{ display: { md: 'none' } }}>
-                        <MenuOutlined />
-                    </IconButton>
-                    <Typography variant="h5">{translations.guild_settings}</Typography>
-                </DrawerHeader>
-                <HeaderButtonContainer>
-                    <GuildSelect
-                        value={guild.id}
-                        setValue={(value) => router.push(`/dashboard/${value}`)}
-                        guilds={guilds}
-                        mutualGuilds={mutualGuilds}
-                    />
-                </HeaderButtonContainer>
-                <StyledUl sx={{ px: 1 }}>
-                    <DrawerItem
-                        icon={<HomeOutlined />}
-                        label={translations.home}
-                        href={`/dashboard/${guild.id}`}
-                        exact
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<NotificationsOutlined />}
-                        label={translations.notifications}
-                        href={`/dashboard/${guild.id}/notifications`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
+        <Fragment>
+            <DrawerHeader sx={{ p: { md: 1.5 } }}>
+                <IconButton onClick={handleDrawerClose} sx={{ display: { md: 'none' } }}>
+                    <MenuOutlined />
+                </IconButton>
+                <Typography variant="h5">{translations.guild_settings}</Typography>
+            </DrawerHeader>
+            <DrawerContent>
+                <StyledUl container>
+                    <HeaderButtonContainer>
+                        <GuildSelect
+                            value={guild.id}
+                            setValue={(value) => router.push(`/dashboard/${value}`)}
+                            guilds={guilds}
+                            mutualGuilds={mutualGuilds}
+                        />
+                    </HeaderButtonContainer>
+                    <StyledUl sx={{ px: 1 }}>
+                        <DrawerItem
+                            icon={<HomeOutlined />}
+                            label={translations.home}
+                            href={`/dashboard/${guild.id}`}
+                            exact
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<NotificationsOutlined />}
+                            label={translations.notifications}
+                            href={`/dashboard/${guild.id}/notifications`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                    </StyledUl>
+                    <DrawerGroup label={translations.settings_basic}>
+                        <DrawerItem
+                            icon={<DriveFileRenameOutlineOutlined />}
+                            label={translations.prefix_and_nickname}
+                            href={`/dashboard/${guild.id}/prefix-and-nickname`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<ScheduleOutlined />}
+                            label={translations.time_and_language}
+                            href={`/dashboard/${guild.id}/time-and-language`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<CommandBoxIcon />}
+                            label={translations.commands}
+                            href={`/dashboard/${guild.id}/commands`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                    </DrawerGroup>
+                    <DrawerGroup label={translations.settings_guild_management}>
+                        <DrawerItem
+                            icon={<PersonAddOutlined />}
+                            label={translations.welcome_message}
+                            href={`/dashboard/${guild.id}/welcome`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<PersonRemoveOutlined />}
+                            label={translations.goodbye_message}
+                            href={`/dashboard/${guild.id}/goodbye`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<DirectionsRunOutlined />}
+                            label={translations.activity}
+                            href={`/dashboard/${guild.id}/activity`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        {flags.tester && <DrawerItem
+                            icon={<SellOutlined />}
+                            label={translations.role_panels}
+                            href={`/dashboard/${guild.id}/role-panels`}
+                            open={open}
+                            setOpen={setOpen}
+                        />}
+                    </DrawerGroup>
+                    <DrawerGroup label={translations.settings_features_and_options}>
+                        <DrawerItem
+                            icon={<EmojiEventsOutlined />}
+                            label={translations.level}
+                            href={`/dashboard/${guild.id}/level`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<TranslateOutlined />}
+                            label={translations.translate}
+                            href={`/dashboard/${guild.id}/translate`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<PollOutlined />}
+                            label={translations.vote}
+                            href={`/dashboard/${guild.id}/vote`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<FormatQuoteOutlined />}
+                            label={translations.quote}
+                            href={`/dashboard/${guild.id}/quote`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
+                            icon={<MusicNoteOutlined />}
+                            label={translations.music}
+                            href={`/dashboard/${guild.id}/music`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        {flags.tester && <DrawerItem
+                            icon={<RecordVoiceOverOutlined />}
+                            label={translations.text_to_speech}
+                            href={`/dashboard/${guild.id}/text-to-speech`}
+                            open={open}
+                            setOpen={setOpen}
+                        />}
+                        <DrawerItem
+                            icon={<TextSnippetOutlined />}
+                            label={translations.logging}
+                            href={`/dashboard/${guild.id}/logging`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                    </DrawerGroup>
                 </StyledUl>
-                <DrawerGroup label={translations.settings_basic}>
-                    <DrawerItem
-                        icon={<DriveFileRenameOutlineOutlined />}
-                        label={translations.prefix_and_nickname}
-                        href={`/dashboard/${guild.id}/prefix-and-nickname`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<ScheduleOutlined />}
-                        label={translations.time_and_language}
-                        href={`/dashboard/${guild.id}/time-and-language`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<CommandBoxIcon />}
-                        label={translations.commands}
-                        href={`/dashboard/${guild.id}/commands`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                </DrawerGroup>
-                <DrawerGroup label={translations.settings_guild_management}>
-                    <DrawerItem
-                        icon={<PersonAddOutlined />}
-                        label={translations.welcome_message}
-                        href={`/dashboard/${guild.id}/welcome`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<PersonRemoveOutlined />}
-                        label={translations.goodbye_message}
-                        href={`/dashboard/${guild.id}/goodbye`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<DirectionsRunOutlined />}
-                        label={translations.activity}
-                        href={`/dashboard/${guild.id}/activity`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    {flags.tester && <DrawerItem
-                        icon={<SellOutlined />}
-                        label={translations.role_panels}
-                        href={`/dashboard/${guild.id}/role-panels`}
-                        open={open}
-                        setOpen={setOpen}
-                    />}
-                </DrawerGroup>
-                <DrawerGroup label={translations.settings_features_and_options}>
-                    <DrawerItem
-                        icon={<EmojiEventsOutlined />}
-                        label={translations.level}
-                        href={`/dashboard/${guild.id}/level`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<TranslateOutlined />}
-                        label={translations.translate}
-                        href={`/dashboard/${guild.id}/translate`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<PollOutlined />}
-                        label={translations.vote}
-                        href={`/dashboard/${guild.id}/vote`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<FormatQuoteOutlined />}
-                        label={translations.quote}
-                        href={`/dashboard/${guild.id}/quote`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    <DrawerItem
-                        icon={<MusicNoteOutlined />}
-                        label={translations.music}
-                        href={`/dashboard/${guild.id}/music`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    {flags.tester && <DrawerItem
-                        icon={<RecordVoiceOverOutlined />}
-                        label={translations.text_to_speech}
-                        href={`/dashboard/${guild.id}/text-to-speech`}
-                        open={open}
-                        setOpen={setOpen}
-                    />}
-                    <DrawerItem
-                        icon={<TextSnippetOutlined />}
-                        label={translations.logging}
-                        href={`/dashboard/${guild.id}/logging`}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                </DrawerGroup>
-            </StyledUl>
-        </DrawerContent>
+            </DrawerContent>
+        </Fragment>
     );
 
     return (
