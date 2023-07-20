@@ -5,6 +5,7 @@ import { MobileNavigationAppBarMenu } from '@app/_navigation/mobile';
 import { UserPopover } from '@app/_popovers/user';
 import { AppBar, Toolbar } from '@components/appbar';
 import { CommandBoxIcon } from '@components/icons';
+import { GuildFlags } from '@interfaces/bot';
 import { DataGuild, RedisGuild } from '@interfaces/redis';
 import { UserViewProps } from '@interfaces/view';
 import {
@@ -45,6 +46,7 @@ import { GuildSelect } from './components';
 
 interface Props extends UserViewProps {
     guild: RedisGuild | DataGuild;
+    flags: GuildFlags;
 
     guilds: OAuthGuild[];
     mutualGuilds: string[];
@@ -150,6 +152,7 @@ const Drawer = (
         open,
         setOpen,
         guild,
+        flags,
         guilds,
         mutualGuilds,
         localization: { translations }
@@ -238,13 +241,13 @@ const Drawer = (
                         open={open}
                         setOpen={setOpen}
                     />
-                    <DrawerItem
+                    {flags.tester && <DrawerItem
                         icon={<SellOutlined />}
                         label={translations.role_panels}
                         href={`/dashboard/${guild.id}/role-panels`}
                         open={open}
                         setOpen={setOpen}
-                    />
+                    />}
                 </DrawerGroup>
                 <DrawerGroup label={translations.settings_features_and_options}>
                     <DrawerItem
@@ -282,13 +285,13 @@ const Drawer = (
                         open={open}
                         setOpen={setOpen}
                     />
-                    <DrawerItem
+                    {flags.tester && <DrawerItem
                         icon={<RecordVoiceOverOutlined />}
                         label={translations.text_to_speech}
                         href={`/dashboard/${guild.id}/text-to-speech`}
                         open={open}
                         setOpen={setOpen}
-                    />
+                    />}
                     <DrawerItem
                         icon={<TextSnippetOutlined />}
                         label={translations.logging}
@@ -318,7 +321,7 @@ const Drawer = (
     );
 };
 
-export const Navigation = ({ guild, user, guilds, mutualGuilds, localization }: Props) => {
+export const Navigation = ({ guild, flags, user, guilds, mutualGuilds, localization }: Props) => {
     const [open, setOpen] = useState(false);
 
     const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
@@ -328,6 +331,7 @@ export const Navigation = ({ guild, user, guilds, mutualGuilds, localization }: 
             <Header
                 onDrawerToggleClick={handleDrawerToggle}
                 guild={guild}
+                flags={flags}
                 user={user}
                 localization={localization}
             />
@@ -335,6 +339,7 @@ export const Navigation = ({ guild, user, guilds, mutualGuilds, localization }: 
                 open={open}
                 setOpen={setOpen}
                 guild={guild}
+                flags={flags}
                 user={user}
                 guilds={guilds}
                 mutualGuilds={mutualGuilds}

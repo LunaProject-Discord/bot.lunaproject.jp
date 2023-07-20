@@ -1,7 +1,7 @@
 import { getGuilds, getUser } from '@app/utils';
 import { UnauthorizedView } from '@app/view';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration } from '@libs/bot';
+import { getGuildConfiguration, getGuildFlags } from '@libs/bot';
 import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
 import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
@@ -63,19 +63,21 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const guildsData = getGuilds();
 
     const guildData = getGuildById(id);
+    const guildFlagsData = getGuildFlags(id);
     const guildConfigurationData = getGuildConfiguration(id);
 
-    const [user, guilds, guild, guildConfiguration] = await Promise.all([
+    const [user, guilds, guild, guildFlags, guildConfiguration] = await Promise.all([
         userData,
         guildsData,
         guildData,
+        guildFlagsData,
         guildConfigurationData
     ]);
 
     if (!user)
         return (<UnauthorizedView localization={localization} />);
 
-    if (!guild || !guildConfiguration)
+    if (!guild || !guildFlags || !guildConfiguration)
         return (<NotFoundView />);
 
     const member = await getMemberById(user.id, guild.id);
@@ -90,6 +92,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
         <Fragment>
             <Navigation
                 guild={guild}
+                flags={guildFlags}
                 user={user}
                 guilds={sortedGuilds}
                 mutualGuilds={mutualGuilds.map((mutualGuild) => mutualGuild.id)}
