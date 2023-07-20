@@ -98,11 +98,11 @@ export type TranslationKeys =
     | 'nickname_hint'
 
     | 'time_and_language'
-    | 'time_and_language_description'
+    | 'guild_time_and_language_description'
     | 'date_and_time'
     | 'timezone'
     | 'timezone_description'
-    | 'language_description'
+    | 'guild_language_description'
 
     | 'commands'
     | 'commands_description'
@@ -266,6 +266,8 @@ export type TranslationKeys =
 
 
     | 'user_settings'
+    | 'user_time_and_language_description'
+    | 'user_language_description'
 
 
     | 'send_message_channel'

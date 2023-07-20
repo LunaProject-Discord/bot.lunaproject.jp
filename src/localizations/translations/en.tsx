@@ -110,11 +110,11 @@ export const translationsEn: Translations = {
     </Fragment>,
 
     time_and_language: 'Time & Language',
-    time_and_language_description: 'You can set the date & time, language used for some functions.',
+    guild_time_and_language_description: 'You can set the date & time, language used for some functions.',
     date_and_time: 'Date & Time',
     timezone: 'Time Zone',
     timezone_description: 'If you set the time zone to a geographic area you speak frequently, the date and time will be displayed for that area.',
-    language_description: 'Server-specific functions, such as the log function, will send messages in the language set here.',
+    guild_language_description: 'Server-specific functions, such as the log function, will send messages in the language set here.',
 
     commands: 'Commands',
     commands_description: 'You can override command permissions and other settings.',
@@ -322,6 +322,8 @@ export const translationsEn: Translations = {
 
 
     user_settings: 'User Settings',
+    user_time_and_language_description: 'You can set the date, time, and language used in the functions performed by the user.',
+    user_language_description: 'Responses to commands you execute will be in the language you set here.',
 
 
     send_message_channel: 'Channel to send message',

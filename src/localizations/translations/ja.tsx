@@ -109,11 +109,11 @@ export const translationsJa: Translations = {
     </Fragment>,
 
     time_and_language: '時刻と言語',
-    time_and_language_description: '一部の機能で使用される日時や言語の設定ができます。',
+    guild_time_and_language_description: '一部の機能で使用される日時や言語の設定ができます。',
     date_and_time: '日付と時刻',
     timezone: 'タイムゾーン',
     timezone_description: 'タイムゾーンをよく話す地域圏に設定すると、その地域に合わせた日時が表示されます。',
-    language_description: 'ログ機能などのサーバー専用の機能では、ここで設定した言語でメッセージが送信されます。',
+    guild_language_description: 'ログ機能などのサーバー専用の機能では、ここで設定した言語でメッセージが送信されます。',
 
     commands: 'コマンド',
     commands_description: 'コマンドの権限などの設定を上書きすることができます。',
@@ -322,6 +322,8 @@ export const translationsJa: Translations = {
 
 
     user_settings: 'ユーザー設定',
+    user_time_and_language_description: 'ユーザーが実行した機能で使用される日時や言語の設定ができます。',
+    user_language_description: 'あなたが実行したコマンドの応答は、ここで設定した言語で行われます。',
 
 
     send_message_channel: 'メッセージを送信するチャンネル',

@@ -1,10 +1,14 @@
 import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import { GuildConfiguration } from './bot';
+import { GuildConfiguration, UserConfiguration } from './bot';
 import { LocalizationProps } from './localization';
 import { DataGuild, RedisChannel, RedisMember, RedisRole } from './redis';
 
 export interface UserViewProps extends LocalizationProps {
     user: OAuthUser;
+}
+
+export interface UserConfigurationViewProps extends UserViewProps {
+    configuration: UserConfiguration;
 }
 
 export interface GuildViewProps extends LocalizationProps {

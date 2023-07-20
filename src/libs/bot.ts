@@ -4,6 +4,8 @@ import {
     GuildLevel,
     GuildNotification,
     PartialUser,
+    UserConfiguration,
+    UserConfigurationLanguage,
     UserNotification
 } from '@interfaces/bot';
 import { Cache, OAuthGuild } from '@lunaproject-discord/web-discord';
@@ -79,7 +81,7 @@ export const getUserNotifications = async (id: string): Promise<UserNotification
             type: notification.type,
             title: notification.title,
             description: notification.description,
-            isRead: notification.is_read,
+            read: notification.is_read,
             updatedAt: notification.updated_at.getTime(),
             createdAt: notification.created_at.getTime()
         });
@@ -104,7 +106,7 @@ export const getUserNotificationById = async (id: number): Promise<UserNotificat
         type: notification.type,
         title: notification.title,
         description: notification.description,
-        isRead: notification.is_read,
+        read: notification.is_read,
         updatedAt: notification.updated_at.getTime(),
         createdAt: notification.created_at.getTime()
     };
@@ -129,7 +131,7 @@ export const getUserNotificationByName = async (id: string, name: string): Promi
         type: notification.type,
         title: notification.title,
         description: notification.description,
-        isRead: notification.is_read,
+        read: notification.is_read,
         updatedAt: notification.updated_at.getTime(),
         createdAt: notification.created_at.getTime()
     };
@@ -227,6 +229,29 @@ export const getGuildNotificationByName = async (id: string, name: string): Prom
         reads: reads.map((read) => read.user_id.toString()),
         updatedAt: notification.updated_at.getTime(),
         createdAt: notification.created_at.getTime()
+    };
+};
+
+export const getUserConfiguration = async (id: string): Promise<UserConfiguration | undefined> => {
+    const userId = BigInt(id);
+    const userData = await prisma.users.findUnique({
+        where: {
+            id: userId
+        }
+    });
+    const userConfigurationData = await prisma.users_configurations.findUnique({
+        where: {
+            id: userId
+        }
+    });
+
+    if (!userData || !userConfigurationData)
+        return undefined;
+
+    return {
+        id,
+        language: userConfigurationData.language as UserConfigurationLanguage,
+        timezone: userConfigurationData.timezone as TimeZone
     };
 };
 
