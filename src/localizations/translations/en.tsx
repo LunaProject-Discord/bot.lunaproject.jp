@@ -86,6 +86,7 @@ export const translationsEn: Translations = {
     </Fragment>,
 
 
+    welcome: 'Welcome',
     welcome_to_name: 'Welcome to %n!',
 
 

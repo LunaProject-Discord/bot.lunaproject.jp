@@ -111,9 +111,9 @@ export const View = ({ user, localization: { translations } }: Props) => {
 
     return (
         <PageContent>
-            <Typography variant="h4">ようこそ</Typography>
+            <Typography variant="h4">{translations.welcome}</Typography>
             <Alert severity="warning" sx={{ mt: 3 }}>
-                <AlertTitle>警告</AlertTitle>
+                <AlertTitle>{translations.warning}</AlertTitle>
                 このサイトは現在開発中です。大部分は利用できません。
             </Alert>
             {user ? (

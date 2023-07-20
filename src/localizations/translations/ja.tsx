@@ -86,6 +86,7 @@ export const translationsJa: Translations = {
     </Fragment>,
 
 
+    welcome: 'ようこそ',
     welcome_to_name: 'ようこそ、%n さん！',
 
 

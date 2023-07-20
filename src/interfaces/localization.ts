@@ -77,6 +77,7 @@ export type TranslationKeys =
     | 'error_not_found_description'
 
 
+    | 'welcome'
     | 'welcome_to_name'
 
 
