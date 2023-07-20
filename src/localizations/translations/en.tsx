@@ -29,6 +29,17 @@ export const translationsEn: Translations = {
     move_up: 'Move Up',
     move_down: 'Move Down',
 
+    guild: 'Server',
+    guilds: 'Servers',
+    channel: 'Channel',
+    channels: 'Channels',
+    role: 'Role',
+    roles: 'Roles',
+    member: 'Member',
+    members: 'Members',
+    user: 'User',
+    users: 'Users',
+
 
     pattern_date: 'yyyy/MM/dd (E)',
     pattern_time: 'HH:mm',
@@ -93,6 +104,7 @@ export const translationsEn: Translations = {
     home: 'Home',
     status: 'Status',
     leaderboard: 'Leaderboard',
+    choose_guild_leaderboard: 'Select the server on which you want to display the leaderboard.',
 
 
     guild_settings: 'Server Settings',
@@ -194,6 +206,7 @@ export const translationsEn: Translations = {
 
     level: 'Level',
     experience: 'Experience',
+    rank: 'Rank',
     level_description: 'Experience is awarded based on the number of statements made by members, which can be used to activate the server.',
     level_enabled: 'Enable Level',
     level_experience_per_message: 'Experience per message',
@@ -266,10 +279,10 @@ export const translationsEn: Translations = {
     music_description: 'Media uploaded on YouTube and other sites can be played on the voice channel.',
     music_enabled: 'Enable Music',
     music_web_panel: 'Enable the web panel to enable playback and other operations',
-    music_default_volume: 'デフォルトの音量',
-    music_timeout_seconds: '再生が終了した後にチャンネルから退出するまでの秒数',
-    music_next_media_notification: '次のメディアを再生するときに通知を送信する',
-    music_next_media_notification_description: 'この設定が有効であっても繰り返しが 1曲のみ の場合は通知されません。',
+    music_default_volume: 'Default volume',
+    music_timeout_seconds: 'Number of seconds to exit the channel after playback ends',
+    music_next_media_notification: 'Send a notification when the next piece of media is to be played',
+    music_next_media_notification_description: 'Even if this setting is enabled, you will not be notified if only one song is repeated.',
     music_sources: 'Source to play',
     music_source_youtube: 'YouTube',
     music_source_niconico: 'niconico',

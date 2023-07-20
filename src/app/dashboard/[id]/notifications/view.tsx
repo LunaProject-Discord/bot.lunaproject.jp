@@ -35,7 +35,7 @@ export const View = ({ guild, notifications, localization: { translations } }: P
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.notifications}</Typography>
-                    <Typography variant="body1"></Typography>
+                    <Typography></Typography>
                 </Box>
             </PageHeader>
             {Object.keys(guildNotifications).map((date) => {

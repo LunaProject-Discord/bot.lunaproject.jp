@@ -41,7 +41,7 @@ interface GuildsProps {
 }
 
 const GuildsGallery = ({ guilds }: GuildsProps) => (
-    <Gallery>
+    <Gallery sx={{ gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' }}>
         {guilds.map((guild) => (
             <GalleryItem key={guild.id}>
                 <ButtonBase component={NextLink} href={`/dashboard/${guild.id}`}>
@@ -111,7 +111,7 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.guild_settings}</Typography>
-                    <Typography variant="body1">{translations.choose_guild_settings}</Typography>
+                    <Typography>{translations.choose_guild_settings}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>
                     <SegmentedControl<ViewType>
@@ -172,7 +172,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.guild_settings}</Typography>
-                <Typography variant="body1">{translations.choose_guild_settings}</Typography>
+                <Typography>{translations.loading}</Typography>
             </Box>
         </PageHeader>
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>

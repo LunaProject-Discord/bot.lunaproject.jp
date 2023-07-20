@@ -28,7 +28,7 @@ export const View = ({ guild, configuration, localization: { translations } }: G
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.prefix_and_nickname}</Typography>
-                    <Typography variant="body1">{translations.prefix_and_nickname_description}</Typography>
+                    <Typography>{translations.prefix_and_nickname_description}</Typography>
                 </Box>
             </PageHeader>
             <Section>

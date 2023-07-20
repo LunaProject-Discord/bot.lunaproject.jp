@@ -21,7 +21,7 @@ export const View = ({ guild, notification, localization: { translations } }: Pr
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.notifications}</Typography>
-                    <Typography variant="body1"></Typography>
+                    <Typography></Typography>
                 </Box>
             </PageHeader>
             <Section>

@@ -9,7 +9,7 @@ import {
     SettingsOutlined,
     TuneOutlined
 } from '@mui/icons-material';
-import { alpha, Avatar, Divider, IconButton, styled, Tooltip } from '@mui/material';
+import { alpha, Avatar, Box, Divider, IconButton, styled, Tooltip } from '@mui/material';
 import { getUserAvatar, getUserDisplayName } from '@utils/discord';
 import Image from 'next/image';
 import NextLink from 'next/link';
@@ -33,7 +33,7 @@ const DesktopNavigationRoot = styled('nav')(({ theme }) => ({
     }
 }));
 
-const DesktopNavigationGroup = styled('div')(({ theme }) => ({
+const DesktopNavigationGroup = styled(Box)(({ theme }) => ({
     padding: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',

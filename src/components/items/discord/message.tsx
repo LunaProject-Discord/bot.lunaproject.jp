@@ -133,7 +133,7 @@ export const MessageItem = (
                                 gap: 1
                             }}
                         >
-                            {children && <Typography component="div" variant="body1">{children}</Typography>}
+                            {children && <Typography component="div">{children}</Typography>}
                             <Button
                                 onClick={() => (setOpen ?? __setOpen)(true)}
                                 disabled={disabled}

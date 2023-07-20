@@ -30,7 +30,7 @@ export const ChannelItem = (
     return (
         <EditableItem value={value} setValue={setValue} disabled={disabled} localization={localization}>
             <ChannelIcon channel={channel} color="action" />
-            <Typography variant="body1">{channel.name}</Typography>
+            <Typography>{channel.name}</Typography>
         </EditableItem>
     );
 };

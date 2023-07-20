@@ -30,7 +30,7 @@ export const View = ({ user, notifications, localization: { translations } }: Pr
                 <Typography variant="h4">
                     {String(translations.welcome_to_name).replace('%n', getUserDisplayName(user))}
                 </Typography>
-                <Typography variant="body1">ここはユーザーの設定ページです。</Typography>
+                <Typography>ここはユーザーの設定ページです。</Typography>
             </Box>
         </PageHeader>
         <Section>
@@ -71,7 +71,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.user_settings}</Typography>
-                <Typography variant="body1" />
+                <Typography>{translations.loading}</Typography>
             </Box>
         </PageHeader>
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>

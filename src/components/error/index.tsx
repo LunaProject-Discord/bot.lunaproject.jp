@@ -1,10 +1,10 @@
 'use client';
 
-import { styled, TypographyProps } from '@mui/material';
+import { Box, styled, TypographyProps } from '@mui/material';
 import React from 'react';
 import { TranslatableTypography } from '../text';
 
-export const ErrorRoot = styled('div')(({ theme }) => ({
+export const ErrorRoot = styled(Box)(({ theme }) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -18,5 +18,5 @@ export const ErrorTitle = styled(
 )<TypographyProps>();
 
 export const ErrorDescription = styled(
-    (props: TypographyProps) => <TranslatableTypography variant="body1" align="center" {...props} />
+    (props: TypographyProps) => <TranslatableTypography align="center" {...props} />
 )<TypographyProps>();

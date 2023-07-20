@@ -31,7 +31,7 @@ export const View = ({ user, guild, notifications, localization: { translations 
                 <Typography variant="h4">
                     {String(translations.welcome_to_name).replace('%n', getUserDisplayName(user))}
                 </Typography>
-                <Typography variant="body1">ここは {guild.name} の設定ページです。</Typography>
+                <Typography>ここは {guild.name} の設定ページです。</Typography>
             </Box>
         </PageHeader>
         <Section>
@@ -72,7 +72,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.guild_settings}</Typography>
-                <Typography variant="body1" />
+                <Typography>{translations.loading}</Typography>
             </Box>
         </PageHeader>
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>

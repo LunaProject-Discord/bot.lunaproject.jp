@@ -29,6 +29,17 @@ export const translationsJa: Translations = {
     move_up: '上に移動',
     move_down: '下に移動',
 
+    guild: 'サーバー',
+    guilds: 'サーバー',
+    channel: 'チャンネル',
+    channels: 'チャンネル',
+    role: '役職',
+    roles: '役職',
+    member: 'メンバー',
+    members: 'メンバー',
+    user: 'ユーザー',
+    users: 'ユーザー',
+
 
     pattern_date: 'yyyy年M月d日 (E)',
     pattern_time: 'HH:mm',
@@ -93,6 +104,7 @@ export const translationsJa: Translations = {
     home: 'ホーム',
     status: 'ステータス',
     leaderboard: 'リーダーボード',
+    choose_guild_leaderboard: 'リーダーボードを表示したいサーバーを選択してください。',
 
 
     guild_settings: 'サーバー設定',
@@ -194,6 +206,7 @@ export const translationsJa: Translations = {
 
     level: 'レベル',
     experience: '経験値',
+    rank: '順位',
     level_description: 'メンバーの発言数に応じた経験値を付与し、サーバーのアクティブ化に役立てることができます。',
     level_enabled: 'レベルを有効にする',
     level_experience_per_message: 'メッセージあたりの経験値',

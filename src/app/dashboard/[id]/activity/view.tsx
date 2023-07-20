@@ -37,7 +37,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 <PageHeader>
                     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                         <Typography variant="h4">{translations.activity}</Typography>
-                        <Typography variant="body1">{translations.activity_description}</Typography>
+                        <Typography>{translations.activity_description}</Typography>
                     </Box>
                 </PageHeader>
                 <Section>

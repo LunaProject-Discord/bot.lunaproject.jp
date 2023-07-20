@@ -30,6 +30,17 @@ export type TranslationKeys =
     | 'move_up'
     | 'move_down'
 
+    | 'guild'
+    | 'guilds'
+    | 'channel'
+    | 'channels'
+    | 'role'
+    | 'roles'
+    | 'member'
+    | 'members'
+    | 'user'
+    | 'users'
+
 
     | 'pattern_date'
     | 'pattern_time'
@@ -84,6 +95,7 @@ export type TranslationKeys =
     | 'home'
     | 'status'
     | 'leaderboard'
+    | 'choose_guild_leaderboard'
 
 
     | 'guild_settings'
@@ -157,6 +169,7 @@ export type TranslationKeys =
 
     | 'level'
     | 'experience'
+    | 'rank'
     | 'level_description'
     | 'level_enabled'
     | 'level_experience_per_message'

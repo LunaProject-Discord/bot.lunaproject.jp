@@ -210,7 +210,7 @@ export const View = ({ guild, levels, localization }: Props) => {
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.level_manage}</Typography>
-                    <Typography variant="body1">{translations.level_description}</Typography>
+                    <Typography>{translations.level_description}</Typography>
                 </Box>
             </PageHeader>
             <Box
@@ -319,7 +319,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.level_manage}</Typography>
-                <Typography variant="body1">{translations.level_description}</Typography>
+                <Typography>{translations.level_description}</Typography>
             </Box>
         </PageHeader>
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
@@ -333,7 +333,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.level_manage}</Typography>
-                <Typography variant="body1">{translations.level_description}</Typography>
+                <Typography>{translations.level_description}</Typography>
             </Box>
         </PageHeader>
         <Box

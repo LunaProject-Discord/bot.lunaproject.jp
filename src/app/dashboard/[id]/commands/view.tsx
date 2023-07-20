@@ -203,7 +203,7 @@ export const View = ({ guild, configuration, commands: redisCommands, localizati
                 <PageHeader>
                     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                         <Typography variant="h4">{translations.commands}</Typography>
-                        <Typography variant="body1">{translations.commands_description}</Typography>
+                        <Typography>{translations.commands_description}</Typography>
                     </Box>
                 </PageHeader>
                 <Channels

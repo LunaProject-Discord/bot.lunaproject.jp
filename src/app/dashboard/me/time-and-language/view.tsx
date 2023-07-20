@@ -30,7 +30,7 @@ export const View = ({ user, configuration, localization: { translations } }: Us
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.time_and_language}</Typography>
-                    <Typography variant="body1">{translations.user_time_and_language_description}</Typography>
+                    <Typography>{translations.user_time_and_language_description}</Typography>
                 </Box>
             </PageHeader>
             <Section>

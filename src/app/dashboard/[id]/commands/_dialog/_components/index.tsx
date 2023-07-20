@@ -5,10 +5,10 @@ import {
     EditableItemProps
 } from '@app/dashboard/[id]/commands/_components';
 import { StyledProps } from '@interfaces/mui';
-import { styled, Typography } from '@mui/material';
+import { Box, styled, Typography } from '@mui/material';
 import React from 'react';
 
-export const Group = styled('div')(({ theme }) => ({
+export const Group = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(.5)

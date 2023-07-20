@@ -63,7 +63,7 @@ export const View = ({ guild, configuration, localization: { translations } }: G
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.music}</Typography>
-                    <Typography variant="body1">{translations.music_description}</Typography>
+                    <Typography>{translations.music_description}</Typography>
                 </Box>
             </PageHeader>
             <Section>
