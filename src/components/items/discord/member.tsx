@@ -1,5 +1,6 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
 import { RedisMember } from '@interfaces/redis';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
@@ -56,7 +57,7 @@ export const MemberListItem = ({ member, ...props }: MemberListItemProps) => (
 
 export type MemberProps = SnowflakeItemProps<Member>;
 
-export type MemberPopoverProps = PopoverProps & MemberProps;
+export type MemberPopoverProps = PopoverProps & MemberProps & LocalizationProps;
 
 export const MemberPopover = (
     {
@@ -65,6 +66,7 @@ export const MemberPopover = (
         value,
         setValue,
         choices,
+        localization: { translations },
         ...props
     }: MemberPopoverProps
 ) => {
@@ -145,7 +147,7 @@ export const MemberPopover = (
                 value={search}
                 onChange={handleInputChange}
                 onKeyDown={handleInputKeyDown}
-                placeholder="メンバーを検索..."
+                placeholder={translations.search_members as string}
             />
             <FixedSizeList
                 ref={ref}
@@ -176,9 +178,23 @@ export const MemberPopover = (
     );
 };
 
-export type MemberSelectProps = ItemDisabledProps & MemberProps & SnowflakeSelectProps<MemberPopoverProps>;
+export type MemberSelectProps =
+    ItemDisabledProps
+    & MemberProps
+    & SnowflakeSelectProps<MemberPopoverProps>
+    & LocalizationProps;
 
-export const MemberSelect = ({ value, setValue, choices, disabled, sx, popoverProps }: MemberSelectProps) => {
+export const MemberSelect = (
+    {
+        value,
+        setValue,
+        choices,
+        disabled,
+        localization,
+        sx,
+        popoverProps
+    }: MemberSelectProps
+) => {
     const ref = useRef<HTMLDivElement | null>(null);
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -209,6 +225,7 @@ export const MemberSelect = ({ value, setValue, choices, disabled, sx, popoverPr
                 value={value}
                 setValue={setValue}
                 choices={choices}
+                localization={localization}
                 sx={{
                     [`& .${popoverClasses.paper}`]: {
                         minWidth: ref.current?.offsetWidth
@@ -220,7 +237,7 @@ export const MemberSelect = ({ value, setValue, choices, disabled, sx, popoverPr
     );
 };
 
-export type MemberItemProps = ItemProps & MemberProps;
+export type MemberItemProps = ItemProps & MemberProps & LocalizationProps;
 
 export const MemberItem = (
     {
@@ -234,6 +251,7 @@ export const MemberItem = (
         setValue,
         choices,
         disabled,
+        localization,
         sx
     }: MemberItemProps
 ) => (
@@ -255,6 +273,7 @@ export const MemberItem = (
                     setValue={setValue}
                     choices={choices}
                     disabled={disabled}
+                    localization={localization}
                     sx={{
                         width: {
                             xs: '100%',

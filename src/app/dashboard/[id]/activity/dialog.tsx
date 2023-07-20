@@ -170,6 +170,7 @@ const RoleItem = (
                         value={value.id}
                         setValue={(action) => setValue({ ...value, id: getStateActionValue(action, value.id) })}
                         choices={roles}
+                        localization={localization}
                         sx={{ width: { xs: '100%', md: 300 } }}
                     />
                 </ItemRowContainer>

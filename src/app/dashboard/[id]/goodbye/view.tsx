@@ -55,6 +55,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         setValue={setChannelId}
                         choices={guild.channels.filter((channel) => channel.type !== ChannelType.GuildForum && channel.type !== ChannelType.GuildVoice && channel.type !== ChannelType.GuildStageVoice)}
                         disabled={!enabled}
+                        localization={localization}
                     />
                     <MessageItem
                         primary={translations.customize_message}

@@ -349,7 +349,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
             <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
             <Typography variant="h4">データがありません</Typography>
             <Typography align="center">
-                このサーバーではまだ誰も発言していないようです…<br />
+                このサーバーではまだ誰も発言していないようです...<br />
                 サーバーで発言してから少し待った後に再度お試しください。
             </Typography>
         </Box>

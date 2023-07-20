@@ -96,6 +96,7 @@ export const Roles = (
                 choices={roles.filter((role) => !overrides.some(({ id }) => id === role.id))}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                localization={localization}
             />
         </Fragment>
     );

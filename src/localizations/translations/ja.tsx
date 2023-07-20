@@ -6,7 +6,7 @@ export const translationsJa: Translations = {
     warning: '警告',
     error: 'エラー',
     info: '情報',
-    loading: '読み込み中…',
+    loading: '読み込み中...',
     login: 'ログイン',
     logout: 'ログアウト',
     yes: 'はい',

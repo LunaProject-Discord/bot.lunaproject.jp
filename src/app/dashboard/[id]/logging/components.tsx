@@ -119,60 +119,65 @@ export const Moderation = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingModeration>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_moderation}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_moderation}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={translations.logging_moderation_update}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_moderation_kick}
-                checked={value.kick}
-                setChecked={(checked) => setValue({ ...value, kick: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_moderation_prune}
-                checked={value.prune}
-                setChecked={(checked) => setValue({ ...value, prune: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_moderation_ban}
-                checked={value.ban}
-                setChecked={(checked) => setValue({ ...value, ban: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_moderation_unban}
-                checked={value.unban}
-                setChecked={(checked) => setValue({ ...value, unban: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={translations.logging_moderation_update}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_moderation_kick}
+                    checked={value.kick}
+                    setChecked={(checked) => setValue({ ...value, kick: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_moderation_prune}
+                    checked={value.prune}
+                    setChecked={(checked) => setValue({ ...value, prune: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_moderation_ban}
+                    checked={value.ban}
+                    setChecked={(checked) => setValue({ ...value, ban: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_moderation_unban}
+                    checked={value.unban}
+                    setChecked={(checked) => setValue({ ...value, unban: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Member = (
     {
@@ -180,60 +185,65 @@ export const Member = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingMember>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_member}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_member}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={translations.logging_member_join}
-                checked={value.join}
-                setChecked={(checked) => setValue({ ...value, join: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_member_leave}
-                checked={value.leave}
-                setChecked={(checked) => setValue({ ...value, leave: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_member_update}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_member_role_add}
-                checked={value.role_add}
-                setChecked={(checked) => setValue({ ...value, role_add: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_member_role_remove}
-                checked={value.role_remove}
-                setChecked={(checked) => setValue({ ...value, role_remove: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={translations.logging_member_join}
+                    checked={value.join}
+                    setChecked={(checked) => setValue({ ...value, join: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_member_leave}
+                    checked={value.leave}
+                    setChecked={(checked) => setValue({ ...value, leave: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_member_update}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_member_role_add}
+                    checked={value.role_add}
+                    setChecked={(checked) => setValue({ ...value, role_add: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_member_role_remove}
+                    checked={value.role_remove}
+                    setChecked={(checked) => setValue({ ...value, role_remove: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Voice = (
     {
@@ -241,60 +251,65 @@ export const Voice = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingVoice>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_voice}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_voice}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={translations.logging_voice_join}
-                checked={value.join}
-                setChecked={(checked) => setValue({ ...value, join: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_voice_leave}
-                checked={value.leave}
-                setChecked={(checked) => setValue({ ...value, leave: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_voice_move}
-                checked={value.move}
-                setChecked={(checked) => setValue({ ...value, move: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_voice_mute}
-                checked={value.mute}
-                setChecked={(checked) => setValue({ ...value, mute: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_voice_deafen}
-                checked={value.deafen}
-                setChecked={(checked) => setValue({ ...value, deafen: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={translations.logging_voice_join}
+                    checked={value.join}
+                    setChecked={(checked) => setValue({ ...value, join: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_voice_leave}
+                    checked={value.leave}
+                    setChecked={(checked) => setValue({ ...value, leave: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_voice_move}
+                    checked={value.move}
+                    setChecked={(checked) => setValue({ ...value, move: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_voice_mute}
+                    checked={value.mute}
+                    setChecked={(checked) => setValue({ ...value, mute: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_voice_deafen}
+                    checked={value.deafen}
+                    setChecked={(checked) => setValue({ ...value, deafen: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Category = (
     {
@@ -302,54 +317,59 @@ export const Category = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingChannel>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_category}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_category}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={String(translations.logging_object_create).replace('%n', String(translations.logging_category))}
-                checked={value.create}
-                setChecked={(checked) => setValue({ ...value, create: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_category))}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_update).replace('%n', String(translations.logging_category))}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_channel_permission_update}
-                checked={value.permissions_update}
-                setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_create).replace('%n', String(translations.logging_category))}
+                    checked={value.create}
+                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_category))}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_update).replace('%n', String(translations.logging_category))}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_channel_permission_update}
+                    checked={value.permissions_update}
+                    setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const TextChannel = (
     {
@@ -357,54 +377,59 @@ export const TextChannel = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingChannel>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_text_channel}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_text_channel}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={String(translations.logging_object_create).replace('%n', String(translations.logging_text_channel))}
-                checked={value.create}
-                setChecked={(checked) => setValue({ ...value, create: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_text_channel))}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_update).replace('%n', String(translations.logging_text_channel))}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_channel_permission_update}
-                checked={value.permissions_update}
-                setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_create).replace('%n', String(translations.logging_text_channel))}
+                    checked={value.create}
+                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_text_channel))}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_update).replace('%n', String(translations.logging_text_channel))}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_channel_permission_update}
+                    checked={value.permissions_update}
+                    setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const VoiceChannel = (
     {
@@ -412,54 +437,59 @@ export const VoiceChannel = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingChannel>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_voice_channel}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_voice_channel}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={String(translations.logging_object_create).replace('%n', String(translations.logging_voice_channel))}
-                checked={value.create}
-                setChecked={(checked) => setValue({ ...value, create: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_voice_channel))}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_update).replace('%n', String(translations.logging_voice_channel))}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_channel_permission_update}
-                checked={value.permissions_update}
-                setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_create).replace('%n', String(translations.logging_voice_channel))}
+                    checked={value.create}
+                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_voice_channel))}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_update).replace('%n', String(translations.logging_voice_channel))}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_channel_permission_update}
+                    checked={value.permissions_update}
+                    setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Role = (
     {
@@ -467,48 +497,53 @@ export const Role = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingObject>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_role}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_role}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={String(translations.logging_object_create).replace('%n', String(translations.logging_role))}
-                checked={value.create}
-                setChecked={(checked) => setValue({ ...value, create: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_role))}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_update).replace('%n', String(translations.logging_role))}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_create).replace('%n', String(translations.logging_role))}
+                    checked={value.create}
+                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_role))}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_update).replace('%n', String(translations.logging_role))}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Emote = (
     {
@@ -516,48 +551,53 @@ export const Emote = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingObject>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_emote}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_emote}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={String(translations.logging_object_create).replace('%n', String(translations.logging_emote))}
-                checked={value.create}
-                setChecked={(checked) => setValue({ ...value, create: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_emote))}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_update).replace('%n', String(translations.logging_emote))}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_create).replace('%n', String(translations.logging_emote))}
+                    checked={value.create}
+                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_emote))}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_update).replace('%n', String(translations.logging_emote))}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Invite = (
     {
@@ -565,48 +605,53 @@ export const Invite = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingObject>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_invite}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_invite}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={String(translations.logging_object_create).replace('%n', String(translations.logging_invite))}
-                checked={value.create}
-                setChecked={(checked) => setValue({ ...value, create: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_invite))}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_update).replace('%n', String(translations.logging_invite))}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_create).replace('%n', String(translations.logging_invite))}
+                    checked={value.create}
+                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_invite))}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_update).replace('%n', String(translations.logging_invite))}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Webhook = (
     {
@@ -614,48 +659,53 @@ export const Webhook = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingObject>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_webhook}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_webhook}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={String(translations.logging_object_create).replace('%n', String(translations.logging_webhook))}
-                checked={value.create}
-                setChecked={(checked) => setValue({ ...value, create: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_webhook))}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_update).replace('%n', String(translations.logging_webhook))}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_create).replace('%n', String(translations.logging_webhook))}
+                    checked={value.create}
+                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_webhook))}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_update).replace('%n', String(translations.logging_webhook))}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Integration = (
     {
@@ -663,48 +713,53 @@ export const Integration = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingObject>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_integration}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_integration}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={String(translations.logging_object_create).replace('%n', String(translations.logging_integration))}
-                checked={value.create}
-                setChecked={(checked) => setValue({ ...value, create: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_integration))}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={String(translations.logging_object_update).replace('%n', String(translations.logging_integration))}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_create).replace('%n', String(translations.logging_integration))}
+                    checked={value.create}
+                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_integration))}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={String(translations.logging_object_update).replace('%n', String(translations.logging_integration))}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};
 
 export const Message = (
     {
@@ -712,57 +767,62 @@ export const Message = (
         setValue,
         channels,
         disabled,
-        localization: { translations }
+        localization
     }: Props<GuildConfigurationLoggingMessage>
-) => (
-    <ItemContainer>
-        <ItemHeader
-            label={translations.logging_message}
-            enabled={value.enabled}
-            setEnabled={(enabled) => setValue({ ...value, enabled })}
-            disabled={disabled}
-        />
-        <ItemContent>
-            <ChannelItem
-                primary={translations.logging_channel}
-                value={value.channel_id}
-                setValue={(action) => setValue({
-                    ...value,
-                    channel_id: getStateActionValue(action, value.channel_id)
-                })}
-                choices={channels}
-                disabled={disabled || !value.enabled}
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemContainer>
+            <ItemHeader
+                label={translations.logging_message}
+                enabled={value.enabled}
+                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                disabled={disabled}
             />
-            <SwitchItem
-                primary={translations.logging_message_update}
-                checked={value.update}
-                setChecked={(checked) => setValue({ ...value, update: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_message_delete}
-                checked={value.delete}
-                setChecked={(checked) => setValue({ ...value, delete: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_message_purge}
-                checked={value.purge}
-                setChecked={(checked) => setValue({ ...value, purge: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_message_pin}
-                checked={value.pin}
-                setChecked={(checked) => setValue({ ...value, pin: checked })}
-                disabled={disabled || !value.enabled}
-            />
-            <SwitchItem
-                primary={translations.logging_message_unpin}
-                checked={value.unpin}
-                setChecked={(checked) => setValue({ ...value, unpin: checked })}
-                disabled={disabled || !value.enabled}
-            />
-        </ItemContent>
-    </ItemContainer>
-);
+            <ItemContent>
+                <ChannelItem
+                    primary={translations.logging_channel}
+                    value={value.channel_id}
+                    setValue={(action) => setValue({
+                        ...value,
+                        channel_id: getStateActionValue(action, value.channel_id)
+                    })}
+                    choices={channels}
+                    disabled={disabled || !value.enabled}
+                    localization={localization}
+                />
+                <SwitchItem
+                    primary={translations.logging_message_update}
+                    checked={value.update}
+                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_message_delete}
+                    checked={value.delete}
+                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_message_purge}
+                    checked={value.purge}
+                    setChecked={(checked) => setValue({ ...value, purge: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_message_pin}
+                    checked={value.pin}
+                    setChecked={(checked) => setValue({ ...value, pin: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+                <SwitchItem
+                    primary={translations.logging_message_unpin}
+                    checked={value.unpin}
+                    setChecked={(checked) => setValue({ ...value, unpin: checked })}
+                    disabled={disabled || !value.enabled}
+                />
+            </ItemContent>
+        </ItemContainer>
+    );
+};

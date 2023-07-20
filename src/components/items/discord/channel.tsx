@@ -1,5 +1,6 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
 import { RedisChannel } from '@interfaces/redis';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
@@ -80,7 +81,7 @@ export const ChannelList = ({ category, channels, selected, selectedIndex, onCha
 
 export type ChannelProps = SnowflakeItemProps<Channel>;
 
-export type ChannelPopoverProps = PopoverProps & ChannelProps;
+export type ChannelPopoverProps = PopoverProps & ChannelProps & LocalizationProps;
 
 export const ChannelPopover = (
     {
@@ -89,6 +90,7 @@ export const ChannelPopover = (
         value,
         setValue,
         choices,
+        localization: { translations },
         ...props
     }: ChannelPopoverProps
 ) => {
@@ -173,7 +175,7 @@ export const ChannelPopover = (
                 value={search}
                 onChange={handleInputChange}
                 onKeyDown={handleInputKeyDown}
-                placeholder="チャンネルを検索..."
+                placeholder={translations.search_channels as string}
             />
             <ListRoot subheader={<li style={{ height: 8 }} />} sx={{ pt: 0 }}>
                 {filteredCategories.map((category) => (
@@ -191,9 +193,23 @@ export const ChannelPopover = (
     );
 };
 
-export type ChannelSelectProps = ItemDisabledProps & ChannelProps & SnowflakeSelectProps<ChannelPopoverProps>;
+export type ChannelSelectProps =
+    ItemDisabledProps
+    & ChannelProps
+    & SnowflakeSelectProps<ChannelPopoverProps>
+    & LocalizationProps;
 
-export const ChannelSelect = ({ value, setValue, choices, disabled, sx, popoverProps }: ChannelSelectProps) => {
+export const ChannelSelect = (
+    {
+        value,
+        setValue,
+        choices,
+        disabled,
+        localization,
+        sx,
+        popoverProps
+    }: ChannelSelectProps
+) => {
     const ref = useRef<HTMLDivElement | null>(null);
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -220,6 +236,7 @@ export const ChannelSelect = ({ value, setValue, choices, disabled, sx, popoverP
                 value={value}
                 setValue={setValue}
                 choices={choices}
+                localization={localization}
                 sx={{
                     [`& .${popoverClasses.paper}`]: {
                         minWidth: ref.current?.offsetWidth
@@ -231,7 +248,7 @@ export const ChannelSelect = ({ value, setValue, choices, disabled, sx, popoverP
     );
 };
 
-export type ChannelItemProps = ItemProps & ChannelProps;
+export type ChannelItemProps = ItemProps & ChannelProps & LocalizationProps;
 
 export const ChannelItem = (
     {
@@ -245,6 +262,7 @@ export const ChannelItem = (
         setValue,
         choices,
         disabled,
+        localization,
         sx
     }: ChannelItemProps
 ) => (
@@ -265,6 +283,7 @@ export const ChannelItem = (
                 setValue={setValue}
                 choices={choices}
                 disabled={disabled}
+                localization={localization}
                 sx={{
                     width: {
                         xs: '100%',

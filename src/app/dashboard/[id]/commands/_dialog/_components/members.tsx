@@ -111,6 +111,7 @@ export const Members = ({ value, setValue, members, localization }: GroupProps &
                 choices={members.filter((member) => !value.some(({ id }) => id === member.id))}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                localization={localization}
             />
         </Fragment>
     );

@@ -1,5 +1,6 @@
 'use client';
 
+import { LocalizationProps } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
 import { RedisRole } from '@interfaces/redis';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
@@ -48,7 +49,7 @@ export const RoleListItem = ({ role, sx, ...props }: RoleListItemProps) => (
 
 export type RoleProps = SnowflakeItemProps<Role>;
 
-export type RolePopoverProps = PopoverProps & RoleProps;
+export type RolePopoverProps = PopoverProps & RoleProps & LocalizationProps;
 
 export const RolePopover = (
     {
@@ -57,6 +58,7 @@ export const RolePopover = (
         value,
         setValue,
         choices,
+        localization: { translations },
         ...props
     }: RolePopoverProps
 ) => {
@@ -137,7 +139,7 @@ export const RolePopover = (
                 value={search}
                 onChange={handleInputChange}
                 onKeyDown={handleInputKeyDown}
-                placeholder="役職を検索..."
+                placeholder={translations.search_roles as string}
             />
             <FixedSizeList
                 ref={ref}
@@ -168,9 +170,23 @@ export const RolePopover = (
     );
 };
 
-export type RoleSelectProps = ItemDisabledProps & RoleProps & SnowflakeSelectProps<RolePopoverProps>;
+export type RoleSelectProps =
+    ItemDisabledProps
+    & RoleProps
+    & SnowflakeSelectProps<RolePopoverProps>
+    & LocalizationProps;
 
-export const RoleSelect = ({ value, setValue, choices, disabled, sx, popoverProps }: RoleSelectProps) => {
+export const RoleSelect = (
+    {
+        value,
+        setValue,
+        choices,
+        disabled,
+        localization,
+        sx,
+        popoverProps
+    }: RoleSelectProps
+) => {
     const ref = useRef<HTMLDivElement | null>(null);
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -197,6 +213,7 @@ export const RoleSelect = ({ value, setValue, choices, disabled, sx, popoverProp
                 value={value}
                 setValue={setValue}
                 choices={choices}
+                localization={localization}
                 sx={{
                     [`& .${popoverClasses.paper}`]: {
                         minWidth: ref.current?.offsetWidth
@@ -208,7 +225,7 @@ export const RoleSelect = ({ value, setValue, choices, disabled, sx, popoverProp
     );
 };
 
-export type RoleItemProps = ItemProps & RoleProps;
+export type RoleItemProps = ItemProps & RoleProps & LocalizationProps;
 
 export const RoleItem = (
     {
@@ -222,6 +239,7 @@ export const RoleItem = (
         setValue,
         choices,
         disabled,
+        localization,
         sx
     }: RoleItemProps
 ) => (
@@ -243,6 +261,7 @@ export const RoleItem = (
                     setValue={setValue}
                     choices={choices}
                     disabled={disabled}
+                    localization={localization}
                     sx={{
                         width: {
                             xs: '100%',

@@ -103,6 +103,7 @@ export const Channels = (
                 choices={channels.filter((channel) => !overrides.some(({ id }) => id === channel.id))}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                localization={localization}
             />
         </Fragment>
     );

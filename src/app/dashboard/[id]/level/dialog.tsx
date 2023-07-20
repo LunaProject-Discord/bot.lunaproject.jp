@@ -34,34 +34,39 @@ const RoleItem = (
         setValue,
         roles,
         disabled,
-        localization: { translations }
+        localization
     }: RoleItemProps
-) => (
-    <ItemRoot sx={{ p: 0 }}>
-        <ItemRowContainer>
-            <RoleSelect
-                value={value.id}
-                setValue={(action) => setValue({ ...value, id: getStateActionValue(action, value.id) })}
-                choices={roles}
-                sx={{ width: { xs: '100%', md: 300 } }}
-            />
-        </ItemRowContainer>
-        <ItemFormContainer>
-            <NumberField
-                value={value.level}
-                setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
-                min={0}
-                disabled={disabled}
-                sx={{ width: { xs: '100%', md: 300 } }}
-            />
-            <Tooltip title={translations.remove} placement="top">
-                <IconButton onClick={() => setValue(undefined)} color="error">
-                    <DeleteOutlined />
-                </IconButton>
-            </Tooltip>
-        </ItemFormContainer>
-    </ItemRoot>
-);
+) => {
+    const { translations } = localization;
+
+    return (
+        <ItemRoot sx={{ p: 0 }}>
+            <ItemRowContainer>
+                <RoleSelect
+                    value={value.id}
+                    setValue={(action) => setValue({ ...value, id: getStateActionValue(action, value.id) })}
+                    choices={roles}
+                    localization={localization}
+                    sx={{ width: { xs: '100%', md: 300 } }}
+                />
+            </ItemRowContainer>
+            <ItemFormContainer>
+                <NumberField
+                    value={value.level}
+                    setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
+                    min={0}
+                    disabled={disabled}
+                    sx={{ width: { xs: '100%', md: 300 } }}
+                />
+                <Tooltip title={translations.remove} placement="top">
+                    <IconButton onClick={() => setValue(undefined)} color="error">
+                        <DeleteOutlined />
+                    </IconButton>
+                </Tooltip>
+            </ItemFormContainer>
+        </ItemRoot>
+    );
+};
 
 type ManageRolesDialogProps =
     DialogProps
@@ -182,6 +187,7 @@ export const ManageRolesDialog = (
                 choices={choiceRoles}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                localization={localization}
             />
         </Fragment>
     );
