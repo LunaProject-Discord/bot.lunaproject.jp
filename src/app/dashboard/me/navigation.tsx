@@ -153,7 +153,7 @@ const Drawer = (
                     <DrawerItem
                         icon={<ScheduleOutlined />}
                         label={translations.time_and_language}
-                        href="/dashboard/me/time-language"
+                        href="/dashboard/me/time-and-language"
                         open={open}
                         setOpen={setOpen}
                     />

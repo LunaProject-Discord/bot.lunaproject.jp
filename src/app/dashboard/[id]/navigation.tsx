@@ -200,14 +200,14 @@ const Drawer = (
                     <DrawerItem
                         icon={<DriveFileRenameOutlineOutlined />}
                         label={translations.prefix_and_nickname}
-                        href={`/dashboard/${guild.id}/prefix-nickname`}
+                        href={`/dashboard/${guild.id}/prefix-and-nickname`}
                         open={open}
                         setOpen={setOpen}
                     />
                     <DrawerItem
                         icon={<ScheduleOutlined />}
                         label={translations.time_and_language}
-                        href={`/dashboard/${guild.id}/time-language`}
+                        href={`/dashboard/${guild.id}/time-and-language`}
                         open={open}
                         setOpen={setOpen}
                     />
