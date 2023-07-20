@@ -9,7 +9,6 @@ import {
 } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { RedisChannel } from '@interfaces/redis';
-import { sectionItemClasses } from '@lunaproject-discord/web-core';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { Box, buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
@@ -22,6 +21,7 @@ import {
     ItemFormContainer,
     ItemRowContainer,
     ItemVariableProps,
+    sectionItemClasses,
     SwitchItem
 } from '../../../../components/items';
 
