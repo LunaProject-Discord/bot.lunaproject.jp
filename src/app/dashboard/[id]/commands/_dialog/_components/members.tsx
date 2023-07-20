@@ -1,7 +1,7 @@
 import { EditableItemProps, GroupProps } from '@app/dashboard/[id]/commands/_components';
 import { EditableItem, Group, GroupTitle } from '@app/dashboard/[id]/commands/_dialog/_components/index';
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { MemberPopover } from '@components/items/discord/member';
+import { MemberPopover } from '@components/items';
 import { GuildMembersViewProps } from '@interfaces/view';
 import { ItemIcon, ItemTextBlock } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { AddOutlined } from '@mui/icons-material';

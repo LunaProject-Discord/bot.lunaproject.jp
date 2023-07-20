@@ -1,5 +1,6 @@
 'use client';
 
+import { ItemVariableProps, List, ListItemButton, ListItemIcon, SearchBox, Select } from '@components/items';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemDisabledProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
@@ -16,7 +17,6 @@ import { filterPredicateGuild, getGuildIcon, sortGuilds } from '@utils/discord';
 import { ellipsis } from 'polished';
 import React, { Fragment, MouseEvent, useEffect, useState } from 'react';
 import { FixedSizeList } from 'react-window';
-import { ItemVariableProps, List, ListItemButton, ListItemIcon, SearchBox, Select } from '../../../components/items';
 
 interface ListItemProps extends ListItemButtonProps {
     guild: OAuthGuild;

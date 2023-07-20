@@ -1,6 +1,7 @@
 'use client';
 
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
+import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '@components/items';
 import { BrMobile, Key, translatableTypographyStyled } from '@components/text';
 import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
@@ -41,7 +42,6 @@ import { sortRoles } from '@utils/discord';
 import { getStateActionValue, UniqueId } from '@utils/state';
 import { nanoid } from 'nanoid';
 import React, { Dispatch, Fragment, ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react';
-import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '../../../../components/items';
 
 type EditableObject = GuildConfigurationActivityRole & UniqueId;
 

@@ -1,6 +1,18 @@
 'use client';
 
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
+import {
+    ActionItem,
+    ChannelItem,
+    LinkItem,
+    MessageItem,
+    NumberFieldItem,
+    RadioItem,
+    RouteLinkItem,
+    SelectItem,
+    SwitchItem,
+    TextFieldItem
+} from '@components/items';
 import { PageContent, PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
@@ -21,18 +33,6 @@ import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useEffect, useState } from 'react';
-import {
-    ActionItem,
-    ChannelItem,
-    LinkItem,
-    MessageItem,
-    NumberFieldItem,
-    RadioItem,
-    RouteLinkItem,
-    SelectItem,
-    SwitchItem,
-    TextFieldItem
-} from '../../../../components/items';
 import { saveGuildConfiguration } from '../utils';
 import { ManageRolesDialog } from './dialog';
 

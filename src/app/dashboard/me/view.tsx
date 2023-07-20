@@ -1,5 +1,6 @@
 'use client';
 
+import { RouteLinkItem } from '@components/items';
 import { PageContent, PageHeader } from '@components/layout';
 import { UserNotification } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
@@ -17,7 +18,6 @@ import { Box, CircularProgress, Divider, Link, Typography } from '@mui/material'
 import { getUserDisplayName } from '@utils/discord';
 import NextLink from 'next/link';
 import React, { Fragment } from 'react';
-import { RouteLinkItem } from '../../../components/items';
 
 interface Props extends UserViewProps {
     notifications: UserNotification[];

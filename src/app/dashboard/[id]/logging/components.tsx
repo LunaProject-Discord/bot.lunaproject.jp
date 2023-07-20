@@ -1,4 +1,15 @@
 import {
+    ButtonItemRoot,
+    ChannelItem as OriginalChannelItem,
+    ChannelItemProps,
+    ItemDisabledProps,
+    ItemFormContainer,
+    ItemRowContainer,
+    ItemVariableProps,
+    sectionItemClasses,
+    SwitchItem
+} from '@components/items';
+import {
     GuildConfigurationLoggingChannel,
     GuildConfigurationLoggingComponent,
     GuildConfigurationLoggingMember,
@@ -13,17 +24,6 @@ import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/comp
 import { Box, buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
 import React, { ReactNode } from 'react';
-import {
-    ButtonItemRoot,
-    ChannelItem as OriginalChannelItem,
-    ChannelItemProps,
-    ItemDisabledProps,
-    ItemFormContainer,
-    ItemRowContainer,
-    ItemVariableProps,
-    sectionItemClasses,
-    SwitchItem
-} from '../../../../components/items';
 
 export const GridContainer = styled(Section)(({ theme }) => ({
     display: 'grid',

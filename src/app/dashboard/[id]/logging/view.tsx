@@ -1,5 +1,6 @@
 'use client';
 
+import { SwitchItem } from '@components/items';
 import { PageContent, PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationLogging } from '@interfaces/bot';
@@ -10,7 +11,6 @@ import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
 import React from 'react';
-import { SwitchItem } from '../../../../components/items';
 import { saveGuildConfiguration } from '../utils';
 import {
     Category,

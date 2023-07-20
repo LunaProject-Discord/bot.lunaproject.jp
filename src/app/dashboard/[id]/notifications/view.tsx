@@ -1,5 +1,6 @@
 'use client';
 
+import { RouteLinkItem } from '@components/items';
 import { PageContent, PageHeader } from '@components/layout';
 import { GuildNotification } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
@@ -10,7 +11,6 @@ import { ErrorOutlineOutlined, InfoOutlined, TaskAltOutlined, WarningAmberOutlin
 import { Box, Typography } from '@mui/material';
 import { enUS, ja } from 'date-fns/locale';
 import React, { Fragment } from 'react';
-import { RouteLinkItem } from '../../../../components/items';
 
 interface Props extends GuildViewProps {
     notifications: GuildNotification[];

@@ -1,5 +1,6 @@
 'use client';
 
+import { SelectItem } from '@components/items';
 import { PageContent, PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationLanguage } from '@interfaces/bot';
@@ -11,7 +12,6 @@ import { Box, Typography } from '@mui/material';
 import { TimeZone, TimeZones } from '@utils/timezone';
 import React, { ReactNode } from 'react';
 import spacetime from 'spacetime';
-import { SelectItem } from '../../../../components/items';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {

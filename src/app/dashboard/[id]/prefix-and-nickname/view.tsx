@@ -1,5 +1,6 @@
 'use client';
 
+import { TextFieldItem } from '@components/items';
 import { PageContent, PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
@@ -9,7 +10,6 @@ import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { BadgeOutlined, TagOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, Typography } from '@mui/material';
 import React from 'react';
-import { TextFieldItem } from '../../../../components/items';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {

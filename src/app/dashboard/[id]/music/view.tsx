@@ -1,5 +1,6 @@
 'use client';
 
+import { NumberFieldItem, SwitchItem } from '@components/items';
 import { PageContent, PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationMusic } from '@interfaces/bot';
@@ -9,7 +10,6 @@ import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React from 'react';
-import { NumberFieldItem, SwitchItem } from '../../../../components/items';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
