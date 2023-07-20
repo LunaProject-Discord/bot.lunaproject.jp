@@ -2,6 +2,10 @@
     box-sizing: border-box;
 }
 
+em-emoji-picker {
+    --border-radius: 4px;
+}
+
 * {
     scrollbar-width: thin;
     scrollbar-color: #888;

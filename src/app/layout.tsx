@@ -75,13 +75,6 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
                 type="font/woff2"
                 href="/fonts/m-plus-rounded-1c/m-plus-rounded-1c_700_normal.woff2"
             />
-            <style>
-                {`
-                    em-emoji-picker {
-                        --border-radius: 4px;
-                    }
-                `}
-            </style>
         </head>
         <Body>
             <LayoutView localization={localization}>{children}</LayoutView>
