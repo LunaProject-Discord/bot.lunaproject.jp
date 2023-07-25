@@ -257,8 +257,10 @@ export const View = ({ guild, levels, localization }: Props) => {
                     labelRowsPerPage={<TableRowsOutlined />}
                     SelectProps={{
                         MenuProps: {
-                            PaperProps: {
-                                sx: (theme) => borderAndBoxShadow(theme)
+                            slotProps: {
+                                paper: {
+                                    sx: (theme) => borderAndBoxShadow(theme)
+                                }
                             }
                         }
                     }}

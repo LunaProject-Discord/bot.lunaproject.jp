@@ -79,13 +79,15 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                             anchorEl={anchorEl}
                             onClose={handleClose}
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                            sx={{ zIndex: 1600 }}
-                            PaperProps={{
-                                sx: {
-                                    border: (theme) => `solid 1px ${theme.palette.divider}`,
-                                    boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+                            slotProps={{
+                                paper: {
+                                    sx: {
+                                        border: (theme) => `solid 1px ${theme.palette.divider}`,
+                                        boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+                                    }
                                 }
                             }}
+                            sx={{ zIndex: 1600 }}
                         >
                             <ChromePicker
                                 color={value.color.hex()}

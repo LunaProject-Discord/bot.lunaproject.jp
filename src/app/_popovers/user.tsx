@@ -178,13 +178,15 @@ export const UserPopover = ({ open, anchorEl, onClose, user, localization }: Use
                 vertical: isDesktop ? 'bottom' : 'top',
                 horizontal: isDesktop ? 'left' : 'right'
             }}
-            PaperProps={{
-                sx: {
-                    width: 300,
-                    left: `${isDesktop ? '8px' : 'unset'} !important`,
-                    right: isDesktop ? 0 : '8px !important',
-                    border: (theme) => `solid 1px ${theme.palette.divider}`,
-                    boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+            slotProps={{
+                paper: {
+                    sx: {
+                        width: 300,
+                        left: `${isDesktop ? '8px' : 'unset'} !important`,
+                        right: isDesktop ? 0 : '8px !important',
+                        border: (theme) => `solid 1px ${theme.palette.divider}`,
+                        boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+                    }
                 }
             }}
         >

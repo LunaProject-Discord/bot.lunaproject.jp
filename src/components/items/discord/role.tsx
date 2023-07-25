@@ -130,8 +130,14 @@ export const RolePopover = (
             onClose={handlePopupClose}
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
             transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+            slotProps={{
+                paper: {
+                    sx: {
+                        width: 300
+                    }
+                }
+            }}
             sx={{ zIndex: 1600 }}
-            PaperProps={{ sx: { width: 300 } }}
             {...props}
         >
             <SearchBox

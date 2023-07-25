@@ -202,4 +202,5 @@ export const SearchBox = (props: InputBaseProps) => (
 
 export * from './channel';
 export * from './role';
+export * from './member';
 export * from './message';
