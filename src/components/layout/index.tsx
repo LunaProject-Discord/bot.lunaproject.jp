@@ -4,7 +4,7 @@ import { Box, styled } from '@mui/material';
 import { Property } from 'csstype';
 
 export const Body = styled('body')(({ theme }) => ({
-    minHeight: '100vh',
+    minHeight: '100dvh',
     margin: 0,
     padding: 0
 }));
@@ -29,7 +29,7 @@ export const PageContent = styled(
     { shouldForwardProp: (prop) => prop !== 'sx' && prop !== 'position' && prop !== 'display' }
 )<Props>(({ theme, position, display }) => ({
     width: '100%',
-    minHeight: '100vh',
+    minHeight: '100dvh',
     padding: theme.spacing(3),
     position: position ?? 'static',
     display: display ?? 'block',
