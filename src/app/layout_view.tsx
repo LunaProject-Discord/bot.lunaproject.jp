@@ -8,11 +8,13 @@ import { OAuthUser } from '@lunaproject-discord/web-discord';
 import { createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { indigo } from '@mui/material/colors';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
+import { mediaPanelOpenAtom } from '@states/media';
 import { COOKIE_APPEARANCE } from '@utils/cookie';
 import { fetchWithUser } from '@utils/swr';
 import { parseCookies } from 'nookies';
 import React, { ReactNode, useEffect } from 'react';
-import { RecoilRoot, useRecoilState } from 'recoil';
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
+import { MediaPanel } from 'src/app/_panels/media';
 import useSWRImmutable from 'swr/immutable';
 import { getMuiDateLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';
@@ -26,6 +28,7 @@ const Layout = ({ children, localization }: LayoutProps) => {
     const { locale } = localization;
 
     const [{ isDarkMode }, setAppearance] = useRecoilState(appearanceAtom);
+    const open = useRecoilValue(mediaPanelOpenAtom);
 
     const theme = createTheme(
         {
@@ -96,9 +99,10 @@ const Layout = ({ children, localization }: LayoutProps) => {
                 <CssBaseline />
                 <GlobalStyles styles={{ Nunito, M_Plus_Rounded_1c, '*, ::before, ::after': { fontFamily } }} />
                 <Navigation user={data} localization={localization} />
-                <PageContainer>
+                <PageContainer sx={{ mr: { xl: open ? '400px' : 0 } }}>
                     {children}
                 </PageContainer>
+                {data && <MediaPanel user={data} localization={localization} />}
             </ThemeProvider>
         </StyleProvider>
     );

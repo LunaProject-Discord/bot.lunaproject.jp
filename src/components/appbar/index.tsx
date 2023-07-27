@@ -8,7 +8,7 @@ export const AppBar = styled(
     gap: theme.spacing(1),
     color: theme.palette.mode === 'dark' ? theme.palette.grey[500] : theme.palette.grey[800],
     backgroundColor: theme.palette.background.default,
-    zIndex: theme.zIndex.drawer + 1,
+    // zIndex: theme.zIndex.drawer + 1,
     [theme.breakpoints.up('md')]: {
         display: 'none'
     }
