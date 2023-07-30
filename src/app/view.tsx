@@ -12,7 +12,7 @@ import {
 } from '@lunaproject-discord/web-core/dist/components/Gallery';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { SegmentedControl } from '@lunaproject-discord/web-core/dist/components/SegmentedControl';
-import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord';
+import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import {
     AnalyticsOutlined,
     AutoAwesomeOutlined,
