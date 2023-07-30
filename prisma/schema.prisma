@@ -74,6 +74,7 @@ model guilds {
 
 model guilds_configurations {
   id             BigInt   @id
+  prefix         String   @default("s#") @db.VarChar(32)
   nickname       String   @default("[%p] %n") @db.VarChar(32)
   language       String   @default("ja-JP") @db.VarChar(8)
   timezone       String   @default("Asia/Tokyo") @db.VarChar(32)

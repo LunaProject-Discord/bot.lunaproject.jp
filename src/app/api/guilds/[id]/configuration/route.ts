@@ -50,42 +50,27 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
         const guildId = BigInt(id);
         const now = addHours(new Date(), 9);
 
-        await prisma.$transaction(async (prisma) => {
-            if (data.prefix) {
-                await prisma.guilds.update({
-                    where: {
-                        id: guildId
-                    },
-                    data: {
-                        prefix: data.prefix,
-                        updated_at: now
-                    }
-                });
-                delete data.prefix;
+        if (Object.keys(data).length > 0) {
+            const inputs: {
+                [key: string]: valueOf<Prisma.XOR<Prisma.guilds_configurationsUpdateInput, Prisma.guilds_configurationsUncheckedUpdateInput>>
+            } = {};
+
+            const configurationSections: { [key: string]: valueOf<GuildConfiguration> } = data;
+            for (const sectionKey in configurationSections) {
+                const value = configurationSections[sectionKey];
+                inputs[sectionKey] = typeof value === 'object' ? JSON.stringify(value) : value;
             }
 
-            if (Object.keys(data).length > 0) {
-                const inputs: {
-                    [key: string]: valueOf<Prisma.XOR<Prisma.guilds_configurationsUpdateInput, Prisma.guilds_configurationsUncheckedUpdateInput>>
-                } = {};
-
-                const configurationSections: { [key: string]: valueOf<GuildConfiguration> } = data;
-                for (const sectionKey in configurationSections) {
-                    const value = configurationSections[sectionKey];
-                    inputs[sectionKey] = typeof value === 'object' ? JSON.stringify(value) : value;
+            await prisma.guilds_configurations.update({
+                where: {
+                    id: guildId
+                },
+                data: {
+                    ...inputs,
+                    updated_at: now
                 }
-
-                await prisma.guilds_configurations.update({
-                    where: {
-                        id: guildId
-                    },
-                    data: {
-                        ...inputs,
-                        updated_at: now
-                    }
-                });
-            }
-        });
+            });
+        }
 
         await updateGuildConfigurationById(id);
 
