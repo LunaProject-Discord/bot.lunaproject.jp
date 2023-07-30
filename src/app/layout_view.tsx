@@ -1,6 +1,7 @@
 'use client';
 
 import { PageContainer } from '@components/layout';
+import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject-discord/web-core/dist/components/StyleProvider';
 import { MuiPalette } from '@lunaproject-discord/web-core/dist/utils/theme';
@@ -10,21 +11,21 @@ import { indigo } from '@mui/material/colors';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
 import { mediaPanelOpenAtom } from '@states/media';
 import { COOKIE_APPEARANCE } from '@utils/cookie';
-import { fetchWithUser } from '@utils/swr';
 import { parseCookies } from 'nookies';
 import React, { ReactNode, useEffect } from 'react';
 import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
 import { MediaPanel } from 'src/app/_panels/media';
-import useSWRImmutable from 'swr/immutable';
 import { getMuiDateLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';
 import { fontFamily, M_Plus_Rounded_1c, Nunito } from './theme';
 
 interface LayoutProps extends LocalizationProps {
+    user: OAuthUser | undefined;
+    flags: UserFlags | undefined;
     children: ReactNode;
 }
 
-const Layout = ({ children, localization }: LayoutProps) => {
+const Layout = ({ user, flags, localization, children }: LayoutProps) => {
     const { locale } = localization;
 
     const [{ isDarkMode }, setAppearance] = useRecoilState(appearanceAtom);
@@ -59,12 +60,6 @@ const Layout = ({ children, localization }: LayoutProps) => {
     );
 
     const cookies = parseCookies();
-    const token = cookies['token'];
-
-    const { data, error } = useSWRImmutable<OAuthUser>(
-        token ? ['https://discord.com/api/v10/users/@me', token] : null,
-        ([url, token]: string[]) => fetchWithUser(url, token)
-    );
 
     useEffect(() => {
         const appearance = cookies[COOKIE_APPEARANCE] as AppearanceType | undefined ?? 'system';
@@ -98,18 +93,18 @@ const Layout = ({ children, localization }: LayoutProps) => {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles styles={{ Nunito, M_Plus_Rounded_1c, '*, ::before, ::after': { fontFamily } }} />
-                <Navigation user={data} localization={localization} />
+                <Navigation user={user} localization={localization} />
                 <PageContainer sx={{ mr: { xl: open ? '400px' : 0 } }}>
                     {children}
                 </PageContainer>
-                {data && <MediaPanel user={data} localization={localization} />}
+                {user && flags && flags.tester && <MediaPanel user={user} localization={localization} />}
             </ThemeProvider>
         </StyleProvider>
     );
 };
 
-export const LayoutView = ({ children, localization }: LayoutProps) => (
+export const LayoutView = ({ user, flags, localization, children }: LayoutProps) => (
     <RecoilRoot>
-        <Layout localization={localization}>{children}</Layout>
+        <Layout user={user} flags={flags} localization={localization}>{children}</Layout>
     </RecoilRoot>
 );

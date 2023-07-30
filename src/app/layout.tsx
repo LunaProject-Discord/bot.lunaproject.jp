@@ -1,4 +1,6 @@
+import { getUser } from '@app/utils';
 import { Body } from '@components/layout';
+import { getUserFlags } from '@libs/bot';
 import { getLocale, getLocalization } from '@localizations/server';
 import { Metadata } from 'next';
 import React, { ReactNode } from 'react';
@@ -44,9 +46,12 @@ export const generateMetadata = (): Metadata => {
     };
 };
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+const RootLayout = async ({ children }: { children: ReactNode }) => {
     const localization = getLocalization();
     const { locale } = localization;
+
+    const user = await getUser();
+    const userFlags = user ? await getUserFlags(user.id) : undefined;
 
     return (
         <html lang={locale}>
@@ -77,7 +82,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
             />
         </head>
         <Body>
-            <LayoutView localization={localization}>{children}</LayoutView>
+            <LayoutView user={user} flags={userFlags} localization={localization}>{children}</LayoutView>
         </Body>
         </html>
     );
