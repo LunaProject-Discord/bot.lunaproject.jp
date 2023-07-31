@@ -20,7 +20,7 @@
         "@emotion/styled": "11.11.0",
         "@lexical/markdown": "0.11.2",
         "@lexical/react": "0.11.2",
-        "@lunaproject-discord/web-core": "1.3.5",
+        "@lunaproject-discord/web-core": "1.3.6",
         "@lunaproject-discord/web-discord": "1.0.12",
         "@mui/icons-material": "5.14.0",
         "@mui/lab": "5.0.0-alpha.136",
