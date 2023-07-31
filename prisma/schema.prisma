@@ -341,6 +341,33 @@ model users_profiles {
   display_name  String?  @db.VarChar(32)
 }
 
+model system_performances {
+  id                   Int      @id @default(autoincrement())
+  runtime_cpu          Float
+  system_cpu           Float
+  runtime_memory_total BigInt
+  runtime_memory_used  BigInt
+  runtime_memory_free  BigInt
+  system_memory_total  BigInt
+  system_memory_used   BigInt
+  system_memory_free   BigInt
+  updated_at           DateTime @db.DateTime(0)
+  created_at           DateTime @db.DateTime(0)
+}
+
+model system_statistics {
+  id         Int      @id @default(autoincrement())
+  statuses   String   @db.Text
+  pings      String   @db.Text
+  guilds     String   @db.Text
+  channels   String   @db.Text
+  roles      String   @db.Text
+  emojis     String   @db.Text
+  users      String   @db.Text
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
+}
+
 enum users_notifications_type {
   success
   warning
