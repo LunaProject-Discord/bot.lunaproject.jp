@@ -129,7 +129,7 @@ export const MobileNavigation = ({ openPopover, closePopover, user, localization
 
     const [open, setOpen] = useState(false);
 
-    const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
+    const handleDrawerToggle = () => setOpen((prevState) => !prevState);
 
     return (
         <Fragment>

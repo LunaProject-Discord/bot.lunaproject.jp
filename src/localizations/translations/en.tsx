@@ -35,6 +35,8 @@ export const translationsEn: Translations = {
     channels: 'Channels',
     role: 'Role',
     roles: 'Roles',
+    emoji: 'Emoji',
+    emojis: 'Emojis',
     member: 'Member',
     members: 'Members',
     user: 'User',
@@ -102,7 +104,12 @@ export const translationsEn: Translations = {
 
 
     home: 'Home',
+
+
     status: 'Status',
+    status_description: 'You can check the status of the Bot.',
+
+
     leaderboard: 'Leaderboard',
     choose_guild_leaderboard: 'Select the server on which you want to display the leaderboard.',
 
@@ -338,6 +345,10 @@ export const translationsEn: Translations = {
     user_settings: 'User Settings',
     user_time_and_language_description: 'You can set the date, time, and language used in the functions performed by the user.',
     user_language_description: 'Responses to commands you execute will be in the language you set here.',
+
+
+    statistics: 'Statistics',
+    statistics_description: 'Displays Bot statistics.',
 
 
     send_message_channel: 'Channel to send message',

@@ -326,7 +326,7 @@ const Drawer = (
 export const Navigation = ({ guild, flags, user, guilds, mutualGuilds, localization }: Props) => {
     const [open, setOpen] = useState(false);
 
-    const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
+    const handleDrawerToggle = () => setOpen((prevState) => !prevState);
 
     return (
         <Fragment>

@@ -13,7 +13,7 @@ import { COOKIE_APPEARANCE } from '@utils/cookie';
 import { parseCookies } from 'nookies';
 import React, { ReactNode, useEffect } from 'react';
 import { RecoilRoot, useRecoilState } from 'recoil';
-import { getMuiDateLocalizationByName, getMuiLocalizationByName } from '../localizations';
+import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';
 import { fontFamily, M_Plus_Rounded_1c, Nunito } from './theme';
 
@@ -53,7 +53,8 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
             }
         },
         getMuiLocalizationByName(locale),
-        getMuiDateLocalizationByName(locale)
+        getMuiDateLocalizationByName(locale),
+        getMuiGridLocalizationByName(locale)
     );
 
     const cookies = parseCookies();

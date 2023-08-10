@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -357,6 +358,62 @@ model system_performances {
 
 model system_statistics {
   id         Int      @id @default(autoincrement())
+  statuses   String   @db.Text
+  pings      String   @db.Text
+  guilds     String   @db.Text
+  channels   String   @db.Text
+  roles      String   @db.Text
+  emojis     String   @db.Text
+  users      String   @db.Text
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
+}
+
+view system_statistics_months {
+  id         Int      @unique @default(0)
+  group_by   String?  @db.VarChar(7)
+  statuses   String   @db.Text
+  pings      String   @db.Text
+  guilds     String   @db.Text
+  channels   String   @db.Text
+  roles      String   @db.Text
+  emojis     String   @db.Text
+  users      String   @db.Text
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
+}
+
+view system_statistics_days {
+  id         Int      @unique @default(0)
+  group_by   String?  @db.VarChar(10)
+  statuses   String   @db.Text
+  pings      String   @db.Text
+  guilds     String   @db.Text
+  channels   String   @db.Text
+  roles      String   @db.Text
+  emojis     String   @db.Text
+  users      String   @db.Text
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
+}
+
+view system_statistics_hours {
+  id         Int      @unique @default(0)
+  group_by   String?  @db.VarChar(24)
+  statuses   String   @db.Text
+  pings      String   @db.Text
+  guilds     String   @db.Text
+  channels   String   @db.Text
+  roles      String   @db.Text
+  emojis     String   @db.Text
+  users      String   @db.Text
+  updated_at DateTime @db.DateTime(0)
+  created_at DateTime @db.DateTime(0)
+}
+
+view system_statistics_weeks {
+  id         Int      @unique @default(0)
+  group_by   String?  @db.VarChar(7)
   statuses   String   @db.Text
   pings      String   @db.Text
   guilds     String   @db.Text

@@ -35,6 +35,8 @@ export const translationsJa: Translations = {
     channels: 'チャンネル',
     role: '役職',
     roles: '役職',
+    emoji: '絵文字',
+    emojis: '絵文字',
     member: 'メンバー',
     members: 'メンバー',
     user: 'ユーザー',
@@ -102,7 +104,11 @@ export const translationsJa: Translations = {
 
 
     home: 'ホーム',
+
+
     status: 'ステータス',
+    status_description: 'Bot のステータスを確認できます。',
+
     leaderboard: 'リーダーボード',
     choose_guild_leaderboard: 'リーダーボードを表示したいサーバーを選択してください。',
 
@@ -338,6 +344,10 @@ export const translationsJa: Translations = {
     user_settings: 'ユーザー設定',
     user_time_and_language_description: 'ユーザーが実行した機能で使用される日時や言語の設定ができます。',
     user_language_description: 'あなたが実行したコマンドの応答は、ここで設定した言語で行われます。',
+
+
+    statistics: '統計',
+    statistics_description: 'Bot の統計を表示します。',
 
 
     send_message_channel: 'メッセージを送信するチャンネル',

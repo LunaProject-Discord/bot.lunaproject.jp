@@ -36,6 +36,8 @@ export type TranslationKeys =
     | 'channels'
     | 'role'
     | 'roles'
+    | 'emoji'
+    | 'emojis'
     | 'member'
     | 'members'
     | 'user'
@@ -93,7 +95,12 @@ export type TranslationKeys =
 
 
     | 'home'
+
+
     | 'status'
+    | 'status_description'
+
+
     | 'leaderboard'
     | 'choose_guild_leaderboard'
 
@@ -282,6 +289,10 @@ export type TranslationKeys =
     | 'user_settings'
     | 'user_time_and_language_description'
     | 'user_language_description'
+
+
+    | 'statistics'
+    | 'statistics_description'
 
 
     | 'send_message_channel'
