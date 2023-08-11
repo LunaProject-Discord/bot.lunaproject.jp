@@ -36,10 +36,10 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
             valueFormatter: (params) => params.value.toLocaleString(),
             width: 120
         },
-        ...Object.entries(shards).map(([key, value]): GridColDef => ({
-            field: `shard_${key}`,
+        ...Object.keys(shards).map((shard): GridColDef => ({
+            field: `shard_${shard}`,
             type: 'number',
-            headerName: `シャード #${Number(key) + 1}`,
+            headerName: `シャード #${Number(shard) + 1}`,
             valueFormatter: (params) => params.value.toLocaleString(),
             width: 120
         }))
