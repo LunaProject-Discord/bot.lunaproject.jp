@@ -1,4 +1,3 @@
-import { StatisticsPageProps } from '@app/statistics/interfaces';
 import { getUser } from '@app/utils';
 import { UnauthorizedView } from '@app/view';
 import { getUserFlags } from '@libs/bot';
@@ -42,7 +41,7 @@ export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
     };
 };
 
-const Layout = async ({ children, ...props }: StatisticsPageProps & { children: ReactNode }) => {
+const Layout = async ({ children }: { children: ReactNode }) => {
     const localization = getLocalization();
 
     const user = await getUser();

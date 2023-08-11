@@ -1,6 +1,5 @@
 import { Statistic, StatisticChannelsData, Statistics, StatisticsPeriodType } from '@interfaces/bot';
 import prisma from '@libs/prisma';
-import { infoWithName } from '@lunaproject-discord/web-core/dist/utils/logger';
 import { system_statistics } from '@prisma/client';
 import { toDBDate } from '@utils/date';
 import { endOfWeek, getDaysInMonth, startOfWeek } from 'date-fns';
@@ -149,16 +148,6 @@ export const getDaysStatistics = async (period?: DatePeriod): Promise<Statistics
 export const getWeeksStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
     const start = period?.start ?? DateTime.now().minus({ week: 7 });
     const end = period?.end ?? DateTime.now();
-
-    infoWithName(
-        'getWeeksStatistics',
-        start.toJSDate().toLocaleString('ja-JP'),
-        startOfWeek(start.toJSDate()).toLocaleString('ja-JP'),
-        setWeeksDateTime(start, 'start').toJSDate().toLocaleString('ja-JP'),
-        toDBDate(setWeeksDateTime(start, 'start').toJSDate()).toLocaleString('ja-JP'),
-        setWeeksDateTime(end, 'end').toJSDate().toLocaleString('ja-JP'),
-        toDBDate(setWeeksDateTime(end, 'end').toJSDate()).toLocaleString('ja-JP')
-    );
 
     const systemStatistics = await prisma.system_statistics_weeks.findMany({
         where: {
