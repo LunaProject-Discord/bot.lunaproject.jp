@@ -22,3 +22,5 @@ export const AreaChart = ({ statistics, ...props }: Omit<AreaChartProps, 'width'
         </ParentSize>
     );
 };
+
+export * from './datagrid';

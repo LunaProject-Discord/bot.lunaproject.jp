@@ -1,6 +1,6 @@
 'use client';
 
-import { AreaChart } from '@app/statistics/_components';
+import { AreaChart, DataGrid } from '@app/statistics/_components';
 import { StatisticsViewProps } from '@app/statistics/interfaces';
 import { formatDate, getDate } from '@app/statistics/utils';
 import { PageContent, PageHeader } from '@components/layout';
@@ -9,7 +9,7 @@ import { LocalizationProps } from '@interfaces/localization';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { CloudOffOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Paper, Typography, Unstable_Grid2 as Grid } from '@mui/material';
-import { DataGrid, GridColDef, GridRowsProp, GridToolbar } from '@mui/x-data-grid';
+import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import React from 'react';
 
 interface Props extends StatisticsViewProps, LocalizationProps {
@@ -114,16 +114,6 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
                     initialState={{
                         sorting: {
                             sortModel: [{ field: 'date', sort: 'desc' }]
-                        }
-                    }}
-                    slots={{
-                        toolbar: GridToolbar
-                    }}
-                    slotProps={{
-                        toolbar: {
-                            printOptions: { disableToolbarButton: true },
-                            showQuickFilter: true,
-                            quickFilterProps: { debounceMs: 500 }
                         }
                     }}
                 />
