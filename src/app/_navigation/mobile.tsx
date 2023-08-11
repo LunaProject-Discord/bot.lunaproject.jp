@@ -11,6 +11,7 @@ import {
     LoginOutlined,
     MenuOutlined,
     SettingsOutlined,
+    ShowChartOutlined,
     TuneOutlined
 } from '@mui/icons-material';
 import {
@@ -93,7 +94,7 @@ export const MobileNavigationAppBarMenu = (
         openPopover,
         user,
         localization: { translations }
-    }: NavigationRootProps
+    }: Omit<NavigationRootProps, 'flags'>
 ) => user ? (
     <Tooltip title={getUserDisplayName(user)} placement="bottom">
         <IconButton
@@ -124,7 +125,7 @@ export const MobileNavigationAppBarMenu = (
     </Fragment>
 );
 
-export const MobileNavigation = ({ openPopover, closePopover, user, localization }: NavigationRootProps) => {
+export const MobileNavigation = ({ openPopover, closePopover, user, flags, localization }: NavigationRootProps) => {
     const { translations } = localization;
 
     const [open, setOpen] = useState(false);
@@ -195,6 +196,18 @@ export const MobileNavigation = ({ openPopover, closePopover, user, localization
                         setOpen={setOpen}
                     />
                 </MobileNavigationGroup>
+                {flags?.manager && <Fragment>
+                    <Divider flexItem sx={{ mx: 2 }} />
+                    <MobileNavigationGroup>
+                        <MobileNavigationItem
+                            href="/statistics"
+                            icon={<ShowChartOutlined />}
+                            primary={translations.statistics}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                    </MobileNavigationGroup>
+                </Fragment>}
             </TemporaryDrawer>
         </Fragment>
     );

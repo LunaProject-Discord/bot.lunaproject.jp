@@ -7,6 +7,7 @@ import {
     LeaderboardOutlined,
     LoginOutlined,
     SettingsOutlined,
+    ShowChartOutlined,
     TuneOutlined
 } from '@mui/icons-material';
 import { alpha, Avatar, Box, Divider, IconButton, styled, Tooltip } from '@mui/material';
@@ -67,15 +68,15 @@ const DesktopNavigationItem = ({ href, predicate, icon, label }: DesktopNavigati
     );
 };
 
-export const DesktopNavigation = ({ openPopover, user, localization: { translations } }: NavigationRootProps) => (
+export const DesktopNavigation = ({ openPopover, user, flags, localization: { translations } }: NavigationRootProps) => (
     <DesktopNavigationRoot>
         <DesktopNavigationGroup>
             <IconButton disabled>
                 <Image src={Icon} alt="" width={24} height={24} />
             </IconButton>
         </DesktopNavigationGroup>
-        <Divider flexItem sx={{ mx: 1 }} />
-        <DesktopNavigationGroup sx={{ height: '100%' }}>
+        <Divider flexItem sx={{ mx: 2 }} />
+        <DesktopNavigationGroup>
             <DesktopNavigationItem
                 href="/"
                 icon={<HomeOutlined />}
@@ -98,7 +99,17 @@ export const DesktopNavigation = ({ openPopover, user, localization: { translati
                 label={translations.guild_settings}
             />
         </DesktopNavigationGroup>
-        <Divider flexItem sx={{ mx: 1 }} />
+        {flags?.manager && <Fragment>
+            <Divider flexItem sx={{ mx: 2 }} />
+            <DesktopNavigationGroup>
+                <DesktopNavigationItem
+                    href="/statistics"
+                    icon={<ShowChartOutlined />}
+                    label={translations.statistics}
+                />
+            </DesktopNavigationGroup>
+        </Fragment>}
+        <Divider flexItem sx={{ mt: 'auto', mx: 2 }} />
         <DesktopNavigationGroup>
             {user ? <Tooltip title={getUserDisplayName(user)} placement="right">
                 <IconButton onClick={({ currentTarget }) => openPopover(currentTarget, 'user')} sx={{ p: .5 }}>

@@ -91,7 +91,7 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles styles={{ Nunito, M_Plus_Rounded_1c, '*, ::before, ::after': { fontFamily } }} />
-                <Navigation user={user} localization={localization} />
+                <Navigation user={user} flags={flags} localization={localization} />
                 <PageContainer>
                     {children}
                 </PageContainer>

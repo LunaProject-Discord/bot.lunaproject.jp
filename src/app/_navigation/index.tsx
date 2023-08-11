@@ -1,5 +1,6 @@
 'use client';
 
+import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import React, { Fragment, ReactNode, useState } from 'react';
@@ -11,6 +12,7 @@ export type PopoverType = 'services' | 'notifications' | 'user' | undefined;
 
 export interface NavigationProps extends LocalizationProps {
     user: OAuthUser | undefined;
+    flags: UserFlags | undefined;
 }
 
 export interface NavigationRootProps extends NavigationProps {
@@ -26,7 +28,7 @@ export interface NavigationItemProps {
     icon?: ReactNode;
 }
 
-export const Navigation = ({ user, localization }: NavigationProps) => {
+export const Navigation = ({ user, flags, localization }: NavigationProps) => {
     const [popoverState, setPopoverState] = useState<PopoverType>(undefined);
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -48,12 +50,14 @@ export const Navigation = ({ user, localization }: NavigationProps) => {
                 openPopover={openPopover}
                 closePopover={closePopover}
                 user={user}
+                flags={flags}
                 localization={localization}
             />
             <MobileNavigation
                 openPopover={openPopover}
                 closePopover={closePopover}
                 user={user}
+                flags={flags}
                 localization={localization}
             />
 
