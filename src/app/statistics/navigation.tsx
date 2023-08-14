@@ -219,22 +219,24 @@ const Drawer = ({ open, setOpen, localization: { translations } }: DrawerProps &
                 <StyledUl container>
                     <HeaderButtonContainer sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
-                            <Typography variant="body2" color="text.secondary" sx={{ px: .5 }}>表示する方法</Typography>
+                            <Typography variant="body2" color="text.secondary"
+                                        sx={{ px: .5 }}>{translations.statistics_mode}</Typography>
                             <FormControl fullWidth size="small">
                                 <Select<StatisticsPeriodType>
                                     value={searchParams.get('period') as (StatisticsPeriodType | undefined) ?? 'hours'}
                                     onChange={handlePeriodSelectChange}
                                     label=""
                                 >
-                                    <MenuItem value="hours">時間計 (過去24時間)</MenuItem>
-                                    <MenuItem value="days">日計</MenuItem>
-                                    <MenuItem value="weeks">週計</MenuItem>
-                                    <MenuItem value="months">月計</MenuItem>
+                                    <MenuItem value="hours">{translations.statistics_mode_hours}</MenuItem>
+                                    <MenuItem value="days">{translations.statistics_mode_days}</MenuItem>
+                                    <MenuItem value="weeks">{translations.statistics_mode_weeks}</MenuItem>
+                                    <MenuItem value="months">{translations.statistics_mode_months}</MenuItem>
                                 </Select>
                             </FormControl>
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
-                            <Typography variant="body2" color="text.secondary" sx={{ px: .5 }}>表示する期間</Typography>
+                            <Typography variant="body2" color="text.secondary"
+                                        sx={{ px: .5 }}>{translations.statistics_period}</Typography>
                             <DateTimeEditor
                                 value={searchParams.has('start') ? DateTime.fromSQL(searchParams.get('start')!!).toJSDate() : null}
                                 setValue={handleStartedAtChange}
@@ -244,8 +246,10 @@ const Drawer = ({ open, setOpen, localization: { translations } }: DrawerProps &
                             />
                             <Box
                                 sx={{ px: .5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Typography variant="body2" color="text.secondary">から</Typography>
-                                <Typography variant="body2" color="text.secondary">まで</Typography>
+                                <Typography variant="body2"
+                                            color="text.secondary">{translations.statistics_period_from}</Typography>
+                                <Typography variant="body2"
+                                            color="text.secondary">{translations.statistics_period_to}</Typography>
                             </Box>
                             <DateTimeEditor
                                 value={searchParams.has('end') ? DateTime.fromSQL(searchParams.get('end')!!).toJSDate() : null}

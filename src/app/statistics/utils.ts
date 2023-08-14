@@ -1,8 +1,9 @@
 import { StatisticsPageProps } from '@app/statistics/interfaces';
 import { Statistic, StatisticsPeriodData, StatisticsPeriodType } from '@interfaces/bot';
 import { format } from '@lunaproject-discord/web-core/dist/utils/date';
+import { max } from '@utils/array';
 import { fromDBDate } from '@utils/date';
-import { endOfWeek, getWeekOfMonth, startOfWeek } from 'date-fns';
+import { endOfWeek, startOfWeek } from 'date-fns';
 import { DateTime } from 'luxon';
 
 export const getDate = (statistic: Statistic) => fromDBDate(new Date(statistic.createdAt));
@@ -16,7 +17,7 @@ export const formatDate = (date: Date, period: StatisticsPeriodType) => {
         case 'weeks':
             const start = startOfWeek(date);
             const end = endOfWeek(date);
-            return format(date, `y年M月${getWeekOfMonth(date)}週 (${format(start, 'M月d日')} ~ ${format(end, 'M月d日')})`);
+            return `${format(start, 'M月d日')} ~ ${format(end, 'M月d日')}`;
         case 'months':
             return format(date, 'y年M月');
     }
@@ -32,3 +33,5 @@ export const getPeriod = ({ searchParams }: StatisticsPageProps): StatisticsPeri
         endedAt: end?.isValid ? end : undefined
     };
 };
+
+export const getMaxShards = (statistics: Statistic[], predicate: (statistic: Statistic) => Record<number, any>) => max(statistics, (statistic) => Object.keys(predicate(statistic)).length)?.guilds.shards ?? {};

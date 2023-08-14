@@ -56,7 +56,7 @@ export const getRoleColor = (role: APIRole | RedisRole) => {
 };
 
 
-export const sortGuilds = <T extends OAuthGuild | APIGuild | RedisGuild>(guilds: T[]) => (guilds?.slice() ?? []).sort((a, b) => a.name.localeCompare(b.name));
+export const sortGuilds = <T extends OAuthGuild | APIGuild | RedisGuild | DataGuild>(guilds: T[]) => (guilds?.slice() ?? []).sort((a, b) => a.name.localeCompare(b.name));
 
 export const sortChannels = <T extends APIGuildChannel | RedisChannel>(channels: T[]) => (channels?.slice() ?? []).sort((a, b) => a.position - b.position);
 
@@ -65,7 +65,7 @@ export const sortRoles = <T extends APIRole | RedisRole>(roles: T[]) => (roles?.
 export const sortMembers = <T extends GuildMember | RedisMember>(members: T[]) => (members?.slice() ?? []).sort((a, b) => (getMemberDisplayName(a)).localeCompare(getMemberDisplayName(b)));
 
 
-export const filterPredicateGuild = (guild: OAuthGuild | APIGuild | RedisGuild, keyword: string) => keyword.length < 1
+export const filterPredicateGuild = (guild: OAuthGuild | APIGuild | RedisGuild | DataGuild, keyword: string) => keyword.length < 1
     || guild.id.includes(keyword)
     || guild.name.toLowerCase().includes(keyword.toLowerCase());
 

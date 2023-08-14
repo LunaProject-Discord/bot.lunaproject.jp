@@ -30,6 +30,9 @@ export type TranslationKeys =
     | 'move_up'
     | 'move_down'
 
+
+    | 'shard'
+    | 'shards'
     | 'guild'
     | 'guilds'
     | 'channel'
@@ -42,6 +45,20 @@ export type TranslationKeys =
     | 'members'
     | 'user'
     | 'users'
+
+
+    | 'online'
+    | 'offline'
+
+    | 'status'
+    | 'status_connecting'
+    | 'status_connected'
+    | 'status_disconnected'
+    | 'status_waiting_reconnect'
+    | 'status_reconnecting'
+    | 'status_shutting_down'
+    | 'status_shutdown'
+    | 'status_failed_to_login'
 
 
     | 'pattern_date'
@@ -97,8 +114,11 @@ export type TranslationKeys =
     | 'home'
 
 
-    | 'status'
     | 'status_description'
+    | 'status_shard_with_id'
+    | 'status_average_ping'
+    | 'status_mutual_guilds'
+    | 'status_mutual_guilds_with_count'
 
 
     | 'leaderboard'
@@ -293,6 +313,20 @@ export type TranslationKeys =
 
     | 'statistics'
     | 'statistics_description'
+    | 'statistics_mode'
+    | 'statistics_mode_hours'
+    | 'statistics_mode_days'
+    | 'statistics_mode_weeks'
+    | 'statistics_mode_months'
+    | 'statistics_period'
+    | 'statistics_period_from'
+    | 'statistics_period_to'
+    | 'statistics_widget_live'
+    | 'statistics_widget_min'
+    | 'statistics_widget_max'
+    | 'statistics_table_date'
+    | 'statistics_table_total'
+    | 'statistics_table_shard_with_id'
 
 
     | 'send_message_channel'

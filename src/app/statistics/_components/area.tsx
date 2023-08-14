@@ -1,3 +1,4 @@
+import { StatisticResponseProps } from '@app/statistics/_components/interfaces';
 import { Statistic } from '@interfaces/bot';
 import { useTheme } from '@mui/material';
 import { fromDBDate } from '@utils/date';
@@ -14,12 +15,8 @@ import React, { useCallback, useMemo } from 'react';
 
 const bisectDate = bisector<Statistic, Date>((statistic) => fromDBDate(new Date(statistic.createdAt))).left;
 
-export interface AreaChartProps {
+export interface AreaChartProps extends StatisticResponseProps {
     statistics: Statistic[];
-    getDate: (statistic: Statistic) => Date;
-    getValue: (statistic: Statistic) => number;
-    formatDate: (date: Date) => string;
-    formatValue: (value: number) => string;
 
     width: number;
     height: number;
@@ -95,8 +92,8 @@ export const AreaChart = withTooltip<AreaChartProps, Statistic>((
                     id="area-gradient"
                     from={theme.palette.primary.main}
                     to={theme.palette.primary.main}
-                    fromOpacity={.3}
-                    toOpacity={.3}
+                    fromOpacity={.2}
+                    toOpacity={.2}
                 />
                 <GridRows
                     left={margin.left}

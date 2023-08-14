@@ -29,6 +29,9 @@ export const translationsEn: Translations = {
     move_up: 'Move Up',
     move_down: 'Move Down',
 
+
+    shard: 'Shard',
+    shards: 'Shards',
     guild: 'Server',
     guilds: 'Servers',
     channel: 'Channel',
@@ -41,6 +44,20 @@ export const translationsEn: Translations = {
     members: 'Members',
     user: 'User',
     users: 'Users',
+
+
+    online: 'Online',
+    offline: 'Offline',
+
+    status: 'Status',
+    status_connecting: 'Connecting...',
+    status_connected: 'Connected',
+    status_disconnected: 'Disconnected',
+    status_waiting_reconnect: 'Waiting for reconnection...',
+    status_reconnecting: 'Reconnecting...',
+    status_shutting_down: 'Shutting down...',
+    status_shutdown: 'Shutdown',
+    status_failed_to_login: 'Failed to login',
 
 
     pattern_date: 'yyyy/MM/dd (E)',
@@ -106,8 +123,11 @@ export const translationsEn: Translations = {
     home: 'Home',
 
 
-    status: 'Status',
     status_description: 'You can check the status of the Bot.',
+    status_shard_with_id: 'Shard #%id',
+    status_average_ping: 'Average Ping',
+    status_mutual_guilds: 'Mutual Servers',
+    status_mutual_guilds_with_count: '%c mutual servers',
 
 
     leaderboard: 'Leaderboard',
@@ -349,6 +369,20 @@ export const translationsEn: Translations = {
 
     statistics: 'Statistics',
     statistics_description: 'Displays Bot statistics.',
+    statistics_mode: 'View Mode',
+    statistics_mode_hours: 'Hourly (Last 24 hours)',
+    statistics_mode_days: 'Daily',
+    statistics_mode_weeks: 'Weekly',
+    statistics_mode_months: 'Monthly',
+    statistics_period: 'View Period',
+    statistics_period_from: 'From',
+    statistics_period_to: 'To',
+    statistics_widget_live: 'Live value',
+    statistics_widget_min: 'Minimum value for this period',
+    statistics_widget_max: 'Maximum value for this period',
+    statistics_table_date: 'Date',
+    statistics_table_total: 'Total',
+    statistics_table_shard_with_id: 'Shard #%id',
 
 
     send_message_channel: 'Channel to send message',

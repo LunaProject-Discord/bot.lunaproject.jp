@@ -1,46 +1,55 @@
 'use client';
 
 import { AreaChart, DataGrid } from '@app/statistics/_components';
+import { LatestWidget, MaxWidget, MinWidget } from '@app/statistics/_components/widgets';
 import { StatisticsViewProps } from '@app/statistics/interfaces';
-import { formatDate, getDate } from '@app/statistics/utils';
+import { formatDate, getDate, getMaxShards } from '@app/statistics/utils';
 import { PageContent, PageHeader } from '@components/layout';
 import { Statistic } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { CloudOffOutlined } from '@mui/icons-material';
-import { Box, CircularProgress, Paper, Typography, Unstable_Grid2 as Grid } from '@mui/material';
-import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
+import { Box, CircularProgress, Typography, Unstable_Grid2 as Grid } from '@mui/material';
+import { GridColDef, GridRowsProp, GridValidRowModel } from '@mui/x-data-grid';
+import { max, min } from '@utils/array';
 import React from 'react';
+
+const getValue = (statistic: Statistic) => statistic.channels.total;
+const formatValue = (value: number) => value.toLocaleString();
 
 interface Props extends StatisticsViewProps, LocalizationProps {
     statistic: Statistic;
 }
 
-export const View = ({ statistic, statistics: { period: { type }, statistics }, localization: { translations } }: Props) => {
-    const latestStatistic = statistics[statistics.length - 1];
+export const View = ({ statistic, statistics: { period: { type }, statistics }, localization }: Props) => {
+    const { translations } = localization;
 
-    const shards = statistics.sort((a, b) => Object.keys(b.channels.shards).length - Object.keys(a.channels.shards).length)[0].channels.shards;
+    const latestStatistic = statistics[statistics.length - 1];
+    const minStatistic = min(statistics, getValue);
+    const maxStatistic = max(statistics, getValue);
+
+    const shards = getMaxShards(statistics, (statistic) => statistic.channels.shards);
 
     const gridColumns: GridColDef[] = [
         {
             field: 'date',
             type: 'dateTime',
-            headerName: '日付',
+            headerName: String(translations.statistics_table_date),
             valueFormatter: (params) => formatDate(params.value, type),
             width: 250
         },
         {
             field: 'total',
             type: 'number',
-            headerName: '合計',
+            headerName: String(translations.statistics_table_total),
             valueFormatter: (params) => params.value.toLocaleString(),
             width: 120
         },
-        ...Object.keys(shards).map((shard): GridColDef => ({
+        ...Object.keys(shards).map((shard): GridColDef<GridValidRowModel, number | undefined, string> => ({
             field: `shard_${shard}`,
             type: 'number',
-            headerName: `シャード #${Number(shard) + 1}`,
-            valueFormatter: (params) => params.value.toLocaleString(),
+            headerName: String(translations.statistics_table_shard_with_id).replace('%id', (Number(shard) + 1).toLocaleString()),
+            valueFormatter: (params) => params.value?.toLocaleString() ?? 'N/A',
             width: 120
         }))
     ];
@@ -62,37 +71,30 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
             </PageHeader>
             <Section>
                 <Grid container spacing={2}>
-                    <Grid xs={12} md={3}>
-                        <Paper
-                            elevation={0}
-                            sx={{
-                                p: 3,
-                                color: 'primary.contrastText',
-                                bgcolor: 'primary.main',
-                                borderRadius: 1
-                            }}
-                        >
-                            <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
-                                <Typography variant="caption">速報値</Typography>
-                                <Typography variant="h4" sx={{ fontFamily: 'Renner, sans-serif' }}>
-                                    {statistic.channels.total.toLocaleString()}
-                                </Typography>
-                            </Box>
-                        </Paper>
-                    </Grid>
-                    {(statistic.id !== latestStatistic.id && statistic.channels.total !== latestStatistic.channels.total) &&
-                        <Grid xs={12} md={3}>
-                            <Paper variant="outlined" elevation={0} sx={{ p: 3 }}>
-                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
-                                    <Typography variant="caption">
-                                        {formatDate(getDate(latestStatistic), type)} 時点の合計
-                                    </Typography>
-                                    <Typography variant="h4" sx={{ fontFamily: 'Renner, sans-serif' }}>
-                                        {latestStatistic.channels.total.toLocaleString()}
-                                    </Typography>
-                                </Box>
-                            </Paper>
-                        </Grid>}
+                    <LatestWidget
+                        statistic={statistic}
+                        difference={latestStatistic}
+                        getValue={getValue}
+                        formatValue={formatValue}
+                        type={type}
+                        localization={localization}
+                    />
+                    {minStatistic && <MinWidget
+                        statistic={minStatistic}
+                        getDate={getDate}
+                        getValue={getValue}
+                        formatDate={(date) => formatDate(date, type)}
+                        formatValue={formatValue}
+                        localization={localization}
+                    />}
+                    {maxStatistic && <MaxWidget
+                        statistic={maxStatistic}
+                        getDate={getDate}
+                        getValue={getValue}
+                        formatDate={(date) => formatDate(date, type)}
+                        formatValue={formatValue}
+                        localization={localization}
+                    />}
                 </Grid>
             </Section>
             <Section>
@@ -100,9 +102,9 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
                     <AreaChart
                         statistics={statistics}
                         getDate={getDate}
-                        getValue={(statistic) => statistic.channels.total}
+                        getValue={getValue}
                         formatDate={(date) => formatDate(date, type)}
-                        formatValue={(value) => value.toLocaleString()}
+                        formatValue={formatValue}
                     />
                 </SectionContent>
             </Section>

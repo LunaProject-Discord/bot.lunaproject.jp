@@ -1,3 +1,5 @@
+import { SessionStatus } from '@interfaces/bot';
+
 export interface RedisSnowflake {
     id: string;
 }
@@ -69,6 +71,12 @@ export interface RedisUserGuilds extends RedisSnowflake {
 export interface RedisUserGuild extends RedisSnowflake {
     owner: boolean;
     permissions: string;
+}
+
+export interface RedisStatus {
+    id: number;
+    status: SessionStatus;
+    ping: number;
 }
 
 export interface RedisCommand {

@@ -1,8 +1,10 @@
-import { getHoursStatistics, getLatestStatistic } from '@libs/bot';
+import { getGuilds, getUser } from '@app/utils';
+import { getAndRequestUserGuildsById, getStatuses } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
+import { sortGuilds } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
-import { NotFoundView, View } from './view';
+import { View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
     const { translations } = getLocalization();
@@ -30,14 +32,23 @@ export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
 const Page = async () => {
     const localization = getLocalization();
 
-    const statistic = await getLatestStatistic();
-    const statistics = await getHoursStatistics();
-    console.log(statistic, statistics);
+    const userData = getUser();
+    const guildsData = getGuilds();
+    const statusesData = getStatuses();
+    const [user, guilds, statuses] = await Promise.all([userData, guildsData, statusesData]);
 
-    if (!statistic)
-        return (<NotFoundView localization={localization} />);
+    const mutualGuilds = user ? await getAndRequestUserGuildsById(user.id) : [];
+    const mutualGuildIds = mutualGuilds.map((mutualGuild) => mutualGuild.id);
+    const sortedGuilds = sortGuilds(guilds.filter((guild) => mutualGuildIds.includes(guild.id)));
 
-    return (<View statistic={statistic} localization={localization} />);
+    return (
+        <View
+            user={user}
+            guilds={sortedGuilds}
+            statuses={statuses}
+            localization={localization}
+        />
+    );
 };
 
 export default Page;

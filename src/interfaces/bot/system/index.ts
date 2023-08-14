@@ -1,1 +1,18 @@
+export type SessionStatus =
+    'INITIALIZING'
+    | 'INITIALIZED'
+    | 'LOGGING_IN'
+    | 'CONNECTING_TO_WEBSOCKET'
+    | 'IDENTIFYING_SESSION'
+    | 'AWAITING_LOGIN_CONFIRMATION'
+    | 'LOADING_SUBSYSTEMS'
+    | 'CONNECTED'
+    | 'DISCONNECTED'
+    | 'RECONNECT_QUEUED'
+    | 'WAITING_TO_RECONNECT'
+    | 'ATTEMPTING_TO_RECONNECT'
+    | 'SHUTTING_DOWN'
+    | 'SHUTDOWN'
+    | 'FAILED_TO_LOGIN';
+
 export * from './statistics';

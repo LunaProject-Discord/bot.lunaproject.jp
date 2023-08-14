@@ -1,5 +1,5 @@
 import { DataGuild, RedisGuild, RedisMember, RedisUser } from '@interfaces/redis';
-import { GuildMember } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { GuildMember, OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { APIGuild, APIUser } from 'discord-api-types/v10';
 
 export const CDN_BASE_URL = 'https://cdn.discordapp.com';
@@ -11,7 +11,7 @@ export const buildCdnUrl = (path: string, size?: number, format?: CdnImageFormat
     CDN_BASE_URL
 ).toString();
 
-export const getGuildIcon = (guild: APIGuild | RedisGuild | DataGuild, size?: number, format?: CdnImageFormat) => guild.icon ? buildCdnUrl(
+export const getGuildIcon = (guild: OAuthGuild | APIGuild | RedisGuild | DataGuild, size?: number, format?: CdnImageFormat) => guild.icon ? buildCdnUrl(
     `/icons/${guild.id}/${guild.icon}`,
     size,
     format
@@ -23,7 +23,7 @@ export const getGuildIcon = (guild: APIGuild | RedisGuild | DataGuild, size?: nu
 
 export const getMemberAvatar = (
     member: GuildMember | RedisMember,
-    guild: APIGuild | RedisGuild | DataGuild | string,
+    guild: OAuthGuild | APIGuild | RedisGuild | DataGuild | string,
     size?: number,
     format?: CdnImageFormat
 ) => member.avatar ? buildCdnUrl(
@@ -36,7 +36,7 @@ export const getMemberAvatar = (
     format
 );
 
-export const getUserAvatar = (user: APIUser | RedisUser, size?: number, format?: CdnImageFormat) => user.avatar ? buildCdnUrl(
+export const getUserAvatar = (user: OAuthUser | APIUser | RedisUser, size?: number, format?: CdnImageFormat) => user.avatar ? buildCdnUrl(
     `/avatars/${user.id}/${user.avatar}`,
     size,
     format

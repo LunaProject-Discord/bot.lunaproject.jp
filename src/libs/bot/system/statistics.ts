@@ -80,8 +80,8 @@ export interface DatePeriod {
 }
 
 export const getHoursStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
-    const start = period?.start ?? DateTime.now().minus({ day: 1 });
-    const end = period?.end ?? DateTime.now();
+    const start = period?.start ?? DateTime.now().minus({ day: 1, hour: 1 });
+    const end = period?.end ?? DateTime.now().minus({ hour: 1 });
 
     const systemStatistics = await prisma.system_statistics_hours.findMany({
         where: {
@@ -114,7 +114,7 @@ export const getHoursStatistics = async (period?: DatePeriod): Promise<Statistic
 
 export const getDaysStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
     const start = period?.start ?? DateTime.now().minus({ month: 1 });
-    const end = period?.end ?? DateTime.now();
+    const end = period?.end ?? DateTime.now().minus({ day: 1 });
 
     const systemStatistics = await prisma.system_statistics_days.findMany({
         where: {
@@ -147,7 +147,7 @@ export const getDaysStatistics = async (period?: DatePeriod): Promise<Statistics
 
 export const getWeeksStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
     const start = period?.start ?? DateTime.now().minus({ week: 7 });
-    const end = period?.end ?? DateTime.now();
+    const end = period?.end ?? DateTime.now().minus({ week: 1 });
 
     const systemStatistics = await prisma.system_statistics_weeks.findMany({
         where: {
@@ -180,7 +180,7 @@ export const getWeeksStatistics = async (period?: DatePeriod): Promise<Statistic
 
 export const getMonthsStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
     const start = period?.start ?? DateTime.now().minus({ month: 7 });
-    const end = period?.end ?? DateTime.now();
+    const end = period?.end ?? DateTime.now().minus({ month: 1 });
 
     const systemStatistics = await prisma.system_statistics_months.findMany({
         where: {
