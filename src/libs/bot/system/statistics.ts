@@ -3,7 +3,7 @@ import prisma from '@libs/prisma';
 import { system_statistics } from '@prisma/client';
 import { toDBDate } from '@utils/date';
 import { endOfWeek, getDaysInMonth, startOfWeek } from 'date-fns';
-import { DateObjectUnits, DateTime } from 'luxon';
+import { DateObjectUnits, DateTime, Settings } from 'luxon';
 
 export const getStatistic = async (statisticOrId: system_statistics | number): Promise<Statistic | undefined> => {
     const systemStatistic = typeof statisticOrId === 'number' ? await prisma.system_statistics.findUnique({ where: { id: statisticOrId } }) : statisticOrId;
@@ -80,6 +80,7 @@ export interface DatePeriod {
 }
 
 export const getHoursStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
+    Settings.defaultZone = 'Asia/Tokyo';
     const start = period?.start ?? DateTime.now().minus({ day: 1, hour: 1 });
     const end = period?.end ?? DateTime.now().minus({ hour: 1 });
 
@@ -113,6 +114,7 @@ export const getHoursStatistics = async (period?: DatePeriod): Promise<Statistic
 };
 
 export const getDaysStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
+    Settings.defaultZone = 'Asia/Tokyo';
     const start = period?.start ?? DateTime.now().minus({ month: 1 });
     const end = period?.end ?? DateTime.now().minus({ day: 1 });
 
@@ -146,6 +148,7 @@ export const getDaysStatistics = async (period?: DatePeriod): Promise<Statistics
 };
 
 export const getWeeksStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
+    Settings.defaultZone = 'Asia/Tokyo';
     const start = period?.start ?? DateTime.now().minus({ week: 7 });
     const end = period?.end ?? DateTime.now().minus({ week: 1 });
 
@@ -179,6 +182,7 @@ export const getWeeksStatistics = async (period?: DatePeriod): Promise<Statistic
 };
 
 export const getMonthsStatistics = async (period?: DatePeriod): Promise<Statistics | undefined> => {
+    Settings.defaultZone = 'Asia/Tokyo';
     const start = period?.start ?? DateTime.now().minus({ month: 7 });
     const end = period?.end ?? DateTime.now().minus({ month: 1 });
 
