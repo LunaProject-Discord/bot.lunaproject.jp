@@ -115,10 +115,15 @@ export type TranslationKeys =
 
 
     | 'status_description'
+    | 'status_all_connected'
+    | 'status_any_connected'
+    | 'status_all_disconnected'
     | 'status_shard_with_id'
     | 'status_average_ping'
     | 'status_mutual_guilds'
     | 'status_mutual_guilds_with_count'
+    | 'status_mutual_guilds_empty'
+    | 'status_mutual_guilds_not_logged_in'
 
 
     | 'leaderboard'

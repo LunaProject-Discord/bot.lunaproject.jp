@@ -124,10 +124,16 @@ export const translationsJa: Translations = {
 
 
     status_description: 'Bot のステータスを確認できます。',
+    status_all_connected: 'すべてのシャードは正常に接続されています。',
+    status_any_connected: 'いくつかのシャードが接続されていない可能性があります！',
+    status_all_disconnected: 'すべてのシャードが準備中であるか Discord に接続されていません！',
     status_shard_with_id: 'シャード #%id',
     status_average_ping: '平均 Ping',
     status_mutual_guilds: '共通のサーバー',
     status_mutual_guilds_with_count: '%c つの共通なサーバー',
+    status_mutual_guilds_empty: '共通のサーバーはありません',
+    status_mutual_guilds_not_logged_in: 'ログインをすることで共通のサーバーを表示することができます。',
+
 
     leaderboard: 'リーダーボード',
     choose_guild_leaderboard: 'リーダーボードを表示したいサーバーを選択してください。',

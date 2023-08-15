@@ -124,10 +124,15 @@ export const translationsEn: Translations = {
 
 
     status_description: 'You can check the status of the Bot.',
+    status_all_connected: 'All shards are connected properly.',
+    status_any_connected: 'Some shards may not be connected!',
+    status_all_disconnected: 'All shards are either in preparation or not connected to Discord!',
     status_shard_with_id: 'Shard #%id',
     status_average_ping: 'Average Ping',
     status_mutual_guilds: 'Mutual Servers',
     status_mutual_guilds_with_count: '%c mutual servers',
+    status_mutual_guilds_empty: 'No mutual servers',
+    status_mutual_guilds_not_logged_in: 'You can view mutual servers by logging in.',
 
 
     leaderboard: 'Leaderboard',

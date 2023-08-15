@@ -7,20 +7,21 @@ import { RedisStatus } from '@interfaces/redis';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { CloudOffOutlined } from '@mui/icons-material';
-import { Alert, Box, CircularProgress, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, CircularProgress, Typography } from '@mui/material';
 import { sortGuilds } from '@utils/discord';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 interface Props extends LocalizationProps {
+    statuses: RedisStatus[];
     user: OAuthUser | undefined;
     guilds: OAuthGuild[];
-    statuses: RedisStatus[];
 }
 
-export const View = ({ guilds, statuses, localization }: Props) => {
+export const View = ({ statuses, user, guilds, localization }: Props) => {
     const { translations } = localization;
 
     const isAllConnected = statuses.every(({ status }) => status === 'CONNECTED');
+    const isAllDisconnected = statuses.every(({ status }) => status !== 'CONNECTED');
 
     return (
         <PageContent>
@@ -30,17 +31,29 @@ export const View = ({ guilds, statuses, localization }: Props) => {
                     <Typography>{translations.status_description}</Typography>
                 </Box>
             </PageHeader>
-            {isAllConnected ? <Alert severity="success" sx={{ mt: 3 }}>
-                すべてのシャードは正常に接続されています。
-            </Alert> : <Alert severity="warning" sx={{ mt: 3 }}>
-                いくつかのシャードが接続されていない可能性があります。
-            </Alert>}
+            <Section>
+                <SectionContent>
+                    {!isAllDisconnected ? <Fragment>
+                        {isAllConnected ? <Alert severity="success">
+                            <AlertTitle>{translations.online}</AlertTitle>
+                            {translations.status_all_connected}
+                        </Alert> : <Alert severity="warning">
+                            <AlertTitle>{translations.online} ({translations.warning})</AlertTitle>
+                            {translations.status_any_connected}
+                        </Alert>}
+                    </Fragment> : <Alert severity="error">
+                        <AlertTitle>{translations.offline}</AlertTitle>
+                        {translations.status_all_disconnected}
+                    </Alert>}
+                </SectionContent>
+            </Section>
             <Section>
                 <SectionContent>
                     {statuses.map((status) => (
                         <Status
                             key={status.id}
                             status={status}
+                            user={user}
                             guilds={sortGuilds(guilds.filter((guild) => (BigInt(guild.id) >> 22n) % BigInt(statuses.length) === BigInt(status.id)))}
                             localization={localization}
                         />

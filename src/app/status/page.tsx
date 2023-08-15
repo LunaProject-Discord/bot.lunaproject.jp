@@ -43,9 +43,9 @@ const Page = async () => {
 
     return (
         <View
+            statuses={statuses}
             user={user}
             guilds={sortedGuilds}
-            statuses={statuses}
             localization={localization}
         />
     );
