@@ -1,6 +1,6 @@
 import { PartialGuildLevel } from '@interfaces/bot';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration, getGuildLevels } from '@libs/bot';
+import { getGuildLevels } from '@libs/bot';
 import { getGuildById } from '@lunaproject-discord/web-discord';
 import { COOKIE_TOKEN } from '@utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
@@ -20,8 +20,7 @@ export const GET = async (req: NextRequest, { params: { id } }: WithIdParamProps
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    const guildConfiguration = await getGuildConfiguration(id);
-    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD) || !guildConfiguration?.level.leaderboard.public)
+    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
     return NextResponse.json(await getGuildLevels(id, isFetchUser), { status: 200 });
@@ -37,8 +36,7 @@ export const PATCH = async (req: Request, { params: { id } }: WithIdParamProps) 
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    const guildConfiguration = await getGuildConfiguration(id);
-    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD) || !guildConfiguration?.level.leaderboard.public)
+    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
     const data: PartialGuildLevel[] = await req.json();
