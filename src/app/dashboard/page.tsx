@@ -1,3 +1,4 @@
+import { UnauthorizedView } from '@app/view';
 import { getAndRequestUserGuildsById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
 import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
@@ -5,7 +6,6 @@ import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from 
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { getGuilds, getUser } from '../utils';
-import { UnauthorizedView } from '../view';
 import { View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
