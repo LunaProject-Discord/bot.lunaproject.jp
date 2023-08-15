@@ -1,10 +1,10 @@
+import { UnauthorizedView } from '@app/view';
 import { getGuildConfiguration } from '@libs/bot';
 import { getAndRequestUserGuildsById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
 import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { sortGuilds } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
-import { NextResponse } from 'next/server';
 import React from 'react';
 import { getGuilds, getUser } from '../utils';
 import { View } from './view';
@@ -33,7 +33,7 @@ const Page = async () => {
 
     const user = await getUser();
     if (!user)
-        return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
+        return (<UnauthorizedView localization={localization} />);
 
     const guildsData = getGuilds();
     const mutualGuildsData = getAndRequestUserGuildsById(user.id);
