@@ -41,7 +41,10 @@ export const DialogActions = styled(MuiDialogActions)(({ theme }) => ({
     padding: theme.spacing(0, 2, 2),
     display: 'flex',
     alignItems: 'center',
-    gap: theme.spacing(1.5)
+    gap: theme.spacing(1.5),
+    '& > :not(:first-of-type)': {
+        margin: 0
+    }
 }));
 
 export * from './manage_disabled_channels';

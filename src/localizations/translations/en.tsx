@@ -270,14 +270,14 @@ export const translationsEn: Translations = {
             <li>User Name: <code>{'{'}user:name{'}'}</code></li>
             <li>User Discriminator: <code>{'{'}user:discriminator{'}'}</code></li>
             <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
-            <li>変更前の暫定順位: <code>{'{'}rank:old{'}'}</code></li>
-            <li>変更後の暫定順位: <code>{'{'}rank:new{'}'}</code></li>
-            <li>変更前のレベル: <code>{'{'}level:old{'}'}</code></li>
-            <li>変更後のレベル: <code>{'{'}level:new{'}'}</code></li>
-            <li>変更前の経験値: <code>{'{'}xp:old{'}'}</code></li>
-            <li>変更後の経験値: <code>{'{'}xp:new{'}'}</code></li>
-            <li>変更前の最大経験値: <code>{'{'}max_xp:old{'}'}</code></li>
-            <li>変更後の最大経験値: <code>{'{'}max_xp:new{'}'}</code></li>
+            <li>Tentative ranking before change: <code>{'{'}rank:old{'}'}</code></li>
+            <li>Tentative ranking after change: <code>{'{'}rank:new{'}'}</code></li>
+            <li>Level before change: <code>{'{'}level:old{'}'}</code></li>
+            <li>Level after change: <code>{'{'}level:new{'}'}</code></li>
+            <li>Experience before the change: <code>{'{'}xp:old{'}'}</code></li>
+            <li>Experience after change: <code>{'{'}xp:new{'}'}</code></li>
+            <li>Maximum experience before change: <code>{'{'}max_xp:old{'}'}</code></li>
+            <li>Maximum experience after change: <code>{'{'}max_xp:new{'}'}</code></li>
         </ul>
     </Fragment>,
     level_leaderboard: 'Leaderboard',
@@ -393,9 +393,20 @@ export const translationsEn: Translations = {
     send_message_channel: 'Channel to send message',
     manage_disabled_channels: 'Manage Disabled Channels',
     manage_disabled_roles: 'Manage Disabled Roles',
+
+
     message_builder: 'Message Builder',
+    message_builder_editor: 'Editor',
+    message_builder_preview: 'Preview',
+    message_builder_light_theme: 'Change to a light theme',
+    message_builder_dark_theme: 'Change to a dark theme',
+    message_builder_cozy_mode: 'Change to cozy mode',
+    message_builder_compact_mode: 'Change to compact mode',
+
     customize_message: 'Customize Message',
     edit_message: 'Edit Message',
+
+
     about_this_settings: 'About this settings',
     notifications: 'Notifications',
     manage_account: 'Manage Account',

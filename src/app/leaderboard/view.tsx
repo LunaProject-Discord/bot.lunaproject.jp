@@ -80,7 +80,7 @@ interface Props extends LocalizationProps {
 }
 
 export const View = ({ guilds, localization: { translations } }: Props) => {
-    const [viewAs, setViewAs] = useState<ViewType>('gallery');
+    const [viewType, setViewType] = useState<ViewType>('gallery');
 
     return (
         <PageContent display="flex">
@@ -91,8 +91,8 @@ export const View = ({ guilds, localization: { translations } }: Props) => {
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>
                     <SegmentedControl<ViewType>
-                        value={viewAs}
-                        setValue={setViewAs}
+                        value={viewType}
+                        setValue={setViewType}
                         choices={[
                             { value: 'gallery', children: (<GridViewOutlined />) },
                             { value: 'table', children: (<FormatListBulletedOutlined />) }
@@ -101,7 +101,7 @@ export const View = ({ guilds, localization: { translations } }: Props) => {
                 </Box>
             </PageHeader>
             <Section sx={{ p: 0 }}>
-                {viewAs === 'gallery' ? (<GuildsGallery guilds={guilds} />) : (<GuildsTable guilds={guilds} />)}
+                {viewType === 'gallery' ? (<GuildsGallery guilds={guilds} />) : (<GuildsTable guilds={guilds} />)}
             </Section>
         </PageContent>
     );

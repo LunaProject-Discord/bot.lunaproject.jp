@@ -393,9 +393,20 @@ export const translationsJa: Translations = {
     send_message_channel: 'メッセージを送信するチャンネル',
     manage_disabled_channels: '無効なチャンネルの管理',
     manage_disabled_roles: '無効な役職の管理',
+
+
     message_builder: 'メッセージ ビルダー',
+    message_builder_editor: '編集',
+    message_builder_preview: 'プレビュー',
+    message_builder_light_theme: 'ライトテーマに変更する',
+    message_builder_dark_theme: 'ダークテーマに変更する',
+    message_builder_cozy_mode: '通常モードに変更する',
+    message_builder_compact_mode: 'コンパクトモードに変更する',
+
     customize_message: 'メッセージをカスタマイズ',
     edit_message: 'メッセージを編集',
+
+
     about_this_settings: 'この設定について',
     notifications: '通知',
     manage_account: 'アカウントの管理',
@@ -417,4 +428,3 @@ export const localizationJa: Localization = {
     locale: 'ja',
     translations: translationsJa
 };
-

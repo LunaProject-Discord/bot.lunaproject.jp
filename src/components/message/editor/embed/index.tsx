@@ -100,7 +100,7 @@ export const EmbedEditor = ({ id, embed, onChange, removeEmbed, localization }: 
                     }
                 }}
             >
-                {translations.embeds} #{id + 1}{embed.title && ` — ${embed.title}`}
+                {translations.embed} #{id + 1}{embed.title && ` — ${embed.title}`}
                 <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: .5 }}>
                     <Tooltip title={translations.remove} placement="top">
                         <IconButton
@@ -139,7 +139,10 @@ export const EmbedEditor = ({ id, embed, onChange, removeEmbed, localization }: 
                 />
                 <EmbedFooterEditor
                     value={footer}
-                    setValue={(action) => onChange({ ...embed, ...getStateActionValue(action, footer) })}
+                    setValue={(action) => {
+                        const { timestamp, ...value } = getStateActionValue(action, footer);
+                        onChange({ ...embed, timestamp, footer: value });
+                    }}
                     localization={localization}
                 />
             </AccordionDetails>

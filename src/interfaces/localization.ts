@@ -337,9 +337,20 @@ export type TranslationKeys =
     | 'send_message_channel'
     | 'manage_disabled_channels'
     | 'manage_disabled_roles'
+
+
     | 'message_builder'
+    | 'message_builder_editor'
+    | 'message_builder_preview'
+    | 'message_builder_light_theme'
+    | 'message_builder_dark_theme'
+    | 'message_builder_cozy_mode'
+    | 'message_builder_compact_mode'
+
     | 'customize_message'
     | 'edit_message'
+
+
     | 'about_this_settings'
     | 'notifications'
     | 'manage_account'
