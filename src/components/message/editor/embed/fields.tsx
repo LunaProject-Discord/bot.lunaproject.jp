@@ -32,6 +32,7 @@ interface EmbedFieldEditorProps extends ItemDisabledProps, ItemVariableProps<Emb
     visibleMoveDownButton: boolean;
     moveUp: (e: MouseEvent<HTMLButtonElement>) => void;
     moveDown: (e: MouseEvent<HTMLButtonElement>) => void;
+    duplicate: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const EmbedFieldEditor = (
@@ -45,6 +46,7 @@ export const EmbedFieldEditor = (
         visibleMoveDownButton,
         moveUp,
         moveDown,
+        duplicate,
         localization: { translations }
     }: EmbedFieldEditorProps
 ) => (
@@ -62,9 +64,11 @@ export const EmbedFieldEditor = (
                         <KeyboardArrowDownOutlined />
                     </IconButton>
                 </Tooltip>}
-                <IconButton size="small" sx={{ width: 36, height: 36 }}>
-                    <ContentCopyOutlined fontSize="small" />
-                </IconButton>
+                <Tooltip title={translations.duplicate} placement="top">
+                    <IconButton onClick={duplicate} size="small" sx={{ width: 36, height: 36 }}>
+                        <ContentCopyOutlined fontSize="small" />
+                    </IconButton>
+                </Tooltip>
                 <Tooltip title={translations.remove} placement="top">
                     <IconButton onClick={remove} size="small" color="error" sx={{ width: 36, height: 36 }}>
                         <ClearOutlined fontSize="small" />
@@ -128,6 +132,11 @@ export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: E
 
     const moveDown = (i: number) => setValue((prevValue) => moveDownArray(prevValue, i));
 
+    const duplicate = (i: number, mode: 'next' | 'last') => setValue((prevValue) => {
+        const field = prevValue[i];
+        return replaceArray(prevValue, mode === 'next' ? i + 1 : prevValue.length, { ...field, _id: nanoid() }, 0);
+    });
+
     return (
         <EmbedAccordion>
             <EmbedAccordionSummary>{translations.embed_fields}</EmbedAccordionSummary>
@@ -153,6 +162,10 @@ export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: E
                             moveDown={(e) => {
                                 e.stopPropagation();
                                 moveDown(i);
+                            }}
+                            duplicate={(e) => {
+                                e.stopPropagation();
+                                duplicate(i, e.shiftKey ? 'last' : 'next');
                             }}
                             localization={localization}
                         />

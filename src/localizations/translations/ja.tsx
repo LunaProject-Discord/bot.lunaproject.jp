@@ -28,6 +28,7 @@ export const translationsJa: Translations = {
     close: '閉じる',
     move_up: '上に移動',
     move_down: '下に移動',
+    duplicate: '複製',
 
 
     shard: 'シャード',

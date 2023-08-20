@@ -32,6 +32,7 @@ import {
     replace as replaceArray
 } from '@utils/array';
 import { getStateActionValue } from '@utils/state';
+import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
 import { EmbedAccordionSummary } from './accordion';
 import { EmbedAuthorEditor } from './author';
@@ -95,6 +96,7 @@ interface EmbedEditorProps extends ItemDisabledProps, ItemVariableProps<Embed>, 
     visibleMoveDownButton: boolean;
     moveUp: (e: MouseEvent<HTMLButtonElement>) => void;
     moveDown: (e: MouseEvent<HTMLButtonElement>) => void;
+    duplicate: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const EmbedEditor = (
@@ -108,6 +110,7 @@ export const EmbedEditor = (
         visibleMoveDownButton,
         moveUp,
         moveDown,
+        duplicate,
         localization
     }: EmbedEditorProps
 ) => {
@@ -143,9 +146,11 @@ export const EmbedEditor = (
                             <KeyboardArrowDownOutlined />
                         </IconButton>
                     </Tooltip>}
-                    <IconButton size="small" sx={{ width: 36, height: 36 }}>
-                        <ContentCopyOutlined fontSize="small" />
-                    </IconButton>
+                    <Tooltip title={translations.duplicate} placement="top">
+                        <IconButton onClick={duplicate} size="small" sx={{ width: 36, height: 36 }}>
+                            <ContentCopyOutlined fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                     <Tooltip title={translations.remove} placement="top">
                         <IconButton onClick={remove} size="small" color="error" sx={{ width: 36, height: 36 }}>
                             <ClearOutlined fontSize="small" />
@@ -219,6 +224,11 @@ export const EmbedsEditor = ({ value, setValue, disabled, localization }: Embeds
 
     const moveDown = (i: number) => setValue((prevValue) => moveDownArray(prevValue, i));
 
+    const duplicate = (i: number, mode: 'next' | 'last') => setValue((prevValue) => {
+        const embed = prevValue[i];
+        return replaceArray(prevValue, mode === 'next' ? i + 1 : prevValue.length, { ...embed, _id: nanoid() }, 0);
+    });
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -252,6 +262,10 @@ export const EmbedsEditor = ({ value, setValue, disabled, localization }: Embeds
                     moveDown={(e) => {
                         e.stopPropagation();
                         moveDown(i);
+                    }}
+                    duplicate={(e) => {
+                        e.stopPropagation();
+                        duplicate(i, e.shiftKey ? 'last' : 'next');
                     }}
                     localization={localization}
                 />

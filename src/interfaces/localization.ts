@@ -29,6 +29,7 @@ export type TranslationKeys =
     | 'close'
     | 'move_up'
     | 'move_down'
+    | 'duplicate'
 
 
     | 'shard'

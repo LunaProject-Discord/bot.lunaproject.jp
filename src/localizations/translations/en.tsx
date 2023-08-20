@@ -28,6 +28,7 @@ export const translationsEn: Translations = {
     close: 'Close',
     move_up: 'Move Up',
     move_down: 'Move Down',
+    duplicate: 'Duplicate',
 
 
     shard: 'Shard',
