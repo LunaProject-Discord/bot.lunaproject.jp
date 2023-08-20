@@ -33,6 +33,7 @@ export const translationsEn: Translations = {
 
     shard: 'Shard',
     shards: 'Shards',
+    ping: 'Ping',
     guild: 'Server',
     guilds: 'Servers',
     channel: 'Channel',

@@ -270,6 +270,13 @@ const Drawer = ({ open, setOpen, localization: { translations } }: DrawerProps &
                             setOpen={setOpen}
                         />
                         <DrawerItem
+                            icon={<WifiOutlined />}
+                            label={translations.ping}
+                            href={`/statistics/ping${searchParams.toString().length > 0 ? `?${searchParams.toString()}` : ''}`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                        <DrawerItem
                             icon={<DnsOutlined />}
                             label={translations.guilds}
                             href={`/statistics/guilds${searchParams.toString().length > 0 ? `?${searchParams.toString()}` : ''}`}

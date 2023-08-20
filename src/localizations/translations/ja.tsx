@@ -33,6 +33,7 @@ export const translationsJa: Translations = {
 
     shard: 'シャード',
     shards: 'シャード',
+    ping: 'Ping',
     guild: 'サーバー',
     guilds: 'サーバー',
     channel: 'チャンネル',

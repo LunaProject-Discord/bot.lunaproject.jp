@@ -34,6 +34,7 @@ export type TranslationKeys =
 
     | 'shard'
     | 'shards'
+    | 'ping'
     | 'guild'
     | 'guilds'
     | 'channel'
