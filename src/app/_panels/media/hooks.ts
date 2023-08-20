@@ -36,7 +36,7 @@ export const useMediaWebSocket = (user: OAuthUser | APIUser | RedisUser): MediaW
 
     const [requestTrial, setRequestTrial] = useState(false);
 
-    const { socket, send } = useWebSocket(`ws://localhost:8080/media?id=${user.id}`, {
+    const { socket, send } = useWebSocket(`${process.env.NEXT_PUBLIC_BOT_WEBSOCKET_API_ORIGIN}/media?id=${user.id}`, {
         onOpen: () => requestStatus(),
         onMessage: (e: MessageEvent<string>) => {
             const data: MediaResponse = JSON.parse(e.data);
