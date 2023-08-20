@@ -42,21 +42,21 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
             field: 'total',
             type: 'number',
             headerName: String(translations.statistics_table_total),
-            valueFormatter: (params) => params.value.toLocaleString(),
+            valueFormatter: (params) => formatValue(params.value),
             width: 120
         },
         ...Object.keys(shards).map((shard): GridColDef<GridValidRowModel, number | undefined, string> => ({
             field: `shard_${shard}`,
             type: 'number',
             headerName: String(translations.statistics_table_shard_with_id).replace('%id', (Number(shard) + 1).toLocaleString()),
-            valueFormatter: (params) => params.value?.toLocaleString() ?? 'N/A',
+            valueFormatter: (params) => params.value ? formatValue(params.value) : 'N/A',
             width: 120
         }))
     ];
     const gridRows: GridRowsProp = statistics.map((statistic) => ({
         id: statistic.id,
         date: getDate(statistic),
-        total: statistic.users.total,
+        total: getValue(statistic),
         ...Object.entries(statistic.users.shards).reduce((acc, [key, value]) => ({ ...acc, [`shard_${key}`]: value.total }), {})
     }));
 

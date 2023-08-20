@@ -27,7 +27,8 @@ import {
     HomeOutlined,
     MenuOutlined,
     PeopleAltOutlined,
-    SellOutlined
+    SellOutlined,
+    WifiOutlined
 } from '@mui/icons-material';
 import { Box, FormControl, IconButton, MenuItem, SelectChangeEvent, styled, Typography } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
@@ -219,8 +220,9 @@ const Drawer = ({ open, setOpen, localization: { translations } }: DrawerProps &
                 <StyledUl container>
                     <HeaderButtonContainer sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
-                            <Typography variant="body2" color="text.secondary"
-                                        sx={{ px: .5 }}>{translations.statistics_mode}</Typography>
+                            <Typography variant="body2" color="text.secondary" sx={{ px: .5 }}>
+                                {translations.statistics_mode}
+                            </Typography>
                             <FormControl fullWidth size="small">
                                 <Select<StatisticsPeriodType>
                                     value={searchParams.get('period') as (StatisticsPeriodType | undefined) ?? 'hours'}
@@ -235,8 +237,9 @@ const Drawer = ({ open, setOpen, localization: { translations } }: DrawerProps &
                             </FormControl>
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
-                            <Typography variant="body2" color="text.secondary"
-                                        sx={{ px: .5 }}>{translations.statistics_period}</Typography>
+                            <Typography variant="body2" color="text.secondary" sx={{ px: .5 }}>
+                                {translations.statistics_period}
+                            </Typography>
                             <DateTimeEditor
                                 value={searchParams.has('start') ? DateTime.fromSQL(searchParams.get('start')!!).toJSDate() : null}
                                 setValue={handleStartedAtChange}
@@ -245,11 +248,19 @@ const Drawer = ({ open, setOpen, localization: { translations } }: DrawerProps &
                                 maxDate={endOfToday()}
                             />
                             <Box
-                                sx={{ px: .5, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Typography variant="body2"
-                                            color="text.secondary">{translations.statistics_period_from}</Typography>
-                                <Typography variant="body2"
-                                            color="text.secondary">{translations.statistics_period_to}</Typography>
+                                sx={{
+                                    px: .5,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between'
+                                }}
+                            >
+                                <Typography variant="body2" color="text.secondary">
+                                    {translations.statistics_period_from}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {translations.statistics_period_to}
+                                </Typography>
                             </Box>
                             <DateTimeEditor
                                 value={searchParams.has('end') ? DateTime.fromSQL(searchParams.get('end')!!).toJSDate() : null}
