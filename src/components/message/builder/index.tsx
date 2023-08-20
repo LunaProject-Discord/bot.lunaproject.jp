@@ -164,8 +164,8 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
                         <MessageEditorWrapper>
                             <MessageEditorSection active={viewType === 'editor'}>
                                 <Editor
-                                    message={editableMessage}
-                                    setMessage={setEditableMessage}
+                                    value={editableMessage}
+                                    setValue={setEditableMessage}
                                     localization={localization}
                                 />
                             </MessageEditorSection>

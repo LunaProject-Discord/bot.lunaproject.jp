@@ -1,9 +1,18 @@
 'use client';
 
+import { ItemDisabledProps, ItemVariableProps } from '@components/items';
 import { useTheme } from '@emotion/react';
 import { LocalizationProps } from '@interfaces/localization';
-import { Embed as EmbedData } from '@lunaproject-discord/web-discord/dist/interfaces/message';
-import { ClearOutlined, ExpandMoreOutlined } from '@mui/icons-material';
+import { getNewEmbed } from '@libs/message';
+import { Embed } from '@lunaproject-discord/web-discord/dist/interfaces/message';
+import {
+    AddOutlined,
+    ClearOutlined,
+    ContentCopyOutlined,
+    ExpandMoreOutlined,
+    KeyboardArrowDownOutlined,
+    KeyboardArrowUpOutlined
+} from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,
     AccordionDetails as MuiAccordionDetails,
@@ -11,12 +20,19 @@ import {
     AccordionSummary as MuiAccordionSummary,
     AccordionSummaryProps,
     Box,
+    Button,
     IconButton,
     styled,
     Tooltip
 } from '@mui/material';
+import {
+    moveDown as moveDownArray,
+    moveUp as moveUpArray,
+    remove as removeArray,
+    replace as replaceArray
+} from '@utils/array';
 import { getStateActionValue } from '@utils/state';
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { EmbedAccordionSummary } from './accordion';
 import { EmbedAuthorEditor } from './author';
 import { EmbedBody, EmbedBodyEditor } from './body';
@@ -72,21 +88,36 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     padding: theme.spacing(0)
 }));
 
-interface Props extends LocalizationProps {
-    id: number;
-    embed: EmbedData;
-    onChange: (embed: EmbedData) => void;
-    removeEmbed: () => void;
+interface EmbedEditorProps extends ItemDisabledProps, ItemVariableProps<Embed>, LocalizationProps {
+    index: number;
+    remove: (e: MouseEvent<HTMLButtonElement>) => void;
+    visibleMoveUpButton: boolean;
+    visibleMoveDownButton: boolean;
+    moveUp: (e: MouseEvent<HTMLButtonElement>) => void;
+    moveDown: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export const EmbedEditor = ({ id, embed, onChange, removeEmbed, localization }: Props) => {
+export const EmbedEditor = (
+    {
+        index,
+        value,
+        setValue,
+        disabled,
+        remove,
+        visibleMoveUpButton,
+        visibleMoveDownButton,
+        moveUp,
+        moveDown,
+        localization
+    }: EmbedEditorProps
+) => {
     const { translations } = localization;
 
     const theme = useTheme();
 
-    const embedColor = embed.color.rgbNumber() === 0xffffff ? undefined : embed.color.hex();
-    const body: EmbedBody = { color: embed.color, title: embed.title, description: embed.description, url: embed.url };
-    const footer: EmbedFooter = { timestamp: embed.timestamp, ...embed.footer };
+    const embedColor = value.color.rgbNumber() === 0xffffff ? undefined : value.color.hex();
+    const body: EmbedBody = { color: value.color, title: value.title, description: value.description, url: value.url };
+    const footer: EmbedFooter = { timestamp: value.timestamp, ...value.footer };
 
     return (
         <ContainerAccordion borderColor={embedColor || theme.background.tertiary}>
@@ -100,52 +131,131 @@ export const EmbedEditor = ({ id, embed, onChange, removeEmbed, localization }: 
                     }
                 }}
             >
-                {translations.embed} #{id + 1}{embed.title && ` — ${embed.title}`}
+                {translations.embed} #{index + 1}{value.title && ` — ${value.title}`}
                 <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: .5 }}>
+                    {visibleMoveUpButton && <Tooltip title={translations.move_up} placement="top">
+                        <IconButton onClick={moveUp} size="small" sx={{ width: 36, height: 36 }}>
+                            <KeyboardArrowUpOutlined />
+                        </IconButton>
+                    </Tooltip>}
+                    {visibleMoveDownButton && <Tooltip title={translations.move_down} placement="top">
+                        <IconButton onClick={moveDown} size="small" sx={{ width: 36, height: 36 }}>
+                            <KeyboardArrowDownOutlined />
+                        </IconButton>
+                    </Tooltip>}
+                    <IconButton size="small" sx={{ width: 36, height: 36 }}>
+                        <ContentCopyOutlined fontSize="small" />
+                    </IconButton>
                     <Tooltip title={translations.remove} placement="top">
-                        <IconButton
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                removeEmbed();
-                            }}
-                            size="small"
-                            color="error"
-                        >
-                            <ClearOutlined />
+                        <IconButton onClick={remove} size="small" color="error" sx={{ width: 36, height: 36 }}>
+                            <ClearOutlined fontSize="small" />
                         </IconButton>
                     </Tooltip>
                 </Box>
             </EmbedAccordionSummary>
             <AccordionDetails>
                 <EmbedAuthorEditor
-                    value={embed.author}
-                    setValue={(action) => onChange({ ...embed, author: getStateActionValue(action, embed.author) })}
+                    value={value.author}
+                    setValue={(action) => setValue((prevValue) => ({
+                        ...prevValue,
+                        author: getStateActionValue(action, prevValue.author)
+                    }))}
+                    disabled={disabled}
                     localization={localization}
                 />
                 <EmbedBodyEditor
                     value={body}
-                    setValue={(action) => onChange({ ...embed, ...getStateActionValue(action, body) })}
+                    setValue={(action) => setValue((prevValue) => ({
+                        ...prevValue,
+                        ...getStateActionValue(action, body)
+                    }))}
+                    disabled={disabled}
                     localization={localization}
                 />
                 <EmbedFieldsEditor
-                    value={embed.fields}
-                    setValue={(action) => onChange({ ...embed, fields: getStateActionValue(action, embed.fields) })}
+                    value={value.fields}
+                    setValue={(action) => setValue((prevValue) => ({
+                        ...prevValue,
+                        fields: getStateActionValue(action, prevValue.fields)
+                    }))}
+                    disabled={disabled}
                     localization={localization}
                 />
                 <EmbedImageEditor
-                    value={embed.image}
-                    setValue={(action) => onChange({ ...embed, image: getStateActionValue(action, embed.image) })}
+                    value={value.image}
+                    setValue={(action) => setValue((prevValue) => ({
+                        ...prevValue,
+                        image: getStateActionValue(action, prevValue.image)
+                    }))}
+                    disabled={disabled}
                     localization={localization}
                 />
                 <EmbedFooterEditor
                     value={footer}
                     setValue={(action) => {
                         const { timestamp, ...value } = getStateActionValue(action, footer);
-                        onChange({ ...embed, timestamp, footer: value });
+                        setValue((prevValue) => ({ ...prevValue, timestamp, footer: value }));
                     }}
+                    disabled={disabled}
                     localization={localization}
                 />
             </AccordionDetails>
         </ContainerAccordion>
+    );
+};
+
+type EmbedsEditorProps = ItemDisabledProps & ItemVariableProps<Embed[]> & LocalizationProps;
+
+export const EmbedsEditor = ({ value, setValue, disabled, localization }: EmbedsEditorProps) => {
+    const { translations } = localization;
+
+    const add = () => setValue((prevValue) => [...prevValue, getNewEmbed()]);
+
+    const remove = (i: number) => setValue((prevValue) => removeArray(prevValue, i));
+
+    const update = (i: number, embed: Embed) => setValue((prevValue) => replaceArray(prevValue, i, embed));
+
+    const moveUp = (i: number) => setValue((prevValue) => moveUpArray(prevValue, i));
+
+    const moveDown = (i: number) => setValue((prevValue) => moveDownArray(prevValue, i));
+
+    return (
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Button
+                    onClick={add}
+                    disabled={disabled || value.length > 9}
+                    disableElevation
+                    variant="contained"
+                    startIcon={<AddOutlined />}
+                >
+                    {translations.embed_add}
+                </Button>
+            </Box>
+            {value.map((embed, i) => (
+                <EmbedEditor
+                    key={embed._id ?? i}
+                    index={i}
+                    value={embed}
+                    setValue={(action) => update(i, getStateActionValue(action, embed))}
+                    disabled={disabled}
+                    remove={(e) => {
+                        e.stopPropagation();
+                        remove(i);
+                    }}
+                    visibleMoveUpButton={i !== 0}
+                    visibleMoveDownButton={i !== value.length - 1}
+                    moveUp={(e) => {
+                        e.stopPropagation();
+                        moveUp(i);
+                    }}
+                    moveDown={(e) => {
+                        e.stopPropagation();
+                        moveDown(i);
+                    }}
+                    localization={localization}
+                />
+            ))}
+        </Box>
     );
 };

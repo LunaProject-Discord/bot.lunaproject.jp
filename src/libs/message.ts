@@ -35,6 +35,7 @@ export const toEmbed = (
     date.setTime(parseInt(timestamp ?? Date.now().toString(), 10));
 
     return {
+        _id: nanoid(),
         title,
         description,
         url: url ?? '',

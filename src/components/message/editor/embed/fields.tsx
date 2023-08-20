@@ -11,6 +11,12 @@ import {
     KeyboardArrowUpOutlined
 } from '@mui/icons-material';
 import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
+import {
+    moveDown as moveDownArray,
+    moveUp as moveUpArray,
+    remove as removeArray,
+    replace as replaceArray
+} from '@utils/array';
 import { getStateActionValue } from '@utils/state';
 import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
@@ -112,35 +118,15 @@ type EmbedFieldsEditorProps = ItemDisabledProps & ItemVariableProps<EmbedField[]
 export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: EmbedFieldsEditorProps) => {
     const { translations } = localization;
 
-    const add = () => setValue([...value, { _id: nanoid(), ...DefaultField }]);
+    const add = () => setValue((prevValue) => [...prevValue, { _id: nanoid(), ...DefaultField }]);
 
-    const remove = (i: number) => {
-        const data = [...value];
-        data.splice(i, 1);
-        setValue(data);
-    };
+    const remove = (i: number) => setValue((prevValue) => removeArray(prevValue, i));
 
-    const edit = (i: number, field: EmbedField) => {
-        const data = [...value];
-        data[i] = field;
-        setValue(data);
-    };
+    const update = (i: number, field: EmbedField) => setValue((prevValue) => replaceArray(prevValue, i, field));
 
-    const moveUp = (i: number) => {
-        if (i === 0) return;
+    const moveUp = (i: number) => setValue((prevValue) => moveUpArray(prevValue, i));
 
-        const data = [...value];
-        data.splice(i - 1, 0, ...data.splice(i, 1));
-        setValue(data);
-    };
-
-    const moveDown = (i: number) => {
-        if (i === value.length - 1) return;
-
-        const data = [...value];
-        data.splice(i + 1, 0, ...data.splice(i, 1));
-        setValue(data);
-    };
+    const moveDown = (i: number) => setValue((prevValue) => moveDownArray(prevValue, i));
 
     return (
         <EmbedAccordion>
@@ -152,7 +138,7 @@ export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: E
                             key={field._id ?? i}
                             index={i}
                             value={field}
-                            setValue={(action) => edit(i, getStateActionValue(action, field))}
+                            setValue={(action) => update(i, getStateActionValue(action, field))}
                             disabled={disabled}
                             remove={(e) => {
                                 e.stopPropagation();
@@ -174,6 +160,7 @@ export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: E
                     <Box sx={{ pt: 1, px: 1 }}>
                         <Button
                             onClick={add}
+                            disabled={disabled || value.length > 24}
                             disableElevation
                             variant="contained"
                             startIcon={<AddOutlined />}
