@@ -29,16 +29,35 @@ export const translationsEn: Translations = {
     move_up: 'Move Up',
     move_down: 'Move Down',
 
+
+    shard: 'Shard',
+    shards: 'Shards',
     guild: 'Server',
     guilds: 'Servers',
     channel: 'Channel',
     channels: 'Channels',
     role: 'Role',
     roles: 'Roles',
+    emoji: 'Emoji',
+    emojis: 'Emojis',
     member: 'Member',
     members: 'Members',
     user: 'User',
     users: 'Users',
+
+
+    online: 'Online',
+    offline: 'Offline',
+
+    status: 'Status',
+    status_connecting: 'Connecting...',
+    status_connected: 'Connected',
+    status_disconnected: 'Disconnected',
+    status_waiting_reconnect: 'Waiting for reconnection...',
+    status_reconnecting: 'Reconnecting...',
+    status_shutting_down: 'Shutting down...',
+    status_shutdown: 'Shutdown',
+    status_failed_to_login: 'Failed to login',
 
 
     pattern_date: 'yyyy/MM/dd (E)',
@@ -102,7 +121,20 @@ export const translationsEn: Translations = {
 
 
     home: 'Home',
-    status: 'Status',
+
+
+    status_description: 'You can check the status of the Bot.',
+    status_all_connected: 'All shards are connected properly.',
+    status_any_connected: 'Some shards may not be connected!',
+    status_all_disconnected: 'All shards are either in preparation or not connected to Discord!',
+    status_shard_with_id: 'Shard #%id',
+    status_average_ping: 'Average Ping',
+    status_mutual_guilds: 'Mutual Servers',
+    status_mutual_guilds_with_count: '%c mutual servers',
+    status_mutual_guilds_empty: 'No mutual servers',
+    status_mutual_guilds_not_logged_in: 'You can view mutual servers by logging in.',
+
+
     leaderboard: 'Leaderboard',
     choose_guild_leaderboard: 'Select the server on which you want to display the leaderboard.',
 
@@ -238,14 +270,14 @@ export const translationsEn: Translations = {
             <li>User Name: <code>{'{'}user:name{'}'}</code></li>
             <li>User Discriminator: <code>{'{'}user:discriminator{'}'}</code></li>
             <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
-            <li>変更前の暫定順位: <code>{'{'}rank:old{'}'}</code></li>
-            <li>変更後の暫定順位: <code>{'{'}rank:new{'}'}</code></li>
-            <li>変更前のレベル: <code>{'{'}level:old{'}'}</code></li>
-            <li>変更後のレベル: <code>{'{'}level:new{'}'}</code></li>
-            <li>変更前の経験値: <code>{'{'}xp:old{'}'}</code></li>
-            <li>変更後の経験値: <code>{'{'}xp:new{'}'}</code></li>
-            <li>変更前の最大経験値: <code>{'{'}max_xp:old{'}'}</code></li>
-            <li>変更後の最大経験値: <code>{'{'}max_xp:new{'}'}</code></li>
+            <li>Tentative ranking before change: <code>{'{'}rank:old{'}'}</code></li>
+            <li>Tentative ranking after change: <code>{'{'}rank:new{'}'}</code></li>
+            <li>Level before change: <code>{'{'}level:old{'}'}</code></li>
+            <li>Level after change: <code>{'{'}level:new{'}'}</code></li>
+            <li>Experience before the change: <code>{'{'}xp:old{'}'}</code></li>
+            <li>Experience after change: <code>{'{'}xp:new{'}'}</code></li>
+            <li>Maximum experience before change: <code>{'{'}max_xp:old{'}'}</code></li>
+            <li>Maximum experience after change: <code>{'{'}max_xp:new{'}'}</code></li>
         </ul>
     </Fragment>,
     level_leaderboard: 'Leaderboard',
@@ -340,12 +372,41 @@ export const translationsEn: Translations = {
     user_language_description: 'Responses to commands you execute will be in the language you set here.',
 
 
+    statistics: 'Statistics',
+    statistics_description: 'Displays Bot statistics.',
+    statistics_mode: 'View Mode',
+    statistics_mode_hours: 'Hourly (Last 24 hours)',
+    statistics_mode_days: 'Daily',
+    statistics_mode_weeks: 'Weekly',
+    statistics_mode_months: 'Monthly',
+    statistics_period: 'View Period',
+    statistics_period_from: 'From',
+    statistics_period_to: 'To',
+    statistics_widget_live: 'Live value',
+    statistics_widget_min: 'Minimum value for this period',
+    statistics_widget_max: 'Maximum value for this period',
+    statistics_table_date: 'Date',
+    statistics_table_total: 'Total',
+    statistics_table_shard_with_id: 'Shard #%id',
+
+
     send_message_channel: 'Channel to send message',
     manage_disabled_channels: 'Manage Disabled Channels',
     manage_disabled_roles: 'Manage Disabled Roles',
+
+
     message_builder: 'Message Builder',
+    message_builder_editor: 'Editor',
+    message_builder_preview: 'Preview',
+    message_builder_light_theme: 'Change to a light theme',
+    message_builder_dark_theme: 'Change to a dark theme',
+    message_builder_cozy_mode: 'Change to cozy mode',
+    message_builder_compact_mode: 'Change to compact mode',
+
     customize_message: 'Customize Message',
     edit_message: 'Edit Message',
+
+
     about_this_settings: 'About this settings',
     notifications: 'Notifications',
     manage_account: 'Manage Account',

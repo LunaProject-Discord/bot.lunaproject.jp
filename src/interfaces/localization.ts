@@ -30,16 +30,35 @@ export type TranslationKeys =
     | 'move_up'
     | 'move_down'
 
+
+    | 'shard'
+    | 'shards'
     | 'guild'
     | 'guilds'
     | 'channel'
     | 'channels'
     | 'role'
     | 'roles'
+    | 'emoji'
+    | 'emojis'
     | 'member'
     | 'members'
     | 'user'
     | 'users'
+
+
+    | 'online'
+    | 'offline'
+
+    | 'status'
+    | 'status_connecting'
+    | 'status_connected'
+    | 'status_disconnected'
+    | 'status_waiting_reconnect'
+    | 'status_reconnecting'
+    | 'status_shutting_down'
+    | 'status_shutdown'
+    | 'status_failed_to_login'
 
 
     | 'pattern_date'
@@ -93,7 +112,20 @@ export type TranslationKeys =
 
 
     | 'home'
-    | 'status'
+
+
+    | 'status_description'
+    | 'status_all_connected'
+    | 'status_any_connected'
+    | 'status_all_disconnected'
+    | 'status_shard_with_id'
+    | 'status_average_ping'
+    | 'status_mutual_guilds'
+    | 'status_mutual_guilds_with_count'
+    | 'status_mutual_guilds_empty'
+    | 'status_mutual_guilds_not_logged_in'
+
+
     | 'leaderboard'
     | 'choose_guild_leaderboard'
 
@@ -284,12 +316,41 @@ export type TranslationKeys =
     | 'user_language_description'
 
 
+    | 'statistics'
+    | 'statistics_description'
+    | 'statistics_mode'
+    | 'statistics_mode_hours'
+    | 'statistics_mode_days'
+    | 'statistics_mode_weeks'
+    | 'statistics_mode_months'
+    | 'statistics_period'
+    | 'statistics_period_from'
+    | 'statistics_period_to'
+    | 'statistics_widget_live'
+    | 'statistics_widget_min'
+    | 'statistics_widget_max'
+    | 'statistics_table_date'
+    | 'statistics_table_total'
+    | 'statistics_table_shard_with_id'
+
+
     | 'send_message_channel'
     | 'manage_disabled_channels'
     | 'manage_disabled_roles'
+
+
     | 'message_builder'
+    | 'message_builder_editor'
+    | 'message_builder_preview'
+    | 'message_builder_light_theme'
+    | 'message_builder_dark_theme'
+    | 'message_builder_cozy_mode'
+    | 'message_builder_compact_mode'
+
     | 'customize_message'
     | 'edit_message'
+
+
     | 'about_this_settings'
     | 'notifications'
     | 'manage_account'

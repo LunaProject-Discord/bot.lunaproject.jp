@@ -5,7 +5,7 @@ import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject-discord/web-core/dist/components/StyleProvider';
 import { MuiPalette } from '@lunaproject-discord/web-core/dist/utils/theme';
-import { OAuthUser } from '@lunaproject-discord/web-discord';
+import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { indigo } from '@mui/material/colors';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
@@ -14,8 +14,8 @@ import { COOKIE_APPEARANCE } from '@utils/cookie';
 import { parseCookies } from 'nookies';
 import React, { ReactNode, useEffect } from 'react';
 import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil';
-import { MediaPanel } from 'src/app/_panels/media';
-import { getMuiDateLocalizationByName, getMuiLocalizationByName } from '../localizations';
+import { MediaPanel } from '@app/_panels/media';
+import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';
 import { fontFamily, M_Plus_Rounded_1c, Nunito } from './theme';
 
@@ -56,7 +56,8 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
             }
         },
         getMuiLocalizationByName(locale),
-        getMuiDateLocalizationByName(locale)
+        getMuiDateLocalizationByName(locale),
+        getMuiGridLocalizationByName(locale)
     );
 
     const cookies = parseCookies();
@@ -93,7 +94,7 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <GlobalStyles styles={{ Nunito, M_Plus_Rounded_1c, '*, ::before, ::after': { fontFamily } }} />
-                <Navigation user={user} localization={localization} />
+                <Navigation user={user} flags={flags} localization={localization} />
                 <PageContainer sx={{ mr: { xl: open ? '400px' : 0 } }}>
                     {children}
                 </PageContainer>

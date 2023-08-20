@@ -85,8 +85,6 @@ export const MessageItem = (
 
     const [__open, __setOpen] = useState(false);
 
-    const handleDialogClose = () => (setOpen ?? __setOpen)(false);
-
     const setMessage = (message: DataMessage | ((prevValue: DataMessage) => DataMessage)) => {
         setValue(typeof message === 'function' ? message(value) : message);
     };
@@ -151,7 +149,7 @@ export const MessageItem = (
 
             <MessageBuilder
                 open={open ?? __open}
-                onClose={handleDialogClose}
+                setOpen={setOpen ?? __setOpen}
                 message={value}
                 setMessage={setMessage}
                 localization={localization}

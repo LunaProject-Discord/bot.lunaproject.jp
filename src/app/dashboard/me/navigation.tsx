@@ -181,7 +181,7 @@ const Drawer = (
 export const Navigation = ({ user, localization }: UserViewProps) => {
     const [open, setOpen] = useState(false);
 
-    const handleDrawerToggle = () => setOpen((prevOpen) => !prevOpen);
+    const handleDrawerToggle = () => setOpen((prevState) => !prevState);
 
     return (
         <Fragment>

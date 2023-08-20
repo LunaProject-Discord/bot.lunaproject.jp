@@ -16,6 +16,8 @@ interface Props extends LocalizationProps {
 }
 
 export const Editor = ({ message, setMessage, localization }: Props) => {
+    const { translations } = localization;
+
     const addEmbed = () => setMessage((msg) => ({ ...msg, embeds: [...msg.embeds, getNewEmbed()] }));
 
     const removeEmbed = (i: number) => setMessage((msg) => {
@@ -31,7 +33,7 @@ export const Editor = ({ message, setMessage, localization }: Props) => {
     });
 
     return (
-        <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <TextArea
                 value={message.content}
                 setValue={(content) => setMessage({ ...message, content })}
@@ -48,7 +50,7 @@ export const Editor = ({ message, setMessage, localization }: Props) => {
                         variant="contained"
                         startIcon={<AddOutlined />}
                     >
-                        Embed を追加
+                        {translations.embed_add}
                     </Button>
                 </Box>
                 {message.embeds.map((embed, i) => (

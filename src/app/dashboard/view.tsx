@@ -90,15 +90,10 @@ interface Props extends LocalizationProps {
 }
 
 export const View = ({ guilds, mutualGuilds, localization: { translations } }: Props) => {
-    const [viewAs, setViewAs] = useState<ViewType>('gallery');
+    const [viewType, setViewType] = useState<ViewType>('gallery');
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
     const open = Boolean(anchorEl);
-
-    const handleViewAsChange = (e: MouseEvent<HTMLElement>, newViewAs: ViewType) => {
-        if (newViewAs)
-            setViewAs(newViewAs);
-    };
 
     const handleInviteButtonClick = (e: MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
 
@@ -115,8 +110,8 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>
                     <SegmentedControl<ViewType>
-                        value={viewAs}
-                        setValue={setViewAs}
+                        value={viewType}
+                        setValue={setViewType}
                         choices={[
                             { value: 'gallery', children: (<GridViewOutlined />) },
                             { value: 'table', children: (<FormatListBulletedOutlined />) }
@@ -136,7 +131,7 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
                 </Box>
             </PageHeader>
             <Section sx={{ p: 0 }}>
-                {viewAs === 'gallery' ? (
+                {viewType === 'gallery' ? (
                     <GuildsGallery guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
                 ) : (
                     <GuildsTable guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />

@@ -352,7 +352,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
             <Typography variant="h4">データがありません</Typography>
             <Typography align="center">
                 このサーバーではまだ誰も発言していないようです...<br />
-                サーバーで発言してから少し待った後に再度お試しください。
+                サーバーで発言してからしばらく待った後に再度お試しください。
             </Typography>
         </Box>
     </PageContent>

@@ -29,16 +29,35 @@ export const translationsJa: Translations = {
     move_up: '上に移動',
     move_down: '下に移動',
 
+
+    shard: 'シャード',
+    shards: 'シャード',
     guild: 'サーバー',
     guilds: 'サーバー',
     channel: 'チャンネル',
     channels: 'チャンネル',
     role: '役職',
     roles: '役職',
+    emoji: '絵文字',
+    emojis: '絵文字',
     member: 'メンバー',
     members: 'メンバー',
     user: 'ユーザー',
     users: 'ユーザー',
+
+
+    online: 'オンライン',
+    offline: 'オフライン',
+
+    status: 'ステータス',
+    status_connecting: '接続中...',
+    status_connected: '接続済み',
+    status_disconnected: '切断済み',
+    status_waiting_reconnect: '再接続の待機中...',
+    status_reconnecting: '再接続中...',
+    status_shutting_down: 'シャットダウン中...',
+    status_shutdown: 'シャットダウン済み',
+    status_failed_to_login: 'ログイン失敗',
 
 
     pattern_date: 'yyyy年M月d日 (E)',
@@ -102,7 +121,20 @@ export const translationsJa: Translations = {
 
 
     home: 'ホーム',
-    status: 'ステータス',
+
+
+    status_description: 'Bot のステータスを確認できます。',
+    status_all_connected: 'すべてのシャードは正常に接続されています。',
+    status_any_connected: 'いくつかのシャードが接続されていない可能性があります！',
+    status_all_disconnected: 'すべてのシャードが準備中であるか Discord に接続されていません！',
+    status_shard_with_id: 'シャード #%id',
+    status_average_ping: '平均 Ping',
+    status_mutual_guilds: '共通のサーバー',
+    status_mutual_guilds_with_count: '%c つの共通なサーバー',
+    status_mutual_guilds_empty: '共通のサーバーはありません',
+    status_mutual_guilds_not_logged_in: 'ログインをすることで共通のサーバーを表示することができます。',
+
+
     leaderboard: 'リーダーボード',
     choose_guild_leaderboard: 'リーダーボードを表示したいサーバーを選択してください。',
 
@@ -340,12 +372,41 @@ export const translationsJa: Translations = {
     user_language_description: 'あなたが実行したコマンドの応答は、ここで設定した言語で行われます。',
 
 
+    statistics: '統計',
+    statistics_description: 'Bot の統計を表示します。',
+    statistics_mode: '表示する方法',
+    statistics_mode_hours: '時間計 (過去24時間)',
+    statistics_mode_days: '日計',
+    statistics_mode_weeks: '週計',
+    statistics_mode_months: '月計',
+    statistics_period: '表示する期間',
+    statistics_period_from: 'から',
+    statistics_period_to: 'まで',
+    statistics_widget_live: '速報値',
+    statistics_widget_min: 'この期間の最小値',
+    statistics_widget_max: 'この期間の最大値',
+    statistics_table_date: '日時',
+    statistics_table_total: '合計',
+    statistics_table_shard_with_id: 'シャード #%id',
+
+
     send_message_channel: 'メッセージを送信するチャンネル',
     manage_disabled_channels: '無効なチャンネルの管理',
     manage_disabled_roles: '無効な役職の管理',
+
+
     message_builder: 'メッセージ ビルダー',
+    message_builder_editor: '編集',
+    message_builder_preview: 'プレビュー',
+    message_builder_light_theme: 'ライトテーマに変更する',
+    message_builder_dark_theme: 'ダークテーマに変更する',
+    message_builder_cozy_mode: '通常モードに変更する',
+    message_builder_compact_mode: 'コンパクトモードに変更する',
+
     customize_message: 'メッセージをカスタマイズ',
     edit_message: 'メッセージを編集',
+
+
     about_this_settings: 'この設定について',
     notifications: '通知',
     manage_account: 'アカウントの管理',
@@ -367,4 +428,3 @@ export const localizationJa: Localization = {
     locale: 'ja',
     translations: translationsJa
 };
-

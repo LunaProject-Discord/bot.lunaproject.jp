@@ -6,6 +6,7 @@ import type {
     EmbedFooter as OriginalEmbedFooter
 } from '@lunaproject-discord/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
+import { getStateActionValue } from '@utils/state';
 import React from 'react';
 import { DateTimeEditor } from '../../../date';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
@@ -47,7 +48,7 @@ export const EmbedFooterEditor = ({ value, setValue, disabled, localization: { t
                 <EmbedFormItem label={translations.embed_footer_timestamp} inline sx={{ flexGrow: .5 }}>
                     <DateTimeEditor
                         value={value.timestamp}
-                        setValue={(timestamp) => setValue({ ...value, timestamp })}
+                        setValue={(action) => setValue({ ...value, timestamp: getStateActionValue(action, value.timestamp) })}
                     />
                 </EmbedFormItem>
             </EmbedFormContainer>

@@ -12,7 +12,7 @@ import {
 } from '@lunaproject-discord/web-core/dist/components/Gallery';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { SegmentedControl } from '@lunaproject-discord/web-core/dist/components/SegmentedControl';
-import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord';
+import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import {
     AnalyticsOutlined,
     AutoAwesomeOutlined,
@@ -107,7 +107,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
         ([url, token]: string[]) => fetchWithUser(url, token)
     );
 
-    const [viewState, setViewState] = useState<ViewType>('guilds');
+    const [viewType, setViewType] = useState<ViewType>('guilds');
 
     return (
         <PageContent>
@@ -120,8 +120,8 @@ export const View = ({ user, localization: { translations } }: Props) => {
                 <Section sx={{ gap: 3 }}>
                     <Box sx={{ width: 'fit-content' }}>
                         <SegmentedControl<ViewType>
-                            value={viewState}
-                            setValue={setViewState}
+                            value={viewType}
+                            setValue={setViewType}
                             choices={[
                                 {
                                     value: 'features',
@@ -140,7 +140,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                             ]}
                         />
                     </Box>
-                    {viewState === 'features' && <SectionContent>
+                    {viewType === 'features' && <SectionContent>
                         <List>
                             <ListItemButton
                                 component={NextLink}
@@ -180,7 +180,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                             </ListItemButton>
                         </List>
                     </SectionContent>}
-                    {viewState === 'guilds' && <SectionContent>
+                    {viewType === 'guilds' && <SectionContent>
                         {guilds ? (
                             <GuildsGalleryView
                                 guilds={guilds.filter((guild) => guild.features.length > 0).map((guild) => guild.guild)}

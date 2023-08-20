@@ -1,28 +1,52 @@
 'use client';
 
+import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { Theme, ThemeProvider } from '@emotion/react';
 import { LocalizationProps } from '@interfaces/localization';
 import { DataMessage } from '@interfaces/message';
 import { toDataMessage, toEmbed, toMessage } from '@libs/message';
-import { Preview, THEMES } from '@lunaproject-discord/web-core';
-import { DialogProps } from '@lunaproject-discord/web-core/dist/components/Dialog';
+import { segmentedControlClasses, THEMES } from '@lunaproject-discord/web-core';
+import { MessageContainer, MessagePreview } from '@lunaproject-discord/web-core/dist/components/Message';
+import { SegmentedControl } from '@lunaproject-discord/web-core/dist/components/SegmentedControl';
 import { Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';
-import { CloseOutlined, DeleteOutlined, EditOutlined, PreviewOutlined, SaveOutlined } from '@mui/icons-material';
-import { AppBar, Box, Button, Dialog, Divider, Tab, Tabs, Toolbar, Typography, useTheme } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import {
+    CloseOutlined,
+    DarkModeOutlined,
+    DeleteOutlined,
+    EditOutlined,
+    LightModeOutlined,
+    PreviewOutlined,
+    SaveOutlined
+} from '@mui/icons-material';
+import {
+    Box,
+    Button,
+    DialogProps as MuiDialogProps,
+    IconButton,
+    Theme as MuiTheme,
+    Tooltip,
+    useMediaQuery,
+    useTheme
+} from '@mui/material';
+import { GridTableRowsIcon, GridViewHeadlineIcon } from '@mui/x-data-grid';
+import deepEqual from 'deep-equal';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Editor } from '../editor';
 import { MessagePreviewContainer } from '../preview';
-import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } from './styles';
+import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } from './components';
+
+type ViewType = 'editor' | 'preview';
 
 interface Props extends DialogProps, LocalizationProps {
     message: DataMessage;
     setMessage: (value: DataMessage | ((prevValue: DataMessage) => DataMessage)) => void;
 }
 
-export const MessageBuilder = ({ open, onClose, message, setMessage, localization }: Props) => {
+export const MessageBuilder = ({ open, setOpen, message, setMessage, localization }: Props) => {
     const { translations } = localization;
 
     const theme = useTheme();
+    const isMobile = useMediaQuery<MuiTheme>((theme) => theme.breakpoints.down('md'));
 
     const [lightTheme, setLightTheme] = useState(theme.palette.mode === 'light');
     const [compactMode, setCompactMode] = useState(false);
@@ -36,9 +60,30 @@ export const MessageBuilder = ({ open, onClose, message, setMessage, localizatio
         }
     };
 
-    const [tabState, setTabState] = useState<'editor' | 'preview'>('editor');
+    const [viewType, setViewType] = useState<ViewType>('editor');
 
     const [editableMessage, setEditableMessage] = useState<Message>(toMessage(message));
+    const isChanged = !deepEqual(message, toDataMessage(editableMessage), { strict: true });
+
+    const handleClose = () => setOpen(false);
+
+    const handleDialogClose: MuiDialogProps['onClose'] = (_, reason) => {
+        if (reason === 'backdropClick' && isChanged) return;
+        handleClose();
+    };
+
+    const handleSaveButtonClick = () => {
+        setMessage(toDataMessage(editableMessage));
+        handleClose();
+    };
+
+    const handleResetButtonClick = () => {
+        setEditableMessage((msg) => ({
+            ...msg,
+            content: '',
+            embeds: []
+        }));
+    };
 
     useEffect(() => {
         setEditableMessage((msg) => ({
@@ -48,96 +93,113 @@ export const MessageBuilder = ({ open, onClose, message, setMessage, localizatio
         }));
     }, [open]);
 
-    const handleResetClick = () => {
-        setEditableMessage((msg) => ({
-            ...msg,
-            content: '',
-            embeds: []
-        }));
-    };
-
-    const handleSaveClick = () => {
-        setMessage(toDataMessage(editableMessage));
-        onClose();
-    };
-
     return (
         <Dialog
             open={open}
-            onClose={onClose}
-            disableEscapeKeyDown
-            fullScreen
-            sx={{
-                zIndex: (theme) => theme.zIndex.modal + 100,
-                '& .MuiPaper-root': {
-                    overflow: 'hidden'
+            onClose={handleDialogClose}
+            disableEscapeKeyDown={isChanged}
+            fullScreen={isMobile}
+            fullWidth
+            maxWidth="xl"
+            PaperProps={{
+                sx: {
+                    height: '100%'
                 }
             }}
         >
-            <AppBar color="default" elevation={0} sx={{ p: '0px !important' }}>
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flex: 1 }}>
-                        {translations.message_builder}
-                    </Typography>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                        <Button onClick={handleResetClick} color="error" startIcon={<DeleteOutlined />}>
-                            {translations.reset}
-                        </Button>
-                        <Divider orientation="vertical" flexItem sx={{ m: 1 }} />
-                        <Button onClick={onClose} startIcon={<CloseOutlined />}>
-                            {translations.cancel}
-                        </Button>
-                        <Button onClick={handleSaveClick} variant="contained" startIcon={<SaveOutlined />}>
-                            {translations.save}
-                        </Button>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-            <MessageEditorContainer>
-                <Toolbar />
-                <Box sx={{ display: { xs: 'block', md: 'none' }, borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs value={tabState} onChange={(_, value) => setTabState(value)} variant="fullWidth">
-                        <Tab
-                            value="editor"
-                            icon={<EditOutlined />}
-                            iconPosition="start"
-                            label="エディター"
-                            sx={{
-                                minHeight: 0,
-                                px: 2,
-                                py: 1.5
-                            }}
-                        />
-                        <Tab
-                            value="preview"
-                            icon={<PreviewOutlined />}
-                            iconPosition="start"
-                            label="プレビュー"
-                            sx={{
-                                minHeight: 0,
-                                px: 2,
-                                py: 1.5
-                            }}
-                        />
-                    </Tabs>
+            <DialogTitle>
+                {translations.message_builder}
+                <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Tooltip
+                        title={!lightTheme ? translations.message_builder_light_theme : translations.message_builder_dark_theme}
+                        placement="bottom"
+                    >
+                        <IconButton onClick={() => setLightTheme((prevState) => !prevState)}>
+                            {!lightTheme ? <LightModeOutlined /> : <DarkModeOutlined />}
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip
+                        title={!compactMode ? translations.message_builder_compact_mode : translations.message_builder_cozy_mode}
+                        placement="bottom"
+                    >
+                        <IconButton onClick={() => setCompactMode((prevState) => !prevState)}>
+                            {!compactMode ? <GridViewHeadlineIcon /> : <GridTableRowsIcon />}
+                        </IconButton>
+                    </Tooltip>
                 </Box>
-                <ThemeProvider theme={defaultTheme}>
-                    <MessageEditorWrapper>
-                        <MessageEditorSection active={tabState === 'editor'}>
-                            <Editor
-                                message={editableMessage}
-                                setMessage={setEditableMessage}
-                                localization={localization}
-                            />
-                        </MessageEditorSection>
-                        <MessageEditorSection active={tabState === 'preview'}>
-                            <MessagePreviewContainer>
-                                <Preview message={editableMessage} />
-                            </MessagePreviewContainer>
-                        </MessageEditorSection>
-                    </MessageEditorWrapper>
-                </ThemeProvider>
-            </MessageEditorContainer>
+            </DialogTitle>
+            <DialogContent sx={{ overflow: 'hidden' }}>
+                <MessageEditorContainer sx={{ overflow: 'hidden' }}>
+                    <Box
+                        sx={{
+                            pb: 3,
+                            display: { xs: 'block', md: 'none' },
+                            [`& .${segmentedControlClasses.button}`]: {
+                                width: '100%'
+                            }
+                        }}
+                    >
+                        <SegmentedControl<ViewType>
+                            value={viewType}
+                            setValue={setViewType}
+                            choices={[
+                                {
+                                    value: 'editor',
+                                    children: <Fragment>
+                                        <EditOutlined sx={{ ml: -.75 }} />
+                                        {translations.message_builder_editor}
+                                    </Fragment>
+                                },
+                                {
+                                    value: 'preview',
+                                    children: <Fragment>
+                                        <PreviewOutlined sx={{ ml: -.75 }} />
+                                        {translations.message_builder_preview}
+                                    </Fragment>
+                                }
+                            ]}
+                        />
+                    </Box>
+                    <ThemeProvider theme={defaultTheme}>
+                        <MessageEditorWrapper>
+                            <MessageEditorSection active={viewType === 'editor'}>
+                                <Editor
+                                    message={editableMessage}
+                                    setMessage={setEditableMessage}
+                                    localization={localization}
+                                />
+                            </MessageEditorSection>
+                            <MessageEditorSection active={viewType === 'preview'}>
+                                <MessagePreviewContainer sx={{ height: '100%' }}>
+                                    <MessageContainer style={{ border: `solid 1px ${theme.palette.divider}` }}>
+                                        <MessagePreview message={editableMessage} />
+                                    </MessageContainer>
+                                </MessagePreviewContainer>
+                            </MessageEditorSection>
+                        </MessageEditorWrapper>
+                    </ThemeProvider>
+                </MessageEditorContainer>
+            </DialogContent>
+            <DialogActions>
+                <Button
+                    onClick={handleResetButtonClick}
+                    color="error"
+                    startIcon={<DeleteOutlined />}
+                    sx={{ mr: 'auto' }}
+                >
+                    {translations.reset}
+                </Button>
+                {isChanged ? <Fragment>
+                    <Button onClick={handleClose} startIcon={<CloseOutlined />}>
+                        {translations.cancel}
+                    </Button>
+                    <Button onClick={handleSaveButtonClick} variant="contained" startIcon={<SaveOutlined />}>
+                        {translations.save}
+                    </Button>
+                </Fragment> : <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
+                    {translations.close}
+                </Button>}
+            </DialogActions>
         </Dialog>
     );
 };

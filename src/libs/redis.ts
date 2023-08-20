@@ -6,6 +6,7 @@ import {
     RedisMember,
     RedisRole,
     RedisSnowflake,
+    RedisStatus,
     RedisUser,
     RedisUserGuild,
     RedisUserGuilds
@@ -18,6 +19,7 @@ const HASH_ROLES = 'roles';
 const HASH_MEMBERS = 'members';
 const HASH_USERS = 'users';
 const HASH_USERS_GUILDS = 'users_guilds';
+const HASH_STATUSES = 'statuses';
 const HASH_COMMANDS = 'commands';
 
 const PUBSUB_USERS_GUILDS = HASH_USERS_GUILDS;
@@ -136,6 +138,22 @@ export const updateGuildConfigurationById = async (id: string): Promise<void> =>
 export const updateUserConfigurationById = async (id: string): Promise<void> => {
     const data: RedisSnowflake = { id };
     await redis.publish(PUBSUB_USER_CONFIGURATION, JSON.stringify(data));
+};
+
+export const getStatuses = async (): Promise<RedisStatus[]> => {
+    const statuses = await redis.hgetall(HASH_STATUSES);
+    if (!statuses)
+        return [];
+
+    return Object.values(statuses).map((status) => JSON.parse(status));
+};
+
+export const getStatus = async (id: number): Promise<RedisStatus | undefined> => {
+    const data = await redis.hget(HASH_STATUSES, id.toString());
+    if (!data)
+        return undefined;
+
+    return JSON.parse(data);
 };
 
 export const getCommands = async (): Promise<RedisCommand[]> => {

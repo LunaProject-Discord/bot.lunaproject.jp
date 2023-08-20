@@ -1,11 +1,10 @@
 import { Box, styled } from '@mui/material';
 
-export const MessageEditorContainer = styled(Box)(({ theme }) => ({
+export const MessageEditorContainer = styled(Box)({
     height: '100%',
-    padding: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column'
-}));
+});
 
 export const MessageEditorWrapper = styled(Box)(({ theme }) => ({
     height: '100%',
