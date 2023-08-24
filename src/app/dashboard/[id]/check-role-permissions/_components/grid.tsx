@@ -295,8 +295,23 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                             <GridRowHeaderCell />
                             {roles.map((role) => (
                                 <GridRowHeaderCell key={role.id}>
-                                    <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
-                                    <Typography>{role.name}</Typography>
+                                    <Box
+                                        sx={{
+                                            ...size(16),
+                                            flexShrink: 0,
+                                            bgcolor: getRoleColor(role),
+                                            borderRadius: '50%'
+                                        }}
+                                    />
+                                    <Typography
+                                        sx={{
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            overflow: 'hidden'
+                                        }}
+                                    >
+                                        {role.name}
+                                    </Typography>
                                 </GridRowHeaderCell>
                             ))}
                         </DesktopGridColumnHeader>

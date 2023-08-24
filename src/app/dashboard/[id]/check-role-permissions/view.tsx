@@ -40,19 +40,24 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     <Alert severity="info">
                         <AlertTitle>{translations.role_permissions_how_to}</AlertTitle>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <CheckOutlined /> {translations.role_permissions_how_to_description_yes}
+                            <CheckOutlined sx={{ mb: 'auto' }} />
+                            {translations.role_permissions_how_to_description_yes}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <CloseOutlined /> {translations.role_permissions_how_to_description_no}
+                            <CloseOutlined sx={{ mb: 'auto' }} />
+                            {translations.role_permissions_how_to_description_no}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <RemoveOutlined /> {translations.role_permissions_how_to_description_inherited_everyone}
+                            <RemoveOutlined sx={{ mb: 'auto' }} />
+                            {translations.role_permissions_how_to_description_inherited_everyone}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <CrownOutlined /> {translations.role_permissions_how_to_description_inherited_administrator}
+                            <CrownOutlined sx={{ mb: 'auto' }} />
+                            {translations.role_permissions_how_to_description_inherited_administrator}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <DeleteOutlined /> {translations.role_permissions_how_to_description_deletable}
+                            <DeleteOutlined sx={{ mb: 'auto' }} />
+                            {translations.role_permissions_how_to_description_deletable}
                         </Box>
                     </Alert>
                 </SectionContent>
