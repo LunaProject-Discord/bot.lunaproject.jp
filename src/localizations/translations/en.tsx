@@ -254,7 +254,7 @@ export const translationsEn: Translations = {
     role_permissions_how_to_description_no: 'is not granted that permission.',
     role_permissions_how_to_description_inherited_everyone: 'means that @everyone has been granted permission and therefore inherits it.',
     role_permissions_how_to_description_inherited_administrator: 'means that the role has been granted administrator permission and therefore inherits it.',
-    role_permissions_how_to_description_deletable: 'means that the permission has already been granted by some factor and there is no problem in deleting it.',
+    role_permissions_how_to_description_deletable: 'means that the permission has already been granted by some factor and there is no problem with revoking it.',
     role_permissions_grid_yes: 'Permission granted',
     role_permissions_grid_no: 'Permission not granted',
     role_permissions_grid_inherited_everyone: 'Permission granted to @everyone',

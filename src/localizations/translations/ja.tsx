@@ -253,7 +253,7 @@ export const translationsJa: Translations = {
     role_permissions_how_to_description_no: 'はその権限が役職に付与されていません。',
     role_permissions_how_to_description_inherited_everyone: 'は @everyone に権限が付与されているため、それを継承していることを意味します。',
     role_permissions_how_to_description_inherited_administrator: 'は役職に管理者権限が付与されているため、それを継承していることを意味します。',
-    role_permissions_how_to_description_deletable: 'は何らかの要因によってすでに権限が付与されているため、削除しても問題がないことを意味します。',
+    role_permissions_how_to_description_deletable: 'は何らかの要因によってすでに権限が付与されているため、剥奪しても問題がないことを意味します。',
     role_permissions_grid_yes: '権限が付与されています',
     role_permissions_grid_no: '権限が付与されていません',
     role_permissions_grid_inherited_everyone: '権限が @everyone に付与されています',
