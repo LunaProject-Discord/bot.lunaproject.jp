@@ -20,8 +20,6 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     const roles = sortRoles(guild.roles);
 
-    console.log(roles, permissions);
-
     return (
         <PageContent>
             <PageHeader>
