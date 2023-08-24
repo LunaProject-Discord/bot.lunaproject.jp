@@ -57,7 +57,10 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
         id: statistic.id,
         date: getDate(statistic),
         total: getValue(statistic),
-        ...Object.entries(statistic.channels.shards).reduce((acc, [key, value]) => ({ ...acc, [`shard_${key}`]: value.total }), {})
+        ...Object.entries(statistic.channels.shards).reduce((acc, [key, value]) => ({
+            ...acc,
+            [`shard_${key}`]: value.total
+        }), {})
     }));
 
 

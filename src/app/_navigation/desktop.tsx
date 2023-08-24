@@ -68,7 +68,14 @@ const DesktopNavigationItem = ({ href, predicate, icon, label }: DesktopNavigati
     );
 };
 
-export const DesktopNavigation = ({ openPopover, user, flags, localization: { translations } }: NavigationRootProps) => (
+export const DesktopNavigation = (
+    {
+        openPopover,
+        user,
+        flags,
+        localization: { translations }
+    }: NavigationRootProps
+) => (
     <DesktopNavigationRoot>
         <DesktopNavigationGroup>
             <IconButton disabled>

@@ -152,7 +152,7 @@ export const EmbedEditor = (
                         </IconButton>
                     </Tooltip>
                     <Tooltip title={translations.remove} placement="top">
-                        <IconButton onClick={remove} size="small" color="error" sx={{ width: 36, height: 36 }}>
+                        <IconButton onClick={remove} color="error" size="small" sx={{ width: 36, height: 36 }}>
                             <ClearOutlined fontSize="small" />
                         </IconButton>
                     </Tooltip>

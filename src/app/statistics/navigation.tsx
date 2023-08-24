@@ -223,7 +223,7 @@ const Drawer = ({ open, setOpen, localization: { translations } }: DrawerProps &
                             <Typography variant="body2" color="text.secondary" sx={{ px: .5 }}>
                                 {translations.statistics_mode}
                             </Typography>
-                            <FormControl fullWidth size="small">
+                            <FormControl size="small" fullWidth>
                                 <Select<StatisticsPeriodType>
                                     value={searchParams.get('period') as (StatisticsPeriodType | undefined) ?? 'hours'}
                                     onChange={handlePeriodSelectChange}

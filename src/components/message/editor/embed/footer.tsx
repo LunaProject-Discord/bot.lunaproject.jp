@@ -29,9 +29,9 @@ export const EmbedFooterEditor = ({ value, setValue, disabled, localization: { t
                         type="text"
                         inputProps={{ maxLength: 2048 }}
                         disabled={disabled}
-                        fullWidth
                         size="small"
                         margin="none"
+                        fullWidth
                     />
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_footer_icon_url} inline>
@@ -40,15 +40,18 @@ export const EmbedFooterEditor = ({ value, setValue, disabled, localization: { t
                         onChange={(e) => setValue({ ...value, iconUrl: e.target.value })}
                         type="url"
                         disabled={disabled}
-                        fullWidth
                         size="small"
                         margin="none"
+                        fullWidth
                     />
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_footer_timestamp} inline sx={{ flexGrow: .5 }}>
                     <DateTimeEditor
                         value={value.timestamp}
-                        setValue={(action) => setValue({ ...value, timestamp: getStateActionValue(action, value.timestamp) })}
+                        setValue={(action) => setValue({
+                            ...value,
+                            timestamp: getStateActionValue(action, value.timestamp)
+                        })}
                     />
                 </EmbedFormItem>
             </EmbedFormContainer>

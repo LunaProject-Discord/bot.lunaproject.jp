@@ -57,7 +57,10 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
         id: statistic.id,
         date: getDate(statistic),
         total: getValue(statistic),
-        ...Object.entries(statistic.roles.shards).reduce((acc, [key, value]) => ({ ...acc, [`shard_${key}`]: value }), {})
+        ...Object.entries(statistic.roles.shards).reduce((acc, [key, value]) => ({
+            ...acc,
+            [`shard_${key}`]: value
+        }), {})
     }));
 
 

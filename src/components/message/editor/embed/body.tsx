@@ -49,9 +49,9 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                             type="text"
                             inputProps={{ maxLength: 256 }}
                             disabled={disabled}
-                            fullWidth
                             size="small"
                             margin="none"
+                            fullWidth
                         />
                     </EmbedFormItem>
                     <EmbedFormItem label={translations.embed_body_description}>
@@ -68,9 +68,9 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                             onChange={(e) => setValue({ ...value, url: e.target.value })}
                             type="url"
                             disabled={disabled}
-                            fullWidth
                             size="small"
                             margin="none"
+                            fullWidth
                         />
                     </EmbedFormItem>
                     <EmbedFormItem label={translations.embed_body_color} inline sx={{ flexGrow: 0 }}>

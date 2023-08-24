@@ -70,7 +70,7 @@ export const EmbedFieldEditor = (
                     </IconButton>
                 </Tooltip>
                 <Tooltip title={translations.remove} placement="top">
-                    <IconButton onClick={remove} size="small" color="error" sx={{ width: 36, height: 36 }}>
+                    <IconButton onClick={remove} color="error" size="small" sx={{ width: 36, height: 36 }}>
                         <ClearOutlined fontSize="small" />
                     </IconButton>
                 </Tooltip>
@@ -85,9 +85,9 @@ export const EmbedFieldEditor = (
                         type="text"
                         inputProps={{ maxLength: 256 }}
                         disabled={disabled}
-                        fullWidth
                         size="small"
                         margin="none"
+                        fullWidth
                     />
                 </EmbedFormItem>
                 <EmbedFormItem label="&nbsp;" inline sx={{ flexGrow: 0 }}>

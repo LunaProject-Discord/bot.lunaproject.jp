@@ -10,7 +10,9 @@ import { CloudOffOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import React from 'react';
 
-export const View = ({ statistics: { period: { type }, statistics }, localization }: StatisticsViewProps & LocalizationProps) => {
+type Props = StatisticsViewProps & LocalizationProps;
+
+export const View = ({ statistics: { period: { type }, statistics }, localization }: Props) => {
     const { translations } = localization;
 
     return (

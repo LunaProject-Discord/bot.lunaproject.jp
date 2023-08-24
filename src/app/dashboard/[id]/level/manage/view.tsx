@@ -138,9 +138,9 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                 <ItemFormGroup sx={{ width: 'auto', flexShrink: 0 }}>
                     <Button
                         onClick={() => setValue({ ...value, level: 0, xp: 0 })}
-                        fullWidth
                         variant="text"
                         color="error"
+                        fullWidth
                         startIcon={<DeleteOutlined />}
                     >
                         {translations.reset}

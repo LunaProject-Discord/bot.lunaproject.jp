@@ -21,9 +21,9 @@ export const EmbedAuthorEditor = ({ value, setValue, disabled, localization: { t
                         type="text"
                         inputProps={{ maxLength: 256 }}
                         disabled={disabled}
-                        fullWidth
                         size="small"
                         margin="none"
+                        fullWidth
                     />
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_author_url} inline>
@@ -32,9 +32,9 @@ export const EmbedAuthorEditor = ({ value, setValue, disabled, localization: { t
                         onChange={(e) => setValue({ ...value, url: e.target.value })}
                         type="url"
                         disabled={disabled}
-                        fullWidth
                         size="small"
                         margin="none"
+                        fullWidth
                     />
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_author_icon_url} inline>
@@ -43,9 +43,9 @@ export const EmbedAuthorEditor = ({ value, setValue, disabled, localization: { t
                         onChange={(e) => setValue({ ...value, iconUrl: e.target.value })}
                         type="url"
                         disabled={disabled}
-                        fullWidth
                         size="small"
                         margin="none"
+                        fullWidth
                     />
                 </EmbedFormItem>
             </EmbedFormContainer>

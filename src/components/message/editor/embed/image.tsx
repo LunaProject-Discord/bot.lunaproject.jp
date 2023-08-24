@@ -26,9 +26,9 @@ export const EmbedImageEditor = ({ value, setValue, disabled, localization: { tr
                             }}
                             type="url"
                             disabled={disabled}
-                            fullWidth
                             size="small"
                             margin="none"
+                            fullWidth
                         />
                     ))}
                 </EmbedFormItem>
@@ -38,9 +38,9 @@ export const EmbedImageEditor = ({ value, setValue, disabled, localization: { tr
                         onChange={(e) => setValue({ ...value, thumbnail: e.target.value })}
                         type="url"
                         disabled={disabled}
-                        fullWidth
                         size="small"
                         margin="none"
+                        fullWidth
                     />
                 </EmbedFormItem>
             </EmbedFormContainer>
