@@ -38,7 +38,7 @@ import {
     TextSnippetOutlined,
     TranslateOutlined
 } from '@mui/icons-material';
-import { Box, IconButton, styled, Typography } from '@mui/material';
+import { Box, Chip, IconButton, styled, Typography } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { Dispatch, Fragment, MouseEventHandler, SetStateAction, useState } from 'react';
@@ -220,7 +220,21 @@ const Drawer = (
                             setOpen={setOpen}
                         />
                     </DrawerGroup>
-                    <DrawerGroup label={translations.settings_guild_management}>
+                    <DrawerGroup label={translations.settings_moderation_and_management}>
+                        <DrawerItem
+                            icon={<SellOutlined />}
+                            label={
+                                <Box sx={{ width: '100%', pr: 1, display: 'flex', alignItems: 'center' }}>
+                                    {translations.role_permissions}
+                                    <Chip label="Beta" color="secondary" size="small" sx={{ height: 20, ml: 'auto' }} />
+                                </Box>
+                            }
+                            href={`/dashboard/${guild.id}/check-role-permissions`}
+                            open={open}
+                            setOpen={setOpen}
+                        />
+                    </DrawerGroup>
+                    <DrawerGroup label={translations.settings_features_and_options}>
                         <DrawerItem
                             icon={<PersonAddOutlined />}
                             label={translations.welcome_message}
@@ -249,8 +263,6 @@ const Drawer = (
                             open={open}
                             setOpen={setOpen}
                         />}
-                    </DrawerGroup>
-                    <DrawerGroup label={translations.settings_features_and_options}>
                         <DrawerItem
                             icon={<EmojiEventsOutlined />}
                             label={translations.level}

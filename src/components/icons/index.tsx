@@ -64,3 +64,17 @@ export const CommandBoxIcon = (props: SvgIconProps) => (
             d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3M9.3 19H7L14.7 5H17L9.3 19Z" />
     </SvgIcon>
 );
+
+export const Crown = (props: SvgIconProps) => (
+    <SvgIcon {...props}>
+        <path
+            d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5M19 19C19 19.6 18.6 20 18 20H6C5.4 20 5 19.6 5 19V18H19V19Z" />
+    </SvgIcon>
+);
+
+export const CrownOutlined = (props: SvgIconProps) => (
+    <SvgIcon {...props}>
+        <path
+            d="M12 8L15 13.2L18 10.5L17.3 14H6.7L6 10.5L9 13.2L12 8M12 4L8.5 10L3 5L5 16H19L21 5L15.5 10L12 4M19 18H5V19C5 19.6 5.4 20 6 20H18C18.6 20 19 19.6 19 19V18Z" />
+    </SvgIcon>
+);
