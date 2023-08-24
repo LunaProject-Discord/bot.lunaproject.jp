@@ -232,6 +232,8 @@ export type TranslationKeys =
     | 'command_permissions_roles'
     | 'command_permissions_members'
 
+    | 'automod'
+
     | 'role_permissions'
     | 'role_permissions_description'
     | 'role_permissions_select_roles'

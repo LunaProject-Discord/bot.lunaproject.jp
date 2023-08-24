@@ -243,6 +243,8 @@ export const translationsJa: Translations = {
     command_permissions_roles: '役職の権限オーバーライド',
     command_permissions_members: 'メンバーの権限オーバーライド',
 
+    automod: 'AutoMod',
+
     role_permissions: '役職の権限を確認',
     role_permissions_description: 'サーバーに設定されている役職とその権限を表示することで、権限の設定に役立てることができます。',
     role_permissions_select_roles: '表示する権限を選択',

@@ -244,6 +244,8 @@ export const translationsEn: Translations = {
     command_permissions_roles: 'Role Permissions Override',
     command_permissions_members: 'Member Permissions Override',
 
+    automod: 'AutoMod',
+
     role_permissions: 'Check Role Permissions',
     role_permissions_description: 'Displaying the roles and their permissions set for the server can be helpful in setting permissions.',
     role_permissions_select_roles: 'Select the permissions you wish to display',

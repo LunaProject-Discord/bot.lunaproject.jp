@@ -34,6 +34,7 @@ import {
     PollOutlined,
     RecordVoiceOverOutlined,
     ScheduleOutlined,
+    SecurityOutlined,
     SellOutlined,
     TextSnippetOutlined,
     TranslateOutlined
@@ -221,6 +222,13 @@ const Drawer = (
                         />
                     </DrawerGroup>
                     <DrawerGroup label={translations.settings_moderation_and_management}>
+                        {flags.tester && <DrawerItem
+                            icon={<SecurityOutlined />}
+                            label={translations.automod}
+                            href={`/dashboard/${guild.id}/automod`}
+                            open={open}
+                            setOpen={setOpen}
+                        />}
                         <DrawerItem
                             icon={<SellOutlined />}
                             label={
