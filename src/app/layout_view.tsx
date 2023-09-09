@@ -31,6 +31,22 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
     const theme = createTheme(
         {
             components: {
+                MuiButton: {
+                    styleOverrides: {
+                        root: {
+                            textTransform: 'none'
+                        }
+                    }
+                },
+                MuiInputBase: {
+                    styleOverrides: {
+                        input: {
+                            '&:placeholder-shown': {
+                                textOverflow: 'ellipsis'
+                            }
+                        }
+                    }
+                },
                 MuiTooltip: {
                     styleOverrides: {
                         popper: {
