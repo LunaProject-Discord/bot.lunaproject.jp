@@ -4,7 +4,7 @@ import { PageContainer } from '@components/layout';
 import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject-discord/web-core/dist/components/StyleProvider';
-import { MuiPalette } from '@lunaproject-discord/web-core/dist/utils/theme';
+import { MuiComponents, MuiPalette } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
 import { createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { indigo } from '@mui/material/colors';
@@ -30,31 +30,7 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
 
     const theme = createTheme(
         {
-            components: {
-                MuiButton: {
-                    styleOverrides: {
-                        root: {
-                            textTransform: 'none'
-                        }
-                    }
-                },
-                MuiInputBase: {
-                    styleOverrides: {
-                        input: {
-                            '&:placeholder-shown': {
-                                textOverflow: 'ellipsis'
-                            }
-                        }
-                    }
-                },
-                MuiTooltip: {
-                    styleOverrides: {
-                        popper: {
-                            userSelect: 'none'
-                        }
-                    }
-                }
-            },
+            components: MuiComponents,
             palette: {
                 ...MuiPalette,
                 primary: {

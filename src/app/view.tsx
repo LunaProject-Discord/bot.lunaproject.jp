@@ -104,7 +104,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
 
     const { data: guilds } = useSWRImmutable<FeaturedGuild[]>(
         token ? ['/api/users/me/home/guilds', token] : null,
-        ([url, token]: string[]) => fetchWithUser(url, token)
+        ([url, token]) => fetchWithUser(url, token as string)
     );
 
     const [viewType, setViewType] = useState<ViewType>('guilds');
