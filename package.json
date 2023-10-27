@@ -27,7 +27,7 @@
         "@mui/material": "5.14.12",
         "@mui/x-data-grid": "6.16.1",
         "@mui/x-date-pickers": "6.16.1",
-        "@prisma/client": "5.4.2",
+        "@prisma/client": "5.5.2",
         "@visx/curve": "3.3.0",
         "@visx/event": "3.3.0",
         "@visx/gradient": "3.3.0",
@@ -73,13 +73,10 @@
         "@types/luxon": "3.3.2",
         "@types/mousetrap": "1.6.12",
         "@types/node": "18.16.20",
-        "@types/react": "18.2.27",
-        "@types/react-color": "3.0.7",
-        "@types/react-dom": "18.2.12",
+        "@types/react": "18.2.33",
+        "@types/react-color": "3.0.9",
+        "@types/react-dom": "18.2.14",
         "@types/react-window": "1.8.6",
-        "prisma": "5.4.2"
-    },
-    "resolutions": {
-        "@types/react": "18.2.27"
+        "prisma": "5.5.2"
     }
 }
