@@ -68,15 +68,15 @@
         "typescript": "5.2.2"
     },
     "devDependencies": {
-        "@types/color": "3.0.4",
-        "@types/deep-equal": "1.0.2",
-        "@types/luxon": "3.3.2",
-        "@types/mousetrap": "1.6.12",
+        "@types/color": "3.0.5",
+        "@types/deep-equal": "1.0.3",
+        "@types/luxon": "3.3.3",
+        "@types/mousetrap": "1.6.13",
         "@types/node": "18.16.20",
         "@types/react": "18.2.33",
         "@types/react-color": "3.0.9",
         "@types/react-dom": "18.2.14",
-        "@types/react-window": "1.8.6",
+        "@types/react-window": "1.8.7",
         "prisma": "5.5.2"
     }
 }

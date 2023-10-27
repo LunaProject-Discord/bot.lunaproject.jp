@@ -1149,12 +1149,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/color@npm:3.0.4":
-  version: 3.0.4
-  resolution: "@types/color@npm:3.0.4"
+"@types/color@npm:3.0.5":
+  version: 3.0.5
+  resolution: "@types/color@npm:3.0.5"
   dependencies:
     "@types/color-convert": "*"
-  checksum: 46935626ddeb8ae8877488b1f8f2f71b17a529c113673301a1dd7a64d917cb7a748545ac34ed30c188d66a2cd09c33abc24c87bd5b3a80d520cf1f35aaa2e476
+  checksum: 82cce7cb132b5c0898dd69b92a4663e34ad8f19db6a009bef7ef79d4840ddb4d5f7e793e2e64e3b4a60da92dc2ae33d1aa498981d0fcf0562917c9550603a99d
   languageName: node
   linkType: hard
 
@@ -1248,10 +1248,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/deep-equal@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@types/deep-equal@npm:1.0.2"
-  checksum: 856dcb29e99347f0389ae2619bdce6f21b33b6f36eef0134b95a043a00773e365f10409ad0804b1fb0b96006e5cb19cdaea220e3af1b65ba122bc283ff1c2efe
+"@types/deep-equal@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@types/deep-equal@npm:1.0.3"
+  checksum: eddd9a381dac9d2bb99846e8f42a5e568f54610485cdcb6dd08ae60e597d406331f25f3bb1e63d0ecf28b6376d304ac635106b9a86a25c43d496406c4f29f298
   languageName: node
   linkType: hard
 
@@ -1269,17 +1269,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:3.3.2":
-  version: 3.3.2
-  resolution: "@types/luxon@npm:3.3.2"
-  checksum: b9111132720eae0269538872a5a496b29587ecfc8edc3b0ff7d269aa93a5ff00a131b23d1e9d1f12ec39f2c779ad21bd8d9f90b122c85a182771aabde7f676b8
+"@types/luxon@npm:3.3.3":
+  version: 3.3.3
+  resolution: "@types/luxon@npm:3.3.3"
+  checksum: 072dd39eea3f63453788fab2fcfc83eb33917afcaffe178ce08ecd8b016824b8ab3bfa991f66266f2fc1927768a56b4334945f2eb1d83638e325c0c43d7d0e86
   languageName: node
   linkType: hard
 
-"@types/mousetrap@npm:1.6.12":
-  version: 1.6.12
-  resolution: "@types/mousetrap@npm:1.6.12"
-  checksum: ffa1d481bee235597c975dbd8f03a96ab54bd07ad896d424b79fbe5faf65aa4d2a8986849b1d6e0168ca5a5f248965ab0750bed9e4f3070b64da119ab1a099f4
+"@types/mousetrap@npm:1.6.13":
+  version: 1.6.13
+  resolution: "@types/mousetrap@npm:1.6.13"
+  checksum: b009d7335fb1a77c68cadca61a83106c53695a92122d78d3a107e04791f57239623eb14e99f9c689cada47219a5ab3c7ce203b4063a9b2ae21283b03d3948239
   languageName: node
   linkType: hard
 
@@ -1332,12 +1332,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-window@npm:1.8.6":
-  version: 1.8.6
-  resolution: "@types/react-window@npm:1.8.6"
+"@types/react-window@npm:1.8.7":
+  version: 1.8.7
+  resolution: "@types/react-window@npm:1.8.7"
   dependencies:
     "@types/react": "*"
-  checksum: 3084190ab50a84d8499a6df574ad67474566cd7aeeb8fc6ce82a7a13421fd39e21a059c51f9d12f38e5ac52eb9d65f6184e3fb6cb62841e93b197b7401b36e35
+  checksum: e135299b5d55b63eb3f400570b77ff64afaeeb305587f71f7e20734a879aaddec6f6d24180e54c6c2f3200a71712ac7e6f1474733fe71e879a65f9e4ab113977
   languageName: node
   linkType: hard
 
@@ -1850,15 +1850,15 @@ __metadata:
     "@mui/x-data-grid": 6.16.1
     "@mui/x-date-pickers": 6.16.1
     "@prisma/client": 5.5.2
-    "@types/color": 3.0.4
-    "@types/deep-equal": 1.0.2
-    "@types/luxon": 3.3.2
-    "@types/mousetrap": 1.6.12
+    "@types/color": 3.0.5
+    "@types/deep-equal": 1.0.3
+    "@types/luxon": 3.3.3
+    "@types/mousetrap": 1.6.13
     "@types/node": 18.16.20
     "@types/react": 18.2.33
     "@types/react-color": 3.0.9
     "@types/react-dom": 18.2.14
-    "@types/react-window": 1.8.6
+    "@types/react-window": 1.8.7
     "@visx/curve": 3.3.0
     "@visx/event": 3.3.0
     "@visx/gradient": 3.3.0
