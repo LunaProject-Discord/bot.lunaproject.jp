@@ -199,6 +199,8 @@ export type TranslationKeys =
 
     | 'guild_settings'
     | 'choose_guild_settings'
+    | 'back_to_home'
+    | 'back_to_select_guild'
     | 'settings_basic'
     | 'settings_guild_management'
     | 'settings_moderation_and_management'

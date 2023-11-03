@@ -208,6 +208,8 @@ export const translationsEn: Translations = {
 
     guild_settings: 'Server Settings',
     choose_guild_settings: 'Select the server you wish to configure.',
+    back_to_home: 'Back to Home',
+    back_to_select_guild: 'Back to Select Server',
     settings_basic: 'Basic Settings',
     settings_guild_management: 'Server Management',
     settings_moderation_and_management: 'Moderation & Management',

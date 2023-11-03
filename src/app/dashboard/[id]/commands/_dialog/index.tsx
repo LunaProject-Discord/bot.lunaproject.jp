@@ -3,13 +3,13 @@
 import { Channels, Group, GroupTitle, Members, Roles } from '@app/dashboard/[id]/commands/_dialog/_components';
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
 import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@app/dashboard/[id]/commands/utils';
+import { CancelButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
-import { Code, Key } from '@components/text';
+import { Code } from '@components/text';
 import { GuildConfigurationCommand } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
 import { ItemFormContainer, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
-import { CloseOutlined } from '@mui/icons-material';
-import { Box, Button, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
 import { sortChannels, sortMembers, sortRoles } from '@utils/discord';
 import { getStateActionValue } from '@utils/state';
 import deepEqual from 'deep-equal';
@@ -182,10 +182,9 @@ const ManageCommandDialog = memo<ManageCommandDialogProps>((
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => setOpen(false)} variant="contained" startIcon={<CloseOutlined />}>
+                    <CancelButton onClick={() => setOpen(false)} variant="contained">
                         {translations.close}
-                        <Key sx={{ ml: 1, mr: -.5 }}>Esc</Key>
-                    </Button>
+                    </CancelButton>
                 </DialogActions>
             </Dialog>
         </Fragment>

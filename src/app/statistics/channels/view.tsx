@@ -4,7 +4,7 @@ import { AreaChart, DataGrid } from '@app/statistics/_components';
 import { LatestWidget, MaxWidget, MinWidget } from '@app/statistics/_components/widgets';
 import { StatisticsViewProps } from '@app/statistics/interfaces';
 import { formatDate, getDate, getMaxShards } from '@app/statistics/utils';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { Statistic } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
@@ -12,7 +12,7 @@ import { CloudOffOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { GridColDef, GridRowsProp, GridValidRowModel } from '@mui/x-data-grid';
 import { max, min } from '@utils/array';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 const getValue = (statistic: Statistic) => statistic.channels.total;
 const formatValue = (value: number) => value.toLocaleString();
@@ -65,7 +65,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
 
 
     return (
-        <PageContent>
+        <Fragment>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.channels}</Typography>
@@ -122,12 +122,12 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
                     }}
                 />
             </Section>
-        </PageContent>
+        </Fragment>
     );
 };
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.channels}</Typography>
@@ -137,11 +137,11 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </Fragment>
 );
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.channels}</Typography>
@@ -165,5 +165,5 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 しばらく待ってから再度お試しください。
             </Typography>
         </Box>
-    </PageContent>
+    </Fragment>
 );

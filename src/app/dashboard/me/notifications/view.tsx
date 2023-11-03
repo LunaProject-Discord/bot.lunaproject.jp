@@ -1,7 +1,7 @@
 'use client';
 
 import { RouteLinkItem } from '@components/items';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { UserNotification } from '@interfaces/bot';
 import { UserViewProps } from '@interfaces/view';
 import { useLocale } from '@localizations/client';
@@ -31,7 +31,7 @@ export const View = ({ user, notifications, localization: { translations } }: Pr
     });
 
     return (
-        <PageContent>
+        <Fragment>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.notifications}</Typography>
@@ -67,6 +67,6 @@ export const View = ({ user, notifications, localization: { translations } }: Pr
                     </Section>
                 );
             })}
-        </PageContent>
+        </Fragment>
     );
 };

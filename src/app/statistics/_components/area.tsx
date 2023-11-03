@@ -1,3 +1,5 @@
+'use client';
+
 import { StatisticResponseProps } from '@app/statistics/_components/interfaces';
 import { Statistic } from '@interfaces/bot';
 import { useTheme } from '@mui/material';

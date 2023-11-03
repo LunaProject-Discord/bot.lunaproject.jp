@@ -8,7 +8,7 @@ import {
     getDefaultCommandConfiguration,
     sortCommands
 } from '@app/dashboard/[id]/commands/utils';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { codeStyled } from '@components/text';
 import { GuildConfigurationCommand, GuildConfigurationCommands } from '@interfaces/bot';
@@ -199,63 +199,61 @@ export const View = ({ guild, configuration, commands: redisCommands, localizati
 
     return (
         <Fragment>
-            <PageContent>
-                <PageHeader>
-                    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                        <Typography variant="h4">{translations.commands}</Typography>
-                        <Typography>{translations.commands_description}</Typography>
-                    </Box>
-                </PageHeader>
-                <Channels
-                    default={defaultChannels}
-                    setDefault={setDefaultChannels}
-                    overrides={overrideChannels}
-                    setOverrides={setOverrideChannels}
-                    channels={guild.channels}
-                    localization={localization}
-                />
-                <Roles
-                    default={defaultRoles}
-                    setDefault={setDefaultRoles}
-                    overrides={overrideRoles}
-                    setOverrides={setOverrideRoles}
-                    roles={guild.roles.filter((role) => role.position !== 0)}
-                    localization={localization}
-                />
-                <Members
-                    value={members}
-                    setValue={setMembers}
-                    members={guild.members}
-                    localization={localization}
-                />
-                {categorizedCommands.map(([category, redisCommands]) => (
-                    <Section key={category}>
-                        <SectionTitle>{category}</SectionTitle>
-                        <SectionContent>
-                            <Grid container spacing={2}>
-                                {redisCommands.map((command) => (
-                                    <CommandItem
-                                        key={command.name}
-                                        setOpen={setOpenManageCommandDialog}
-                                        value={getCommandConfiguration(command, commands)}
-                                        setValue={updateCommand}
-                                        command={command}
-                                        guild={guild}
-                                        localization={localization}
-                                    />
-                                ))}
-                            </Grid>
-                        </SectionContent>
-                    </Section>
-                ))}
+            <PageHeader>
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
+                    <Typography variant="h4">{translations.commands}</Typography>
+                    <Typography>{translations.commands_description}</Typography>
+                </Box>
+            </PageHeader>
+            <Channels
+                default={defaultChannels}
+                setDefault={setDefaultChannels}
+                overrides={overrideChannels}
+                setOverrides={setOverrideChannels}
+                channels={guild.channels}
+                localization={localization}
+            />
+            <Roles
+                default={defaultRoles}
+                setDefault={setDefaultRoles}
+                overrides={overrideRoles}
+                setOverrides={setOverrideRoles}
+                roles={guild.roles.filter((role) => role.position !== 0)}
+                localization={localization}
+            />
+            <Members
+                value={members}
+                setValue={setMembers}
+                members={guild.members}
+                localization={localization}
+            />
+            {categorizedCommands.map(([category, redisCommands]) => (
+                <Section key={category}>
+                    <SectionTitle>{category}</SectionTitle>
+                    <SectionContent>
+                        <Grid container spacing={2}>
+                            {redisCommands.map((command) => (
+                                <CommandItem
+                                    key={command.name}
+                                    setOpen={setOpenManageCommandDialog}
+                                    value={getCommandConfiguration(command, commands)}
+                                    setValue={updateCommand}
+                                    command={command}
+                                    guild={guild}
+                                    localization={localization}
+                                />
+                            ))}
+                        </Grid>
+                    </SectionContent>
+                </Section>
+            ))}
 
-                <SaveConfirm
-                    open={!deepEqual(commandsConfiguration, toObject(), { strict: true })}
-                    disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openManageCommandDialog}
-                    onSave={handleSaveAction}
-                    onCancel={handleCancelAction}
-                />
-            </PageContent>
+            <SaveConfirm
+                open={!deepEqual(commandsConfiguration, toObject(), { strict: true })}
+                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openManageCommandDialog}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
+            />
         </Fragment>
     );
 };

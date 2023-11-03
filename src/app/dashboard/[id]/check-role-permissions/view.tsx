@@ -2,7 +2,7 @@
 
 import { Grid, PermissionsItem } from '@app/dashboard/[id]/check-role-permissions/_components';
 import { CrownOutlined } from '@components/icons';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { ALL_PERMISSIONS } from '@interfaces/permissions';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
@@ -10,7 +10,7 @@ import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { CheckOutlined, CloseOutlined, DeleteOutlined, RemoveOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, Typography } from '@mui/material';
 import { sortRoles } from '@utils/discord';
-import React, { useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
@@ -21,7 +21,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
     const roles = sortRoles(guild.roles);
 
     return (
-        <PageContent>
+        <Fragment>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.role_permissions}</Typography>
@@ -66,6 +66,6 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 permissions={filteredPermissions}
                 localization={localization}
             />
-        </PageContent>
+        </Fragment>
     );
 };

@@ -1,6 +1,8 @@
 'use client';
 
-import { PageContent, PageHeader } from '@components/layout';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import { PageHeader } from '@components/layout';
+import { PageCenteredLayout, PageLayout } from '@components/layout_v2';
 import { GuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { GuildConfigurationViewProps } from '@interfaces/view';
@@ -48,7 +50,7 @@ export const View = ({ guild, levels, localization }: Props) => {
         return (<DataEmptyView localization={localization} />);
 
     return (
-        <PageContent sx={search.length > 0 && data.length < 1 ? { display: 'flex', gap: 0 } : undefined}>
+        <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.leaderboard}</Typography>
@@ -63,19 +65,19 @@ export const View = ({ guild, levels, localization }: Props) => {
                 </Box>
             </PageHeader>
             <Box
-                sx={{
+                sx={(theme) => ({
                     width: '100%',
                     pt: 3,
                     pb: { xs: 3, md: 0 },
                     position: 'sticky',
-                    top: { xs: 56, md: 0 },
+                    top: { xs: 56, sm: theme.spacing(8) },
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     gap: 2,
                     zIndex: 1,
                     bgcolor: 'background.paper'
-                }}
+                })}
             >
                 <Box
                     sx={{
@@ -174,12 +176,12 @@ export const View = ({ guild, levels, localization }: Props) => {
                     検索キーワードを変更して再度お試しください。
                 </Typography>
             </Box>}
-        </PageContent>
+        </PageLayout>
     );
 };
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.leaderboard}</Typography>
@@ -189,56 +191,38 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </PageLayout>
 );
 
 export const NotFoundView = ({}: LocalizationProps) => (
-    <PageContent display="flex">
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
+    <PageCenteredLayout>
+        <ErrorRoot>
             <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-            <Typography variant="h4">サーバーが見つかりません</Typography>
-            <Typography align="center">
+            <ErrorTitle>サーバーが見つかりません</ErrorTitle>
+            <ErrorDescription>
                 指定されたサーバーが見つかりませんでした。<br />
                 あなたはそのサーバーの管理者ではないか、サーバーが存在しない可能性があります。<br />
                 サーバーが存在していることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
-            </Typography>
-        </Box>
-    </PageContent>
+            </ErrorDescription>
+        </ErrorRoot>
+    </PageCenteredLayout>
 );
 
 export const DataEmptyView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.leaderboard}</Typography>
                 <Typography />
             </Box>
         </PageHeader>
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
+        <ErrorRoot>
             <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-            <Typography variant="h4">データがありません</Typography>
-            <Typography align="center">
+            <ErrorTitle>データがありません</ErrorTitle>
+            <ErrorDescription>
                 このサーバーではまだ誰も発言していないようです...<br />
                 サーバーで発言してからしばらく待った後に再度お試しください。
-            </Typography>
-        </Box>
-    </PageContent>
+            </ErrorDescription>
+        </ErrorRoot>
+    </PageLayout>
 );

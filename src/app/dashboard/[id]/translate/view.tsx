@@ -2,7 +2,7 @@
 
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
 import { ActionItem, SwitchItem } from '@components/items';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationTranslate } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
@@ -45,48 +45,46 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <PageContent>
-                <PageHeader>
-                    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                        <Typography variant="h4">{translations.translate}</Typography>
-                        <Typography>{translations.translate_description}</Typography>
-                    </Box>
-                </PageHeader>
-                <Section>
-                    <SectionContent>
-                        <SwitchItem
-                            primary={translations.translate_enabled}
-                            checked={enabled}
-                            setChecked={setEnabled}
-                        />
-                        <SwitchItem
-                            primary={translations.translate_reaction}
-                            checked={reaction}
-                            setChecked={setReaction}
-                            disabled={!enabled}
-                        />
-                        <ActionItem
-                            primary={translations.manage_disabled_channels}
-                            secondary={translations.translate_manage_disabled_channels_description}
-                            onAction={() => setOpenDisabledChannelsDialog(true)}
-                            disabled={!enabled}
-                        />
-                        <ActionItem
-                            primary={translations.manage_disabled_roles}
-                            secondary={translations.translate_manage_disabled_roles_description}
-                            onAction={() => setOpenDisabledRolesDialog(true)}
-                            disabled={!enabled}
-                        />
-                    </SectionContent>
-                </Section>
+            <PageHeader>
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
+                    <Typography variant="h4">{translations.translate}</Typography>
+                    <Typography>{translations.translate_description}</Typography>
+                </Box>
+            </PageHeader>
+            <Section>
+                <SectionContent>
+                    <SwitchItem
+                        primary={translations.translate_enabled}
+                        checked={enabled}
+                        setChecked={setEnabled}
+                    />
+                    <SwitchItem
+                        primary={translations.translate_reaction}
+                        checked={reaction}
+                        setChecked={setReaction}
+                        disabled={!enabled}
+                    />
+                    <ActionItem
+                        primary={translations.manage_disabled_channels}
+                        secondary={translations.translate_manage_disabled_channels_description}
+                        onAction={() => setOpenDisabledChannelsDialog(true)}
+                        disabled={!enabled}
+                    />
+                    <ActionItem
+                        primary={translations.manage_disabled_roles}
+                        secondary={translations.translate_manage_disabled_roles_description}
+                        onAction={() => setOpenDisabledRolesDialog(true)}
+                        disabled={!enabled}
+                    />
+                </SectionContent>
+            </Section>
 
-                <SaveConfirm
-                    open={!deepEqual(translateConfiguration, toObject(), { strict: true })}
-                    disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
-                    onSave={handleSaveAction}
-                    onCancel={handleCancelAction}
-                />
-            </PageContent>
+            <SaveConfirm
+                open={!deepEqual(translateConfiguration, toObject(), { strict: true })}
+                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
+            />
 
             <ManageDisabledChannelsDialog
                 open={openDisabledChannelsDialog}

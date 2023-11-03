@@ -23,25 +23,18 @@ import {
     ListItemText,
     ListSubheader,
     Popover,
-    Theme,
     Tooltip,
-    Typography,
-    useMediaQuery
+    Typography
 } from '@mui/material';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
+import { popoverAtom } from '@states/popover';
 import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '@utils/cookie';
+import { getUserAvatar, getUserDisplayName } from '@utils/discord';
 import NextLink from 'next/link';
 import { setCookie } from 'nookies';
 import React, { Fragment, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { getUserAvatar } from '../../utils/discord';
-import {
-    PopoverListItemButton,
-    PopoverListItemIcon,
-    PopoverListItemLinkButton,
-    PopoverListItemSwitch,
-    PopoverProps
-} from './index';
+import { PopoverListItemButton, PopoverListItemIcon, PopoverListItemLinkButton, PopoverListItemSwitch } from './index';
 
 interface PanelContentProps extends LocalizationProps {
     onClose: () => void;
@@ -149,41 +142,38 @@ const LocalePanelContent = ({ onClose, setPanelState, localization: { locale, tr
 
 type PanelType = 'appearance' | 'locale' | null;
 
-export interface UserPopoverProps extends PopoverProps {
+export interface UserPopoverProps extends LocalizationProps {
     user: OAuthUser | undefined;
 }
 
-export const UserPopover = ({ open, anchorEl, onClose, user, localization }: UserPopoverProps) => {
+export const UserPopover = ({ user, localization }: UserPopoverProps) => {
     const { translations } = localization;
 
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
-
+    const [popoverState, setPopoverState] = useRecoilState(popoverAtom);
     const [panelState, setPanelState] = useState<PanelType>(null);
 
     const handleClose = () => {
         setPanelState(null);
-        onClose();
+        setPopoverState(undefined);
     };
 
     return (
         <Popover
-            open={open}
-            anchorEl={anchorEl}
+            open={popoverState?.type === 'user'}
+            anchorEl={popoverState?.anchorEl}
             onClose={handleClose}
             anchorOrigin={{
-                vertical: isDesktop ? 'top' : 'bottom',
-                horizontal: isDesktop ? 'left' : 'right'
+                vertical: 'bottom',
+                horizontal: 'right'
             }}
             transformOrigin={{
-                vertical: isDesktop ? 'bottom' : 'top',
-                horizontal: isDesktop ? 'left' : 'right'
+                vertical: 'top',
+                horizontal: 'right'
             }}
             slotProps={{
                 paper: {
                     sx: {
                         width: 300,
-                        left: `${isDesktop ? '8px' : 'unset'} !important`,
-                        right: isDesktop ? 0 : '8px !important',
                         border: (theme) => `solid 1px ${theme.palette.divider}`,
                         boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
                     }
@@ -215,7 +205,7 @@ export const UserPopover = ({ open, anchorEl, onClose, user, localization }: Use
                             justifyContent: 'space-between'
                         }}>
                             <Typography variant="h6" sx={{ fontSize: '1.2rem', lineHeight: 1.2 }}>
-                                {user.global_name ?? user.username}
+                                {getUserDisplayName(user)}
                             </Typography>
                             <Typography
                                 variant="body2"
@@ -231,14 +221,14 @@ export const UserPopover = ({ open, anchorEl, onClose, user, localization }: Use
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={translations.logout} placement="top">
-                            <IconButton component={NextLink} href="https://accounts.lunaproject.jp/logout">
+                            <IconButton component={NextLink} href="https://account.lunaproject.jp/logout">
                                 <LogoutOutlined />
                             </IconButton>
                         </Tooltip>
                     </Box>
                     <Divider />
                     <List>
-                        <PopoverListItemLinkButton href="https://accounts.lunaproject.jp/" dense>
+                        <PopoverListItemLinkButton href="https://account.lunaproject.jp/" dense>
                             <PopoverListItemIcon>
                                 <ManageAccountsOutlined />
                             </PopoverListItemIcon>

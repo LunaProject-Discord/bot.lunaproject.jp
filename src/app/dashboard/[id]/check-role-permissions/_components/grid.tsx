@@ -243,13 +243,13 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
         <Fragment>
             <Section
                 ref={gridHeaderSectionRef}
-                sx={{
-                    width: mainWidth,
+                sx={(theme) => ({
+                    // width: mainWidth,
                     position: 'sticky',
-                    top: { xs: 56, md: 0 },
+                    top: { xs: 56, sm: theme.spacing(8) },
                     zIndex: 3,
                     bgcolor: 'background.paper'
-                }}
+                })}
             >
                 <SectionContent>
                     <GridRoot
@@ -288,7 +288,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                     </GridRoot>
                 </SectionContent>
             </Section>
-            <Section sx={{ width: mainWidth, mt: `${-(gridHeaderHeight)}px` }}>
+            <Section sx={{ /* width: mainWidth, */ mt: `${-(gridHeaderHeight)}px` }}>
                 <SectionContent>
                     <GridRoot ref={gridBodyRef} onScroll={handleGridBodyScroll}>
                         <DesktopGridColumnHeader ref={desktopRoleColumnHeaderRef}>

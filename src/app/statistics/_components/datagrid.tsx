@@ -1,3 +1,5 @@
+'use client';
+
 import { borderAndBoxShadow } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { DataGrid as MuiDataGrid, DataGridProps, GridToolbar } from '@mui/x-data-grid';
 

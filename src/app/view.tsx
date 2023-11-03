@@ -1,7 +1,7 @@
 'use client';
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { PageContent } from '@components/layout';
+import { PageCenteredLayout, PageLayout } from '@components/layout_v2';
 import { FeaturedGuild } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import {
@@ -110,7 +110,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
     const [viewType, setViewType] = useState<ViewType>('guilds');
 
     return (
-        <PageContent>
+        <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
             <Typography variant="h4">{translations.welcome}</Typography>
             <Alert severity="warning" sx={{ mt: 3 }}>
                 <AlertTitle>{translations.warning}</AlertTitle>
@@ -201,7 +201,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                     </Box>
                     <Button
                         component={NextLink}
-                        href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+                        href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                         disableElevation
                         variant="contained"
                         startIcon={<LoginOutlined />}
@@ -211,20 +211,20 @@ export const View = ({ user, localization: { translations } }: Props) => {
                     </Button>
                 </Alert>
             )}
-        </PageContent>
+        </PageLayout>
     );
 };
 
 
 export const UnauthorizedView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageCenteredLayout>
         <ErrorRoot>
             <PersonOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
             <ErrorTitle>{translations.error_unauthorized_title}</ErrorTitle>
             <ErrorDescription>{translations.error_unauthorized_description}</ErrorDescription>
             <Button
                 component={NextLink}
-                href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+                href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                 variant="contained"
                 size="large"
                 startIcon={<LoginOutlined />}
@@ -232,22 +232,22 @@ export const UnauthorizedView = ({ localization: { translations } }: Localizatio
                 {translations.login}
             </Button>
         </ErrorRoot>
-    </PageContent>
+    </PageCenteredLayout>
 );
 
 export const ForbiddenView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageCenteredLayout>
         <ErrorRoot>
             <LockPersonOutlined color="primary" sx={{ fontSize: '10rem' }} />
             <ErrorTitle>{translations.error_forbidden_title}</ErrorTitle>
             <ErrorDescription>{translations.error_forbidden_description}</ErrorDescription>
         </ErrorRoot>
-    </PageContent>
+    </PageCenteredLayout>
 );
 
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageCenteredLayout>
         <ErrorRoot>
             <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
             <ErrorTitle>{translations.error_not_found_title}</ErrorTitle>
@@ -263,5 +263,5 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 ホームに戻る
             </Button>
         </ErrorRoot>
-    </PageContent>
+    </PageCenteredLayout>
 );

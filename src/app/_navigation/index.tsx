@@ -1,73 +1,201 @@
 'use client';
 
+import { UserPopover } from '@app/_popovers';
+import {
+    NavigationAppBar as RootNavigationAppBar,
+    NavigationDrawer as RootNavigationDrawer,
+    NavigationDrawerGroup,
+    NavigationDrawerItem,
+    NavigationDrawerProps as RootNavigationDrawerProps,
+    NavigationToolbar,
+    NavigationToolbarItem
+} from '@components/navigation';
 import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
+import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
 import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import React, { Fragment, ReactNode, useState } from 'react';
-import { UserPopover } from '../_popovers/user';
-import { DesktopNavigation } from './desktop';
-import { MobileNavigation } from './mobile';
+import {
+    AnalyticsOutlined,
+    HomeOutlined,
+    LeaderboardOutlined,
+    LoginOutlined,
+    MenuOutlined,
+    SettingsOutlined,
+    ShowChartOutlined,
+    TuneOutlined
+} from '@mui/icons-material';
+import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger } from '@mui/material';
+import { popoverAtom } from '@states/popover';
+import { getUserAvatar, getUserDisplayName } from '@utils/discord';
+import Image from 'next/image';
+import NextLink from 'next/link';
+import React, { Fragment, MouseEvent, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 
-export type PopoverType = 'services' | 'notifications' | 'user' | undefined;
+export type RootNavigationProps = NavigationProps & RootNavigationDrawerProps;
+
+export const NavigationAppBar = ({ setOpen, user, flags, localization: { translations } }: RootNavigationProps) => {
+    const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 0 });
+
+    const setPopoverState = useSetRecoilState(popoverAtom);
+
+    const handleDrawerToggle = () => setOpen((prevState) => !prevState);
+
+    const handleUserPopoverOpenButtonClick = (e: MouseEvent<HTMLButtonElement>) => setPopoverState({
+        type: 'user',
+        anchorEl: e.currentTarget
+    });
+
+    return (
+        <RootNavigationAppBar
+            sx={{
+                boxShadow: (theme) => trigger ? `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)` : 'none'
+            }}
+        >
+            <NavigationToolbar>
+                <IconButton onClick={handleDrawerToggle} color="inherit" sx={{ display: { md: 'none' } }}>
+                    <MenuOutlined />
+                </IconButton>
+                <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
+                    <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                </RouteLink>
+                <Box sx={{ ml: 2, display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
+                    <NavigationToolbarItem href="/status">
+                        {translations.status}
+                    </NavigationToolbarItem>
+                    <NavigationToolbarItem href="/leaderboard">
+                        {translations.leaderboard}
+                    </NavigationToolbarItem>
+                    <NavigationToolbarItem
+                        href="/dashboard"
+                        predicate={(pathname, href) => pathname.startsWith(href) && !pathname.startsWith('/dashboard/me')}
+                    >
+                        {translations.guild_settings}
+                    </NavigationToolbarItem>
+                    {flags?.manager && <Fragment>
+                        <Divider orientation="vertical" flexItem sx={{ m: 1 }} />
+                        <NavigationToolbarItem href="/statistics">
+                            {translations.statistics}
+                        </NavigationToolbarItem>
+                    </Fragment>}
+                </Box>
+                <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {user ? <Tooltip title={getUserDisplayName(user)} placement="bottom">
+                        <IconButton onClick={handleUserPopoverOpenButtonClick} sx={{ p: .5 }}>
+                            <Avatar
+                                src={getUserAvatar(user)}
+                                sx={{ width: 32, height: 32, pointerEvents: 'none' }}
+                            />
+                        </IconButton>
+                    </Tooltip> : <Fragment>
+                        <Tooltip title={translations.site_settings} placement="bottom">
+                            <IconButton onClick={handleUserPopoverOpenButtonClick}>
+                                <TuneOutlined />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title={translations.login} placement="bottom">
+                            <IconButton
+                                component={NextLink}
+                                href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+                            >
+                                <LoginOutlined />
+                            </IconButton>
+                        </Tooltip>
+                    </Fragment>}
+                </Box>
+            </NavigationToolbar>
+        </RootNavigationAppBar>
+    );
+};
+
+export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) => {
+    const handleDrawerToggle = () => setOpen((prevState) => !prevState);
+
+    return (
+        <NavigationToolbar
+            sx={(theme) => ({
+                px: { md: `${theme.spacing(1)} !important` },
+                position: 'sticky',
+                top: 0,
+                bgcolor: 'background.default',
+                zIndex: 1
+            })}
+        >
+            <IconButton onClick={handleDrawerToggle} color="inherit">
+                <MenuOutlined />
+            </IconButton>
+            <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
+                <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+            </RouteLink>
+        </NavigationToolbar>
+    );
+};
+
+export const NavigationDrawer = ({ open, setOpen, flags, localization: { translations } }: RootNavigationProps) => {
+    return (
+        <RootNavigationDrawer open={open} onClose={() => setOpen(false)} variant="temporary">
+            <NavigationDrawerToolbar open={open} setOpen={setOpen} />
+            <NavigationDrawerGroup sx={{ px: { md: 1 } }}>
+                <NavigationDrawerItem
+                    href="/"
+                    icon={<HomeOutlined />}
+                    primary={translations.home}
+                    open={open}
+                    setOpen={setOpen}
+                />
+                <NavigationDrawerItem
+                    href="/status"
+                    icon={<AnalyticsOutlined />}
+                    primary={translations.status}
+                    open={open}
+                    setOpen={setOpen}
+                />
+                <NavigationDrawerItem
+                    href="/leaderboard"
+                    icon={<LeaderboardOutlined />}
+                    primary={translations.leaderboard}
+                    open={open}
+                    setOpen={setOpen}
+                />
+                <NavigationDrawerItem
+                    href="/dashboard"
+                    predicate={(pathname, href) => pathname.startsWith(href) && !pathname.startsWith('/dashboard/me')}
+                    icon={<SettingsOutlined />}
+                    primary={translations.guild_settings}
+                    open={open}
+                    setOpen={setOpen}
+                />
+            </NavigationDrawerGroup>
+            {flags?.manager && <Fragment>
+                <Divider flexItem sx={{ mx: 2 }} />
+                <NavigationDrawerGroup sx={{ px: { md: 1 } }}>
+                    <NavigationDrawerItem
+                        href="/statistics"
+                        icon={<ShowChartOutlined />}
+                        primary={translations.statistics}
+                        open={open}
+                        setOpen={setOpen}
+                    />
+                </NavigationDrawerGroup>
+            </Fragment>}
+        </RootNavigationDrawer>
+    );
+};
 
 export interface NavigationProps extends LocalizationProps {
     user: OAuthUser | undefined;
     flags: UserFlags | undefined;
 }
 
-export interface NavigationRootProps extends NavigationProps {
-    openPopover: (elem: HTMLButtonElement, type: PopoverType) => void;
-    closePopover: () => void;
-}
-
-export type NavigationItemPredicate = (pathname: string, href: string) => boolean;
-
-export interface NavigationItemProps {
-    href: string;
-    predicate?: NavigationItemPredicate;
-    icon?: ReactNode;
-}
-
 export const Navigation = ({ user, flags, localization }: NavigationProps) => {
-    const [popoverState, setPopoverState] = useState<PopoverType>(undefined);
-
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-    const open = popoverState !== undefined && Boolean(anchorEl);
-
-    const openPopover = (elem: HTMLButtonElement, type: PopoverType) => {
-        setPopoverState(type);
-        setAnchorEl(elem);
-    };
-
-    const closePopover = () => {
-        setPopoverState(undefined);
-        setAnchorEl(null);
-    };
+    const [open, setOpen] = useState(false);
 
     return (
         <Fragment>
-            <DesktopNavigation
-                openPopover={openPopover}
-                closePopover={closePopover}
-                user={user}
-                flags={flags}
-                localization={localization}
-            />
-            <MobileNavigation
-                openPopover={openPopover}
-                closePopover={closePopover}
-                user={user}
-                flags={flags}
-                localization={localization}
-            />
+            <NavigationAppBar open={open} setOpen={setOpen} user={user} flags={flags} localization={localization} />
+            <NavigationDrawer open={open} setOpen={setOpen} user={user} flags={flags} localization={localization} />
 
-            <UserPopover
-                open={popoverState === 'user' && open}
-                anchorEl={anchorEl}
-                onClose={closePopover}
-                user={user}
-                localization={localization}
-            />
+            <UserPopover user={user} localization={localization} />
         </Fragment>
     );
 };

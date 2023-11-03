@@ -248,7 +248,7 @@ export const Status = ({ status: { id, status, ping }, user, guilds, localizatio
                             <Typography>{translations.status_mutual_guilds_not_logged_in}</Typography>
                             <Button
                                 component={NextLink}
-                                href={`https://accounts.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+                                href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                                 disableElevation
                                 variant="contained"
                                 startIcon={<LoginOutlined />}

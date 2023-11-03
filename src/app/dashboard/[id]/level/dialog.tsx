@@ -1,15 +1,15 @@
 'use client';
 
+import { CancelButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover, RoleSelect } from '@components/items';
-import { BrMobile, Key } from '@components/text';
+import { BrMobile } from '@components/text';
 import { GuildConfigurationLevelRewardRole } from '@interfaces/bot';
 import { GuildRolesViewProps } from '@interfaces/view';
 import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import {
     AddOutlined,
-    CloseOutlined,
     DeleteOutlined,
     KeyboardArrowDownOutlined,
     KeyboardArrowUpOutlined,
@@ -169,10 +169,7 @@ export const ManageRolesDialog = (
                     </Box>}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
-                        {translations.close}
-                        <Key sx={{ ml: 1, mr: -.5 }}>Esc</Key>
-                    </Button>
+                    <CancelButton onClick={handleClose} variant="contained">{translations.close}</CancelButton>
                 </DialogActions>
             </Dialog>
 

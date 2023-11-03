@@ -1,6 +1,7 @@
 'use client';
 
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
+import { PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import {
     Gallery,
@@ -83,7 +84,7 @@ export const View = ({ guilds, localization: { translations } }: Props) => {
     const [viewType, setViewType] = useState<ViewType>('gallery');
 
     return (
-        <PageContent display="flex">
+        <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.leaderboard}</Typography>
@@ -100,15 +101,15 @@ export const View = ({ guilds, localization: { translations } }: Props) => {
                     />
                 </Box>
             </PageHeader>
-            <Section sx={{ p: 0 }}>
+            <Section>
                 {viewType === 'gallery' ? (<GuildsGallery guilds={guilds} />) : (<GuildsTable guilds={guilds} />)}
             </Section>
-        </PageContent>
+        </PageLayout>
     );
 };
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.leaderboard}</Typography>
@@ -118,5 +119,5 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </PageLayout>
 );

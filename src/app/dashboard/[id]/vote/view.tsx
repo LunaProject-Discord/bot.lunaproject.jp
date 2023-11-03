@@ -1,7 +1,7 @@
 'use client';
 
 import { SwitchItem } from '@components/items';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationComponent } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
@@ -9,7 +9,7 @@ import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/comp
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
@@ -27,7 +27,7 @@ export const View = ({ guild, configuration, localization: { translations } }: G
     };
 
     return (
-        <PageContent>
+        <Fragment>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.vote}</Typography>
@@ -49,6 +49,6 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
             />
-        </PageContent>
+        </Fragment>
     );
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { ActionItem, SwitchItem } from '@components/items';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationActivity } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
@@ -33,7 +33,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <PageContent>
+            <Fragment>
                 <PageHeader>
                     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                         <Typography variant="h4">{translations.activity}</Typography>
@@ -61,7 +61,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     onSave={handleSaveAction}
                     onCancel={handleCancelAction}
                 />
-            </PageContent>
+            </Fragment>
 
             <ManageRolesDialog
                 open={openRolesDialog}

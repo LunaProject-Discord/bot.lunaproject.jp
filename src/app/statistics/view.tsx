@@ -3,12 +3,12 @@
 import { AreaChart } from '@app/statistics/_components';
 import { StatisticsViewProps } from '@app/statistics/interfaces';
 import { formatDate, getDate } from '@app/statistics/utils';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { LocalizationProps } from '@interfaces/localization';
 import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import { CloudOffOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import React from 'react';
+import React, { Fragment } from 'react';
 
 type Props = StatisticsViewProps & LocalizationProps;
 
@@ -16,7 +16,7 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
     const { translations } = localization;
 
     return (
-        <PageContent display="flex">
+        <Fragment>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.statistics}</Typography>
@@ -95,12 +95,12 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
                     />
                 </SectionContent>
             </Section>
-        </PageContent>
+        </Fragment>
     );
 };
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.statistics}</Typography>
@@ -110,11 +110,11 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </Fragment>
 );
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.statistics}</Typography>
@@ -138,5 +138,5 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 しばらく待ってから再度お試しください。
             </Typography>
         </Box>
-    </PageContent>
+    </Fragment>
 );

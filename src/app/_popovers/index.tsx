@@ -50,3 +50,5 @@ export const PopoverListItemSwitch = ({ checked, primary, secondary, ...props }:
 export const PopoverListItemIcon = styled(MuiListItemIcon)(({ theme }) => ({
     minWidth: theme.spacing(3)
 }));
+
+export * from './user';

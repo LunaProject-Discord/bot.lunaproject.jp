@@ -1,7 +1,9 @@
 'use client';
 
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
 import { RouteLinkItem } from '@components/items';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
+import { PageCenteredLayout } from '@components/layout_v2';
 import { GuildNotification } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { GuildViewProps, UserViewProps } from '@interfaces/view';
@@ -25,7 +27,7 @@ interface Props extends UserViewProps, GuildViewProps {
 }
 
 export const View = ({ user, guild, notifications, localization: { translations } }: Props) => (
-    <PageContent>
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">
@@ -64,11 +66,11 @@ export const View = ({ user, guild, notifications, localization: { translations 
                 <ArrowForwardOutlined fontSize="small" sx={{ mb: .25 }} />
             </Link>
         </Section>
-    </PageContent>
+    </Fragment>
 );
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.guild_settings}</Typography>
@@ -78,51 +80,33 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </Fragment>
 );
 
 export const ForbiddenView = () => (
-    <PageContent display="flex">
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
+    <PageCenteredLayout>
+        <ErrorRoot>
             <LockPersonOutlined color="primary" sx={{ fontSize: '10rem' }} />
-            <Typography variant="h4">権限がありません</Typography>
-            <Typography align="center">
+            <ErrorTitle>権限がありません</ErrorTitle>
+            <ErrorDescription>
                 このサーバーの設定を変更する権限がありません。<br />
                 このサーバーの設定を変更するには、サーバーのオーナーであるか、<b>サーバーの管理</b>権限が付与されている必要があります。<br />
                 あなたに設定を変更する権限があることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
-            </Typography>
-        </Box>
-    </PageContent>
+            </ErrorDescription>
+        </ErrorRoot>
+    </PageCenteredLayout>
 );
 
 export const NotFoundView = () => (
-    <PageContent display="flex">
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
+    <PageCenteredLayout>
+        <ErrorRoot>
             <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-            <Typography variant="h4">サーバーが見つかりません</Typography>
-            <Typography align="center">
+            <ErrorTitle>サーバーが見つかりません</ErrorTitle>
+            <ErrorDescription>
                 指定されたサーバーが見つかりませんでした。<br />
                 あなたはそのサーバーの管理者ではないか、サーバーが存在しない可能性があります。<br />
                 サーバーが存在していることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
-            </Typography>
-        </Box>
-    </PageContent>
+            </ErrorDescription>
+        </ErrorRoot>
+    </PageCenteredLayout>
 );

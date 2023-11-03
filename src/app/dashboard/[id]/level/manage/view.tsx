@@ -1,7 +1,8 @@
 'use client';
 
 import { getMemberDisplay } from '@app/user';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
+import { PageCenteredLayout } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildLevel, PartialGuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
@@ -29,7 +30,7 @@ import { getMemberAvatar } from '@utils/cdn';
 import { filterPredicateMember } from '@utils/discord';
 import { getStateActionValue } from '@utils/state';
 import clsx from 'clsx';
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
 
 const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
     const res = await fetch(
@@ -206,7 +207,7 @@ export const View = ({ guild, levels, localization }: Props) => {
         return (<NotFoundView localization={localization} />);
 
     return (
-        <PageContent sx={search.length > 0 && data.length < 1 ? { display: 'flex', gap: 0 } : undefined}>
+        <Fragment>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.level_manage}</Typography>
@@ -214,18 +215,18 @@ export const View = ({ guild, levels, localization }: Props) => {
                 </Box>
             </PageHeader>
             <Box
-                sx={{
+                sx={(theme) => ({
                     width: '100%',
                     py: 3,
                     position: 'sticky',
-                    top: { xs: 56, md: 0 },
+                    top: { xs: 56, sm: theme.spacing(8) },
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
                     alignItems: 'center',
                     gap: 2,
                     zIndex: 1,
                     bgcolor: 'background.paper'
-                }}
+                })}
             >
                 <Box
                     sx={{
@@ -312,12 +313,12 @@ export const View = ({ guild, levels, localization }: Props) => {
             </Box>}
 
             <SaveConfirm open={values.length > 0} onSave={handleSaveAction} onCancel={handleCancelAction} />
-        </PageContent>
+        </Fragment>
     );
 };
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.level_manage}</Typography>
@@ -327,11 +328,11 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </Fragment>
 );
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageCenteredLayout>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.level_manage}</Typography>
@@ -355,5 +356,5 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 サーバーで発言してからしばらく待った後に再度お試しください。
             </Typography>
         </Box>
-    </PageContent>
+    </PageCenteredLayout>
 );

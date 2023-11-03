@@ -1,7 +1,9 @@
 'use client';
 
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
 import { RouteLinkItem } from '@components/items';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
+import { PageCenteredLayout } from '@components/layout_v2';
 import { UserNotification } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { UserViewProps } from '@interfaces/view';
@@ -24,7 +26,7 @@ interface Props extends UserViewProps {
 }
 
 export const View = ({ user, notifications, localization: { translations } }: Props) => (
-    <PageContent>
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">
@@ -63,11 +65,11 @@ export const View = ({ user, notifications, localization: { translations } }: Pr
                 <ArrowForwardOutlined fontSize="small" sx={{ mb: .25 }} />
             </Link>
         </Section>
-    </PageContent>
+    </Fragment>
 );
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <Fragment>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.user_settings}</Typography>
@@ -77,28 +79,19 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </Fragment>
 );
 
 export const NotFoundView = () => (
-    <PageContent display="flex">
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
+    <PageCenteredLayout>
+        <ErrorRoot>
             <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-            <Typography variant="h4">サーバーが見つかりません</Typography>
-            <Typography align="center">
+            <ErrorTitle>サーバーが見つかりません</ErrorTitle>
+            <ErrorDescription>
                 指定されたサーバーが見つかりませんでした。<br />
                 あなたはそのサーバーの管理者ではないか、サーバーが存在しない可能性があります。<br />
                 サーバーが存在していることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
-            </Typography>
-        </Box>
-    </PageContent>
+            </ErrorDescription>
+        </ErrorRoot>
+    </PageCenteredLayout>
 );

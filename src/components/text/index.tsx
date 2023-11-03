@@ -32,7 +32,7 @@ export const keyStyled = (theme: Theme): CSSObject => ({
     color: theme.palette.text.secondary,
     backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
     borderBottom: `solid 3px ${theme.palette.divider}`,
-    [theme.breakpoints.down('md')]: {
+    '@media (any-hover: none)': {
         display: 'none'
     }
 });

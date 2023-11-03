@@ -1,7 +1,7 @@
 'use client';
 
 import { TextFieldItem } from '@components/items';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
 import { GuildConfigurationViewProps } from '@interfaces/view';
@@ -9,7 +9,7 @@ import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/comp
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
 import { BadgeOutlined, TagOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, Typography } from '@mui/material';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
@@ -24,7 +24,7 @@ export const View = ({ guild, configuration, localization: { translations } }: G
     };
 
     return (
-        <PageContent>
+        <Fragment>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.prefix_and_nickname}</Typography>
@@ -58,6 +58,6 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
             />
-        </PageContent>
+        </Fragment>
     );
 };

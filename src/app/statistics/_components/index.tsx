@@ -1,3 +1,5 @@
+'use client';
+
 import { Skeleton } from '@mui/material';
 import { ParentSize } from '@visx/responsive';
 import React, { useEffect, useState } from 'react';
@@ -24,3 +26,5 @@ export const AreaChart = ({ statistics, ...props }: Omit<AreaChartProps, 'width'
 };
 
 export * from './datagrid';
+export * from './interfaces';
+export * from './widgets';

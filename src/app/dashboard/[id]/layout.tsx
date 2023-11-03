@@ -1,10 +1,12 @@
 import { getGuilds, getUser } from '@app/utils';
 import { UnauthorizedView } from '@app/view';
+import { PageWithSidebarLayout } from '@components/layout_v2';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration, getGuildFlags } from '@libs/bot';
+import { getGuildConfiguration, getGuildFlags, getUserFlags } from '@libs/bot';
 import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
 import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { Box } from '@mui/material';
 import {
     ADMINISTRATOR_OR_MANAGE_GUILD,
     someCheckMemberPermissions,
@@ -12,7 +14,7 @@ import {
     sortGuilds
 } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
-import React, { Fragment, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
 import { ForbiddenView, NotFoundView } from './view';
 
@@ -73,6 +75,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
         guildFlagsData,
         guildConfigurationData
     ]);
+    const userFlags = user ? await getUserFlags(user.id) : undefined;
 
     if (!user)
         return (<UnauthorizedView localization={localization} />);
@@ -89,17 +92,18 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const sortedGuilds = sortGuilds(guilds.filter((guild) => someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))) as OAuthGuild[];
 
     return (
-        <Fragment>
+        <Box sx={{ p: 3, display: 'flex', gap: 3 }}>
             <Navigation
-                guild={guild}
-                flags={guildFlags}
                 user={user}
+                userFlags={userFlags}
+                guild={guild}
+                guildFlags={guildFlags}
                 guilds={sortedGuilds}
                 mutualGuilds={mutualGuilds.map((mutualGuild) => mutualGuild.id)}
                 localization={localization}
             />
-            {children}
-        </Fragment>
+            <PageWithSidebarLayout>{children}</PageWithSidebarLayout>
+        </Box>
     );
 };
 

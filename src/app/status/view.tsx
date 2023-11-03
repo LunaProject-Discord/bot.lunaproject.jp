@@ -1,7 +1,8 @@
 'use client';
 
 import { Status } from '@app/status/components';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
+import { PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import { RedisStatus } from '@interfaces/redis';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
@@ -24,7 +25,7 @@ export const View = ({ statuses, user, guilds, localization }: Props) => {
     const isAllDisconnected = statuses.every(({ status }) => status !== 'CONNECTED');
 
     return (
-        <PageContent>
+        <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.status}</Typography>
@@ -60,12 +61,12 @@ export const View = ({ statuses, user, guilds, localization }: Props) => {
                     ))}
                 </SectionContent>
             </Section>
-        </PageContent>
+        </PageLayout>
     );
 };
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.status}</Typography>
@@ -75,11 +76,11 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </PageLayout>
 );
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.status}</Typography>
@@ -103,5 +104,5 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 しばらく待ってから再度お試しください。
             </Typography>
         </Box>
-    </PageContent>
+    </PageLayout>
 );

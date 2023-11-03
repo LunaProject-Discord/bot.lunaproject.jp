@@ -1,3 +1,5 @@
+'use client';
+
 import { StatisticResponseProps } from '@app/statistics/_components/interfaces';
 import { getDate } from '@app/statistics/utils';
 import { Statistic, StatisticsPeriodType } from '@interfaces/bot';

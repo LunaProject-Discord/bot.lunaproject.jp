@@ -208,6 +208,8 @@ export const translationsJa: Translations = {
 
     guild_settings: 'サーバー設定',
     choose_guild_settings: '設定したいサーバーを選択してください。',
+    back_to_home: 'ホームに戻る',
+    back_to_select_guild: 'サーバー選択に戻る',
     settings_basic: '基本の設定',
     settings_guild_management: 'サーバー管理',
     settings_moderation_and_management: 'モデレーションと管理',

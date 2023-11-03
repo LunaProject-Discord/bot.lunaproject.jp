@@ -2,7 +2,7 @@
 
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
 import { ActionItem, SwitchItem } from '@components/items';
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationQuote } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
@@ -54,66 +54,64 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <PageContent>
-                <PageHeader>
-                    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                        <Typography variant="h4">{translations.quote}</Typography>
-                        <Typography>{translations.quote_description}</Typography>
-                    </Box>
-                </PageHeader>
-                <Section>
-                    <SectionContent>
-                        <SwitchItem
-                            primary={translations.quote_enabled}
-                            checked={enabled}
-                            setChecked={setEnabled}
-                        />
-                        <SwitchItem
-                            primary={translations.quote_reaction}
-                            checked={reaction}
-                            setChecked={setReaction}
-                            disabled={!enabled}
-                        />
-                        <SwitchItem
-                            primary={translations.quote_message}
-                            checked={message}
-                            setChecked={setMessage}
-                            disabled={!enabled}
-                        />
-                        <SwitchItem
-                            primary={translations.quote_other_guild_to_this_guild}
-                            checked={otherGuildToThisGuild}
-                            setChecked={setOtherGuildToThisGuild}
-                            disabled={!enabled}
-                        />
-                        <SwitchItem
-                            primary={translations.quote_this_guild_to_other_guild}
-                            checked={thisGuildToOtherGuild}
-                            setChecked={setThisGuildToOtherGuild}
-                            disabled={!enabled}
-                        />
-                        <ActionItem
-                            primary={translations.manage_disabled_channels}
-                            secondary={translations.quote_manage_disabled_channels_description}
-                            onAction={() => setOpenDisabledChannelsDialog(true)}
-                            disabled={!enabled}
-                        />
-                        <ActionItem
-                            primary={translations.manage_disabled_roles}
-                            secondary={translations.quote_manage_disabled_roles_description}
-                            onAction={() => setOpenDisabledRolesDialog(true)}
-                            disabled={!enabled}
-                        />
-                    </SectionContent>
-                </Section>
+            <PageHeader>
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
+                    <Typography variant="h4">{translations.quote}</Typography>
+                    <Typography>{translations.quote_description}</Typography>
+                </Box>
+            </PageHeader>
+            <Section>
+                <SectionContent>
+                    <SwitchItem
+                        primary={translations.quote_enabled}
+                        checked={enabled}
+                        setChecked={setEnabled}
+                    />
+                    <SwitchItem
+                        primary={translations.quote_reaction}
+                        checked={reaction}
+                        setChecked={setReaction}
+                        disabled={!enabled}
+                    />
+                    <SwitchItem
+                        primary={translations.quote_message}
+                        checked={message}
+                        setChecked={setMessage}
+                        disabled={!enabled}
+                    />
+                    <SwitchItem
+                        primary={translations.quote_other_guild_to_this_guild}
+                        checked={otherGuildToThisGuild}
+                        setChecked={setOtherGuildToThisGuild}
+                        disabled={!enabled}
+                    />
+                    <SwitchItem
+                        primary={translations.quote_this_guild_to_other_guild}
+                        checked={thisGuildToOtherGuild}
+                        setChecked={setThisGuildToOtherGuild}
+                        disabled={!enabled}
+                    />
+                    <ActionItem
+                        primary={translations.manage_disabled_channels}
+                        secondary={translations.quote_manage_disabled_channels_description}
+                        onAction={() => setOpenDisabledChannelsDialog(true)}
+                        disabled={!enabled}
+                    />
+                    <ActionItem
+                        primary={translations.manage_disabled_roles}
+                        secondary={translations.quote_manage_disabled_roles_description}
+                        onAction={() => setOpenDisabledRolesDialog(true)}
+                        disabled={!enabled}
+                    />
+                </SectionContent>
+            </Section>
 
-                <SaveConfirm
-                    open={!deepEqual(quoteConfiguration, toObject(), { strict: true })}
-                    disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
-                    onSave={handleSaveAction}
-                    onCancel={handleCancelAction}
-                />
-            </PageContent>
+            <SaveConfirm
+                open={!deepEqual(quoteConfiguration, toObject(), { strict: true })}
+                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
+            />
 
             <ManageDisabledChannelsDialog
                 open={openDisabledChannelsDialog}

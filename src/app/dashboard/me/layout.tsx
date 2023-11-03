@@ -1,9 +1,11 @@
 import { getUser } from '@app/utils';
 import { UnauthorizedView } from '@app/view';
-import { getUserConfiguration } from '@libs/bot';
+import { PageWithSidebarLayout } from '@components/layout_v2';
+import { getUserConfiguration, getUserFlags } from '@libs/bot';
 import { getLocalization } from '@localizations/server';
+import { Box } from '@mui/material';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
-import React, { Fragment, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
 import { NotFoundView } from './view';
 
@@ -46,6 +48,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
     const localization = getLocalization();
 
     const user = await getUser();
+    const userFlags = user ? await getUserFlags(user.id) : undefined;
     if (!user)
         return (<UnauthorizedView localization={localization} />);
 
@@ -54,10 +57,10 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         return (<NotFoundView />);
 
     return (
-        <Fragment>
-            <Navigation user={user} localization={localization} />
-            {children}
-        </Fragment>
+        <Box sx={{ p: 3, display: 'flex', gap: 3 }}>
+            <Navigation user={user} flags={userFlags} localization={localization} />
+            <PageWithSidebarLayout>{children}</PageWithSidebarLayout>
+        </Box>
     );
 };
 

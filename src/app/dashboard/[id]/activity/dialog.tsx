@@ -1,8 +1,9 @@
 'use client';
 
+import { CancelButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '@components/items';
-import { BrMobile, Key, translatableTypographyStyled } from '@components/text';
+import { BrMobile, translatableTypographyStyled } from '@components/text';
 import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
@@ -11,7 +12,6 @@ import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import {
     AddOutlined,
-    CloseOutlined,
     DeleteOutlined,
     KeyboardArrowDownOutlined,
     KeyboardArrowUpOutlined,
@@ -326,10 +326,7 @@ export const ManageRolesDialog = (
                     </Box>}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
-                        {translations.close}
-                        <Key sx={{ ml: 1, mr: -.5 }}>Esc</Key>
-                    </Button>
+                    <CancelButton onClick={handleClose} variant="contained">{translations.close}</CancelButton>
                 </DialogActions>
             </Dialog>
 

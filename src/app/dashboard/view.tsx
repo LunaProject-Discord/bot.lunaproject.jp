@@ -1,6 +1,7 @@
 'use client';
 
-import { PageContent, PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout';
+import { PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import {
     Gallery,
@@ -102,7 +103,7 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
     };
 
     return (
-        <PageContent display="flex">
+        <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.guild_settings}</Typography>
@@ -130,7 +131,7 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
                     </Button>
                 </Box>
             </PageHeader>
-            <Section sx={{ p: 0 }}>
+            <Section>
                 {viewType === 'gallery' ? (
                     <GuildsGallery guilds={guilds.filter((guild) => mutualGuilds.includes(guild.id))} />
                 ) : (
@@ -158,12 +159,12 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
                     </MenuItem>
                 ))}
             </Menu>
-        </PageContent>
+        </PageLayout>
     );
 };
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageContent display="flex">
+    <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
         <PageHeader>
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="h4">{translations.guild_settings}</Typography>
@@ -173,5 +174,5 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
-    </PageContent>
+    </PageLayout>
 );

@@ -1,6 +1,6 @@
 'use client';
 
-import { PageContainer } from '@components/layout';
+import { RootLayout } from '@components/layout_v2';
 import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject-discord/web-core/dist/components/StyleProvider';
@@ -84,9 +84,9 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
                 <CssBaseline />
                 <GlobalStyles styles={{ Nunito, M_Plus_Rounded_1c, '*, ::before, ::after': { fontFamily } }} />
                 <Navigation user={user} flags={flags} localization={localization} />
-                <PageContainer>
+                <RootLayout>
                     {children}
-                </PageContainer>
+                </RootLayout>
             </ThemeProvider>
         </StyleProvider>
     );
