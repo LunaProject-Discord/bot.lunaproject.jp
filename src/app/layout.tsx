@@ -2,11 +2,15 @@ import { getUser } from '@app/utils';
 import { Body } from '@components/layout';
 import { getUserFlags } from '@libs/bot';
 import { getLocale, getLocalization } from '@localizations/server';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import React, { ReactNode } from 'react';
 import '../../public/fonts/style.css';
 import '../../public/global.css';
 import { LayoutView } from './layout_view';
+
+export const viewport: Viewport = {
+    themeColor: '#959ac0'
+};
 
 export const generateMetadata = (): Metadata => {
     const locale = getLocale();
@@ -19,7 +23,6 @@ export const generateMetadata = (): Metadata => {
             template: '%s | 結月 -ゆづき-'
         },
         description: 'Discord向けの多機能Bot「結月 -ゆづき-」の公式ホームページです。あなたも導入してみませんか？\nThis is the official website of "結月 -ゆづき-" the multifunctional bot for Discord.',
-        themeColor: '#959ac0',
         openGraph: {
             type: 'website',
             locale: locale === 'ja' ? 'ja-JP' : 'en-US',

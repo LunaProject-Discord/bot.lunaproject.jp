@@ -10,7 +10,7 @@ import {
 } from '@components/navigation';
 import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
 import { ArrowBackOutlined, HomeOutlined, NotificationsOutlined, ScheduleOutlined } from '@mui/icons-material';
-import { Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Theme, Typography, useMediaQuery } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 
 export const Navigation = ({ user, flags, localization }: NavigationProps) => {
@@ -52,7 +52,10 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
                             <ArrowBackOutlined fontSize="small" />
                             {translations.back_to_home}
                         </RouteLink>
-                    </Fragment> : <Typography variant="h5">{translations.user_settings}</Typography>}
+                    </Fragment> : <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant="h5">{translations.dashboard}</Typography>
+                        <Typography color="text.secondary">{translations.user_settings}</Typography>
+                    </Box>}
                     <NavigationDrawerContent>
                         <NavigationDrawerGroup>
                             <NavigationDrawerItem

@@ -188,6 +188,7 @@ export const translationsEn: Translations = {
 
 
     home: 'Home',
+    back_to_home: 'Back to Home',
 
 
     status_description: 'You can check the status of the Bot.',
@@ -206,9 +207,11 @@ export const translationsEn: Translations = {
     choose_guild_leaderboard: 'Select the server on which you want to display the leaderboard.',
 
 
+    dashboard: 'Dashboard',
+
+
     guild_settings: 'Server Settings',
     choose_guild_settings: 'Select the server you wish to configure.',
-    back_to_home: 'Back to Home',
     back_to_select_guild: 'Back to Select Server',
     settings_basic: 'Basic Settings',
     settings_guild_management: 'Server Management',
@@ -280,6 +283,19 @@ export const translationsEn: Translations = {
             <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+    welcome_message_before_pending: 'When you join the server (before agreeing to the rules)',
+    welcome_message_before_pending_enabled: 'Enable settings when joining a server',
+    welcome_message_before_pending_message_enabled: 'Send a message when you join the server',
+    welcome_message_before_pending_message_edit_description: 'Customize the message sent when a user joins the server.',
+    welcome_message_before_pending_roles_enabled: 'Assign roles when you join the server',
+    welcome_message_after_pending: 'When you agree to the rules',
+    welcome_message_after_pending_enabled: 'Enable settings when agreeing to rules',
+    welcome_message_after_pending_message_enabled: 'Send a message when you agree to the rules',
+    welcome_message_after_pending_message_edit_description: 'You can customize the message that is sent when a user agrees to a rule.',
+    welcome_message_after_pending_roles_enabled: 'Assign roles when you agree to the rules',
+    welcome_message_message: 'Send Message',
+    welcome_message_roles: 'Assignment of Roles',
+    welcome_message_manage_roles: 'Manage Roles',
 
     goodbye_message: 'Goodbye Message',
     goodbye_message_description: 'A message can be sent when a user leaves the server.',

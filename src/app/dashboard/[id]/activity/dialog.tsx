@@ -7,7 +7,7 @@ import { BrMobile, translatableTypographyStyled } from '@components/text';
 import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
-import { GuildRolesViewProps } from '@interfaces/view';
+import { GuildViewProps } from '@interfaces/view';
 import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import {
@@ -38,8 +38,8 @@ import {
     Typography,
     useMediaQuery
 } from '@mui/material';
-import { sortRoles } from '@utils/discord';
-import { getStateActionValue, UniqueId } from '@utils/state';
+import { getInteractRolesByDataGuild } from '@utils/discord';
+import { getStateActionValue, UniqueId, updateArrayState } from '@utils/state';
 import { nanoid } from 'nanoid';
 import React, { Dispatch, Fragment, ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react';
 
@@ -144,7 +144,7 @@ const SelectActivityTypePopover = (
     );
 };
 
-interface RoleItemProps extends ItemDisabledProps, GuildRolesViewProps {
+interface RoleItemProps extends ItemDisabledProps, GuildViewProps {
     value: EditableObject;
     setValue: Dispatch<SetStateAction<EditableObject | undefined>>;
 }
@@ -153,8 +153,8 @@ const RoleItem = (
     {
         value,
         setValue,
-        roles,
         disabled,
+        guild,
         localization
     }: RoleItemProps
 ) => {
@@ -165,11 +165,12 @@ const RoleItem = (
     return (
         <Fragment>
             <ItemRoot sx={{ p: 0 }}>
-                <ItemRowContainer>
+                <ItemRowContainer sx={{ mb: { xs: -1, md: 0 } }}>
                     <RoleSelect
                         value={value.id}
                         setValue={(action) => setValue({ ...value, id: getStateActionValue(action, value.id) })}
-                        choices={roles}
+                        choices={getInteractRolesByDataGuild(guild)}
+                        disabled={disabled}
                         localization={localization}
                         sx={{ width: { xs: '100%', md: 300 } }}
                     />
@@ -209,7 +210,7 @@ const RoleItem = (
                             {translations[`activity_type_${value.type === 'CUSTOM_STATUS' ? 'custom_status' : value.type.toLowerCase()}_short` as TranslationKeys]}
                         </Select>
                         <Tooltip title={translations.remove} placement="top">
-                            <IconButton onClick={() => setValue(undefined)} color="error">
+                            <IconButton onClick={() => setValue(undefined)} disabled={disabled} color="error">
                                 <DeleteOutlined />
                             </IconButton>
                         </Tooltip>
@@ -228,7 +229,7 @@ const RoleItem = (
     );
 };
 
-type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildConfigurationActivityRole[]> & GuildRolesViewProps;
+type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildConfigurationActivityRole[]> & GuildViewProps;
 
 export const ManageRolesDialog = (
     {
@@ -236,7 +237,7 @@ export const ManageRolesDialog = (
         setOpen,
         value,
         setValue,
-        roles: choices,
+        guild,
         localization
     }: ManageRolesDialogProps
 ) => {
@@ -248,8 +249,7 @@ export const ManageRolesDialog = (
 
     const initialValues = useMemo(() => value.map((role): EditableObject => ({ _id: nanoid(), ...role })), [value]);
     const [roles, setRoles] = useState(initialValues);
-
-    const choiceRoles = sortRoles(choices).filter((role) => role.position !== 0);
+    const updateRole = updateArrayState(setRoles, setValue);
 
     const toRoles = (roles: EditableObject[]) => roles.map(({ _id, ...role }) => role);
 
@@ -257,20 +257,6 @@ export const ManageRolesDialog = (
         setValue(toRoles(roles));
         setOpen(false);
     };
-
-    const updateValue = (id: string, role: EditableObject | undefined) => setRoles((values) => {
-        let data = [...values];
-
-        const i = data.findIndex((activityRole) => activityRole._id === id);
-        if (i !== -1)
-            data.splice(i, 1);
-
-        if (role)
-            data.push(role);
-
-        setValue(toRoles(data));
-        return data;
-    });
 
     useEffect(() => {
         if (!open)
@@ -299,13 +285,13 @@ export const ManageRolesDialog = (
                         {translations.add}
                     </Button>
                 </DialogTitle>
-                <DialogContent sx={{ height: { xs: '100%', md: 500 } }}>
+                <DialogContent sx={{ height: { xs: '100%', md: 500 }, gap: { xs: 1, md: 0 } }}>
                     {roles.length > 0 ? roles.map((role) => (
                         <RoleItem
                             key={role._id}
                             value={role}
-                            setValue={(action) => updateValue(role._id, getStateActionValue(action, role))}
-                            roles={choiceRoles}
+                            setValue={(action) => updateRole(role._id, getStateActionValue(action, role))}
+                            guild={guild}
                             localization={localization}
                         />
                     )) : <Box
@@ -335,7 +321,16 @@ export const ManageRolesDialog = (
                 setAnchorEl={setAnchorEl}
                 setSelected={(action) => {
                     const _id = nanoid();
-                    updateValue(_id, { _id, id: '', name: '', type: getStateActionValue(action, 'PLAYING') });
+                    updateRole(
+                        _id,
+                        {
+                            _id,
+                            enabled: true,
+                            id: '',
+                            name: '',
+                            type: getStateActionValue(action, 'PLAYING')
+                        }
+                    );
                 }}
                 localization={localization}
             />

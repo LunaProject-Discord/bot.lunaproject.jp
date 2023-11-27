@@ -188,6 +188,7 @@ export const translationsJa: Translations = {
 
 
     home: 'ホーム',
+    back_to_home: 'ホームに戻る',
 
 
     status_description: 'Bot のステータスを確認できます。',
@@ -206,9 +207,11 @@ export const translationsJa: Translations = {
     choose_guild_leaderboard: 'リーダーボードを表示したいサーバーを選択してください。',
 
 
+    dashboard: 'ダッシュボード',
+
+
     guild_settings: 'サーバー設定',
     choose_guild_settings: '設定したいサーバーを選択してください。',
-    back_to_home: 'ホームに戻る',
     back_to_select_guild: 'サーバー選択に戻る',
     settings_basic: '基本の設定',
     settings_guild_management: 'サーバー管理',
@@ -279,6 +282,19 @@ export const translationsJa: Translations = {
             <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+    welcome_message_before_pending: 'サーバーに参加したとき (ルールに同意する前)',
+    welcome_message_before_pending_enabled: 'サーバーに参加したときの設定を有効にする',
+    welcome_message_before_pending_message_enabled: 'サーバーに参加したときにメッセージを送信する',
+    welcome_message_before_pending_message_edit_description: 'ユーザーがサーバーに参加したときに送信されるメッセージをカスタマイズできます。',
+    welcome_message_before_pending_roles_enabled: 'サーバーに参加したときに役職を付与する',
+    welcome_message_after_pending: 'ルールに同意したとき',
+    welcome_message_after_pending_enabled: 'ルールに同意したときの設定を有効にする',
+    welcome_message_after_pending_message_enabled: 'ルールに同意したときにメッセージを送信する',
+    welcome_message_after_pending_message_edit_description: 'ユーザーがルールに同意したときに送信されるメッセージをカスタマイズできます。',
+    welcome_message_after_pending_roles_enabled: 'ルールに同意したときに役職を付与する',
+    welcome_message_message: 'メッセージの送信',
+    welcome_message_roles: '役職の付与',
+    welcome_message_manage_roles: '付与する役職の管理',
 
     goodbye_message: 'さよなら (退出) メッセージ',
     goodbye_message_description: 'ユーザーがサーバーから退出したときにメッセージを送信できます。',

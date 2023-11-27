@@ -131,7 +131,12 @@ export const MessageItem = (
                                 gap: 1
                             }}
                         >
-                            {children && <Typography component="div">{children}</Typography>}
+                            {children && <Typography
+                                component="div"
+                                color={!disabled ? 'text.primary' : 'text.disabled'}
+                            >
+                                {children}
+                            </Typography>}
                             <Button
                                 onClick={() => (setOpen ?? __setOpen)(true)}
                                 disabled={disabled}

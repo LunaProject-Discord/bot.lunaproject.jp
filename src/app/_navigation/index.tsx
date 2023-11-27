@@ -57,7 +57,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                     <MenuOutlined />
                 </IconButton>
                 <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
-                    <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                    <Image src="/logo/yudzuki.svg" alt="" width={142} height={48} />
                 </RouteLink>
                 <Box sx={{ ml: 2, display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
                     <NavigationToolbarItem href="/status">
@@ -125,7 +125,7 @@ export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) 
                 <MenuOutlined />
             </IconButton>
             <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
-                <Image src="/logo/yudzuki.svg" alt="" width={158} height={40} />
+                <Image src="/logo/yudzuki.svg" alt="" width={142} height={48} />
             </RouteLink>
         </NavigationToolbar>
     );

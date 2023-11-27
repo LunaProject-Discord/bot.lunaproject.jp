@@ -1,5 +1,5 @@
-import { UserNotification } from '@interfaces/bot/user';
+import { Notification } from '@interfaces/bot';
 
-export interface GuildNotification extends Omit<UserNotification, 'read'> {
+export interface GuildNotification extends Notification {
     reads: string[];
 }

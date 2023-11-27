@@ -3,7 +3,7 @@
 import { SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
-import { GuildConfigurationComponent } from '@interfaces/bot';
+import { GuildConfigurationRoot } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
@@ -16,7 +16,7 @@ export const View = ({ guild, configuration, localization: { translations } }: G
     const voteConfiguration = configuration.vote;
     const [enabled, setEnabled, resetEnabled] = useResettableState(voteConfiguration.enabled);
 
-    const toObject = (): GuildConfigurationComponent => ({
+    const toObject = (): GuildConfigurationRoot => ({
         enabled
     });
 

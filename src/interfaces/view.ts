@@ -19,12 +19,24 @@ export interface GuildChannelsViewProps extends LocalizationProps {
     channels: RedisChannel[];
 }
 
+export interface GuildChannelViewProps extends LocalizationProps {
+    channel: RedisChannel;
+}
+
 export interface GuildRolesViewProps extends LocalizationProps {
     roles: RedisRole[];
 }
 
+export interface GuildRoleViewProps extends LocalizationProps {
+    role: RedisRole;
+}
+
 export interface GuildMembersViewProps extends LocalizationProps {
     members: RedisMember[];
+}
+
+export interface GuildMemberViewProps extends LocalizationProps {
+    member: RedisMember;
 }
 
 export interface GuildConfigurationViewProps extends GuildViewProps {

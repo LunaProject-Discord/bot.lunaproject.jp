@@ -15,6 +15,7 @@ export const getGuildConfiguration = async (id: string): Promise<GuildConfigurat
         timezone: guildConfigurationData.timezone as TimeZone,
         commands: JSON.parse(guildConfigurationData.commands),
         welcome: JSON.parse(guildConfigurationData.welcome),
+        welcome_v2: JSON.parse(guildConfigurationData.welcome_v2),
         goodbye: JSON.parse(guildConfigurationData.goodbye),
         activity: JSON.parse(guildConfigurationData.activity),
         global_chat: JSON.parse(guildConfigurationData.global_chat),

@@ -5,6 +5,7 @@ import {
     OAuthGuild,
     OAuthUser
 } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { predicateNonNullable } from '@utils/array';
 import { APIGuild, APIRole, APIUser, PermissionFlagsBits } from 'discord-api-types/v10';
 
 export * from '@lunaproject-discord/web-discord/dist/utils';
@@ -83,3 +84,24 @@ export const filterPredicateMember = (member: GuildMember | RedisMember, keyword
     || ('global_name' in member.user ? member.user.global_name : member.user.display_name)?.toLowerCase().includes(keyword.toLowerCase())
     || member.user.discriminator.includes(keyword)
     || member.nick?.toLowerCase().includes(keyword.toLowerCase());
+
+
+export const getInteractRoles = <G extends OAuthGuild | APIGuild | RedisGuild | DataGuild, M extends GuildMember | RedisMember, R extends APIRole | RedisRole>(guild: G, member: M, roles: R[]) => {
+    const sortedRoles = sortRoles(roles).filter((role) => role.position !== 0);
+
+    if ((typeof guild.owner === 'string' && guild.owner === member.user.id)
+        || ('owner_id' in guild && guild.owner_id === member.user.id)
+        || (typeof guild.owner === 'boolean' && guild.owner))
+        return sortedRoles;
+
+    const memberRoles = sortRoles(member.roles.map((roleId) => sortedRoles.find((role) => role.id === roleId)).filter(predicateNonNullable));
+    if (memberRoles.length < 1)
+        return [];
+
+    const highestRole = memberRoles[0];
+    return sortedRoles.filter((role) => role.position < highestRole.position);
+};
+
+export const getInteractRolesByDataGuild = (guild: DataGuild) => getInteractRoles(guild, getSelfMember(guild), guild.roles).filter((role) => !role.tags.bot_id && !role.tags.integration_id);
+
+export const getSelfMember = (guild: DataGuild) => guild.members.find((member) => member.id === process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID)!!;

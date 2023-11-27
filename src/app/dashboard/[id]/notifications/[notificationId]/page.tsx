@@ -1,6 +1,6 @@
 import { getUser } from '@app/utils';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildNotificationById, getGuildNotificationByName } from '@libs/bot';
+import { getGuildNotificationById, setGuildNotificationRead } from '@libs/bot';
 import { getGuildById, getMemberById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '@utils/discord';
@@ -12,14 +12,14 @@ import { View } from './view';
 interface Props extends WithIdParamProps {
     params: {
         id: string;
-        idOrName: string | number;
+        notificationId: string;
     };
 }
 
-export const generateMetadata = async ({ params: { id, idOrName } }: Props, parent: ResolvingMetadata) => {
+export const generateMetadata = async ({ params: { id, notificationId } }: Props, parent: ResolvingMetadata) => {
     const userData = getUser();
     const guildData = getGuildById(id);
-    const guildNotificationData = typeof idOrName === 'string' ? getGuildNotificationByName(id, idOrName) : getGuildNotificationById(idOrName);
+    const guildNotificationData = getGuildNotificationById(id, notificationId);
 
     const [user, guild, guildNotification] = await Promise.all([userData, guildData, guildNotificationData]);
 
@@ -44,16 +44,24 @@ export const generateMetadata = async ({ params: { id, idOrName } }: Props, pare
         }
     };
 };
-const Page = async ({ params: { id, idOrName } }: Props) => {
+const Page = async ({ params: { id, notificationId } }: Props) => {
     const localization = getLocalization();
 
+    const userData = getUser();
     const guildData = getGuildById(id);
-    const guildNotificationData = typeof idOrName === 'string' ? getGuildNotificationByName(id, idOrName) : getGuildNotificationById(idOrName);
+    const guildNotificationData = getGuildNotificationById(id, notificationId);
 
-    const [guild, guildNotification] = await Promise.all([guildData, guildNotificationData]);
+    const [user, guild, guildNotification] = await Promise.all([
+        userData,
+        guildData,
+        guildNotificationData
+    ]);
 
     if (!guild || !guildNotification)
         return (<NotFoundView />);
+
+    if (user)
+        await setGuildNotificationRead(guild.id, guildNotification.id, user.id, true);
 
     return (<View guild={guild} notification={guildNotification} localization={localization} />);
 };

@@ -1,22 +1,26 @@
 import { UserNotification } from '@interfaces/bot';
 import prisma from '@libs/prisma';
+import { fromBinaryUUID, toBinaryUUID } from '@utils/uuid';
 
 export const getUserNotifications = async (id: string): Promise<UserNotification[]> => {
     const userNotifications = await prisma.users_notifications.findMany({
         where: {
-            user_id: BigInt(id)
+            id: BigInt(id)
+        },
+        include: {
+            system_notifications: true
         }
     });
 
     const notifications: UserNotification[] = [];
-    for (const notification of userNotifications) {
+    for (const userNotification of userNotifications) {
+        const notification = userNotification.system_notifications;
         notifications.push({
-            id: notification.id,
-            name: notification.name,
+            id: fromBinaryUUID(notification.id),
             type: notification.type,
             title: notification.title,
             description: notification.description,
-            read: notification.is_read,
+            read: userNotification.is_read,
             updatedAt: notification.updated_at.getTime(),
             createdAt: notification.created_at.getTime()
         });
@@ -25,49 +29,56 @@ export const getUserNotifications = async (id: string): Promise<UserNotification
     return notifications;
 };
 
-export const getUserNotificationById = async (id: number): Promise<UserNotification | undefined> => {
-    const notification = await prisma.users_notifications.findUnique({
+export const getUserNotificationById = async (id: string, notificationId: string): Promise<UserNotification | undefined> => {
+    const userNotification = await prisma.users_notifications.findUnique({
         where: {
-            id
+            id_notification_id: {
+                id: BigInt(id),
+                notification_id: toBinaryUUID(notificationId)
+            }
+        },
+        include: {
+            system_notifications: true
         }
     });
 
-    if (!notification)
+    if (!userNotification)
         return undefined;
 
+    const notification = userNotification.system_notifications;
     return {
-        id: notification.id,
-        name: notification.name,
+        id: fromBinaryUUID(notification.id),
         type: notification.type,
         title: notification.title,
         description: notification.description,
-        read: notification.is_read,
+        read: userNotification.is_read,
         updatedAt: notification.updated_at.getTime(),
         createdAt: notification.created_at.getTime()
     };
 };
 
-export const getUserNotificationByName = async (id: string, name: string): Promise<UserNotification | undefined> => {
-    const notification = await prisma.users_notifications.findUnique({
+export const setUserNotificationRead = async (id: string, notificationId: string, read: boolean) => {
+    const userNotification = await prisma.users_notifications.findUnique({
         where: {
-            user_id_name: {
-                user_id: BigInt(id),
-                name
+            id_notification_id: {
+                id: BigInt(id),
+                notification_id: toBinaryUUID(notificationId)
             }
         }
     });
 
-    if (!notification)
-        return undefined;
+    if (!userNotification)
+        return;
 
-    return {
-        id: notification.id,
-        name: notification.name,
-        type: notification.type,
-        title: notification.title,
-        description: notification.description,
-        read: notification.is_read,
-        updatedAt: notification.updated_at.getTime(),
-        createdAt: notification.created_at.getTime()
-    };
+    await prisma.users_notifications.update({
+        where: {
+            id_notification_id: {
+                id: BigInt(id),
+                notification_id: toBinaryUUID(notificationId)
+            }
+        },
+        data: {
+            is_read: read
+        }
+    });
 };

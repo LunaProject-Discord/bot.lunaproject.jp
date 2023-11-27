@@ -46,15 +46,17 @@ interface NavigationProps extends UserViewProps {
     mutualGuilds: string[];
 }
 
-export const Navigation = ({
-                               user,
-                               userFlags,
-                               guild,
-                               guildFlags,
-                               guilds,
-                               mutualGuilds,
-                               localization
-                           }: NavigationProps) => {
+export const Navigation = (
+    {
+        user,
+        userFlags,
+        guild,
+        guildFlags,
+        guilds,
+        mutualGuilds,
+        localization
+    }: NavigationProps
+) => {
     const { translations } = localization;
 
     const router = useRouter();
@@ -95,7 +97,10 @@ export const Navigation = ({
                             <ArrowBackOutlined fontSize="small" />
                             {translations.back_to_select_guild}
                         </RouteLink>
-                    </Fragment> : <Typography variant="h5">{translations.guild_settings}</Typography>}
+                    </Fragment> : <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant="h5">{translations.dashboard}</Typography>
+                        <Typography color="text.secondary">{translations.guild_settings}</Typography>
+                    </Box>}
                     <Box sx={{ px: { xs: 1, md: 0 } }}>
                         <GuildSelect
                             value={guild.id}

@@ -2,11 +2,10 @@
 
 import { CancelButton, SwitchButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
-import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover, RoleSelect } from '@components/items';
+import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover } from '@components/items';
 import { BrMobile } from '@components/text';
-import { GuildConfigurationLevelRewardRole } from '@interfaces/bot';
+import { GuildConfigurationWelcomeV2AfterPendingRole } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
-import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import {
     AddOutlined,
@@ -16,12 +15,13 @@ import {
     LabelOffOutlined
 } from '@mui/icons-material';
 import { Box, Button, Divider, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
-import { getInteractRolesByDataGuild } from '@utils/discord';
+import { getInteractRolesByDataGuild, getRoleColor } from '@utils/discord';
 import { getStateActionValue, UniqueId, updateArrayState } from '@utils/state';
 import { nanoid } from 'nanoid';
+import { size } from 'polished';
 import React, { Dispatch, Fragment, SetStateAction, useEffect, useMemo, useState } from 'react';
 
-type EditableObject = GuildConfigurationLevelRewardRole & UniqueId;
+type EditableObject = GuildConfigurationWelcomeV2AfterPendingRole & UniqueId;
 
 interface RoleItemProps extends ItemDisabledProps, GuildViewProps {
     value: EditableObject;
@@ -39,26 +39,31 @@ const RoleItem = (
 ) => {
     const { translations } = localization;
 
+    const role = guild.roles.find((role) => role.id === value.id);
     return (
-        <ItemRoot sx={{ p: 0 }}>
-            <ItemRowContainer sx={{ mb: { xs: -2, md: 0 } }}>
-                <RoleSelect
-                    value={value.id}
-                    setValue={(action) => setValue({ ...value, id: getStateActionValue(action, value.id) })}
-                    choices={getInteractRolesByDataGuild(guild)}
-                    disabled={disabled || !value.enabled}
-                    localization={localization}
-                    sx={{ width: { xs: '100%', md: 300 } }}
-                />
+        <ItemRoot sx={{ p: 0, flexDirection: 'row !important' }}>
+            <ItemRowContainer sx={{ overflow: 'hidden' }}>
+                {role && <Fragment>
+                    <Box
+                        sx={{
+                            ...size(16),
+                            flexShrink: 0,
+                            bgcolor: getRoleColor(role),
+                            borderRadius: '50%'
+                        }}
+                    />
+                    <Typography
+                        sx={{
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                            overflow: 'hidden'
+                        }}
+                    >
+                        {role.name}
+                    </Typography>
+                </Fragment>}
             </ItemRowContainer>
-            <ItemFormContainer>
-                <NumberField
-                    value={value.level}
-                    setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
-                    min={0}
-                    disabled={disabled || !value.enabled}
-                    sx={{ width: { xs: '100%', md: 300 } }}
-                />
+            <ItemFormContainer sx={{ width: 'unset !important' }}>
                 <SwitchButton
                     checked={value.enabled}
                     setChecked={(action) => setValue({ ...value, enabled: getStateActionValue(action, value.enabled) })}
@@ -76,9 +81,12 @@ const RoleItem = (
     );
 };
 
-type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildConfigurationLevelRewardRole[]> & GuildViewProps;
+type ManageAfterPendingRolesDialogProps =
+    DialogProps
+    & ItemVariableProps<GuildConfigurationWelcomeV2AfterPendingRole[]>
+    & GuildViewProps;
 
-export const ManageRolesDialog = (
+export const ManageAfterPendingRolesDialog = (
     {
         open,
         setOpen,
@@ -86,7 +94,7 @@ export const ManageRolesDialog = (
         setValue,
         guild,
         localization
-    }: ManageRolesDialogProps
+    }: ManageAfterPendingRolesDialogProps
 ) => {
     const { translations } = localization;
 
@@ -120,7 +128,7 @@ export const ManageRolesDialog = (
                 maxWidth="md"
             >
                 <DialogTitle>
-                    {translations.level_reward_manage_roles}
+                    {translations.welcome_message_manage_roles}
                     <Button
                         onClick={(e) => setAnchorEl(e.currentTarget)}
                         disableElevation
@@ -174,8 +182,7 @@ export const ManageRolesDialog = (
                         {
                             _id,
                             enabled: true,
-                            id: getStateActionValue(action, ''),
-                            level: 1
+                            id: getStateActionValue(action, '')
                         }
                     );
                 }}

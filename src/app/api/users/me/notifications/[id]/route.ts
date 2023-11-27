@@ -1,19 +1,14 @@
 import { getUser } from '@app/utils';
-import { getUserNotificationById, getUserNotificationByName } from '@libs/bot';
+import { WithIdParamProps } from '@interfaces/page';
+import { getUserNotificationById } from '@libs/bot';
 import { NextResponse } from 'next/server';
 
-type Props = {
-    params: {
-        idOrName: string | number;
-    }
-}
-
-export const GET = async (req: Request, { params: { idOrName } }: Props) => {
+export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
     const user = await getUser();
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
 
-    const notification = typeof idOrName === 'string' ? await getUserNotificationByName(user.id, idOrName) : await getUserNotificationById(idOrName);
+    const notification = await getUserNotificationById(user.id, id);
     if (!notification)
         return NextResponse.json({ message: 'Notification not found!' }, { status: 404 });
 

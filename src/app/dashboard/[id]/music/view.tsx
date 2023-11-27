@@ -105,7 +105,9 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>{translations.music_sources}</SectionTitle>
+                <SectionTitle color={enabled ? 'text.primary' : 'text.disabled'}>
+                    {translations.music_sources}
+                </SectionTitle>
                 <SectionContent>
                     <SwitchItem
                         primary={translations.music_source_youtube}

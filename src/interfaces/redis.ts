@@ -42,6 +42,14 @@ export interface RedisRole extends RedisSnowflake {
     icon: string | null;
     unicode_emoji: string | null;
     permissions: string;
+    tags: RedisRoleTags;
+}
+
+export interface RedisRoleTags {
+    bot_id: string | null;
+    integration_id: string | null;
+    boost: boolean;
+    linked_role: boolean;
 }
 
 export interface RedisMember extends RedisSnowflake {

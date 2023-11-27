@@ -263,7 +263,7 @@ export const MemberItem = (
 ) => (
     <Fragment>
         <ItemRoot sx={sx}>
-            <ItemRowContainer size={secondary ? 'medium' : 'small'}>
+            <ItemRowContainer dense={!secondary}>
                 <ItemIcon icon={icon} iconSx={iconSx} />
                 <ItemTextBlock
                     primary={primary}

@@ -1,24 +1,19 @@
 import { getUser } from '@app/utils';
 import { UnauthorizedView } from '@app/view';
-import { getUserNotificationById, getUserNotificationByName } from '@libs/bot';
+import { WithIdParamProps } from '@interfaces/page';
+import { getUserNotificationById, setUserNotificationRead } from '@libs/bot';
 import { getLocalization } from '@localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { NotFoundView } from '../../view';
 import { View } from './view';
 
-interface Props {
-    params: {
-        idOrName: string | number;
-    };
-}
-
-export const generateMetadata = async ({ params: { idOrName } }: Props, parent: ResolvingMetadata) => {
+export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
     const user = await getUser();
     if (!user)
         return parent;
 
-    const userNotification = await (typeof idOrName === 'string' ? getUserNotificationByName(user.id, idOrName) : getUserNotificationById(idOrName));
+    const userNotification = await getUserNotificationById(user.id, id);
     if (!userNotification)
         return parent;
 
@@ -36,16 +31,18 @@ export const generateMetadata = async ({ params: { idOrName } }: Props, parent: 
         }
     };
 };
-const Page = async ({ params: { idOrName } }: Props) => {
+const Page = async ({ params: { id } }: WithIdParamProps) => {
     const localization = getLocalization();
 
     const user = await getUser();
     if (!user)
         return (<UnauthorizedView localization={localization} />);
 
-    const userNotification = await (typeof idOrName === 'string' ? getUserNotificationByName(user.id, idOrName) : getUserNotificationById(idOrName));
+    const userNotification = await getUserNotificationById(user.id, id);
     if (!userNotification)
         return (<NotFoundView />);
+
+    await setUserNotificationRead(user.id, id, true);
 
     return (<View user={user} notification={userNotification} localization={localization} />);
 };

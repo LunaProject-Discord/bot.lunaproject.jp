@@ -1,5 +1,5 @@
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildNotificationById, getGuildNotificationByName } from '@libs/bot';
+import { getGuildNotificationById } from '@libs/bot';
 import { getGuildById } from '@lunaproject-discord/web-discord';
 import { COOKIE_TOKEN } from '@utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
@@ -8,11 +8,11 @@ import { NextResponse } from 'next/server';
 
 type Props = WithIdParamProps & {
     params: {
-        idOrName: string | number;
+        notificationId: string;
     }
 }
 
-export const GET = async (req: Request, { params: { id, idOrName } }: Props) => {
+export const GET = async (req: Request, { params: { id, notificationId } }: Props) => {
     const nextCookies = cookies();
     const token = nextCookies.get(COOKIE_TOKEN)?.value;
     if (!token)
@@ -25,7 +25,7 @@ export const GET = async (req: Request, { params: { id, idOrName } }: Props) => 
     if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    const notification = typeof idOrName === 'string' ? await getGuildNotificationByName(id, idOrName) : await getGuildNotificationById(idOrName);
+    const notification = await getGuildNotificationById(id, notificationId);
     if (!notification)
         return NextResponse.json({ message: 'Notification not found!' }, { status: 404 });
 

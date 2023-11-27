@@ -1,10 +1,5 @@
-export interface UserNotification {
-    id: number;
-    name: string;
-    type: 'success' | 'warning' | 'error' | 'information';
-    title: string;
-    description: string;
+import { Notification } from '@interfaces/bot';
+
+export interface UserNotification extends Notification {
     read: boolean;
-    updatedAt: number;
-    createdAt: number;
 }

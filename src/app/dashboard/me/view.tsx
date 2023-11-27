@@ -40,7 +40,7 @@ export const View = ({ user, notifications, localization: { translations } }: Pr
             <SectionContent>
                 {notifications.filter((notification) => !notification.read).slice(0, 4).map((notification) => (
                     <RouteLinkItem
-                        key={notification.name}
+                        key={notification.id}
                         icon={<Fragment>
                             {notification.type === 'success' && <TaskAltOutlined color="success" />}
                             {notification.type === 'warning' && <WarningAmberOutlined color="warning" />}
@@ -48,8 +48,15 @@ export const View = ({ user, notifications, localization: { translations } }: Pr
                             {notification.type === 'information' && <InfoOutlined color="info" />}
                         </Fragment>}
                         primary={notification.title}
-                        secondary={`${(notification.description.split('\n').length > 1 ? notification.description.split('\n')[0] : notification.description).substring(0, 50)}...`}
-                        href={`/dashboard/me/notifications/${notification.name}`}
+                        secondary={notification.description.split('\n').length > 1 ? notification.description.split('\n')[0] : notification.description}
+                        secondaryTypographyProps={{
+                            sx: {
+                                whiteSpace: 'nowrap',
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden'
+                            }
+                        }}
+                        href={`/dashboard/me/notifications/${notification.id}`}
                     />
                 ))}
             </SectionContent>

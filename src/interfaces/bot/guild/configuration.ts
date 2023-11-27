@@ -12,14 +12,15 @@ export interface GuildConfiguration {
     commands: GuildConfigurationCommands;
 
     welcome: GuildConfigurationWelcome;
+    welcome_v2: GuildConfigurationWelcomeV2;
     goodbye: GuildConfigurationGoodbye;
     activity: GuildConfigurationActivity;
 
-    global_chat: GuildConfigurationComponent;
+    global_chat: GuildConfigurationRoot;
     global_ban: GuildConfigurationGlobalBan;
     level: GuildConfigurationLevel;
     translate: GuildConfigurationTranslate;
-    vote: GuildConfigurationComponent;
+    vote: GuildConfigurationRoot;
     quote: GuildConfigurationQuote;
     music: GuildConfigurationMusic;
     logging: GuildConfigurationLogging;
@@ -27,7 +28,7 @@ export interface GuildConfiguration {
 
 export type GuildConfigurationLanguage = 'ja-JP' | 'en-US';
 
-export interface GuildConfigurationComponent {
+export interface GuildConfigurationRoot {
     enabled: boolean;
 }
 
@@ -60,26 +61,70 @@ export interface GuildConfigurationCommand {
     permissions: GuildConfigurationCommandsPermissions;
 }
 
-export interface GuildConfigurationWelcome extends GuildConfigurationComponent {
+export interface GuildConfigurationWelcome extends GuildConfigurationRoot {
     channel_id: string;
     message: DataMessage;
     roles: GuildConfigurationWelcomeRole[];
 }
 
-export interface GuildConfigurationWelcomeRole {
+export interface GuildConfigurationWelcomeRole extends GuildConfigurationRoot {
     id: string;
 }
 
-export interface GuildConfigurationGoodbye extends GuildConfigurationComponent {
+export interface GuildConfigurationWelcomeV2 extends GuildConfigurationRoot {
+    before_pending: GuildConfigurationWelcomeV2BeforePending;
+    after_pending: GuildConfigurationWelcomeV2AfterPending;
+}
+
+export interface GuildConfigurationWelcomeV2BeforePending extends GuildConfigurationRoot {
+    message: GuildConfigurationWelcomeV2Message;
+    roles: GuildConfigurationWelcomeV2BeforePendingRoles;
+}
+
+export interface GuildConfigurationWelcomeV2BeforePendingRoles extends GuildConfigurationRoot {
+    roles: GuildConfigurationWelcomeV2BeforePendingRole[];
+}
+
+export interface GuildConfigurationWelcomeV2BeforePendingRole extends GuildConfigurationRoot {
+    id: string;
+    type: GuildConfigurationWelcomeV2BeforePendingRoleTargetType;
+}
+
+export type GuildConfigurationWelcomeV2BeforePendingRoleTargetType =
+    'EVERYONE'
+    | 'USER'
+    | 'BOT'
+    | 'VERIFIED_BOT'
+    | 'NOT_VERIFIED_BOT';
+
+export interface GuildConfigurationWelcomeV2AfterPending extends GuildConfigurationRoot {
+    message: GuildConfigurationWelcomeV2Message;
+    roles: GuildConfigurationWelcomeV2AfterPendingRoles;
+}
+
+export interface GuildConfigurationWelcomeV2AfterPendingRoles extends GuildConfigurationRoot {
+    roles: GuildConfigurationWelcomeV2AfterPendingRole[];
+}
+
+export interface GuildConfigurationWelcomeV2AfterPendingRole extends GuildConfigurationRoot {
+    id: string;
+}
+
+export interface GuildConfigurationWelcomeV2Message extends GuildConfigurationRoot {
     channel_id: string;
     message: DataMessage;
 }
 
-export interface GuildConfigurationActivity extends GuildConfigurationComponent {
+export interface GuildConfigurationGoodbye extends GuildConfigurationRoot {
+    channel_id: string;
+    message: DataMessage;
+}
+
+export interface GuildConfigurationActivity extends GuildConfigurationRoot {
     roles: GuildConfigurationActivityRole[];
 }
 
-export interface GuildConfigurationActivityRole {
+export interface GuildConfigurationActivityRole extends GuildConfigurationRoot {
     id: string;
     name: string;
     type: GuildConfigurationActivityRoleType;
@@ -93,11 +138,11 @@ export type GuildConfigurationActivityRoleType =
     | 'CUSTOM_STATUS'
     | 'COMPETING';
 
-export interface GuildConfigurationGlobalBan extends GuildConfigurationComponent {
+export interface GuildConfigurationGlobalBan extends GuildConfigurationRoot {
     minimum_evaluate_value: number;
 }
 
-export interface GuildConfigurationLevel extends GuildConfigurationComponent {
+export interface GuildConfigurationLevel extends GuildConfigurationRoot {
     experience_per_message: number;
     disabled: GuildConfigurationAccessControlComponent;
     reward: GuildConfigurationLevelReward;
@@ -113,7 +158,7 @@ export interface GuildConfigurationLevelReward {
 
 export type GuildConfigurationLevelRewardType = 'STACK_PREVIOUS_ROLES' | 'REMOVE_PREVIOUS_ROLES';
 
-export interface GuildConfigurationLevelRewardRole {
+export interface GuildConfigurationLevelRewardRole extends GuildConfigurationRoot {
     id: string;
     level: number;
 }
@@ -136,12 +181,12 @@ export interface GuildConfigurationLevelLeaderboard {
     vanity_code: string | null;
 }
 
-export interface GuildConfigurationTranslate extends GuildConfigurationComponent {
+export interface GuildConfigurationTranslate extends GuildConfigurationRoot {
     reaction: boolean;
     disabled: GuildConfigurationAccessControlComponent;
 }
 
-export interface GuildConfigurationQuote extends GuildConfigurationComponent {
+export interface GuildConfigurationQuote extends GuildConfigurationRoot {
     reaction: boolean;
     message: boolean;
     other_guild_to_this_guild: boolean;
@@ -149,7 +194,7 @@ export interface GuildConfigurationQuote extends GuildConfigurationComponent {
     disabled: GuildConfigurationAccessControlComponent;
 }
 
-export interface GuildConfigurationMusic extends GuildConfigurationComponent {
+export interface GuildConfigurationMusic extends GuildConfigurationRoot {
     web_panel: boolean;
     default_volume: number;
     timeout_seconds: number;
@@ -183,7 +228,7 @@ export interface GuildConfigurationLogging {
     message: GuildConfigurationLoggingMessage;
 }
 
-export interface GuildConfigurationLoggingComponent extends GuildConfigurationComponent {
+export interface GuildConfigurationLoggingComponent extends GuildConfigurationRoot {
     channel_id: string;
     color: string;
 }

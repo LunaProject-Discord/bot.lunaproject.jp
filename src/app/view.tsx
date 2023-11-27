@@ -260,7 +260,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 size="large"
                 startIcon={<HomeOutlined />}
             >
-                ホームに戻る
+                {translations.back_to_home}
             </Button>
         </ErrorRoot>
     </PageCenteredLayout>

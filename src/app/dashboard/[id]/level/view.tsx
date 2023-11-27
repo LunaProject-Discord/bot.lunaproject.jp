@@ -147,9 +147,11 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>{translations.level_reward}</SectionTitle>
+                <SectionTitle color={enabled ? 'text.primary' : 'text.disabled'}>
+                    {translations.level_reward}
+                </SectionTitle>
                 <SectionContent>
-                    <SectionParagraph variant="h6" fontWeight={400}>
+                    <SectionParagraph variant="h6" fontWeight={400} color={enabled ? 'text.primary' : 'text.disabled'}>
                         {translations.level_reward_type}
                     </SectionParagraph>
                     <RadioItem<GuildConfigurationLevelRewardType>
@@ -186,7 +188,9 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>{translations.level_notification}</SectionTitle>
+                <SectionTitle color={enabled ? 'text.primary' : 'text.disabled'}>
+                    {translations.level_notification}
+                </SectionTitle>
                 <SectionContent>
                     <SelectItem<GuildConfigurationLevelNotificationType>
                         primary={translations.level_notification_type}
@@ -222,7 +226,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         secondary={translations.level_notification_edit_description}
                         value={notificationMessage}
                         setValue={setNotificationMessage}
-                        disabled={!enabled}
+                        disabled={!enabled || notificationType === 'DISABLED'}
                         open={openMessageBuilder}
                         setOpen={setOpenMessageBuilder}
                         localization={localization}
@@ -232,7 +236,9 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>{translations.level_leaderboard}</SectionTitle>
+                <SectionTitle color={enabled ? 'text.primary' : 'text.disabled'}>
+                    {translations.level_leaderboard}
+                </SectionTitle>
                 <SectionContent>
                     <LinkItem
                         primary={translations.level_leaderboard_view}
@@ -295,7 +301,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 setOpen={setOpenRolesDialog}
                 value={rewardRoles}
                 setValue={setRewardRoles}
-                roles={guild.roles}
+                guild={guild}
                 localization={localization}
             />
         </Fragment>

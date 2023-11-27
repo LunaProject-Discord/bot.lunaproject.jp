@@ -51,7 +51,7 @@ export const View = ({ guild, notifications, localization: { translations } }: P
                         <SectionContent>
                             {guildNotifications[date].sort((a, b) => b.createdAt - a.createdAt).map((notification) => (
                                 <RouteLinkItem
-                                    key={notification.name}
+                                    key={notification.id}
                                     icon={<Fragment>
                                         {notification.type === 'success' && <TaskAltOutlined color="success" />}
                                         {notification.type === 'warning' && <WarningAmberOutlined color="warning" />}
@@ -59,8 +59,15 @@ export const View = ({ guild, notifications, localization: { translations } }: P
                                         {notification.type === 'information' && <InfoOutlined color="info" />}
                                     </Fragment>}
                                     primary={notification.title}
-                                    secondary={`${(notification.description.split('\n').length > 1 ? notification.description.split('\n')[0] : notification.description).substring(0, 50)}...`}
-                                    href={`/dashboard/${guild.id}/notifications/${notification.name}`}
+                                    secondary={notification.description.split('\n').length > 1 ? notification.description.split('\n')[0] : notification.description}
+                                    secondaryTypographyProps={{
+                                        sx: {
+                                            whiteSpace: 'nowrap',
+                                            textOverflow: 'ellipsis',
+                                            overflow: 'hidden'
+                                        }
+                                    }}
+                                    href={`/dashboard/${guild.id}/notifications/${notification.id}`}
                                 />
                             ))}
                         </SectionContent>

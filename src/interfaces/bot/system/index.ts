@@ -15,4 +15,5 @@ export type SessionStatus =
     | 'SHUTDOWN'
     | 'FAILED_TO_LOGIN';
 
+export * from './notification';
 export * from './statistics';

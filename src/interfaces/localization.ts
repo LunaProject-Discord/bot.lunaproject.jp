@@ -179,6 +179,7 @@ export type TranslationKeys =
 
 
     | 'home'
+    | 'back_to_home'
 
 
     | 'status_description'
@@ -197,9 +198,11 @@ export type TranslationKeys =
     | 'choose_guild_leaderboard'
 
 
+    | 'dashboard'
+
+
     | 'guild_settings'
     | 'choose_guild_settings'
-    | 'back_to_home'
     | 'back_to_select_guild'
     | 'settings_basic'
     | 'settings_guild_management'
@@ -256,6 +259,19 @@ export type TranslationKeys =
     | 'welcome_message_enabled'
     | 'welcome_message_edit_description'
     | 'welcome_message_edit_hint'
+    | 'welcome_message_before_pending'
+    | 'welcome_message_before_pending_enabled'
+    | 'welcome_message_before_pending_message_enabled'
+    | 'welcome_message_before_pending_message_edit_description'
+    | 'welcome_message_before_pending_roles_enabled'
+    | 'welcome_message_after_pending'
+    | 'welcome_message_after_pending_enabled'
+    | 'welcome_message_after_pending_message_enabled'
+    | 'welcome_message_after_pending_message_edit_description'
+    | 'welcome_message_after_pending_roles_enabled'
+    | 'welcome_message_message'
+    | 'welcome_message_roles'
+    | 'welcome_message_manage_roles'
 
     | 'goodbye_message'
     | 'goodbye_message_description'

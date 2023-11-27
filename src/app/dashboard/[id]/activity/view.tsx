@@ -33,42 +33,40 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <Fragment>
-                <PageHeader>
-                    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                        <Typography variant="h4">{translations.activity}</Typography>
-                        <Typography>{translations.activity_description}</Typography>
-                    </Box>
-                </PageHeader>
-                <Section>
-                    <SectionContent>
-                        <SwitchItem
-                            primary={translations.activity_enabled}
-                            checked={enabled}
-                            setChecked={setEnabled}
-                        />
-                        <ActionItem
-                            primary={translations.activity_manage_roles}
-                            onAction={() => setOpenRolesDialog(true)}
-                            disabled={!enabled}
-                        />
-                    </SectionContent>
-                </Section>
+            <PageHeader>
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
+                    <Typography variant="h4">{translations.activity}</Typography>
+                    <Typography>{translations.activity_description}</Typography>
+                </Box>
+            </PageHeader>
+            <Section>
+                <SectionContent>
+                    <SwitchItem
+                        primary={translations.activity_enabled}
+                        checked={enabled}
+                        setChecked={setEnabled}
+                    />
+                    <ActionItem
+                        primary={translations.activity_manage_roles}
+                        onAction={() => setOpenRolesDialog(true)}
+                        disabled={!enabled}
+                    />
+                </SectionContent>
+            </Section>
 
-                <SaveConfirm
-                    open={!deepEqual(activityConfiguration, toObject(), { strict: true })}
-                    disableKeyboardShortcuts={openRolesDialog}
-                    onSave={handleSaveAction}
-                    onCancel={handleCancelAction}
-                />
-            </Fragment>
+            <SaveConfirm
+                open={!deepEqual(activityConfiguration, toObject(), { strict: true })}
+                disableKeyboardShortcuts={openRolesDialog}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
+            />
 
             <ManageRolesDialog
                 open={openRolesDialog}
                 setOpen={setOpenRolesDialog}
                 value={roles}
                 setValue={setRoles}
-                roles={guild.roles}
+                guild={guild}
                 localization={localization}
             />
         </Fragment>
