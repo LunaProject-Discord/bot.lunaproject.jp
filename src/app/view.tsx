@@ -113,7 +113,6 @@ export const View = ({ user, localization: { translations } }: Props) => {
         <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
             <Typography variant="h4">{translations.welcome}</Typography>
             <Alert severity="warning" sx={{ mt: 3 }}>
-                <AlertTitle>{translations.warning}</AlertTitle>
                 このサイトは現在開発中です。大部分は利用できません。
             </Alert>
             {user ? (
@@ -194,7 +193,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                 </Section>
             ) : (
                 <Alert severity="info" sx={{ mt: 3 }}>
-                    <AlertTitle>お知らせ</AlertTitle>
+                    <AlertTitle>{translations.information}</AlertTitle>
                     <Box sx={{ mb: .5 }}>
                         このサイトのすべての機能を利用するにはログインが必要です。<br />
                         下のボタンからログインをしてください。

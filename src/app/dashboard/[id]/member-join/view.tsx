@@ -202,8 +202,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionTitle>
                 <SectionContent>
                     {!isMemberVerificationGateEnabled && <Alert severity="warning">
-                        <AlertTitle>{translations.member_join_after_pending_alert}</AlertTitle>
-                        {translations.member_join_after_pending_alert_description}
+                        <AlertTitle>{translations.dashboard_error_cannot_be_enabled_alert_title}</AlertTitle>
+                        {translations.member_join_after_pending_error_cannot_be_enabled_alert_description}
                     </Alert>}
                     <SwitchItem
                         primary={translations.member_join_after_pending_enabled}

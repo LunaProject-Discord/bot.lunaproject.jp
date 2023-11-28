@@ -3,7 +3,7 @@
 import { CancelButton, SwitchButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover, RoleSelect } from '@components/items';
-import { BrMobile } from '@components/text';
+import { TranslatableTypography } from '@components/text';
 import { GuildConfigurationLevelRewardRole } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
 import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
@@ -15,7 +15,7 @@ import {
     KeyboardArrowUpOutlined,
     LabelOffOutlined
 } from '@mui/icons-material';
-import { Box, Button, Divider, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Divider, IconButton, Theme, Tooltip, useMediaQuery } from '@mui/material';
 import { getInteractRolesByDataGuild } from '@utils/discord';
 import { getStateActionValue, UniqueId, updateArrayState } from '@utils/state';
 import { nanoid } from 'nanoid';
@@ -152,10 +152,12 @@ export const ManageRolesDialog = (
                         }}
                     >
                         <LabelOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-                        <Typography variant="h4" align="center">登録されている<BrMobile />役職がありません</Typography>
-                        <Typography align="center">
-                            右上のボタンから役職を追加できます。
-                        </Typography>
+                        <TranslatableTypography variant="h4" align="center">
+                            {translations.dashboard_error_manage_roles_empty_dialog_title}
+                        </TranslatableTypography>
+                        <TranslatableTypography align="center">
+                            {translations.dashboard_error_manage_roles_empty_dialog_description}
+                        </TranslatableTypography>
                     </Box>}
                 </DialogContent>
                 <DialogActions>

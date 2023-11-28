@@ -5,7 +5,7 @@ export const translationsJa: Translations = {
     success: '成功',
     warning: '警告',
     error: 'エラー',
-    info: '情報',
+    information: '情報',
     loading: '読み込み中...',
     login: 'ログイン',
     logout: 'ログアウト',
@@ -208,6 +208,12 @@ export const translationsJa: Translations = {
 
 
     dashboard: 'ダッシュボード',
+    dashboard_error_manage_roles_empty_dialog_title: <Fragment>
+        登録されている<br className="mobile" />
+        役職がありません
+    </Fragment>,
+    dashboard_error_manage_roles_empty_dialog_description: '右上のボタンから役職を追加できます。',
+    dashboard_error_cannot_be_enabled_alert_title: 'この設定を有効にすることはできません',
 
 
     guild_settings: 'サーバー設定',
@@ -314,8 +320,7 @@ export const translationsJa: Translations = {
     member_join_before_pending_role_type_verified_bot: '認証済みBot',
     member_join_before_pending_role_type_not_verified_bot: '未認証Bot',
     member_join_after_pending: 'ルールに同意したとき',
-    member_join_after_pending_alert: 'この設定を有効にすることはできません',
-    member_join_after_pending_alert_description: <Fragment>
+    member_join_after_pending_error_cannot_be_enabled_alert_description: <Fragment>
         続けるには、下記の設定を Discord で有効にしてください。
         <ul style={{ marginTop: 4, marginBottom: 0, paddingInlineStart: 20 }}>
             <li>コミュニティ</li>

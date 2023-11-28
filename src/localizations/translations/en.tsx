@@ -5,7 +5,7 @@ export const translationsEn: Translations = {
     success: 'Success',
     warning: 'Warning',
     error: 'Error',
-    info: 'Info',
+    information: 'Information',
     loading: 'Loading...',
     login: 'Login',
     logout: 'Logout',
@@ -208,6 +208,9 @@ export const translationsEn: Translations = {
 
 
     dashboard: 'Dashboard',
+    dashboard_error_manage_roles_empty_dialog_title: 'No registered roles!',
+    dashboard_error_manage_roles_empty_dialog_description: 'Role can be added by clicking on the button in the upper right corner.',
+    dashboard_error_cannot_be_enabled_alert_title: 'This setting cannot be enabled!',
 
 
     guild_settings: 'Server Settings',
@@ -315,8 +318,7 @@ export const translationsEn: Translations = {
     member_join_before_pending_role_type_verified_bot: 'Verified Bot',
     member_join_before_pending_role_type_not_verified_bot: 'Unverified Bot',
     member_join_after_pending: 'When you agree to the rules',
-    member_join_after_pending_alert: 'This setting cannot be enabled',
-    member_join_after_pending_alert_description: <Fragment>
+    member_join_after_pending_error_cannot_be_enabled_alert_description: <Fragment>
         To continue, please enable the following settings in Discord.
         <ul style={{ marginTop: 4, marginBottom: 0, paddingInlineStart: 20 }}>
             <li>Community</li>

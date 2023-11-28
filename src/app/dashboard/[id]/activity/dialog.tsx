@@ -3,7 +3,7 @@
 import { CancelButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '@components/items';
-import { BrMobile, translatableTypographyStyled } from '@components/text';
+import { TranslatableTypography, translatableTypographyStyled } from '@components/text';
 import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
@@ -35,7 +35,6 @@ import {
     OutlinedInput,
     Theme,
     Tooltip,
-    Typography,
     useMediaQuery
 } from '@mui/material';
 import { getInteractRolesByDataGuild } from '@utils/discord';
@@ -305,10 +304,12 @@ export const ManageRolesDialog = (
                         }}
                     >
                         <LabelOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-                        <Typography variant="h4" align="center">登録されている<BrMobile />役職がありません</Typography>
-                        <Typography align="center">
-                            右上のボタンから役職を追加できます。
-                        </Typography>
+                        <TranslatableTypography variant="h4" align="center">
+                            {translations.dashboard_error_manage_roles_empty_dialog_title}
+                        </TranslatableTypography>
+                        <TranslatableTypography align="center">
+                            {translations.dashboard_error_manage_roles_empty_dialog_description}
+                        </TranslatableTypography>
                     </Box>}
                 </DialogContent>
                 <DialogActions>

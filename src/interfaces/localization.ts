@@ -6,7 +6,7 @@ export type TranslationKeys =
     'success'
     | 'warning'
     | 'error'
-    | 'info'
+    | 'information'
     | 'loading'
     | 'login'
     | 'logout'
@@ -199,6 +199,9 @@ export type TranslationKeys =
 
 
     | 'dashboard'
+    | 'dashboard_error_manage_roles_empty_dialog_title'
+    | 'dashboard_error_manage_roles_empty_dialog_description'
+    | 'dashboard_error_cannot_be_enabled_alert_title'
 
 
     | 'guild_settings'
@@ -280,8 +283,7 @@ export type TranslationKeys =
     | 'member_join_before_pending_role_type_verified_bot'
     | 'member_join_before_pending_role_type_not_verified_bot'
     | 'member_join_after_pending'
-    | 'member_join_after_pending_alert'
-    | 'member_join_after_pending_alert_description'
+    | 'member_join_after_pending_error_cannot_be_enabled_alert_description'
     | 'member_join_after_pending_enabled'
     | 'member_join_after_pending_message_enabled'
     | 'member_join_after_pending_message_edit_description'
