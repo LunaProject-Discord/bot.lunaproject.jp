@@ -122,11 +122,11 @@ export interface DefaultEditableItemProps extends DefaultEditableSwitchProps, St
 }
 
 export const DefaultEditableItem = ({ value, setValue, disabled, sx, children }: DefaultEditableItemProps) => (
-    <ItemRoot sx={sx}>
-        <ItemRowContainer>
+    <ItemRoot sx={sx ?? { flexDirection: 'row !important', alignItems: 'center !important' }}>
+        <ItemRowContainer sx={{ overflow: 'hidden' }}>
             {children}
         </ItemRowContainer>
-        <ItemFormContainer>
+        <ItemFormContainer sx={{ width: 'unset !important' }}>
             <DefaultEditableSwitch value={value} setValue={setValue} disabled={disabled} />
         </ItemFormContainer>
     </ItemRoot>
@@ -148,11 +148,11 @@ export const EditableItem = (
         children
     }: EditableItemProps
 ) => (
-    <ItemRoot sx={sx}>
-        <ItemRowContainer>
+    <ItemRoot sx={sx ?? { flexDirection: 'row !important', alignItems: 'center !important' }}>
+        <ItemRowContainer sx={{ overflow: 'hidden' }}>
             {children}
         </ItemRowContainer>
-        <ItemFormContainer>
+        <ItemFormContainer sx={{ width: 'unset !important' }}>
             <EditableSwitch
                 value={value.override}
                 setValue={(action) => setValue({ ...value, override: getStateActionValue(action, value.override) })}

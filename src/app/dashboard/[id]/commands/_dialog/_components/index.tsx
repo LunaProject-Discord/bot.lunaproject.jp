@@ -31,7 +31,12 @@ export const DefaultEditableItem = (
         children
     }: Exclude<DefaultEditableItemProps, keyof StyledProps>
 ) => (
-    <OriginalDefaultEditableItem value={value} setValue={setValue} disabled={disabled} sx={{ p: 0 }}>
+    <OriginalDefaultEditableItem
+        value={value}
+        setValue={setValue}
+        disabled={disabled}
+        sx={{ p: 0, flexDirection: 'row !important', alignItems: 'center !important' }}
+    >
         {children}
     </OriginalDefaultEditableItem>
 );
@@ -50,7 +55,7 @@ export const EditableItem = (
         setValue={setValue}
         disabled={disabled}
         localization={localization}
-        sx={{ p: 0 }}
+        sx={{ p: 0, flexDirection: 'row !important', alignItems: 'center !important' }}
     >
         {children}
     </OriginalEditableItem>

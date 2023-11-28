@@ -1,11 +1,12 @@
 import { EditableItemProps, GroupProps } from '@app/dashboard/[id]/commands/_components';
 import { EditableItem, Group, GroupTitle } from '@app/dashboard/[id]/commands/_dialog/_components/index';
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
+import { getMemberDisplay } from '@app/user';
 import { MemberPopover } from '@components/items';
 import { GuildMembersViewProps } from '@interfaces/view';
 import { ItemIcon, ItemTextBlock } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import { AddOutlined } from '@mui/icons-material';
-import { Avatar, Box, Button } from '@mui/material';
+import { Avatar, Button } from '@mui/material';
 import { getMemberAvatar } from '@utils/cdn';
 import { getStateActionValue } from '@utils/state';
 import { nanoid } from 'nanoid';
@@ -15,6 +16,8 @@ type MemberItemProps = EditableItemProps & GuildMembersViewProps;
 
 export const MemberItem = ({ value, setValue, members, disabled, localization }: Omit<MemberItemProps, 'children'>) => {
     const member = members.find((member) => member.id === value.id)!!;
+    const [primary, secondary] = getMemberDisplay(member);
+
     return (
         <EditableItem value={value} setValue={setValue} disabled={disabled} localization={localization}>
             <ItemIcon
@@ -27,26 +30,20 @@ export const MemberItem = ({ value, setValue, members, disabled, localization }:
                 }
             />
             <ItemTextBlock
-                primary={member.nick ?? member.user.display_name ?? <Fragment>
-                    {member.user.name}
-                    <Box component="span" sx={{ fontFamily: 'Renner', color: 'text.secondary' }}>
-                        #{member.user.discriminator}
-                    </Box>
-                </Fragment>}
-                secondary={Number(member.user.discriminator) === 0 ? `@${member.user.name}` : (
-                    (member.nick || member.user.display_name) ?
-                        <Fragment>
-                            {member.user.name}
-                            <Box component="span" sx={{ fontFamily: 'Renner', color: 'text.secondary' }}>
-                                #{member.user.discriminator}
-                            </Box>
-                        </Fragment>
-                        :
-                        undefined
-                )}
+                primary={primary}
+                secondary={secondary}
+                primaryTypographyProps={{
+                    sx: {
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden'
+                    }
+                }}
                 secondaryTypographyProps={{
                     sx: {
-                        color: Number(member.user.discriminator) === 0 ? undefined : 'text.primary'
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden'
                     }
                 }}
             />

@@ -29,7 +29,24 @@ export const MemberItem = ({ value, setValue, members, disabled, localization }:
                     />
                 }
             />
-            <ItemTextBlock primary={primary} secondary={secondary} />
+            <ItemTextBlock
+                primary={primary}
+                secondary={secondary}
+                primaryTypographyProps={{
+                    sx: {
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden'
+                    }
+                }}
+                secondaryTypographyProps={{
+                    sx: {
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                        overflow: 'hidden'
+                    }
+                }}
+            />
         </EditableItem>
     );
 };

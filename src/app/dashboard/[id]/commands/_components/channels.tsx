@@ -30,7 +30,9 @@ export const ChannelItem = (
     return (
         <EditableItem value={value} setValue={setValue} disabled={disabled} localization={localization}>
             <ChannelIcon channel={channel} color="action" />
-            <Typography>{channel.name}</Typography>
+            <Typography sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                {channel.name}
+            </Typography>
         </EditableItem>
     );
 };

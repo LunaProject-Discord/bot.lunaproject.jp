@@ -23,7 +23,9 @@ export const RoleItem = ({ value, setValue, roles, disabled, localization }: Omi
     return (
         <EditableItem value={value} setValue={setValue} disabled={disabled} localization={localization}>
             <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
-            <Typography>{role.name}</Typography>
+            <Typography sx={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                {role.name}
+            </Typography>
         </EditableItem>
     );
 };
