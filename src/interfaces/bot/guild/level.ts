@@ -1,4 +1,4 @@
-import { PartialUser } from '@interfaces/bot/user';
+import { RedisSnowflake, RedisUser } from '@interfaces/redis';
 
 export interface PartialGuildLevel {
     user_id: string;
@@ -7,6 +7,6 @@ export interface PartialGuildLevel {
 }
 
 export interface GuildLevel extends Omit<PartialGuildLevel, 'user_id'> {
-    user: PartialUser;
+    user: RedisUser | RedisSnowflake;
     rank: number;
 }

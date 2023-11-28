@@ -12,8 +12,8 @@ export interface GuildConfiguration {
     commands: GuildConfigurationCommands;
 
     welcome: GuildConfigurationWelcome;
-    welcome_v2: GuildConfigurationWelcomeV2;
     goodbye: GuildConfigurationGoodbye;
+    member_join: GuildConfigurationMemberJoin;
     activity: GuildConfigurationActivity;
 
     global_chat: GuildConfigurationRoot;
@@ -71,51 +71,52 @@ export interface GuildConfigurationWelcomeRole extends GuildConfigurationRoot {
     id: string;
 }
 
-export interface GuildConfigurationWelcomeV2 extends GuildConfigurationRoot {
-    before_pending: GuildConfigurationWelcomeV2BeforePending;
-    after_pending: GuildConfigurationWelcomeV2AfterPending;
+export interface GuildConfigurationGoodbye extends GuildConfigurationRoot {
+    channel_id: string;
+    message: DataMessage;
 }
 
-export interface GuildConfigurationWelcomeV2BeforePending extends GuildConfigurationRoot {
-    message: GuildConfigurationWelcomeV2Message;
-    roles: GuildConfigurationWelcomeV2BeforePendingRoles;
+export interface GuildConfigurationMemberJoin extends GuildConfigurationRoot {
+    before_pending: GuildConfigurationMemberJoinBeforePending;
+    after_pending: GuildConfigurationMemberJoinAfterPending;
+    _migrated: boolean;
 }
 
-export interface GuildConfigurationWelcomeV2BeforePendingRoles extends GuildConfigurationRoot {
-    roles: GuildConfigurationWelcomeV2BeforePendingRole[];
+export interface GuildConfigurationMemberJoinBeforePending extends GuildConfigurationRoot {
+    message: GuildConfigurationMemberJoinMessage;
+    roles: GuildConfigurationMemberJoinBeforePendingRoles;
 }
 
-export interface GuildConfigurationWelcomeV2BeforePendingRole extends GuildConfigurationRoot {
+export interface GuildConfigurationMemberJoinBeforePendingRoles extends GuildConfigurationRoot {
+    roles: GuildConfigurationMemberJoinBeforePendingRole[];
+}
+
+export interface GuildConfigurationMemberJoinBeforePendingRole extends GuildConfigurationRoot {
     id: string;
-    type: GuildConfigurationWelcomeV2BeforePendingRoleTargetType;
+    type: GuildConfigurationMemberJoinBeforePendingRoleTargetType;
 }
 
-export type GuildConfigurationWelcomeV2BeforePendingRoleTargetType =
+export type GuildConfigurationMemberJoinBeforePendingRoleTargetType =
     'EVERYONE'
     | 'USER'
     | 'BOT'
     | 'VERIFIED_BOT'
     | 'NOT_VERIFIED_BOT';
 
-export interface GuildConfigurationWelcomeV2AfterPending extends GuildConfigurationRoot {
-    message: GuildConfigurationWelcomeV2Message;
-    roles: GuildConfigurationWelcomeV2AfterPendingRoles;
+export interface GuildConfigurationMemberJoinAfterPending extends GuildConfigurationRoot {
+    message: GuildConfigurationMemberJoinMessage;
+    roles: GuildConfigurationMemberJoinAfterPendingRoles;
 }
 
-export interface GuildConfigurationWelcomeV2AfterPendingRoles extends GuildConfigurationRoot {
-    roles: GuildConfigurationWelcomeV2AfterPendingRole[];
+export interface GuildConfigurationMemberJoinAfterPendingRoles extends GuildConfigurationRoot {
+    roles: GuildConfigurationMemberJoinAfterPendingRole[];
 }
 
-export interface GuildConfigurationWelcomeV2AfterPendingRole extends GuildConfigurationRoot {
+export interface GuildConfigurationMemberJoinAfterPendingRole extends GuildConfigurationRoot {
     id: string;
 }
 
-export interface GuildConfigurationWelcomeV2Message extends GuildConfigurationRoot {
-    channel_id: string;
-    message: DataMessage;
-}
-
-export interface GuildConfigurationGoodbye extends GuildConfigurationRoot {
+export interface GuildConfigurationMemberJoinMessage extends GuildConfigurationRoot {
     channel_id: string;
     message: DataMessage;
 }

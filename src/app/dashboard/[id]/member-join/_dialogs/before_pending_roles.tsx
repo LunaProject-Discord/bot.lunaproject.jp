@@ -4,7 +4,10 @@ import { CancelButton, SwitchButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover } from '@components/items';
 import { BrMobile } from '@components/text';
-import { GuildConfigurationWelcomeV2AfterPendingRole } from '@interfaces/bot';
+import {
+    GuildConfigurationMemberJoinBeforePendingRole,
+    GuildConfigurationMemberJoinBeforePendingRoleTargetType
+} from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
 import {
@@ -14,14 +17,25 @@ import {
     KeyboardArrowUpOutlined,
     LabelOffOutlined
 } from '@mui/icons-material';
-import { Box, Button, Divider, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
+import {
+    Box,
+    Button,
+    Divider,
+    IconButton,
+    MenuItem,
+    Select,
+    Theme,
+    Tooltip,
+    Typography,
+    useMediaQuery
+} from '@mui/material';
 import { getInteractRolesByDataGuild, getRoleColor } from '@utils/discord';
 import { getStateActionValue, UniqueId, updateArrayState } from '@utils/state';
 import { nanoid } from 'nanoid';
 import { size } from 'polished';
 import React, { Dispatch, Fragment, SetStateAction, useEffect, useMemo, useState } from 'react';
 
-type EditableObject = GuildConfigurationWelcomeV2AfterPendingRole & UniqueId;
+type EditableObject = GuildConfigurationMemberJoinBeforePendingRole & UniqueId;
 
 interface RoleItemProps extends ItemDisabledProps, GuildViewProps {
     value: EditableObject;
@@ -41,8 +55,8 @@ const RoleItem = (
 
     const role = guild.roles.find((role) => role.id === value.id);
     return (
-        <ItemRoot sx={{ p: 0, flexDirection: 'row !important' }}>
-            <ItemRowContainer sx={{ overflow: 'hidden' }}>
+        <ItemRoot sx={{ p: 0 }}>
+            <ItemRowContainer dense sx={{ overflow: 'hidden' }}>
                 {role && <Fragment>
                     <Box
                         sx={{
@@ -63,7 +77,34 @@ const RoleItem = (
                     </Typography>
                 </Fragment>}
             </ItemRowContainer>
-            <ItemFormContainer sx={{ width: 'unset !important' }}>
+            <ItemFormContainer>
+                <Select<GuildConfigurationMemberJoinBeforePendingRoleTargetType>
+                    value={value.type}
+                    onChange={(e) => setValue({
+                        ...value,
+                        type: e.target.value as GuildConfigurationMemberJoinBeforePendingRoleTargetType
+                    })}
+                    disabled={disabled}
+                    fullWidth
+                    size="small"
+                    sx={{ minWidth: 200 }}
+                >
+                    <MenuItem value="EVERYONE">
+                        {translations.member_join_before_pending_role_type_everyone}
+                    </MenuItem>
+                    <MenuItem value="USER">
+                        {translations.member_join_before_pending_role_type_user}
+                    </MenuItem>
+                    <MenuItem value="BOT">
+                        {translations.member_join_before_pending_role_type_bot}
+                    </MenuItem>
+                    <MenuItem value="VERIFIED_BOT">
+                        {translations.member_join_before_pending_role_type_verified_bot}
+                    </MenuItem>
+                    <MenuItem value="NOT_VERIFIED_BOT">
+                        {translations.member_join_before_pending_role_type_not_verified_bot}
+                    </MenuItem>
+                </Select>
                 <SwitchButton
                     checked={value.enabled}
                     setChecked={(action) => setValue({ ...value, enabled: getStateActionValue(action, value.enabled) })}
@@ -81,12 +122,12 @@ const RoleItem = (
     );
 };
 
-type ManageAfterPendingRolesDialogProps =
+type ManageBeforePendingRolesDialogProps =
     DialogProps
-    & ItemVariableProps<GuildConfigurationWelcomeV2AfterPendingRole[]>
+    & ItemVariableProps<GuildConfigurationMemberJoinBeforePendingRole[]>
     & GuildViewProps;
 
-export const ManageAfterPendingRolesDialog = (
+export const ManageBeforePendingRolesDialog = (
     {
         open,
         setOpen,
@@ -94,7 +135,7 @@ export const ManageAfterPendingRolesDialog = (
         setValue,
         guild,
         localization
-    }: ManageAfterPendingRolesDialogProps
+    }: ManageBeforePendingRolesDialogProps
 ) => {
     const { translations } = localization;
 
@@ -128,7 +169,7 @@ export const ManageAfterPendingRolesDialog = (
                 maxWidth="md"
             >
                 <DialogTitle>
-                    {translations.welcome_message_manage_roles}
+                    {translations.member_join_manage_roles}
                     <Button
                         onClick={(e) => setAnchorEl(e.currentTarget)}
                         disableElevation
@@ -182,7 +223,8 @@ export const ManageAfterPendingRolesDialog = (
                         {
                             _id,
                             enabled: true,
-                            id: getStateActionValue(action, '')
+                            id: getStateActionValue(action, ''),
+                            type: 'EVERYONE'
                         }
                     );
                 }}

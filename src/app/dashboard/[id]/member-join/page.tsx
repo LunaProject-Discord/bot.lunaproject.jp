@@ -11,7 +11,7 @@ import { View } from './view';
 
 export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
     const { translations } = getLocalization();
-    const title = translations.welcome_message;
+    const title = translations.member_join;
 
     const user = await getUser();
     const guild = await getGuildById(id);

@@ -282,19 +282,6 @@ export const translationsJa: Translations = {
             <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
-    welcome_message_before_pending: 'サーバーに参加したとき (ルールに同意する前)',
-    welcome_message_before_pending_enabled: 'サーバーに参加したときの設定を有効にする',
-    welcome_message_before_pending_message_enabled: 'サーバーに参加したときにメッセージを送信する',
-    welcome_message_before_pending_message_edit_description: 'ユーザーがサーバーに参加したときに送信されるメッセージをカスタマイズできます。',
-    welcome_message_before_pending_roles_enabled: 'サーバーに参加したときに役職を付与する',
-    welcome_message_after_pending: 'ルールに同意したとき',
-    welcome_message_after_pending_enabled: 'ルールに同意したときの設定を有効にする',
-    welcome_message_after_pending_message_enabled: 'ルールに同意したときにメッセージを送信する',
-    welcome_message_after_pending_message_edit_description: 'ユーザーがルールに同意したときに送信されるメッセージをカスタマイズできます。',
-    welcome_message_after_pending_roles_enabled: 'ルールに同意したときに役職を付与する',
-    welcome_message_message: 'メッセージの送信',
-    welcome_message_roles: '役職の付与',
-    welcome_message_manage_roles: '付与する役職の管理',
 
     goodbye_message: 'さよなら (退出) メッセージ',
     goodbye_message_description: 'ユーザーがサーバーから退出したときにメッセージを送信できます。',
@@ -312,6 +299,49 @@ export const translationsJa: Translations = {
             <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+
+    member_join: 'メンバーの参加',
+    member_join_description: 'メンバーがサーバーに参加したときにメッセージを送信できます。',
+    member_join_enabled: 'メンバーの参加を有効にする',
+    member_join_before_pending: 'サーバーに参加したとき (ルールに同意する前)',
+    member_join_before_pending_enabled: 'サーバーに参加したときの設定を有効にする',
+    member_join_before_pending_message_enabled: 'サーバーに参加したときにメッセージを送信する',
+    member_join_before_pending_message_edit_description: 'メンバーがサーバーに参加したときに送信されるメッセージをカスタマイズできます。',
+    member_join_before_pending_roles_enabled: 'サーバーに参加したときに役職を付与する',
+    member_join_before_pending_role_type_everyone: '全員',
+    member_join_before_pending_role_type_user: 'ユーザー',
+    member_join_before_pending_role_type_bot: 'すべてのBot',
+    member_join_before_pending_role_type_verified_bot: '認証済みBot',
+    member_join_before_pending_role_type_not_verified_bot: '未認証Bot',
+    member_join_after_pending: 'ルールに同意したとき',
+    member_join_after_pending_alert: 'この設定を有効にすることはできません',
+    member_join_after_pending_alert_description: <Fragment>
+        続けるには、下記の設定を Discord で有効にしてください。
+        <ul style={{ marginTop: 4, marginBottom: 0, paddingInlineStart: 20 }}>
+            <li>コミュニティ</li>
+            <li>ルール スクリーニング</li>
+        </ul>
+    </Fragment>,
+    member_join_after_pending_enabled: 'ルールに同意したときの設定を有効にする',
+    member_join_after_pending_message_enabled: 'ルールに同意したときにメッセージを送信する',
+    member_join_after_pending_message_edit_description: 'メンバーがルールに同意したときに送信されるメッセージをカスタマイズできます。',
+    member_join_after_pending_roles_enabled: 'ルールに同意したときに役職を付与する',
+    member_join_message: 'メッセージの送信',
+    member_join_message_edit_hint: <Fragment>
+        <b>下記のプレースホルダーを設定することでユーザーの名前などに置き換えできます。</b>
+        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+            <li>サーバーのID: <code>{'{'}guild:id{'}'}</code></li>
+            <li>サーバーの名前: <code>{'{'}guild:name{'}'}</code></li>
+            <li>サーバーのメンバー数: <code>{'{'}guild:members{'}'}</code></li>
+            <li>ルールチャンネルのメンション (設定されている場合のみ): <code>{'{'}guild:rules{'}'}</code></li>
+            <li>ユーザーのID: <code>{'{'}user:id{'}'}</code></li>
+            <li>ユーザーの名前: <code>{'{'}user:name{'}'}</code></li>
+            <li>ユーザーのタグ: <code>{'{'}user:discriminator{'}'}</code></li>
+            <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
+        </ul>
+    </Fragment>,
+    member_join_roles: '役職の付与',
+    member_join_manage_roles: '付与する役職の管理',
 
     activity: 'アクティビティ ロール',
     activity_description: 'ゲームのプレイ中や音楽の再生中に役職を付与することができます。',

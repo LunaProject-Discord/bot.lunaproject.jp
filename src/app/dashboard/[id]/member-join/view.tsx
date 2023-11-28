@@ -1,11 +1,14 @@
 'use client';
 
-import { ManageAfterPendingRolesDialog, ManageBeforePendingRolesDialog } from '@app/dashboard/[id]/welcome-v2/_dialogs';
+import {
+    ManageAfterPendingRolesDialog,
+    ManageBeforePendingRolesDialog
+} from '@app/dashboard/[id]/member-join/_dialogs';
 import { ActionItem, ChannelItem, MessageItem, SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout';
 import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
-import { GuildConfigurationWelcomeV2 } from '@interfaces/bot';
+import { GuildConfigurationMemberJoin } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
@@ -25,22 +28,22 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     const isMemberVerificationGateEnabled = guild.features.includes('MEMBER_VERIFICATION_GATE_ENABLED');
 
-    const welcomeConfiguration = configuration.welcome_v2;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(welcomeConfiguration.enabled);
-    const [beforePendingEnabled, setBeforePendingEnabled, resetBeforePendingEnabled] = useResettableState(welcomeConfiguration.before_pending.enabled);
-    const [beforePendingMessageEnabled, setBeforePendingMessageEnabled, resetBeforePendingMessageEnabled] = useResettableState(welcomeConfiguration.before_pending.message.enabled);
-    const [beforePendingMessageChannelId, setBeforePendingMessageChannelId, resetBeforePendingMessageChannelId] = useResettableState(welcomeConfiguration.before_pending.message.channel_id);
-    const [beforePendingMessageMessage, setBeforePendingMessageMessage, resetBeforePendingMessageMessage] = useResettableState(welcomeConfiguration.before_pending.message.message);
-    const [beforePendingRolesEnabled, setBeforePendingRolesEnabled, resetBeforePendingRolesEnabled] = useResettableState(welcomeConfiguration.before_pending.roles.enabled);
-    const [beforePendingRolesRoles, setBeforePendingRolesRoles, resetBeforePendingRolesRoles] = useResettableState(welcomeConfiguration.before_pending.roles.roles);
-    const [afterPendingEnabled, setAfterPendingEnabled, resetAfterPendingEnabled] = useResettableState(welcomeConfiguration.after_pending.enabled);
-    const [afterPendingMessageEnabled, setAfterPendingMessageEnabled, resetAfterPendingMessageEnabled] = useResettableState(welcomeConfiguration.after_pending.message.enabled);
-    const [afterPendingMessageChannelId, setAfterPendingMessageChannelId, resetAfterPendingMessageChannelId] = useResettableState(welcomeConfiguration.after_pending.message.channel_id);
-    const [afterPendingMessageMessage, setAfterPendingMessageMessage, resetAfterPendingMessageMessage] = useResettableState(welcomeConfiguration.after_pending.message.message);
-    const [afterPendingRolesEnabled, setAfterPendingRolesEnabled, resetAfterPendingRolesEnabled] = useResettableState(welcomeConfiguration.after_pending.roles.enabled);
-    const [afterPendingRolesRoles, setAfterPendingRolesRoles, resetAfterPendingRolesRoles] = useResettableState(welcomeConfiguration.after_pending.roles.roles);
+    const memberJoinConfiguration = configuration.member_join;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(memberJoinConfiguration.enabled);
+    const [beforePendingEnabled, setBeforePendingEnabled, resetBeforePendingEnabled] = useResettableState(memberJoinConfiguration.before_pending.enabled);
+    const [beforePendingMessageEnabled, setBeforePendingMessageEnabled, resetBeforePendingMessageEnabled] = useResettableState(memberJoinConfiguration.before_pending.message.enabled);
+    const [beforePendingMessageChannelId, setBeforePendingMessageChannelId, resetBeforePendingMessageChannelId] = useResettableState(memberJoinConfiguration.before_pending.message.channel_id);
+    const [beforePendingMessageMessage, setBeforePendingMessageMessage, resetBeforePendingMessageMessage] = useResettableState(memberJoinConfiguration.before_pending.message.message);
+    const [beforePendingRolesEnabled, setBeforePendingRolesEnabled, resetBeforePendingRolesEnabled] = useResettableState(memberJoinConfiguration.before_pending.roles.enabled);
+    const [beforePendingRolesRoles, setBeforePendingRolesRoles, resetBeforePendingRolesRoles] = useResettableState(memberJoinConfiguration.before_pending.roles.roles);
+    const [afterPendingEnabled, setAfterPendingEnabled, resetAfterPendingEnabled] = useResettableState(memberJoinConfiguration.after_pending.enabled);
+    const [afterPendingMessageEnabled, setAfterPendingMessageEnabled, resetAfterPendingMessageEnabled] = useResettableState(memberJoinConfiguration.after_pending.message.enabled);
+    const [afterPendingMessageChannelId, setAfterPendingMessageChannelId, resetAfterPendingMessageChannelId] = useResettableState(memberJoinConfiguration.after_pending.message.channel_id);
+    const [afterPendingMessageMessage, setAfterPendingMessageMessage, resetAfterPendingMessageMessage] = useResettableState(memberJoinConfiguration.after_pending.message.message);
+    const [afterPendingRolesEnabled, setAfterPendingRolesEnabled, resetAfterPendingRolesEnabled] = useResettableState(memberJoinConfiguration.after_pending.roles.enabled);
+    const [afterPendingRolesRoles, setAfterPendingRolesRoles, resetAfterPendingRolesRoles] = useResettableState(memberJoinConfiguration.after_pending.roles.roles);
 
-    const toObject = (): GuildConfigurationWelcomeV2 => ({
+    const toObject = (): GuildConfigurationMemberJoin => ({
         enabled,
         before_pending: {
             enabled: beforePendingEnabled,
@@ -65,10 +68,11 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 enabled: afterPendingRolesEnabled,
                 roles: afterPendingRolesRoles
             }
-        }
+        },
+        _migrated: memberJoinConfiguration._migrated
     });
 
-    const handleSaveAction = () => saveGuildConfiguration(guild.id, { welcome_v2: toObject() });
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, { member_join: toObject() });
 
     const handleCancelAction = () => {
         resetEnabled();
@@ -90,13 +94,13 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
         <Fragment>
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.welcome_message}</Typography>
-                    <Typography>{translations.welcome_message_description}</Typography>
+                    <Typography variant="h4">{translations.member_join}</Typography>
+                    <Typography>{translations.member_join_description}</Typography>
                 </Box>
             </PageHeader>
             <Section>
                 <SectionContent>
-                    <Alert severity="warning">
+                    <Alert severity="info">
                         <AlertTitle>「ようこそメッセージ」が生まれ変わります！</AlertTitle>
                         <Box sx={{ mb: .5 }}>
                             ルール スクリーニングへの対応や、ユーザーや Bot に自動で役職を付与できるようになります。<br />
@@ -114,7 +118,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <Section>
                 <SectionContent>
                     <SwitchItem
-                        primary={translations.welcome_message_enabled}
+                        primary={translations.member_join_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
@@ -122,11 +126,11 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
             <Section>
                 <SectionTitle color={enabled ? 'text.primary' : 'text.disabled'}>
-                    {translations.welcome_message_before_pending}
+                    {translations.member_join_before_pending}
                 </SectionTitle>
                 <SectionContent>
                     <SwitchItem
-                        primary={translations.welcome_message_before_pending_enabled}
+                        primary={translations.member_join_before_pending_enabled}
                         checked={beforePendingEnabled}
                         setChecked={setBeforePendingEnabled}
                         disabled={!enabled}
@@ -139,11 +143,11 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     fontWeight={400}
                     color={enabled && beforePendingEnabled ? 'text.primary' : 'text.disabled'}
                 >
-                    {translations.welcome_message_message}
+                    {translations.member_join_message}
                 </SectionTitle>
                 <SectionContent>
                     <SwitchItem
-                        primary={translations.welcome_message_before_pending_message_enabled}
+                        primary={translations.member_join_before_pending_message_enabled}
                         checked={beforePendingMessageEnabled}
                         setChecked={setBeforePendingMessageEnabled}
                         disabled={!enabled || !beforePendingEnabled}
@@ -158,7 +162,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     />
                     <MessageItem
                         primary={translations.customize_message}
-                        secondary={translations.welcome_message_before_pending_message_edit_description}
+                        secondary={translations.member_join_before_pending_message_edit_description}
                         value={beforePendingMessageMessage}
                         setValue={setBeforePendingMessageMessage}
                         disabled={!enabled || !beforePendingEnabled || !beforePendingMessageEnabled}
@@ -166,7 +170,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         setOpen={setOpenBeforePendingMessageBuilder}
                         localization={localization}
                     >
-                        <CodeStyleContainer>{translations.welcome_message_edit_hint}</CodeStyleContainer>
+                        <CodeStyleContainer>{translations.member_join_message_edit_hint}</CodeStyleContainer>
                     </MessageItem>
                 </SectionContent>
             </Section>
@@ -176,17 +180,17 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     fontWeight={400}
                     color={enabled && beforePendingEnabled ? 'text.primary' : 'text.disabled'}
                 >
-                    {translations.welcome_message_roles}
+                    {translations.member_join_roles}
                 </SectionTitle>
                 <SectionContent>
                     <SwitchItem
-                        primary={translations.welcome_message_before_pending_roles_enabled}
+                        primary={translations.member_join_before_pending_roles_enabled}
                         checked={beforePendingRolesEnabled}
                         setChecked={setBeforePendingRolesEnabled}
                         disabled={!enabled || !beforePendingEnabled}
                     />
                     <ActionItem
-                        primary={translations.welcome_message_manage_roles}
+                        primary={translations.member_join_manage_roles}
                         onAction={() => setOpenBeforePendingRolesDialog(true)}
                         disabled={!enabled || !beforePendingEnabled || !beforePendingRolesEnabled}
                     />
@@ -194,19 +198,15 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
             <Section>
                 <SectionTitle color={enabled ? 'text.primary' : 'text.disabled'}>
-                    {translations.welcome_message_after_pending}
+                    {translations.member_join_after_pending}
                 </SectionTitle>
                 <SectionContent>
                     {!isMemberVerificationGateEnabled && <Alert severity="warning">
-                        <AlertTitle>この設定を有効にすることはできません</AlertTitle>
-                        続けるには、下記の項目を Discord にて有効にしてください。
-                        <ul style={{ marginTop: 4, marginBottom: 0, paddingInlineStart: 20 }}>
-                            <li>コミュニティ</li>
-                            <li>ルール スクリーニング</li>
-                        </ul>
+                        <AlertTitle>{translations.member_join_after_pending_alert}</AlertTitle>
+                        {translations.member_join_after_pending_alert_description}
                     </Alert>}
                     <SwitchItem
-                        primary={translations.welcome_message_after_pending_enabled}
+                        primary={translations.member_join_after_pending_enabled}
                         checked={afterPendingEnabled}
                         setChecked={setAfterPendingEnabled}
                         disabled={!enabled || !isMemberVerificationGateEnabled}
@@ -219,11 +219,11 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     fontWeight={400}
                     color={enabled && afterPendingEnabled ? 'text.primary' : 'text.disabled'}
                 >
-                    {translations.welcome_message_message}
+                    {translations.member_join_message}
                 </SectionTitle>
                 <SectionContent>
                     <SwitchItem
-                        primary={translations.welcome_message_after_pending_message_enabled}
+                        primary={translations.member_join_after_pending_message_enabled}
                         checked={afterPendingMessageEnabled}
                         setChecked={setAfterPendingMessageEnabled}
                         disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled}
@@ -238,7 +238,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     />
                     <MessageItem
                         primary={translations.customize_message}
-                        secondary={translations.welcome_message_after_pending_message_edit_description}
+                        secondary={translations.member_join_after_pending_message_edit_description}
                         value={afterPendingMessageMessage}
                         setValue={setAfterPendingMessageMessage}
                         disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled || !afterPendingMessageEnabled}
@@ -246,7 +246,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         setOpen={setOpenAfterPendingMessageBuilder}
                         localization={localization}
                     >
-                        <CodeStyleContainer>{translations.welcome_message_edit_hint}</CodeStyleContainer>
+                        <CodeStyleContainer>{translations.member_join_message_edit_hint}</CodeStyleContainer>
                     </MessageItem>
                 </SectionContent>
             </Section>
@@ -256,17 +256,17 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     fontWeight={400}
                     color={enabled && afterPendingEnabled ? 'text.primary' : 'text.disabled'}
                 >
-                    {translations.welcome_message_roles}
+                    {translations.member_join_roles}
                 </SectionTitle>
                 <SectionContent>
                     <SwitchItem
-                        primary={translations.welcome_message_after_pending_roles_enabled}
+                        primary={translations.member_join_after_pending_roles_enabled}
                         checked={afterPendingRolesEnabled}
                         setChecked={setAfterPendingRolesEnabled}
                         disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled}
                     />
                     <ActionItem
-                        primary={translations.welcome_message_manage_roles}
+                        primary={translations.member_join_manage_roles}
                         onAction={() => setOpenAfterPendingRolesDialog(true)}
                         disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled || !afterPendingRolesEnabled}
                     />
@@ -274,7 +274,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
 
             <SaveConfirm
-                open={!deepEqual(welcomeConfiguration, toObject(), { strict: true })}
+                open={!deepEqual(memberJoinConfiguration, toObject(), { strict: true })}
                 disableKeyboardShortcuts={openAfterPendingMessageBuilder}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}

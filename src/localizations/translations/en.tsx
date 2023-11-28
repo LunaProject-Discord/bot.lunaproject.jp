@@ -283,19 +283,6 @@ export const translationsEn: Translations = {
             <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
-    welcome_message_before_pending: 'When you join the server (before agreeing to the rules)',
-    welcome_message_before_pending_enabled: 'Enable settings when joining a server',
-    welcome_message_before_pending_message_enabled: 'Send a message when you join the server',
-    welcome_message_before_pending_message_edit_description: 'Customize the message sent when a user joins the server.',
-    welcome_message_before_pending_roles_enabled: 'Assign roles when you join the server',
-    welcome_message_after_pending: 'When you agree to the rules',
-    welcome_message_after_pending_enabled: 'Enable settings when agreeing to rules',
-    welcome_message_after_pending_message_enabled: 'Send a message when you agree to the rules',
-    welcome_message_after_pending_message_edit_description: 'You can customize the message that is sent when a user agrees to a rule.',
-    welcome_message_after_pending_roles_enabled: 'Assign roles when you agree to the rules',
-    welcome_message_message: 'Send Message',
-    welcome_message_roles: 'Assignment of Roles',
-    welcome_message_manage_roles: 'Manage Roles',
 
     goodbye_message: 'Goodbye Message',
     goodbye_message_description: 'A message can be sent when a user leaves the server.',
@@ -313,6 +300,49 @@ export const translationsEn: Translations = {
             <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
         </ul>
     </Fragment>,
+
+    member_join: 'Member Join',
+    member_join_description: 'Messages can be sent when a member joins the server.',
+    member_join_enabled: 'Enable Member Join',
+    member_join_before_pending: 'When you join the server (before agreeing to the rules)',
+    member_join_before_pending_enabled: 'Enable settings when joining a server',
+    member_join_before_pending_message_enabled: 'Send a message when you join the server',
+    member_join_before_pending_message_edit_description: 'Customize the message sent when a member joins the server.',
+    member_join_before_pending_roles_enabled: 'Assign roles when you join the server',
+    member_join_before_pending_role_type_everyone: '@everyone',
+    member_join_before_pending_role_type_user: 'User',
+    member_join_before_pending_role_type_bot: 'All Bot',
+    member_join_before_pending_role_type_verified_bot: 'Verified Bot',
+    member_join_before_pending_role_type_not_verified_bot: 'Unverified Bot',
+    member_join_after_pending: 'When you agree to the rules',
+    member_join_after_pending_alert: 'This setting cannot be enabled',
+    member_join_after_pending_alert_description: <Fragment>
+        To continue, please enable the following settings in Discord.
+        <ul style={{ marginTop: 4, marginBottom: 0, paddingInlineStart: 20 }}>
+            <li>Community</li>
+            <li>Rules Screening</li>
+        </ul>
+    </Fragment>,
+    member_join_after_pending_enabled: 'Enable settings when agreeing to rules',
+    member_join_after_pending_message_enabled: 'Send a message when you agree to the rules',
+    member_join_after_pending_message_edit_description: 'You can customize the message that is sent when a member agrees to a rule.',
+    member_join_after_pending_roles_enabled: 'Assign roles when you agree to the rules',
+    member_join_message: 'Send Message',
+    member_join_message_edit_hint: <Fragment>
+        <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
+        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+            <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
+            <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
+            <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
+            <li>Rule channel mentions (if set): <code>{'{'}guild:rules{'}'}</code></li>
+            <li>User ID: <code>{'{'}user:id{'}'}</code></li>
+            <li>User Name: <code>{'{'}user:name{'}'}</code></li>
+            <li>User Discriminator: <code>{'{'}user:discriminator{'}'}</code></li>
+            <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
+        </ul>
+    </Fragment>,
+    member_join_roles: 'Assignment of Roles',
+    member_join_manage_roles: 'Manage Roles',
 
     activity: 'Activity Roles',
     activity_description: 'Roles can be assigned during game play or music playback.',

@@ -1,10 +1,3 @@
-export interface PartialUser {
-    id: string;
-    name?: string;
-    discriminator?: string;
-    avatar?: string;
-}
-
 export interface UserFlags {
     id: string;
     manager: boolean;

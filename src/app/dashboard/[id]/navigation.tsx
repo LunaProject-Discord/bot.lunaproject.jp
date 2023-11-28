@@ -172,18 +172,7 @@ export const Navigation = (
                             <NavigationDrawerItem
                                 href={`${prefix}/check-role-permissions`}
                                 icon={<SellOutlined />}
-                                primary={
-                                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                                        {translations.role_permissions}
-                                        <Chip
-                                            label="Beta"
-                                            variant="rounded"
-                                            color="info"
-                                            size="small"
-                                            sx={{ height: 20, ml: 'auto' }}
-                                        />
-                                    </Box>
-                                }
+                                primary={translations.role_permissions}
                                 open={open}
                                 setOpen={setOpen}
                             />
@@ -200,6 +189,24 @@ export const Navigation = (
                                 href={`${prefix}/goodbye`}
                                 icon={<PersonRemoveOutlined />}
                                 primary={translations.goodbye_message}
+                                open={open}
+                                setOpen={setOpen}
+                            />
+                            <NavigationDrawerItem
+                                href={`${prefix}/member-join`}
+                                icon={<PersonAddOutlined />}
+                                primary={
+                                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+                                        {translations.member_join}
+                                        <Chip
+                                            label="Beta"
+                                            variant="rounded"
+                                            color="info"
+                                            size="small"
+                                            sx={{ height: 20, ml: 'auto' }}
+                                        />
+                                    </Box>
+                                }
                                 open={open}
                                 setOpen={setOpen}
                             />

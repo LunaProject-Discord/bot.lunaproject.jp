@@ -1,6 +1,6 @@
 import { GuildLevel } from '@interfaces/bot';
-import { getUser } from '@libs/bot';
 import prisma from '@libs/prisma';
+import { getUserById } from '@libs/redis';
 
 export const getGuildLevels = async (id: string, isFetchUser: boolean = true): Promise<GuildLevel[]> => {
     const results: any[] = await prisma.$queryRaw`
@@ -13,8 +13,9 @@ export const getGuildLevels = async (id: string, isFetchUser: boolean = true): P
     const levels: GuildLevel[] = [];
     for (const level of results) {
         const userId = String(level.user_id);
+
         levels.push({
-            user: isFetchUser ? await getUser(userId) : { id: userId },
+            user: isFetchUser ? (await getUserById(userId) ?? { id: userId }) : { id: userId },
             rank: Number(level.rank),
             level: Number(level.level),
             xp: Number(level.xp)
