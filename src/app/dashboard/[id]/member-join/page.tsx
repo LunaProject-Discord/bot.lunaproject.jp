@@ -5,6 +5,7 @@ import { getGuildById, getMemberById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { redirect, RedirectType } from 'next/navigation';
 import React from 'react';
 import { NotFoundView } from '../view';
 import { View } from './view';
@@ -45,8 +46,11 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
 
     const [guild, guildConfiguration] = await Promise.all([guildData, guildConfigurationData]);
 
-    if (!guild || !guildConfiguration || !guild.members.some((member) => member.id === process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID))
+    if (!guild || !guildConfiguration)
         return (<NotFoundView />);
+
+    if (!guildConfiguration.member_join._migrated)
+        return redirect(`/dashboard/${id}/welcome`, RedirectType.replace);
 
     return (<View guild={guild} configuration={guildConfiguration} localization={localization} />);
 };

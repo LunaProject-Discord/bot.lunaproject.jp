@@ -12,7 +12,7 @@ import { GuildConfigurationMemberJoin } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
-import { Alert, AlertTitle, Box, Button, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useState } from 'react';
@@ -98,23 +98,6 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     <Typography>{translations.member_join_description}</Typography>
                 </Box>
             </PageHeader>
-            <Section>
-                <SectionContent>
-                    <Alert severity="info">
-                        <AlertTitle>「ようこそメッセージ」が生まれ変わります！</AlertTitle>
-                        <Box sx={{ mb: .5 }}>
-                            ルール スクリーニングへの対応や、ユーザーや Bot に自動で役職を付与できるようになります。<br />
-                            現在、この機能はベータ公開中です。利用するには「ようこそメッセージ」からの移行が必要です。
-                        </Box>
-                        <Button
-                            disableElevation
-                            variant="contained"
-                        >
-                            設定データを移行する
-                        </Button>
-                    </Alert>
-                </SectionContent>
-            </Section>
             <Section>
                 <SectionContent>
                     <SwitchItem
