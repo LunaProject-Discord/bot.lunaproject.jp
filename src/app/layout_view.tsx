@@ -6,11 +6,12 @@ import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject-discord/web-core/dist/components/StyleProvider';
 import { MuiComponents, MuiPalette } from '@lunaproject-discord/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
-import { createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
+import { alpha, buttonClasses, createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { indigo } from '@mui/material/colors';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
 import { COOKIE_APPEARANCE } from '@utils/cookie';
 import { parseCookies } from 'nookies';
+import { rgba } from 'polished';
 import React, { ReactNode, useEffect } from 'react';
 import { RecoilRoot, useRecoilState } from 'recoil';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '../localizations';
@@ -30,13 +31,48 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
 
     const theme = createTheme(
         {
-            components: MuiComponents,
+            components: {
+                ...MuiComponents,
+                MuiButton: {
+                    variants: [
+                        {
+                            props: {
+                                variant: 'contained',
+                                color: 'monotone'
+                            },
+                            style: ({ theme }) => ({
+                                [`&:disabled, &.${buttonClasses.disabled}`]: {
+                                    color: theme.palette.mode === 'light' ? rgba(0, 0, 0, .26) : rgba(255, 255, 255, .3),
+                                    backgroundColor: theme.palette.mode === 'light' ? rgba(0, 0, 0, .12) : rgba(255, 255, 255, .12)
+                                },
+                                '&:hover': {
+                                    backgroundColor: theme.palette.mode === 'light' ? rgba(0, 0, 0, .7) : rgba(255, 255, 255, .85)
+                                },
+                                [`&:active, &.${buttonClasses.focusVisible}`]: {
+                                    backgroundColor: theme.palette.mode === 'light' ? rgba(0, 0, 0, .65) : rgba(255, 255, 255, .8)
+                                }
+                            })
+                        }
+                    ],
+                    styleOverrides: {
+                        root: {
+                            textTransform: 'none'
+                        }
+                    }
+                }
+            },
             palette: {
                 ...MuiPalette,
                 primary: {
                     light: indigo[isDarkMode ? 'A200' : 300],
                     main: indigo[isDarkMode ? 'A400' : 500],
                     dark: indigo[isDarkMode ? 'A700' : 700]
+                },
+                monotone: {
+                    light: alpha('#000', .87),
+                    main: isDarkMode ? '#fff' : alpha('#000', .87),
+                    dark: '#fff',
+                    contrastText: isDarkMode ? alpha('#000', .87) : '#fff'
                 },
                 mode: isDarkMode ? 'dark' : 'light'
             },
