@@ -206,6 +206,7 @@ export type TranslationKeys =
 
     | 'guild_settings'
     | 'guild_settings_description'
+    | 'add_bot'
     | 'back_to_select_guild'
     | 'settings_basic'
     | 'settings_guild_management'

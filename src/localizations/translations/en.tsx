@@ -215,6 +215,7 @@ export const translationsEn: Translations = {
 
     guild_settings: 'Server Settings',
     guild_settings_description: 'Select the server you wish to configure.',
+    add_bot: 'Add Bot',
     back_to_select_guild: 'Back to Select Server',
     settings_basic: 'Basic Settings',
     settings_guild_management: 'Server Management',

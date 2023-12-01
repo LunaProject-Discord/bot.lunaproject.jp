@@ -218,6 +218,7 @@ export const translationsJa: Translations = {
 
     guild_settings: 'サーバー設定',
     guild_settings_description: '設定したいサーバーを選択してください。',
+    add_bot: 'Bot を導入',
     back_to_select_guild: 'サーバー選択に戻る',
     settings_basic: '基本の設定',
     settings_guild_management: 'サーバー管理',

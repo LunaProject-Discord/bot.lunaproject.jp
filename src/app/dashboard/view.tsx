@@ -111,7 +111,7 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
                         endIcon={open ? <KeyboardArrowUpOutlined /> : <KeyboardArrowDownOutlined />}
                         sx={{ width: '100%', height: 48, px: 2 }}
                     >
-                        Bot を導入
+                        {translations.add_bot}
                     </Button>
                 </Box>
             </PageHeader>
