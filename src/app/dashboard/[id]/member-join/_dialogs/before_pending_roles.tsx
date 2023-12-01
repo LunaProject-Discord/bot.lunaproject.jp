@@ -9,7 +9,7 @@ import {
     GuildConfigurationMemberJoinBeforePendingRoleTargetType
 } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
-import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import {
     AddOutlined,
     DeleteOutlined,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from '@localizations/client';
-import { MuiDarkTheme, MuiLightTheme } from '@lunaproject-discord/web-core/dist/utils/theme';
+import { MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
 import { RefreshOutlined, SaveOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProvider, useTheme } from '@mui/material';

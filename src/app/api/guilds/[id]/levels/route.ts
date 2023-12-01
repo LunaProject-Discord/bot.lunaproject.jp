@@ -1,7 +1,7 @@
 import { PartialGuildLevel } from '@interfaces/bot';
 import { WithIdParamProps } from '@interfaces/page';
 import { getGuildLevels } from '@libs/bot';
-import { getGuildById } from '@lunaproject-discord/web-discord';
+import { getGuildById } from '@lunaproject/web-discord';
 import { COOKIE_TOKEN } from '@utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
 import { cookies } from 'next/headers';

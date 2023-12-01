@@ -1,14 +1,9 @@
 import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole, RedisUser } from '@interfaces/redis';
-import {
-    APIGuildChannel,
-    GuildMember,
-    OAuthGuild,
-    OAuthUser
-} from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { APIGuildChannel, GuildMember, OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
 import { predicateNonNullable } from '@utils/array';
 import { APIGuild, APIRole, APIUser, PermissionFlagsBits } from 'discord-api-types/v10';
 
-export * from '@lunaproject-discord/web-discord/dist/utils';
+export * from '@lunaproject/web-discord/dist/utils';
 
 export const ADMINISTRATOR_OR_MANAGE_GUILD = [PermissionFlagsBits.Administrator, PermissionFlagsBits.ManageGuild];
 

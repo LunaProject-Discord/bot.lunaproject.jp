@@ -5,10 +5,10 @@ import { Theme, ThemeProvider } from '@emotion/react';
 import { LocalizationProps } from '@interfaces/localization';
 import { DataMessage } from '@interfaces/message';
 import { toDataMessage, toEmbed, toMessage } from '@libs/message';
-import { segmentedControlClasses, THEMES } from '@lunaproject-discord/web-core';
-import { MessageContainer, MessagePreview } from '@lunaproject-discord/web-core/dist/components/Message';
-import { SegmentedControl } from '@lunaproject-discord/web-core/dist/components/SegmentedControl';
-import { Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';
+import { segmentedControlClasses, THEMES } from '@lunaproject/web-core';
+import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
+import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
+import { Message } from '@lunaproject/web-discord/dist/interfaces/message';
 import {
     CloseOutlined,
     DarkModeOutlined,

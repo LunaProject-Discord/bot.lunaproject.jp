@@ -7,9 +7,9 @@ import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
 import { GuildConfigurationWelcome } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
-import { DialogV2, DialogV2Actions, DialogV2Content, DialogV2Title } from '@lunaproject-discord/web-core';
-import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
-import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
+import { DialogV2, DialogV2Actions, DialogV2Content, DialogV2Title } from '@lunaproject/web-core';
+import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
@@ -157,7 +157,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                             そのため、この機能を利用した際に発生した一切の損害についての責任は負いませんのでご注意ください。<br />
                         </Typography>
                         <Typography variant="h6" sx={{ mt: 1 }}>ようこそ (参加) メッセージ からの改善点</Typography>
-                        <ul style={{ marginTop: 4, marginBottom: 4, paddingInlineStart: 20 }}>
+                        <ul className="list-disc mt-1 ps-5">
                             <li>ユーザーや Bot に役職を付与できるように</li>
                             <li>メンバーのルール スクリーニング状態に応じて動作するように</li>
                         </ul>

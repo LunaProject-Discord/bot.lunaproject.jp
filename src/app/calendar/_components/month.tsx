@@ -1,4 +1,4 @@
-import { format } from '@lunaproject-discord/web-core/dist/utils/date';
+import { format } from '@lunaproject/web-core/dist/utils/date';
 import { Box, styled } from '@mui/material';
 import { blue, red } from '@mui/material/colors';
 import {

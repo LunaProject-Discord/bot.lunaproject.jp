@@ -8,7 +8,7 @@ import {
     NavigationDrawerItem,
     NavigationRoot
 } from '@components/navigation';
-import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
+import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { ArrowBackOutlined, HomeOutlined, NotificationsOutlined, ScheduleOutlined } from '@mui/icons-material';
 import { Box, Theme, Typography, useMediaQuery } from '@mui/material';
 import React, { Fragment, useState } from 'react';

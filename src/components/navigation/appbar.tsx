@@ -1,7 +1,7 @@
 'use client';
 
 import { defaultPredicate, NavigationItemProps } from '@components/navigation/index';
-import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
+import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { AppBar as MuiAppBar, AppBarProps, Button, styled, Toolbar as MuiToolbar } from '@mui/material';
 import { usePathname } from 'next/navigation';
 import React, { ReactNode } from 'react';

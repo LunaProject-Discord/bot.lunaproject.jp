@@ -2,7 +2,7 @@ import { getUser } from '@app/utils';
 import { UserConfiguration } from '@interfaces/bot';
 import { getUserConfiguration } from '@libs/bot';
 import { updateUserConfigurationById } from '@libs/redis';
-import { errorWithName } from '@lunaproject-discord/web-core/dist/utils/logger';
+import { errorWithName } from '@lunaproject/web-core/dist/utils/logger';
 import { Prisma } from '@prisma/client';
 import { addHours } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';

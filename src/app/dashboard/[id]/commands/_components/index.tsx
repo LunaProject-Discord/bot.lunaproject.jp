@@ -7,7 +7,7 @@ import {
     ItemDisabledProps,
     ItemFormContainer,
     ItemVariableProps
-} from '@lunaproject-discord/web-core/dist/components/SectionItems';
+} from '@lunaproject/web-core/dist/components/SectionItems';
 import { CheckOutlined, ClearOutlined, DeleteOutlined } from '@mui/icons-material';
 import { IconButton, ToggleButton, toggleButtonClasses, ToggleButtonGroup, Tooltip } from '@mui/material';
 import { getStateActionValue } from '@utils/state';

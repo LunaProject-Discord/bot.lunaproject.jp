@@ -7,7 +7,7 @@ import {
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
 import { RolePopover } from '@components/items';
 import { GuildRolesViewProps } from '@interfaces/view';
-import { Section, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
+import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { AddOutlined } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 import { getRoleColor } from '@utils/discord';

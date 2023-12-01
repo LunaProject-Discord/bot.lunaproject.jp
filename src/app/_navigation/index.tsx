@@ -12,8 +12,8 @@ import {
 } from '@components/navigation';
 import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
-import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
-import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
+import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
 import {
     AnalyticsOutlined,
     HomeOutlined,

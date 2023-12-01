@@ -4,7 +4,7 @@ import { PageHeader } from '@components/layout';
 import { GuildNotification } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
 import { useLocale } from '@localizations/client';
-import { Section, SectionParagraph, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
+import { Section, SectionParagraph, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { Box, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
 

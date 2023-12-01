@@ -1,4 +1,4 @@
-import { OAuthGuild } from '@lunaproject-discord/web-discord';
+import { OAuthGuild } from '@lunaproject/web-discord';
 
 export interface GuildFlags {
     id: string;

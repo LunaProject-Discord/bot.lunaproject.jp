@@ -8,11 +8,11 @@ import { GuildLevel, PartialGuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { DataGuild, RedisMember } from '@interfaces/redis';
 import { GuildConfigurationViewProps } from '@interfaces/view';
-import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
-import { Section } from '@lunaproject-discord/web-core/dist/components/Section';
-import { ItemIcon, ItemRowContainer, ItemTextBlock } from '@lunaproject-discord/web-core/dist/components/SectionItems';
-import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
-import { borderAndBoxShadow } from '@lunaproject-discord/web-core/dist/utils/theme';
+import { NumberField } from '@lunaproject/web-core/dist/components/NumberField';
+import { Section } from '@lunaproject/web-core/dist/components/Section';
+import { ItemIcon, ItemRowContainer, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
+import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
+import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils/theme';
 import { CloudOffOutlined, DeleteOutlined, SearchOutlined, TableRowsOutlined } from '@mui/icons-material';
 import {
     Avatar,

@@ -7,7 +7,7 @@ import { PageCenteredLayout } from '@components/layout_v2';
 import { UserNotification } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { UserViewProps } from '@interfaces/view';
-import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
+import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import {
     ArrowForwardOutlined,
     CloudOffOutlined,

@@ -8,7 +8,7 @@ import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfa
 import { ChannelIcon } from '@components/icons';
 import { ChannelPopover } from '@components/items';
 import { GuildChannelsViewProps } from '@interfaces/view';
-import { Section, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
+import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { AddOutlined } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { getStateActionValue } from '@utils/state';

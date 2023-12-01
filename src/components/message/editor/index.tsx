@@ -2,7 +2,7 @@
 
 import { ItemDisabledProps, ItemVariableProps } from '@components/items';
 import { LocalizationProps } from '@interfaces/localization';
-import { Message } from '@lunaproject-discord/web-discord/dist/interfaces/message';
+import { Message } from '@lunaproject/web-discord/dist/interfaces/message';
 import { Box, Divider } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
 import React from 'react';

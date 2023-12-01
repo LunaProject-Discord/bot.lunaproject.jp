@@ -4,7 +4,7 @@ import { StatisticResponseProps } from '@app/statistics/_components/interfaces';
 import { getDate } from '@app/statistics/utils';
 import { Statistic, StatisticsPeriodType } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
-import { format } from '@lunaproject-discord/web-core/dist/utils/date';
+import { format } from '@lunaproject/web-core/dist/utils/date';
 import {
     EventOutlined,
     SvgIconComponent,

@@ -15,9 +15,9 @@ import { GuildConfigurationCommand, GuildConfigurationCommands } from '@interfac
 import { LocalizationProps } from '@interfaces/localization';
 import { RedisCommand } from '@interfaces/redis';
 import { GuildConfigurationViewProps, GuildViewProps } from '@interfaces/view';
-import { ButtonBase } from '@lunaproject-discord/web-core/dist/components/ButtonBase';
-import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
-import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
+import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
+import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, styled, Switch, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
 import deepEqual from 'deep-equal';

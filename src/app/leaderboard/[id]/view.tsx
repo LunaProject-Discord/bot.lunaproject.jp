@@ -6,8 +6,8 @@ import { PageCenteredLayout, PageLayout } from '@components/layout_v2';
 import { GuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { GuildConfigurationViewProps } from '@interfaces/view';
-import { Section } from '@lunaproject-discord/web-core/dist/components/Section';
-import { borderAndBoxShadow } from '@lunaproject-discord/web-core/dist/utils/theme';
+import { Section } from '@lunaproject/web-core/dist/components/Section';
+import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils/theme';
 import { CloudOffOutlined, SearchOutlined, TableRowsOutlined } from '@mui/icons-material';
 import {
     Avatar,

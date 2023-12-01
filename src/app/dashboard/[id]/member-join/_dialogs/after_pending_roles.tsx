@@ -6,7 +6,7 @@ import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover } from '@com
 import { TranslatableTypography } from '@components/text';
 import { GuildConfigurationMemberJoinAfterPendingRole } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
-import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import {
     AddOutlined,
     DeleteOutlined,

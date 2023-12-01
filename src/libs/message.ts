@@ -1,5 +1,5 @@
 import { DataEmbed, DataMessage } from '@interfaces/message';
-import { Embed, Message, MessageAuthor } from '@lunaproject-discord/web-discord';
+import { Embed, Message, MessageAuthor } from '@lunaproject/web-discord';
 import Color from 'color';
 import { nanoid } from 'nanoid';
 

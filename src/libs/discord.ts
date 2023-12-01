@@ -1,1 +1,1 @@
-export * from '@lunaproject-discord/web-discord/dist/libs';
+export * from '@lunaproject/web-discord/dist/libs';

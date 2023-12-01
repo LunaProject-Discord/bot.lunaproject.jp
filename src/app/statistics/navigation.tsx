@@ -10,9 +10,8 @@ import {
     NavigationRoot
 } from '@components/navigation';
 import { StatisticsPeriodType } from '@interfaces/bot';
-import { TextChannelIcon } from '@lunaproject-discord/web-core/dist/components/Icons/channels';
-import { RouteLink } from '@lunaproject-discord/web-core/dist/components/Link';
-import { Select } from '@lunaproject-discord/web-core/dist/components/Select';
+import { TextChannelIcon } from '@lunaproject/web-core/dist/components/Icons/channels';
+import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     ArrowBackOutlined,
     DnsOutlined,
@@ -22,7 +21,7 @@ import {
     SellOutlined,
     WifiOutlined
 } from '@mui/icons-material';
-import { Box, FormControl, MenuItem, SelectChangeEvent, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Theme, Typography, useMediaQuery } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
 import { endOfToday } from 'date-fns';
 import { DateTime } from 'luxon';

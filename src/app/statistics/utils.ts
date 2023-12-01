@@ -1,25 +1,30 @@
 import { StatisticsPageProps } from '@app/statistics/interfaces';
 import { Statistic, StatisticsPeriodData, StatisticsPeriodType } from '@interfaces/bot';
-import { format } from '@lunaproject-discord/web-core/dist/utils/date';
+import { Localization } from '@interfaces/localization';
+import { getDateFnsLocaleByName } from '@localizations/index';
+import { format } from '@lunaproject/web-core/dist/utils/date';
 import { max } from '@utils/array';
 import { fromDBDate } from '@utils/date';
-import { endOfWeek, startOfWeek } from 'date-fns';
+import { endOfWeek, format as formatDateFns, startOfWeek } from 'date-fns';
 import { DateTime } from 'luxon';
 
 export const getDate = (statistic: Statistic) => fromDBDate(new Date(statistic.createdAt));
 
-export const formatDate = (date: Date, period: StatisticsPeriodType) => {
+export const formatDate = (date: Date, period: StatisticsPeriodType, { locale, translations }: Localization) => {
+    const pattern = translations.pattern_date as string;
+    const options: Parameters<typeof formatDateFns>[2] = { locale: getDateFnsLocaleByName(locale) };
+
     switch (period) {
         case 'hours':
-            return format(date, 'y年M月d日 H時');
+            return format(date, locale === 'ja' ? `${pattern} H時` : `${pattern} h a`, options);
         case 'days':
-            return format(date, 'y年M月d日');
+            return format(date, pattern, options);
         case 'weeks':
             const start = startOfWeek(date);
             const end = endOfWeek(date);
-            return `${format(start, 'M月d日')} ~ ${format(end, 'M月d日')}`;
+            return `${format(start, pattern, options)} ~ ${format(end, pattern, options)}`;
         case 'months':
-            return format(date, 'y年M月');
+            return format(date, locale === 'ja' ? 'yyyy年M月' : 'MMMM yyyy', options);
     }
 };
 

@@ -5,7 +5,7 @@ import { WithIdParamProps } from '@interfaces/page';
 import { getGuildConfiguration, getGuildFlags, getUserFlags } from '@libs/bot';
 import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
-import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
 import { Box } from '@mui/material';
 import {
     ADMINISTRATOR_OR_MANAGE_GUILD,

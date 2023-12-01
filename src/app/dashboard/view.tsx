@@ -3,16 +3,11 @@
 import { PageHeader } from '@components/layout';
 import { PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
-import {
-    Gallery,
-    GalleryItem,
-    GalleryItemIcon,
-    GalleryItemText
-} from '@lunaproject-discord/web-core/dist/components/Gallery';
-import { Menu } from '@lunaproject-discord/web-core/dist/components/Menu';
-import { Section } from '@lunaproject-discord/web-core/dist/components/Section';
-import { SegmentedControl } from '@lunaproject-discord/web-core/dist/components/SegmentedControl';
-import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
+import { Menu } from '@lunaproject/web-core/dist/components/Menu';
+import { Section } from '@lunaproject/web-core/dist/components/Section';
+import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
+import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
 import {
     AddOutlined,
     FormatListBulletedOutlined,

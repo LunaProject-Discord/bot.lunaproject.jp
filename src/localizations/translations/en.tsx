@@ -127,9 +127,9 @@ export const translationsEn: Translations = {
     permission_8589934592: 'Manage Events',
 
 
-    pattern_date: 'yyyy/MM/dd (E)',
-    pattern_time: 'HH:mm',
-    pattern_datetime: 'yyyy/MM/dd (E) HH:mm',
+    pattern_date: 'EEEE, MMMM d, yyyy',
+    pattern_time: 'hh:mm a',
+    pattern_datetime: 'EEEE, MMMM d, yyyy hh:mm a',
 
 
     search: 'Search',
@@ -275,7 +275,7 @@ export const translationsEn: Translations = {
     welcome_message_edit_description: 'Customize the message sent when a user joins the server.',
     welcome_message_edit_hint: <Fragment>
         <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
-        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+        <ul className="mt-1">
             <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
             <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
             <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
@@ -293,7 +293,7 @@ export const translationsEn: Translations = {
     goodbye_message_edit_description: 'Customize the message sent when a user leaves the server.',
     goodbye_message_edit_hint: <Fragment>
         <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
-        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+        <ul className="mt-1">
             <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
             <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
             <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
@@ -320,7 +320,7 @@ export const translationsEn: Translations = {
     member_join_after_pending: 'When you agree to the rules',
     member_join_after_pending_error_cannot_be_enabled_alert_description: <Fragment>
         To continue, please enable the following settings in Discord.
-        <ul style={{ marginTop: 4, marginBottom: 0, paddingInlineStart: 20 }}>
+        <ul className="list-disc mt-1 ps-5">
             <li>Community</li>
             <li>Rules Screening</li>
         </ul>
@@ -332,7 +332,7 @@ export const translationsEn: Translations = {
     member_join_message: 'Send Message',
     member_join_message_edit_hint: <Fragment>
         <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
-        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+        <ul className="mt-1">
             <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
             <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
             <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
@@ -398,7 +398,7 @@ export const translationsEn: Translations = {
     level_notification_edit_description: 'You can customize the message sent when a member\'s level is raised.',
     level_notification_edit_hint: <Fragment>
         <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
-        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+        <ul className="mt-1">
             <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
             <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
             <li>User ID: <code>{'{'}user:id{'}'}</code></li>

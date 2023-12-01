@@ -2,7 +2,10 @@ import { getUser } from '@app/utils';
 import { Body } from '@components/layout';
 import { getUserFlags } from '@libs/bot';
 import { getLocale, getLocalization } from '@localizations/server';
+import { AppearanceType } from '@states/appearance';
+import { COOKIE_APPEARANCE } from '@utils/cookie';
 import { Metadata, Viewport } from 'next';
+import { cookies } from 'next/headers';
 import React, { ReactNode } from 'react';
 import '../../public/fonts/style.css';
 import '../../public/global.css';
@@ -52,6 +55,9 @@ export const generateMetadata = (): Metadata => {
 const RootLayout = async ({ children }: { children: ReactNode }) => {
     const localization = getLocalization();
     const { locale } = localization;
+
+    const nextCookies = cookies();
+    const appearance = nextCookies.get(COOKIE_APPEARANCE)?.value as AppearanceType | undefined ?? 'system';
 
     const user = await getUser();
     const userFlags = user ? await getUserFlags(user.id) : undefined;

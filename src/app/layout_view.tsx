@@ -3,9 +3,9 @@
 import { RootLayout } from '@components/layout_v2';
 import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
-import { StyleProvider } from '@lunaproject-discord/web-core/dist/components/StyleProvider';
-import { MuiComponents, MuiPalette } from '@lunaproject-discord/web-core/dist/utils/theme';
-import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { StyleProvider } from '@lunaproject/web-core/dist/components/StyleProvider';
+import { MuiComponents, MuiPalette } from '@lunaproject/web-core/dist/utils/theme';
+import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
 import { alpha, buttonClasses, createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { indigo } from '@mui/material/colors';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
@@ -113,6 +113,15 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
             '公式サポートサーバーにてお待ちしております。 https://lunaproject.jp/support'
         );
     }, []);
+
+    useEffect(() => {
+        const documentElement = document.documentElement;
+        if (isDarkMode) {
+            documentElement.classList.add('dark');
+        } else {
+            documentElement.classList.remove('dark');
+        }
+    }, [isDarkMode]);
 
     return (
         <StyleProvider>

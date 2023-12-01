@@ -4,7 +4,7 @@ import { ItemDisabledProps, ItemVariableProps } from '@components/items';
 import { useTheme } from '@emotion/react';
 import { LocalizationProps } from '@interfaces/localization';
 import { getNewEmbed } from '@libs/message';
-import { Embed } from '@lunaproject-discord/web-discord/dist/interfaces/message';
+import { Embed } from '@lunaproject/web-discord/dist/interfaces/message';
 import {
     AddOutlined,
     ClearOutlined,

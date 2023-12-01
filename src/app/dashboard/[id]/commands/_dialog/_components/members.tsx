@@ -4,7 +4,7 @@ import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfa
 import { getMemberDisplay } from '@app/user';
 import { MemberPopover } from '@components/items';
 import { GuildMembersViewProps } from '@interfaces/view';
-import { ItemIcon, ItemTextBlock } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { ItemIcon, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
 import { AddOutlined } from '@mui/icons-material';
 import { Avatar, Button } from '@mui/material';
 import { getMemberAvatar } from '@utils/cdn';

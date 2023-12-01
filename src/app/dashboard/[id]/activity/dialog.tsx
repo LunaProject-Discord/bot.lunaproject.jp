@@ -8,8 +8,8 @@ import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } fr
 import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
 import { GuildViewProps } from '@interfaces/view';
-import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
-import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { Popover } from '@lunaproject/web-core/dist/components/Popover';
+import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import {
     AddOutlined,
     DeleteOutlined,

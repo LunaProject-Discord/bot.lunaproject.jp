@@ -277,7 +277,7 @@ export const translationsJa: Translations = {
     welcome_message_edit_description: 'ユーザーがサーバーに参加したときに送信されるメッセージをカスタマイズできます。',
     welcome_message_edit_hint: <Fragment>
         <b>下記のプレースホルダーを設定することでユーザーの名前などに置き換えできます。</b>
-        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+        <ul className="mt-1">
             <li>サーバーのID: <code>{'{'}guild:id{'}'}</code></li>
             <li>サーバーの名前: <code>{'{'}guild:name{'}'}</code></li>
             <li>サーバーのメンバー数: <code>{'{'}guild:members{'}'}</code></li>
@@ -295,7 +295,7 @@ export const translationsJa: Translations = {
     goodbye_message_edit_description: 'ユーザーがサーバーから退出したときに送信されるメッセージをカスタマイズできます。',
     goodbye_message_edit_hint: <Fragment>
         <b>下記のプレースホルダーを設定することでユーザーの名前などに置き換えできます。</b>
-        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+        <ul className="mt-1">
             <li>サーバーのID: <code>{'{'}guild:id{'}'}</code></li>
             <li>サーバーの名前: <code>{'{'}guild:name{'}'}</code></li>
             <li>サーバーのメンバー数: <code>{'{'}guild:members{'}'}</code></li>
@@ -322,7 +322,7 @@ export const translationsJa: Translations = {
     member_join_after_pending: 'ルールに同意したとき',
     member_join_after_pending_error_cannot_be_enabled_alert_description: <Fragment>
         続けるには、下記の設定を Discord で有効にしてください。
-        <ul style={{ marginTop: 4, marginBottom: 0, paddingInlineStart: 20 }}>
+        <ul className="list-disc mt-1 ps-5">
             <li>コミュニティ</li>
             <li>ルール スクリーニング</li>
         </ul>
@@ -334,7 +334,7 @@ export const translationsJa: Translations = {
     member_join_message: 'メッセージの送信',
     member_join_message_edit_hint: <Fragment>
         <b>下記のプレースホルダーを設定することでユーザーの名前などに置き換えできます。</b>
-        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+        <ul className="mt-1">
             <li>サーバーのID: <code>{'{'}guild:id{'}'}</code></li>
             <li>サーバーの名前: <code>{'{'}guild:name{'}'}</code></li>
             <li>サーバーのメンバー数: <code>{'{'}guild:members{'}'}</code></li>
@@ -401,7 +401,7 @@ export const translationsJa: Translations = {
     level_notification_edit_description: 'メンバーのレベルが上がったときに送信されるメッセージをカスタマイズできます。',
     level_notification_edit_hint: <Fragment>
         <b>下記のプレースホルダーを設定することでユーザーの名前などに置き換えできます。</b>
-        <ul style={{ marginTop: 4, marginBottom: 0, padding: 0, listStyle: 'none' }}>
+        <ul className="mt-1">
             <li>サーバーのID: <code>{'{'}guild:id{'}'}</code></li>
             <li>サーバーの名前: <code>{'{'}guild:name{'}'}</code></li>
             <li>ユーザーのID: <code>{'{'}user:id{'}'}</code></li>

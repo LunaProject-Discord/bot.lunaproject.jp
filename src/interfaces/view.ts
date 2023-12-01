@@ -1,4 +1,4 @@
-import { OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
 import { GuildConfiguration, UserConfiguration } from './bot';
 import { LocalizationProps } from './localization';
 import { DataGuild, RedisChannel, RedisMember, RedisRole } from './redis';

@@ -6,8 +6,8 @@ import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover, RoleSelect 
 import { TranslatableTypography } from '@components/text';
 import { GuildConfigurationLevelRewardRole } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
-import { NumberField } from '@lunaproject-discord/web-core/dist/components/NumberField';
-import { ItemDisabledProps, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { NumberField } from '@lunaproject/web-core/dist/components/NumberField';
+import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import {
     AddOutlined,
     DeleteOutlined,

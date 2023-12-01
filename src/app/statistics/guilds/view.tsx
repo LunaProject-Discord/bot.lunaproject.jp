@@ -7,7 +7,7 @@ import { formatDate, getDate, getMaxShards } from '@app/statistics/utils';
 import { PageHeader } from '@components/layout';
 import { Statistic } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
-import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
+import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { CloudOffOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { GridColDef, GridRowsProp, GridValidRowModel } from '@mui/x-data-grid';
@@ -35,7 +35,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
             field: 'date',
             type: 'dateTime',
             headerName: String(translations.statistics_table_date),
-            valueFormatter: (params) => formatDate(params.value, type),
+            valueFormatter: (params) => formatDate(params.value, type, localization),
             width: 250
         },
         {
@@ -86,7 +86,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
                         statistic={minStatistic}
                         getDate={getDate}
                         getValue={getValue}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={formatValue}
                         localization={localization}
                     />}
@@ -94,19 +94,20 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
                         statistic={maxStatistic}
                         getDate={getDate}
                         getValue={getValue}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={formatValue}
                         localization={localization}
                     />}
                 </Grid>
             </Section>
             <Section>
-                <SectionContent sx={{ height: 300 }}>
+                <SectionContent>
                     <AreaChart
                         statistics={statistics}
+                        label={translations.guild as string}
                         getDate={getDate}
                         getValue={getValue}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={formatValue}
                     />
                 </SectionContent>

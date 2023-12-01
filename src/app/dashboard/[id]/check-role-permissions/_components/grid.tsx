@@ -1,7 +1,7 @@
 import { CrownOutlined } from '@components/icons';
 import { TranslationKeys } from '@interfaces/localization';
 import { GuildRolesViewProps, GuildViewProps } from '@interfaces/view';
-import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
+import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { CheckOutlined, CloseOutlined, DeleteOutlined, RemoveOutlined } from '@mui/icons-material';
 import { alpha, Box, BoxProps, CSSObject, styled, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import { checkPermission, getRoleColor } from '@utils/discord';

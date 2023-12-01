@@ -1,5 +1,5 @@
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildById } from '@lunaproject-discord/web-discord';
+import { getGuildById } from '@lunaproject/web-discord';
 import { COOKIE_TOKEN } from '@utils/cookie';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';

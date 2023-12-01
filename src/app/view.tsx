@@ -4,15 +4,10 @@ import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
 import { PageCenteredLayout, PageLayout } from '@components/layout_v2';
 import { FeaturedGuild } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
-import {
-    Gallery,
-    GalleryItem,
-    GalleryItemIcon,
-    GalleryItemText
-} from '@lunaproject-discord/web-core/dist/components/Gallery';
-import { Section, SectionContent } from '@lunaproject-discord/web-core/dist/components/Section';
-import { SegmentedControl } from '@lunaproject-discord/web-core/dist/components/SegmentedControl';
-import { OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
+import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
+import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
 import {
     AnalyticsOutlined,
     AutoAwesomeOutlined,

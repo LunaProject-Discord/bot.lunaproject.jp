@@ -1,5 +1,5 @@
 import { DataGuild, RedisGuild, RedisMember, RedisUser } from '@interfaces/redis';
-import { GuildMember, OAuthGuild, OAuthUser } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { GuildMember, OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
 import { APIGuild, APIUser } from 'discord-api-types/v10';
 
 export const CDN_BASE_URL = 'https://cdn.discordapp.com';

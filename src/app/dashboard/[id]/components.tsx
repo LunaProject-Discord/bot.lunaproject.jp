@@ -1,9 +1,9 @@
 'use client';
 
 import { ItemVariableProps, List, ListItemButton, ListItemIcon, SearchBox, Select } from '@components/items';
-import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
-import { ItemDisabledProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
-import { OAuthGuild } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { Popover } from '@lunaproject/web-core/dist/components/Popover';
+import { ItemDisabledProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
 import {
     Avatar,
     ListItemButtonProps,

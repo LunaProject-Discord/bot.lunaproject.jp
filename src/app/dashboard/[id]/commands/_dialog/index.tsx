@@ -8,7 +8,7 @@ import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '
 import { Code } from '@components/text';
 import { GuildConfigurationCommand } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
-import { ItemFormContainer, ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { ItemFormContainer, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Box, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
 import { sortChannels, sortMembers, sortRoles } from '@utils/discord';
 import { getStateActionValue } from '@utils/state';

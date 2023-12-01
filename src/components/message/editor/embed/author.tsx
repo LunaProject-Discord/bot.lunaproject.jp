@@ -1,7 +1,7 @@
 'use client';
 
 import { LocalizationProps } from '@interfaces/localization';
-import type { EmbedAuthor } from '@lunaproject-discord/web-discord/dist/interfaces/message';
+import type { EmbedAuthor } from '@lunaproject/web-discord/dist/interfaces/message';
 import { OutlinedInput } from '@mui/material';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';

@@ -22,13 +22,8 @@ import {
     GuildConfigurationLevelRewardType
 } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
-import {
-    Section,
-    SectionContent,
-    SectionParagraph,
-    SectionTitle
-} from '@lunaproject-discord/web-core/dist/components/Section';
-import { useResettableState } from '@lunaproject-discord/web-core/dist/utils';
+import { Section, SectionContent, SectionParagraph, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';

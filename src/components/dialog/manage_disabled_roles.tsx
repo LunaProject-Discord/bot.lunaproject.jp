@@ -1,9 +1,9 @@
 'use client';
 
 import { GuildRolesViewProps } from '@interfaces/view';
-import { Dialog, DialogActions, DialogHeader } from '@lunaproject-discord/web-core/dist/components/Dialog';
-import { ItemVariableProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
-import { useResettableState } from '@lunaproject-discord/web-core/dist/utils/state';
+import { Dialog, DialogActions, DialogHeader } from '@lunaproject/web-core/dist/components/Dialog';
+import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
 import { ClearOutlined, CloseOutlined, SearchOutlined } from '@mui/icons-material';
 import {
     Box,

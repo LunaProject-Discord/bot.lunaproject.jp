@@ -5,7 +5,7 @@ import { StatisticsViewProps } from '@app/statistics/interfaces';
 import { formatDate, getDate } from '@app/statistics/utils';
 import { PageHeader } from '@components/layout';
 import { LocalizationProps } from '@interfaces/localization';
-import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
+import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { CloudOffOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
@@ -24,73 +24,79 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
                 </Box>
             </PageHeader>
             <Section>
-                <SectionTitle>Ping</SectionTitle>
-                <SectionContent sx={{ height: 300 }}>
+                <SectionTitle>{translations.ping}</SectionTitle>
+                <SectionContent>
                     <AreaChart
                         statistics={statistics}
+                        label={translations.ping as string}
                         getDate={getDate}
                         getValue={(statistic) => statistic.pings.total}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={(value) => `${value.toLocaleString()}ms`}
                     />
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>サーバー数</SectionTitle>
-                <SectionContent sx={{ height: 300 }}>
+                <SectionTitle>{translations.guilds}</SectionTitle>
+                <SectionContent>
                     <AreaChart
                         statistics={statistics}
+                        label={translations.guild as string}
                         getDate={getDate}
                         getValue={(statistic) => statistic.guilds.total}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={(value) => value.toLocaleString()}
                     />
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>チャンネル数</SectionTitle>
-                <SectionContent sx={{ height: 300 }}>
+                <SectionTitle>{translations.channels}</SectionTitle>
+                <SectionContent>
                     <AreaChart
                         statistics={statistics}
+                        label={translations.channel as string}
                         getDate={getDate}
                         getValue={(statistic) => statistic.channels.total}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={(value) => value.toLocaleString()}
                     />
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>役職数</SectionTitle>
-                <SectionContent sx={{ height: 300 }}>
+                <SectionTitle>{translations.roles}</SectionTitle>
+                <SectionContent>
                     <AreaChart
                         statistics={statistics}
+                        label={translations.role as string}
                         getDate={getDate}
                         getValue={(statistic) => statistic.roles.total}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={(value) => value.toLocaleString()}
                     />
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>絵文字数</SectionTitle>
-                <SectionContent sx={{ height: 300 }}>
+                <SectionTitle>{translations.emojis}</SectionTitle>
+                <SectionContent>
                     <AreaChart
                         statistics={statistics}
+                        label={translations.emoji as string}
                         getDate={getDate}
                         getValue={(statistic) => statistic.emojis.total}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={(value) => value.toLocaleString()}
                     />
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle>ユーザー数</SectionTitle>
-                <SectionContent sx={{ height: 300 }}>
+                <SectionTitle>{translations.users}</SectionTitle>
+                <SectionContent>
                     <AreaChart
                         statistics={statistics}
+                        label={translations.user as string}
                         getDate={getDate}
                         getValue={(statistic) => statistic.users.total}
-                        formatDate={(date) => formatDate(date, type)}
+                        formatDate={(date) => formatDate(date, type, localization)}
                         formatValue={(value) => value.toLocaleString()}
                     />
                 </SectionContent>

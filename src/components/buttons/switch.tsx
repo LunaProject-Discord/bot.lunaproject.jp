@@ -1,6 +1,6 @@
 import { LocalizationProps } from '@interfaces/localization';
-import { ButtonBase } from '@lunaproject-discord/web-core/dist/components/ButtonBase';
-import { ItemDisabledProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
+import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
+import { ItemDisabledProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Switch, switchClasses, Typography } from '@mui/material';
 import React, { Dispatch, SetStateAction } from 'react';
 

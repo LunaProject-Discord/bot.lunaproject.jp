@@ -11,13 +11,13 @@ import {
     THREAD_PERMISSIONS,
     VOICE_PERMISSIONS
 } from '@interfaces/permissions';
-import { buttonActionStyled } from '@lunaproject-discord/web-core/dist/components/ButtonBase';
+import { buttonActionStyled } from '@lunaproject/web-core/dist/components/ButtonBase';
 import {
     ItemDisabledProps,
     ItemTextBlock,
     ItemVariableProps,
     SwitchItemProps
-} from '@lunaproject-discord/web-core/dist/components/SectionItems';
+} from '@lunaproject/web-core/dist/components/SectionItems';
 import { KeyboardArrowDownOutlined } from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,

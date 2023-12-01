@@ -3,9 +3,9 @@
 import { LocalizationProps } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
 import { RedisChannel } from '@interfaces/redis';
-import { Popover } from '@lunaproject-discord/web-core/dist/components/Popover';
-import { ItemDisabledProps, ItemProps } from '@lunaproject-discord/web-core/dist/components/SectionItems';
-import { APIGuildChannel } from '@lunaproject-discord/web-discord/dist/interfaces/discord';
+import { Popover } from '@lunaproject/web-core/dist/components/Popover';
+import { ItemDisabledProps, ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { APIGuildChannel } from '@lunaproject/web-discord/dist/interfaces/discord';
 import { ListItemButtonProps, ListItemText, popoverClasses, Theme, Typography, useMediaQuery } from '@mui/material';
 import { filterPredicateChannel, sortChannels } from '@utils/discord';
 import { ChannelType } from 'discord-api-types/v10';

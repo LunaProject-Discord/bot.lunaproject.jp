@@ -7,7 +7,7 @@ import {
     StageChannelIcon,
     TextChannelIcon,
     VoiceChannelIcon
-} from '@lunaproject-discord/web-core/dist/components/Icons/channels';
+} from '@lunaproject/web-core/dist/components/Icons/channels';
 import { CategoryOutlined } from '@mui/icons-material';
 import { SvgIcon, SvgIconProps } from '@mui/material';
 import { APIChannel, ChannelType } from 'discord-api-types/v10';

@@ -4,22 +4,18 @@ import { RouteLinkItem } from '@components/items';
 import { PageHeader } from '@components/layout';
 import { GuildNotification } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
-import { useLocale } from '@localizations/client';
-import { Section, SectionContent, SectionTitle } from '@lunaproject-discord/web-core/dist/components/Section';
-import { format } from '@lunaproject-discord/web-core/dist/utils/date';
+import { getDateFnsLocaleByName } from '@localizations/index';
+import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import { format } from '@lunaproject/web-core/dist/utils/date';
 import { ErrorOutlineOutlined, InfoOutlined, TaskAltOutlined, WarningAmberOutlined } from '@mui/icons-material';
 import { Box, Typography } from '@mui/material';
-import { enUS, ja } from 'date-fns/locale';
 import React, { Fragment } from 'react';
 
 interface Props extends GuildViewProps {
     notifications: GuildNotification[];
 }
 
-
-export const View = ({ guild, notifications, localization: { translations } }: Props) => {
-    const language = useLocale();
-
+export const View = ({ guild, notifications, localization: { locale, translations } }: Props) => {
     const guildNotifications: Record<string, GuildNotification[]> = {};
 
     notifications.forEach((notification) => {
@@ -45,7 +41,7 @@ export const View = ({ guild, notifications, localization: { translations } }: P
                             {format(
                                 date,
                                 translations.pattern_date as string,
-                                { locale: language === 'ja' ? ja : enUS }
+                                { locale: getDateFnsLocaleByName(locale) }
                             )}
                         </SectionTitle>
                         <SectionContent>
