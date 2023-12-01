@@ -195,7 +195,7 @@ export type TranslationKeys =
 
 
     | 'leaderboard'
-    | 'choose_guild_leaderboard'
+    | 'leaderboard_description'
 
 
     | 'dashboard'
@@ -205,7 +205,7 @@ export type TranslationKeys =
 
 
     | 'guild_settings'
-    | 'choose_guild_settings'
+    | 'guild_settings_description'
     | 'back_to_select_guild'
     | 'settings_basic'
     | 'settings_guild_management'

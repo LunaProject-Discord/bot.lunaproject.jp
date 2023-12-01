@@ -204,7 +204,7 @@ export const translationsEn: Translations = {
 
 
     leaderboard: 'Leaderboard',
-    choose_guild_leaderboard: 'Select the server on which you want to display the leaderboard.',
+    leaderboard_description: 'Select the server on which you want to display the leaderboard.',
 
 
     dashboard: 'Dashboard',
@@ -214,7 +214,7 @@ export const translationsEn: Translations = {
 
 
     guild_settings: 'Server Settings',
-    choose_guild_settings: 'Select the server you wish to configure.',
+    guild_settings_description: 'Select the server you wish to configure.',
     back_to_select_guild: 'Back to Select Server',
     settings_basic: 'Basic Settings',
     settings_guild_management: 'Server Management',

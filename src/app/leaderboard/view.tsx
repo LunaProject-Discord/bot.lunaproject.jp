@@ -64,7 +64,7 @@ export const View = ({ guilds, localization: { translations } }: Props) => {
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.leaderboard}</Typography>
-                    <Typography>{translations.choose_guild_leaderboard}</Typography>
+                    <Typography>{translations.leaderboard_description}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>
                     <SegmentedControl<ViewType>

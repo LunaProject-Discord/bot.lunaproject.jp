@@ -91,7 +91,7 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
             <PageHeader>
                 <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="h4">{translations.guild_settings}</Typography>
-                    <Typography>{translations.choose_guild_settings}</Typography>
+                    <Typography>{translations.guild_settings_description}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>
                     <SegmentedControl<ViewType>
