@@ -216,7 +216,7 @@ export type TranslationKeys =
     | 'prefix_and_nickname_description'
     | 'prefix'
     | 'nickname'
-    | 'nickname_hint'
+    | 'nickname_description'
 
     | 'time_and_language'
     | 'guild_time_and_language_description'

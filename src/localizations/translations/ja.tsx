@@ -228,7 +228,7 @@ export const translationsJa: Translations = {
     prefix_and_nickname_description: 'Bot の呼び出し方やニックネームを設定できます。',
     prefix: 'プレフィックス',
     nickname: 'ニックネーム',
-    nickname_hint: <Fragment>
+    nickname_description: <Fragment>
         <code>%p</code> で設定中のプレフィックスへ、<code>%n</code> で Bot の名前へ置き換えができます。
     </Fragment>,
 

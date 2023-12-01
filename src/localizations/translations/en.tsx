@@ -225,7 +225,7 @@ export const translationsEn: Translations = {
     prefix_and_nickname_description: 'You can set how the Bot is called and its nickname.',
     prefix: 'Prefix',
     nickname: 'Nickname',
-    nickname_hint: <Fragment>
+    nickname_description: <Fragment>
         You can use <code>%p</code> to replace the prefix currently set and <code>%n</code> to replace the Bot&#39;s
         name.
     </Fragment>,

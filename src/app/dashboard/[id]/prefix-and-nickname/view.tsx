@@ -8,7 +8,7 @@ import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { BadgeOutlined, TagOutlined } from '@mui/icons-material';
-import { Alert, AlertTitle, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
@@ -42,14 +42,11 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                     <TextFieldItem
                         icon={<BadgeOutlined />}
                         primary={translations.nickname}
+                        secondary={<CodeStyleContainer>{translations.nickname_description}</CodeStyleContainer>}
                         value={nickname}
                         setValue={setNickname}
                         maxLength={32}
                     />
-                    <Alert severity="info">
-                        <AlertTitle>{translations.about_this_settings}</AlertTitle>
-                        <CodeStyleContainer>{translations.nickname_hint}</CodeStyleContainer>
-                    </Alert>
                 </SectionContent>
             </Section>
 
