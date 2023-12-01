@@ -456,6 +456,10 @@ export const translationsJa: Translations = {
     music_next_media_notification_description: 'この設定が有効であっても繰り返しが 1曲のみ の場合は通知されません。',
     music_sources: '再生するソース',
     music_source_youtube: 'YouTube',
+    music_source_youtube_error_cannot_be_enabled_alert_description: <Fragment>
+        現在、YouTube 側の制限により再生することができません。<br />
+        そのため、この設定はすべてのサーバーで強制的に無効になっています。
+    </Fragment>,
     music_source_niconico: 'ニコニコ動画',
     music_source_soundcloud: 'SoundCloud',
     music_source_twitch: 'Twitch',

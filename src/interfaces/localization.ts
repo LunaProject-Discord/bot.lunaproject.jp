@@ -379,6 +379,7 @@ export type TranslationKeys =
     | 'music_next_media_notification_description'
     | 'music_sources'
     | 'music_source_youtube'
+    | 'music_source_youtube_error_cannot_be_enabled_alert_description'
     | 'music_source_niconico'
     | 'music_source_soundcloud'
     | 'music_source_twitch'

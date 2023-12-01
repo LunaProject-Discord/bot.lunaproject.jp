@@ -453,6 +453,10 @@ export const translationsEn: Translations = {
     music_next_media_notification_description: 'Even if this setting is enabled, you will not be notified if only one song is repeated.',
     music_sources: 'Source to play',
     music_source_youtube: 'YouTube',
+    music_source_youtube_error_cannot_be_enabled_alert_description: <Fragment>
+        Currently, due to limitations on the YouTube side, it is not possible to playback the video.<br />
+        Therefore, this setting is forced to be disabled on all servers.
+    </Fragment>,
     music_source_niconico: 'niconico',
     music_source_soundcloud: 'SoundCloud',
     music_source_twitch: 'Twitch',

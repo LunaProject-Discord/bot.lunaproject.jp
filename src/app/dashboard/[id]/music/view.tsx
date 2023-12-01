@@ -7,7 +7,7 @@ import { GuildConfigurationMusic } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Box, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -109,11 +109,16 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                     {translations.music_sources}
                 </SectionTitle>
                 <SectionContent>
+                    <Alert severity="warning">
+                        <AlertTitle>{translations.dashboard_error_cannot_be_enabled_alert_title}</AlertTitle>
+                        {translations.music_source_youtube_error_cannot_be_enabled_alert_description}
+                    </Alert>
                     <SwitchItem
                         primary={translations.music_source_youtube}
-                        checked={youtube}
-                        setChecked={setYoutube}
-                        disabled={!enabled}
+                        checked={false}
+                        setChecked={() => {
+                        }}
+                        disabled
                     />
                     <SwitchItem
                         primary={translations.music_source_niconico}
