@@ -546,9 +546,17 @@ export const translationsJa: Translations = {
 
 
     about_this_settings: 'この設定について',
-    notifications: '通知',
-    manage_account: 'アカウントの管理',
 
+
+    lunaproject_services: 'Luna Project のサービス',
+    lunaproject_document: 'Luna Project ドキュメント',
+    lunaproject_account: 'Luna Project アカウント',
+
+
+    notifications: '通知',
+
+
+    manage_account: 'アカウントの管理',
 
     site_settings: 'サイトの設定',
 

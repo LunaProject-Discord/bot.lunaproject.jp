@@ -1,0 +1,86 @@
+'use client';
+
+import { LocalizationProps } from '@interfaces/localization';
+import { DescriptionOutlined, ManageAccountsOutlined, NightlightRound, OpenInNewOutlined } from '@mui/icons-material';
+import { Divider, List, ListItemText, Popover } from '@mui/material';
+import { popoverAtom } from '@states/popover';
+import React from 'react';
+import { useRecoilState } from 'recoil';
+import { PopoverListItemIcon, PopoverListItemLinkButton } from './index';
+
+export const ServicesPopover = ({ localization }: LocalizationProps) => {
+    const { translations } = localization;
+
+    const [popoverState, setPopoverState] = useRecoilState(popoverAtom);
+
+    const handleClose = () => setPopoverState(undefined);
+
+    return (
+        <Popover
+            open={popoverState?.type === 'services'}
+            anchorEl={popoverState?.anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right'
+            }}
+            transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+            }}
+            slotProps={{
+                paper: {
+                    sx: {
+                        width: 300,
+                        border: (theme) => `solid 1px ${theme.palette.divider}`,
+                        boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+                    }
+                }
+            }}
+        >
+            <List>
+                <PopoverListItemLinkButton href="https://lunaproject.jp/" target="_blank" dense>
+                    <PopoverListItemIcon>
+                        <NightlightRound sx={{ color: '#ffc636', transform: 'rotate(-20deg)' }} />
+                    </PopoverListItemIcon>
+                    <ListItemText primary="Luna Project" />
+                    <OpenInNewOutlined color="action" />
+                </PopoverListItemLinkButton>
+                <PopoverListItemLinkButton href="https://docs.lunaproject.jp/" target="_blank" dense>
+                    <PopoverListItemIcon>
+                        <DescriptionOutlined />
+                    </PopoverListItemIcon>
+                    <ListItemText primary={translations.lunaproject_document} />
+                    <OpenInNewOutlined color="action" />
+                </PopoverListItemLinkButton>
+            </List>
+            <Divider />
+            <List>
+                <PopoverListItemLinkButton href="https://account.lunaproject.jp/" dense>
+                    <PopoverListItemIcon>
+                        <ManageAccountsOutlined />
+                    </PopoverListItemIcon>
+                    <ListItemText primary={translations.lunaproject_account} />
+                </PopoverListItemLinkButton>
+                <PopoverListItemLinkButton href="https://yudzuki.lunaproject.jp/" dense>
+                    <PopoverListItemIcon>
+                        <NightlightRound sx={{ color: '#959ac0', transform: 'rotate(-20deg)' }} />
+                    </PopoverListItemIcon>
+                    <ListItemText primary="結月 -ゆづき-" />
+                </PopoverListItemLinkButton>
+                <PopoverListItemLinkButton href="https://satsuki.lunaproject.jp/" dense>
+                    <PopoverListItemIcon>
+                        <NightlightRound sx={{ color: '#f792d5', transform: 'rotate(-20deg)' }} />
+                    </PopoverListItemIcon>
+                    <ListItemText primary="彩月 -さつき-" />
+                </PopoverListItemLinkButton>
+                <PopoverListItemLinkButton href="https://natsuki.lunaproject.jp/" dense>
+                    <PopoverListItemIcon>
+                        <NightlightRound sx={{ color: '#b0ff7c', transform: 'rotate(-20deg)' }} />
+                    </PopoverListItemIcon>
+                    <ListItemText primary="菜月 -なつき-" />
+                </PopoverListItemLinkButton>
+            </List>
+        </Popover>
+    );
+};

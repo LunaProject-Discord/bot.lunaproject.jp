@@ -1,6 +1,6 @@
 'use client';
 
-import { UserPopover } from '@app/_popovers';
+import { ServicesPopover, UserPopover } from '@app/_popovers';
 import {
     NavigationAppBar as RootNavigationAppBar,
     NavigationDrawer as RootNavigationDrawer,
@@ -16,6 +16,7 @@ import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
 import {
     AnalyticsOutlined,
+    AppsOutlined,
     HomeOutlined,
     LeaderboardOutlined,
     LoginOutlined,
@@ -40,6 +41,11 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
     const setPopoverState = useSetRecoilState(popoverAtom);
 
     const handleDrawerToggle = () => setOpen((prevState) => !prevState);
+
+    const handleServicesPopoverOpenButtonClick = (e: MouseEvent<HTMLButtonElement>) => setPopoverState({
+        type: 'services',
+        anchorEl: e.currentTarget
+    });
 
     const handleUserPopoverOpenButtonClick = (e: MouseEvent<HTMLButtonElement>) => setPopoverState({
         type: 'user',
@@ -80,6 +86,11 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                     </Fragment>}
                 </Box>
                 <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Tooltip title={translations.lunaproject_services} placement="bottom">
+                        <IconButton onClick={handleServicesPopoverOpenButtonClick}>
+                            <AppsOutlined />
+                        </IconButton>
+                    </Tooltip>
                     {user ? <Tooltip title={getUserDisplayName(user)} placement="bottom">
                         <IconButton onClick={handleUserPopoverOpenButtonClick} sx={{ p: .5 }}>
                             <Avatar
@@ -195,6 +206,7 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
             <NavigationAppBar open={open} setOpen={setOpen} user={user} flags={flags} localization={localization} />
             <NavigationDrawer open={open} setOpen={setOpen} user={user} flags={flags} localization={localization} />
 
+            <ServicesPopover localization={localization} />
             <UserPopover user={user} localization={localization} />
         </Fragment>
     );

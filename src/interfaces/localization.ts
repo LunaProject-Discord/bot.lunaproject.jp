@@ -469,9 +469,17 @@ export type TranslationKeys =
 
 
     | 'about_this_settings'
-    | 'notifications'
-    | 'manage_account'
 
+
+    | 'lunaproject_services'
+    | 'lunaproject_document'
+    | 'lunaproject_account'
+
+
+    | 'notifications'
+
+
+    | 'manage_account'
 
     | 'site_settings'
 

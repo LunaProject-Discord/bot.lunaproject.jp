@@ -543,9 +543,17 @@ export const translationsEn: Translations = {
 
 
     about_this_settings: 'About this settings',
-    notifications: 'Notifications',
-    manage_account: 'Manage Account',
 
+
+    lunaproject_services: 'Luna Project Services',
+    lunaproject_document: 'Luna Project Document',
+    lunaproject_account: 'Luna Project Account',
+
+
+    notifications: 'Notifications',
+
+
+    manage_account: 'Manage Account',
 
     site_settings: 'Site Settings',
 
