@@ -6,6 +6,7 @@ import { LocalizationProps } from '@interfaces/localization';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Menu } from '@lunaproject/web-core/dist/components/Menu';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
+import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
 import {
@@ -21,15 +22,13 @@ import {
     Button,
     ButtonBase,
     CircularProgress,
-    List,
-    ListItemButton,
     ListItemIcon,
     ListItemText,
     MenuItem,
     Typography
 } from '@mui/material';
 import NextLink from 'next/link';
-import React, { MouseEvent, useState } from 'react';
+import React, { Fragment, MouseEvent, useState } from 'react';
 import { getGuildIcon } from '../../utils/discord';
 
 interface GuildsProps {
@@ -56,26 +55,16 @@ const GuildsGallery = ({ guilds }: GuildsProps) => (
 );
 
 const GuildsTable = ({ guilds }: GuildsProps) => (
-    <List>
+    <Fragment>
         {guilds.map((guild) => (
-            <ListItemButton
+            <RouteLinkItem
                 key={guild.id}
-                component={NextLink}
+                icon={<Avatar src={getGuildIcon(guild)} alt={guild.name} />}
+                primary={guild.name}
                 href={`/dashboard/${guild.id}`}
-                sx={{
-                    borderBottom: (theme) => `solid 1px ${theme.palette.divider}`
-                }}
-            >
-                <ListItemIcon>
-                    <Avatar
-                        src={getGuildIcon(guild)}
-                        alt={guild.name}
-                    />
-                </ListItemIcon>
-                <ListItemText primary={guild.name} />
-            </ListItemButton>
+            />
         ))}
-    </List>
+    </Fragment>
 );
 
 type ViewType = 'gallery' | 'table';

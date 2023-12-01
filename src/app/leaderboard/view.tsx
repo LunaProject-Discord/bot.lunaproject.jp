@@ -5,22 +5,13 @@ import { PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
+import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
 import { FormatListBulletedOutlined, GridViewOutlined } from '@mui/icons-material';
-import {
-    Avatar,
-    Box,
-    ButtonBase,
-    CircularProgress,
-    List,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Typography
-} from '@mui/material';
+import { Avatar, Box, ButtonBase, CircularProgress, Typography } from '@mui/material';
 import NextLink from 'next/link';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { getGuildIcon } from '../../utils/discord';
 
 interface GuildsProps {
@@ -47,26 +38,16 @@ const GuildsGallery = ({ guilds }: GuildsProps) => (
 );
 
 const GuildsTable = ({ guilds }: GuildsProps) => (
-    <List>
+    <Fragment>
         {guilds.map((guild) => (
-            <ListItemButton
+            <RouteLinkItem
                 key={guild.id}
-                component={NextLink}
-                href={`/leaderboard/${guild.id}`}
-                sx={{
-                    borderBottom: (theme) => `solid 1px ${theme.palette.divider}`
-                }}
-            >
-                <ListItemIcon>
-                    <Avatar
-                        src={getGuildIcon(guild)}
-                        alt={guild.name}
-                    />
-                </ListItemIcon>
-                <ListItemText primary={guild.name} />
-            </ListItemButton>
+                icon={<Avatar src={getGuildIcon(guild)} alt={guild.name} />}
+                primary={guild.name}
+                href={`/dashboard/${guild.id}`}
+            />
         ))}
-    </List>
+    </Fragment>
 );
 
 type ViewType = 'gallery' | 'table';

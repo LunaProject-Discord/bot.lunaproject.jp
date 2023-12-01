@@ -6,6 +6,7 @@ import { FeaturedGuild } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
 import {
@@ -45,7 +46,7 @@ interface GuildsProps {
     guilds: OAuthGuild[];
 }
 
-const GuildsGalleryView = ({ guilds }: GuildsProps) => (
+const GuildsGallery = ({ guilds }: GuildsProps) => (
     <Gallery>
         {guilds.map((guild) => (
             <GalleryItem key={guild.id}>
@@ -64,27 +65,17 @@ const GuildsGalleryView = ({ guilds }: GuildsProps) => (
     </Gallery>
 );
 
-const GuildsTableView = ({ guilds }: GuildsProps) => (
-    <List>
+const GuildsTable = ({ guilds }: GuildsProps) => (
+    <Fragment>
         {guilds.map((guild) => (
-            <ListItemButton
+            <RouteLinkItem
                 key={guild.id}
-                component={NextLink}
+                icon={<Avatar src={getGuildIcon(guild)} alt={guild.name} />}
+                primary={guild.name}
                 href={`/dashboard/${guild.id}`}
-                sx={{
-                    borderBottom: (theme) => `solid 1px ${theme.palette.divider}`
-                }}
-            >
-                <ListItemIcon>
-                    <Avatar
-                        src={getGuildIcon(guild)}
-                        alt={guild.name}
-                    />
-                </ListItemIcon>
-                <ListItemText primary={guild.name} />
-            </ListItemButton>
+            />
         ))}
-    </List>
+    </Fragment>
 );
 
 type ViewType = 'features' | 'guilds';
@@ -176,7 +167,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                     </SectionContent>}
                     {viewType === 'guilds' && <SectionContent>
                         {guilds ? (
-                            <GuildsGalleryView
+                            <GuildsGallery
                                 guilds={guilds.filter((guild) => guild.features.length > 0).map((guild) => guild.guild)}
                             />
                         ) : (
