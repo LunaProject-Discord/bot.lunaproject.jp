@@ -7,7 +7,7 @@ import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunapro
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
-import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { FormatListBulletedOutlined, GridViewOutlined } from '@mui/icons-material';
 import { Avatar, Box, ButtonBase, CircularProgress, Typography } from '@mui/material';
 import NextLink from 'next/link';

@@ -4,7 +4,7 @@ import { SessionStatus } from '@interfaces/bot';
 import { Localization, LocalizationProps } from '@interfaces/localization';
 import { RedisStatus } from '@interfaces/redis';
 import { buttonActionStyled } from '@lunaproject/web-core/dist/components/ButtonBase';
-import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import {
     ErrorOutlineOutlined,
     KeyboardArrowDownOutlined,

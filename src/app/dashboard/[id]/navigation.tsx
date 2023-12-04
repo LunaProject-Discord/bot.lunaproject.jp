@@ -14,7 +14,7 @@ import { GuildFlags, UserFlags } from '@interfaces/bot';
 import { DataGuild, RedisGuild } from '@interfaces/redis';
 import { UserViewProps } from '@interfaces/view';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
-import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import {
     ArrowBackOutlined,
     DirectionsRunOutlined,

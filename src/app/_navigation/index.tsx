@@ -13,7 +13,7 @@ import {
 import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
-import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import {
     AnalyticsOutlined,
     AppsOutlined,

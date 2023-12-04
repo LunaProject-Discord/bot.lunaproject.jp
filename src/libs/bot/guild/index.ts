@@ -3,7 +3,7 @@ import { DataGuild } from '@interfaces/redis';
 import { getUserPermission } from '@libs/bot';
 import prisma from '@libs/prisma';
 import { getMemberById } from '@libs/redis';
-import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '@utils/discord';
 
 export const hasDashboardAccess = async (guild: DataGuild, user: OAuthUser): Promise<[boolean, boolean]> => {

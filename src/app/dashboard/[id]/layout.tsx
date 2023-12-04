@@ -5,7 +5,7 @@ import { WithIdParamProps } from '@interfaces/page';
 import { getGuildConfiguration, getGuildFlags, getUserFlags, hasDashboardAccess } from '@libs/bot';
 import { getAndRequestUserGuildsById, getGuildById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
-import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Alert, AlertTitle, Box } from '@mui/material';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';

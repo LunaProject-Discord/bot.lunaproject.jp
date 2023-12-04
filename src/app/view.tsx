@@ -8,7 +8,7 @@ import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunapro
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
-import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import {
     AnalyticsOutlined,
     AutoAwesomeOutlined,

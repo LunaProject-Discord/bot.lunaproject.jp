@@ -1,7 +1,7 @@
 'use client';
 
 import { LocaleType, LocalizationProps } from '@interfaces/localization';
-import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import {
     ArrowBackOutlined,
     BrushOutlined,

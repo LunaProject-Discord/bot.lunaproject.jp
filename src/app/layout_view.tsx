@@ -5,7 +5,7 @@ import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject/web-core/dist/components/StyleProvider';
 import { MuiComponents, MuiPalette } from '@lunaproject/web-core/dist/utils/theme';
-import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { alpha, buttonClasses, createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
 import { indigo } from '@mui/material/colors';
 import { appearanceAtom, AppearanceType } from '@states/appearance';

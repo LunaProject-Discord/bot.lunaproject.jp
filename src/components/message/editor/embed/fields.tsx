@@ -1,8 +1,7 @@
 'use client';
 
 import { LocalizationProps } from '@interfaces/localization';
-import type { EmbedField } from '@lunaproject/web-discord/dist/interfaces/message';
-import { DefaultField } from '@lunaproject/web-discord/dist/interfaces/message';
+import { DefaultField, EmbedField } from '@lunaproject/web-discord/dist/interfaces';
 import {
     AddOutlined,
     ClearOutlined,

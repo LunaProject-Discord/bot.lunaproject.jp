@@ -1,7 +1,7 @@
 'use client';
 
 import { LocalizationProps } from '@interfaces/localization';
-import type { EmbedImage } from '@lunaproject/web-discord/dist/interfaces/message';
+import { EmbedImage } from '@lunaproject/web-discord/dist/interfaces';
 import { OutlinedInput } from '@mui/material';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';

@@ -8,7 +8,7 @@ import { toDataMessage, toEmbed, toMessage } from '@libs/message';
 import { segmentedControlClasses, THEMES } from '@lunaproject/web-core';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
-import { Message } from '@lunaproject/web-discord/dist/interfaces/message';
+import { Message } from '@lunaproject/web-discord/dist/interfaces';
 import {
     CloseOutlined,
     DarkModeOutlined,

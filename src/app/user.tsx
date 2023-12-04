@@ -1,7 +1,7 @@
 'use client';
 
 import { RedisMember, RedisUser } from '@interfaces/redis';
-import { GuildMember, OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { GuildMember, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { Box } from '@mui/material';
 import { getUserDisplayName } from '@utils/discord';
 import { APIUser } from 'discord-api-types/v10';

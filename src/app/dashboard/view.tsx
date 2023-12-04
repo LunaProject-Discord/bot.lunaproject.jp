@@ -8,7 +8,7 @@ import { Menu } from '@lunaproject/web-core/dist/components/Menu';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
-import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import {
     AddOutlined,
     FormatListBulletedOutlined,

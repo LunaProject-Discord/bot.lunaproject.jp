@@ -6,7 +6,7 @@ import { PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import { RedisStatus } from '@interfaces/redis';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
-import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { CloudOffOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, CircularProgress, Typography } from '@mui/material';
 import { sortGuilds } from '@utils/discord';

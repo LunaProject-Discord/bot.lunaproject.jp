@@ -1,7 +1,7 @@
 'use client';
 
 import { LocalizationProps } from '@interfaces/localization';
-import type { Embed, EmbedFooter as OriginalEmbedFooter } from '@lunaproject/web-discord/dist/interfaces/message';
+import { Embed, EmbedFooter as OriginalEmbedFooter } from '@lunaproject/web-discord/dist/interfaces';
 import { OutlinedInput } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
 import React from 'react';

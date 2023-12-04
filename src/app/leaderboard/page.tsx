@@ -2,7 +2,7 @@ import { UnauthorizedView } from '@app/view';
 import { getGuildConfiguration } from '@libs/bot';
 import { getAndRequestUserGuildsById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
-import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
+import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { sortGuilds } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
