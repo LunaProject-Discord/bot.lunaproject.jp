@@ -1,12 +1,12 @@
 import { PartialGuildLevel } from '@interfaces/bot';
 import { WithIdParamProps } from '@interfaces/page';
 import { getGuildLevels } from '@libs/bot';
+import prisma from '@libs/prisma';
 import { getGuildById } from '@lunaproject/web-discord';
 import { COOKIE_TOKEN } from '@utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '../../../../../libs/prisma';
 
 export const GET = async (req: NextRequest, { params: { id } }: WithIdParamProps) => {
     const nextCookies = cookies();

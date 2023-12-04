@@ -1,16 +1,14 @@
+import { getUser } from '@app/utils';
 import { GuildConfiguration } from '@interfaces/bot';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration } from '@libs/bot';
+import { getGuildConfiguration, hasDashboardAccess } from '@libs/bot';
+import prisma from '@libs/prisma';
 import { updateGuildConfigurationById } from '@libs/redis';
 import { errorWithName } from '@lunaproject/web-core/dist/utils/logger';
 import { getGuildById } from '@lunaproject/web-discord/dist/libs';
 import { Prisma } from '@prisma/client';
-import { COOKIE_TOKEN } from '@utils/cookie';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
 import { addHours } from 'date-fns';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '../../../../../libs/prisma';
 
 type valueOf<T> = T[keyof T];
 
