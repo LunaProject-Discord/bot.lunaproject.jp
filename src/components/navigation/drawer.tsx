@@ -86,7 +86,7 @@ export const NavigationDrawerGroupRoot = styled(List)(({ theme }) => ({
 }));
 
 export const NavigationDrawerGroupLabel = styled(ListSubheader)(({ theme }) => ({
-    padding: theme.spacing(0, 1.5),
+    padding: 0,
     lineHeight: 'unset',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',

@@ -5,12 +5,14 @@ import { Link } from '@lunaproject/web-core/dist/components';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { CheckOutlined } from '@mui/icons-material';
 import {
+    CSSObject,
     LinkProps,
     ListItemButton as MuiListItemButton,
     ListItemButtonProps,
     ListItemIcon as MuiListItemIcon,
     ListItemText,
-    styled
+    styled,
+    Theme
 } from '@mui/material';
 import { LinkProps as NextLinkProps } from 'next/link';
 import React, { ReactNode } from 'react';
@@ -21,28 +23,25 @@ export interface PopoverProps extends LocalizationProps {
     onClose: () => void;
 }
 
-export const PopoverListItemButton = styled(MuiListItemButton)(({ theme }) => ({
+const popoverListItemButtonStyled = (theme: Theme): CSSObject => ({
+    minHeight: theme.spacing(5),
     padding: theme.spacing(.5, 1.5),
     gap: theme.spacing(1.5)
-}));
+});
+
+export const PopoverListItemButton = styled(MuiListItemButton)(({ theme }) => popoverListItemButtonStyled(theme));
 
 type PopoverListItemLinkButtonProps = ListItemButtonProps & LinkProps;
 
 export const PopoverListItemLinkButton = styled(
     (props) => <MuiListItemButton component={Link} href="" {...props} />
-)<PopoverListItemLinkButtonProps>(({ theme }) => ({
-    padding: theme.spacing(.5, 1.5),
-    gap: theme.spacing(1.5)
-}));
+)<PopoverListItemLinkButtonProps>(({ theme }) => popoverListItemButtonStyled(theme));
 
 export type PopoverListItemRouteLinkButtonProps = ListItemButtonProps & LinkProps & NextLinkProps;
 
 export const PopoverListItemRouteLinkButton = styled(
     (props) => <MuiListItemButton component={RouteLink} href="" {...props} />
-)<PopoverListItemLinkButtonProps>(({ theme }) => ({
-    padding: theme.spacing(.5, 1.5),
-    gap: theme.spacing(1.5)
-}));
+)<PopoverListItemRouteLinkButtonProps>(({ theme }) => popoverListItemButtonStyled(theme));
 
 interface PopoverListItemSwitchProps extends ListItemButtonProps {
     checked: boolean;
