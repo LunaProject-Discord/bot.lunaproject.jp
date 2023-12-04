@@ -34,11 +34,13 @@ import {
     TextSnippetOutlined,
     TranslateOutlined
 } from '@mui/icons-material';
-import { Box, Chip, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Box, Chip, Theme, Typography, useMediaQuery } from '@mui/material';
+import { getGuildIcon } from '@utils/cdn';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 
 interface NavigationProps extends UserViewProps {
+    userManager: boolean;
     userFlags: UserFlags | undefined;
     guild: RedisGuild | DataGuild;
     guildFlags: GuildFlags;
@@ -49,6 +51,7 @@ interface NavigationProps extends UserViewProps {
 export const Navigation = (
     {
         user,
+        userManager,
         userFlags,
         guild,
         guildFlags,
@@ -102,12 +105,25 @@ export const Navigation = (
                         <Typography color="text.secondary">{translations.guild_settings}</Typography>
                     </Box>}
                     <Box sx={{ px: { xs: 1, md: 0 } }}>
-                        <GuildSelect
+                        {(userManager && !mutualGuilds.includes(guild.id)) ? <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1
+                            }}
+                        >
+                            <Avatar
+                                src={getGuildIcon(guild)}
+                                alt=" "
+                                sx={{ width: 24, height: 24, pointerEvents: 'none' }}
+                            />
+                            <Typography>{guild.name}</Typography>
+                        </Box> : <GuildSelect
                             value={guild.id}
                             setValue={(value) => router.push(`/dashboard/${value}`)}
                             guilds={guilds}
                             mutualGuilds={mutualGuilds}
-                        />
+                        />}
                     </Box>
                     <NavigationDrawerContent>
                         <NavigationDrawerGroup>

@@ -1,8 +1,42 @@
-import { UserFlags } from '@interfaces/bot';
+import { UserFlags, UserPermission } from '@interfaces/bot';
 import prisma from '@libs/prisma';
 
+export const getUserPermission = async (id: string): Promise<UserPermission> => {
+    const userData = await prisma.users.findUnique({
+        where: {
+            id: BigInt(id)
+        },
+        select: {
+            permission: true
+        }
+    });
+    if (!userData)
+        return 'default';
+
+    switch (userData.permission) {
+        case 4:
+            return 'owner';
+        case 3:
+            return 'sub_owner';
+        case 2:
+            return 'admin';
+        case 1:
+            return 'staff';
+        default:
+            return 'default';
+    }
+};
+
 export const getUserFlags = async (id: string): Promise<UserFlags | undefined> => {
-    const userData = await prisma.users.findUnique({ where: { id: BigInt(id) } });
+    const userData = await prisma.users.findUnique({
+        where: {
+            id: BigInt(id)
+        },
+        select: {
+            permission: true,
+            flags: true
+        }
+    });
     if (!userData)
         return undefined;
 

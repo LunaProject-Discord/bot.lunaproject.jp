@@ -2,17 +2,12 @@ import { getGuilds, getUser } from '@app/utils';
 import { UnauthorizedView } from '@app/view';
 import { PageWithSidebarLayout } from '@components/layout_v2';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration, getGuildFlags, getUserFlags } from '@libs/bot';
-import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@libs/redis';
+import { getGuildConfiguration, getGuildFlags, getUserFlags, hasDashboardAccess } from '@libs/bot';
+import { getAndRequestUserGuildsById, getGuildById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces/discord';
-import { Box } from '@mui/material';
-import {
-    ADMINISTRATOR_OR_MANAGE_GUILD,
-    someCheckMemberPermissions,
-    someCheckPermissions,
-    sortGuilds
-} from '@utils/discord';
+import { Alert, AlertTitle, Box } from '@mui/material';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
@@ -26,8 +21,8 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     if (!user || !guild)
         return parent;
 
-    const member = await getMemberById(user.id, guild.id);
-    if (!member || !someCheckMemberPermissions(guild, member, ...ADMINISTRATOR_OR_MANAGE_GUILD))
+    const [hasPermission] = await hasDashboardAccess(guild, user);
+    if (!hasPermission)
         return parent;
 
     const metadata = await parent;
@@ -83,8 +78,8 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     if (!guild || !guildFlags || !guildConfiguration)
         return (<NotFoundView />);
 
-    const member = await getMemberById(user.id, guild.id);
-    if (!member || !someCheckMemberPermissions(guild, member, ...ADMINISTRATOR_OR_MANAGE_GUILD))
+    const [hasPermission, isManager] = await hasDashboardAccess(guild, user);
+    if (!hasPermission)
         return (<ForbiddenView />);
 
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);
@@ -95,6 +90,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
         <Box sx={{ p: 3, display: 'flex', gap: 3 }}>
             <Navigation
                 user={user}
+                userManager={isManager}
                 userFlags={userFlags}
                 guild={guild}
                 guildFlags={guildFlags}
@@ -102,7 +98,14 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
                 mutualGuilds={mutualGuilds.map((mutualGuild) => mutualGuild.id)}
                 localization={localization}
             />
-            <PageWithSidebarLayout>{children}</PageWithSidebarLayout>
+            <PageWithSidebarLayout>
+                {isManager && <Alert severity="warning" className="mb-6">
+                    <AlertTitle>サービスの運営としてアクセスしています！</AlertTitle>
+                    現在、あなたはサービスの運営としてこのサーバーのダッシュボードにアクセスしています。<br />
+                    このサーバーの管理者よりサポートの要求が行われたなどの理由以外で、本来権限がないサーバーの設定を変更することは禁止されています。
+                </Alert>}
+                {children}
+            </PageWithSidebarLayout>
         </Box>
     );
 };

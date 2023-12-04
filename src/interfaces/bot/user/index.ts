@@ -1,3 +1,5 @@
+export type UserPermission = 'owner' | 'sub_owner' | 'admin' | 'staff' | 'default';
+
 export interface UserFlags {
     id: string;
     manager: boolean;

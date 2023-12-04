@@ -13,32 +13,32 @@ import { NextRequest, NextResponse } from 'next/server';
 type valueOf<T> = T[keyof T];
 
 export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
-    const nextCookies = cookies();
-    const token = nextCookies.get(COOKIE_TOKEN)?.value;
-    if (!token)
+    const user = await getUser();
+    if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
 
-    const guild = await getGuildById(id, token);
+    const guild = await getGuildById(id);
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
+    const [hasPermission] = await hasDashboardAccess(guild, user);
+    if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
     return NextResponse.json(await getGuildConfiguration(id), { status: 200 });
 };
 
 export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamProps) => {
-    const nextCookies = cookies();
-    const token = nextCookies.get(COOKIE_TOKEN)?.value;
-    if (!token)
+    const user = await getUser();
+    if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
 
-    const guild = await getGuildById(id, token);
+    const guild = await getGuildById(id);
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
+    const [hasPermission] = await hasDashboardAccess(guild, user);
+    if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
     const data: Partial<GuildConfiguration> = await req.json();

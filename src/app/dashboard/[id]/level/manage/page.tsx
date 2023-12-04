@@ -1,9 +1,8 @@
 import { getUser } from '@app/utils';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration, getGuildLevels } from '@libs/bot';
-import { getGuildById, getMemberById } from '@libs/redis';
+import { getGuildConfiguration, getGuildLevels, hasDashboardAccess } from '@libs/bot';
+import { getGuildById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { NotFoundView } from '../../view';
@@ -18,8 +17,8 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     if (!user || !guild)
         return parent;
 
-    const member = await getMemberById(user.id, guild.id);
-    if (!member || !someCheckMemberPermissions(guild, member, ...ADMINISTRATOR_OR_MANAGE_GUILD))
+    const [hasPermission] = await hasDashboardAccess(guild, user);
+    if (!hasPermission)
         return parent;
 
     const metadata = await parent;
