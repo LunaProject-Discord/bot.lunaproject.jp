@@ -2,10 +2,16 @@ import { getGuilds, getUser } from '@app/utils';
 import { UnauthorizedView } from '@app/view';
 import { PageWithSidebarLayout } from '@components/layout_v2';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration, getGuildFlags, getUserFlags, hasDashboardAccess } from '@libs/bot';
-import { getAndRequestUserGuildsById, getGuildById } from '@libs/redis';
+import {
+    getGuildConfiguration,
+    getGuildFlags,
+    getUserFlags,
+    hasDashboardAccess,
+    hasDashboardAccessMemberPermission,
+    hasDashboardAccessUserPermission
+} from '@libs/bot';
+import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
-import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Alert, AlertTitle, Box } from '@mui/material';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
@@ -21,7 +27,7 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     if (!user || !guild)
         return parent;
 
-    const [hasPermission] = await hasDashboardAccess(guild, user);
+    const hasPermission = await hasDashboardAccess(guild, user);
     if (!hasPermission)
         return parent;
 
@@ -78,13 +84,20 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     if (!guild || !guildFlags || !guildConfiguration)
         return (<NotFoundView />);
 
-    const [hasPermission, isManager] = await hasDashboardAccess(guild, user);
-    if (!hasPermission)
-        return (<ForbiddenView />);
+    const isManager = await hasDashboardAccessUserPermission(user);
+    if (!isManager) {
+        const member = await getMemberById(user.id, guild.id);
+        if (!member)
+            return (<NotFoundView />);
+
+        const hasPermission = hasDashboardAccessMemberPermission(guild, member);
+        if (!hasPermission)
+            return (<ForbiddenView />);
+    }
 
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);
 
-    const sortedGuilds = sortGuilds(guilds.filter((guild) => someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))) as OAuthGuild[];
+    const sortedGuilds = sortGuilds(guilds.filter((guild) => someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD)));
 
     return (
         <Box sx={{ p: 3, display: 'flex', gap: 3 }}>

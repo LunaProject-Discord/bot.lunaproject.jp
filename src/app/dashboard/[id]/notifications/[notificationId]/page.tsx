@@ -25,7 +25,7 @@ export const generateMetadata = async ({ params: { id, notificationId } }: Props
     if (!user || !guild || !guildNotification)
         return parent;
 
-    const [hasPermission] = await hasDashboardAccess(guild, user);
+    const hasPermission = await hasDashboardAccess(guild, user);
     if (!hasPermission)
         return parent;
 

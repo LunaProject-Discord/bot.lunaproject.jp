@@ -20,7 +20,7 @@ export const GET = async (req: Request, { params: { id } }: WithIdParamProps) =>
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    const [hasPermission] = await hasDashboardAccess(guild, user);
+    const hasPermission = await hasDashboardAccess(guild, user);
     if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
@@ -36,7 +36,7 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
     if (!guild)
         return NextResponse.json({ message: 'Guild not found!' }, { status: 404 });
 
-    const [hasPermission] = await hasDashboardAccess(guild, user);
+    const hasPermission = await hasDashboardAccess(guild, user);
     if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
