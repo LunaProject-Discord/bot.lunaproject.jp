@@ -105,7 +105,8 @@ export const Navigation = (
                         <Typography color="text.secondary">{translations.guild_settings}</Typography>
                     </Box>}
                     <Box sx={{ px: { xs: 1, md: 0 } }}>
-                        {(userManager && !mutualGuilds.includes(guild.id)) ? <Box
+                        {(userManager && !guilds.filter((guild) => mutualGuilds.includes(guild.id)).map((guild) => guild.id).includes(guild.id)) ?
+                            <Box
                             sx={{
                                 display: 'flex',
                                 alignItems: 'center',
