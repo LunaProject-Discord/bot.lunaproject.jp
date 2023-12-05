@@ -96,8 +96,10 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     }
 
     const mutualGuilds = await getAndRequestUserGuildsById(user.id);
+    const mutualGuildIds = mutualGuilds.map((mutualGuild) => mutualGuild.id);
 
     const sortedGuilds = sortGuilds(guilds.filter((guild) => someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD)));
+    const filteredSortedGuilds = sortedGuilds.filter((sortedGuild) => mutualGuildIds.includes(sortedGuild.id));
 
     return (
         <Box sx={{ p: 3, display: 'flex', gap: 3 }}>
@@ -108,11 +110,14 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
                 guild={guild}
                 guildFlags={guildFlags}
                 guilds={sortedGuilds}
-                mutualGuilds={mutualGuilds.map((mutualGuild) => mutualGuild.id)}
+                mutualGuilds={mutualGuildIds}
                 localization={localization}
             />
             <PageWithSidebarLayout>
-                {isManager && <Alert severity="warning" className="mb-6">
+                {(isManager && filteredSortedGuilds.every((sortedGuild) => sortedGuild.id !== guild.id)) && <Alert
+                    severity="warning"
+                    className="mb-6"
+                >
                     <AlertTitle>サービスの運営としてアクセスしています！</AlertTitle>
                     現在、あなたはサービスの運営としてこのサーバーのダッシュボードにアクセスしています。<br />
                     このサーバーの管理者よりサポートの要求が行われたなどの理由以外で、本来権限がないサーバーの設定を変更することは禁止されています。
