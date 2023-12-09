@@ -59,7 +59,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
             }}
         >
             <NavigationToolbar>
-                <IconButton onClick={handleDrawerToggle} color="inherit" sx={{ display: { md: 'none' } }}>
+                <IconButton onClick={handleDrawerToggle} sx={{ display: { md: 'none' } }}>
                     <MenuOutlined />
                 </IconButton>
                 <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
@@ -132,7 +132,7 @@ export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) 
                 zIndex: 1
             })}
         >
-            <IconButton onClick={handleDrawerToggle} color="inherit">
+            <IconButton onClick={handleDrawerToggle}>
                 <MenuOutlined />
             </IconButton>
             <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
