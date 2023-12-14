@@ -17,3 +17,9 @@ declare module '@mui/material/Button' {
         monotone: true;
     }
 }
+
+declare module '@mui/material/CircularProgress' {
+    interface CircularProgressPropsColorOverrides {
+        monotone: true;
+    }
+}

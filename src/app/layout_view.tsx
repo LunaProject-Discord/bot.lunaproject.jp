@@ -97,6 +97,11 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
                             })
                         }
                     ]
+                },
+                MuiCircularProgress: {
+                    defaultProps: {
+                        color: 'monotone'
+                    }
                 }
             },
             palette: {
