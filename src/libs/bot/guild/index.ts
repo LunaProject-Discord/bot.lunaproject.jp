@@ -1,4 +1,4 @@
-import { GuildFlags } from '@interfaces/bot';
+import { GuildConfiguration, GuildFlags } from '@interfaces/bot';
 import { DataGuild, RedisMember } from '@interfaces/redis';
 import { getUserPermission } from '@libs/bot';
 import prisma from '@libs/prisma';
@@ -23,6 +23,22 @@ export const hasDashboardAccess = async (guild: DataGuild, user: OAuthUser): Pro
         return hasDashboardAccessMemberPermission(guild, member);
 
     return false;
+};
+
+export const isLeaderboardAccessible = async (user: OAuthUser | undefined, guild: DataGuild, guildConfiguration: GuildConfiguration): Promise<boolean> => {
+    const levelConfiguration = guildConfiguration.level;
+    const levelLeaderboardConfiguration = levelConfiguration.leaderboard;
+    if (!levelConfiguration.enabled)
+        return false;
+
+    if (levelLeaderboardConfiguration.public)
+        return true;
+
+    if (!user)
+        return false;
+
+    const member = await getMemberById(user.id, guild.id);
+    return member !== undefined;
 };
 
 export const getGuildFlags = async (id: string): Promise<GuildFlags | undefined> => {

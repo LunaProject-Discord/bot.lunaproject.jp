@@ -5,21 +5,26 @@ import {
     ManageBeforePendingRolesDialog
 } from '@app/dashboard/[id]/member-join/_dialogs';
 import { ActionItem, ChannelItem, MessageItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
 import { GuildConfigurationMemberJoin } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Alert, AlertTitle, Box, Typography } from '@mui/material';
+import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
+import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
+
+    const router = useRouter();
+
+    const [openMigratingBackdrop, setOpenMigratingBackdrop] = useState(false);
 
     const [openBeforePendingMessageBuilder, setOpenBeforePendingMessageBuilder] = useState(false);
     const [openAfterPendingMessageBuilder, setOpenAfterPendingMessageBuilder] = useState(false);
@@ -90,14 +95,50 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
         resetAfterPendingRolesRoles();
     };
 
+    const handleRollbackAction = async () => {
+        setOpenMigratingBackdrop(true);
+
+        const result = await saveGuildConfiguration(
+            guild.id,
+            {
+                member_join: {
+                    ...toObject(),
+                    enabled: false,
+                    _migrated: false
+                }
+            }
+        );
+
+        setOpenMigratingBackdrop(false);
+
+        if (result) {
+            router.refresh();
+            router.push(`/dashboard/${guild.id}/welcome`);
+        }
+    };
+
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.member_join}</Typography>
-                    <Typography>{translations.member_join_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.member_join} secondary={translations.member_join_description} />
+            <Section>
+                <SectionContent>
+                    <Alert severity="warning">
+                        <AlertTitle>ベータ版の機能を利用しています！</AlertTitle>
+                        <Box sx={{ mb: .5 }}>
+                            現在、ベータ公開中の機能を利用しています。<br />
+                            この機能の利用をやめて安定版を利用するには、下のボタンを押してください。
+                        </Box>
+                        <Button
+                            onClick={handleRollbackAction}
+                            disableElevation
+                            variant="contained"
+                            color="inherit"
+                        >
+                            利用をやめる
+                        </Button>
+                    </Alert>
+                </SectionContent>
+            </Section>
             <Section>
                 <SectionContent>
                     <SwitchItem
@@ -255,6 +296,10 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     />
                 </SectionContent>
             </Section>
+
+            <Backdrop open={openMigratingBackdrop} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
 
             <SaveConfirm
                 open={!deepEqual(memberJoinConfiguration, toObject(), { strict: true })}

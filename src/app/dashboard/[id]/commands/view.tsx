@@ -8,7 +8,7 @@ import {
     getDefaultCommandConfiguration,
     sortCommands
 } from '@app/dashboard/[id]/commands/utils';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { codeStyled } from '@components/text';
 import { GuildConfigurationCommand, GuildConfigurationCommands } from '@interfaces/bot';
@@ -199,12 +199,7 @@ export const View = ({ guild, configuration, commands: redisCommands, localizati
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.commands}</Typography>
-                    <Typography>{translations.commands_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.commands} secondary={translations.commands_description} />
             <Channels
                 default={defaultChannels}
                 setDefault={setDefaultChannels}

@@ -1,8 +1,8 @@
 'use client';
 
+import { RefreshIcon, SaveIcon } from '@components/icons';
 import { useTranslation } from '@localizations/client';
 import { MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
-import { RefreshOutlined, SaveOutlined } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProvider, useTheme } from '@mui/material';
 import Mousetrap from 'mousetrap';
@@ -78,7 +78,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                                 ref={cancelButton}
                                 onClick={onCancel}
                                 disabled={loading || pending}
-                                startIcon={<RefreshOutlined sx={{ transform: 'scale(-1, 1)' }} />}
+                                startIcon={<RefreshIcon sx={{ transform: 'scale(-1, 1)' }} />}
                                 sx={{
                                     gap: .5,
                                     [`& .${buttonClasses.startIcon}, & .${buttonClasses.endIcon}`]: {
@@ -95,7 +95,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                                 loading={loading || pending}
                                 loadingPosition="start"
                                 variant="contained"
-                                startIcon={<SaveOutlined />}
+                                startIcon={<SaveIcon />}
                             >
                                 {translations.save}
                                 <Key sx={{ ml: 1, mr: -.5 }}>s</Key>

@@ -1,7 +1,7 @@
 'use client';
 
+import { ArrowDropDownIcon, ArrowDropUpIcon, SearchIcon } from '@components/icons';
 import { PopoverProps } from '@interfaces/mui';
-import { ArrowDropDownOutlined, ArrowDropUpOutlined, SearchOutlined } from '@mui/icons-material';
 import {
     alpha,
     Box,
@@ -119,7 +119,7 @@ const Select = forwardRef<HTMLDivElement, SelectProps>((
                 color: !disabled ? 'action.active' : 'action.disabled'
             }}
         >
-            {open ? <ArrowDropUpOutlined /> : <ArrowDropDownOutlined />}
+            {open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
         </Box>
         <SelectOutline />
     </SelectRoot>
@@ -195,7 +195,7 @@ export const SearchBox = (props: InputBaseProps) => (
             bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
         }}
     >
-        <SearchOutlined color="action" />
+        <SearchIcon color="action" />
         <InputBase {...props} fullWidth />
     </Box>
 );

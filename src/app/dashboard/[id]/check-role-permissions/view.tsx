@@ -1,14 +1,13 @@
 'use client';
 
 import { Grid, PermissionsItem } from '@app/dashboard/[id]/check-role-permissions/_components';
-import { CrownOutlined } from '@components/icons';
-import { PageHeader } from '@components/layout';
+import { CheckIcon, CloseIcon, CrownOutlined, DeleteIcon, RemoveIcon } from '@components/icons';
+import { PageHeader } from '@components/layout_v2';
 import { ALL_PERMISSIONS } from '@interfaces/permissions';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { CheckOutlined, CloseOutlined, DeleteOutlined, RemoveOutlined } from '@mui/icons-material';
-import { Alert, AlertTitle, Box, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box } from '@mui/material';
 import { sortRoles } from '@utils/discord';
 import React, { Fragment, useMemo } from 'react';
 
@@ -22,12 +21,10 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.role_permissions}</Typography>
-                    <Typography>{translations.role_permissions_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader
+                primary={translations.role_permissions}
+                secondary={translations.role_permissions_description}
+            />
             <Section>
                 <SectionContent>
                     <PermissionsItem value={permissions} setValue={setPermissions} localization={localization} />
@@ -38,15 +35,15 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     <Alert severity="info">
                         <AlertTitle>{translations.role_permissions_how_to}</AlertTitle>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <CheckOutlined sx={{ mb: 'auto' }} />
+                            <CheckIcon sx={{ mb: 'auto' }} />
                             {translations.role_permissions_how_to_description_yes}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <CloseOutlined sx={{ mb: 'auto' }} />
+                            <CloseIcon sx={{ mb: 'auto' }} />
                             {translations.role_permissions_how_to_description_no}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <RemoveOutlined sx={{ mb: 'auto' }} />
+                            <RemoveIcon sx={{ mb: 'auto' }} />
                             {translations.role_permissions_how_to_description_inherited_everyone}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
@@ -54,7 +51,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                             {translations.role_permissions_how_to_description_inherited_administrator}
                         </Box>
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <DeleteOutlined sx={{ mb: 'auto' }} />
+                            <DeleteIcon sx={{ mb: 'auto' }} />
                             {translations.role_permissions_how_to_description_deletable}
                         </Box>
                     </Alert>

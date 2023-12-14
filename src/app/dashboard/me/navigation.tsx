@@ -1,6 +1,7 @@
 'use client';
 
 import { NavigationAppBar, NavigationDrawerToolbar, NavigationProps } from '@app/_navigation';
+import { ArrowBackIcon, HomeIcon, NotificationsIcon, ScheduleIcon } from '@components/icons';
 import {
     NavigationDrawer,
     NavigationDrawerContent,
@@ -9,7 +10,6 @@ import {
     NavigationRoot
 } from '@components/navigation';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
-import { ArrowBackOutlined, HomeOutlined, NotificationsOutlined, ScheduleOutlined } from '@mui/icons-material';
 import { Box, Theme, Typography, useMediaQuery } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 
@@ -49,7 +49,7 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
                                 gap: 1
                             }}
                         >
-                            <ArrowBackOutlined fontSize="small" />
+                            <ArrowBackIcon fontSize="small" />
                             {translations.back_to_home}
                         </RouteLink>
                     </Fragment> : <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -61,14 +61,14 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
                             <NavigationDrawerItem
                                 href={prefix}
                                 predicate={(pathname) => pathname === prefix}
-                                icon={<HomeOutlined />}
+                                icon={<HomeIcon />}
                                 primary={translations.home}
                                 open={open}
                                 setOpen={setOpen}
                             />
                             <NavigationDrawerItem
                                 href={`${prefix}/notifications`}
-                                icon={<NotificationsOutlined />}
+                                icon={<NotificationsIcon />}
                                 primary={translations.notifications}
                                 open={open}
                                 setOpen={setOpen}
@@ -77,7 +77,7 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
                         <NavigationDrawerGroup label={translations.settings_basic}>
                             <NavigationDrawerItem
                                 href={`${prefix}/time-and-language`}
-                                icon={<ScheduleOutlined />}
+                                icon={<ScheduleIcon />}
                                 primary={translations.time_and_language}
                                 open={open}
                                 setOpen={setOpen}

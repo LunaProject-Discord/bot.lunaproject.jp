@@ -2,6 +2,17 @@
 
 import { ServicesPopover, UserPopover } from '@app/_popovers';
 import {
+    AnalyticsIcon,
+    AppsIcon,
+    HomeIcon,
+    LeaderboardIcon,
+    LoginIcon,
+    MenuIcon,
+    MonitoringIcon,
+    SettingsIcon,
+    TuneIcon
+} from '@components/icons';
+import {
     NavigationAppBar as RootNavigationAppBar,
     NavigationDrawer as RootNavigationDrawer,
     NavigationDrawerGroup,
@@ -14,17 +25,6 @@ import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    AnalyticsOutlined,
-    AppsOutlined,
-    HomeOutlined,
-    LeaderboardOutlined,
-    LoginOutlined,
-    MenuOutlined,
-    SettingsOutlined,
-    ShowChartOutlined,
-    TuneOutlined
-} from '@mui/icons-material';
 import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger } from '@mui/material';
 import { popoverAtom } from '@states/popover';
 import { getUserAvatar, getUserDisplayName } from '@utils/discord';
@@ -60,7 +60,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
         >
             <NavigationToolbar>
                 <IconButton onClick={handleDrawerToggle} sx={{ display: { md: 'none' } }}>
-                    <MenuOutlined />
+                    <MenuIcon />
                 </IconButton>
                 <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
                     <Image src="/logo/yudzuki.svg" alt="" width={142} height={48} />
@@ -88,7 +88,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                 <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
                     <Tooltip title={translations.lunaproject_services} placement="bottom">
                         <IconButton onClick={handleServicesPopoverOpenButtonClick}>
-                            <AppsOutlined />
+                            <AppsIcon />
                         </IconButton>
                     </Tooltip>
                     {user ? <Tooltip title={getUserDisplayName(user)} placement="bottom">
@@ -101,7 +101,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                     </Tooltip> : <Fragment>
                         <Tooltip title={translations.site_settings} placement="bottom">
                             <IconButton onClick={handleUserPopoverOpenButtonClick}>
-                                <TuneOutlined />
+                                <TuneIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={translations.login} placement="bottom">
@@ -109,7 +109,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                                 component={NextLink}
                                 href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                             >
-                                <LoginOutlined />
+                                <LoginIcon />
                             </IconButton>
                         </Tooltip>
                     </Fragment>}
@@ -133,7 +133,7 @@ export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) 
             })}
         >
             <IconButton onClick={handleDrawerToggle}>
-                <MenuOutlined />
+                <MenuIcon />
             </IconButton>
             <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
                 <Image src="/logo/yudzuki.svg" alt="" width={142} height={48} />
@@ -149,21 +149,21 @@ export const NavigationDrawer = ({ open, setOpen, flags, localization: { transla
             <NavigationDrawerGroup sx={{ px: { md: 1 } }}>
                 <NavigationDrawerItem
                     href="/"
-                    icon={<HomeOutlined />}
+                    icon={<HomeIcon />}
                     primary={translations.home}
                     open={open}
                     setOpen={setOpen}
                 />
                 <NavigationDrawerItem
                     href="/status"
-                    icon={<AnalyticsOutlined />}
+                    icon={<AnalyticsIcon />}
                     primary={translations.status}
                     open={open}
                     setOpen={setOpen}
                 />
                 <NavigationDrawerItem
                     href="/leaderboard"
-                    icon={<LeaderboardOutlined />}
+                    icon={<LeaderboardIcon />}
                     primary={translations.leaderboard}
                     open={open}
                     setOpen={setOpen}
@@ -171,7 +171,7 @@ export const NavigationDrawer = ({ open, setOpen, flags, localization: { transla
                 <NavigationDrawerItem
                     href="/dashboard"
                     predicate={(pathname, href) => pathname.startsWith(href) && !pathname.startsWith('/dashboard/me')}
-                    icon={<SettingsOutlined />}
+                    icon={<SettingsIcon />}
                     primary={translations.guild_settings}
                     open={open}
                     setOpen={setOpen}
@@ -182,7 +182,7 @@ export const NavigationDrawer = ({ open, setOpen, flags, localization: { transla
                 <NavigationDrawerGroup sx={{ px: { md: 1 } }}>
                     <NavigationDrawerItem
                         href="/statistics"
-                        icon={<ShowChartOutlined />}
+                        icon={<MonitoringIcon />}
                         primary={translations.statistics}
                         open={open}
                         setOpen={setOpen}

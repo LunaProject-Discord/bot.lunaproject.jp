@@ -1,14 +1,13 @@
 'use client';
 
+import { ScheduleIcon, TranslateIcon } from '@components/icons';
 import { SelectItem } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { UserConfigurationLanguage } from '@interfaces/bot';
 import { UserConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { ScheduleOutlined, TranslateOutlined } from '@mui/icons-material';
-import { Box, Typography } from '@mui/material';
 import { TimeZone, TimeZones } from '@utils/timezone';
 import React, { Fragment, ReactNode } from 'react';
 import spacetime from 'spacetime';
@@ -27,17 +26,15 @@ export const View = ({ user, configuration, localization: { translations } }: Us
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.time_and_language}</Typography>
-                    <Typography>{translations.user_time_and_language_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader
+                primary={translations.time_and_language}
+                secondary={translations.user_time_and_language_description}
+            />
             <Section>
                 <SectionTitle>{translations.date_and_time}</SectionTitle>
                 <SectionContent>
                     <SelectItem<TimeZone>
-                        icon={<ScheduleOutlined />}
+                        icon={<ScheduleIcon />}
                         primary={translations.timezone}
                         secondary={translations.timezone_description}
                         value={timezone}
@@ -66,7 +63,7 @@ export const View = ({ user, configuration, localization: { translations } }: Us
                 <SectionTitle>{translations.language}</SectionTitle>
                 <SectionContent>
                     <SelectItem<UserConfigurationLanguage>
-                        icon={<TranslateOutlined />}
+                        icon={<TranslateIcon />}
                         primary={translations.language}
                         secondary={translations.user_language_description}
                         value={language}

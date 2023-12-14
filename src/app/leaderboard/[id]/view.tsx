@@ -1,14 +1,13 @@
 'use client';
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { PageHeader } from '@components/layout';
-import { PageCenteredLayout, PageLayout } from '@components/layout_v2';
+import { CloudOffIcon, SearchIcon, TableRowsIcon } from '@components/icons';
+import { PageCenteredLayout, PageHeader, PageLayout } from '@components/layout_v2';
 import { GuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils/theme';
-import { CloudOffOutlined, SearchOutlined, TableRowsOutlined } from '@mui/icons-material';
 import {
     Avatar,
     Box,
@@ -20,7 +19,7 @@ import {
 } from '@mui/material';
 import { getGuildIcon } from '@utils/cdn';
 import { filterPredicateMember } from '@utils/discord';
-import React, { ChangeEvent, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
 import { DesktopLevelItemRoot, LevelItem } from './components';
 
 interface Props extends GuildConfigurationViewProps {
@@ -51,19 +50,20 @@ export const View = ({ guild, levels, localization }: Props) => {
 
     return (
         <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.leaderboard}</Typography>
-                    <Typography sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <PageHeader
+                primary={translations.leaderboard}
+                secondary={
+                    <Fragment>
                         <Avatar
                             src={getGuildIcon(guild)}
                             alt=" "
                             sx={{ width: 24, height: 24, pointerEvents: 'none' }}
                         />
                         {guild.name}
-                    </Typography>
-                </Box>
-            </PageHeader>
+                    </Fragment>
+                }
+                secondaryTypographyProps={{ sx: { display: 'flex', alignItems: 'center', gap: 1 } }}
+            />
             <Box
                 sx={(theme) => ({
                     width: '100%',
@@ -100,7 +100,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                             borderRadius: 1
                         }}
                     >
-                        <SearchOutlined color="action" />
+                        <SearchIcon color="action" />
                         <InputBase
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
@@ -115,7 +115,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                         onPageChange={handlePageIndexChange}
                         rowsPerPage={perPageLimit}
                         onRowsPerPageChange={handlePerPageLimitChange}
-                        labelRowsPerPage={<TableRowsOutlined />}
+                        labelRowsPerPage={<TableRowsIcon />}
                         SelectProps={{
                             MenuProps: {
                                 slotProps: {
@@ -159,35 +159,21 @@ export const View = ({ guild, levels, localization }: Props) => {
                         />
                     );
                 })}
-            </Section> : <Box
-                sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    placeItems: 'center',
-                    placeContent: 'center',
-                    gap: 1
-                }}
-            >
-                <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-                <Typography variant="h4">メンバーが見つかりません</Typography>
-                <Typography align="center">
+            </Section> : <ErrorRoot>
+                <CloudOffIcon sx={{ fontSize: '10rem' }} />
+                <ErrorTitle>メンバーが見つかりません</ErrorTitle>
+                <ErrorDescription>
                     指定したキーワードに合うメンバーが見つかりませんでした。<br />
                     検索キーワードを変更して再度お試しください。
-                </Typography>
-            </Box>}
+                </ErrorDescription>
+            </ErrorRoot>}
         </PageLayout>
     );
 };
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.leaderboard}</Typography>
-                <Typography>{translations.loading}</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.leaderboard} secondary={translations.loading} />
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
@@ -197,7 +183,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
 export const NotFoundView = ({}: LocalizationProps) => (
     <PageCenteredLayout>
         <ErrorRoot>
-            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
             <ErrorTitle>サーバーが見つかりません</ErrorTitle>
             <ErrorDescription>
                 指定されたサーバーが見つかりませんでした。<br />
@@ -210,14 +196,9 @@ export const NotFoundView = ({}: LocalizationProps) => (
 
 export const DataEmptyView = ({ localization: { translations } }: LocalizationProps) => (
     <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.leaderboard}</Typography>
-                <Typography />
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.leaderboard} />
         <ErrorRoot>
-            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
             <ErrorTitle>データがありません</ErrorTitle>
             <ErrorDescription>
                 このサーバーではまだ誰も発言していないようです...<br />

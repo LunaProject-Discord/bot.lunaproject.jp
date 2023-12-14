@@ -6,9 +6,9 @@ import {
     GroupTitle
 } from '@app/dashboard/[id]/commands/_dialog/_components/index';
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
+import { AddIcon } from '@components/icons';
 import { RolePopover } from '@components/items';
 import { GuildRolesViewProps } from '@interfaces/view';
-import { AddOutlined } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 import { getRoleColor } from '@utils/discord';
 import { getStateActionValue } from '@utils/state';
@@ -66,9 +66,8 @@ export const Roles = (
                         onClick={({ currentTarget }) => setAnchorEl(currentTarget)}
                         disableElevation
                         variant="contained"
-                        color="inherit"
                         size="small"
-                        startIcon={<AddOutlined />}
+                        startIcon={<AddIcon />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}

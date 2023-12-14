@@ -1,11 +1,10 @@
 import { getUser } from '@app/utils';
-import { UnauthorizedView } from '@app/view';
+import { NotFoundView, UnauthorizedView } from '@app/view';
 import { WithIdParamProps } from '@interfaces/page';
 import { getUserNotificationById, setUserNotificationRead } from '@libs/bot';
 import { getLocalization } from '@localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
-import { NotFoundView } from '../../view';
 import { View } from './view';
 
 export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
@@ -40,7 +39,7 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
 
     const userNotification = await getUserNotificationById(user.id, id);
     if (!userNotification)
-        return (<NotFoundView />);
+        return (<NotFoundView localization={localization} />);
 
     await setUserNotificationRead(user.id, id, true);
 

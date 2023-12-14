@@ -1,17 +1,17 @@
 'use client';
 
+import {
+    ArrowBackIcon,
+    BrushIcon,
+    KeyboardArrowRightIcon,
+    LogoutIcon,
+    ManageAccountsIcon,
+    OpenInNewIcon,
+    SettingsIcon,
+    TranslateIcon
+} from '@components/icons';
 import { LocaleType, LocalizationProps } from '@interfaces/localization';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    ArrowBackOutlined,
-    BrushOutlined,
-    ChevronRightOutlined,
-    LogoutOutlined,
-    ManageAccountsOutlined,
-    OpenInNewOutlined,
-    SettingsOutlined,
-    TranslateOutlined
-} from '@mui/icons-material';
 import {
     alpha,
     Avatar,
@@ -69,7 +69,7 @@ const AppearancePanelContent = ({ onClose, setPanelState, localization: { transl
             <List>
                 <PopoverListItemButton dense onClick={() => setPanelState(null)}>
                     <PopoverListItemIcon sx={{ minWidth: 'unset' }}>
-                        <ArrowBackOutlined />
+                        <ArrowBackIcon />
                     </PopoverListItemIcon>
                     <ListItemText primary={translations.design_and_appearance} />
                 </PopoverListItemButton>
@@ -118,7 +118,7 @@ const LocalePanelContent = ({ onClose, setPanelState, localization: { locale, tr
             <List>
                 <PopoverListItemButton dense onClick={() => setPanelState(null)}>
                     <PopoverListItemIcon sx={{ minWidth: 'unset' }}>
-                        <ArrowBackOutlined />
+                        <ArrowBackIcon />
                     </PopoverListItemIcon>
                     <ListItemText primary={translations.language} />
                 </PopoverListItemButton>
@@ -217,12 +217,12 @@ export const UserPopover = ({ user, localization }: UserPopoverProps) => {
                         </Box>
                         <Tooltip title={translations.user_settings} placement="top">
                             <IconButton component={NextLink} href="/dashboard/me">
-                                <SettingsOutlined />
+                                <SettingsIcon />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={translations.logout} placement="top">
                             <IconButton component={NextLink} href="https://account.lunaproject.jp/logout">
-                                <LogoutOutlined />
+                                <LogoutIcon />
                             </IconButton>
                         </Tooltip>
                     </Box>
@@ -230,10 +230,10 @@ export const UserPopover = ({ user, localization }: UserPopoverProps) => {
                     <List>
                         <PopoverListItemLinkButton href="https://account.lunaproject.jp/" dense>
                             <PopoverListItemIcon>
-                                <ManageAccountsOutlined />
+                                <ManageAccountsIcon />
                             </PopoverListItemIcon>
                             <ListItemText primary={translations.manage_account} />
-                            <OpenInNewOutlined color="action" />
+                            <OpenInNewIcon color="action" />
                         </PopoverListItemLinkButton>
                     </List>
                     <Divider />
@@ -260,17 +260,17 @@ export const UserPopover = ({ user, localization }: UserPopoverProps) => {
                 ) : undefined}>
                     <PopoverListItemButton dense onClick={() => setPanelState('appearance')}>
                         <PopoverListItemIcon>
-                            <BrushOutlined />
+                            <BrushIcon />
                         </PopoverListItemIcon>
                         <ListItemText primary={translations.design_and_appearance} />
-                        <ChevronRightOutlined color="action" />
+                        <KeyboardArrowRightIcon color="action" />
                     </PopoverListItemButton>
                     <PopoverListItemButton dense onClick={() => setPanelState('locale')}>
                         <PopoverListItemIcon>
-                            <TranslateOutlined />
+                            <TranslateIcon />
                         </PopoverListItemIcon>
                         <ListItemText primary={translations.language} />
-                        <ChevronRightOutlined color="action" />
+                        <KeyboardArrowRightIcon color="action" />
                     </PopoverListItemButton>
                 </List>
             </Fragment>}

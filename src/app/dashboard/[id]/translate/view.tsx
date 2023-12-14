@@ -2,13 +2,12 @@
 
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
 import { ActionItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationTranslate } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -45,12 +44,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.translate}</Typography>
-                    <Typography>{translations.translate_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.translate} secondary={translations.translate_description} />
             <Section>
                 <SectionContent>
                     <SwitchItem

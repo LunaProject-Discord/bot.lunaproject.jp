@@ -1,10 +1,9 @@
 import { getUser } from '@app/utils';
-import { UnauthorizedView } from '@app/view';
+import { NotFoundView, UnauthorizedView } from '@app/view';
 import { getUserConfiguration } from '@libs/bot';
 import { getLocalization } from '@localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
-import { NotFoundView } from '../view';
 import { View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
@@ -35,7 +34,7 @@ const Page = async () => {
 
     const userConfiguration = await getUserConfiguration(user.id);
     if (!userConfiguration)
-        return (<NotFoundView />);
+        return (<NotFoundView localization={localization} />);
 
     return (<View user={user} configuration={userConfiguration} localization={localization} />);
 };

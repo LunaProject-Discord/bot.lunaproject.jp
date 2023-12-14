@@ -1,18 +1,18 @@
 'use client';
 
+import {
+    AddIcon,
+    CloseIcon,
+    ContentCopyIcon,
+    ExpandMoreIcon,
+    KeyboardArrowDownIcon,
+    KeyboardArrowUpIcon
+} from '@components/icons';
 import { ItemDisabledProps, ItemVariableProps } from '@components/items';
 import { useTheme } from '@emotion/react';
 import { LocalizationProps } from '@interfaces/localization';
 import { getNewEmbed } from '@libs/message';
 import { Embed } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    AddOutlined,
-    ClearOutlined,
-    ContentCopyOutlined,
-    ExpandMoreOutlined,
-    KeyboardArrowDownOutlined,
-    KeyboardArrowUpOutlined
-} from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,
     AccordionDetails as MuiAccordionDetails,
@@ -76,7 +76,7 @@ const Accordion = styled(
 }));
 
 const AccordionSummary = styled(
-    (props: AccordionSummaryProps) => (<MuiAccordionSummary expandIcon={<ExpandMoreOutlined />} {...props} />)
+    (props: AccordionSummaryProps) => (<MuiAccordionSummary expandIcon={<ExpandMoreIcon />} {...props} />)
 )(({ theme }) => ({
     height: 40,
     minHeight: '40px !important',
@@ -138,22 +138,22 @@ export const EmbedEditor = (
                 <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: .5 }}>
                     {visibleMoveUpButton && <Tooltip title={translations.move_up} placement="top">
                         <IconButton onClick={moveUp} size="small" sx={{ width: 36, height: 36 }}>
-                            <KeyboardArrowUpOutlined />
+                            <KeyboardArrowUpIcon />
                         </IconButton>
                     </Tooltip>}
                     {visibleMoveDownButton && <Tooltip title={translations.move_down} placement="top">
                         <IconButton onClick={moveDown} size="small" sx={{ width: 36, height: 36 }}>
-                            <KeyboardArrowDownOutlined />
+                            <KeyboardArrowDownIcon />
                         </IconButton>
                     </Tooltip>}
                     <Tooltip title={translations.duplicate} placement="top">
                         <IconButton onClick={duplicate} size="small" sx={{ width: 36, height: 36 }}>
-                            <ContentCopyOutlined fontSize="small" />
+                            <ContentCopyIcon fontSize="small" />
                         </IconButton>
                     </Tooltip>
                     <Tooltip title={translations.remove} placement="top">
                         <IconButton onClick={remove} color="error" size="small" sx={{ width: 36, height: 36 }}>
-                            <ClearOutlined fontSize="small" />
+                            <CloseIcon fontSize="small" />
                         </IconButton>
                     </Tooltip>
                 </Box>
@@ -237,7 +237,7 @@ export const EmbedsEditor = ({ value, setValue, disabled, localization }: Embeds
                     disabled={disabled || value.length > 9}
                     disableElevation
                     variant="contained"
-                    startIcon={<AddOutlined />}
+                    startIcon={<AddIcon />}
                 >
                     {translations.embed_add}
                 </Button>

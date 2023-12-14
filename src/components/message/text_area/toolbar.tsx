@@ -1,15 +1,15 @@
 'use client';
 
+import {
+    FormatBoldIcon,
+    FormatItalicIcon,
+    FormatStrikethroughIcon,
+    FormatUnderlinedIcon,
+    MoodIcon
+} from '@components/icons';
 import { $convertToMarkdownString } from '@lexical/markdown';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
-import {
-    EmojiEmotionsOutlined,
-    FormatBoldOutlined,
-    FormatItalicOutlined,
-    FormatStrikethroughOutlined,
-    FormatUnderlinedOutlined
-} from '@mui/icons-material';
 import { Box, styled, Typography } from '@mui/material';
 import { $getSelection, $isRangeSelection, FORMAT_TEXT_COMMAND } from 'lexical';
 import { MouseEvent, useEffect, useState } from 'react';
@@ -64,23 +64,23 @@ export const Toolbar = ({ maxLength, onPickerOpen }: Props) => {
     return (
         <Container>
             <Button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold')}>
-                <FormatBoldOutlined color={bold ? 'primary' : 'action'} />
+                <FormatBoldIcon color={bold ? 'primary' : 'action'} />
             </Button>
             <Button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic')}>
-                <FormatItalicOutlined color={italic ? 'primary' : 'action'} />
+                <FormatItalicIcon color={italic ? 'primary' : 'action'} />
             </Button>
             <Button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline')}>
-                <FormatUnderlinedOutlined color={underline ? 'primary' : 'action'} />
+                <FormatUnderlinedIcon color={underline ? 'primary' : 'action'} />
             </Button>
             <Button onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough')}>
-                <FormatStrikethroughOutlined color={strikethrough ? 'primary' : 'action'} />
+                <FormatStrikethroughIcon color={strikethrough ? 'primary' : 'action'} />
             </Button>
             <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: .5 }}>
                 <Typography variant="overline" sx={{ userSelect: 'none' }}>
                     {length}{maxLength && ` / ${maxLength}`}
                 </Typography>
                 <Button onClick={onPickerOpen} sx={{ ml: 'auto' }}>
-                    <EmojiEmotionsOutlined color="action" />
+                    <MoodIcon color="action" />
                 </Button>
             </Box>
         </Container>

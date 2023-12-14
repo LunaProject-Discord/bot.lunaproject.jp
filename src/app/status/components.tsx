@@ -1,17 +1,11 @@
 'use client';
 
+import { ErrorIcon, KeyboardArrowDownIcon, LoginIcon, TaskAltIcon, WarningIcon } from '@components/icons';
 import { SessionStatus } from '@interfaces/bot';
 import { Localization, LocalizationProps } from '@interfaces/localization';
 import { RedisStatus } from '@interfaces/redis';
 import { buttonActionStyled } from '@lunaproject/web-core/dist/components/ButtonBase';
 import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    ErrorOutlineOutlined,
-    KeyboardArrowDownOutlined,
-    LoginOutlined,
-    TaskAltOutlined,
-    WarningAmberOutlined
-} from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,
     accordionClasses,
@@ -51,13 +45,13 @@ const getStatusColor = (status: SessionStatus) => {
 const getStatusIcon = (status: SessionStatus) => {
     switch (status) {
         case 'CONNECTED':
-            return TaskAltOutlined;
+            return TaskAltIcon;
         case 'SHUTTING_DOWN':
         case 'SHUTDOWN':
         case 'FAILED_TO_LOGIN':
-            return ErrorOutlineOutlined;
+            return ErrorIcon;
         default:
-            return WarningAmberOutlined;
+            return WarningIcon;
     }
 };
 
@@ -107,7 +101,7 @@ export const StatusAccordion = styled(
 });
 
 export const StatusAccordionSummary = styled(
-    (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<KeyboardArrowDownOutlined />} {...props} />
+    (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<KeyboardArrowDownIcon />} {...props} />
 )<AccordionSummaryProps>(({ theme }) => ({
     minHeight: 50,
     padding: theme.spacing(0, 1.5),
@@ -251,7 +245,7 @@ export const Status = ({ status: { id, status, ping }, user, guilds, localizatio
                                 href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                                 disableElevation
                                 variant="contained"
-                                startIcon={<LoginOutlined />}
+                                startIcon={<LoginIcon />}
                                 sx={{ width: 'fit-content' }}
                             >
                                 {translations.login}

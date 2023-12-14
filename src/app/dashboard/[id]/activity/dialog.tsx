@@ -2,26 +2,27 @@
 
 import { CancelButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import {
+    AddIcon,
+    DeleteIcon,
+    KeyboardArrowDownIcon,
+    KeyboardArrowUpIcon,
+    LabelOffIcon,
+    LiveTvIcon,
+    MusicNoteIcon,
+    SportsEsportsIcon,
+    TagIcon,
+    VideocamIcon
+} from '@components/icons';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '@components/items';
-import { TranslatableTypography, translatableTypographyStyled } from '@components/text';
+import { translatableTypographyStyled } from '@components/text';
 import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
 import { PopoverProps } from '@interfaces/mui';
 import { GuildViewProps } from '@interfaces/view';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
-import {
-    AddOutlined,
-    DeleteOutlined,
-    KeyboardArrowDownOutlined,
-    KeyboardArrowUpOutlined,
-    LabelOffOutlined,
-    MusicNoteOutlined,
-    OndemandVideoOutlined,
-    SportsEsportsOutlined,
-    TagOutlined,
-    VideocamOutlined
-} from '@mui/icons-material';
 import {
     Box,
     Button,
@@ -78,31 +79,31 @@ const SelectActivityTypePopover = (
     const items: SelectActivityTypeMenuItem[] = [
         {
             type: 'PLAYING',
-            icon: <SportsEsportsOutlined />,
+            icon: <SportsEsportsIcon />,
             primary: translations.activity_type_playing_long,
             secondary: translations.activity_type_playing_description
         },
         {
             type: 'STREAMING',
-            icon: <VideocamOutlined />,
+            icon: <VideocamIcon />,
             primary: translations.activity_type_streaming_long,
             secondary: translations.activity_type_streaming_description
         },
         {
             type: 'LISTENING',
-            icon: <MusicNoteOutlined />,
+            icon: <MusicNoteIcon />,
             primary: translations.activity_type_listening_long,
             secondary: translations.activity_type_listening_description
         },
         {
             type: 'WATCHING',
-            icon: <OndemandVideoOutlined />,
+            icon: <LiveTvIcon />,
             primary: translations.activity_type_watching_long,
             secondary: translations.activity_type_watching_description
         },
         {
             type: 'CUSTOM_STATUS',
-            icon: <TagOutlined />,
+            icon: <TagIcon />,
             primary: translations.activity_type_custom_status_long,
             secondary: translations.activity_type_custom_status_description
         }
@@ -210,7 +211,7 @@ const RoleItem = (
                         </Select>
                         <Tooltip title={translations.remove} placement="top">
                             <IconButton onClick={() => setValue(undefined)} disabled={disabled} color="error">
-                                <DeleteOutlined />
+                                <DeleteIcon />
                             </IconButton>
                         </Tooltip>
                     </Box>
@@ -277,8 +278,8 @@ export const ManageRolesDialog = (
                         onClick={(e) => setAnchorEl(e.currentTarget)}
                         disableElevation
                         variant="contained"
-                        startIcon={<AddOutlined />}
-                        endIcon={anchorEl ? <KeyboardArrowUpOutlined /> : <KeyboardArrowDownOutlined />}
+                        startIcon={<AddIcon />}
+                        endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}
@@ -293,24 +294,15 @@ export const ManageRolesDialog = (
                             guild={guild}
                             localization={localization}
                         />
-                    )) : <Box
-                        sx={{
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            placeItems: 'center',
-                            placeContent: 'center',
-                            gap: 1
-                        }}
-                    >
-                        <LabelOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-                        <TranslatableTypography variant="h4" align="center">
+                    )) : <ErrorRoot>
+                        <LabelOffIcon sx={{ fontSize: '10rem' }} />
+                        <ErrorTitle>
                             {translations.dashboard_error_manage_roles_empty_dialog_title}
-                        </TranslatableTypography>
-                        <TranslatableTypography align="center">
+                        </ErrorTitle>
+                        <ErrorDescription>
                             {translations.dashboard_error_manage_roles_empty_dialog_description}
-                        </TranslatableTypography>
-                    </Box>}
+                        </ErrorDescription>
+                    </ErrorRoot>}
                 </DialogContent>
                 <DialogActions>
                     <CancelButton onClick={handleClose} variant="contained">{translations.close}</CancelButton>

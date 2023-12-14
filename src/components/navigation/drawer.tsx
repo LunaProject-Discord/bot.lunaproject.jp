@@ -1,16 +1,22 @@
 'use client';
 
+import { ToggleOffIcon, ToggleOnIcon } from '@components/icons';
 import {
+    alpha,
+    CSSObject,
     Drawer,
     drawerClasses,
     List,
     ListItemButton,
+    listItemButtonClasses,
     ListItemIcon,
     ListItemText,
+    listItemTextClasses,
     ListProps,
     ListSubheader,
     styled,
-    svgIconClasses
+    svgIconClasses,
+    Theme
 } from '@mui/material';
 import NextLink from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -108,6 +114,44 @@ export const NavigationDrawerGroup = ({ label, children, ...props }: NavigationD
     </NavigationDrawerGroupRoot>
 );
 
+export const navigationDrawerItemRootStyled = (theme: Theme): CSSObject => ({
+    minHeight: theme.spacing(5),
+    px: 1.5,
+    py: .5,
+    gap: 1,
+    color: theme.palette.text.secondary,
+    borderRadius: 1,
+    [`&.${listItemButtonClasses.selected}`]: {
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.action.selected,
+        [`&.${listItemButtonClasses.focusVisible}`]: {
+            backgroundColor: alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
+        }
+    },
+    [`&.${listItemButtonClasses.selected}:hover`]: {
+        backgroundColor: alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity),
+        '@media (hover: none)': {
+            backgroundColor: alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity)
+        }
+    }
+});
+
+export const NavigationDrawerItemIcon = styled(ListItemIcon)(({ theme }) => ({
+    minWidth: 20,
+    color: 'inherit',
+    [`& .${svgIconClasses.root}`]: {
+        fontSize: theme.typography.h6.fontSize
+    }
+}));
+
+export const NavigationDrawerItemText = styled(ListItemText)(({ theme }) => ({
+    color: 'inherit',
+    [`& .${listItemTextClasses.primary}`]: {
+        fontSize: theme.typography.body2.fontSize,
+        fontWeight: theme.typography.fontWeightMedium
+    }
+}));
+
 export interface NavigationDrawerItemProps extends NavigationDrawerProps, NavigationItemProps {
     primary?: ReactNode;
     secondary?: ReactNode;
@@ -130,7 +174,47 @@ export const NavigationDrawerItem = (
     const loweredHref = href.toLowerCase();
     const isMatch = (predicate ?? defaultPredicate)(loweredPathname, loweredHref);
 
-    const color = isMatch ? 'primary.main' : 'text.secondary';
+    const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+        router.push(href);
+        setOpen(false);
+    };
+
+    return (
+        <ListItemButton
+            component={NextLink}
+            href={href}
+            selected={isMatch}
+            onClick={handleClick}
+            sx={(theme) => navigationDrawerItemRootStyled(theme)}
+        >
+            <NavigationDrawerItemIcon>{icon}</NavigationDrawerItemIcon>
+            <NavigationDrawerItemText primary={primary} secondary={secondary} />
+        </ListItemButton>
+    );
+};
+
+export interface NavigationDrawerItemWithEnabledStatusProps extends NavigationDrawerItemProps {
+    enabled: boolean;
+}
+
+export const NavigationDrawerItemWithEnabledStatus = (
+    {
+        href,
+        predicate,
+        icon,
+        primary,
+        secondary,
+        enabled,
+        setOpen
+    }: NavigationDrawerItemWithEnabledStatusProps
+) => {
+    const router = useRouter();
+
+    const pathname = usePathname();
+    const loweredPathname = pathname.toLowerCase();
+    const loweredHref = href.toLowerCase();
+    const isMatch = (predicate ?? defaultPredicate)(loweredPathname, loweredHref);
 
     const handleClick = (e: MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -144,29 +228,11 @@ export const NavigationDrawerItem = (
             href={href}
             selected={isMatch}
             onClick={handleClick}
-            sx={{ px: 1.5, py: .5, gap: 1, borderRadius: 1 }}
+            sx={(theme) => navigationDrawerItemRootStyled(theme)}
         >
-            <ListItemIcon
-                sx={{
-                    minWidth: 20,
-                    color,
-                    [`& .${svgIconClasses.root}`]: {
-                        fontSize: (theme) => theme.typography.h6.fontSize
-                    }
-                }}
-            >
-                {icon}
-            </ListItemIcon>
-            <ListItemText
-                primary={primary}
-                primaryTypographyProps={{
-                    fontSize: (theme) => theme.typography.body2.fontSize,
-                    fontWeight: (theme) => theme.typography.fontWeightMedium,
-                    color
-                }}
-                secondary={secondary}
-                secondaryTypographyProps={{ color }}
-            />
+            <NavigationDrawerItemIcon>{icon}</NavigationDrawerItemIcon>
+            <NavigationDrawerItemText primary={primary} secondary={secondary} />
+            {enabled ? <ToggleOnIcon color="inherit" /> : <ToggleOffIcon color="disabled" />}
         </ListItemButton>
     );
 };

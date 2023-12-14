@@ -2,10 +2,10 @@ import { EditableItemProps, GroupProps } from '@app/dashboard/[id]/commands/_com
 import { EditableItem, Group, GroupTitle } from '@app/dashboard/[id]/commands/_dialog/_components/index';
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
 import { getMemberDisplay } from '@app/user';
+import { AddIcon } from '@components/icons';
 import { MemberPopover } from '@components/items';
 import { GuildMembersViewProps } from '@interfaces/view';
 import { ItemIcon, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
-import { AddOutlined } from '@mui/icons-material';
 import { Avatar, Button } from '@mui/material';
 import { getMemberAvatar } from '@utils/cdn';
 import { getStateActionValue } from '@utils/state';
@@ -78,9 +78,8 @@ export const Members = ({ value, setValue, members, localization }: GroupProps &
                         onClick={({ currentTarget }) => setAnchorEl(currentTarget)}
                         disableElevation
                         variant="contained"
-                        color="inherit"
                         size="small"
-                        startIcon={<AddOutlined />}
+                        startIcon={<AddIcon />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}

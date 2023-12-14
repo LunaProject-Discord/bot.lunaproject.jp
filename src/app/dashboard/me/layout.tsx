@@ -1,5 +1,5 @@
 import { getUser } from '@app/utils';
-import { UnauthorizedView } from '@app/view';
+import { NotFoundView, UnauthorizedView } from '@app/view';
 import { PageWithSidebarLayout } from '@components/layout_v2';
 import { getUserConfiguration, getUserFlags } from '@libs/bot';
 import { getLocalization } from '@localizations/server';
@@ -7,7 +7,6 @@ import { Box } from '@mui/material';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
-import { NotFoundView } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
     const { translations } = getLocalization();
@@ -54,7 +53,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
     const userConfiguration = await getUserConfiguration(user.id);
     if (!userConfiguration)
-        return (<NotFoundView />);
+        return (<NotFoundView localization={localization} />);
 
     return (
         <Box sx={{ p: 3, display: 'flex', gap: 3 }}>

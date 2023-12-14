@@ -1,5 +1,6 @@
 'use client';
 
+import { KeyboardArrowDownIcon } from '@components/icons';
 import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
 import {
     ADVANCED_PERMISSIONS,
@@ -18,7 +19,6 @@ import {
     ItemVariableProps,
     SwitchItemProps
 } from '@lunaproject/web-core/dist/components/SectionItems';
-import { KeyboardArrowDownOutlined } from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,
     accordionClasses,
@@ -55,7 +55,7 @@ const Accordion = styled(
 });
 
 const AccordionSummary = styled(
-    (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<KeyboardArrowDownOutlined />} {...props} />
+    (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<KeyboardArrowDownIcon />} {...props} />
 )<AccordionSummaryProps>(({ theme }) => ({
     minHeight: 50,
     padding: theme.spacing(0, 1.5),

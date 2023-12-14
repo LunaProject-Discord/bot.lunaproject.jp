@@ -2,7 +2,7 @@
 
 import { CancelButton } from '@components/buttons';
 import { ChannelItem, MessageItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
 import { GuildConfigurationWelcome } from '@interfaces/bot';
@@ -92,13 +92,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.welcome_message}</Typography>
-                    <Typography>{translations.welcome_message_description}</Typography>
-                </Box>
-            </PageHeader>
-            {false && <Section>
+            <PageHeader primary={translations.welcome_message} secondary={translations.welcome_message_description} />
+            <Section>
                 <SectionContent>
                     <Alert severity="info">
                         <AlertTitle>「ようこそ (参加) メッセージ」が生まれ変わります！</AlertTitle>
@@ -110,12 +105,13 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                             onClick={() => setOpenMigrationDialog(true)}
                             disableElevation
                             variant="contained"
+                            color="inherit"
                         >
                             今すぐ試す
                         </Button>
                     </Alert>
                 </SectionContent>
-            </Section>}
+            </Section>
             <Section>
                 <SectionContent>
                     <SwitchItem
@@ -146,45 +142,42 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
 
-            {false && <Fragment>
-                <DialogV2 open={openMigrationDialog} onClose={() => setOpenMigrationDialog(false)}>
-                    <DialogV2Title>
-                        「メンバーの参加」の利用開始
-                    </DialogV2Title>
-                    <DialogV2Content>
-                        <Typography>
-                            現在、この機能はベータ公開中です。<br />
-                            そのため、この機能を利用した際に発生した一切の損害についての責任は負いませんのでご注意ください。<br />
-                        </Typography>
-                        <Typography variant="h6" sx={{ mt: 1 }}>ようこそ (参加) メッセージ からの改善点</Typography>
-                        <ul className="list-disc mt-1 ps-5">
-                            <li>ユーザーや Bot に役職を付与できるように</li>
-                            <li>メンバーのルール スクリーニング状態に応じて動作するように</li>
-                        </ul>
-                        <Typography variant="h6" sx={{ mt: 1 }}>この機能の利用について</Typography>
-                        <Typography>
-                            この機能が正式公開されるまでは、従来の機能と切り替えて使用することができます。<br />
-                            この機能を利用するには ようこそ (参加) メッセージ の設定を引き継ぐか、新しく設定する必要があります。<br />
-                            下のボタンを押して機能の利用開始方法を選択してください。
-                        </Typography>
-                    </DialogV2Content>
-                    <DialogV2Actions>
-                        <CancelButton onClick={() => setOpenMigrationDialog(false)} sx={{ mr: 'auto' }}>
-                            {translations.cancel}
-                        </CancelButton>
-                        <Button onClick={handleNewAction}>
-                            新しく設定する
-                        </Button>
-                        <Button onClick={handleMigrateAction} variant="contained">
-                            設定を引き継ぐ
-                        </Button>
-                    </DialogV2Actions>
-                </DialogV2>
-                <Backdrop open={openMigratingBackdrop}
-                          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}>
-                    <CircularProgress color="inherit" />
-                </Backdrop>
-            </Fragment>}
+            <DialogV2 open={openMigrationDialog} onClose={() => setOpenMigrationDialog(false)}>
+                <DialogV2Title>
+                    「メンバーの参加」の利用開始
+                </DialogV2Title>
+                <DialogV2Content>
+                    <Typography>
+                        現在、この機能はベータ公開中です。<br />
+                        そのため、この機能を利用した際に発生した一切の損害についての責任は負いませんのでご注意ください。<br />
+                    </Typography>
+                    <Typography variant="h6" sx={{ mt: 1 }}>ようこそ (参加) メッセージ からの改善点</Typography>
+                    <ul className="list-disc mt-1 ps-5">
+                        <li>ユーザーや Bot に役職を付与できるように</li>
+                        <li>メンバーのルール スクリーニング状態に応じて動作するように</li>
+                    </ul>
+                    <Typography variant="h6" sx={{ mt: 1 }}>この機能の利用について</Typography>
+                    <Typography>
+                        この機能が正式公開されるまでは、従来の機能と切り替えて使用することができます。<br />
+                        この機能を利用するには ようこそ (参加) メッセージ の設定を引き継ぐか、新しく設定する必要があります。<br />
+                        下のボタンを押して機能の利用開始方法を選択してください。
+                    </Typography>
+                </DialogV2Content>
+                <DialogV2Actions>
+                    <CancelButton onClick={() => setOpenMigrationDialog(false)} sx={{ mr: 'auto' }}>
+                        {translations.cancel}
+                    </CancelButton>
+                    <Button onClick={handleNewAction}>
+                        新しく設定する
+                    </Button>
+                    <Button onClick={handleMigrateAction} variant="contained">
+                        設定を引き継ぐ
+                    </Button>
+                </DialogV2Actions>
+            </DialogV2>
+            <Backdrop open={openMigratingBackdrop} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
 
             <SaveConfirm
                 open={!deepEqual(welcomeConfiguration, toObject(), { strict: true })}

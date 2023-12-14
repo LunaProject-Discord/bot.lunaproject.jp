@@ -1,7 +1,14 @@
 'use client';
 
 import { NAVIGATION_DRAWER_WIDTH } from '@components/navigation';
-import { Box, styled } from '@mui/material';
+import { Box, styled, Typography, TypographyProps } from '@mui/material';
+import React, { ReactNode } from 'react';
+
+export const Body = styled('body')(({ theme }) => ({
+    minHeight: '100dvh',
+    margin: 0,
+    padding: 0
+}));
 
 export const RootLayout = styled(Box)(({ theme }) => ({
     width: '100%',
@@ -37,3 +44,39 @@ export const PageCenteredLayout = styled(PageLayout)(({ theme }) => ({
         height: `calc(100dvh - ${theme.spacing(8)})`
     }
 }));
+
+export const PageHeaderRoot = styled('header')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(3),
+    [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+        alignItems: 'stretch'
+    }
+}));
+
+export interface PageHeaderProps {
+    primary?: ReactNode;
+    secondary?: ReactNode;
+    primaryTypographyProps?: TypographyProps;
+    secondaryTypographyProps?: TypographyProps;
+    children?: ReactNode;
+}
+
+export const PageHeader = (
+    {
+        primary,
+        secondary,
+        primaryTypographyProps,
+        secondaryTypographyProps,
+        children
+    }: PageHeaderProps
+) => (
+    <PageHeaderRoot>
+        <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
+            {primary && <Typography variant="h4" {...primaryTypographyProps}>{primary}</Typography>}
+            {secondary && <Typography {...secondaryTypographyProps}>{secondary}</Typography>}
+        </Box>
+        {children && <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>{children}</Box>}
+    </PageHeaderRoot>
+);

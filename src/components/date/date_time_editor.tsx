@@ -1,8 +1,8 @@
 'use client';
 
 import { BaseDateTimeEditorProps } from '@components/date/index';
+import { TodayIcon } from '@components/icons';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
-import { TodayOutlined } from '@mui/icons-material';
 import { IconButton, InputAdornment, Theme, useMediaQuery } from '@mui/material';
 import { DateTimeField, DateTimeFieldProps, MobileDateTimePicker, StaticDateTimePicker } from '@mui/x-date-pickers';
 import { BaseDateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker/shared';
@@ -84,7 +84,7 @@ export const DateTimeEditor = (
                                             size="small"
                                             sx={{ mr: -1 }}
                                         >
-                                            <TodayOutlined />
+                                            <TodayIcon />
                                         </IconButton>
                                     </InputAdornment>
                                 )

@@ -5,10 +5,10 @@ import {
     OverrideGroupProps
 } from '@app/dashboard/[id]/commands/_components';
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
+import { AddIcon } from '@components/icons';
 import { RolePopover } from '@components/items';
 import { GuildRolesViewProps } from '@interfaces/view';
 import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
-import { AddOutlined } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 import { getRoleColor } from '@utils/discord';
 import { getStateActionValue } from '@utils/state';
@@ -66,8 +66,7 @@ export const Roles = (
                         onClick={({ currentTarget }) => setAnchorEl(currentTarget)}
                         disableElevation
                         variant="contained"
-                        color="inherit"
-                        startIcon={<AddOutlined />}
+                        startIcon={<AddIcon />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}

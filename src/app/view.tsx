@@ -1,6 +1,18 @@
 'use client';
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import {
+    AnalyticsIcon,
+    CloudOffIcon,
+    DnsIcon,
+    HomeIcon,
+    LeaderboardIcon,
+    LockPersonIcon,
+    LoginIcon,
+    PersonOffIcon,
+    SettingsIcon,
+    TrailLengthShortIcon
+} from '@components/icons';
 import { PageCenteredLayout, PageLayout } from '@components/layout_v2';
 import { FeaturedGuild } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
@@ -9,18 +21,6 @@ import { Section, SectionContent } from '@lunaproject/web-core/dist/components/S
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    AnalyticsOutlined,
-    AutoAwesomeOutlined,
-    CloudOffOutlined,
-    DnsOutlined,
-    HomeOutlined,
-    LeaderboardOutlined,
-    LockPersonOutlined,
-    LoginOutlined,
-    PersonOffOutlined,
-    SettingsOutlined
-} from '@mui/icons-material';
 import {
     Alert,
     AlertTitle,
@@ -111,14 +111,14 @@ export const View = ({ user, localization: { translations } }: Props) => {
                                 {
                                     value: 'features',
                                     children: <Fragment>
-                                        <AutoAwesomeOutlined sx={{ ml: -.75 }} />
+                                        <TrailLengthShortIcon sx={{ ml: -.75 }} />
                                         機能から探す
                                     </Fragment>
                                 },
                                 {
                                     value: 'guilds',
                                     children: <Fragment>
-                                        <DnsOutlined sx={{ ml: -.75 }} />
+                                        <DnsIcon sx={{ ml: -.75 }} />
                                         サーバーから探す
                                     </Fragment>
                                 }
@@ -135,7 +135,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                                 }}
                             >
                                 <ListItemIcon>
-                                    <AnalyticsOutlined />
+                                    <AnalyticsIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={translations.status} />
                             </ListItemButton>
@@ -147,7 +147,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                                 }}
                             >
                                 <ListItemIcon>
-                                    <LeaderboardOutlined />
+                                    <LeaderboardIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={translations.leaderboard} />
                             </ListItemButton>
@@ -159,7 +159,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                                 }}
                             >
                                 <ListItemIcon>
-                                    <SettingsOutlined />
+                                    <SettingsIcon />
                                 </ListItemIcon>
                                 <ListItemText primary={translations.guild_settings} />
                             </ListItemButton>
@@ -189,7 +189,8 @@ export const View = ({ user, localization: { translations } }: Props) => {
                         href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                         disableElevation
                         variant="contained"
-                        startIcon={<LoginOutlined />}
+                        color="inherit"
+                        startIcon={<LoginIcon />}
                         sx={{ px: 2 }}
                     >
                         {translations.login}
@@ -204,7 +205,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
 export const UnauthorizedView = ({ localization: { translations } }: LocalizationProps) => (
     <PageCenteredLayout>
         <ErrorRoot>
-            <PersonOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <PersonOffIcon sx={{ fontSize: '10rem' }} />
             <ErrorTitle>{translations.error_unauthorized_title}</ErrorTitle>
             <ErrorDescription>{translations.error_unauthorized_description}</ErrorDescription>
             <Button
@@ -212,7 +213,7 @@ export const UnauthorizedView = ({ localization: { translations } }: Localizatio
                 href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                 variant="contained"
                 size="large"
-                startIcon={<LoginOutlined />}
+                startIcon={<LoginIcon />}
             >
                 {translations.login}
             </Button>
@@ -223,7 +224,7 @@ export const UnauthorizedView = ({ localization: { translations } }: Localizatio
 export const ForbiddenView = ({ localization: { translations } }: LocalizationProps) => (
     <PageCenteredLayout>
         <ErrorRoot>
-            <LockPersonOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <LockPersonIcon sx={{ fontSize: '10rem' }} />
             <ErrorTitle>{translations.error_forbidden_title}</ErrorTitle>
             <ErrorDescription>{translations.error_forbidden_description}</ErrorDescription>
         </ErrorRoot>
@@ -234,7 +235,7 @@ export const ForbiddenView = ({ localization: { translations } }: LocalizationPr
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <PageCenteredLayout>
         <ErrorRoot>
-            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
             <ErrorTitle>{translations.error_not_found_title}</ErrorTitle>
             <ErrorDescription>{translations.error_not_found_description}</ErrorDescription>
             <Button
@@ -243,7 +244,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 prefetch={false}
                 variant="contained"
                 size="large"
-                startIcon={<HomeOutlined />}
+                startIcon={<HomeIcon />}
             >
                 {translations.back_to_home}
             </Button>

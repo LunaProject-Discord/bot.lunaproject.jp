@@ -1,5 +1,6 @@
 'use client';
 
+import { CategoryIcon } from '@components/icons/material_symbols';
 import { RedisChannel } from '@interfaces/redis';
 import {
     AnnouncementChannelIcon,
@@ -8,7 +9,6 @@ import {
     TextChannelIcon,
     VoiceChannelIcon
 } from '@lunaproject/web-core/dist/components/Icons/channels';
-import { CategoryOutlined } from '@mui/icons-material';
 import { SvgIcon, SvgIconProps } from '@mui/material';
 import { APIChannel, ChannelType } from 'discord-api-types/v10';
 import React, { Fragment } from 'react';
@@ -28,7 +28,7 @@ interface ChannelIconProps extends SvgIconProps {
 export const ChannelIcon = ({ channel, ...props }: ChannelIconProps) => {
     switch (typeof channel === 'number' ? channel : channel.type) {
         case ChannelType.GuildCategory:
-            return <CategoryOutlined {...props} />;
+            return <CategoryIcon {...props} />;
         case ChannelType.GuildText:
             return <TextChannelIcon {...props} />;
         case ChannelType.GuildVoice:
@@ -78,3 +78,6 @@ export const CrownOutlined = (props: SvgIconProps) => (
             d="M12 8L15 13.2L18 10.5L17.3 14H6.7L6 10.5L9 13.2L12 8M12 4L8.5 10L3 5L5 16H19L21 5L15.5 10L12 4M19 18H5V19C5 19.6 5.4 20 6 20H18C18.6 20 19 19.6 19 19V18Z" />
     </SvgIcon>
 );
+
+export * from './material_symbols';
+export * from './utils';

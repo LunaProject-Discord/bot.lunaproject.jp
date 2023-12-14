@@ -1,13 +1,12 @@
 'use client';
 
 import { ActionItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationActivity } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -33,12 +32,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.activity}</Typography>
-                    <Typography>{translations.activity_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.activity} secondary={translations.activity_description} />
             <Section>
                 <SectionContent>
                     <SwitchItem

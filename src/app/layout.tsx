@@ -1,5 +1,5 @@
 import { getUser } from '@app/utils';
-import { Body } from '@components/layout';
+import { Body } from '@components/layout_v2';
 import { getUserFlags } from '@libs/bot';
 import { getLocale, getLocalization } from '@localizations/server';
 import { AppearanceType } from '@states/appearance';

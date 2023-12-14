@@ -1,13 +1,12 @@
 'use client';
 
 import { Status } from '@app/status/components';
-import { PageHeader } from '@components/layout';
-import { PageLayout } from '@components/layout_v2';
+import { CloudOffIcon } from '@components/icons';
+import { PageHeader, PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import { RedisStatus } from '@interfaces/redis';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { CloudOffOutlined } from '@mui/icons-material';
 import { Alert, AlertTitle, Box, CircularProgress, Typography } from '@mui/material';
 import { sortGuilds } from '@utils/discord';
 import React, { Fragment } from 'react';
@@ -26,12 +25,7 @@ export const View = ({ statuses, user, guilds, localization }: Props) => {
 
     return (
         <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.status}</Typography>
-                    <Typography>{translations.status_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.status} secondary={translations.status_description} />
             <Section>
                 <SectionContent>
                     {!isAllDisconnected ? <Fragment>
@@ -67,12 +61,7 @@ export const View = ({ statuses, user, guilds, localization }: Props) => {
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.status}</Typography>
-                <Typography>{translations.loading}</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.status} secondary={translations.loading} />
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
@@ -81,12 +70,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.status}</Typography>
-                <Typography />
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.status} />
         <Box
             sx={{
                 height: '100%',
@@ -97,7 +81,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 gap: 1
             }}
         >
-            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
             <Typography variant="h4">データがありません</Typography>
             <Typography align="center">
                 現在、表示できるデータはありません。<br />

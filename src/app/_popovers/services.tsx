@@ -1,7 +1,8 @@
 'use client';
 
+import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@components/icons';
 import { LocalizationProps } from '@interfaces/localization';
-import { DescriptionOutlined, ManageAccountsOutlined, NightlightRound, OpenInNewOutlined } from '@mui/icons-material';
+import { NightlightRound } from '@mui/icons-material';
 import { Divider, List, ListItemText, Popover } from '@mui/material';
 import { popoverAtom } from '@states/popover';
 import React from 'react';
@@ -44,21 +45,21 @@ export const ServicesPopover = ({ localization }: LocalizationProps) => {
                         <NightlightRound sx={{ color: '#ffc636', transform: 'rotate(-20deg)' }} />
                     </PopoverListItemIcon>
                     <ListItemText primary="Luna Project" />
-                    <OpenInNewOutlined color="action" />
+                    <OpenInNewIcon color="action" />
                 </PopoverListItemLinkButton>
                 <PopoverListItemLinkButton href="https://docs.lunaproject.jp/" target="_blank" dense>
                     <PopoverListItemIcon>
-                        <DescriptionOutlined />
+                        <DescriptionIcon />
                     </PopoverListItemIcon>
                     <ListItemText primary={translations.lunaproject_document} />
-                    <OpenInNewOutlined color="action" />
+                    <OpenInNewIcon color="action" />
                 </PopoverListItemLinkButton>
             </List>
             <Divider />
             <List>
                 <PopoverListItemLinkButton href="https://account.lunaproject.jp/" dense>
                     <PopoverListItemIcon>
-                        <ManageAccountsOutlined />
+                        <ManageAccountsIcon />
                     </PopoverListItemIcon>
                     <ListItemText primary={translations.lunaproject_account} />
                 </PopoverListItemLinkButton>

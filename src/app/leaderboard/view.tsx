@@ -1,18 +1,17 @@
 'use client';
 
-import { PageHeader } from '@components/layout';
-import { PageLayout } from '@components/layout_v2';
+import { FormatListBulletedIcon, GridViewIcon } from '@components/icons';
+import { PageHeader, PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
-import { FormatListBulletedOutlined, GridViewOutlined } from '@mui/icons-material';
-import { Avatar, Box, ButtonBase, CircularProgress, Typography } from '@mui/material';
+import { Avatar, ButtonBase, CircularProgress } from '@mui/material';
+import { getGuildIcon } from '@utils/discord';
 import NextLink from 'next/link';
 import React, { Fragment, useState } from 'react';
-import { getGuildIcon } from '../../utils/discord';
 
 interface GuildsProps {
     guilds: OAuthGuild[];
@@ -61,21 +60,15 @@ export const View = ({ guilds, localization: { translations } }: Props) => {
 
     return (
         <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.leaderboard}</Typography>
-                    <Typography>{translations.leaderboard_description}</Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>
-                    <SegmentedControl<ViewType>
-                        value={viewType}
-                        setValue={setViewType}
-                        choices={[
-                            { value: 'gallery', children: (<GridViewOutlined />) },
-                            { value: 'table', children: (<FormatListBulletedOutlined />) }
-                        ]}
-                    />
-                </Box>
+            <PageHeader primary={translations.leaderboard} secondary={translations.leaderboard_description}>
+                <SegmentedControl<ViewType>
+                    value={viewType}
+                    setValue={setViewType}
+                    choices={[
+                        { value: 'gallery', children: (<GridViewIcon />) },
+                        { value: 'table', children: (<FormatListBulletedIcon />) }
+                    ]}
+                />
             </PageHeader>
             <Section>
                 {viewType === 'gallery' ? (<GuildsGallery guilds={guilds} />) : (<GuildsTable guilds={guilds} />)}
@@ -86,12 +79,7 @@ export const View = ({ guilds, localization: { translations } }: Props) => {
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.leaderboard}</Typography>
-                <Typography>{translations.loading}</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.leaderboard} secondary={translations.loading} />
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>

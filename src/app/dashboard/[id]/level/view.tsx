@@ -13,7 +13,7 @@ import {
     SwitchItem,
     TextFieldItem
 } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
 import {
@@ -24,7 +24,6 @@ import {
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionParagraph, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Box, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -102,12 +101,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.level}</Typography>
-                    <Typography>{translations.level_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.level} secondary={translations.level_description} />
             <Section>
                 <SectionContent>
                     <SwitchItem

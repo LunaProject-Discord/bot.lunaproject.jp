@@ -1,7 +1,13 @@
 'use client';
 
-import { PageHeader } from '@components/layout';
-import { PageLayout } from '@components/layout_v2';
+import {
+    AddIcon,
+    FormatListBulletedIcon,
+    GridViewIcon,
+    KeyboardArrowDownIcon,
+    KeyboardArrowUpIcon
+} from '@components/icons';
+import { PageHeader, PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Menu } from '@lunaproject/web-core/dist/components/Menu';
@@ -9,27 +15,10 @@ import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    AddOutlined,
-    FormatListBulletedOutlined,
-    GridViewOutlined,
-    KeyboardArrowDownOutlined,
-    KeyboardArrowUpOutlined
-} from '@mui/icons-material';
-import {
-    Avatar,
-    Box,
-    Button,
-    ButtonBase,
-    CircularProgress,
-    ListItemIcon,
-    ListItemText,
-    MenuItem,
-    Typography
-} from '@mui/material';
+import { Avatar, Button, ButtonBase, CircularProgress, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
+import { getGuildIcon } from '@utils/discord';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEvent, useState } from 'react';
-import { getGuildIcon } from '../../utils/discord';
 
 interface GuildsProps {
     guilds: OAuthGuild[];
@@ -88,32 +77,26 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
 
     return (
         <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.guild_settings}</Typography>
-                    <Typography>{translations.guild_settings_description}</Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>
-                    <SegmentedControl<ViewType>
-                        value={viewType}
-                        setValue={setViewType}
-                        choices={[
-                            { value: 'gallery', children: (<GridViewOutlined />) },
-                            { value: 'table', children: (<FormatListBulletedOutlined />) }
-                        ]}
-                    />
-                    <Button
-                        onClick={handleInviteButtonClick}
-                        disableElevation
-                        variant="contained"
-                        size="large"
-                        startIcon={<AddOutlined />}
-                        endIcon={open ? <KeyboardArrowUpOutlined /> : <KeyboardArrowDownOutlined />}
-                        sx={{ width: '100%', height: 48, px: 2 }}
-                    >
-                        {translations.add_bot}
-                    </Button>
-                </Box>
+            <PageHeader primary={translations.guild_settings} secondary={translations.guild_settings_description}>
+                <SegmentedControl<ViewType>
+                    value={viewType}
+                    setValue={setViewType}
+                    choices={[
+                        { value: 'gallery', children: (<GridViewIcon />) },
+                        { value: 'table', children: (<FormatListBulletedIcon />) }
+                    ]}
+                />
+                <Button
+                    onClick={handleInviteButtonClick}
+                    disableElevation
+                    variant="contained"
+                    size="large"
+                    startIcon={<AddIcon />}
+                    endIcon={open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    sx={{ width: '100%', height: 48, px: 2 }}
+                >
+                    {translations.add_bot}
+                </Button>
             </PageHeader>
             <Section>
                 {viewType === 'gallery' ? (
@@ -149,12 +132,7 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.guild_settings}</Typography>
-                <Typography>{translations.loading}</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.guild_settings} secondary={translations.loading} />
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>

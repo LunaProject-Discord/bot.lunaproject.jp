@@ -1,5 +1,6 @@
 'use client';
 
+import { EditIcon } from '@components/icons';
 import { ThemeProvider } from '@emotion/react';
 import { LocalizationProps } from '@interfaces/localization';
 import { DataMessage } from '@interfaces/message';
@@ -7,7 +8,6 @@ import { toMessage } from '@libs/message';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { THEMES } from '@lunaproject/web-core/dist/styles';
-import { EditOutlined } from '@mui/icons-material';
 import { Box, Button, styled, Typography, useTheme } from '@mui/material';
 import React, { Dispatch, Fragment, ReactNode, SetStateAction, useState } from 'react';
 import { MessageBuilder } from '../../message/builder';
@@ -143,7 +143,7 @@ export const MessageItem = (
                                 disableElevation
                                 variant="contained"
                                 size="large"
-                                startIcon={<EditOutlined />}
+                                startIcon={<EditIcon />}
                             >
                                 {translations.edit_message}
                             </Button>

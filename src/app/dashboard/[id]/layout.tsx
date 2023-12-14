@@ -15,6 +15,7 @@ import { getLocalization } from '@localizations/server';
 import { Alert, AlertTitle, Box } from '@mui/material';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { notFound } from 'next/navigation';
 import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
 import { ForbiddenView, NotFoundView } from './view';
@@ -60,6 +61,9 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
 };
 
 const Layout = async ({ children, params: { id } }: WithIdParamProps & { children: ReactNode }) => {
+    if (!/^\d+$/.test(id))
+        return notFound();
+
     const localization = getLocalization();
 
     const userData = getUser();
@@ -109,6 +113,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
                 userFlags={userFlags}
                 guild={guild}
                 guildFlags={guildFlags}
+                guildConfiguration={guildConfiguration}
                 guilds={sortedGuilds}
                 mutualGuilds={mutualGuildIds}
                 localization={localization}

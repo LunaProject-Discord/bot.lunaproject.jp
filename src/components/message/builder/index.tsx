@@ -1,6 +1,8 @@
 'use client';
 
+import { CancelButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
+import { DarkModeIcon, DeleteIcon, EditIcon, LightModeIcon, PreviewIcon, SaveIcon } from '@components/icons';
 import { Theme, ThemeProvider } from '@emotion/react';
 import { LocalizationProps } from '@interfaces/localization';
 import { DataMessage } from '@interfaces/message';
@@ -9,15 +11,6 @@ import { segmentedControlClasses, THEMES } from '@lunaproject/web-core';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { Message } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    CloseOutlined,
-    DarkModeOutlined,
-    DeleteOutlined,
-    EditOutlined,
-    LightModeOutlined,
-    PreviewOutlined,
-    SaveOutlined
-} from '@mui/icons-material';
 import {
     Box,
     Button,
@@ -115,7 +108,7 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
                         placement="bottom"
                     >
                         <IconButton onClick={() => setLightTheme((prevState) => !prevState)}>
-                            {!lightTheme ? <LightModeOutlined /> : <DarkModeOutlined />}
+                            {!lightTheme ? <LightModeIcon /> : <DarkModeIcon />}
                         </IconButton>
                     </Tooltip>
                     <Tooltip
@@ -146,14 +139,14 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
                                 {
                                     value: 'editor',
                                     children: <Fragment>
-                                        <EditOutlined sx={{ ml: -.75 }} />
+                                        <EditIcon sx={{ ml: -.75 }} />
                                         {translations.message_builder_editor}
                                     </Fragment>
                                 },
                                 {
                                     value: 'preview',
                                     children: <Fragment>
-                                        <PreviewOutlined sx={{ ml: -.75 }} />
+                                        <PreviewIcon sx={{ ml: -.75 }} />
                                         {translations.message_builder_preview}
                                     </Fragment>
                                 }
@@ -184,21 +177,21 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
                 <Button
                     onClick={handleResetButtonClick}
                     color="error"
-                    startIcon={<DeleteOutlined />}
+                    startIcon={<DeleteIcon />}
                     sx={{ mr: 'auto' }}
                 >
                     {translations.reset}
                 </Button>
                 {isChanged ? <Fragment>
-                    <Button onClick={handleClose} startIcon={<CloseOutlined />}>
+                    <CancelButton onClick={handleClose}>
                         {translations.cancel}
-                    </Button>
-                    <Button onClick={handleSaveButtonClick} variant="contained" startIcon={<SaveOutlined />}>
+                    </CancelButton>
+                    <Button onClick={handleSaveButtonClick} variant="contained" startIcon={<SaveIcon />}>
                         {translations.save}
                     </Button>
-                </Fragment> : <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
+                </Fragment> : <CancelButton onClick={handleClose} variant="contained">
                     {translations.close}
-                </Button>}
+                </CancelButton>}
             </DialogActions>
         </Dialog>
     );

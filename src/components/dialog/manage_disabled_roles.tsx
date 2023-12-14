@@ -1,13 +1,13 @@
 'use client';
 
+import { CancelButton } from '@components/buttons';
+import { CloseIcon, SearchIcon } from '@components/icons';
 import { GuildRolesViewProps } from '@interfaces/view';
 import { Dialog, DialogActions, DialogHeader } from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
-import { ClearOutlined, CloseOutlined, SearchOutlined } from '@mui/icons-material';
 import {
     Box,
-    Button,
     DialogContent,
     IconButton,
     InputBase,
@@ -80,7 +80,7 @@ export const ManageDisabledRolesDialog = (
                             bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
                         }}
                     >
-                        <SearchOutlined color="action" />
+                        <SearchIcon color="action" />
                         <InputBase
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
@@ -88,7 +88,7 @@ export const ManageDisabledRolesDialog = (
                             fullWidth
                         />
                         {search.length > 0 && <IconButton onClick={() => resetSearch()} sx={{ my: -.5, mr: -.5 }}>
-                            <ClearOutlined color="action" />
+                            <CloseIcon color="action" />
                         </IconButton>}
                     </Box>
                     <Box sx={{ height: { xs: 'auto', md: 500 }, p: 2, overflowY: 'auto' }}>
@@ -130,9 +130,9 @@ export const ManageDisabledRolesDialog = (
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
+                    <CancelButton onClick={handleClose} variant="contained">
                         {translations.close}
-                    </Button>
+                    </CancelButton>
                 </DialogActions>
             </Dialog>
         </Fragment>

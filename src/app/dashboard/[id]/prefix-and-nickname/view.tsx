@@ -1,14 +1,13 @@
 'use client';
 
+import { BadgeIcon, TagIcon } from '@components/icons';
 import { TextFieldItem } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { CodeStyleContainer } from '@components/text';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { BadgeOutlined, TagOutlined } from '@mui/icons-material';
-import { Box, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
@@ -25,22 +24,20 @@ export const View = ({ guild, configuration, localization: { translations } }: G
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.prefix_and_nickname}</Typography>
-                    <Typography>{translations.prefix_and_nickname_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader
+                primary={translations.prefix_and_nickname}
+                secondary={translations.prefix_and_nickname_description}
+            />
             <Section>
                 <SectionContent>
                     <TextFieldItem
-                        icon={<TagOutlined />}
+                        icon={<TagIcon />}
                         primary={translations.prefix}
                         value={prefix}
                         setValue={setPrefix}
                     />
                     <TextFieldItem
-                        icon={<BadgeOutlined />}
+                        icon={<BadgeIcon />}
                         primary={translations.nickname}
                         secondary={<CodeStyleContainer>{translations.nickname_description}</CodeStyleContainer>}
                         value={nickname}

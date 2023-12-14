@@ -1,23 +1,22 @@
 'use client';
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import {
+    ArrowForwardIcon,
+    CloudOffIcon,
+    ErrorIcon,
+    InfoIcon,
+    LockPersonIcon,
+    TaskAltIcon,
+    WarningIcon
+} from '@components/icons';
 import { RouteLinkItem } from '@components/items';
-import { PageHeader } from '@components/layout';
-import { PageCenteredLayout } from '@components/layout_v2';
+import { PageCenteredLayout, PageHeader } from '@components/layout_v2';
 import { GuildNotification } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { GuildViewProps, UserViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
-import {
-    ArrowForwardOutlined,
-    CloudOffOutlined,
-    ErrorOutlineOutlined,
-    InfoOutlined,
-    LockPersonOutlined,
-    TaskAltOutlined,
-    WarningAmberOutlined
-} from '@mui/icons-material';
-import { Box, CircularProgress, Divider, Link, Typography } from '@mui/material';
+import { CircularProgress, Divider, Link } from '@mui/material';
 import { getUserDisplayName } from '@utils/discord';
 import NextLink from 'next/link';
 import React, { Fragment } from 'react';
@@ -28,14 +27,10 @@ interface Props extends UserViewProps, GuildViewProps {
 
 export const View = ({ user, guild, notifications, localization: { translations } }: Props) => (
     <Fragment>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">
-                    {String(translations.welcome_to_name).replace('%n', getUserDisplayName(user))}
-                </Typography>
-                <Typography>ここは {guild.name} の設定ページです。</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader
+            primary={String(translations.welcome_to_name).replace('%n', getUserDisplayName(user))}
+            secondary={`ここは ${guild.name} の設定ページです。`}
+        />
         <Section>
             <SectionTitle>このサーバーへのお知らせ</SectionTitle>
             <SectionContent>
@@ -43,10 +38,10 @@ export const View = ({ user, guild, notifications, localization: { translations 
                     <RouteLinkItem
                         key={notification.id}
                         icon={<Fragment>
-                            {notification.type === 'success' && <TaskAltOutlined color="success" />}
-                            {notification.type === 'warning' && <WarningAmberOutlined color="warning" />}
-                            {notification.type === 'error' && <ErrorOutlineOutlined color="error" />}
-                            {notification.type === 'information' && <InfoOutlined color="info" />}
+                            {notification.type === 'success' && <TaskAltIcon color="success" />}
+                            {notification.type === 'warning' && <WarningIcon color="warning" />}
+                            {notification.type === 'error' && <ErrorIcon color="error" />}
+                            {notification.type === 'information' && <InfoIcon color="info" />}
                         </Fragment>}
                         primary={notification.title}
                         secondary={notification.description.split('\n').length > 1 ? notification.description.split('\n')[0] : notification.description}
@@ -70,7 +65,7 @@ export const View = ({ user, guild, notifications, localization: { translations 
                 sx={{ ml: 'auto', display: 'inline-flex', alignItems: 'center', gap: .5 }}
             >
                 すべてのお知らせを見る
-                <ArrowForwardOutlined fontSize="small" sx={{ mb: .25 }} />
+                <ArrowForwardIcon fontSize="small" sx={{ mb: .25 }} />
             </Link>
         </Section>
     </Fragment>
@@ -78,12 +73,7 @@ export const View = ({ user, guild, notifications, localization: { translations 
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <Fragment>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.guild_settings}</Typography>
-                <Typography>{translations.loading}</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.guild_settings} secondary={translations.loading} />
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
@@ -93,7 +83,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
 export const ForbiddenView = () => (
     <PageCenteredLayout>
         <ErrorRoot>
-            <LockPersonOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <LockPersonIcon sx={{ fontSize: '10rem' }} />
             <ErrorTitle>権限がありません</ErrorTitle>
             <ErrorDescription>
                 このサーバーの設定を変更する権限がありません。<br />
@@ -107,7 +97,7 @@ export const ForbiddenView = () => (
 export const NotFoundView = () => (
     <PageCenteredLayout>
         <ErrorRoot>
-            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
             <ErrorTitle>サーバーが見つかりません</ErrorTitle>
             <ErrorDescription>
                 指定されたサーバーが見つかりませんでした。<br />

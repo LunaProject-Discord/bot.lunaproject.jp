@@ -1,5 +1,5 @@
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { CommandIcon } from '@components/icons';
+import { CheckIcon, CloseIcon, CommandIcon, DeleteIcon } from '@components/icons';
 import { ItemRoot, ItemRowContainer } from '@components/items';
 import { LocalizationProps } from '@interfaces/localization';
 import { StyledProps } from '@interfaces/mui';
@@ -8,7 +8,6 @@ import {
     ItemFormContainer,
     ItemVariableProps
 } from '@lunaproject/web-core/dist/components/SectionItems';
-import { CheckOutlined, ClearOutlined, DeleteOutlined } from '@mui/icons-material';
 import { IconButton, ToggleButton, toggleButtonClasses, ToggleButtonGroup, Tooltip } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
@@ -40,7 +39,7 @@ export const DefaultEditableSwitch = ({ value, setValue, disabled }: DefaultEdit
                 }
             }}
         >
-            <ClearOutlined />
+            <CloseIcon />
         </ToggleButton>
         <ToggleButton
             value="inherit"
@@ -68,7 +67,7 @@ export const DefaultEditableSwitch = ({ value, setValue, disabled }: DefaultEdit
                 }
             }}
         >
-            <CheckOutlined />
+            <CheckIcon />
         </ToggleButton>
     </ToggleButtonGroup>
 );
@@ -98,7 +97,7 @@ export const EditableSwitch = ({ value, setValue, disabled }: EditableSwitchProp
                 }
             }}
         >
-            <ClearOutlined />
+            <CloseIcon />
         </ToggleButton>
         <ToggleButton
             value="allow"
@@ -112,7 +111,7 @@ export const EditableSwitch = ({ value, setValue, disabled }: EditableSwitchProp
                 }
             }}
         >
-            <CheckOutlined />
+            <CheckIcon />
         </ToggleButton>
     </ToggleButtonGroup>
 );
@@ -160,7 +159,7 @@ export const EditableItem = (
             />
             <Tooltip title={translations.remove} placement="top">
                 <IconButton onClick={() => setValue(undefined)} color="error">
-                    <DeleteOutlined />
+                    <DeleteIcon />
                 </IconButton>
             </Tooltip>
         </ItemFormContainer>

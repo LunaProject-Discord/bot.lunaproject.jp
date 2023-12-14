@@ -1,8 +1,9 @@
 'use client';
 
 import { getMemberDisplay } from '@app/user';
-import { PageHeader } from '@components/layout';
-import { PageCenteredLayout } from '@components/layout_v2';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import { CloudOffIcon, DeleteIcon, SearchIcon, TableRowsIcon } from '@components/icons';
+import { PageCenteredLayout, PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildLevel, PartialGuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
@@ -13,7 +14,6 @@ import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { ItemIcon, ItemRowContainer, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
 import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils/theme';
-import { CloudOffOutlined, DeleteOutlined, SearchOutlined, TableRowsOutlined } from '@mui/icons-material';
 import {
     Avatar,
     Box,
@@ -142,7 +142,7 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                         variant="text"
                         color="error"
                         fullWidth
-                        startIcon={<DeleteOutlined />}
+                        startIcon={<DeleteIcon />}
                     >
                         {translations.reset}
                     </Button>
@@ -208,12 +208,7 @@ export const View = ({ guild, levels, localization }: Props) => {
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.level_manage}</Typography>
-                    <Typography>{translations.level_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.level_manage} secondary={translations.level_description} />
             <Box
                 sx={(theme) => ({
                     width: '100%',
@@ -240,7 +235,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                         borderRadius: 1
                     }}
                 >
-                    <SearchOutlined color="action" />
+                    <SearchIcon color="action" />
                     <InputBase
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
@@ -255,7 +250,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                     onPageChange={handlePageIndexChange}
                     rowsPerPage={perPageLimit}
                     onRowsPerPageChange={handlePerPageLimitChange}
-                    labelRowsPerPage={<TableRowsOutlined />}
+                    labelRowsPerPage={<TableRowsIcon />}
                     SelectProps={{
                         MenuProps: {
                             slotProps: {
@@ -294,23 +289,14 @@ export const View = ({ guild, levels, localization }: Props) => {
                         />
                     );
                 })}
-            </Section> : <Box
-                sx={{
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    placeItems: 'center',
-                    placeContent: 'center',
-                    gap: 1
-                }}
-            >
-                <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-                <Typography variant="h4">メンバーが見つかりません</Typography>
-                <Typography align="center">
+            </Section> : <ErrorRoot>
+                <CloudOffIcon sx={{ fontSize: '10rem' }} />
+                <ErrorTitle>メンバーが見つかりません</ErrorTitle>
+                <ErrorDescription>
                     指定したキーワードに合うメンバーが見つかりませんでした。<br />
                     検索キーワードを変更して再度お試しください。
-                </Typography>
-            </Box>}
+                </ErrorDescription>
+            </ErrorRoot>}
 
             <SaveConfirm open={values.length > 0} onSave={handleSaveAction} onCancel={handleCancelAction} />
         </Fragment>
@@ -319,12 +305,7 @@ export const View = ({ guild, levels, localization }: Props) => {
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <Fragment>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.level_manage}</Typography>
-                <Typography>{translations.level_description}</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.level_manage} secondary={translations.loading} />
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
@@ -333,28 +314,14 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <PageCenteredLayout>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.level_manage}</Typography>
-                <Typography>{translations.level_description}</Typography>
-            </Box>
-        </PageHeader>
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
-            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-            <Typography variant="h4">データがありません</Typography>
-            <Typography align="center">
+        <PageHeader primary={translations.level_manage} />
+        <ErrorRoot>
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
+            <ErrorTitle>データがありません</ErrorTitle>
+            <ErrorDescription>
                 このサーバーではまだ誰も発言していないようです...<br />
                 サーバーで発言してからしばらく待った後に再度お試しください。
-            </Typography>
-        </Box>
+            </ErrorDescription>
+        </ErrorRoot>
     </PageCenteredLayout>
 );

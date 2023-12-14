@@ -2,7 +2,15 @@
 
 import { defaultPredicate, NavigationItemProps } from '@components/navigation/index';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
-import { AppBar as MuiAppBar, AppBarProps, Button, styled, Toolbar as MuiToolbar } from '@mui/material';
+import {
+    alpha,
+    AppBar as MuiAppBar,
+    AppBarProps,
+    Button,
+    buttonClasses,
+    styled,
+    Toolbar as MuiToolbar
+} from '@mui/material';
 import { usePathname } from 'next/navigation';
 import React, { ReactNode } from 'react';
 
@@ -46,10 +54,29 @@ export const NavigationToolbarItem = (
     const loweredHref = href.toLowerCase();
     const isMatch = (predicate ?? defaultPredicate)(loweredPathname, loweredHref);
 
-    const color = isMatch ? 'primary' : 'inherit';
+    const color = isMatch ? 'monotone' : 'inherit';
 
     return (
-        <Button component={RouteLink} href={href} color={color}>
+        <Button
+            component={RouteLink}
+            href={href}
+            color={color}
+            sx={(theme) => (isMatch ? {
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.action.selected,
+                [`&.${buttonClasses.focusVisible}`]: {
+                    backgroundColor: alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
+                },
+                '&:hover': {
+                    backgroundColor: alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity),
+                    '@media (hover: none)': {
+                        backgroundColor: alpha(theme.palette.action.selected, theme.palette.action.selectedOpacity)
+                    }
+                }
+            } : {
+                color: theme.palette.text.secondary
+            })}
+        >
             {children}
         </Button>
     );

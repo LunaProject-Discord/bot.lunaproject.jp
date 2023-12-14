@@ -1,14 +1,13 @@
 'use client';
 
+import { ErrorIcon, InfoIcon, TaskAltIcon, WarningIcon } from '@components/icons';
 import { RouteLinkItem } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { UserNotification } from '@interfaces/bot';
 import { UserViewProps } from '@interfaces/view';
 import { getDateFnsLocaleByName } from '@localizations/index';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { format } from '@lunaproject/web-core/dist/utils/date';
-import { ErrorOutlineOutlined, InfoOutlined, TaskAltOutlined, WarningAmberOutlined } from '@mui/icons-material';
-import { Box, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
 
 interface Props extends UserViewProps {
@@ -28,12 +27,7 @@ export const View = ({ user, notifications, localization: { locale, translations
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.notifications}</Typography>
-                    <Typography></Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.notifications} />
             {Object.keys(userNotifications).map((date) => {
                 return (
                     <Section key={date}>
@@ -49,10 +43,10 @@ export const View = ({ user, notifications, localization: { locale, translations
                                 <RouteLinkItem
                                     key={notification.id}
                                     icon={<Fragment>
-                                        {notification.type === 'success' && <TaskAltOutlined color="success" />}
-                                        {notification.type === 'warning' && <WarningAmberOutlined color="warning" />}
-                                        {notification.type === 'error' && <ErrorOutlineOutlined color="error" />}
-                                        {notification.type === 'information' && <InfoOutlined color="info" />}
+                                        {notification.type === 'success' && <TaskAltIcon color="success" />}
+                                        {notification.type === 'warning' && <WarningIcon color="warning" />}
+                                        {notification.type === 'error' && <ErrorIcon color="error" />}
+                                        {notification.type === 'information' && <InfoIcon color="info" />}
                                     </Fragment>}
                                     primary={notification.title}
                                     secondary={notification.description.split('\n').length > 1 ? notification.description.split('\n')[0] : notification.description}

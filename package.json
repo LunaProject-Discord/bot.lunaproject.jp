@@ -22,6 +22,7 @@
         "@lexical/react": "0.12.2",
         "@lunaproject/web-core": "1.5.2",
         "@lunaproject/web-discord": "1.1.2",
+        "@material-symbols/svg-400": "0.14.2",
         "@mui/icons-material": "5.14.16",
         "@mui/lab": "5.0.0-alpha.152",
         "@mui/material": "5.14.17",
@@ -61,6 +62,7 @@
         "typescript": "5.2.2"
     },
     "devDependencies": {
+        "@svgr/webpack": "8.1.0",
         "@types/color": "3.0.6",
         "@types/deep-equal": "1.0.4",
         "@types/luxon": "3.3.3",

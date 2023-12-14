@@ -2,38 +2,39 @@
 
 import { NavigationAppBar, NavigationDrawerToolbar } from '@app/_navigation';
 import { GuildSelect } from '@app/dashboard/[id]/components';
-import { CommandBoxIcon } from '@components/icons';
+import {
+    ArrowBackIcon,
+    CommandBoxIcon,
+    DirectionsRunIcon,
+    EmojiEventsIcon,
+    FormatQuoteIcon,
+    HomeIcon,
+    LabelIcon,
+    MonitoringIcon,
+    MusicNoteIcon,
+    NotificationsIcon,
+    PersonAddIcon,
+    PersonRemoveIcon,
+    RecordVoiceOverIcon,
+    ScheduleIcon,
+    SecurityIcon,
+    TagIcon,
+    TextSnippetIcon,
+    TranslateIcon
+} from '@components/icons';
 import {
     NavigationDrawer,
     NavigationDrawerContent,
     NavigationDrawerGroup,
     NavigationDrawerItem,
+    NavigationDrawerItemWithEnabledStatus,
     NavigationRoot
 } from '@components/navigation';
-import { GuildFlags, UserFlags } from '@interfaces/bot';
+import { GuildConfiguration, GuildFlags, UserFlags } from '@interfaces/bot';
 import { DataGuild, RedisGuild } from '@interfaces/redis';
 import { UserViewProps } from '@interfaces/view';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    ArrowBackOutlined,
-    DirectionsRunOutlined,
-    DriveFileRenameOutlineOutlined,
-    EmojiEventsOutlined,
-    FormatQuoteOutlined,
-    HomeOutlined,
-    MusicNoteOutlined,
-    NotificationsOutlined,
-    PersonAddOutlined,
-    PersonRemoveOutlined,
-    PollOutlined,
-    RecordVoiceOverOutlined,
-    ScheduleOutlined,
-    SecurityOutlined,
-    SellOutlined,
-    TextSnippetOutlined,
-    TranslateOutlined
-} from '@mui/icons-material';
 import { Avatar, Box, Chip, Theme, Typography, useMediaQuery } from '@mui/material';
 import { getGuildIcon } from '@utils/cdn';
 import { useRouter } from 'next/navigation';
@@ -44,6 +45,7 @@ interface NavigationProps extends UserViewProps {
     userFlags: UserFlags | undefined;
     guild: RedisGuild | DataGuild;
     guildFlags: GuildFlags;
+    guildConfiguration: GuildConfiguration;
     guilds: OAuthGuild[];
     mutualGuilds: string[];
 }
@@ -55,6 +57,7 @@ export const Navigation = (
         userFlags,
         guild,
         guildFlags,
+        guildConfiguration,
         guilds,
         mutualGuilds,
         localization
@@ -97,7 +100,7 @@ export const Navigation = (
                                 gap: 1
                             }}
                         >
-                            <ArrowBackOutlined fontSize="small" />
+                            <ArrowBackIcon fontSize="small" />
                             {translations.back_to_select_guild}
                         </RouteLink>
                     </Fragment> : <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -107,38 +110,38 @@ export const Navigation = (
                     <Box sx={{ px: { xs: 1, md: 0 } }}>
                         {(userManager && !guilds.filter((guild) => mutualGuilds.includes(guild.id)).map((guild) => guild.id).includes(guild.id)) ?
                             <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 1
-                            }}
-                        >
-                            <Avatar
-                                src={getGuildIcon(guild)}
-                                alt=" "
-                                sx={{ width: 24, height: 24, pointerEvents: 'none' }}
-                            />
-                            <Typography>{guild.name}</Typography>
-                        </Box> : <GuildSelect
-                            value={guild.id}
-                            setValue={(value) => router.push(`/dashboard/${value}`)}
-                            guilds={guilds}
-                            mutualGuilds={mutualGuilds}
-                        />}
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 1
+                                }}
+                            >
+                                <Avatar
+                                    src={getGuildIcon(guild)}
+                                    alt=" "
+                                    sx={{ width: 24, height: 24, pointerEvents: 'none' }}
+                                />
+                                <Typography>{guild.name}</Typography>
+                            </Box> : <GuildSelect
+                                value={guild.id}
+                                setValue={(value) => router.push(`/dashboard/${value}`)}
+                                guilds={guilds}
+                                mutualGuilds={mutualGuilds}
+                            />}
                     </Box>
                     <NavigationDrawerContent>
                         <NavigationDrawerGroup>
                             <NavigationDrawerItem
                                 href={prefix}
                                 predicate={(pathname) => pathname === prefix}
-                                icon={<HomeOutlined />}
+                                icon={<HomeIcon />}
                                 primary={translations.home}
                                 open={open}
                                 setOpen={setOpen}
                             />
                             <NavigationDrawerItem
                                 href={`${prefix}/notifications`}
-                                icon={<NotificationsOutlined />}
+                                icon={<NotificationsIcon />}
                                 primary={translations.notifications}
                                 open={open}
                                 setOpen={setOpen}
@@ -147,14 +150,14 @@ export const Navigation = (
                         <NavigationDrawerGroup label={translations.settings_basic}>
                             <NavigationDrawerItem
                                 href={`${prefix}/prefix-and-nickname`}
-                                icon={<DriveFileRenameOutlineOutlined />}
+                                icon={<TagIcon />}
                                 primary={translations.prefix_and_nickname}
                                 open={open}
                                 setOpen={setOpen}
                             />
                             <NavigationDrawerItem
                                 href={`${prefix}/time-and-language`}
-                                icon={<ScheduleOutlined />}
+                                icon={<ScheduleIcon />}
                                 primary={translations.time_and_language}
                                 open={open}
                                 setOpen={setOpen}
@@ -170,7 +173,7 @@ export const Navigation = (
                         <NavigationDrawerGroup label={translations.settings_moderation_and_management}>
                             {guildFlags.tester && <NavigationDrawerItem
                                 href={`${prefix}/automod`}
-                                icon={<SecurityOutlined />}
+                                icon={<SecurityIcon />}
                                 primary={
                                     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
                                         {translations.automod}
@@ -188,37 +191,58 @@ export const Navigation = (
                             />}
                             <NavigationDrawerItem
                                 href={`${prefix}/check-role-permissions`}
-                                icon={<SellOutlined />}
+                                icon={<LabelIcon />}
                                 primary={translations.role_permissions}
                                 open={open}
                                 setOpen={setOpen}
                             />
                         </NavigationDrawerGroup>
                         <NavigationDrawerGroup label={translations.settings_features_and_options}>
-                            <NavigationDrawerItem
+                            {guildConfiguration.member_join._migrated ? <NavigationDrawerItemWithEnabledStatus
+                                href={`${prefix}/member-join`}
+                                icon={<PersonAddIcon />}
+                                primary={
+                                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+                                        {translations.member_join}
+                                        <Chip
+                                            label="Beta"
+                                            variant="rounded"
+                                            color="info"
+                                            size="small"
+                                            sx={{ height: 20, ml: 1 }}
+                                        />
+                                    </Box>
+                                }
+                                enabled={guildConfiguration.member_join.enabled}
+                                open={open}
+                                setOpen={setOpen}
+                            /> : <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/welcome`}
-                                icon={<PersonAddOutlined />}
+                                icon={<PersonAddIcon />}
                                 primary={translations.welcome_message}
+                                enabled={guildConfiguration.welcome.enabled}
                                 open={open}
                                 setOpen={setOpen}
-                            />
-                            <NavigationDrawerItem
+                            />}
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/goodbye`}
-                                icon={<PersonRemoveOutlined />}
+                                icon={<PersonRemoveIcon />}
                                 primary={translations.goodbye_message}
+                                enabled={guildConfiguration.goodbye.enabled}
                                 open={open}
                                 setOpen={setOpen}
                             />
-                            <NavigationDrawerItem
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/activity`}
-                                icon={<DirectionsRunOutlined />}
+                                icon={<DirectionsRunIcon />}
                                 primary={translations.activity}
+                                enabled={guildConfiguration.activity.enabled}
                                 open={open}
                                 setOpen={setOpen}
                             />
                             {guildFlags.tester && <NavigationDrawerItem
                                 href={`${prefix}/role-panels`}
-                                icon={<SellOutlined />}
+                                icon={<LabelIcon />}
                                 primary={
                                     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
                                         {translations.role_panels}
@@ -234,44 +258,49 @@ export const Navigation = (
                                 open={open}
                                 setOpen={setOpen}
                             />}
-                            <NavigationDrawerItem
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/level`}
-                                icon={<EmojiEventsOutlined />}
+                                icon={<EmojiEventsIcon />}
                                 primary={translations.level}
+                                enabled={guildConfiguration.level.enabled}
                                 open={open}
                                 setOpen={setOpen}
                             />
-                            <NavigationDrawerItem
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/translate`}
-                                icon={<TranslateOutlined />}
+                                icon={<TranslateIcon />}
                                 primary={translations.translate}
+                                enabled={guildConfiguration.translate.enabled}
                                 open={open}
                                 setOpen={setOpen}
                             />
-                            <NavigationDrawerItem
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/vote`}
-                                icon={<PollOutlined />}
+                                icon={<MonitoringIcon />}
                                 primary={translations.vote}
+                                enabled={guildConfiguration.vote.enabled}
                                 open={open}
                                 setOpen={setOpen}
                             />
-                            <NavigationDrawerItem
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/quote`}
-                                icon={<FormatQuoteOutlined />}
+                                icon={<FormatQuoteIcon />}
                                 primary={translations.quote}
+                                enabled={guildConfiguration.quote.enabled}
                                 open={open}
                                 setOpen={setOpen}
                             />
-                            <NavigationDrawerItem
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/music`}
-                                icon={<MusicNoteOutlined />}
+                                icon={<MusicNoteIcon />}
                                 primary={translations.music}
+                                enabled={guildConfiguration.music.enabled}
                                 open={open}
                                 setOpen={setOpen}
                             />
                             {guildFlags.tester && <NavigationDrawerItem
                                 href={`${prefix}/text-to-speech`}
-                                icon={<RecordVoiceOverOutlined />}
+                                icon={<RecordVoiceOverIcon />}
                                 primary={
                                     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
                                         {translations.text_to_speech}
@@ -287,10 +316,11 @@ export const Navigation = (
                                 open={open}
                                 setOpen={setOpen}
                             />}
-                            <NavigationDrawerItem
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/logging`}
-                                icon={<TextSnippetOutlined />}
+                                icon={<TextSnippetIcon />}
                                 primary={translations.logging}
+                                enabled={guildConfiguration.logging.enabled}
                                 open={open}
                                 setOpen={setOpen}
                             />

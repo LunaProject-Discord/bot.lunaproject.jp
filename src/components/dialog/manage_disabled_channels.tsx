@@ -1,10 +1,10 @@
 'use client';
 
+import { CancelButton } from '@components/buttons';
 import { GuildChannelsViewProps } from '@interfaces/view';
 import { Dialog, DialogActions, DialogHeader } from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { ChevronRightOutlined, ClearOutlined, CloseOutlined, SearchOutlined } from '@mui/icons-material';
 import {
     Accordion as MuiAccordion,
     accordionClasses,
@@ -14,7 +14,6 @@ import {
     accordionSummaryClasses,
     AccordionSummaryProps,
     Box,
-    Button,
     DialogContent,
     IconButton,
     InputBase,
@@ -29,7 +28,7 @@ import { filterPredicateChannel, sortChannels } from '@utils/discord';
 import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
 import React, { Fragment, useState } from 'react';
-import { ChannelIcon } from '../icons';
+import { ChannelIcon, CloseIcon, KeyboardArrowRightIcon, SearchIcon } from '../icons';
 import { ListItemButton, ListItemIcon } from '../items';
 import { DialogProps } from './index';
 
@@ -49,7 +48,7 @@ const Accordion = styled(
 });
 
 const AccordionSummary = styled(
-    (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<ChevronRightOutlined />} {...props} />
+    (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<KeyboardArrowRightIcon />} {...props} />
 )<AccordionSummaryProps>(({ theme }) => ({
     minHeight: 36,
     padding: 0,
@@ -141,7 +140,7 @@ export const ManageDisabledChannelsDialog = (
                             bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
                         }}
                     >
-                        <SearchOutlined color="action" />
+                        <SearchIcon color="action" />
                         <InputBase
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
@@ -149,7 +148,7 @@ export const ManageDisabledChannelsDialog = (
                             fullWidth
                         />
                         {search.length > 0 && <IconButton onClick={() => resetSearch()} sx={{ my: -.5, mr: -.5 }}>
-                            <ClearOutlined color="action" />
+                            <CloseIcon color="action" />
                         </IconButton>}
                     </Box>
                     <Box sx={{ height: { xs: 'auto', md: 500 }, p: 2, overflowY: 'auto' }}>
@@ -202,9 +201,9 @@ export const ManageDisabledChannelsDialog = (
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="contained" startIcon={<CloseOutlined />}>
+                    <CancelButton onClick={handleClose} variant="contained">
                         {translations.close}
-                    </Button>
+                    </CancelButton>
                 </DialogActions>
             </Dialog>
         </Fragment>

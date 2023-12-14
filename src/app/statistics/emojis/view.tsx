@@ -4,11 +4,11 @@ import { AreaChart, DataGrid } from '@app/statistics/_components';
 import { LatestWidget, MaxWidget, MinWidget } from '@app/statistics/_components/widgets';
 import { StatisticsViewProps } from '@app/statistics/interfaces';
 import { formatDate, getDate, getMaxShards } from '@app/statistics/utils';
-import { PageHeader } from '@components/layout';
+import { CloudOffIcon } from '@components/icons';
+import { PageHeader } from '@components/layout_v2';
 import { Statistic } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
-import { CloudOffOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { GridColDef, GridRowsProp, GridValidRowModel } from '@mui/x-data-grid';
 import { max, min } from '@utils/array';
@@ -66,12 +66,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.emojis}</Typography>
-                    <Typography>{translations.statistics_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.emojis} secondary={translations.statistics_description} />
             <Section>
                 <Grid container spacing={2}>
                     <LatestWidget
@@ -129,12 +124,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <Fragment>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.emojis}</Typography>
-                <Typography>{translations.loading}</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.emojis} secondary={translations.loading} />
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
@@ -143,12 +133,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <Fragment>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.emojis}</Typography>
-                <Typography />
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.emojis} />
         <Box
             sx={{
                 height: '100%',
@@ -159,7 +144,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 gap: 1
             }}
         >
-            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
             <Typography variant="h4">データがありません</Typography>
             <Typography align="center">
                 現在、表示できるデータはありません。<br />

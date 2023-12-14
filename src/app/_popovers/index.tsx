@@ -1,9 +1,9 @@
 'use client';
 
+import { CheckIcon } from '@components/icons';
 import { LocalizationProps } from '@interfaces/localization';
 import { Link } from '@lunaproject/web-core/dist/components';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
-import { CheckOutlined } from '@mui/icons-material';
 import {
     CSSObject,
     LinkProps,
@@ -31,7 +31,7 @@ const popoverListItemButtonStyled = (theme: Theme): CSSObject => ({
 
 export const PopoverListItemButton = styled(MuiListItemButton)(({ theme }) => popoverListItemButtonStyled(theme));
 
-type PopoverListItemLinkButtonProps = ListItemButtonProps & LinkProps;
+export type PopoverListItemLinkButtonProps = ListItemButtonProps & LinkProps;
 
 export const PopoverListItemLinkButton = styled(
     (props) => <MuiListItemButton component={Link} href="" {...props} />
@@ -52,7 +52,7 @@ interface PopoverListItemSwitchProps extends ListItemButtonProps {
 export const PopoverListItemSwitch = ({ checked, primary, secondary, ...props }: PopoverListItemSwitchProps) => (
     <PopoverListItemButton dense {...props}>
         <PopoverListItemIcon>
-            {checked && <CheckOutlined />}
+            {checked && <CheckIcon />}
         </PopoverListItemIcon>
         <ListItemText primary={primary} secondary={secondary} />
     </PopoverListItemButton>

@@ -3,10 +3,10 @@
 import { AreaChart } from '@app/statistics/_components';
 import { StatisticsViewProps } from '@app/statistics/interfaces';
 import { formatDate, getDate } from '@app/statistics/utils';
-import { PageHeader } from '@components/layout';
+import { CloudOffIcon } from '@components/icons';
+import { PageHeader } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
-import { CloudOffOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
 
@@ -17,12 +17,7 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.statistics}</Typography>
-                    <Typography>{translations.statistics_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.statistics} secondary={translations.statistics_description} />
             <Section>
                 <SectionTitle>{translations.ping}</SectionTitle>
                 <SectionContent>
@@ -107,12 +102,7 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
 
 export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
     <Fragment>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.statistics}</Typography>
-                <Typography>{translations.loading}</Typography>
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.statistics} secondary={translations.loading} />
         <Section sx={{ height: '100%', p: 0, placeItems: 'center', placeContent: 'center' }}>
             <CircularProgress />
         </Section>
@@ -121,12 +111,7 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
 
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <Fragment>
-        <PageHeader>
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                <Typography variant="h4">{translations.statistics}</Typography>
-                <Typography />
-            </Box>
-        </PageHeader>
+        <PageHeader primary={translations.statistics} />
         <Box
             sx={{
                 height: '100%',
@@ -137,7 +122,7 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 gap: 1
             }}
         >
-            <CloudOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
             <Typography variant="h4">データがありません</Typography>
             <Typography align="center">
                 現在、表示できるデータはありません。<br />

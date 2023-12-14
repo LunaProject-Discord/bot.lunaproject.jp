@@ -1,8 +1,7 @@
-import { CrownOutlined } from '@components/icons';
+import { CheckIcon, CloseIcon, CrownOutlined, DeleteIcon, RemoveIcon } from '@components/icons';
 import { TranslationKeys } from '@interfaces/localization';
 import { GuildRolesViewProps, GuildViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
-import { CheckOutlined, CloseOutlined, DeleteOutlined, RemoveOutlined } from '@mui/icons-material';
 import { alpha, Box, BoxProps, CSSObject, styled, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import { checkPermission, getRoleColor } from '@utils/discord';
 import clsx from 'clsx';
@@ -372,7 +371,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                             bgcolor: (theme) => alpha(theme.palette.warning.main, .1)
                                                         }}
                                                     >
-                                                        <DeleteOutlined color="warning" />
+                                                        <DeleteIcon color="warning" />
                                                     </GridCell>
                                                 </Tooltip>
                                             );
@@ -411,7 +410,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                             bgcolor: (theme) => alpha(theme.palette.warning.main, .1)
                                                         }}
                                                     >
-                                                        <DeleteOutlined color="warning" />
+                                                        <DeleteIcon color="warning" />
                                                     </GridCell>
                                                 </Tooltip>
                                             );
@@ -428,7 +427,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                             bgcolor: (theme) => alpha(theme.palette.info.main, .1)
                                                         }}
                                                     >
-                                                        <RemoveOutlined color="info" />
+                                                        <RemoveIcon color="info" />
                                                     </GridCell>
                                                 </Tooltip>
                                             );
@@ -448,7 +447,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                         bgcolor: (theme) => alpha(theme.palette.primary.main, .1)
                                                     }}
                                                 >
-                                                    <CheckOutlined color="primary" />
+                                                    <CheckIcon color="primary" />
                                                 </GridCell>
                                             </Tooltip>
                                         );
@@ -461,7 +460,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                 enterTouchDelay={100}
                                             >
                                                 <GridCell>
-                                                    <CloseOutlined color="disabled" />
+                                                    <CloseIcon color="disabled" />
                                                 </GridCell>
                                             </Tooltip>
                                         );

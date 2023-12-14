@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRightOutlined } from '@mui/icons-material';
+import { KeyboardArrowRightIcon } from '@components/icons';
 import {
     Accordion as MuiAccordion,
     accordionClasses,
@@ -30,7 +30,7 @@ export const EmbedAccordion = styled(
 }));
 
 export const EmbedAccordionSummary = styled(
-    (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<ChevronRightOutlined />} {...props} />
+    (props: AccordionSummaryProps) => <MuiAccordionSummary expandIcon={<KeyboardArrowRightIcon />} {...props} />
 )<AccordionSummaryProps>(({ theme }) => ({
     minHeight: 36,
     padding: 0,

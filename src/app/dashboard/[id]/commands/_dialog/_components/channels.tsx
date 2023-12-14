@@ -6,10 +6,9 @@ import {
     GroupTitle
 } from '@app/dashboard/[id]/commands/_dialog/_components/index';
 import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { ChannelIcon } from '@components/icons';
+import { AddIcon, ChannelIcon } from '@components/icons';
 import { ChannelPopover } from '@components/items';
 import { GuildChannelsViewProps } from '@interfaces/view';
-import { AddOutlined } from '@mui/icons-material';
 import { Button, Typography } from '@mui/material';
 import { getStateActionValue } from '@utils/state';
 import { nanoid } from 'nanoid';
@@ -73,9 +72,8 @@ export const Channels = (
                         onClick={({ currentTarget }) => setAnchorEl(currentTarget)}
                         disableElevation
                         variant="contained"
-                        color="inherit"
                         size="small"
-                        startIcon={<AddOutlined />}
+                        startIcon={<AddIcon />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}

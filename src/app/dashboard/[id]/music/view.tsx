@@ -1,13 +1,13 @@
 'use client';
 
 import { NumberFieldItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout';
+import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
 import { GuildConfigurationMusic } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Alert, AlertTitle, Box, Typography } from '@mui/material';
+import { Alert, AlertTitle } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -60,12 +60,7 @@ export const View = ({ guild, configuration, localization: { translations } }: G
 
     return (
         <Fragment>
-            <PageHeader>
-                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: .5 }}>
-                    <Typography variant="h4">{translations.music}</Typography>
-                    <Typography>{translations.music_description}</Typography>
-                </Box>
-            </PageHeader>
+            <PageHeader primary={translations.music} secondary={translations.music_description} />
             <Section>
                 <SectionContent>
                     <SwitchItem

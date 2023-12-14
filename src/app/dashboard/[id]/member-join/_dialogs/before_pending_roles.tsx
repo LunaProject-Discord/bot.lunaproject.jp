@@ -2,21 +2,15 @@
 
 import { CancelButton, SwitchButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import { AddIcon, DeleteIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon, LabelOffIcon } from '@components/icons';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover } from '@components/items';
-import { TranslatableTypography } from '@components/text';
 import {
     GuildConfigurationMemberJoinBeforePendingRole,
     GuildConfigurationMemberJoinBeforePendingRoleTargetType
 } from '@interfaces/bot';
 import { GuildViewProps } from '@interfaces/view';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
-import {
-    AddOutlined,
-    DeleteOutlined,
-    KeyboardArrowDownOutlined,
-    KeyboardArrowUpOutlined,
-    LabelOffOutlined
-} from '@mui/icons-material';
 import {
     Box,
     Button,
@@ -114,7 +108,7 @@ const RoleItem = (
                 <Divider orientation="vertical" flexItem sx={{ my: 2 }} />
                 <Tooltip title={translations.remove} placement="top">
                     <IconButton onClick={() => setValue(undefined)} disabled={disabled} color="error">
-                        <DeleteOutlined />
+                        <DeleteIcon />
                     </IconButton>
                 </Tooltip>
             </ItemFormContainer>
@@ -174,8 +168,8 @@ export const ManageBeforePendingRolesDialog = (
                         onClick={(e) => setAnchorEl(e.currentTarget)}
                         disableElevation
                         variant="contained"
-                        startIcon={<AddOutlined />}
-                        endIcon={anchorEl ? <KeyboardArrowUpOutlined /> : <KeyboardArrowDownOutlined />}
+                        startIcon={<AddIcon />}
+                        endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}
@@ -190,24 +184,11 @@ export const ManageBeforePendingRolesDialog = (
                             guild={guild}
                             localization={localization}
                         />
-                    )) : <Box
-                        sx={{
-                            height: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            placeItems: 'center',
-                            placeContent: 'center',
-                            gap: 1
-                        }}
-                    >
-                        <LabelOffOutlined color="primary" sx={{ fontSize: '10rem' }} />
-                        <TranslatableTypography variant="h4" align="center">
-                            {translations.dashboard_error_manage_roles_empty_dialog_title}
-                        </TranslatableTypography>
-                        <TranslatableTypography align="center">
-                            {translations.dashboard_error_manage_roles_empty_dialog_description}
-                        </TranslatableTypography>
-                    </Box>}
+                    )) : <ErrorRoot>
+                        <LabelOffIcon sx={{ fontSize: '10rem' }} />
+                        <ErrorTitle>{translations.dashboard_error_manage_roles_empty_dialog_title}</ErrorTitle>
+                        <ErrorDescription>{translations.dashboard_error_manage_roles_empty_dialog_description}</ErrorDescription>
+                    </ErrorRoot>}
                 </DialogContent>
                 <DialogActions>
                     <CancelButton onClick={handleClose} variant="contained">{translations.close}</CancelButton>

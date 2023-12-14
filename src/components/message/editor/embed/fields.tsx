@@ -1,14 +1,8 @@
 'use client';
 
+import { AddIcon, CloseIcon, ContentCopyIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@components/icons';
 import { LocalizationProps } from '@interfaces/localization';
 import { DefaultField, EmbedField } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    AddOutlined,
-    ClearOutlined,
-    ContentCopyOutlined,
-    KeyboardArrowDownOutlined,
-    KeyboardArrowUpOutlined
-} from '@mui/icons-material';
 import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
 import {
     moveDown as moveDownArray,
@@ -55,22 +49,22 @@ export const EmbedFieldEditor = (
             <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: .5 }}>
                 {visibleMoveUpButton && <Tooltip title={translations.move_up} placement="top">
                     <IconButton onClick={moveUp} size="small" sx={{ width: 36, height: 36 }}>
-                        <KeyboardArrowUpOutlined />
+                        <KeyboardArrowUpIcon />
                     </IconButton>
                 </Tooltip>}
                 {visibleMoveDownButton && <Tooltip title={translations.move_down} placement="top">
                     <IconButton onClick={moveDown} size="small" sx={{ width: 36, height: 36 }}>
-                        <KeyboardArrowDownOutlined />
+                        <KeyboardArrowDownIcon />
                     </IconButton>
                 </Tooltip>}
                 <Tooltip title={translations.duplicate} placement="top">
                     <IconButton onClick={duplicate} size="small" sx={{ width: 36, height: 36 }}>
-                        <ContentCopyOutlined fontSize="small" />
+                        <ContentCopyIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
                 <Tooltip title={translations.remove} placement="top">
                     <IconButton onClick={remove} color="error" size="small" sx={{ width: 36, height: 36 }}>
-                        <ClearOutlined fontSize="small" />
+                        <CloseIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -175,7 +169,7 @@ export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: E
                             disabled={disabled || value.length > 24}
                             disableElevation
                             variant="contained"
-                            startIcon={<AddOutlined />}
+                            startIcon={<AddIcon />}
                         >
                             {translations.embed_field_add}
                         </Button>
