@@ -3,7 +3,6 @@
 import { ToggleOffIcon, ToggleOnIcon } from '@components/icons';
 import {
     alpha,
-    CSSObject,
     Drawer,
     drawerClasses,
     List,
@@ -18,6 +17,7 @@ import {
     svgIconClasses,
     Theme
 } from '@mui/material';
+import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
 import NextLink from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { Dispatch, MouseEvent, ReactNode, SetStateAction } from 'react';
@@ -114,7 +114,7 @@ export const NavigationDrawerGroup = ({ label, children, ...props }: NavigationD
     </NavigationDrawerGroupRoot>
 );
 
-export const navigationDrawerItemRootStyled = (theme: Theme): CSSObject => ({
+export const navigationDrawerItemRootStyled = (theme: Theme): SystemStyleObject<Theme> => ({
     minHeight: theme.spacing(5),
     px: 1.5,
     py: .5,

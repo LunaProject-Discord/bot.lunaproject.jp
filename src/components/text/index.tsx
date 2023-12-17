@@ -1,8 +1,9 @@
 'use client';
 
 import { Box, CSSObject, styled, Theme, Typography } from '@mui/material';
+import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
 
-export const codeStyled = (theme: Theme): CSSObject => ({
+export const codeStyled = (theme: Theme): SystemStyleObject<Theme> => ({
     margin: theme.spacing(0, .25),
     padding: theme.spacing(.25, .5),
     fontFamily: 'HackGen, Consolas, monospace',
@@ -18,9 +19,11 @@ export const CodeStyleContainer = styled(Box)(({ theme }) => ({
     '& code': codeStyled(theme)
 }));
 
-export const Code = styled('code')(({ theme }) => codeStyled(theme));
+export const Code = styled('code')(({ theme }) => ({
+    ...codeStyled(theme)
+}));
 
-export const keyStyled = (theme: Theme): CSSObject => ({
+export const keyStyled = (theme: Theme): SystemStyleObject<Theme> => ({
     ...codeStyled(theme),
     padding: theme.spacing(0, .5),
     fontFamily: 'Renner, sans-serif',
@@ -41,7 +44,9 @@ export const KeyStyleContainer = styled(Box)(({ theme }) => ({
     '& kbd': keyStyled(theme)
 }));
 
-export const Key = styled(Code.withComponent('kbd'))(({ theme }) => keyStyled(theme));
+export const Key = styled(Code.withComponent('kbd'))(({ theme }) => ({
+    ...keyStyled(theme)
+}));
 
 export const translatableTypographyStyled = (theme: Theme): CSSObject => ({
     '& br': {
