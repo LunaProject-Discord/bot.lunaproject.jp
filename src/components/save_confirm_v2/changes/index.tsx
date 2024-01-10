@@ -103,6 +103,7 @@ export const ChangeUndoButtonRoot = styled(
     alignItems: 'center',
     justifyContent: 'center',
     visibility: 'hidden',
+    cursor: 'pointer',
     color: theme.palette.action.active,
     '&:hover': {
         color: theme.palette.text.primary

@@ -10,16 +10,15 @@ import { RefreshIcon, SaveIcon } from '@components/icons';
 import { Changes } from '@components/save_confirm_v2/changes';
 import { Change, ChangesGroupByPath } from '@components/save_confirm_v2/changes/utils';
 import { Issues } from '@components/save_confirm_v2/issues';
-import { Key } from '@components/text';
 import { LocalizationProps } from '@interfaces/localization';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, buttonClasses, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Tooltip, Typography } from '@mui/material';
 import { isRenderableReactNode } from '@utils/react/node';
 import deepEqual from 'deep-equal';
 import { diff } from 'json-diff-ts';
 import Mousetrap from 'mousetrap';
 import { useRouter } from 'next/navigation';
-import React, { Fragment, ReactNode, useEffect, useMemo, useRef, useState, useTransition } from 'react';
+import React, { ReactNode, useEffect, useMemo, useRef, useState, useTransition } from 'react';
 import { BottomSheetRef } from 'react-spring-bottom-sheet';
 import { SpringEvent } from 'react-spring-bottom-sheet/dist/types';
 import { ZodType } from 'zod';
@@ -146,35 +145,9 @@ export const SaveConfirmV2 = <T, >(
                         setExpanded={(open) => sheetRef.current?.snapTo(({ snapPoints }) => open ? Math.max(...snapPoints) : Math.min(...snapPoints))}
                         localization={localization}
                     />
-                    {parseResult.success ? <Fragment>
-                        <Typography>{isRenderableReactNode(label) ? label : translations.save_confirm}</Typography>
-                        <Box sx={{ ml: 'auto', display: { xs: 'none', sm: 'flex' }, alignItems: 'center', gap: 1 }}>
-                            <Tooltip title={translations.discard_changes}>
-                                <IconButton
-                                    onClick={handleCancelButtonClick}
-                                    disabled={loading || pending}
-                                >
-                                    <RefreshIcon sx={{ transform: 'scale(-1, 1)' }} />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={translations.save}>
-                                <LoadingButton
-                                    onClick={handleSaveButtonClick}
-                                    disabled={!parseResult.success}
-                                    loading={loading || pending}
-                                    variant="contained"
-                                    size="large"
-                                    sx={{
-                                        minWidth: 0,
-                                        p: 1,
-                                        borderRadius: '50%'
-                                    }}
-                                >
-                                    <SaveIcon />
-                                </LoadingButton>
-                            </Tooltip>
-                        </Box>
-                    </Fragment> : <Box>
+                    {parseResult.success ? <Typography>
+                        {isRenderableReactNode(label) ? label : translations.save_confirm}
+                    </Typography> : <Box>
                         <Typography>
                             {String(translations.save_confirm_settings_error_cannot_save_alert_title).replace(
                                 '%c',
@@ -185,6 +158,34 @@ export const SaveConfirmV2 = <T, >(
                             {translations.save_confirm_settings_error_cannot_save_alert_description}
                         </Typography>
                     </Box>}
+                    <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <Tooltip title={translations.discard_changes}>
+                            <IconButton
+                                ref={cancelButtonRef}
+                                onClick={handleCancelButtonClick}
+                                disabled={loading || pending}
+                            >
+                                <RefreshIcon sx={{ transform: 'scale(-1, 1)' }} />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title={translations.save}>
+                            <LoadingButton
+                                ref={saveButtonRef}
+                                onClick={handleSaveButtonClick}
+                                disabled={!parseResult.success}
+                                loading={loading || pending}
+                                variant="contained"
+                                size="large"
+                                sx={{
+                                    minWidth: 0,
+                                    p: 1,
+                                    borderRadius: '50%'
+                                }}
+                            >
+                                <SaveIcon />
+                            </LoadingButton>
+                        </Tooltip>
+                    </Box>
                 </Box>
             }
             sx={{
@@ -194,38 +195,8 @@ export const SaveConfirmV2 = <T, >(
             }}
         >
             <BottomSheetContent>
+                {!parseResult.success && <Issues issues={parseResult.error.issues} localization={localization} />}
                 <Changes changes={diffResult} groupByPath={groupByPath} localization={localization} />
-                {parseResult.success ? <Fragment>
-                    <LoadingButton
-                        ref={saveButtonRef}
-                        onClick={handleSaveButtonClick}
-                        disabled={!parseResult.success}
-                        loading={loading || pending}
-                        loadingPosition="start"
-                        variant="contained"
-                        size="large"
-                        startIcon={<SaveIcon />}
-                    >
-                        {translations.save}
-                        <Key sx={{ ml: 1, mr: -.5 }}>s</Key>
-                    </LoadingButton>
-                    <Button
-                        ref={cancelButtonRef}
-                        onClick={handleCancelButtonClick}
-                        disabled={loading || pending}
-                        size="large"
-                        startIcon={<RefreshIcon sx={{ transform: 'scale(-1, 1)' }} />}
-                        sx={{
-                            gap: .5,
-                            [`& .${buttonClasses.startIcon}, & .${buttonClasses.endIcon}`]: {
-                                m: 0
-                            }
-                        }}
-                    >
-                        {translations.discard_changes}
-                        <Key>r c</Key>
-                    </Button>
-                </Fragment> : <Issues issues={parseResult.error.issues} localization={localization} />}
             </BottomSheetContent>
         </BottomSheet>
     );

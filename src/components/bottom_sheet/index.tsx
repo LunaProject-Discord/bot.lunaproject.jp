@@ -40,6 +40,7 @@ export const BottomSheetHeaderToggleButton = (
         <IconButton
             onClick={() => setExpanded(!expanded)}
             sx={{
+                display: { xs: 'none', sm: 'inline-flex' },
                 transition: (theme) => theme.transitions.create('transform', {
                     duration: theme.transitions.duration.shortest
                 }),

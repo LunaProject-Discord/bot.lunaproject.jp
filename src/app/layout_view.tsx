@@ -17,7 +17,8 @@ import { StyleProvider } from '@lunaproject/web-core/dist/components/StyleProvid
 import { Config, ConfigProvider } from '@lunaproject/web-core/dist/utils/config';
 import { MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material';
+import { ChipProps, createTheme, darken, lighten, Theme, ThemeOptions, ThemeProvider } from '@mui/material';
+import { Interpolation } from '@mui/system';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
 import { COOKIE_APPEARANCE } from '@utils/cookie';
 import deepmerge from 'deepmerge';
@@ -27,6 +28,19 @@ import { RecoilRoot, useRecoilState } from 'recoil';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';
 import { fontFamily } from './theme';
+
+const chipStyled = (color: ChipProps['color']): Interpolation<{ theme: Omit<Theme, 'components'> }> => ({ theme }) => {
+    const getColor = theme.palette.mode === 'light' ? darken : lighten;
+    const getBackgroundColor = theme.palette.mode === 'light' ? lighten : darken;
+
+    if (!color || color === 'default')
+        return {};
+
+    return {
+        color: getColor(theme.palette[color].light, .9),
+        backgroundColor: getBackgroundColor(theme.palette[color].light, .6)
+    };
+};
 
 interface LayoutProps extends LocalizationProps {
     user: OAuthUser | undefined;
@@ -53,6 +67,47 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
                                 info: <InfoIcon fontSize="inherit" />
                             }
                         }
+                    },
+                    MuiChip: {
+                        variants: [
+                            {
+                                props: {
+                                    variant: 'rounded'
+                                },
+                                style: ({ theme }) => ({
+                                    fontWeight: 500,
+                                    borderRadius: theme.shape.borderRadius
+                                })
+                            },
+                            {
+                                props: {
+                                    variant: 'rounded',
+                                    color: 'info'
+                                },
+                                style: chipStyled('info')
+                            },
+                            {
+                                props: {
+                                    variant: 'rounded',
+                                    color: 'error'
+                                },
+                                style: chipStyled('error')
+                            },
+                            {
+                                props: {
+                                    variant: 'rounded',
+                                    color: 'warning'
+                                },
+                                style: chipStyled('warning')
+                            },
+                            {
+                                props: {
+                                    variant: 'rounded',
+                                    color: 'success'
+                                },
+                                style: chipStyled('success')
+                            }
+                        ]
                     }
                 }
             ),
