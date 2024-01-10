@@ -64,6 +64,7 @@ import PersonOff from '@material-symbols/svg-400/outlined/person_off.svg';
 import PersonRemove from '@material-symbols/svg-400/outlined/person_remove.svg';
 import Preview from '@material-symbols/svg-400/outlined/preview.svg';
 import RecordVoiceOver from '@material-symbols/svg-400/outlined/record_voice_over.svg';
+import Redo from '@material-symbols/svg-400/outlined/redo.svg';
 import Refresh from '@material-symbols/svg-400/outlined/refresh.svg';
 import Remove from '@material-symbols/svg-400/outlined/remove.svg';
 import Save from '@material-symbols/svg-400/outlined/save.svg';
@@ -88,6 +89,7 @@ import TrendingDown from '@material-symbols/svg-400/outlined/trending_down.svg';
 import TrendingFlat from '@material-symbols/svg-400/outlined/trending_flat.svg';
 import TrendingUp from '@material-symbols/svg-400/outlined/trending_up.svg';
 import Tune from '@material-symbols/svg-400/outlined/tune.svg';
+import Undo from '@material-symbols/svg-400/outlined/undo.svg';
 import Videocam from '@material-symbols/svg-400/outlined/videocam.svg';
 import Warning from '@material-symbols/svg-400/outlined/warning.svg';
 
@@ -221,6 +223,8 @@ export const PreviewIcon = createSvgIcon({ path: Preview }, 'PreviewIcon');
 
 export const RecordVoiceOverIcon = createSvgIcon({ path: RecordVoiceOver }, 'RecordVoiceOverIcon');
 
+export const RedoIcon = createSvgIcon({ path: Redo }, 'RedoIcon');
+
 export const RefreshIcon = createSvgIcon({ path: Refresh }, 'RefreshIcon');
 
 export const RemoveIcon = createSvgIcon({ path: Remove }, 'RemoveIcon');
@@ -268,6 +272,8 @@ export const TrendingFlatIcon = createSvgIcon({ path: TrendingFlat }, 'TrendingF
 export const TrendingUpIcon = createSvgIcon({ path: TrendingUp }, 'TrendingUpIcon');
 
 export const TuneIcon = createSvgIcon({ path: Tune }, 'TuneIcon');
+
+export const UndoIcon = createSvgIcon({ path: Undo }, 'UndoIcon');
 
 export const VideocamIcon = createSvgIcon({ path: Videocam }, 'VideocamIcon');
 

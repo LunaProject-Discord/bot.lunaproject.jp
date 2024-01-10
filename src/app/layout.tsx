@@ -7,9 +7,11 @@ import { COOKIE_APPEARANCE } from '@utils/cookie';
 import { Metadata, Viewport } from 'next';
 import { cookies } from 'next/headers';
 import React, { ReactNode } from 'react';
+import { LayoutView } from './layout_view';
+
 import '../../public/fonts/style.css';
 import '../../public/global.css';
-import { LayoutView } from './layout_view';
+import 'react-spring-bottom-sheet/dist/style.css';
 
 export const viewport: Viewport = {
     themeColor: '#959ac0'

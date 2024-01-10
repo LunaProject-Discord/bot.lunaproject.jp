@@ -19,6 +19,8 @@ export const translationsEn: Translations = {
     create: 'Create',
     delete: 'Delete',
     edit: 'Edit',
+    undo: 'Undo',
+    redo: 'Redo',
     confirm: 'Confirm',
     cancel: 'Cancel',
     save: 'Save',
@@ -510,6 +512,16 @@ export const translationsEn: Translations = {
     user_settings: 'User Settings',
     user_time_and_language_description: 'You can set the date, time, and language used in the functions performed by the user.',
     user_language_description: 'Responses to commands you execute will be in the language you set here.',
+
+
+    save_confirm: 'Do you want to save changes?',
+    save_confirm_changes: '%c Change(s) Found',
+    save_confirm_issues: '%c Problem(s) Found',
+
+    save_confirm_data: 'Do you want to save your data?',
+    save_confirm_settings: 'Do you want to save your settings?',
+    save_confirm_settings_error_cannot_save_alert_title: 'There is a problem with %c!',
+    save_confirm_settings_error_cannot_save_alert_description: 'Cannot save settings.',
 
 
     statistics: 'Statistics',

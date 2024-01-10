@@ -41,6 +41,9 @@
             "@localizations/*": [
                 "src/localizations/*"
             ],
+            "@schemas/*": [
+                "src/schemas/*"
+            ],
             "@states/*": [
                 "src/states/*"
             ],

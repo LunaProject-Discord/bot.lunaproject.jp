@@ -20,6 +20,8 @@ export type TranslationKeys =
     | 'create'
     | 'delete'
     | 'edit'
+    | 'undo'
+    | 'redo'
     | 'confirm'
     | 'cancel'
     | 'save'
@@ -433,6 +435,16 @@ export type TranslationKeys =
     | 'user_settings'
     | 'user_time_and_language_description'
     | 'user_language_description'
+
+
+    | 'save_confirm'
+    | 'save_confirm_changes'
+    | 'save_confirm_issues'
+
+    | 'save_confirm_data'
+    | 'save_confirm_settings'
+    | 'save_confirm_settings_error_cannot_save_alert_title'
+    | 'save_confirm_settings_error_cannot_save_alert_description'
 
 
     | 'statistics'

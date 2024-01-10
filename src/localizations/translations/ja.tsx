@@ -19,6 +19,8 @@ export const translationsJa: Translations = {
     create: '作成',
     delete: '削除',
     edit: '編集',
+    undo: '元に戻す',
+    redo: 'やり直す',
     confirm: '確認',
     cancel: 'キャンセル',
     save: '保存',
@@ -513,6 +515,16 @@ export const translationsJa: Translations = {
     user_settings: 'ユーザー設定',
     user_time_and_language_description: 'ユーザーが実行した機能で使用される日時や言語の設定ができます。',
     user_language_description: 'あなたが実行したコマンドの応答は、ここで設定した言語で行われます。',
+
+
+    save_confirm: '変更を保存しますか？',
+    save_confirm_changes: '%c 件の変更',
+    save_confirm_issues: '%c 件の問題',
+
+    save_confirm_data: 'データを保存しますか？',
+    save_confirm_settings: '設定を保存しますか？',
+    save_confirm_settings_error_cannot_save_alert_title: '%c 件の問題があります！',
+    save_confirm_settings_error_cannot_save_alert_description: '設定を保存できません',
 
 
     statistics: '統計',

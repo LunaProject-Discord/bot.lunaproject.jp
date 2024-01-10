@@ -1,4 +1,4 @@
-import { GuildConfiguration, GuildConfigurationLanguage } from '@interfaces/bot';
+import { ConfigurationLanguage, GuildConfiguration } from '@interfaces/bot';
 import prisma from '@libs/prisma';
 import { TimeZone } from '@utils/timezone';
 
@@ -11,7 +11,7 @@ export const getGuildConfiguration = async (id: string): Promise<GuildConfigurat
         id,
         prefix: guildConfigurationData.prefix,
         nickname: guildConfigurationData.nickname,
-        language: guildConfigurationData.language as GuildConfigurationLanguage,
+        language: guildConfigurationData.language as ConfigurationLanguage,
         timezone: guildConfigurationData.timezone as TimeZone,
         commands: JSON.parse(guildConfigurationData.commands),
         welcome: JSON.parse(guildConfigurationData.welcome),

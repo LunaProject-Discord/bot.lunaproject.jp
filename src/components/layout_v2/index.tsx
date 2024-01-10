@@ -1,14 +1,34 @@
 'use client';
 
+import { fontFamily, M_Plus_Rounded_1c, Nunito } from '@app/theme';
 import { NAVIGATION_DRAWER_WIDTH } from '@components/navigation';
-import { Box, styled, Typography, TypographyProps } from '@mui/material';
-import React, { ReactNode } from 'react';
+import { Box, CssBaseline, GlobalStyles, styled, Typography, TypographyProps } from '@mui/material';
+import React, { Fragment, ReactNode } from 'react';
 
 export const Body = styled('body')(({ theme }) => ({
     minHeight: '100dvh',
     margin: 0,
     padding: 0
 }));
+
+export const RootStyles = () => (
+    <Fragment>
+        <CssBaseline />
+        <GlobalStyles
+            styles={(theme) => ({
+                Nunito,
+                M_Plus_Rounded_1c,
+                '*, ::before, ::after': {
+                    fontFamily
+                },
+
+                '[data-rsbs-backdrop], [data-rsbs-overlay], [data-rsbs-root]:after': {
+                    zIndex: theme.zIndex.drawer + 1
+                }
+            })}
+        />
+    </Fragment>
+);
 
 export const RootLayout = styled(Box)(({ theme }) => ({
     width: '100%',

@@ -1,38 +1,21 @@
-export interface DataMessage {
-    content: string;
-    embeds?: DataEmbed[];
-}
+import {
+    DataEmbedAuthorSchema,
+    DataEmbedFieldSchema,
+    DataEmbedFooterSchema,
+    DataEmbedImageSchema,
+    DataEmbedSchema,
+    DataMessageSchema
+} from '@schemas/message';
+import { z } from 'zod';
 
-export interface DataEmbed {
-    title: string;
-    description: string;
-    url: string | null;
-    color: string | null;
-    timestamp: string | null;
-    author: DataEmbedAuthor | null;
-    fields: DataEmbedField[] | null;
-    image: DataEmbedImage | null;
-    footer: DataEmbedFooter | null;
-}
+export type DataMessage = z.infer<typeof DataMessageSchema>;
 
-export interface DataEmbedAuthor {
-    name: string;
-    url: string | null;
-    iconUrl: string | null;
-}
+export type DataEmbed = z.infer<typeof DataEmbedSchema>;
 
-export interface DataEmbedField {
-    name: string;
-    value: string;
-    inline: boolean | null;
-}
+export type DataEmbedAuthor = z.infer<typeof DataEmbedAuthorSchema>;
 
-export interface DataEmbedImage {
-    images: string[];
-    thumbnail: string | null;
-}
+export type DataEmbedField = z.infer<typeof DataEmbedFieldSchema>;
 
-export interface DataEmbedFooter {
-    text: string;
-    iconUrl: string | null;
-}
+export type DataEmbedImage = z.infer<typeof DataEmbedImageSchema>;
+
+export type DataEmbedFooter = z.infer<typeof DataEmbedFooterSchema>;

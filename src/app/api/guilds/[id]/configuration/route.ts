@@ -6,6 +6,7 @@ import prisma from '@libs/prisma';
 import { getGuildById, updateGuildConfigurationById } from '@libs/redis';
 import { errorWithName } from '@lunaproject/web-core/dist/utils/logger';
 import { Prisma } from '@prisma/client';
+import { PartialGuildConfigurationSchema } from '@schemas/bot';
 import { addHours } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -40,19 +41,23 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
     if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    const data: Partial<GuildConfiguration> = await req.json();
-    delete data.id;
+    const body = await req.json();
+    const result = PartialGuildConfigurationSchema.safeParse(body);
+    if (!result.success)
+        return NextResponse.json({ message: 'Invalid body!', issues: result.error.issues }, { status: 400 });
+
+    const configuration = result.data;
 
     try {
         const guildId = BigInt(id);
         const now = addHours(new Date(), 9);
 
-        if (Object.keys(data).length > 0) {
+        if (Object.keys(configuration).length > 0) {
             const inputs: {
                 [key: string]: valueOf<Prisma.XOR<Prisma.guilds_configurationsUpdateInput, Prisma.guilds_configurationsUncheckedUpdateInput>>
             } = {};
 
-            const configurationSections: { [key: string]: valueOf<GuildConfiguration> } = data;
+            const configurationSections: { [key: string]: valueOf<GuildConfiguration> } = configuration;
             for (const sectionKey in configurationSections) {
                 const value = configurationSections[sectionKey];
                 inputs[sectionKey] = typeof value === 'object' ? JSON.stringify(value) : value;

@@ -1,280 +1,130 @@
-import { DataMessage } from '@interfaces/message';
-import { TimeZone } from '@utils/timezone';
+import {
+    GuildConfigurationActivityRoleSchema,
+    GuildConfigurationActivityRoleTypeSchema,
+    GuildConfigurationActivitySchema,
+    GuildConfigurationCommandSchema,
+    GuildConfigurationCommandsPermissionOverridesSchema,
+    GuildConfigurationCommandsPermissionSchema,
+    GuildConfigurationCommandsPermissionsSchema,
+    GuildConfigurationCommandsSchema,
+    GuildConfigurationGlobalBanSchema,
+    GuildConfigurationGoodbyeSchema,
+    GuildConfigurationLevelLeaderboardSchema,
+    GuildConfigurationLevelNotificationSchema,
+    GuildConfigurationLevelNotificationTypeSchema,
+    GuildConfigurationLevelRewardRoleSchema,
+    GuildConfigurationLevelRewardSchema,
+    GuildConfigurationLevelRewardTypeSchema,
+    GuildConfigurationLevelSchema,
+    GuildConfigurationLoggingChannelSchema,
+    GuildConfigurationLoggingMemberSchema,
+    GuildConfigurationLoggingMessageSchema,
+    GuildConfigurationLoggingModerationSchema,
+    GuildConfigurationLoggingObjectSchema,
+    GuildConfigurationLoggingRootSchema,
+    GuildConfigurationLoggingSchema,
+    GuildConfigurationLoggingVoiceSchema,
+    GuildConfigurationMemberJoinAfterPendingRoleSchema,
+    GuildConfigurationMemberJoinAfterPendingRolesSchema,
+    GuildConfigurationMemberJoinAfterPendingSchema,
+    GuildConfigurationMemberJoinBeforePendingRoleSchema,
+    GuildConfigurationMemberJoinBeforePendingRolesSchema,
+    GuildConfigurationMemberJoinBeforePendingRoleTargetTypeSchema,
+    GuildConfigurationMemberJoinBeforePendingSchema,
+    GuildConfigurationMemberJoinMessageSchema,
+    GuildConfigurationMemberJoinSchema,
+    GuildConfigurationMusicSchema,
+    GuildConfigurationMusicSourcesSchema,
+    GuildConfigurationQuoteSchema,
+    GuildConfigurationSchema,
+    GuildConfigurationTranslateSchema,
+    GuildConfigurationWelcomeRoleSchema,
+    GuildConfigurationWelcomeSchema,
+    PartialGuildConfigurationSchema
+} from '@schemas/bot';
+import { z } from 'zod';
 
-export interface GuildConfiguration {
-    id: string;
 
-    prefix: string;
-    nickname: string;
-    language: GuildConfigurationLanguage;
-    timezone: TimeZone;
+export type GuildConfiguration = z.infer<typeof GuildConfigurationSchema>;
 
-    commands: GuildConfigurationCommands;
+export type GuildConfigurationCommands = z.infer<typeof GuildConfigurationCommandsSchema>;
 
-    welcome: GuildConfigurationWelcome;
-    goodbye: GuildConfigurationGoodbye;
-    member_join: GuildConfigurationMemberJoin;
-    activity: GuildConfigurationActivity;
+export type GuildConfigurationCommandsPermissions = z.infer<typeof GuildConfigurationCommandsPermissionsSchema>;
 
-    global_chat: GuildConfigurationRoot;
-    global_ban: GuildConfigurationGlobalBan;
-    level: GuildConfigurationLevel;
-    translate: GuildConfigurationTranslate;
-    vote: GuildConfigurationRoot;
-    quote: GuildConfigurationQuote;
-    music: GuildConfigurationMusic;
-    logging: GuildConfigurationLogging;
-}
+export type GuildConfigurationCommandsPermission = z.infer<typeof GuildConfigurationCommandsPermissionSchema>;
 
-export type GuildConfigurationLanguage = 'ja-JP' | 'en-US';
+export type GuildConfigurationCommandsPermissionOverrides = z.infer<typeof GuildConfigurationCommandsPermissionOverridesSchema>;
 
-export interface GuildConfigurationRoot {
-    enabled: boolean;
-}
+export type GuildConfigurationCommand = z.infer<typeof GuildConfigurationCommandSchema>;
 
-export interface GuildConfigurationAccessControlComponent {
-    channels: string[];
-    roles: string[];
-}
+export type GuildConfigurationWelcome = z.infer<typeof GuildConfigurationWelcomeSchema>;
 
-export interface GuildConfigurationCommands {
-    permissions: GuildConfigurationCommandsPermissions;
-    commands: GuildConfigurationCommand[];
-}
+export type GuildConfigurationWelcomeRole = z.infer<typeof GuildConfigurationWelcomeRoleSchema>;
 
-export interface GuildConfigurationCommandsPermissions {
-    channels: GuildConfigurationCommandsPermission;
-    roles: GuildConfigurationCommandsPermission;
-    members: { [key in string]: boolean };
-}
+export type GuildConfigurationGoodbye = z.infer<typeof GuildConfigurationGoodbyeSchema>;
 
-export interface GuildConfigurationCommandsPermission {
-    default: boolean | null;
-    overrides: GuildConfigurationCommandsPermissionOverrides;
-}
+export type GuildConfigurationMemberJoin = z.infer<typeof GuildConfigurationMemberJoinSchema>;
 
-export type GuildConfigurationCommandsPermissionOverrides = { [key in string]: boolean };
+export type GuildConfigurationMemberJoinBeforePending = z.infer<typeof GuildConfigurationMemberJoinBeforePendingSchema>;
 
-export interface GuildConfigurationCommand {
-    name: string;
-    enabled: boolean;
-    permissions: GuildConfigurationCommandsPermissions;
-}
+export type GuildConfigurationMemberJoinBeforePendingRoles = z.infer<typeof GuildConfigurationMemberJoinBeforePendingRolesSchema>;
 
-export interface GuildConfigurationWelcome extends GuildConfigurationRoot {
-    channel_id: string;
-    message: DataMessage;
-    roles: GuildConfigurationWelcomeRole[];
-}
+export type GuildConfigurationMemberJoinBeforePendingRole = z.infer<typeof GuildConfigurationMemberJoinBeforePendingRoleSchema>;
 
-export interface GuildConfigurationWelcomeRole extends GuildConfigurationRoot {
-    id: string;
-}
+export type GuildConfigurationMemberJoinBeforePendingRoleTargetType = z.infer<typeof GuildConfigurationMemberJoinBeforePendingRoleTargetTypeSchema>;
 
-export interface GuildConfigurationGoodbye extends GuildConfigurationRoot {
-    channel_id: string;
-    message: DataMessage;
-}
+export type GuildConfigurationMemberJoinAfterPending = z.infer<typeof GuildConfigurationMemberJoinAfterPendingSchema>;
 
-export interface GuildConfigurationMemberJoin extends GuildConfigurationRoot {
-    before_pending: GuildConfigurationMemberJoinBeforePending;
-    after_pending: GuildConfigurationMemberJoinAfterPending;
-    _migrated: boolean;
-}
+export type GuildConfigurationMemberJoinAfterPendingRoles = z.infer<typeof GuildConfigurationMemberJoinAfterPendingRolesSchema>;
 
-export interface GuildConfigurationMemberJoinBeforePending extends GuildConfigurationRoot {
-    message: GuildConfigurationMemberJoinMessage;
-    roles: GuildConfigurationMemberJoinBeforePendingRoles;
-}
+export type GuildConfigurationMemberJoinAfterPendingRole = z.infer<typeof GuildConfigurationMemberJoinAfterPendingRoleSchema>;
 
-export interface GuildConfigurationMemberJoinBeforePendingRoles extends GuildConfigurationRoot {
-    roles: GuildConfigurationMemberJoinBeforePendingRole[];
-}
+export type GuildConfigurationMemberJoinMessage = z.infer<typeof GuildConfigurationMemberJoinMessageSchema>;
 
-export interface GuildConfigurationMemberJoinBeforePendingRole extends GuildConfigurationRoot {
-    id: string;
-    type: GuildConfigurationMemberJoinBeforePendingRoleTargetType;
-}
+export type GuildConfigurationActivity = z.infer<typeof GuildConfigurationActivitySchema>;
 
-export type GuildConfigurationMemberJoinBeforePendingRoleTargetType =
-    'EVERYONE'
-    | 'USER'
-    | 'BOT'
-    | 'VERIFIED_BOT'
-    | 'NOT_VERIFIED_BOT';
+export type GuildConfigurationActivityRole = z.infer<typeof GuildConfigurationActivityRoleSchema>;
 
-export interface GuildConfigurationMemberJoinAfterPending extends GuildConfigurationRoot {
-    message: GuildConfigurationMemberJoinMessage;
-    roles: GuildConfigurationMemberJoinAfterPendingRoles;
-}
+export type GuildConfigurationActivityRoleType = z.infer<typeof GuildConfigurationActivityRoleTypeSchema>;
 
-export interface GuildConfigurationMemberJoinAfterPendingRoles extends GuildConfigurationRoot {
-    roles: GuildConfigurationMemberJoinAfterPendingRole[];
-}
+export type GuildConfigurationGlobalBan = z.infer<typeof GuildConfigurationGlobalBanSchema>;
 
-export interface GuildConfigurationMemberJoinAfterPendingRole extends GuildConfigurationRoot {
-    id: string;
-}
+export type GuildConfigurationLevel = z.infer<typeof GuildConfigurationLevelSchema>;
 
-export interface GuildConfigurationMemberJoinMessage extends GuildConfigurationRoot {
-    channel_id: string;
-    message: DataMessage;
-}
+export type GuildConfigurationLevelReward = z.infer<typeof GuildConfigurationLevelRewardSchema>;
 
-export interface GuildConfigurationActivity extends GuildConfigurationRoot {
-    roles: GuildConfigurationActivityRole[];
-}
+export type GuildConfigurationLevelRewardType = z.infer<typeof GuildConfigurationLevelRewardTypeSchema>;
 
-export interface GuildConfigurationActivityRole extends GuildConfigurationRoot {
-    id: string;
-    name: string;
-    type: GuildConfigurationActivityRoleType;
-}
+export type GuildConfigurationLevelRewardRole = z.infer<typeof GuildConfigurationLevelRewardRoleSchema>;
 
-export type GuildConfigurationActivityRoleType =
-    'PLAYING'
-    | 'STREAMING'
-    | 'LISTENING'
-    | 'WATCHING'
-    | 'CUSTOM_STATUS'
-    | 'COMPETING';
+export type GuildConfigurationLevelNotification = z.infer<typeof GuildConfigurationLevelNotificationSchema>;
 
-export interface GuildConfigurationGlobalBan extends GuildConfigurationRoot {
-    minimum_evaluate_value: number;
-}
+export type GuildConfigurationLevelNotificationType = z.infer<typeof GuildConfigurationLevelNotificationTypeSchema>;
 
-export interface GuildConfigurationLevel extends GuildConfigurationRoot {
-    experience_per_message: number;
-    disabled: GuildConfigurationAccessControlComponent;
-    reward: GuildConfigurationLevelReward;
-    notification: GuildConfigurationLevelNotification;
-    leaderboard: GuildConfigurationLevelLeaderboard;
-}
+export type GuildConfigurationLevelLeaderboard = z.infer<typeof GuildConfigurationLevelLeaderboardSchema>;
 
-export interface GuildConfigurationLevelReward {
-    type: GuildConfigurationLevelRewardType;
-    remove_role_demoted: boolean;
-    roles: GuildConfigurationLevelRewardRole[];
-}
+export type GuildConfigurationTranslate = z.infer<typeof GuildConfigurationTranslateSchema>;
 
-export type GuildConfigurationLevelRewardType = 'STACK_PREVIOUS_ROLES' | 'REMOVE_PREVIOUS_ROLES';
+export type GuildConfigurationQuote = z.infer<typeof GuildConfigurationQuoteSchema>;
 
-export interface GuildConfigurationLevelRewardRole extends GuildConfigurationRoot {
-    id: string;
-    level: number;
-}
+export type GuildConfigurationMusic = z.infer<typeof GuildConfigurationMusicSchema>;
 
-export interface GuildConfigurationLevelNotification {
-    type: GuildConfigurationLevelNotificationType;
-    channel_id: string;
-    message: DataMessage;
-}
+export type GuildConfigurationMusicSources = z.infer<typeof GuildConfigurationMusicSourcesSchema>;
 
-export type GuildConfigurationLevelNotificationType =
-    'DISABLED'
-    | 'DIRECT_MESSAGE'
-    | 'CURRENT_CHANNEL'
-    | 'CUSTOM_CHANNEL';
+export type GuildConfigurationLogging = z.infer<typeof GuildConfigurationLoggingSchema>;
 
-export interface GuildConfigurationLevelLeaderboard {
-    public: boolean;
-    allow_join: boolean;
-    vanity_code: string | null;
-}
+export type GuildConfigurationLoggingRoot = z.infer<typeof GuildConfigurationLoggingRootSchema>;
 
-export interface GuildConfigurationTranslate extends GuildConfigurationRoot {
-    reaction: boolean;
-    disabled: GuildConfigurationAccessControlComponent;
-}
+export type GuildConfigurationLoggingModeration = z.infer<typeof GuildConfigurationLoggingModerationSchema>;
 
-export interface GuildConfigurationQuote extends GuildConfigurationRoot {
-    reaction: boolean;
-    message: boolean;
-    other_guild_to_this_guild: boolean;
-    this_guild_to_other_guild: boolean;
-    disabled: GuildConfigurationAccessControlComponent;
-}
+export type GuildConfigurationLoggingMember = z.infer<typeof GuildConfigurationLoggingMemberSchema>;
 
-export interface GuildConfigurationMusic extends GuildConfigurationRoot {
-    web_panel: boolean;
-    default_volume: number;
-    timeout_seconds: number;
-    next_media_notification: boolean;
-    sources: GuildConfigurationMusicSources;
-}
+export type GuildConfigurationLoggingVoice = z.infer<typeof GuildConfigurationLoggingVoiceSchema>;
 
-export interface GuildConfigurationMusicSources {
-    youtube: boolean;
-    niconico: boolean;
-    soundcloud: boolean;
-    twitch: boolean;
-    bandcamp: boolean;
-    vimeo: boolean;
-}
+export type GuildConfigurationLoggingChannel = z.infer<typeof GuildConfigurationLoggingChannelSchema>;
 
-export interface GuildConfigurationLogging {
-    enabled: boolean;
+export type GuildConfigurationLoggingObject = z.infer<typeof GuildConfigurationLoggingObjectSchema>;
 
-    moderation: GuildConfigurationLoggingModeration;
-    member: GuildConfigurationLoggingMember;
-    voice: GuildConfigurationLoggingVoice;
-    category: GuildConfigurationLoggingChannel;
-    text_channel: GuildConfigurationLoggingChannel;
-    voice_channel: GuildConfigurationLoggingChannel;
-    role: GuildConfigurationLoggingObject;
-    emote: GuildConfigurationLoggingObject;
-    invite: GuildConfigurationLoggingObject;
-    webhook: GuildConfigurationLoggingObject;
-    integration: GuildConfigurationLoggingObject;
-    message: GuildConfigurationLoggingMessage;
-}
+export type GuildConfigurationLoggingMessage = z.infer<typeof GuildConfigurationLoggingMessageSchema>;
 
-export interface GuildConfigurationLoggingComponent extends GuildConfigurationRoot {
-    channel_id: string;
-    color: string;
-}
-
-export interface GuildConfigurationLoggingModeration extends GuildConfigurationLoggingComponent {
-    update: boolean;
-    kick: boolean;
-    prune: boolean;
-    ban: boolean;
-    unban: boolean;
-}
-
-export interface GuildConfigurationLoggingMember extends GuildConfigurationLoggingComponent {
-    join: boolean;
-    leave: boolean;
-    update: boolean;
-    role_add: boolean;
-    role_remove: boolean;
-}
-
-export interface GuildConfigurationLoggingVoice extends GuildConfigurationLoggingComponent {
-    join: boolean;
-    leave: boolean;
-    move: boolean;
-    mute: boolean;
-    deafen: boolean;
-}
-
-export interface GuildConfigurationLoggingChannel extends GuildConfigurationLoggingComponent {
-    create: boolean;
-    delete: boolean;
-    update: boolean;
-    permissions_update: boolean;
-}
-
-export interface GuildConfigurationLoggingObject extends GuildConfigurationLoggingComponent {
-    create: boolean;
-    delete: boolean;
-    update: boolean;
-}
-
-export interface GuildConfigurationLoggingMessage extends GuildConfigurationLoggingComponent {
-    update: boolean;
-    delete: boolean;
-    purge: boolean;
-    pin: boolean;
-    unpin: boolean;
-}
+export type PartialGuildConfiguration = z.infer<typeof PartialGuildConfigurationSchema>;

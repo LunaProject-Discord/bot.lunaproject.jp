@@ -1,13 +1,23 @@
 'use client';
 
-import { ErrorIcon, InfoIcon, TaskAltIcon, WarningIcon } from '@components/icons';
-import { RootLayout } from '@components/layout_v2';
+import {
+    ArrowDropDownIcon,
+    ArrowDropUpIcon,
+    ArrowRightIcon,
+    ErrorIcon,
+    InfoIcon,
+    OpenInNewIcon,
+    TaskAltIcon,
+    WarningIcon
+} from '@components/icons';
+import { RootLayout, RootStyles } from '@components/layout_v2';
 import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject/web-core/dist/components/StyleProvider';
+import { Config, ConfigProvider } from '@lunaproject/web-core/dist/utils/config';
 import { MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { createTheme, CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material';
+import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
 import { COOKIE_APPEARANCE } from '@utils/cookie';
 import deepmerge from 'deepmerge';
@@ -16,7 +26,7 @@ import React, { ReactNode, useEffect } from 'react';
 import { RecoilRoot, useRecoilState } from 'recoil';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';
-import { fontFamily, M_Plus_Rounded_1c, Nunito } from './theme';
+import { fontFamily } from './theme';
 
 interface LayoutProps extends LocalizationProps {
     user: OAuthUser | undefined;
@@ -31,7 +41,7 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
 
     const theme = createTheme(
         {
-            components: deepmerge(
+            components: deepmerge<ThemeOptions['components']>(
                 MuiComponents,
                 {
                     MuiAlert: {
@@ -55,6 +65,15 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
         getMuiDateLocalizationByName(locale),
         getMuiGridLocalizationByName(locale)
     );
+
+    const config: Config = {
+        icons: {
+            Decrement: ArrowDropDownIcon,
+            Increment: ArrowDropUpIcon,
+            More: ArrowRightIcon,
+            OpenInNew: OpenInNewIcon
+        }
+    };
 
     const cookies = parseCookies();
 
@@ -97,12 +116,13 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
     return (
         <StyleProvider>
             <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <GlobalStyles styles={{ Nunito, M_Plus_Rounded_1c, '*, ::before, ::after': { fontFamily } }} />
-                <Navigation user={user} flags={flags} localization={localization} />
-                <RootLayout>
-                    {children}
-                </RootLayout>
+                <ConfigProvider value={config}>
+                    <RootStyles />
+                    <Navigation user={user} flags={flags} localization={localization} />
+                    <RootLayout>
+                        {children}
+                    </RootLayout>
+                </ConfigProvider>
             </ThemeProvider>
         </StyleProvider>
     );
