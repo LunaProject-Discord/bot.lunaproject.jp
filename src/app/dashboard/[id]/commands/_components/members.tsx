@@ -8,7 +8,7 @@ import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Sec
 import { ItemIcon, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Avatar, Button } from '@mui/material';
 import { getMemberAvatar } from '@utils/cdn';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { Fragment, useState } from 'react';
 

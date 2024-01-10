@@ -19,7 +19,7 @@ import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, styled, Switch, Typography, Unstable_Grid2 as Grid } from '@mui/material';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import deepEqual from 'deep-equal';
 import React, { Dispatch, Fragment, memo, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';

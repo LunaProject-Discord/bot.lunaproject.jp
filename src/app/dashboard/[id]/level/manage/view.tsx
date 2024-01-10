@@ -28,7 +28,7 @@ import {
 } from '@mui/material';
 import { getMemberAvatar } from '@utils/cdn';
 import { filterPredicateMember } from '@utils/discord';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import clsx from 'clsx';
 import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
 
@@ -112,6 +112,8 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                     <NumberField
                         value={value.level}
                         setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
+                        pattern="\d*"
+                        step={1}
                         min={0}
                         sx={{
                             width: {
@@ -126,6 +128,8 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                     <NumberField
                         value={value.xp}
                         setValue={(action) => setValue({ ...value, xp: getStateActionValue(action, value.xp) })}
+                        pattern="\d*"
+                        step={1}
                         min={0}
                         max={20 * Math.max(value.level, 1)}
                         sx={{

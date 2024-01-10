@@ -22,7 +22,7 @@ import {
 import { StatisticsPeriodType } from '@interfaces/bot';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Theme, Typography, useMediaQuery } from '@mui/material';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import { endOfToday } from 'date-fns';
 import { DateTime } from 'luxon';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';

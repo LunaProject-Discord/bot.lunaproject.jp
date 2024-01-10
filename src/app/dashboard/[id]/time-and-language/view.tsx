@@ -4,7 +4,7 @@ import { ScheduleIcon, TranslateIcon } from '@components/icons';
 import { SelectItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
 import { SaveConfirm } from '@components/save_confirm';
-import { GuildConfigurationLanguage } from '@interfaces/bot';
+import { ConfigurationLanguage } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
@@ -62,7 +62,7 @@ export const View = ({ guild, configuration, localization: { translations } }: G
             <Section>
                 <SectionTitle>{translations.language}</SectionTitle>
                 <SectionContent>
-                    <SelectItem<GuildConfigurationLanguage>
+                    <SelectItem<ConfigurationLanguage>
                         icon={<TranslateIcon />}
                         primary={translations.language}
                         secondary={translations.guild_language_description}

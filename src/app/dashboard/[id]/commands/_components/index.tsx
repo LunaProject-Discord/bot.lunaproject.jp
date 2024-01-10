@@ -9,7 +9,7 @@ import {
     ItemVariableProps
 } from '@lunaproject/web-core/dist/components/SectionItems';
 import { IconButton, ToggleButton, toggleButtonClasses, ToggleButtonGroup, Tooltip } from '@mui/material';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 
 type DefaultEditableValue = 'allow' | 'deny' | 'inherit';

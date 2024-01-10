@@ -11,7 +11,7 @@ import { GuildViewProps } from '@interfaces/view';
 import { ItemFormContainer, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Box, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
 import { sortChannels, sortMembers, sortRoles } from '@utils/discord';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import deepEqual from 'deep-equal';
 import React, { Fragment, memo, SetStateAction, useCallback, useState } from 'react';
 

@@ -11,18 +11,18 @@ import {
 } from '@components/items';
 import {
     GuildConfigurationLoggingChannel,
-    GuildConfigurationLoggingComponent,
     GuildConfigurationLoggingMember,
     GuildConfigurationLoggingMessage,
     GuildConfigurationLoggingModeration,
     GuildConfigurationLoggingObject,
+    GuildConfigurationLoggingRoot,
     GuildConfigurationLoggingVoice
 } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { RedisChannel } from '@interfaces/redis';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { Box, buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import React, { ReactNode } from 'react';
 
 export const GridContainer = styled(Section)(({ theme }) => ({
@@ -109,7 +109,7 @@ const ChannelItem = (props: ChannelItemProps) => (
     </Box>
 );
 
-interface Props<T extends GuildConfigurationLoggingComponent> extends ItemDisabledProps, ItemVariableProps<T>, LocalizationProps {
+interface Props<T extends GuildConfigurationLoggingRoot> extends ItemDisabledProps, ItemVariableProps<T>, LocalizationProps {
     channels: RedisChannel[];
 }
 

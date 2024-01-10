@@ -1,6 +1,6 @@
-import { GuildConfiguration } from '@interfaces/bot';
+import { PartialGuildConfiguration } from '@interfaces/bot';
 
-export const saveGuildConfiguration = async (id: string, configuration: Partial<GuildConfiguration>) => {
+export const saveGuildConfiguration = async (id: string, configuration: PartialGuildConfiguration) => {
     const res = await fetch(
         `/api/guilds/${id}/configuration`,
         {

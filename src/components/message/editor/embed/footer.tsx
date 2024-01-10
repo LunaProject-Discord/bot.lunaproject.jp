@@ -3,7 +3,7 @@
 import { LocalizationProps } from '@interfaces/localization';
 import { Embed, EmbedFooter as OriginalEmbedFooter } from '@lunaproject/web-discord/dist/interfaces';
 import { OutlinedInput } from '@mui/material';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import React from 'react';
 import { DateTimeEditor } from '../../../date';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';

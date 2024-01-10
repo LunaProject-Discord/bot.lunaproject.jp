@@ -11,7 +11,7 @@ import { NumberField } from '@lunaproject/web-core/dist/components/NumberField';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Button, Divider, IconButton, Theme, Tooltip, useMediaQuery } from '@mui/material';
 import { getInteractRolesByDataGuild } from '@utils/discord';
-import { getStateActionValue, UniqueId, updateArrayState } from '@utils/state';
+import { getStateActionValue, UniqueId, updateArrayState } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { Dispatch, Fragment, SetStateAction, useEffect, useMemo, useState } from 'react';
 
@@ -49,6 +49,8 @@ const RoleItem = (
                 <NumberField
                     value={value.level}
                     setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
+                    pattern="\d*"
+                    step={1}
                     min={0}
                     disabled={disabled || !value.enabled}
                     sx={{ width: { xs: '100%', md: 300 } }}

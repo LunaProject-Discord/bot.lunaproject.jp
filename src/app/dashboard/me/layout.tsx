@@ -58,7 +58,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
     return (
         <Box sx={{ p: 3, display: 'flex', gap: 3 }}>
             <Navigation user={user} flags={userFlags} localization={localization} />
-            <PageWithSidebarLayout>{children}</PageWithSidebarLayout>
+            <PageWithSidebarLayout sx={{ pb: 8 }}>{children}</PageWithSidebarLayout>
         </Box>
     );
 };

@@ -2,20 +2,22 @@
 
 import { SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
-import { GuildConfigurationRoot } from '@interfaces/bot';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
+import { ConfigurationRoot } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import deepEqual from 'deep-equal';
+import { ConfigurationRootSchema } from '@schemas/bot';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
+    const { translations } = localization;
+
     const voteConfiguration = configuration.vote;
     const [enabled, setEnabled, resetEnabled] = useResettableState(voteConfiguration.enabled);
 
-    const toObject = (): GuildConfigurationRoot => ({
+    const toObject = (): ConfigurationRoot => ({
         enabled
     });
 
@@ -38,10 +40,13 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                 </SectionContent>
             </Section>
 
-            <SaveConfirm
-                open={!deepEqual(voteConfiguration, toObject(), { strict: true })}
+            <SaveConfirmV2
+                source={voteConfiguration}
+                target={toObject()}
+                schema={ConfigurationRootSchema}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

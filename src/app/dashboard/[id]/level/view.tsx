@@ -14,7 +14,7 @@ import {
     TextFieldItem
 } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { CodeStyleContainer } from '@components/text';
 import {
     GuildConfigurationLevel,
@@ -24,7 +24,7 @@ import {
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionParagraph, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import deepEqual from 'deep-equal';
+import { GuildConfigurationLevelSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useEffect, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -40,20 +40,20 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
     const [origin, setOrigin] = useState('');
 
-    const level = configuration.level;
-    const [enabled, setEnabled, resetEnabled] = useResettableState(level.enabled);
-    const [experiencePerMessage, setExperiencePerMessage, resetExperiencePerMessage] = useResettableState(level.experience_per_message);
-    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(level.disabled.channels);
-    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(level.disabled.roles);
-    const [rewardType, setRewardType, resetRewardType] = useResettableState(level.reward.type);
-    const [rewardRemoveRoleDemoted, setRewardRemoveRoleDemoted, resetRewardRemoveRoleDemoted] = useResettableState(level.reward.remove_role_demoted);
-    const [rewardRoles, setRewardRoles, resetRewardRoles] = useResettableState(level.reward.roles);
-    const [notificationType, setNotificationType, resetNotificationType] = useResettableState(level.notification.type);
-    const [notificationChannelId, setNotificationChannelId, resetNotificationChannelId] = useResettableState(level.notification.channel_id);
-    const [notificationMessage, setNotificationMessage, resetNotificationMessage] = useResettableState(level.notification.message);
-    const [leaderboardPublic, setLeaderboardPublic, resetLeaderboardPublic] = useResettableState(level.leaderboard.public);
-    const [leaderboardAllowJoin, setLeaderboardAllowJoin, resetLeaderboardAllowJoin] = useResettableState(level.leaderboard.allow_join);
-    const [leaderboardVanityCode, setLeaderboardVanityCode, resetLeaderboardVanityCode] = useResettableState(level.leaderboard.vanity_code ?? '');
+    const levelConfiguration = configuration.level;
+    const [enabled, setEnabled, resetEnabled] = useResettableState(levelConfiguration.enabled);
+    const [experiencePerMessage, setExperiencePerMessage, resetExperiencePerMessage] = useResettableState(levelConfiguration.experience_per_message);
+    const [disabledChannels, setDisabledChannels, resetDisabledChannels] = useResettableState(levelConfiguration.disabled.channels);
+    const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(levelConfiguration.disabled.roles);
+    const [rewardType, setRewardType, resetRewardType] = useResettableState(levelConfiguration.reward.type);
+    const [rewardRemoveRoleDemoted, setRewardRemoveRoleDemoted, resetRewardRemoveRoleDemoted] = useResettableState(levelConfiguration.reward.remove_role_demoted);
+    const [rewardRoles, setRewardRoles, resetRewardRoles] = useResettableState(levelConfiguration.reward.roles);
+    const [notificationType, setNotificationType, resetNotificationType] = useResettableState(levelConfiguration.notification.type);
+    const [notificationChannelId, setNotificationChannelId, resetNotificationChannelId] = useResettableState(levelConfiguration.notification.channel_id);
+    const [notificationMessage, setNotificationMessage, resetNotificationMessage] = useResettableState(levelConfiguration.notification.message);
+    const [leaderboardPublic, setLeaderboardPublic, resetLeaderboardPublic] = useResettableState(levelConfiguration.leaderboard.public);
+    const [leaderboardAllowJoin, setLeaderboardAllowJoin, resetLeaderboardAllowJoin] = useResettableState(levelConfiguration.leaderboard.allow_join);
+    const [leaderboardVanityCode, setLeaderboardVanityCode, resetLeaderboardVanityCode] = useResettableState(levelConfiguration.leaderboard.vanity_code ?? '');
 
     useEffect(() => setOrigin(window.location.origin), []);
 
@@ -113,6 +113,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         primary={translations.level_experience_per_message}
                         value={experiencePerMessage}
                         setValue={setExperiencePerMessage}
+                        pattern="\d*"
+                        step={1}
                         min={1}
                         disabled={!enabled}
                     />
@@ -262,11 +264,15 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
 
-            <SaveConfirm
-                open={!deepEqual(level, toObject(), { strict: true })}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={levelConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationLevelSchema}
                 disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openRolesDialog || openMessageBuilder}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
 
             <ManageDisabledChannelsDialog

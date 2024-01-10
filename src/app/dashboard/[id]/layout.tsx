@@ -118,7 +118,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
                 mutualGuilds={mutualGuildIds}
                 localization={localization}
             />
-            <PageWithSidebarLayout>
+            <PageWithSidebarLayout sx={{ pb: 9 }}>
                 {(isManager && filteredSortedGuilds.every((sortedGuild) => sortedGuild.id !== guild.id)) && <Alert
                     severity="warning"
                     className="mb-6"

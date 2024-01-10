@@ -10,7 +10,7 @@ import { ChannelPopover } from '@components/items';
 import { GuildChannelsViewProps } from '@interfaces/view';
 import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { Button, Typography } from '@mui/material';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { Fragment, useState } from 'react';
 

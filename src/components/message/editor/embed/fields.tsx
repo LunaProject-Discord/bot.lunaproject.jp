@@ -10,7 +10,7 @@ import {
     remove as removeArray,
     replace as replaceArray
 } from '@utils/array';
-import { getStateActionValue } from '@utils/state';
+import { getStateActionValue } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
