@@ -2,17 +2,19 @@
 
 import { NumberFieldItem, SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { GuildConfigurationMusic } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle } from '@mui/material';
-import deepEqual from 'deep-equal';
+import { GuildConfigurationMusicSchema } from '@schemas/bot';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
+    const { translations } = localization;
+
     const musicConfiguration = configuration.music;
     const [enabled, setEnabled, resetEnabled] = useResettableState(musicConfiguration.enabled);
     const [webPanel, setWebPanel, resetWebPanel] = useResettableState(musicConfiguration.web_panel);
@@ -152,10 +154,14 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                 </SectionContent>
             </Section>
 
-            <SaveConfirm
-                open={!deepEqual(musicConfiguration, toObject(), { strict: true })}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={musicConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationMusicSchema}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

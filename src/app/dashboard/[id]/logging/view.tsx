@@ -2,12 +2,12 @@
 
 import { SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { GuildConfigurationLogging } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import deepEqual from 'deep-equal';
+import { GuildConfigurationLoggingSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -180,10 +180,14 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 />
             </GridContainer>
 
-            <SaveConfirm
-                open={!deepEqual(loggingConfiguration, toObject(), { strict: true })}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={loggingConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationLoggingSchema}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

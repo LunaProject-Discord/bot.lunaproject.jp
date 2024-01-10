@@ -3,12 +3,12 @@
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
 import { ActionItem, SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { GuildConfigurationQuote } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import deepEqual from 'deep-equal';
+import { GuildConfigurationQuoteSchema } from '@schemas/bot';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
@@ -100,13 +100,6 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
 
-            <SaveConfirm
-                open={!deepEqual(quoteConfiguration, toObject(), { strict: true })}
-                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
-                onSave={handleSaveAction}
-                onCancel={handleCancelAction}
-            />
-
             <ManageDisabledChannelsDialog
                 open={openDisabledChannelsDialog}
                 setOpen={setOpenDisabledChannelsDialog}
@@ -121,6 +114,17 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 value={disabledRoles}
                 setValue={setDisabledRoles}
                 roles={guild.roles}
+                localization={localization}
+            />
+
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={quoteConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationQuoteSchema}
+                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
                 localization={localization}
             />
         </Fragment>

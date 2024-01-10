@@ -2,7 +2,7 @@ import { UndoIcon } from '@components/icons';
 import { ChangeAdd } from '@components/save_confirm_v2/changes/add';
 import { ChangeRemove } from '@components/save_confirm_v2/changes/remove';
 import { ChangeUpdate } from '@components/save_confirm_v2/changes/update';
-import { Change, groupByChanges, mapChanges } from '@components/save_confirm_v2/changes/utils';
+import { Change, ChangesGroupByPath, groupByChanges, mapChanges } from '@components/save_confirm_v2/changes/utils';
 import { Code } from '@components/text';
 import { LocalizationProps } from '@interfaces/localization';
 import { Box, BoxProps, styled, Tooltip, Typography } from '@mui/material';
@@ -146,17 +146,18 @@ export interface ChangeGroupProps extends LocalizationProps {
 
 export interface ChangesProps extends LocalizationProps {
     changes: IChange[];
+    groupByPath?: (changes: Change[] | undefined) => ChangesGroupByPath;
 }
 
-export const Changes = ({ changes, localization }: ChangesProps) => {
+export const Changes = ({ changes, groupByPath, localization }: ChangesProps) => {
     const { translations } = localization;
 
-    const groupedChanges = groupByChanges(changes);
+    const groupedChanges = groupByChanges(changes, groupByPath);
 
     return (
         <ChangesRoot>
             <Typography variant="h6" fontWeight={400}>
-                {String(translations.save_confirm_changes).replace('%c', mapChanges(changes).toLocaleString())}
+                {String(translations.save_confirm_changes).replace('%c', mapChanges(changes).length.toLocaleString())}
             </Typography>
             {Object.entries(groupedChanges.add).map(([path, changes]) => (
                 <ChangeAdd

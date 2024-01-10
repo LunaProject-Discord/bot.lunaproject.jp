@@ -2,13 +2,13 @@
 
 import { ChannelItem, MessageItem, SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { CodeStyleContainer } from '@components/text';
 import { GuildConfigurationGoodbye } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import deepEqual from 'deep-equal';
+import { GuildConfigurationGoodbyeSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -66,11 +66,15 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
 
-            <SaveConfirm
-                open={!deepEqual(goodbyeConfiguration, toObject(), { strict: true })}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={goodbyeConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationGoodbyeSchema}
                 disableKeyboardShortcuts={openMessageBuilder}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

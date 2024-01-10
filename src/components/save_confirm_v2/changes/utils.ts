@@ -45,9 +45,12 @@ export const groupByPath = (changes: Change[] | undefined): ChangesGroupByPath =
 
 export type Changes = { [key in ActionType]: ChangesGroupByPath };
 
-export const groupByChanges = (changes: IChange[]): Changes => mapValues(
+export const groupByChanges = (
+    changes: IChange[],
+    callback?: (changes: Change[] | undefined) => ChangesGroupByPath
+): Changes => mapValues(
     groupByAction(mapChanges(changes)),
-    (changes) => groupByPath(changes)
+    callback ?? ((changes) => groupByPath(changes))
 );
 
 export const isChangeArray = (path: string): boolean => /\[.+]$/g.test(path);

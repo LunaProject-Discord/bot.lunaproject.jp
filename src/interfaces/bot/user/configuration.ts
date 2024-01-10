@@ -1,10 +1,6 @@
-import { TimeZone } from '@utils/timezone';
+import { PartialUserConfigurationSchema, UserConfigurationSchema } from '@schemas/bot';
+import { z } from 'zod';
 
-export interface UserConfiguration {
-    id: string;
+export type UserConfiguration = z.infer<typeof UserConfigurationSchema>;
 
-    language: UserConfigurationLanguage;
-    timezone: TimeZone;
-}
-
-export type UserConfigurationLanguage = 'ja-JP' | 'en-US';
+export type PartialUserConfiguration = z.infer<typeof PartialUserConfigurationSchema>;

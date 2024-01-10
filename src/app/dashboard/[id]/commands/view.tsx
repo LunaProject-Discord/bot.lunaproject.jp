@@ -9,7 +9,7 @@ import {
     sortCommands
 } from '@app/dashboard/[id]/commands/utils';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { codeStyled } from '@components/text';
 import { GuildConfigurationCommand, GuildConfigurationCommands } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
@@ -19,6 +19,7 @@ import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, styled, Switch, Typography, Unstable_Grid2 as Grid } from '@mui/material';
+import { GuildConfigurationCommandsSchema } from '@schemas/bot';
 import { getStateActionValue } from '@utils/react/state';
 import deepEqual from 'deep-equal';
 import React, { Dispatch, Fragment, memo, SetStateAction, useCallback, useMemo, useState } from 'react';
@@ -243,11 +244,15 @@ export const View = ({ guild, configuration, commands: redisCommands, localizati
                 </Section>
             ))}
 
-            <SaveConfirm
-                open={!deepEqual(commandsConfiguration, toObject(), { strict: true })}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={commandsConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationCommandsSchema}
                 disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openManageCommandDialog}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

@@ -3,19 +3,29 @@
 import { BadgeIcon, TagIcon } from '@components/icons';
 import { TextFieldItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { CodeStyleContainer } from '@components/text';
+import { GuildConfigurationPrefixAndNickname } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
+import { GuildConfigurationPrefixAndNicknameSchema } from '@schemas/bot';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
-    const [prefix, setPrefix, resetPrefix] = useResettableState(configuration.prefix);
-    const [nickname, setNickname, resetNickname] = useResettableState(configuration.nickname);
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
+    const { translations } = localization;
 
-    const handleSaveAction = () => saveGuildConfiguration(guild.id, { prefix, nickname });
+    const prefixAndNicknameConfiguration: GuildConfigurationPrefixAndNickname = {
+        prefix: configuration.prefix,
+        nickname: configuration.nickname
+    };
+    const [prefix, setPrefix, resetPrefix] = useResettableState(prefixAndNicknameConfiguration.prefix);
+    const [nickname, setNickname, resetNickname] = useResettableState(prefixAndNicknameConfiguration.nickname);
+
+    const toObject = (): GuildConfigurationPrefixAndNickname => ({ prefix, nickname });
+
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, toObject());
 
     const handleCancelAction = () => {
         resetPrefix();
@@ -47,10 +57,14 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                 </SectionContent>
             </Section>
 
-            <SaveConfirm
-                open={prefix !== configuration.prefix || nickname !== configuration.nickname}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={prefixAndNicknameConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationPrefixAndNicknameSchema}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

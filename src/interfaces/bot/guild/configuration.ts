@@ -35,17 +35,26 @@ import {
     GuildConfigurationMemberJoinSchema,
     GuildConfigurationMusicSchema,
     GuildConfigurationMusicSourcesSchema,
+    GuildConfigurationNicknameSchema,
+    GuildConfigurationPrefixAndNicknameSchema,
+    GuildConfigurationPrefixSchema,
     GuildConfigurationQuoteSchema,
     GuildConfigurationSchema,
     GuildConfigurationTranslateSchema,
+    GuildConfigurationVoteSchema,
     GuildConfigurationWelcomeRoleSchema,
     GuildConfigurationWelcomeSchema,
     PartialGuildConfigurationSchema
 } from '@schemas/bot';
 import { z } from 'zod';
 
-
 export type GuildConfiguration = z.infer<typeof GuildConfigurationSchema>;
+
+export type GuildConfigurationPrefixAndNickname = z.infer<typeof GuildConfigurationPrefixAndNicknameSchema>;
+
+export type GuildConfigurationPrefix = z.infer<typeof GuildConfigurationPrefixSchema>;
+
+export type GuildConfigurationNickname = z.infer<typeof GuildConfigurationNicknameSchema>;
 
 export type GuildConfigurationCommands = z.infer<typeof GuildConfigurationCommandsSchema>;
 
@@ -104,6 +113,8 @@ export type GuildConfigurationLevelNotificationType = z.infer<typeof GuildConfig
 export type GuildConfigurationLevelLeaderboard = z.infer<typeof GuildConfigurationLevelLeaderboardSchema>;
 
 export type GuildConfigurationTranslate = z.infer<typeof GuildConfigurationTranslateSchema>;
+
+export type GuildConfigurationVote = z.infer<typeof GuildConfigurationVoteSchema>;
 
 export type GuildConfigurationQuote = z.infer<typeof GuildConfigurationQuoteSchema>;
 

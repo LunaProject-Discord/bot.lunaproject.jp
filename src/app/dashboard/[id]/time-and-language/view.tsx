@@ -3,21 +3,30 @@
 import { ScheduleIcon, TranslateIcon } from '@components/icons';
 import { SelectItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
-import { ConfigurationLanguage } from '@interfaces/bot';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
+import { ConfigurationLanguage, ConfigurationTimeAndLanguage } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
+import { ConfigurationTimeAndLanguageSchema } from '@schemas/bot';
 import { TimeZone, TimeZones } from '@utils/timezone';
 import React, { Fragment, ReactNode } from 'react';
 import spacetime from 'spacetime';
 import { saveGuildConfiguration } from '../utils';
 
-export const View = ({ guild, configuration, localization: { translations } }: GuildConfigurationViewProps) => {
-    const [timezone, setTimezone, resetTimezone] = useResettableState(configuration.timezone);
-    const [language, setLanguage, resetLanguage] = useResettableState(configuration.language);
+export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
+    const { translations } = localization;
 
-    const handleSaveAction = () => saveGuildConfiguration(guild.id, { timezone, language });
+    const timeAndLanguageConfiguration: ConfigurationTimeAndLanguage = {
+        timezone: configuration.timezone,
+        language: configuration.language
+    };
+    const [timezone, setTimezone, resetTimezone] = useResettableState(timeAndLanguageConfiguration.timezone);
+    const [language, setLanguage, resetLanguage] = useResettableState(timeAndLanguageConfiguration.language);
+
+    const toObject = (): ConfigurationTimeAndLanguage => ({ timezone, language });
+
+    const handleSaveAction = () => saveGuildConfiguration(guild.id, toObject());
 
     const handleCancelAction = () => {
         resetTimezone();
@@ -76,10 +85,14 @@ export const View = ({ guild, configuration, localization: { translations } }: G
                 </SectionContent>
             </Section>
 
-            <SaveConfirm
-                open={timezone !== configuration.timezone || language !== configuration.language}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={timeAndLanguageConfiguration}
+                target={toObject()}
+                schema={ConfigurationTimeAndLanguageSchema}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

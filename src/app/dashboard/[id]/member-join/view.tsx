@@ -6,14 +6,14 @@ import {
 } from '@app/dashboard/[id]/member-join/_dialogs';
 import { ActionItem, ChannelItem, MessageItem, SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { CodeStyleContainer } from '@components/text';
 import { GuildConfigurationMemberJoin } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress } from '@mui/material';
-import deepEqual from 'deep-equal';
+import { GuildConfigurationMemberJoinSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
@@ -27,8 +27,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
     const [openMigratingBackdrop, setOpenMigratingBackdrop] = useState(false);
 
     const [openBeforePendingMessageBuilder, setOpenBeforePendingMessageBuilder] = useState(false);
-    const [openAfterPendingMessageBuilder, setOpenAfterPendingMessageBuilder] = useState(false);
     const [openBeforePendingRolesDialog, setOpenBeforePendingRolesDialog] = useState(false);
+    const [openAfterPendingMessageBuilder, setOpenAfterPendingMessageBuilder] = useState(false);
     const [openAfterPendingRolesDialog, setOpenAfterPendingRolesDialog] = useState(false);
 
     const isMemberVerificationGateEnabled = guild.features.includes('MEMBER_VERIFICATION_GATE_ENABLED');
@@ -301,13 +301,6 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 <CircularProgress color="inherit" />
             </Backdrop>
 
-            <SaveConfirm
-                open={!deepEqual(memberJoinConfiguration, toObject(), { strict: true })}
-                disableKeyboardShortcuts={openAfterPendingMessageBuilder}
-                onSave={handleSaveAction}
-                onCancel={handleCancelAction}
-            />
-
             <ManageBeforePendingRolesDialog
                 open={openBeforePendingRolesDialog}
                 setOpen={setOpenBeforePendingRolesDialog}
@@ -322,6 +315,17 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 value={afterPendingRolesRoles}
                 setValue={setAfterPendingRolesRoles}
                 guild={guild}
+                localization={localization}
+            />
+
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={memberJoinConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationMemberJoinSchema}
+                disableKeyboardShortcuts={openBeforePendingMessageBuilder || openBeforePendingRolesDialog || openAfterPendingMessageBuilder || openAfterPendingRolesDialog}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
                 localization={localization}
             />
         </Fragment>

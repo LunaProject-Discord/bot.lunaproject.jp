@@ -3,7 +3,7 @@
 import { CancelButton } from '@components/buttons';
 import { ChannelItem, MessageItem, SwitchItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { CodeStyleContainer } from '@components/text';
 import { GuildConfigurationWelcome } from '@interfaces/bot';
 import { GuildConfigurationViewProps } from '@interfaces/view';
@@ -11,7 +11,7 @@ import { DialogV2, DialogV2Actions, DialogV2Content, DialogV2Title } from '@luna
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress, Typography } from '@mui/material';
-import deepEqual from 'deep-equal';
+import { GuildConfigurationWelcomeSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
@@ -179,11 +179,15 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 <CircularProgress color="inherit" />
             </Backdrop>
 
-            <SaveConfirm
-                open={!deepEqual(welcomeConfiguration, toObject(), { strict: true })}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={welcomeConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationWelcomeSchema}
                 disableKeyboardShortcuts={openMessageBuilder}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

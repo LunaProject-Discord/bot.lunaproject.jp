@@ -4,11 +4,12 @@ import { getMemberDisplay } from '@app/user';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
 import { CloudOffIcon, DeleteIcon, SearchIcon, TableRowsIcon } from '@components/icons';
 import { PageCenteredLayout, PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
-import { GuildLevel, PartialGuildLevel } from '@interfaces/bot';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
+import { GuildLevel, PartialGuildLevel, PartialGuildLevelRecord } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { DataGuild, RedisMember } from '@interfaces/redis';
 import { GuildConfigurationViewProps } from '@interfaces/view';
+import { filterPredicateNonNullable } from '@lunaproject/web-core';
 import { NumberField } from '@lunaproject/web-core/dist/components/NumberField';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { ItemIcon, ItemRowContainer, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
@@ -26,10 +27,12 @@ import {
     tablePaginationClasses,
     Typography
 } from '@mui/material';
+import { PartialGuildLevelRecordSchema } from '@schemas/bot';
 import { getMemberAvatar } from '@utils/cdn';
 import { filterPredicateMember } from '@utils/discord';
 import { getStateActionValue } from '@utils/react/state';
 import clsx from 'clsx';
+import groupBy from 'lodash/groupBy';
 import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
 
 const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
@@ -195,6 +198,27 @@ export const View = ({ guild, levels, localization }: Props) => {
         setPageIndex(0);
     };
 
+    const toSourceObject = (): PartialGuildLevelRecord => {
+        const store: PartialGuildLevelRecord = {};
+
+        values.map((value) => levels.find((level) => level.user.id === value.user_id))
+            .filter(filterPredicateNonNullable)
+            .forEach((level) => {
+                store[level.user.id] = { user_id: level.user.id, level: level.level, xp: level.xp };
+            });
+
+        return store;
+    };
+
+    const toTargetObject = (): PartialGuildLevelRecord => {
+        const store: PartialGuildLevelRecord = {};
+
+        for (const value of values)
+            store[value.user_id] = { user_id: value.user_id, level: value.level, xp: value.xp };
+
+        return store;
+    };
+
     const handleSaveAction = async () => {
         const result = await saveGuildLevels(guild.id, values);
         if (result)
@@ -302,7 +326,21 @@ export const View = ({ guild, levels, localization }: Props) => {
                 </ErrorDescription>
             </ErrorRoot>}
 
-            <SaveConfirm open={values.length > 0} onSave={handleSaveAction} onCancel={handleCancelAction} />
+            <SaveConfirmV2
+                source={toSourceObject()}
+                target={toTargetObject()}
+                schema={PartialGuildLevelRecordSchema}
+                groupByPath={(changes) => groupBy(
+                    changes,
+                    (change) => {
+                        const path = change.path;
+                        return path.substring(0, path.lastIndexOf('.'));
+                    }
+                )}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
+                localization={localization}
+            />
         </Fragment>
     );
 };

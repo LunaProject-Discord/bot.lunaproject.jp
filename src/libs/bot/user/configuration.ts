@@ -1,4 +1,4 @@
-import { UserConfiguration, UserConfigurationLanguage } from '@interfaces/bot';
+import { ConfigurationLanguage, UserConfiguration } from '@interfaces/bot';
 import prisma from '@libs/prisma';
 import { TimeZone } from '@utils/timezone';
 
@@ -9,7 +9,7 @@ export const getUserConfiguration = async (id: string): Promise<UserConfiguratio
 
     return {
         id,
-        language: userConfigurationData.language as UserConfigurationLanguage,
+        language: userConfigurationData.language as ConfigurationLanguage,
         timezone: userConfigurationData.timezone as TimeZone
     };
 };

@@ -3,21 +3,30 @@
 import { ScheduleIcon, TranslateIcon } from '@components/icons';
 import { SelectItem } from '@components/items';
 import { PageHeader } from '@components/layout_v2';
-import { SaveConfirm } from '@components/save_confirm';
-import { UserConfigurationLanguage } from '@interfaces/bot';
+import { SaveConfirmV2 } from '@components/save_confirm_v2';
+import { ConfigurationLanguage, ConfigurationTimeAndLanguage } from '@interfaces/bot';
 import { UserConfigurationViewProps } from '@interfaces/view';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
+import { ConfigurationTimeAndLanguageSchema } from '@schemas/bot';
 import { TimeZone, TimeZones } from '@utils/timezone';
 import React, { Fragment, ReactNode } from 'react';
 import spacetime from 'spacetime';
 import { saveUserConfiguration } from '../utils';
 
-export const View = ({ user, configuration, localization: { translations } }: UserConfigurationViewProps) => {
-    const [timezone, setTimezone, resetTimezone] = useResettableState(configuration.timezone);
-    const [language, setLanguage, resetLanguage] = useResettableState(configuration.language);
+export const View = ({ user, configuration, localization }: UserConfigurationViewProps) => {
+    const { translations } = localization;
 
-    const handleSaveAction = () => saveUserConfiguration({ timezone, language });
+    const timeAndLanguageConfiguration: ConfigurationTimeAndLanguage = {
+        timezone: configuration.timezone,
+        language: configuration.language
+    };
+    const [timezone, setTimezone, resetTimezone] = useResettableState(timeAndLanguageConfiguration.timezone);
+    const [language, setLanguage, resetLanguage] = useResettableState(timeAndLanguageConfiguration.language);
+
+    const toObject = (): ConfigurationTimeAndLanguage => ({ timezone, language });
+
+    const handleSaveAction = () => saveUserConfiguration(toObject());
 
     const handleCancelAction = () => {
         resetTimezone();
@@ -62,7 +71,7 @@ export const View = ({ user, configuration, localization: { translations } }: Us
             <Section>
                 <SectionTitle>{translations.language}</SectionTitle>
                 <SectionContent>
-                    <SelectItem<UserConfigurationLanguage>
+                    <SelectItem<ConfigurationLanguage>
                         icon={<TranslateIcon />}
                         primary={translations.language}
                         secondary={translations.user_language_description}
@@ -76,10 +85,14 @@ export const View = ({ user, configuration, localization: { translations } }: Us
                 </SectionContent>
             </Section>
 
-            <SaveConfirm
-                open={timezone !== configuration.timezone || language !== configuration.language}
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={timeAndLanguageConfiguration}
+                target={toObject()}
+                schema={ConfigurationTimeAndLanguageSchema}
                 onSave={handleSaveAction}
                 onCancel={handleCancelAction}
+                localization={localization}
             />
         </Fragment>
     );

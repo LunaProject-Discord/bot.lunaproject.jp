@@ -8,6 +8,7 @@ import {
 } from '@components/bottom_sheet';
 import { RefreshIcon, SaveIcon } from '@components/icons';
 import { Changes } from '@components/save_confirm_v2/changes';
+import { Change, ChangesGroupByPath } from '@components/save_confirm_v2/changes/utils';
 import { Issues } from '@components/save_confirm_v2/issues';
 import { Key } from '@components/text';
 import { LocalizationProps } from '@interfaces/localization';
@@ -28,6 +29,8 @@ export interface SaveConfirmV2Props<T> extends LocalizationProps {
     source: T;
     target: T;
     schema: ZodType;
+    groupByPath?: (changes: Change[] | undefined) => ChangesGroupByPath;
+    keyMapping?: Record<string, string>;
     disableKeyboardShortcuts?: boolean;
     onSave: () => Promise<boolean>;
     onCancel: () => void;
@@ -39,6 +42,8 @@ export const SaveConfirmV2 = <T, >(
         source,
         target,
         schema,
+        groupByPath,
+        keyMapping,
         disableKeyboardShortcuts,
         onSave,
         onCancel,
@@ -189,7 +194,7 @@ export const SaveConfirmV2 = <T, >(
             }}
         >
             <BottomSheetContent>
-                <Changes changes={diffResult} localization={localization} />
+                <Changes changes={diffResult} groupByPath={groupByPath} localization={localization} />
                 {parseResult.success ? <Fragment>
                     <LoadingButton
                         ref={saveButtonRef}

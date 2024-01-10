@@ -1,6 +1,6 @@
 import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole, RedisUser } from '@interfaces/redis';
+import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
 import { APIGuildChannel, GuildMember, OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { predicateNonNullable } from '@utils/array';
 import { APIGuild, APIRole, APIUser, PermissionFlagsBits } from 'discord-api-types/v10';
 
 export * from '@lunaproject/web-discord/dist/utils';
@@ -89,7 +89,7 @@ export const getInteractRoles = <G extends OAuthGuild | APIGuild | RedisGuild | 
         || (typeof guild.owner === 'boolean' && guild.owner))
         return sortedRoles;
 
-    const memberRoles = sortRoles(member.roles.map((roleId) => sortedRoles.find((role) => role.id === roleId)).filter(predicateNonNullable));
+    const memberRoles = sortRoles(member.roles.map((roleId) => sortedRoles.find((role) => role.id === roleId)).filter(filterPredicateNonNullable));
     if (memberRoles.length < 1)
         return [];
 

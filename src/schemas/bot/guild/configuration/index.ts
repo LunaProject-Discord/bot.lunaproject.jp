@@ -1,4 +1,5 @@
-import { ConfigurationLanguageSchema, ConfigurationRootSchema } from '@schemas/bot/configuration';
+import { GuildConfigurationVoteSchema } from '@schemas/bot';
+import { ConfigurationRootSchema, ConfigurationTimeAndLanguageSchema } from '@schemas/bot/configuration';
 import { GuildConfigurationActivitySchema } from '@schemas/bot/guild/configuration/activity';
 import { GuildConfigurationCommandsSchema } from '@schemas/bot/guild/configuration/commands';
 import { GuildConfigurationGlobalBanSchema } from '@schemas/bot/guild/configuration/global_ban';
@@ -7,19 +8,14 @@ import { GuildConfigurationLevelSchema } from '@schemas/bot/guild/configuration/
 import { GuildConfigurationLoggingSchema } from '@schemas/bot/guild/configuration/logging';
 import { GuildConfigurationMemberJoinSchema } from '@schemas/bot/guild/configuration/member_join';
 import { GuildConfigurationMusicSchema } from '@schemas/bot/guild/configuration/music';
+import { GuildConfigurationPrefixAndNicknameSchema } from '@schemas/bot/guild/configuration/prefix_and_nickname';
 import { GuildConfigurationQuoteSchema } from '@schemas/bot/guild/configuration/quote';
 import { GuildConfigurationTranslateSchema } from '@schemas/bot/guild/configuration/translate';
 import { GuildConfigurationWelcomeSchema } from '@schemas/bot/guild/configuration/welcome';
 import { SnowflakeSchema } from '@schemas/snowflake';
-import { TimeZone } from '@utils/timezone';
-import { z } from 'zod';
 
-export const GuildConfigurationSchema = z.object({
+export const GuildConfigurationSchema = GuildConfigurationPrefixAndNicknameSchema.extend(ConfigurationTimeAndLanguageSchema.shape).extend({
     id: SnowflakeSchema,
-    prefix: z.string().min(1).max(32),
-    nickname: z.string().max(32),
-    language: ConfigurationLanguageSchema,
-    timezone: z.literal<TimeZone>('Asia/Tokyo'),
     commands: GuildConfigurationCommandsSchema,
     welcome: GuildConfigurationWelcomeSchema,
     goodbye: GuildConfigurationGoodbyeSchema,
@@ -29,7 +25,7 @@ export const GuildConfigurationSchema = z.object({
     global_ban: GuildConfigurationGlobalBanSchema,
     level: GuildConfigurationLevelSchema,
     translate: GuildConfigurationTranslateSchema,
-    vote: ConfigurationRootSchema,
+    vote: GuildConfigurationVoteSchema,
     quote: GuildConfigurationQuoteSchema,
     music: GuildConfigurationMusicSchema,
     logging: GuildConfigurationLoggingSchema
@@ -45,6 +41,8 @@ export * from '@schemas/bot/guild/configuration/level';
 export * from '@schemas/bot/guild/configuration/logging';
 export * from '@schemas/bot/guild/configuration/member_join';
 export * from '@schemas/bot/guild/configuration/music';
+export * from '@schemas/bot/guild/configuration/prefix_and_nickname';
 export * from '@schemas/bot/guild/configuration/quote';
 export * from '@schemas/bot/guild/configuration/translate';
+export * from '@schemas/bot/guild/configuration/vote';
 export * from '@schemas/bot/guild/configuration/welcome';

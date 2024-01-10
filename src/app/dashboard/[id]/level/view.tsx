@@ -264,17 +264,6 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
 
-            <SaveConfirmV2
-                label={translations.save_confirm_settings}
-                source={levelConfiguration}
-                target={toObject()}
-                schema={GuildConfigurationLevelSchema}
-                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openRolesDialog || openMessageBuilder}
-                onSave={handleSaveAction}
-                onCancel={handleCancelAction}
-                localization={localization}
-            />
-
             <ManageDisabledChannelsDialog
                 open={openDisabledChannelsDialog}
                 setOpen={setOpenDisabledChannelsDialog}
@@ -297,6 +286,17 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 value={rewardRoles}
                 setValue={setRewardRoles}
                 guild={guild}
+                localization={localization}
+            />
+
+            <SaveConfirmV2
+                label={translations.save_confirm_settings}
+                source={levelConfiguration}
+                target={toObject()}
+                schema={GuildConfigurationLevelSchema}
+                disableKeyboardShortcuts={openDisabledChannelsDialog || openDisabledRolesDialog || openRolesDialog || openMessageBuilder}
+                onSave={handleSaveAction}
+                onCancel={handleCancelAction}
                 localization={localization}
             />
         </Fragment>

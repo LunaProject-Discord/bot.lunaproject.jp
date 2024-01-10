@@ -1,7 +1,10 @@
 import { ConfigurationAccessControlSchema, ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@schemas/bot';
+import { LevelAndExperienceSchema } from '@schemas/bot/guild/level';
 import { DataMessageSchema } from '@schemas/message';
 import { SnowflakeSchema } from '@schemas/snowflake';
 import { z } from 'zod';
+
+export const GuildConfigurationLevelAndExperienceSchema = LevelAndExperienceSchema.gte(1);
 
 export const GuildConfigurationLevelLeaderboardSchema = z.object({
     public: z.boolean(),
@@ -24,7 +27,7 @@ export const GuildConfigurationLevelNotificationSchema = z.object({
 
 export const GuildConfigurationLevelRewardRoleSchema = ConfigurationRootSchema.extend({
     id: SnowflakeSchema,
-    level: z.number().gte(1).step(1).int()
+    level: GuildConfigurationLevelAndExperienceSchema
 });
 
 export const GuildConfigurationLevelRewardTypeSchema = z.union([
@@ -39,7 +42,7 @@ export const GuildConfigurationLevelRewardSchema = z.object({
 });
 
 export const GuildConfigurationLevelSchema = ConfigurationRootSchema.extend({
-    experience_per_message: z.number().gte(1).step(1).int(),
+    experience_per_message: GuildConfigurationLevelAndExperienceSchema,
     disabled: ConfigurationAccessControlSchema,
     reward: GuildConfigurationLevelRewardSchema,
     notification: GuildConfigurationLevelNotificationSchema,
