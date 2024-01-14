@@ -12,7 +12,7 @@ import { Change, ChangesGroupByPath } from '@components/save_confirm_v2/changes/
 import { Issues } from '@components/save_confirm_v2/issues';
 import { LocalizationProps } from '@interfaces/localization';
 import { LoadingButton } from '@mui/lab';
-import { Box, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import { isRenderableReactNode } from '@utils/react/node';
 import deepEqual from 'deep-equal';
 import { diff } from 'json-diff-ts';
@@ -22,6 +22,8 @@ import React, { ReactNode, useEffect, useMemo, useRef, useState, useTransition }
 import { BottomSheetRef } from 'react-spring-bottom-sheet';
 import { SpringEvent } from 'react-spring-bottom-sheet/dist/types';
 import { ZodType } from 'zod';
+
+export const SheetMinHeight = 72;
 
 export interface SaveConfirmV2Props<T> extends LocalizationProps {
     label?: ReactNode;
@@ -53,6 +55,8 @@ export const SaveConfirmV2 = <T, >(
 
     const router = useRouter();
 
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
+
     const sheetRef = useRef<BottomSheetRef | null>(null);
     const saveButtonRef = useRef<HTMLButtonElement | null>(null);
     const cancelButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -60,8 +64,8 @@ export const SaveConfirmV2 = <T, >(
     const parseResult = useMemo(() => schema.safeParse(target), [schema, target]);
     const diffResult = useMemo(() => diff(source, target), [source, target]);
 
-    const open = useMemo(() => !deepEqual(source, target, { strict: true }), [source, target]);
-    const [expanded, setExpanded] = useState(false);
+    const sheetOpen = useMemo(() => !deepEqual(source, target, { strict: true }), [source, target]);
+    const [sheetExpanded, setSheetExpanded] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [pending, startTransition] = useTransition();
@@ -74,7 +78,7 @@ export const SaveConfirmV2 = <T, >(
         if (type !== 'SNAP')
             return;
 
-        setTimeout(() => setExpanded(sheet.height > 8 * 9));
+        setTimeout(() => setSheetExpanded(sheet.height > SheetMinHeight));
     };
 
     const handleSpringEnd = ({ type }: SpringEvent) => {
@@ -85,7 +89,7 @@ export const SaveConfirmV2 = <T, >(
         if (type !== 'SNAP')
             return;
 
-        setExpanded(sheet.height > 8 * 9);
+        setSheetExpanded(sheet.height > SheetMinHeight);
     };
 
     const handleSaveButtonClick = async () => {
@@ -105,7 +109,7 @@ export const SaveConfirmV2 = <T, >(
             e.preventDefault();
 
             const saveButton = saveButtonRef.current;
-            if (!open || disableKeyboardShortcuts || loading || pending || !saveButton)
+            if (!sheetOpen || disableKeyboardShortcuts || loading || pending || !saveButton)
                 return;
 
             saveButton.click();
@@ -114,7 +118,7 @@ export const SaveConfirmV2 = <T, >(
             e.preventDefault();
 
             const cancelButton = cancelButtonRef.current;
-            if (!open || disableKeyboardShortcuts || !cancelButton)
+            if (!sheetOpen || disableKeyboardShortcuts || !cancelButton)
                 return;
 
             cancelButton.click();
@@ -124,15 +128,30 @@ export const SaveConfirmV2 = <T, >(
             Mousetrap.unbind('s');
             Mousetrap.unbind('r c');
         };
-    }, [open, disableKeyboardShortcuts, loading, pending]);
+    }, [sheetOpen, disableKeyboardShortcuts, loading, pending]);
+
+    useEffect(() => {
+        const sheet = sheetRef.current;
+        if (!sheet)
+            return;
+
+        const expanded = sheet.height > SheetMinHeight;
+        setSheetExpanded(() => expanded);
+
+        const body = document.body;
+        if (!body)
+            return;
+
+        body.style.overflow = !isSmall && expanded ? 'hidden' : '';
+    }, [sheetRef.current?.height, isSmall]);
 
     return (
         <BottomSheet
             ref={sheetRef}
-            open={open}
+            open={sheetOpen}
             skipInitialTransition
-            blocking={false}
-            scrollLocking={false}
+            blocking={!isSmall && sheetExpanded}
+            scrollLocking={!isSmall && sheetExpanded}
             onSpringStart={handleSpringStart}
             onSpringEnd={handleSpringEnd}
             expandOnContentDrag
@@ -141,7 +160,7 @@ export const SaveConfirmV2 = <T, >(
             header={
                 <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', gap: 1 }}>
                     <BottomSheetHeaderToggleButton
-                        expanded={expanded}
+                        expanded={sheetExpanded}
                         setExpanded={(open) => sheetRef.current?.snapTo(({ snapPoints }) => open ? Math.max(...snapPoints) : Math.min(...snapPoints))}
                         localization={localization}
                     />
