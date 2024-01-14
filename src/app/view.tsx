@@ -123,6 +123,10 @@ export const View = ({ user, localization: { translations } }: Props) => {
                                     </Fragment>
                                 }
                             ]}
+                            sx={{
+                                p: .25,
+                                borderRadius: 1.5
+                            }}
                         />
                     </Box>
                     {viewType === 'features' && <SectionContent>

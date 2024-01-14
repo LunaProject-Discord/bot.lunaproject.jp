@@ -3,6 +3,7 @@
 import { FormatListBulletedIcon, GridViewIcon } from '@components/icons';
 import { PageHeader, PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
+import { segmentedControlClasses } from '@lunaproject/web-core';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
@@ -68,6 +69,14 @@ export const View = ({ guilds, localization: { translations } }: Props) => {
                         { value: 'gallery', children: (<GridViewIcon />) },
                         { value: 'table', children: (<FormatListBulletedIcon />) }
                     ]}
+                    sx={{
+                        height: (theme) => theme.spacing(6),
+                        p: .25,
+                        borderRadius: 1.5,
+                        [`& .${segmentedControlClasses.button}`]: {
+                            aspectRatio: '1'
+                        }
+                    }}
                 />
             </PageHeader>
             <Section>

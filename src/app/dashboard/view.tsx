@@ -9,6 +9,7 @@ import {
 } from '@components/icons';
 import { PageHeader, PageLayout } from '@components/layout_v2';
 import { LocalizationProps } from '@interfaces/localization';
+import { segmentedControlClasses } from '@lunaproject/web-core';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Menu } from '@lunaproject/web-core/dist/components/Menu';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
@@ -85,6 +86,14 @@ export const View = ({ guilds, mutualGuilds, localization: { translations } }: P
                         { value: 'gallery', children: (<GridViewIcon />) },
                         { value: 'table', children: (<FormatListBulletedIcon />) }
                     ]}
+                    sx={{
+                        height: (theme) => theme.spacing(6),
+                        p: .25,
+                        borderRadius: 1.5,
+                        [`& .${segmentedControlClasses.button}`]: {
+                            aspectRatio: '1'
+                        }
+                    }}
                 />
                 <Button
                     onClick={handleInviteButtonClick}

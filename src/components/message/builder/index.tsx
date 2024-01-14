@@ -123,15 +123,7 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
             </DialogTitle>
             <DialogContent sx={{ overflow: 'hidden' }}>
                 <MessageEditorContainer sx={{ overflow: 'hidden' }}>
-                    <Box
-                        sx={{
-                            pb: 3,
-                            display: { xs: 'block', md: 'none' },
-                            [`& .${segmentedControlClasses.button}`]: {
-                                width: '100%'
-                            }
-                        }}
-                    >
+                    <Box sx={{ pb: 3, display: { xs: 'block', md: 'none' } }}>
                         <SegmentedControl<ViewType>
                             value={viewType}
                             setValue={setViewType}
@@ -151,6 +143,13 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
                                     </Fragment>
                                 }
                             ]}
+                            sx={{
+                                p: .25,
+                                borderRadius: 1.5,
+                                [`& .${segmentedControlClasses.button}`]: {
+                                    width: '100%'
+                                }
+                            }}
                         />
                     </Box>
                     <ThemeProvider theme={defaultTheme}>
