@@ -377,6 +377,7 @@ export const translationsEn: Translations = {
     level: 'Level',
     experience: 'Experience',
     rank: 'Rank',
+    level_error_invalid_type_level_or_experience: 'Only whole numbers can be specified for level and experience!',
     level_description: 'Experience is awarded based on the number of statements made by members, which can be used to activate the server.',
     level_enabled: 'Enable Level',
     level_experience_per_message: 'Experience per message',

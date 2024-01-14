@@ -380,6 +380,7 @@ export const translationsJa: Translations = {
     level: 'レベル',
     experience: '経験値',
     rank: '順位',
+    level_error_invalid_type_level_or_experience: 'レベルや経験値には整数のみが指定できます！',
     level_description: 'メンバーの発言数に応じた経験値を付与し、サーバーのアクティブ化に役立てることができます。',
     level_enabled: 'レベルを有効にする',
     level_experience_per_message: 'メッセージあたりの経験値',

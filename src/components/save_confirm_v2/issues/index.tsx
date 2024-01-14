@@ -28,7 +28,9 @@ export const Issues = ({ issues, localization: { translations } }: IssuesProps) 
         {issues.map((issue) => (
             <IssueRoot key={`${issue.path.join('.')}-${issue.code}`}>
                 <Typography><Code>{issue.path.join('.')}</Code>: {issue.code}</Typography>
-                <Typography variant="body2">{issue.message}</Typography>
+                <Typography variant="body2">
+                    {issue.message in translations ? translations[issue.message as keyof typeof translations] : issue.message}
+                </Typography>
             </IssueRoot>
         ))}
     </IssuesRoot>

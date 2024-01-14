@@ -322,6 +322,7 @@ export type TranslationKeys =
     | 'level'
     | 'experience'
     | 'rank'
+    | 'level_error_invalid_type_level_or_experience'
     | 'level_description'
     | 'level_enabled'
     | 'level_experience_per_message'
