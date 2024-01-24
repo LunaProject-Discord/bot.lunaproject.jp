@@ -1,7 +1,7 @@
 import { WithIdParamProps } from '@interfaces/page';
 import { getGuildConfiguration } from '@libs/bot';
 import prisma from '@libs/prisma';
-import { updateGuildConfigurationById } from '@libs/redis';
+import { updateGuildById } from '@libs/redis';
 import { getGuildById } from '@lunaproject/web-discord/dist/libs';
 import { COOKIE_TOKEN } from '@utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
@@ -27,9 +27,9 @@ export const POST = async (req: Request, { params: { id } }: WithIdParamProps) =
 
     guildConfiguration.member_join._migrated = true;
 
-    await prisma.guilds_configurations.update({
+    await prisma.guild_configurations.update({
         where: {
-            id: BigInt(id)
+            guild_id: BigInt(id)
         },
         data: {
             member_join: JSON.stringify(guildConfiguration.member_join),
@@ -37,7 +37,7 @@ export const POST = async (req: Request, { params: { id } }: WithIdParamProps) =
         }
     });
 
-    await updateGuildConfigurationById(id);
+    await updateGuildById(id);
 
     return new NextResponse(null, { status: 204 });
 };

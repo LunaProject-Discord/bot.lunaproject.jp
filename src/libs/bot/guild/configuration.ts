@@ -3,7 +3,7 @@ import prisma from '@libs/prisma';
 import { TimeZone } from '@utils/timezone';
 
 export const getGuildConfiguration = async (id: string): Promise<GuildConfiguration | undefined> => {
-    const guildConfigurationData = await prisma.guilds_configurations.findUnique({ where: { id: BigInt(id) } });
+    const guildConfigurationData = await prisma.guild_configurations.findUnique({ where: { guild_id: BigInt(id) } });
     if (!guildConfigurationData)
         return undefined;
 

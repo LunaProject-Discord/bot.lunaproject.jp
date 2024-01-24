@@ -6,7 +6,7 @@ export const LevelAndExperienceSchema = z.number().int('level_error_invalid_type
 export const PartialGuildLevelSchema = z.object({
     user_id: SnowflakeSchema,
     level: LevelAndExperienceSchema,
-    xp: LevelAndExperienceSchema
+    experience: LevelAndExperienceSchema
 });
 
 export const PartialGuildLevelsSchema = z.array(PartialGuildLevelSchema);

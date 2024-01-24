@@ -4,13 +4,13 @@ import { fromBinaryUUID, toBinaryUUID } from '@utils/uuid';
 
 export const getGuildNotifications = async (id: string): Promise<GuildNotification[]> => {
     const guildId = BigInt(id);
-    const guildNotifications = await prisma.guilds_notifications.findMany({
+    const guildNotifications = await prisma.guild_notifications.findMany({
         where: {
-            id: guildId
+            guild_id: guildId
         },
         include: {
             system_notifications: true,
-            guilds_notifications_reads: true
+            guild_notification_reads: true
         }
     });
 
@@ -22,7 +22,7 @@ export const getGuildNotifications = async (id: string): Promise<GuildNotificati
             type: notification.type,
             title: notification.title,
             description: notification.description,
-            reads: guildNotification.guilds_notifications_reads.map((read) => read.user_id.toString()),
+            reads: guildNotification.guild_notification_reads.map((read) => read.user_id.toString()),
             updatedAt: notification.updated_at.getTime(),
             createdAt: notification.created_at.getTime()
         });
@@ -32,16 +32,16 @@ export const getGuildNotifications = async (id: string): Promise<GuildNotificati
 };
 
 export const getGuildNotificationById = async (id: string, notificationId: string): Promise<GuildNotification | undefined> => {
-    const guildNotification = await prisma.guilds_notifications.findUnique({
+    const guildNotification = await prisma.guild_notifications.findUnique({
         where: {
-            id_notification_id: {
-                id: BigInt(id),
+            guild_id_notification_id: {
+                guild_id: BigInt(id),
                 notification_id: toBinaryUUID(notificationId)
             }
         },
         include: {
             system_notifications: true,
-            guilds_notifications_reads: true
+            guild_notification_reads: true
         }
     });
 
@@ -54,7 +54,7 @@ export const getGuildNotificationById = async (id: string, notificationId: strin
         type: notification.type,
         title: notification.title,
         description: notification.description,
-        reads: guildNotification.guilds_notifications_reads.map((read) => read.user_id.toString()),
+        reads: guildNotification.guild_notification_reads.map((read) => read.user_id.toString()),
         updatedAt: notification.updated_at.getTime(),
         createdAt: notification.created_at.getTime()
     };
@@ -64,10 +64,10 @@ export const setGuildNotificationRead = async (id: string, notificationId: strin
     const guildId = BigInt(id);
     const binaryNotificationId = toBinaryUUID(notificationId);
 
-    const guildNotification = await prisma.guilds_notifications.findUnique({
+    const guildNotification = await prisma.guild_notifications.findUnique({
         where: {
-            id_notification_id: {
-                id: guildId,
+            guild_id_notification_id: {
+                guild_id: guildId,
                 notification_id: binaryNotificationId
             }
         }
@@ -77,10 +77,10 @@ export const setGuildNotificationRead = async (id: string, notificationId: strin
         return;
 
     if (read) {
-        await prisma.guilds_notifications_reads.upsert({
+        await prisma.guild_notification_reads.upsert({
             where: {
-                id_guild_id_user_id: {
-                    id: binaryNotificationId,
+                guild_id_user_id_notification_id: {
+                    notification_id: guildNotification.id,
                     guild_id: guildId,
                     user_id: BigInt(userId)
                 }
@@ -89,7 +89,7 @@ export const setGuildNotificationRead = async (id: string, notificationId: strin
                 updated_at: new Date()
             },
             create: {
-                id: binaryNotificationId,
+                notification_id: guildNotification.id,
                 guild_id: guildId,
                 user_id: BigInt(userId),
                 updated_at: new Date(),
@@ -97,10 +97,10 @@ export const setGuildNotificationRead = async (id: string, notificationId: strin
             }
         });
     } else {
-        await prisma.guilds_notifications_reads.delete({
+        await prisma.guild_notification_reads.delete({
             where: {
-                id_guild_id_user_id: {
-                    id: binaryNotificationId,
+                guild_id_user_id_notification_id: {
+                    notification_id: guildNotification.id,
                     guild_id: guildId,
                     user_id: BigInt(userId)
                 }

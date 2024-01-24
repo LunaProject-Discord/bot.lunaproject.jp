@@ -1,11 +1,12 @@
-import { getMemberDisplay } from '@app/user';
+import { getMemberDisplay, getUserDisplay } from '@app/user';
 import { ItemFormContainer, ItemIcon, ItemRoot, ItemRowContainer, ItemTextBlock } from '@components/items';
+import { Code } from '@components/text';
 import { GuildLevel } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
-import { DataGuild, RedisMember } from '@interfaces/redis';
+import { DataGuild, RedisGuild } from '@interfaces/redis';
+import { GuildViewProps } from '@interfaces/view';
 import { Avatar, Box, styled, Theme, Typography, useMediaQuery } from '@mui/material';
-import { getMemberAvatar } from '@utils/cdn';
-import React from 'react';
+import { buildCdnUrl, getMemberAvatar, getUserAvatar } from '@utils/cdn';
+import React, { Fragment } from 'react';
 
 export const DesktopLevelItemRoot = styled(Box)(({ theme }) => ({
     width: '100%',
@@ -51,54 +52,31 @@ const LevelItemGroup = styled(Box)(({ theme }) => ({
     gap: theme.spacing(1)
 }));
 
-interface LevelItemProps extends LocalizationProps {
-    guild: DataGuild;
-    member: RedisMember;
-    data: GuildLevel;
+interface LevelItemProps extends GuildViewProps {
+    level: GuildLevel;
 }
 
-export const LevelItem = ({ guild, member, data, localization }: LevelItemProps) => {
+export const LevelItem = ({ guild, level, localization }: LevelItemProps) => {
     const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
     return isDesktop ? (
-        <DesktopLevelItem guild={guild} member={member} data={data} localization={localization} />
+        <DesktopLevelItem guild={guild} level={level} localization={localization} />
     ) : (
-        <MobileLevelItem guild={guild} member={member} data={data} localization={localization} />
+        <MobileLevelItem guild={guild} level={level} localization={localization} />
     );
 };
 
-export const DesktopLevelItem = ({ guild, member, data, localization: { translations } }: LevelItemProps) => {
-    const [primary, secondary] = getMemberDisplay(member);
+interface LevelItemProfileProps {
+    guild: RedisGuild | DataGuild;
+    user: GuildLevel['user'];
+    member: GuildLevel['member'];
+}
 
-    return (
-        <DesktopLevelItemRoot sx={{ height: 50 }}>
-            <LevelItemRank>
-                {data.rank}
-            </LevelItemRank>
-            <ItemIcon
-                icon={
-                    <Avatar
-                        src={getMemberAvatar(member, guild)}
-                        alt=" "
-                        sx={{ pointerEvents: 'none' }}
-                    />
-                }
-            />
-            <ItemTextBlock primary={primary} secondary={secondary} />
-            <Typography variant="h5" align="center" sx={{ fontFamily: 'Renner' }}>{data.level}</Typography>
-            <Typography variant="h5" align="center" sx={{ fontFamily: 'Renner' }}>{data.xp}</Typography>
-        </DesktopLevelItemRoot>
-    );
-};
+export const LevelItemProfile = ({ guild, user, member }: LevelItemProfileProps) => {
+    if (member) {
+        const [primary, secondary] = getMemberDisplay(member);
 
-export const MobileLevelItem = ({ guild, member, data, localization: { translations } }: LevelItemProps) => {
-    const [primary, secondary] = getMemberDisplay(member);
-
-    return (
-        <ItemRoot>
-            <ItemRowContainer>
-                <LevelItemRank>
-                    {data.rank}
-                </LevelItemRank>
+        return (
+            <Fragment>
                 <ItemIcon
                     icon={
                         <Avatar
@@ -109,17 +87,91 @@ export const MobileLevelItem = ({ guild, member, data, localization: { translati
                     }
                 />
                 <ItemTextBlock primary={primary} secondary={secondary} />
-            </ItemRowContainer>
-            <ItemFormContainer sx={{ justifyContent: 'flex-start' }}>
-                <LevelItemGroup>
-                    <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.level}</Typography>
-                    <Typography variant="h5" sx={{ fontFamily: 'Renner' }}>{data.level}</Typography>
-                </LevelItemGroup>
-                <LevelItemGroup>
-                    <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.experience}</Typography>
-                    <Typography variant="h5" sx={{ fontFamily: 'Renner' }}>{data.xp}</Typography>
-                </LevelItemGroup>
-            </ItemFormContainer>
-        </ItemRoot>
-    );
+            </Fragment>
+        );
+    } else if ('name' in user) {
+        const [primary, secondary] = getUserDisplay(user);
+
+        return (
+            <Fragment>
+                <ItemIcon
+                    icon={
+                        <Avatar
+                            src={getUserAvatar(user)}
+                            alt=" "
+                            sx={{ pointerEvents: 'none' }}
+                        />
+                    }
+                />
+                <ItemTextBlock primary={primary} secondary={secondary} />
+            </Fragment>
+        );
+    } else {
+        return (
+            <Fragment>
+                <ItemIcon
+                    icon={
+                        <Avatar
+                            src={buildCdnUrl('/embed/avatars/0', undefined, 'png')}
+                            alt=" "
+                            sx={{ pointerEvents: 'none' }}
+                        />
+                    }
+                />
+                <ItemTextBlock primary={<Code>{user.id}</Code>} />
+            </Fragment>
+        );
+    }
 };
+
+export const DesktopLevelItem = (
+    {
+        guild,
+        level: {
+            user,
+            member,
+            rank,
+            level,
+            experience
+        },
+        localization: { translations }
+    }: LevelItemProps
+) => (
+    <DesktopLevelItemRoot sx={{ height: 50 }}>
+        <LevelItemRank>{rank}</LevelItemRank>
+        <LevelItemProfile guild={guild} user={user} member={member} />
+        <Typography variant="h5" align="center" sx={{ fontFamily: 'Renner' }}>{level}</Typography>
+        <Typography variant="h5" align="center" sx={{ fontFamily: 'Renner' }}>{experience}</Typography>
+    </DesktopLevelItemRoot>
+);
+
+export const MobileLevelItem = (
+    {
+        guild,
+        level: {
+            user,
+            member,
+            rank,
+            level,
+            experience
+        },
+        localization: { translations }
+    }: LevelItemProps
+) => (
+    <ItemRoot>
+        <ItemRowContainer>
+            <LevelItemRank>{rank}</LevelItemRank>
+            <LevelItemProfile guild={guild} user={user} member={member} />
+        </ItemRowContainer>
+        <ItemFormContainer sx={{ justifyContent: 'flex-start' }}>
+            <LevelItemGroup>
+                <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.level}</Typography>
+                <Typography variant="h5" sx={{ fontFamily: 'Renner' }}>{level}</Typography>
+            </LevelItemGroup>
+            <LevelItemGroup>
+                <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.experience}</Typography>
+                <Typography variant="h5" sx={{ fontFamily: 'Renner' }}>{experience}</Typography>
+            </LevelItemGroup>
+        </ItemFormContainer>
+    </ItemRoot>
+);

@@ -11,6 +11,7 @@ import {
     RedisUserGuild,
     RedisUserGuilds
 } from '@interfaces/redis';
+import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
 import Redis from 'ioredis';
 
 const HASH_GUILDS = 'guilds';
@@ -23,8 +24,11 @@ const HASH_STATUSES = 'statuses';
 const HASH_COMMANDS = 'commands';
 
 const PUBSUB_USERS_GUILDS = HASH_USERS_GUILDS;
+const PUBSUB_GUILD_LEVELS = 'guild_levels';
 const PUBSUB_GUILD_CONFIGURATION = 'guild_configuration';
 const PUBSUB_USER_CONFIGURATION = 'user_configuration';
+const PUBSUB_UPDATE_GUILD = 'update_guild';
+const PUBSUB_UPDATE_USER = 'update_user';
 
 const redis = new Redis({
     port: Number(process.env.REDIS_PORT || 6379),
@@ -32,6 +36,7 @@ const redis = new Redis({
     username: process.env.REDIS_USERNAME,
     password: process.env.REDIS_PASSWORD
 });
+
 
 export const getGuildById = async (id: string): Promise<DataGuild | undefined> => {
     const data = await redis.hget(HASH_GUILDS, id);
@@ -95,6 +100,14 @@ export const getMemberById = async (id: string, guildId: string): Promise<RedisM
     return JSON.parse(data);
 };
 
+export const getUsersByIds = async (ids: string[]): Promise<RedisUser[]> => {
+    const users = await redis.hmget(HASH_USERS, ...ids);
+    if (!users)
+        return [];
+
+    return users.filter(filterPredicateNonNullable).map((user) => JSON.parse(user));
+};
+
 export const getUserById = async (id: string): Promise<RedisUser | undefined> => {
     const data = await redis.hget(HASH_USERS, id);
     if (!data)
@@ -130,16 +143,6 @@ export const getAndRequestUserGuildsById = async (id: string): Promise<RedisUser
     return guilds;
 };
 
-export const updateGuildConfigurationById = async (id: string): Promise<void> => {
-    const data: RedisSnowflake = { id };
-    await redis.publish(PUBSUB_GUILD_CONFIGURATION, JSON.stringify(data));
-};
-
-export const updateUserConfigurationById = async (id: string): Promise<void> => {
-    const data: RedisSnowflake = { id };
-    await redis.publish(PUBSUB_USER_CONFIGURATION, JSON.stringify(data));
-};
-
 export const getStatuses = async (): Promise<RedisStatus[]> => {
     const statuses = await redis.hgetall(HASH_STATUSES);
     if (!statuses)
@@ -170,4 +173,30 @@ export const getCommand = async (name: string): Promise<RedisCommand | undefined
         return undefined;
 
     return JSON.parse(data);
+};
+
+
+export const updateGuildLevelById = async (id: string): Promise<void> => {
+    const data: RedisSnowflake = { id };
+    await redis.publish(PUBSUB_GUILD_LEVELS, JSON.stringify(data));
+};
+
+export const updateGuildConfigurationById = async (id: string): Promise<void> => {
+    const data: RedisSnowflake = { id };
+    await redis.publish(PUBSUB_GUILD_CONFIGURATION, JSON.stringify(data));
+};
+
+export const updateUserConfigurationById = async (id: string): Promise<void> => {
+    const data: RedisSnowflake = { id };
+    await redis.publish(PUBSUB_USER_CONFIGURATION, JSON.stringify(data));
+};
+
+export const updateGuildById = async (id: string): Promise<void> => {
+    const data: RedisSnowflake = { id };
+    await redis.publish(PUBSUB_UPDATE_GUILD, JSON.stringify(data));
+};
+
+export const updateUserById = async (id: string): Promise<void> => {
+    const data: RedisSnowflake = { id };
+    await redis.publish(PUBSUB_UPDATE_USER, JSON.stringify(data));
 };

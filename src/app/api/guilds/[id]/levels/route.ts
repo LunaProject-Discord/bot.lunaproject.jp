@@ -2,6 +2,7 @@ import { PartialGuildLevels } from '@interfaces/bot';
 import { WithIdParamProps } from '@interfaces/page';
 import { getGuildLevels } from '@libs/bot';
 import prisma from '@libs/prisma';
+import { updateGuildById } from '@libs/redis';
 import { getGuildById } from '@lunaproject/web-discord/dist/libs';
 import { PartialGuildLevelsSchema } from '@schemas/bot';
 import { COOKIE_TOKEN } from '@utils/cookie';
@@ -24,7 +25,7 @@ export const GET = async (req: NextRequest, { params: { id } }: WithIdParamProps
     if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    return NextResponse.json(await getGuildLevels(id, isFetchUser), { status: 200 });
+    return NextResponse.json(await getGuildLevels(id), { status: 200 });
 };
 
 export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamProps) => {
@@ -47,14 +48,20 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
 
     const levels: PartialGuildLevels = result.data;
 
-    const counts = await prisma.$transaction(levels.map((level) => prisma.$executeRaw`
-        UPDATE \`guilds_levels\`
-        SET \`level\` = ${level.level},
-            \`xp\`    = ${level.xp}
-        WHERE \`guild_id\` = ${BigInt(id)}
-          AND \`user_id\` = ${BigInt(level.user_id)}
-    `));
-    const count = counts.reduce((sum, count) => sum + count, 0);
+    const guildLevels = await prisma.$transaction(levels.map((level) => prisma.guild_levels.update({
+        where: {
+            guild_id_user_id: {
+                guild_id: BigInt(id),
+                user_id: BigInt(level.user_id)
+            }
+        },
+        data: {
+            level: level.level,
+            experience: level.experience
+        }
+    })));
 
-    return new NextResponse(null, { status: count > 0 ? 200 : 204 });
+    await updateGuildById(id);
+
+    return new NextResponse(null, { status: guildLevels.length > 0 ? 200 : 204 });
 };

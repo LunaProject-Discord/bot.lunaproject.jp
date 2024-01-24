@@ -1,7 +1,13 @@
 'use client';
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { CloudOffIcon, SearchIcon, TableRowsIcon } from '@components/icons';
+import {
+    CloudOffIcon,
+    KeyboardArrowLeftIcon,
+    KeyboardArrowRightIcon,
+    SearchIcon,
+    TableRowsIcon
+} from '@components/icons';
 import { PageCenteredLayout, PageHeader, PageLayout } from '@components/layout_v2';
 import { GuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
@@ -18,7 +24,8 @@ import {
     Typography
 } from '@mui/material';
 import { getGuildIcon } from '@utils/cdn';
-import { filterPredicateMember } from '@utils/discord';
+import { filterPredicateLevel, getLevelPages } from '@utils/level';
+import { useDebounce } from '@utils/react/debounce';
 import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
 import { DesktopLevelItemRoot, LevelItem } from './components';
 
@@ -33,10 +40,11 @@ export const View = ({ guild, levels, localization }: Props) => {
     const [perPageLimit, setPerPageLimit] = useState(50);
 
     const [search, setSearch] = useState('');
+    const keyword = useDebounce(search, 500);
 
-    const filteredLevels = levels.filter((level) => guild.members.some((member) => member.user.id === level.user.id && filterPredicateMember(member, search)));
-    const levelPages = new Array(Math.ceil(filteredLevels.length / perPageLimit)).fill(undefined).map((_, i) => filteredLevels.slice(i * perPageLimit, (i + 1) * perPageLimit));
-    const data = (search.length < 1 ? levelPages[pageIndex] : filteredLevels) ?? [];
+    const filteredLevels = levels.filter((level) => filterPredicateLevel(level, keyword));
+    const levelPages = getLevelPages(filteredLevels, perPageLimit);
+    const data = (keyword.length < 1 ? levelPages[pageIndex] : filteredLevels) ?? [];
 
     const handlePageIndexChange = (e: MouseEvent<HTMLButtonElement> | null, index: number) => setPageIndex(index);
 
@@ -45,7 +53,7 @@ export const View = ({ guild, levels, localization }: Props) => {
         setPageIndex(0);
     };
 
-    if (search.length < 1 && data.length < 1)
+    if (keyword.length < 1 && data.length < 1)
         return (<DataEmptyView localization={localization} />);
 
     return (
@@ -116,11 +124,19 @@ export const View = ({ guild, levels, localization }: Props) => {
                         rowsPerPage={perPageLimit}
                         onRowsPerPageChange={handlePerPageLimitChange}
                         labelRowsPerPage={<TableRowsIcon />}
-                        SelectProps={{
-                            MenuProps: {
-                                slotProps: {
-                                    paper: {
-                                        sx: (theme) => borderAndBoxShadow(theme)
+                        slots={{
+                            actions: {
+                                nextButtonIcon: KeyboardArrowRightIcon,
+                                previousButtonIcon: KeyboardArrowLeftIcon
+                            }
+                        }}
+                        slotProps={{
+                            select: {
+                                MenuProps: {
+                                    slotProps: {
+                                        paper: {
+                                            sx: (theme) => borderAndBoxShadow(theme)
+                                        }
                                     }
                                 }
                             }
@@ -146,19 +162,14 @@ export const View = ({ guild, levels, localization }: Props) => {
                 </DesktopLevelItemRoot>
             </Box>
             {data.length > 0 ? <Section sx={{ p: 0, pt: { md: 1 }, gap: 1 }}>
-                {data.map((level) => {
-                    const member = guild.members.find((member) => member.user.id === level.user.id)!!;
-
-                    return (
-                        <LevelItem
-                            key={level.user.id}
-                            guild={guild}
-                            member={member}
-                            data={level}
-                            localization={localization}
-                        />
-                    );
-                })}
+                {data.map((level) => (
+                    <LevelItem
+                        key={level.user.id}
+                        guild={guild}
+                        level={level}
+                        localization={localization}
+                    />
+                ))}
             </Section> : <ErrorRoot>
                 <CloudOffIcon sx={{ fontSize: '10rem' }} />
                 <ErrorTitle>メンバーが見つかりません</ErrorTitle>

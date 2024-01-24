@@ -40,7 +40,7 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
     const localization = getLocalization();
 
     const guildData = getGuildById(id);
-    const guildLevelsData = getGuildLevels(id, false);
+    const guildLevelsData = getGuildLevels(id);
     const guildConfigurationData = getGuildConfiguration(id);
 
     const [guild, guildLevels, guildConfiguration] = await Promise.all([

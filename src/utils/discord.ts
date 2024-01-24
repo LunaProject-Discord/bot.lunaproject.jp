@@ -74,11 +74,14 @@ export const filterPredicateRole = (role: APIRole | RedisRole, keyword: string) 
     || role.name.toLowerCase().includes(keyword.toLowerCase());
 
 export const filterPredicateMember = (member: GuildMember | RedisMember, keyword: string) => keyword.length < 1
-    || member.user.id.includes(keyword)
-    || ('username' in member.user ? member.user.username : member.user.name).toLowerCase().includes(keyword.toLowerCase())
-    || ('global_name' in member.user ? member.user.global_name : member.user.display_name)?.toLowerCase().includes(keyword.toLowerCase())
-    || member.user.discriminator.includes(keyword)
+    || filterPredicateUser(member.user, keyword)
     || member.nick?.toLowerCase().includes(keyword.toLowerCase());
+
+export const filterPredicateUser = (user: OAuthUser | APIUser | RedisUser, keyword: string) => keyword.length < 1
+    || user.id.includes(keyword)
+    || ('username' in user ? user.username : user.name).toLowerCase().includes(keyword.toLowerCase())
+    || ('global_name' in user ? user.global_name : user.display_name)?.toLowerCase().includes(keyword.toLowerCase())
+    || user.discriminator.includes(keyword);
 
 
 export const getInteractRoles = <G extends OAuthGuild | APIGuild | RedisGuild | DataGuild, M extends GuildMember | RedisMember, R extends APIRole | RedisRole>(guild: G, member: M, roles: R[]) => {

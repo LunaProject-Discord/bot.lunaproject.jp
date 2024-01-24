@@ -3,7 +3,7 @@ import { GuildConfiguration } from '@interfaces/bot';
 import { WithIdParamProps } from '@interfaces/page';
 import { getGuildConfiguration, hasDashboardAccess } from '@libs/bot';
 import prisma from '@libs/prisma';
-import { getGuildById, updateGuildConfigurationById } from '@libs/redis';
+import { getGuildById, updateGuildById } from '@libs/redis';
 import { errorWithName } from '@lunaproject/web-core/dist/utils/logger';
 import { Prisma } from '@prisma/client';
 import { PartialGuildConfigurationSchema } from '@schemas/bot';
@@ -54,7 +54,7 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
 
         if (Object.keys(configuration).length > 0) {
             const inputs: {
-                [key: string]: valueOf<Prisma.XOR<Prisma.guilds_configurationsUpdateInput, Prisma.guilds_configurationsUncheckedUpdateInput>>
+                [key: string]: valueOf<Prisma.XOR<Prisma.guild_configurationsUpdateInput, Prisma.guild_configurationsUncheckedUpdateInput>>
             } = {};
 
             const configurationSections: { [key: string]: valueOf<GuildConfiguration> } = configuration;
@@ -63,9 +63,9 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
                 inputs[sectionKey] = typeof value === 'object' ? JSON.stringify(value) : value;
             }
 
-            await prisma.guilds_configurations.update({
+            await prisma.guild_configurations.update({
                 where: {
-                    id: guildId
+                    guild_id: guildId
                 },
                 data: {
                     ...inputs,
@@ -74,7 +74,7 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
             });
         }
 
-        await updateGuildConfigurationById(id);
+        await updateGuildById(id);
 
         return NextResponse.json(await getGuildConfiguration(id), { status: 200 });
     } catch (e) {

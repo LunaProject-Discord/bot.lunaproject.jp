@@ -1,22 +1,27 @@
 'use client';
 
-import { getMemberDisplay } from '@app/user';
+import { LevelItemProfile } from '@app/leaderboard/[id]/components';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { CloudOffIcon, DeleteIcon, SearchIcon, TableRowsIcon } from '@components/icons';
+import {
+    CloudOffIcon,
+    DeleteIcon,
+    KeyboardArrowLeftIcon,
+    KeyboardArrowRightIcon,
+    SearchIcon,
+    TableRowsIcon
+} from '@components/icons';
 import { PageCenteredLayout, PageHeader } from '@components/layout_v2';
 import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { GuildLevel, PartialGuildLevel, PartialGuildLevelRecord } from '@interfaces/bot';
+import { GuildLevel, PartialGuildLevel, PartialGuildLevelRecord, PartialGuildLevels } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
-import { DataGuild, RedisMember } from '@interfaces/redis';
-import { GuildConfigurationViewProps } from '@interfaces/view';
-import { filterPredicateNonNullable } from '@lunaproject/web-core';
-import { NumberField } from '@lunaproject/web-core/dist/components/NumberField';
+import { GuildConfigurationViewProps, GuildViewProps } from '@interfaces/view';
+import { NumberField, numberFieldClasses } from '@lunaproject/web-core/dist/components/NumberField';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
-import { ItemIcon, ItemRowContainer, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
+import { ItemRowContainer } from '@lunaproject/web-core/dist/components/SectionItems';
+import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
 import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
 import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils/theme';
 import {
-    Avatar,
     Box,
     BoxProps,
     Button,
@@ -28,14 +33,14 @@ import {
     Typography
 } from '@mui/material';
 import { PartialGuildLevelRecordSchema } from '@schemas/bot';
-import { getMemberAvatar } from '@utils/cdn';
-import { filterPredicateMember } from '@utils/discord';
+import { filterPredicateLevel, getLevelPages, getMaxExperience } from '@utils/level';
+import { useDebounce } from '@utils/react/debounce';
 import { getStateActionValue } from '@utils/react/state';
 import clsx from 'clsx';
 import groupBy from 'lodash/groupBy';
-import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
+import React, { ChangeEvent, Fragment, MouseEvent, SetStateAction, useState } from 'react';
 
-const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
+const saveGuildLevels = async (id: string, levels: PartialGuildLevels) => {
     const res = await fetch(
         `/api/guilds/${id}/levels`,
         {
@@ -50,6 +55,7 @@ const saveGuildLevels = async (id: string, levels: PartialGuildLevel[]) => {
 
 const ItemContainer = styled(Box)(({ theme }) => ({
     padding: theme.spacing(0, 1.5),
+    containerType: 'inline-size',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
@@ -57,7 +63,12 @@ const ItemContainer = styled(Box)(({ theme }) => ({
     borderRadius: theme.shape.borderRadius,
     transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color', 'color'], {
         duration: theme.transitions.duration.shortest
-    })
+    }),
+    [`@container (min-width: ${theme.breakpoints.values.sm - 90}px) and (max-width: ${theme.breakpoints.values.md - 70.05}px)`]: {
+        [`& .form-container, & .${numberFieldClasses.root}`]: {
+            width: '100%'
+        }
+    }
 }));
 
 const ItemFormContainer = styled(
@@ -69,7 +80,8 @@ const ItemFormContainer = styled(
     placeItems: 'center',
     placeContent: 'center',
     gap: theme.spacing(2),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
+        width: '100%',
         height: 'auto',
         padding: 0,
         flexDirection: 'column',
@@ -85,36 +97,39 @@ const ItemFormGroup = styled(Box)(({ theme }) => ({
     gap: theme.spacing(1)
 }));
 
-interface LevelItemProps extends LocalizationProps {
-    guild: DataGuild;
-    member: RedisMember;
-    value: PartialGuildLevel;
+interface LevelItemProps extends GuildViewProps {
+    value: GuildLevel;
     setValue: (value: PartialGuildLevel) => void;
 }
 
-export const LevelItem = ({ guild, member, value, setValue, localization: { translations } }: LevelItemProps) => {
-    const [primary, secondary] = getMemberDisplay(member);
+export const LevelItem = ({ guild, value, setValue, localization: { translations } }: LevelItemProps) => {
+    const { user, member, rank, level, experience } = value;
+    const maxExperience = getMaxExperience(level);
+
+    const handleLevelChange = (action: SetStateAction<number>) => {
+        const newLevel = getStateActionValue(action, level);
+        const newExperience = Math.min(getMaxExperience(newLevel), experience);
+
+        setValue({ user_id: user.id, level: newLevel, experience: newExperience });
+    };
+
+    const setExperience = (action: SetStateAction<number>) => setValue({
+        user_id: user.id,
+        level,
+        experience: getStateActionValue(action, experience)
+    });
 
     return (
         <ItemContainer>
             <ItemRowContainer>
-                <ItemIcon
-                    icon={
-                        <Avatar
-                            src={getMemberAvatar(member, guild)}
-                            alt=" "
-                            sx={{ pointerEvents: 'none' }}
-                        />
-                    }
-                />
-                <ItemTextBlock primary={primary} secondary={secondary} />
+                <LevelItemProfile guild={guild} user={user} member={member} />
             </ItemRowContainer>
             <ItemFormContainer>
                 <ItemFormGroup>
                     <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.level}</Typography>
                     <NumberField
-                        value={value.level}
-                        setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
+                        value={level}
+                        setValue={handleLevelChange}
                         pattern="\d*"
                         step={1}
                         min={0}
@@ -129,12 +144,12 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                 <ItemFormGroup>
                     <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.experience}</Typography>
                     <NumberField
-                        value={value.xp}
-                        setValue={(action) => setValue({ ...value, xp: getStateActionValue(action, value.xp) })}
+                        value={experience}
+                        setValue={setExperience}
                         pattern="\d*"
                         step={1}
                         min={0}
-                        max={20 * Math.max(value.level, 1)}
+                        max={maxExperience}
                         sx={{
                             width: {
                                 xs: '100%',
@@ -145,7 +160,7 @@ export const LevelItem = ({ guild, member, value, setValue, localization: { tran
                 </ItemFormGroup>
                 <ItemFormGroup sx={{ width: 'auto', flexShrink: 0 }}>
                     <Button
-                        onClick={() => setValue({ ...value, level: 0, xp: 0 })}
+                        onClick={() => setValue({ user_id: user.id, level: 0, experience: 0 })}
                         variant="text"
                         color="error"
                         fullWidth
@@ -169,23 +184,24 @@ export const View = ({ guild, levels, localization }: Props) => {
     const [pageIndex, setPageIndex] = useState(0);
     const [perPageLimit, setPerPageLimit] = useState(50);
 
-    const [values, setValues, resetValues] = useResettableState<PartialGuildLevel[]>([]);
+    const [values, setValues, resetValues] = useResettableState<PartialGuildLevels>([]);
 
     const [search, setSearch] = useState('');
+    const keyword = useDebounce(search, 500);
 
-    const filteredLevels = levels.filter((level) => guild.members.some((member) => member.user.id === level.user.id && filterPredicateMember(member, search)));
-    const levelPages = new Array(Math.ceil(filteredLevels.length / perPageLimit)).fill(undefined).map((_, i) => filteredLevels.slice(i * perPageLimit, (i + 1) * perPageLimit));
-    const data = (search.length < 1 ? levelPages[pageIndex] : filteredLevels) ?? [];
+    const filteredLevels = levels.filter((level) => filterPredicateLevel(level, keyword));
+    const levelPages = getLevelPages(filteredLevels, perPageLimit);
+    const data = (keyword.length < 1 ? levelPages[pageIndex] : filteredLevels) ?? [];
 
     const updateValue = (value: PartialGuildLevel) => setValues((values) => {
-        let data = [...values];
+        const data = [...values];
 
         const i = data.findIndex((level) => level.user_id === value.user_id);
         if (i !== -1)
             data.splice(i, 1);
 
         const current = filteredLevels.find((level) => level.user.id === value.user_id);
-        if (value.level !== current?.level || value.xp !== current?.xp)
+        if (value.level !== current?.level || value.experience !== current?.experience)
             data.push(value);
 
         return data;
@@ -204,7 +220,7 @@ export const View = ({ guild, levels, localization }: Props) => {
         values.map((value) => levels.find((level) => level.user.id === value.user_id))
             .filter(filterPredicateNonNullable)
             .forEach((level) => {
-                store[level.user.id] = { user_id: level.user.id, level: level.level, xp: level.xp };
+                store[level.user.id] = { user_id: level.user.id, level: level.level, experience: level.experience };
             });
 
         return store;
@@ -214,7 +230,7 @@ export const View = ({ guild, levels, localization }: Props) => {
         const store: PartialGuildLevelRecord = {};
 
         for (const value of values)
-            store[value.user_id] = { user_id: value.user_id, level: value.level, xp: value.xp };
+            store[value.user_id] = { user_id: value.user_id, level: value.level, experience: value.experience };
 
         return store;
     };
@@ -231,7 +247,7 @@ export const View = ({ guild, levels, localization }: Props) => {
         resetValues();
     };
 
-    if (search.length < 1 && data.length < 1)
+    if (keyword.length < 1 && data.length < 1)
         return (<NotFoundView localization={localization} />);
 
     return (
@@ -279,11 +295,19 @@ export const View = ({ guild, levels, localization }: Props) => {
                     rowsPerPage={perPageLimit}
                     onRowsPerPageChange={handlePerPageLimitChange}
                     labelRowsPerPage={<TableRowsIcon />}
-                    SelectProps={{
-                        MenuProps: {
-                            slotProps: {
-                                paper: {
-                                    sx: (theme) => borderAndBoxShadow(theme)
+                    slots={{
+                        actions: {
+                            nextButtonIcon: KeyboardArrowRightIcon,
+                            previousButtonIcon: KeyboardArrowLeftIcon
+                        }
+                    }}
+                    slotProps={{
+                        select: {
+                            MenuProps: {
+                                slotProps: {
+                                    paper: {
+                                        sx: (theme) => borderAndBoxShadow(theme)
+                                    }
                                 }
                             }
                         }
@@ -304,14 +328,12 @@ export const View = ({ guild, levels, localization }: Props) => {
             {data.length > 0 ? <Section sx={{ p: 0, gap: 1 }}>
                 {data.map((level) => {
                     const data = values.find((value) => value.user_id === level.user.id);
-                    const member = guild.members.find((member) => member.user.id === level.user.id)!!;
 
                     return (
                         <LevelItem
                             key={level.user.id}
                             guild={guild}
-                            member={member}
-                            value={data ?? { user_id: level.user.id, level: level.level, xp: level.xp }}
+                            value={{ ...level, ...data }}
                             setValue={updateValue}
                             localization={localization}
                         />

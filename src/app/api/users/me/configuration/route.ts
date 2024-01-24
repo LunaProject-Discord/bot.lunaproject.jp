@@ -2,7 +2,7 @@ import { getUser } from '@app/utils';
 import { UserConfiguration } from '@interfaces/bot';
 import { getUserConfiguration } from '@libs/bot';
 import prisma from '@libs/prisma';
-import { updateUserConfigurationById } from '@libs/redis';
+import { updateUserById } from '@libs/redis';
 import { errorWithName } from '@lunaproject/web-core/dist/utils/logger';
 import { Prisma } from '@prisma/client';
 import { PartialUserConfigurationSchema } from '@schemas/bot';
@@ -37,7 +37,7 @@ export const PATCH = async (req: NextRequest) => {
 
         if (Object.keys(configuration).length > 0) {
             const inputs: {
-                [key: string]: valueOf<Prisma.XOR<Prisma.users_configurationsUpdateInput, Prisma.users_configurationsUncheckedUpdateInput>>
+                [key: string]: valueOf<Prisma.XOR<Prisma.user_configurationsUpdateInput, Prisma.user_configurationsUncheckedUpdateInput>>
             } = {};
 
             const configurationSections: { [key: string]: valueOf<UserConfiguration> } = configuration;
@@ -46,9 +46,9 @@ export const PATCH = async (req: NextRequest) => {
                 inputs[sectionKey] = typeof value === 'object' ? JSON.stringify(value) : value;
             }
 
-            await prisma.users_configurations.update({
+            await prisma.user_configurations.update({
                 where: {
-                    id: userId
+                    user_id: userId
                 },
                 data: {
                     ...inputs,
@@ -57,7 +57,7 @@ export const PATCH = async (req: NextRequest) => {
             });
         }
 
-        await updateUserConfigurationById(user.id);
+        await updateUserById(user.id);
 
         return NextResponse.json(await getUserConfiguration(user.id), { status: 200 });
     } catch (e) {

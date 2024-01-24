@@ -3,9 +3,9 @@ import prisma from '@libs/prisma';
 import { fromBinaryUUID, toBinaryUUID } from '@utils/uuid';
 
 export const getUserNotifications = async (id: string): Promise<UserNotification[]> => {
-    const userNotifications = await prisma.users_notifications.findMany({
+    const userNotifications = await prisma.user_notifications.findMany({
         where: {
-            id: BigInt(id)
+            user_id: BigInt(id)
         },
         include: {
             system_notifications: true
@@ -30,10 +30,10 @@ export const getUserNotifications = async (id: string): Promise<UserNotification
 };
 
 export const getUserNotificationById = async (id: string, notificationId: string): Promise<UserNotification | undefined> => {
-    const userNotification = await prisma.users_notifications.findUnique({
+    const userNotification = await prisma.user_notifications.findUnique({
         where: {
-            id_notification_id: {
-                id: BigInt(id),
+            user_id_notification_id: {
+                user_id: BigInt(id),
                 notification_id: toBinaryUUID(notificationId)
             }
         },
@@ -58,10 +58,10 @@ export const getUserNotificationById = async (id: string, notificationId: string
 };
 
 export const setUserNotificationRead = async (id: string, notificationId: string, read: boolean) => {
-    const userNotification = await prisma.users_notifications.findUnique({
+    const userNotification = await prisma.user_notifications.findUnique({
         where: {
-            id_notification_id: {
-                id: BigInt(id),
+            user_id_notification_id: {
+                user_id: BigInt(id),
                 notification_id: toBinaryUUID(notificationId)
             }
         }
@@ -70,10 +70,10 @@ export const setUserNotificationRead = async (id: string, notificationId: string
     if (!userNotification)
         return;
 
-    await prisma.users_notifications.update({
+    await prisma.user_notifications.update({
         where: {
-            id_notification_id: {
-                id: BigInt(id),
+            user_id_notification_id: {
+                user_id: BigInt(id),
                 notification_id: toBinaryUUID(notificationId)
             }
         },
