@@ -363,7 +363,6 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                 <Tooltip
                                                     key={role.id}
                                                     title={translations.role_permissions_grid_deletable}
-                                                    placement="top"
                                                     enterTouchDelay={100}
                                                 >
                                                     <GridCell
@@ -380,7 +379,6 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                 <Tooltip
                                                     key={role.id}
                                                     title={translations.role_permissions_grid_inherited_administrator}
-                                                    placement="top"
                                                     enterTouchDelay={100}
                                                 >
                                                     <GridCell
@@ -401,7 +399,6 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                 <Tooltip
                                                     key={role.id}
                                                     title={translations.role_permissions_grid_deletable}
-                                                    placement="top"
                                                     enterTouchDelay={100}
                                                 >
                                                     <GridCell
@@ -419,7 +416,6 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                 <Tooltip
                                                     key={role.id}
                                                     title={translations.role_permissions_grid_inherited_everyone}
-                                                    placement="top"
                                                     enterTouchDelay={100}
                                                 >
                                                     <GridCell
@@ -439,7 +435,6 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                             <Tooltip
                                                 key={role.id}
                                                 title={translations.role_permissions_grid_yes}
-                                                placement="top"
                                                 enterTouchDelay={100}
                                             >
                                                 <GridCell
@@ -456,7 +451,6 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                             <Tooltip
                                                 key={role.id}
                                                 title={translations.role_permissions_grid_no}
-                                                placement="top"
                                                 enterTouchDelay={100}
                                             >
                                                 <GridCell>

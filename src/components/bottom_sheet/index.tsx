@@ -1,13 +1,12 @@
 import { ExpandMoreIcon } from '@components/icons';
 import { LocalizationProps } from '@interfaces/localization';
-import { Box, IconButton, styled, Tooltip } from '@mui/material';
-import { blueGrey } from '@mui/material/colors';
+import { alpha, Box, getOverlayAlpha, IconButton, styled, Tooltip } from '@mui/material';
 import React from 'react';
 import { BottomSheet as BottomSheetRoot } from 'react-spring-bottom-sheet';
 import { SnapPointProps } from 'react-spring-bottom-sheet/dist/types';
 
 export const BottomSheet = styled(BottomSheetRoot)(({ theme }) => ({
-    '--rsbs-bg': theme.palette.mode === 'light' ? theme.palette.background.paper : blueGrey['900'],
+    '--rsbs-bg': theme.palette.background.paper,
     '--rsbs-handle-bg': theme.palette.divider,
     '--rsbs-overlay-rounded': `${theme.spacing(1.5)} !important`,
     [theme.breakpoints.up('sm')]: {
@@ -15,7 +14,16 @@ export const BottomSheet = styled(BottomSheetRoot)(({ theme }) => ({
         '--rsbs-ml': 'auto',
         '--rsbs-mr': theme.spacing(3)
     },
-    '& [data-rsbs-header]': {
+    '& [data-rsbs-overlay], &::after': {
+        backgroundImage: theme.palette.mode === 'dark' ? `linear-gradient(${alpha(
+            '#fff',
+            Number(getOverlayAlpha(8))
+        )}, ${alpha(
+            '#fff',
+            Number(getOverlayAlpha(8))
+        )})` : 'none'
+    },
+    '&[data-rsbs-has-header="true"] [data-rsbs-header]': {
         height: theme.spacing(9),
         boxShadow: `0 1px 0 ${theme.palette.divider}`
     },

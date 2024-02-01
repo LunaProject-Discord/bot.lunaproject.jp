@@ -47,22 +47,22 @@ export const EmbedFieldEditor = (
         <EmbedAccordionSummary>
             {translations.embed_field} #{index + 1}{value.name && ` — ${value.name}`}
             <Box sx={{ ml: 'auto', display: 'flex', alignItems: 'center', gap: .5 }}>
-                {visibleMoveUpButton && <Tooltip title={translations.move_up} placement="top">
+                {visibleMoveUpButton && <Tooltip title={translations.move_up}>
                     <IconButton onClick={moveUp} size="small" sx={{ width: 36, height: 36 }}>
                         <KeyboardArrowUpIcon />
                     </IconButton>
                 </Tooltip>}
-                {visibleMoveDownButton && <Tooltip title={translations.move_down} placement="top">
+                {visibleMoveDownButton && <Tooltip title={translations.move_down}>
                     <IconButton onClick={moveDown} size="small" sx={{ width: 36, height: 36 }}>
                         <KeyboardArrowDownIcon />
                     </IconButton>
                 </Tooltip>}
-                <Tooltip title={translations.duplicate} placement="top">
+                <Tooltip title={translations.duplicate}>
                     <IconButton onClick={duplicate} size="small" sx={{ width: 36, height: 36 }}>
                         <ContentCopyIcon fontSize="small" />
                     </IconButton>
                 </Tooltip>
-                <Tooltip title={translations.remove} placement="top">
+                <Tooltip title={translations.remove}>
                     <IconButton onClick={remove} color="error" size="small" sx={{ width: 36, height: 36 }}>
                         <CloseIcon fontSize="small" />
                     </IconButton>

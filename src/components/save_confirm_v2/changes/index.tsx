@@ -116,7 +116,7 @@ export interface ChangeUndoButtonProps extends LocalizationProps {
 
 export const ChangeUndoButton = ({ localization: { translations } }: ChangeUndoButtonProps) => (
     <ChangeUndoButtonRoot>
-        <Tooltip title={translations.undo} disableInteractive>
+        <Tooltip title={translations.undo}>
             <Box component="span" sx={{ display: 'flex' }}>
                 <UndoIcon fontSize="small" color="inherit" />
             </Box>

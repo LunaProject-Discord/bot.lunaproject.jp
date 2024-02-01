@@ -28,17 +28,17 @@ import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger } from '@mui/material';
 import { popoverAtom } from '@states/popover';
 import { getUserAvatar, getUserDisplayName } from '@utils/discord';
+import { useSetAtom } from 'jotai/index';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEvent, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
 
 export type RootNavigationProps = NavigationProps & RootNavigationDrawerProps;
 
 export const NavigationAppBar = ({ setOpen, user, flags, localization: { translations } }: RootNavigationProps) => {
     const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 0 });
 
-    const setPopoverState = useSetRecoilState(popoverAtom);
+    const setPopoverState = useSetAtom(popoverAtom);
 
     const handleDrawerToggle = () => setOpen((prevState) => !prevState);
 
@@ -49,7 +49,8 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
 
     const handleUserPopoverOpenButtonClick = (e: MouseEvent<HTMLButtonElement>) => setPopoverState({
         type: 'user',
-        anchorEl: e.currentTarget
+        anchorEl: e.currentTarget,
+        state: undefined
     });
 
     return (

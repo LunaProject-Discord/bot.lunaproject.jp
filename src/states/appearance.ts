@@ -1,5 +1,4 @@
-import { COOKIE_APPEARANCE } from '@utils/cookie';
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 
 export type AppearanceType = 'system' | 'light' | 'dark';
 
@@ -9,9 +8,6 @@ interface AppearanceState {
 }
 
 export const appearanceAtom = atom<AppearanceState>({
-    key: COOKIE_APPEARANCE,
-    default: {
-        appearance: 'system',
-        isDarkMode: false
-    }
+    appearance: 'system',
+    isDarkMode: false
 });

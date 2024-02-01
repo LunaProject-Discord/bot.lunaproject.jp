@@ -209,7 +209,7 @@ const RoleItem = (
                         >
                             {translations[`activity_type_${value.type === 'CUSTOM_STATUS' ? 'custom_status' : value.type.toLowerCase()}_short` as TranslationKeys]}
                         </Select>
-                        <Tooltip title={translations.remove} placement="top">
+                        <Tooltip title={translations.remove}>
                             <IconButton onClick={() => setValue(undefined)} disabled={disabled} color="error">
                                 <DeleteIcon />
                             </IconButton>

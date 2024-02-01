@@ -1,5 +1,6 @@
 'use client';
 
+import { UserPopoverProps, userPopoverStateAtom } from '@app/_popovers';
 import {
     ArrowBackIcon,
     BrushIcon,
@@ -10,8 +11,7 @@ import {
     SettingsIcon,
     TranslateIcon
 } from '@components/icons';
-import { LocaleType, LocalizationProps } from '@interfaces/localization';
-import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
+import { LocaleType } from '@interfaces/localization';
 import {
     alpha,
     Avatar,
@@ -27,22 +27,18 @@ import {
     Typography
 } from '@mui/material';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
-import { popoverAtom } from '@states/popover';
 import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '@utils/cookie';
 import { getUserAvatar, getUserDisplayName } from '@utils/discord';
+import { useAtom, useSetAtom } from 'jotai/index';
 import NextLink from 'next/link';
 import { setCookie } from 'nookies';
-import React, { Fragment, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { PopoverListItemButton, PopoverListItemIcon, PopoverListItemLinkButton, PopoverListItemSwitch } from './index';
+import React, { Fragment } from 'react';
+import { PopoverListItemButton, PopoverListItemIcon, PopoverListItemLinkButton, PopoverListItemSwitch } from '../index';
 
-interface PanelContentProps extends LocalizationProps {
-    onClose: () => void;
-    setPanelState: (panel: PanelType) => void;
-}
+const AppearancePopoverContent = ({ localization: { translations } }: UserPopoverProps) => {
+    const setPopoverState = useSetAtom(userPopoverStateAtom);
 
-const AppearancePanelContent = ({ onClose, setPanelState, localization: { translations } }: PanelContentProps) => {
-    const [{ appearance }, setAppearance] = useRecoilState(appearanceAtom);
+    const [{ appearance }, setAppearance] = useAtom(appearanceAtom);
 
     const handleAppearanceChange = (type: AppearanceType) => {
         const isBrowserDarkScheme = window.matchMedia('@media (prefers-color-scheme: dark)').matches;
@@ -61,13 +57,13 @@ const AppearancePanelContent = ({ onClose, setPanelState, localization: { transl
             }
         );
 
-        onClose();
+        setPopoverState(undefined);
     };
 
     return (
         <Fragment>
             <List>
-                <PopoverListItemButton dense onClick={() => setPanelState(null)}>
+                <PopoverListItemButton onClick={() => setPopoverState({ state: undefined })} dense>
                     <PopoverListItemIcon sx={{ minWidth: 'unset' }}>
                         <ArrowBackIcon />
                     </PopoverListItemIcon>
@@ -80,23 +76,28 @@ const AppearancePanelContent = ({ onClose, setPanelState, localization: { transl
                     checked={appearance === 'system'}
                     primary={translations.device_theme}
                     onClick={() => handleAppearanceChange('system')}
+                    dense
                 />
                 <PopoverListItemSwitch
                     checked={appearance === 'light'}
                     primary={translations.light_theme}
                     onClick={() => handleAppearanceChange('light')}
+                    dense
                 />
                 <PopoverListItemSwitch
                     checked={appearance === 'dark'}
                     primary={translations.dark_theme}
                     onClick={() => handleAppearanceChange('dark')}
+                    dense
                 />
             </List>
         </Fragment>
     );
 };
 
-const LocalePanelContent = ({ onClose, setPanelState, localization: { locale, translations } }: PanelContentProps) => {
+const LocalePopoverContent = ({ localization: { locale, translations } }: UserPopoverProps) => {
+    const setPopoverState = useSetAtom(userPopoverStateAtom);
+
     const handleLocaleChange = (type: LocaleType) => {
         setCookie(
             null,
@@ -108,7 +109,7 @@ const LocalePanelContent = ({ onClose, setPanelState, localization: { locale, tr
             }
         );
 
-        onClose();
+        setPopoverState(undefined);
 
         window.location.reload();
     };
@@ -116,7 +117,7 @@ const LocalePanelContent = ({ onClose, setPanelState, localization: { locale, tr
     return (
         <Fragment>
             <List>
-                <PopoverListItemButton dense onClick={() => setPanelState(null)}>
+                <PopoverListItemButton onClick={() => setPopoverState({ state: undefined })} dense>
                     <PopoverListItemIcon sx={{ minWidth: 'unset' }}>
                         <ArrowBackIcon />
                     </PopoverListItemIcon>
@@ -129,39 +130,30 @@ const LocalePanelContent = ({ onClose, setPanelState, localization: { locale, tr
                     checked={locale === 'ja'}
                     primary={translations.japanese}
                     onClick={() => handleLocaleChange('ja')}
+                    dense
                 />
                 <PopoverListItemSwitch
                     checked={locale === 'en'}
                     primary={translations.english}
                     onClick={() => handleLocaleChange('en')}
+                    dense
                 />
             </List>
         </Fragment>
     );
 };
 
-type PanelType = 'appearance' | 'locale' | null;
-
-export interface UserPopoverProps extends LocalizationProps {
-    user: OAuthUser | undefined;
-}
-
-export const UserPopover = ({ user, localization }: UserPopoverProps) => {
+export const DesktopUserPopover = ({ user, localization }: UserPopoverProps) => {
     const { translations } = localization;
 
-    const [popoverState, setPopoverState] = useRecoilState(popoverAtom);
-    const [panelState, setPanelState] = useState<PanelType>(null);
-
-    const handleClose = () => {
-        setPanelState(null);
-        setPopoverState(undefined);
-    };
+    const [popoverState, setPopoverState] = useAtom(userPopoverStateAtom);
+    const contentState = popoverState?.state;
 
     return (
         <Popover
-            open={popoverState?.type === 'user'}
+            open={popoverState !== undefined}
             anchorEl={popoverState?.anchorEl}
-            onClose={handleClose}
+            onClose={() => setPopoverState(undefined)}
             anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right'
@@ -180,17 +172,9 @@ export const UserPopover = ({ user, localization }: UserPopoverProps) => {
                 }
             }}
         >
-            {panelState === 'appearance' && <AppearancePanelContent
-                onClose={handleClose}
-                setPanelState={setPanelState}
-                localization={localization}
-            />}
-            {panelState === 'locale' && <LocalePanelContent
-                onClose={handleClose}
-                setPanelState={setPanelState}
-                localization={localization}
-            />}
-            {panelState === null && <Fragment>
+            {contentState === 'appearance' && <AppearancePopoverContent user={user} localization={localization} />}
+            {contentState === 'locale' && <LocalePopoverContent user={user} localization={localization} />}
+            {!contentState && <Fragment>
                 {user && <Fragment>
                     <Box sx={{ p: 1.5, display: 'flex', gap: 1 }}>
                         <Avatar
@@ -198,33 +182,53 @@ export const UserPopover = ({ user, localization }: UserPopoverProps) => {
                             alt=" "
                             sx={{ pointerEvents: 'none' }}
                         />
-                        <Box sx={{
-                            width: '100%',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between'
-                        }}>
-                            <Typography variant="h6" sx={{ fontSize: '1.2rem', lineHeight: 1.2 }}>
+                        <Box
+                            sx={{
+                                width: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
+                                overflow: 'hidden'
+                            }}
+                        >
+                            <Typography
+                                variant="h6"
+                                fontSize="1.2rem"
+                                lineHeight={1.2}
+                                whiteSpace="nowrap"
+                                textOverflow="ellipsis"
+                                overflow="hidden"
+                            >
                                 {getUserDisplayName(user)}
                             </Typography>
                             <Typography
                                 variant="body2"
                                 color="text.secondary"
-                                sx={{ fontFamily: 'Renner', lineHeight: 1.1 }}
+                                fontFamily="Renner"
+                                lineHeight={1.1}
+                                whiteSpace="nowrap"
+                                textOverflow="ellipsis"
+                                overflow="hidden"
                             >
                                 {user.global_name ? `@${user.username}` : `#${user.discriminator}`}
                             </Typography>
                         </Box>
-                        <Tooltip title={translations.user_settings} placement="top">
-                            <IconButton component={NextLink} href="/dashboard/me">
-                                <SettingsIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title={translations.logout} placement="top">
-                            <IconButton component={NextLink} href="https://account.lunaproject.jp/logout">
-                                <LogoutIcon />
-                            </IconButton>
-                        </Tooltip>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 'inherit' }}>
+                            <Tooltip title={translations.user_settings}>
+                                <IconButton
+                                    component={NextLink}
+                                    href="/dashboard/me"
+                                    onClick={() => setPopoverState(undefined)}
+                                >
+                                    <SettingsIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title={translations.logout}>
+                                <IconButton component={NextLink} href="https://account.lunaproject.jp/logout">
+                                    <LogoutIcon />
+                                </IconButton>
+                            </Tooltip>
+                        </Box>
                     </Box>
                     <Divider />
                     <List>
@@ -258,14 +262,14 @@ export const UserPopover = ({ user, localization }: UserPopoverProps) => {
                         {translations.site_settings}
                     </ListSubheader>
                 ) : undefined}>
-                    <PopoverListItemButton dense onClick={() => setPanelState('appearance')}>
+                    <PopoverListItemButton onClick={() => setPopoverState({ state: 'appearance' })} dense>
                         <PopoverListItemIcon>
                             <BrushIcon />
                         </PopoverListItemIcon>
                         <ListItemText primary={translations.design_and_appearance} />
                         <KeyboardArrowRightIcon color="action" />
                     </PopoverListItemButton>
-                    <PopoverListItemButton dense onClick={() => setPanelState('locale')}>
+                    <PopoverListItemButton onClick={() => setPopoverState({ state: 'locale' })} dense>
                         <PopoverListItemIcon>
                             <TranslateIcon />
                         </PopoverListItemIcon>

@@ -62,7 +62,7 @@ const RoleItem = (
                     localization={localization}
                 />
                 <Divider orientation="vertical" flexItem sx={{ my: 2 }} />
-                <Tooltip title={translations.remove} placement="top">
+                <Tooltip title={translations.remove}>
                     <IconButton onClick={() => setValue(undefined)} disabled={disabled} color="error">
                         <DeleteIcon />
                     </IconButton>

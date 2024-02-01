@@ -3,9 +3,9 @@
 import {
     ArrowDropDownIcon,
     ArrowDropUpIcon,
-    ArrowRightIcon,
     ErrorIcon,
     InfoIcon,
+    KeyboardArrowRightIcon,
     OpenInNewIcon,
     TaskAltIcon,
     WarningIcon
@@ -22,9 +22,9 @@ import { Interpolation } from '@mui/system';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
 import { COOKIE_APPEARANCE } from '@utils/cookie';
 import deepmerge from 'deepmerge';
+import { useAtom } from 'jotai/index';
 import { parseCookies } from 'nookies';
 import React, { ReactNode, useEffect } from 'react';
-import { RecoilRoot, useRecoilState } from 'recoil';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';
 import { fontFamily } from './theme';
@@ -48,10 +48,10 @@ interface LayoutProps extends LocalizationProps {
     children: ReactNode;
 }
 
-const Layout = ({ user, flags, localization, children }: LayoutProps) => {
+export const LayoutView = ({ user, flags, localization, children }: LayoutProps) => {
     const { locale } = localization;
 
-    const [{ isDarkMode }, setAppearance] = useRecoilState(appearanceAtom);
+    const [{ isDarkMode }, setAppearance] = useAtom(appearanceAtom);
 
     const theme = createTheme(
         {
@@ -108,6 +108,11 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
                                 style: chipStyled('success')
                             }
                         ]
+                    },
+                    MuiTooltip: {
+                        defaultProps: {
+                            disableInteractive: true
+                        }
                     }
                 }
             ),
@@ -125,7 +130,7 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
         icons: {
             Decrement: ArrowDropDownIcon,
             Increment: ArrowDropUpIcon,
-            More: ArrowRightIcon,
+            More: KeyboardArrowRightIcon,
             OpenInNew: OpenInNewIcon
         }
     };
@@ -182,9 +187,3 @@ const Layout = ({ user, flags, localization, children }: LayoutProps) => {
         </StyleProvider>
     );
 };
-
-export const LayoutView = ({ user, flags, localization, children }: LayoutProps) => (
-    <RecoilRoot>
-        <Layout user={user} flags={flags} localization={localization}>{children}</Layout>
-    </RecoilRoot>
-);

@@ -157,7 +157,7 @@ export const EditableItem = (
                 setValue={(action) => setValue({ ...value, override: getStateActionValue(action, value.override) })}
                 disabled={disabled}
             />
-            <Tooltip title={translations.remove} placement="top">
+            <Tooltip title={translations.remove}>
                 <IconButton onClick={() => setValue(undefined)} color="error">
                     <DeleteIcon />
                 </IconButton>

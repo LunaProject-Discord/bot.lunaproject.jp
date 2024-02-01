@@ -1,7 +1,6 @@
 'use client';
 
 import { CheckIcon } from '@components/icons';
-import { LocalizationProps } from '@interfaces/localization';
 import { Link } from '@lunaproject/web-core/dist/components';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
@@ -16,12 +15,6 @@ import {
 } from '@mui/material';
 import { LinkProps as NextLinkProps } from 'next/link';
 import React, { ReactNode } from 'react';
-
-export interface PopoverProps extends LocalizationProps {
-    open: boolean;
-    anchorEl: HTMLElement | null;
-    onClose: () => void;
-}
 
 const popoverListItemButtonStyled = (theme: Theme): CSSObject => ({
     minHeight: theme.spacing(5),
@@ -50,7 +43,7 @@ interface PopoverListItemSwitchProps extends ListItemButtonProps {
 }
 
 export const PopoverListItemSwitch = ({ checked, primary, secondary, ...props }: PopoverListItemSwitchProps) => (
-    <PopoverListItemButton dense {...props}>
+    <PopoverListItemButton {...props}>
         <PopoverListItemIcon>
             {checked && <CheckIcon />}
         </PopoverListItemIcon>

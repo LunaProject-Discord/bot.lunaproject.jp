@@ -1,24 +1,24 @@
 'use client';
 
+import { servicesPopoverStateAtom } from '@app/_popovers/services';
 import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@components/icons';
 import { LocalizationProps } from '@interfaces/localization';
 import { NightlightRound } from '@mui/icons-material';
 import { Divider, List, ListItemText, Popover } from '@mui/material';
-import { popoverAtom } from '@states/popover';
+import { useAtom } from 'jotai/index';
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import { PopoverListItemIcon, PopoverListItemLinkButton } from './index';
+import { PopoverListItemIcon, PopoverListItemLinkButton } from '../index';
 
-export const ServicesPopover = ({ localization }: LocalizationProps) => {
+export const DesktopServicesPopover = ({ localization }: LocalizationProps) => {
     const { translations } = localization;
 
-    const [popoverState, setPopoverState] = useRecoilState(popoverAtom);
+    const [popoverState, setPopoverState] = useAtom(servicesPopoverStateAtom);
 
     const handleClose = () => setPopoverState(undefined);
 
     return (
         <Popover
-            open={popoverState?.type === 'services'}
+            open={popoverState !== undefined}
             anchorEl={popoverState?.anchorEl}
             onClose={handleClose}
             anchorOrigin={{
