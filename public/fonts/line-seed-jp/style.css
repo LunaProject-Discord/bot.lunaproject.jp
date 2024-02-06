@@ -1,0 +1,31 @@
+@font-face {
+    font-display: fallback;
+    font-family: 'LINE Seed JP';
+    font-style: normal;
+    font-weight: 100;
+    src: url('line-seed-jp_100_normal.woff2') format('woff2'), url('line-seed-jp_100_normal.woff') format('woff');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'LINE Seed JP';
+    font-style: normal;
+    font-weight: 400;
+    src: url('line-seed-jp_400_normal.woff2') format('woff2'), url('line-seed-jp_400_normal.woff') format('woff');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'LINE Seed JP';
+    font-style: normal;
+    font-weight: 600;
+    src: url('line-seed-jp_600_normal.woff2') format('woff2'), url('line-seed-jp_600_normal.woff') format('woff');
+}
+
+@font-face {
+    font-display: fallback;
+    font-family: 'LINE Seed JP';
+    font-style: normal;
+    font-weight: 800;
+    src: url('line-seed-jp_800_normal.woff2') format('woff2'), url('line-seed-jp_800_normal.woff') format('woff');
+}
