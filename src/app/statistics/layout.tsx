@@ -52,7 +52,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         return (<UnauthorizedView localization={localization} />);
 
     return (
-        <Box sx={{ p: 3, display: 'flex', gap: 3 }}>
+        <Box sx={{ p: 2, display: 'flex', gap: 2 }}>
             <Navigation user={user} flags={userFlags} localization={localization} />
             <PageWithSidebarLayout>{children}</PageWithSidebarLayout>
         </Box>

@@ -256,9 +256,9 @@ export const View = ({ guild, levels, localization }: Props) => {
             <Box
                 sx={(theme) => ({
                     width: '100%',
-                    py: 3,
+                    py: 2,
                     position: 'sticky',
-                    top: { xs: 56, sm: theme.spacing(8) },
+                    top: { xs: theme.spacing(7), sm: theme.spacing(8) },
                     display: 'flex',
                     flexDirection: { xs: 'column', md: 'row' },
                     alignItems: 'center',
@@ -325,7 +325,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                     }}
                 />
             </Box>
-            {data.length > 0 ? <Section sx={{ p: 0, gap: 1 }}>
+            {data.length > 0 ? <Section sx={{ p: '0 !important', gap: 1 }}>
                 {data.map((level) => {
                     const data = values.find((value) => value.user_id === level.user.id);
 

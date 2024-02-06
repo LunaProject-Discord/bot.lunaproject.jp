@@ -189,3 +189,37 @@ export const M_Plus_Rounded_1c = css`
         src: url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c_900_normal.woff2') format('woff2'), url('/fonts/m-plus-rounded-1c/m-plus-rounded-1c_900_normal.woff') format('woff');
     }
 `;
+
+export const LINE_Seed_JP = css`
+    @font-face {
+        font-display: fallback;
+        font-family: 'LINE Seed JP';
+        font-style: normal;
+        font-weight: 100;
+        src: url('/fonts/line-seed-jp/line-seed-jp_100_normal.woff2') format('woff2'), url('/fonts/line-seed-jp/line-seed-jp_100_normal.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'LINE Seed JP';
+        font-style: normal;
+        font-weight: 400;
+        src: url('/fonts/line-seed-jp/line-seed-jp_400_normal.woff2') format('woff2'), url('/fonts/line-seed-jp/line-seed-jp_400_normal.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'LINE Seed JP';
+        font-style: normal;
+        font-weight: 600;
+        src: url('/fonts/line-seed-jp/line-seed-jp_600_normal.woff2') format('woff2'), url('/fonts/line-seed-jp/line-seed-jp_600_normal.woff') format('woff');
+    }
+    
+    @font-face {
+        font-display: fallback;
+        font-family: 'LINE Seed JP';
+        font-style: normal;
+        font-weight: 800;
+        src: url('/fonts/line-seed-jp/line-seed-jp_800_normal.woff2') format('woff2'), url('/fonts/line-seed-jp/line-seed-jp_800_normal.woff') format('woff');
+    }
+`;

@@ -106,7 +106,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const filteredSortedGuilds = sortedGuilds.filter((sortedGuild) => mutualGuildIds.includes(sortedGuild.id));
 
     return (
-        <Box sx={{ p: 3, display: 'flex', gap: 3 }}>
+        <Box sx={{ p: 2, display: 'flex', gap: 2 }}>
             <Navigation
                 user={user}
                 userManager={isManager}

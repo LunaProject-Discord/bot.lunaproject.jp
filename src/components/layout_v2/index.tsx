@@ -1,7 +1,8 @@
 'use client';
 
-import { fontFamily, M_Plus_Rounded_1c, Nunito } from '@app/theme';
+import { fontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from '@app/theme';
 import { NAVIGATION_DRAWER_WIDTH } from '@components/navigation';
+import { sectionClasses } from '@lunaproject/web-core/src/components/Section';
 import { Box, CssBaseline, GlobalStyles, styled, Typography, TypographyProps } from '@mui/material';
 import React, { Fragment, ReactNode } from 'react';
 
@@ -18,12 +19,18 @@ export const RootStyles = () => (
             styles={(theme) => ({
                 Nunito,
                 M_Plus_Rounded_1c,
+                LINE_Seed_JP,
+
                 '*, ::before, ::after': {
                     fontFamily
                 },
 
                 '[data-rsbs-backdrop], [data-rsbs-overlay], [data-rsbs-root]:after': {
                     zIndex: theme.zIndex.drawer + 1
+                },
+
+                [`.${sectionClasses.root}`]: {
+                    paddingTop: `${theme.spacing(2)} !important`
                 }
             })}
         />
@@ -42,14 +49,14 @@ export const RootLayout = styled(Box)(({ theme }) => ({
 
 export const PageLayout = styled('main')(({ theme }) => ({
     width: '100%',
-    padding: theme.spacing(3)
+    padding: theme.spacing(2)
 }));
 
 export const PageWithSidebarLayout = styled(PageLayout)(({ theme }) => ({
     padding: 0,
     [theme.breakpoints.up('md')]: {
         // 表示範囲の幅 - (ナビゲーションドロワーの幅 + サイドバーとの余白)
-        maxWidth: `calc(100% - calc(${NAVIGATION_DRAWER_WIDTH}px + ${theme.spacing(3)}))`
+        maxWidth: `calc(100% - calc(${NAVIGATION_DRAWER_WIDTH}px + ${theme.spacing(2)}))`
     }
 }));
 
@@ -68,7 +75,7 @@ export const PageCenteredLayout = styled(PageLayout)(({ theme }) => ({
 export const PageHeaderRoot = styled('header')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
-    gap: theme.spacing(3),
+    gap: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
         alignItems: 'stretch'
@@ -97,6 +104,6 @@ export const PageHeader = (
             {primary && <Typography variant="h4" {...primaryTypographyProps}>{primary}</Typography>}
             {secondary && <Typography {...secondaryTypographyProps}>{secondary}</Typography>}
         </Box>
-        {children && <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 3 }}>{children}</Box>}
+        {children && <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: 2 }}>{children}</Box>}
     </PageHeaderRoot>
 );

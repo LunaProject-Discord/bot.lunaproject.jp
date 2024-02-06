@@ -75,10 +75,10 @@ export const View = ({ guild, levels, localization }: Props) => {
             <Box
                 sx={(theme) => ({
                     width: '100%',
-                    pt: 3,
-                    pb: { xs: 3, md: 0 },
+                    pt: 2,
+                    pb: { xs: 2, md: 0 },
                     position: 'sticky',
-                    top: { xs: 56, sm: theme.spacing(8) },
+                    top: { xs: theme.spacing(7), sm: theme.spacing(8) },
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
@@ -161,7 +161,15 @@ export const View = ({ guild, levels, localization }: Props) => {
                     <Typography variant="body2" align="center">{translations.experience}</Typography>
                 </DesktopLevelItemRoot>
             </Box>
-            {data.length > 0 ? <Section sx={{ p: 0, pt: { md: 1 }, gap: 1 }}>
+            {data.length > 0 ? <Section
+                sx={(theme) => ({
+                    p: '0 !important',
+                    pt: {
+                        md: `${theme.spacing(1)} !important`
+                    },
+                    gap: 1
+                })}
+            >
                 {data.map((level) => (
                     <LevelItem
                         key={level.user.id}

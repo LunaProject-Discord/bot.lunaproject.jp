@@ -34,7 +34,7 @@ export const NavigationToolbar = styled(MuiToolbar)(({ theme }) => ({
     alignItems: 'center',
     gap: theme.spacing(1),
     [theme.breakpoints.up('md')]: {
-        padding: `${theme.spacing(0, 3)} !important`
+        padding: `${theme.spacing(0, 2)} !important`
     }
 }));
 
