@@ -22,7 +22,7 @@
         "@lexical/react": "0.13.1",
         "@lunaproject/web-core": "1.5.9",
         "@lunaproject/web-discord": "1.1.2",
-        "@material-symbols/svg-400": "0.14.6",
+        "@material-symbols/svg-400": "0.14.7",
         "@mui/icons-material": "5.15.7",
         "@mui/lab": "5.0.0-alpha.163",
         "@mui/material": "5.15.7",
