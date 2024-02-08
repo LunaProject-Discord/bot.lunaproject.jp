@@ -325,7 +325,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                     }}
                 />
             </Box>
-            {data.length > 0 ? <Section sx={{ p: '0 !important', gap: 1 }}>
+            {data.length > 0 ? <Section sx={{ p: 0, gap: 1 }}>
                 {data.map((level) => {
                     const data = values.find((value) => value.user_id === level.user.id);
 

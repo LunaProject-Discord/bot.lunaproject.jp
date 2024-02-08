@@ -91,6 +91,12 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
                 type="font/woff2"
                 href="/fonts/m-plus-rounded-1c/m-plus-rounded-1c_700_normal.woff2"
             />
+            <link
+                rel="preload"
+                as="font"
+                type="font/woff2"
+                href="/fonts/line-seed-jp/line-seed-jp_600_normal.woff2"
+            />
         </head>
         <Body>
             <LayoutView user={user} flags={userFlags} localization={localization}>{children}</LayoutView>

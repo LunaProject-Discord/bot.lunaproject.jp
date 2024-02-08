@@ -1,8 +1,7 @@
 'use client';
 
-import { fontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from '@app/theme';
+import { DefaultFontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from '@app/theme';
 import { NAVIGATION_DRAWER_WIDTH } from '@components/navigation';
-import { sectionClasses } from '@lunaproject/web-core/src/components/Section';
 import { Box, CssBaseline, GlobalStyles, styled, Typography, TypographyProps } from '@mui/material';
 import React, { Fragment, ReactNode } from 'react';
 
@@ -22,15 +21,11 @@ export const RootStyles = () => (
                 LINE_Seed_JP,
 
                 '*, ::before, ::after': {
-                    fontFamily
+                    fontFamily: DefaultFontFamily
                 },
 
                 '[data-rsbs-backdrop], [data-rsbs-overlay], [data-rsbs-root]:after': {
                     zIndex: theme.zIndex.drawer + 1
-                },
-
-                [`.${sectionClasses.root}`]: {
-                    paddingTop: `${theme.spacing(2)} !important`
                 }
             })}
         />

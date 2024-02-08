@@ -161,15 +161,7 @@ export const View = ({ guild, levels, localization }: Props) => {
                     <Typography variant="body2" align="center">{translations.experience}</Typography>
                 </DesktopLevelItemRoot>
             </Box>
-            {data.length > 0 ? <Section
-                sx={(theme) => ({
-                    p: '0 !important',
-                    pt: {
-                        md: `${theme.spacing(1)} !important`
-                    },
-                    gap: 1
-                })}
-            >
+            {data.length > 0 ? <Section sx={{ p: 0, pt: { md: 1 }, gap: 1 }}>
                 {data.map((level) => (
                     <LevelItem
                         key={level.user.id}
