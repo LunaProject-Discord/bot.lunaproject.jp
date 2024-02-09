@@ -3,13 +3,13 @@
 import { CancelButton } from '@components/buttons';
 import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
 import { DarkModeIcon, DeleteIcon, EditIcon, LightModeIcon, PreviewIcon, SaveIcon } from '@components/icons';
-import { Theme, ThemeProvider } from '@emotion/react';
+import { ThemeProvider } from '@emotion/react';
 import { LocalizationProps } from '@interfaces/localization';
 import { DataMessage } from '@interfaces/message';
 import { toDataMessage, toEmbed, toMessage } from '@libs/message';
-import { segmentedControlClasses, THEMES } from '@lunaproject/web-core';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
-import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
+import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
+import { buildTheme } from '@lunaproject/web-core/dist/styles/theme';
 import { Message } from '@lunaproject/web-discord/dist/interfaces';
 import {
     Box,
@@ -44,14 +44,10 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
     const [lightTheme, setLightTheme] = useState(theme.palette.mode === 'light');
     const [compactMode, setCompactMode] = useState(false);
 
-    const defaultTheme: Theme = {
-        ...THEMES[lightTheme ? 'light' : 'dark'],
-        appearance: {
-            color: lightTheme ? 'light' : 'dark',
-            display: !compactMode ? 'cozy' : 'compact',
-            fontSize: 16
-        }
-    };
+    const defaultTheme = buildTheme({
+        color: lightTheme ? 'light' : 'dark',
+        display: !compactMode ? 'cozy' : 'compact'
+    });
 
     const [viewType, setViewType] = useState<ViewType>('editor');
 
