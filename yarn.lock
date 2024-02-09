@@ -2137,10 +2137,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lunaproject/web-core@npm:1.5.10":
-  version: 1.5.10
-  resolution: "@lunaproject/web-core@npm:1.5.10"
-  checksum: 10c0/9d9b6bc40ea8bae90c01ac421492adc84b44bd2d102c83cc68e43b85d4642edca176c50f0d3cbcca2d3b6a4c01a0789455eadeb33a90a250c6914f60454a35f8
+"@lunaproject/web-core@npm:1.5.19":
+  version: 1.5.19
+  resolution: "@lunaproject/web-core@npm:1.5.19"
+  checksum: 10c0/da7fb8ead1246e2fce7bf2c140b5672cf25faa984f6d04871231070aa6c028b685f5c7d5b543b7ef7ebdda528ec2f7f0b84b130b6b9f970043b595a3011e668e
   languageName: node
   linkType: hard
 
@@ -3632,7 +3632,7 @@ __metadata:
     "@emotion/styled": "npm:11.11.0"
     "@lexical/markdown": "npm:0.13.1"
     "@lexical/react": "npm:0.13.1"
-    "@lunaproject/web-core": "npm:1.5.10"
+    "@lunaproject/web-core": "npm:1.5.19"
     "@lunaproject/web-discord": "npm:1.1.2"
     "@material-symbols/svg-400": "npm:0.14.7"
     "@mui/icons-material": "npm:5.15.7"
