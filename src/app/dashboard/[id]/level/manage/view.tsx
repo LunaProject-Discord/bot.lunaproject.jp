@@ -2,14 +2,7 @@
 
 import { LevelItemProfile } from '@app/leaderboard/[id]/components';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import {
-    CloudOffIcon,
-    DeleteIcon,
-    KeyboardArrowLeftIcon,
-    KeyboardArrowRightIcon,
-    SearchIcon,
-    TableRowsIcon
-} from '@components/icons';
+import { CloudOffIcon, DeleteIcon, SearchIcon, TableRowsIcon } from '@components/icons';
 import { PageCenteredLayout, PageHeader } from '@components/layout_v2';
 import { SaveConfirmV2 } from '@components/save_confirm_v2';
 import { GuildLevel, PartialGuildLevel, PartialGuildLevelRecord, PartialGuildLevels } from '@interfaces/bot';
@@ -20,18 +13,7 @@ import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { ItemRowContainer } from '@lunaproject/web-core/dist/components/SectionItems';
 import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
 import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
-import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils/theme';
-import {
-    Box,
-    BoxProps,
-    Button,
-    CircularProgress,
-    InputBase,
-    styled,
-    TablePagination,
-    tablePaginationClasses,
-    Typography
-} from '@mui/material';
+import { Box, BoxProps, Button, CircularProgress, InputBase, styled, TablePagination, Typography } from '@mui/material';
 import { PartialGuildLevelRecordSchema } from '@schemas/bot';
 import { filterPredicateLevel, getLevelPages, getMaxExperience } from '@utils/level';
 import { useDebounce } from '@utils/react/debounce';
@@ -295,34 +277,6 @@ export const View = ({ guild, levels, localization }: Props) => {
                     rowsPerPage={perPageLimit}
                     onRowsPerPageChange={handlePerPageLimitChange}
                     labelRowsPerPage={<TableRowsIcon />}
-                    slots={{
-                        actions: {
-                            nextButtonIcon: KeyboardArrowRightIcon,
-                            previousButtonIcon: KeyboardArrowLeftIcon
-                        }
-                    }}
-                    slotProps={{
-                        select: {
-                            MenuProps: {
-                                slotProps: {
-                                    paper: {
-                                        sx: (theme) => borderAndBoxShadow(theme)
-                                    }
-                                }
-                            }
-                        }
-                    }}
-                    sx={{
-                        flexShrink: 0,
-                        userSelect: 'none',
-                        border: 'none',
-                        [`& .${tablePaginationClasses.toolbar}`]: {
-                            p: 0
-                        },
-                        [`& .${tablePaginationClasses.selectLabel}`]: {
-                            lineHeight: 0
-                        }
-                    }}
                 />
             </Box>
             {data.length > 0 ? <Section sx={{ p: 0, gap: 1 }}>

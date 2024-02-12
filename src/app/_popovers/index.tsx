@@ -2,7 +2,6 @@
 
 import { CheckIcon } from '@components/icons';
 import { Link } from '@lunaproject/web-core/dist/components';
-import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     CSSObject,
     LinkProps,
@@ -13,7 +12,7 @@ import {
     styled,
     Theme
 } from '@mui/material';
-import { LinkProps as NextLinkProps } from 'next/link';
+import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import React, { ReactNode } from 'react';
 
 const popoverListItemButtonStyled = (theme: Theme): CSSObject => ({
@@ -33,7 +32,7 @@ export const PopoverListItemLinkButton = styled(
 export type PopoverListItemRouteLinkButtonProps = ListItemButtonProps & LinkProps & NextLinkProps;
 
 export const PopoverListItemRouteLinkButton = styled(
-    (props) => <MuiListItemButton component={RouteLink} href="" {...props} />
+    (props) => <MuiListItemButton component={NextLink} href="" {...props} />
 )<PopoverListItemRouteLinkButtonProps>(({ theme }) => popoverListItemButtonStyled(theme));
 
 interface PopoverListItemSwitchProps extends ListItemButtonProps {

@@ -9,6 +9,9 @@ export const getGuildLevels = async (id: string): Promise<GuildLevel[]> => {
         }
     });
 
+    if (guildLevels.length < 1)
+        return [];
+
     const users = await getUsersByIds(guildLevels.map((guildLevel) => String(guildLevel.user_id)));
     const members = await getMembers(id);
 

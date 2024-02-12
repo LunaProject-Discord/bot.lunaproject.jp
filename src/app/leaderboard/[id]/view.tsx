@@ -1,28 +1,13 @@
 'use client';
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import {
-    CloudOffIcon,
-    KeyboardArrowLeftIcon,
-    KeyboardArrowRightIcon,
-    SearchIcon,
-    TableRowsIcon
-} from '@components/icons';
+import { CloudOffIcon, SearchIcon, TableRowsIcon } from '@components/icons';
 import { PageCenteredLayout, PageHeader, PageLayout } from '@components/layout_v2';
 import { GuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
-import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils/theme';
-import {
-    Avatar,
-    Box,
-    CircularProgress,
-    InputBase,
-    TablePagination,
-    tablePaginationClasses,
-    Typography
-} from '@mui/material';
+import { Avatar, Box, CircularProgress, InputBase, TablePagination, Typography } from '@mui/material';
 import { getGuildIcon } from '@utils/cdn';
 import { filterPredicateLevel, getLevelPages } from '@utils/level';
 import { useDebounce } from '@utils/react/debounce';
@@ -124,41 +109,21 @@ export const View = ({ guild, levels, localization }: Props) => {
                         rowsPerPage={perPageLimit}
                         onRowsPerPageChange={handlePerPageLimitChange}
                         labelRowsPerPage={<TableRowsIcon />}
-                        slots={{
-                            actions: {
-                                nextButtonIcon: KeyboardArrowRightIcon,
-                                previousButtonIcon: KeyboardArrowLeftIcon
-                            }
-                        }}
-                        slotProps={{
-                            select: {
-                                MenuProps: {
-                                    slotProps: {
-                                        paper: {
-                                            sx: (theme) => borderAndBoxShadow(theme)
-                                        }
-                                    }
-                                }
-                            }
-                        }}
-                        sx={{
-                            flexShrink: 0,
-                            userSelect: 'none',
-                            border: 'none',
-                            [`& .${tablePaginationClasses.toolbar}`]: {
-                                p: 0
-                            },
-                            [`& .${tablePaginationClasses.selectLabel}`]: {
-                                lineHeight: 0
-                            }
-                        }}
                     />
                 </Box>
                 <DesktopLevelItemRoot>
-                    <Typography variant="body2" align="center">{translations.rank}</Typography>
-                    <Typography variant="body2" sx={{ gridColumn: 3 }}>{translations.member}</Typography>
-                    <Typography variant="body2" align="center">{translations.level}</Typography>
-                    <Typography variant="body2" align="center">{translations.experience}</Typography>
+                    <Typography variant="body2" color="text.secondary" align="center">
+                        {translations.rank}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ gridColumn: 3 }}>
+                        {translations.member}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" align="center">
+                        {translations.level}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" align="center">
+                        {translations.experience}
+                    </Typography>
                 </DesktopLevelItemRoot>
             </Box>
             {data.length > 0 ? <Section sx={{ p: 0, pt: { md: 1 }, gap: 1 }}>
@@ -198,7 +163,7 @@ export const NotFoundView = ({}: LocalizationProps) => (
             <ErrorTitle>サーバーが見つかりません</ErrorTitle>
             <ErrorDescription>
                 指定されたサーバーが見つかりませんでした。<br />
-                あなたはそのサーバーの管理者ではないか、サーバーが存在しない可能性があります。<br />
+                あなたはそのサーバーに参加していないか、サーバーが存在しない可能性があります。<br />
                 サーバーが存在していることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
             </ErrorDescription>
         </ErrorRoot>

@@ -30,12 +30,12 @@ export const NavigationRoot = styled('nav')(({ theme }) => ({
     height: 'fit-content',
     position: 'sticky',
     // ヘッダーの高さ + ページレイアウトのパディング上
-    top: `calc(${theme.spacing(7)} + ${theme.spacing(3)})`,
+    top: `calc(${theme.spacing(7)} + ${theme.spacing(2)})`,
     display: 'none',
     flexShrink: 0,
     [theme.breakpoints.up('sm')]: {
         // ヘッダーの高さ + ページレイアウトのパディング上
-        top: `calc(${theme.spacing(8)} + ${theme.spacing(3)})`
+        top: `calc(${theme.spacing(8)} + ${theme.spacing(2)})`
     },
     [theme.breakpoints.up('md')]: {
         display: 'block'
@@ -63,7 +63,7 @@ export const NavigationDrawer = styled(Drawer)(({ theme }) => ({
         backgroundImage: 'none',
         [theme.breakpoints.up('md')]: {
             // 表示範囲の高さ - (ヘッダーの高さ + (ページレイアウトのパディング上 + ページレイアウトのパディング下))
-            maxHeight: `calc(100dvh - calc(${theme.spacing(8)} + calc(${theme.spacing(3)} + ${theme.spacing(3)})))`,
+            maxHeight: `calc(100dvh - calc(${theme.spacing(8)} + calc(${theme.spacing(2)} + ${theme.spacing(2)})))`,
             position: 'static'
         }
     }

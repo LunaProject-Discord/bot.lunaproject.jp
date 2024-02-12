@@ -1,7 +1,6 @@
 'use client';
 
 import { defaultPredicate, NavigationItemProps } from '@components/navigation/index';
-import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     alpha,
     AppBar as MuiAppBar,
@@ -11,6 +10,7 @@ import {
     styled,
     Toolbar as MuiToolbar
 } from '@mui/material';
+import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { ReactNode } from 'react';
 
@@ -58,7 +58,7 @@ export const NavigationToolbarItem = (
 
     return (
         <Button
-            component={RouteLink}
+            component={NextLink}
             href={href}
             color={color}
             sx={(theme) => (isMatch ? {

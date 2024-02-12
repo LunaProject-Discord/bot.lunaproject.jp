@@ -5,8 +5,10 @@ import {
     ArrowDropUpIcon,
     ErrorIcon,
     InfoIcon,
+    KeyboardArrowLeftIcon,
     KeyboardArrowRightIcon,
     OpenInNewIcon,
+    TableRowsIcon,
     TaskAltIcon,
     WarningIcon
 } from '@components/icons';
@@ -15,9 +17,9 @@ import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { StyleProvider } from '@lunaproject/web-core/dist/components/StyleProvider';
 import { Config, ConfigProvider } from '@lunaproject/web-core/dist/utils/config';
-import { MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
+import { borderAndBoxShadow, MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material';
+import { createTheme, linearProgressClasses, ThemeOptions, ThemeProvider } from '@mui/material';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
 import { COOKIE_APPEARANCE } from '@utils/cookie';
 import deepmerge from 'deepmerge';
@@ -47,10 +49,54 @@ export const LayoutView = ({ user, flags, localization, children }: LayoutProps)
                     MuiAlert: {
                         defaultProps: {
                             iconMapping: {
-                                success: <TaskAltIcon fontSize="inherit" />,
-                                warning: <WarningIcon fontSize="inherit" />,
-                                error: <ErrorIcon fontSize="inherit" />,
-                                info: <InfoIcon fontSize="inherit" />
+                                success: (<TaskAltIcon fontSize="inherit" />),
+                                warning: (<WarningIcon fontSize="inherit" />),
+                                error: (<ErrorIcon fontSize="inherit" />),
+                                info: (<InfoIcon fontSize="inherit" />)
+                            }
+                        }
+                    },
+                    MuiLinearProgress: {
+                        styleOverrides: {
+                            root: ({ theme }) => ({
+                                [`&, & .${linearProgressClasses.bar}`]: {
+                                    borderRadius: theme.shape.borderRadius
+                                }
+                            })
+                        }
+                    },
+                    MuiTablePagination: {
+                        defaultProps: {
+                            labelRowsPerPage: (<TableRowsIcon />),
+                            slots: {
+                                actions: {
+                                    nextButtonIcon: KeyboardArrowRightIcon,
+                                    previousButtonIcon: KeyboardArrowLeftIcon
+                                }
+                            },
+                            slotProps: {
+                                select: {
+                                    MenuProps: {
+                                        slotProps: {
+                                            paper: {
+                                                sx: (theme) => borderAndBoxShadow(theme)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        styleOverrides: {
+                            root: {
+                                flexShrink: 0,
+                                userSelect: 'none',
+                                border: 'none'
+                            },
+                            toolbar: {
+                                padding: '0 !important'
+                            },
+                            selectLabel: {
+                                lineHeight: 0
                             }
                         }
                     }
