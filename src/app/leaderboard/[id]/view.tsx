@@ -7,7 +7,16 @@ import { GuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
-import { Avatar, Box, CircularProgress, InputBase, TablePagination, Typography } from '@mui/material';
+import {
+    Avatar,
+    Box,
+    CircularProgress,
+    InputBase,
+    TablePagination,
+    Theme,
+    Typography,
+    useMediaQuery
+} from '@mui/material';
 import { getGuildIcon } from '@utils/cdn';
 import { filterPredicateLevel, getLevelPages } from '@utils/level';
 import { useDebounce } from '@utils/react/debounce';
@@ -20,6 +29,8 @@ interface Props extends GuildConfigurationViewProps {
 
 export const View = ({ guild, levels, localization }: Props) => {
     const { translations } = localization;
+
+    const isMedium = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
 
     const [pageIndex, setPageIndex] = useState(0);
     const [perPageLimit, setPerPageLimit] = useState(50);
@@ -109,6 +120,8 @@ export const View = ({ guild, levels, localization }: Props) => {
                         rowsPerPage={perPageLimit}
                         onRowsPerPageChange={handlePerPageLimitChange}
                         labelRowsPerPage={<TableRowsIcon />}
+                        showFirstButton={isMedium}
+                        showLastButton={isMedium}
                     />
                 </Box>
                 <DesktopLevelItemRoot>

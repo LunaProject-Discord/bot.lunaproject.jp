@@ -4,9 +4,11 @@ import {
     ArrowDropDownIcon,
     ArrowDropUpIcon,
     ErrorIcon,
+    FirstPageIcon,
     InfoIcon,
     KeyboardArrowLeftIcon,
     KeyboardArrowRightIcon,
+    LastPageIcon,
     OpenInNewIcon,
     TableRowsIcon,
     TaskAltIcon,
@@ -19,7 +21,7 @@ import { StyleProvider } from '@lunaproject/web-core/dist/components/StyleProvid
 import { Config, ConfigProvider } from '@lunaproject/web-core/dist/utils/config';
 import { borderAndBoxShadow, MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { createTheme, linearProgressClasses, ThemeOptions, ThemeProvider } from '@mui/material';
+import { buttonClasses, createTheme, linearProgressClasses, ThemeOptions, ThemeProvider } from '@mui/material';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
 import { COOKIE_APPEARANCE } from '@utils/cookie';
 import deepmerge from 'deepmerge';
@@ -56,6 +58,26 @@ export const LayoutView = ({ user, flags, localization, children }: LayoutProps)
                             }
                         }
                     },
+                    MuiButton: {
+                        variants: [
+                            {
+                                props: {
+                                    variant: 'outlined',
+                                    color: 'monotone'
+                                },
+                                style: ({ theme }) => ({
+                                    borderColor: theme.palette.divider,
+                                    [`&:disabled, &.${buttonClasses.disabled}`]: {
+                                        borderColor: theme.palette.action.disabled
+                                    },
+                                    '&:hover': {
+                                        backgroundColor: theme.palette.divider,
+                                        borderColor: 'transparent'
+                                    }
+                                })
+                            }
+                        ]
+                    },
                     MuiLinearProgress: {
                         styleOverrides: {
                             root: ({ theme }) => ({
@@ -70,6 +92,8 @@ export const LayoutView = ({ user, flags, localization, children }: LayoutProps)
                             labelRowsPerPage: (<TableRowsIcon />),
                             slots: {
                                 actions: {
+                                    firstButtonIcon: FirstPageIcon,
+                                    lastButtonIcon: LastPageIcon,
                                     nextButtonIcon: KeyboardArrowRightIcon,
                                     previousButtonIcon: KeyboardArrowLeftIcon
                                 }

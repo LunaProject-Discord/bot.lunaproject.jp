@@ -71,6 +71,7 @@ export const LayoutHeader = ({ guild, member, localization }: LayoutHeaderProps)
 
 interface LayoutNavigationProps extends GuildConfigurationViewProps {
     leaderboardAccessible: boolean;
+    dashboardAccessible: boolean;
 }
 
 export const LayoutNavigation = (
@@ -78,6 +79,7 @@ export const LayoutNavigation = (
         guild,
         configuration,
         leaderboardAccessible,
+        dashboardAccessible,
         localization
     }: LayoutNavigationProps
 ) => {
@@ -116,6 +118,13 @@ export const LayoutNavigation = (
                     label={translations.leaderboard}
                     href={`${prefix}/leaderboard`}
                     value={`${prefix}/leaderboard`}
+                />}
+                {dashboardAccessible && <Tab
+                    component={NextLink}
+                    label={translations.dashboard}
+                    href={`/dashboard/${guild.id}`}
+                    value={`/dashboard/${guild.id}`}
+                    sx={{ ml: 'auto' }}
                 />}
             </Tabs>
         </Box>

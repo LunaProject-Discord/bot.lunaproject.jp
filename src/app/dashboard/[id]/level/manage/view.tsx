@@ -13,7 +13,18 @@ import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { ItemRowContainer } from '@lunaproject/web-core/dist/components/SectionItems';
 import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
 import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
-import { Box, BoxProps, Button, CircularProgress, InputBase, styled, TablePagination, Typography } from '@mui/material';
+import {
+    Box,
+    BoxProps,
+    Button,
+    CircularProgress,
+    InputBase,
+    styled,
+    TablePagination,
+    Theme,
+    Typography,
+    useMediaQuery
+} from '@mui/material';
 import { PartialGuildLevelRecordSchema } from '@schemas/bot';
 import { filterPredicateLevel, getLevelPages, getMaxExperience } from '@utils/level';
 import { useDebounce } from '@utils/react/debounce';
@@ -163,6 +174,8 @@ interface Props extends GuildConfigurationViewProps {
 export const View = ({ guild, levels, localization }: Props) => {
     const { translations } = localization;
 
+    const isMedium = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+
     const [pageIndex, setPageIndex] = useState(0);
     const [perPageLimit, setPerPageLimit] = useState(50);
 
@@ -277,6 +290,8 @@ export const View = ({ guild, levels, localization }: Props) => {
                     rowsPerPage={perPageLimit}
                     onRowsPerPageChange={handlePerPageLimitChange}
                     labelRowsPerPage={<TableRowsIcon />}
+                    showFirstButton={isMedium}
+                    showLastButton={isMedium}
                 />
             </Box>
             {data.length > 0 ? <Section sx={{ p: 0, gap: 1 }}>

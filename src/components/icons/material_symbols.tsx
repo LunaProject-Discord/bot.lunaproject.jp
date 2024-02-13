@@ -29,6 +29,7 @@ import Edit from '@material-symbols/svg-400/outlined/edit.svg';
 import EmojiEvents from '@material-symbols/svg-400/outlined/emoji_events.svg';
 import Error from '@material-symbols/svg-400/outlined/error.svg';
 import ExpandMore from '@material-symbols/svg-400/outlined/expand_more.svg';
+import FirstPage from '@material-symbols/svg-400/outlined/first_page.svg';
 import FormatBold from '@material-symbols/svg-400/outlined/format_bold.svg';
 import FormatItalic from '@material-symbols/svg-400/outlined/format_italic.svg';
 import FormatListBulleted from '@material-symbols/svg-400/outlined/format_list_bulleted.svg';
@@ -45,6 +46,7 @@ import KeyboardArrowRight from '@material-symbols/svg-400/outlined/keyboard_arro
 import KeyboardArrowUp from '@material-symbols/svg-400/outlined/keyboard_arrow_up.svg';
 import Label from '@material-symbols/svg-400/outlined/label.svg';
 import LabelOff from '@material-symbols/svg-400/outlined/label_off.svg';
+import LastPage from '@material-symbols/svg-400/outlined/last_page.svg';
 import Leaderboard from '@material-symbols/svg-400/outlined/leaderboard.svg';
 import LightMode from '@material-symbols/svg-400/outlined/light_mode.svg';
 import LiveTv from '@material-symbols/svg-400/outlined/live_tv.svg';
@@ -153,6 +155,8 @@ export const ErrorIcon = createSvgIcon({ path: Error }, 'ErrorIcon');
 
 export const ExpandMoreIcon = createSvgIcon({ path: ExpandMore }, 'ExpandMoreIcon');
 
+export const FirstPageIcon = createSvgIcon({ path: FirstPage }, 'FirstPageIcon');
+
 export const FormatBoldIcon = createSvgIcon({ path: FormatBold }, 'FormatBoldIcon');
 
 export const FormatItalicIcon = createSvgIcon({ path: FormatItalic }, 'FormatItalicIcon');
@@ -184,6 +188,8 @@ export const KeyboardArrowUpIcon = createSvgIcon({ path: KeyboardArrowUp }, 'Key
 export const LabelIcon = createSvgIcon({ path: Label }, 'LabelIcon');
 
 export const LabelOffIcon = createSvgIcon({ path: LabelOff }, 'LabelOffIcon');
+
+export const LastPageIcon = createSvgIcon({ path: LastPage }, 'LastPageIcon');
 
 export const LeaderboardIcon = createSvgIcon({ path: Leaderboard }, 'LeaderboardIcon');
 

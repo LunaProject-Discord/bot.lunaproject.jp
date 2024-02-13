@@ -1,8 +1,9 @@
 'use client';
 
+import { LevelCard } from '@app/guilds/[id]/leaderboard/components';
 import { DesktopLevelItemRoot, LevelItem } from '@app/leaderboard/[id]/components';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { CloudOffIcon, SearchIcon, TableRowsIcon } from '@components/icons';
+import { CloudOffIcon, KeyboardArrowRightIcon, SearchIcon, TableRowsIcon } from '@components/icons';
 import { PageHeader, PageLayout } from '@components/layout_v2';
 import { GuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
@@ -11,24 +12,29 @@ import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import {
     Box,
+    Button,
     InputBase,
-    LinearProgress,
-    Paper,
     TablePagination,
+    Theme,
     Typography,
-    Unstable_Grid2 as Grid
+    Unstable_Grid2 as Grid,
+    useMediaQuery
 } from '@mui/material';
-import { filterPredicateLevel, getLevelPages, getMaxExperience } from '@utils/level';
+import { filterPredicateLevel, getLevelPages } from '@utils/level';
 import { useDebounce } from '@utils/react/debounce';
+import NextLink from 'next/link';
 import React, { ChangeEvent, MouseEvent, useState } from 'react';
 
 interface Props extends GuildConfigurationViewProps {
     member: RedisMember | undefined;
     levels: GuildLevel[];
+    dashboardAccessible: boolean;
 }
 
-export const View = ({ guild, member, levels, localization }: Props) => {
+export const View = ({ guild, member, levels, dashboardAccessible, localization }: Props) => {
     const { translations } = localization;
+
+    const isMedium = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
 
     const [pageIndex, setPageIndex] = useState(0);
     const [perPageLimit, setPerPageLimit] = useState(50);
@@ -50,10 +56,10 @@ export const View = ({ guild, member, levels, localization }: Props) => {
     if (keyword.length < 1 && data.length < 1)
         return (<DataEmptyView localization={localization} />);
 
-    const level = data.find((level) => level.user.id === member?.id);
+    const level = levels.find((level) => level.user.id === member?.id);
     return (
         <Grid container spacing={2}>
-            <Grid xs={12} md={9}>
+            <Grid xs={12} md={8} lg={9}>
                 <Box
                     sx={{
                         width: '100%',
@@ -107,6 +113,8 @@ export const View = ({ guild, member, levels, localization }: Props) => {
                             rowsPerPage={perPageLimit}
                             onRowsPerPageChange={handlePerPageLimitChange}
                             labelRowsPerPage={<TableRowsIcon />}
+                            showFirstButton={isMedium}
+                            showLastButton={isMedium}
                         />
                     </Box>
                     <DesktopLevelItemRoot>
@@ -142,61 +150,34 @@ export const View = ({ guild, member, levels, localization }: Props) => {
                     </ErrorDescription>
                 </ErrorRoot>}
             </Grid>
-            <Grid xs={12} md={3} sx={{ order: { xs: -1, md: 0 } }}>
-                {level && <Box
+            <Grid xs={12} md={4} lg={3} sx={{ order: { xs: -1, md: 0 } }}>
+                {dashboardAccessible && <Button
+                    component={NextLink}
+                    href={`/dashboard/${guild.id}/level/manage`}
+                    variant="outlined"
+                    size="large"
+                    fullWidth
+                    endIcon={<KeyboardArrowRightIcon />}
                     sx={{
-                        mt: -2,
+                        justifyContent: 'space-between',
+                        borderRadius: '10000px'
+                    }}
+                >
+                    {translations.level_manage}
+                </Button>}
+                <Box
+                    sx={{
                         pt: 2,
                         position: 'sticky',
                         top: { xs: (8 * 7) + (8 * 8) + 1, sm: ((8 * 8) * 2) + 1 }
                     }}
                 >
-                    <Paper
-                        variant="outlined"
-                        elevation={0}
-                        sx={{
-                            p: 3,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: .5
-                        }}
-                    >
-                        <Typography variant="caption" color="text.secondary">
-                            暫定順位
-                        </Typography>
-                        <Typography variant="h4" sx={{ fontFamily: 'Renner, sans-serif' }}>
-                            {level.rank}
-                        </Typography>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <Typography>
-                                レベル
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ ml: 'auto' }}>
-                                {level.level}
-                            </Typography>
-                        </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <Typography>
-                                経験値
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ ml: 'auto' }}>
-                                {level.experience}
-                            </Typography>
-                        </Box>
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
-                            <Typography>
-                                次のレベルまでに必要な経験値
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ ml: 'auto' }}>
-                                {getMaxExperience(level.level) - level.experience}
-                            </Typography>
-                        </Box>
-                        <LinearProgress
-                            value={(level.experience / getMaxExperience(level.level)) * 100}
-                            variant="determinate"
-                        />
-                    </Paper>
-                </Box>}
+                    {(level && level.member) && <LevelCard
+                        level={level as Required<GuildLevel>}
+                        guild={guild}
+                        localization={localization}
+                    />}
+                </Box>
             </Grid>
         </Grid>
     );

@@ -1,7 +1,7 @@
 import { NotFoundView } from '@app/guilds/[id]/view';
 import { getUser } from '@app/utils';
 import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration, getGuildLevels, isLeaderboardAccessible } from '@libs/bot';
+import { getGuildConfiguration, getGuildLevels, hasDashboardAccess, isLeaderboardAccessible } from '@libs/bot';
 import { getGuildById, getMemberById } from '@libs/redis';
 import { getLocalization } from '@localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
@@ -62,8 +62,9 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
         return (<NotFoundView localization={localization} />);
 
     const member = user ? await getMemberById(user.id, guild.id) : undefined;
-    const isAccessible = await isLeaderboardAccessible(user, guild, guildConfiguration);
-    if (!isAccessible)
+    const allowLeaderboard = await isLeaderboardAccessible(user, guild, guildConfiguration);
+    const allowDashboard = user ? await hasDashboardAccess(guild, user) : false;
+    if (!allowLeaderboard)
         return (<NotFoundView localization={localization} />);
 
     return (
@@ -72,6 +73,7 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
             member={member}
             levels={guildLevels}
             configuration={guildConfiguration}
+            dashboardAccessible={allowDashboard}
             localization={localization}
         />
     );

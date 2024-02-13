@@ -71,7 +71,8 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
         return (<NotFoundView localization={localization} />);
 
     const member = user ? await getMemberById(user.id, guild.id) : undefined;
-    const isAccessible = await isLeaderboardAccessible(user, guild, guildConfiguration);
+    const allowLeaderboard = await isLeaderboardAccessible(user, guild, guildConfiguration);
+    const allowDashboard = user ? await hasDashboardAccess(guild, user) : false;
 
     return (
         <Fragment>
@@ -79,7 +80,8 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
             <LayoutNavigation
                 guild={guild}
                 configuration={guildConfiguration}
-                leaderboardAccessible={isAccessible}
+                leaderboardAccessible={allowLeaderboard}
+                dashboardAccessible={allowDashboard}
                 localization={localization}
             />
             <PageLayout>{children}</PageLayout>
