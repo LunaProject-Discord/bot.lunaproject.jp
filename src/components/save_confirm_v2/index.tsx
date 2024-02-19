@@ -15,7 +15,7 @@ import { LoadingButton } from '@mui/lab';
 import { Box, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import { isRenderableReactNode } from '@utils/react/node';
 import deepEqual from 'deep-equal';
-import { diff } from 'json-diff-ts';
+import { diff, EmbeddedObjKeysMapType, EmbeddedObjKeysType } from 'json-diff-ts';
 import Mousetrap from 'mousetrap';
 import { useRouter } from 'next/navigation';
 import React, { ReactNode, useEffect, useMemo, useRef, useState, useTransition } from 'react';
@@ -32,6 +32,7 @@ export interface SaveConfirmV2Props<T> extends LocalizationProps {
     schema: ZodType;
     groupByPath?: (changes: Change[] | undefined) => ChangesGroupByPath;
     keyMapping?: Record<string, string>;
+    embeddedObjectKeyMapping?: EmbeddedObjKeysType | EmbeddedObjKeysMapType;
     disableKeyboardShortcuts?: boolean;
     onSave: () => Promise<boolean>;
     onCancel: () => void;
@@ -45,6 +46,7 @@ export const SaveConfirmV2 = <T, >(
         schema,
         groupByPath,
         keyMapping,
+        embeddedObjectKeyMapping,
         disableKeyboardShortcuts,
         onSave,
         onCancel,
@@ -62,7 +64,7 @@ export const SaveConfirmV2 = <T, >(
     const cancelButtonRef = useRef<HTMLButtonElement | null>(null);
 
     const parseResult = useMemo(() => schema.safeParse(target), [schema, target]);
-    const diffResult = useMemo(() => diff(source, target), [source, target]);
+    const diffResult = useMemo(() => diff(source, target, embeddedObjectKeyMapping), [source, target, embeddedObjectKeyMapping]);
 
     const sheetOpen = useMemo(() => !deepEqual(source, target, { strict: true }), [source, target]);
     const [sheetExpanded, setSheetExpanded] = useState(false);

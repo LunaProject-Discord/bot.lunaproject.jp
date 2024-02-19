@@ -51,7 +51,7 @@ const RoleItem = (
                     setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
                     pattern="\d*"
                     step={1}
-                    min={0}
+                    min={1}
                     disabled={disabled || !value.enabled}
                     sx={{ width: { xs: '100%', md: 300 } }}
                 />

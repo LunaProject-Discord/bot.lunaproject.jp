@@ -26,6 +26,7 @@ import { Section, SectionContent, SectionParagraph, SectionTitle } from '@lunapr
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { GuildConfigurationLevelSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
+import uniqBy from 'lodash/uniqBy';
 import React, { Fragment, useEffect, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
 import { ManageRolesDialog } from './dialog';
@@ -47,7 +48,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
     const [disabledRoles, setDisabledRoles, resetDisabledRoles] = useResettableState(levelConfiguration.disabled.roles);
     const [rewardType, setRewardType, resetRewardType] = useResettableState(levelConfiguration.reward.type);
     const [rewardRemoveRoleDemoted, setRewardRemoveRoleDemoted, resetRewardRemoveRoleDemoted] = useResettableState(levelConfiguration.reward.remove_role_demoted);
-    const [rewardRoles, setRewardRoles, resetRewardRoles] = useResettableState(levelConfiguration.reward.roles);
+    const [rewardRoles, setRewardRoles, resetRewardRoles] = useResettableState(uniqBy(levelConfiguration.reward.roles, (role) => `${role.level}_${role.id}`));
     const [notificationType, setNotificationType, resetNotificationType] = useResettableState(levelConfiguration.notification.type);
     const [notificationChannelId, setNotificationChannelId, resetNotificationChannelId] = useResettableState(levelConfiguration.notification.channel_id);
     const [notificationMessage, setNotificationMessage, resetNotificationMessage] = useResettableState(levelConfiguration.notification.message);
@@ -67,7 +68,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
         reward: {
             type: rewardType,
             remove_role_demoted: rewardRemoveRoleDemoted,
-            roles: rewardRoles
+            roles: uniqBy(rewardRoles, (role) => `${role.level}_${role.id}`)
         },
         notification: {
             type: notificationType,
