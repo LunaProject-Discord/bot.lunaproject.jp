@@ -310,11 +310,8 @@ export const View = ({ guild, levels, localization }: Props) => {
                 })}
             </Section> : <ErrorRoot>
                 <CloudOffIcon sx={{ fontSize: '10rem' }} />
-                <ErrorTitle>メンバーが見つかりません</ErrorTitle>
-                <ErrorDescription>
-                    指定したキーワードに合うメンバーが見つかりませんでした。<br />
-                    検索キーワードを変更して再度お試しください。
-                </ErrorDescription>
+                <ErrorTitle>{translations.error_member_not_found_title}</ErrorTitle>
+                <ErrorDescription>{translations.error_member_not_found_description}</ErrorDescription>
             </ErrorRoot>}
 
             <SaveConfirmV2

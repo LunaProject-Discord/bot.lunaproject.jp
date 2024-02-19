@@ -165,11 +165,15 @@ export const MobileLevelItem = (
         </ItemRowContainer>
         <ItemFormContainer sx={{ justifyContent: 'flex-start' }}>
             <LevelItemGroup>
-                <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.level}</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ flexShrink: 0 }}>
+                    {translations.level}
+                </Typography>
                 <Typography variant="h5" sx={{ fontFamily: 'Renner' }}>{level}</Typography>
             </LevelItemGroup>
             <LevelItemGroup>
-                <Typography variant="body2" sx={{ flexShrink: 0 }}>{translations.experience}</Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ flexShrink: 0 }}>
+                    {translations.experience}
+                </Typography>
                 <Typography variant="h5" sx={{ fontFamily: 'Renner' }}>{experience}</Typography>
             </LevelItemGroup>
         </ItemFormContainer>

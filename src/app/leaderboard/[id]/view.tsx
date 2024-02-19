@@ -150,11 +150,8 @@ export const View = ({ guild, levels, localization }: Props) => {
                 ))}
             </Section> : <ErrorRoot>
                 <CloudOffIcon sx={{ fontSize: '10rem' }} />
-                <ErrorTitle>メンバーが見つかりません</ErrorTitle>
-                <ErrorDescription>
-                    指定したキーワードに合うメンバーが見つかりませんでした。<br />
-                    検索キーワードを変更して再度お試しください。
-                </ErrorDescription>
+                <ErrorTitle>{translations.error_member_not_found_title}</ErrorTitle>
+                <ErrorDescription>{translations.error_member_not_found_description}</ErrorDescription>
             </ErrorRoot>}
         </PageLayout>
     );
@@ -169,16 +166,12 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
     </PageLayout>
 );
 
-export const NotFoundView = ({}: LocalizationProps) => (
+export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <PageCenteredLayout>
         <ErrorRoot>
             <CloudOffIcon sx={{ fontSize: '10rem' }} />
-            <ErrorTitle>サーバーが見つかりません</ErrorTitle>
-            <ErrorDescription>
-                指定されたサーバーが見つかりませんでした。<br />
-                あなたはそのサーバーに参加していないか、サーバーが存在しない可能性があります。<br />
-                サーバーが存在していることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
-            </ErrorDescription>
+            <ErrorTitle>{translations.error_guild_not_found_title}</ErrorTitle>
+            <ErrorDescription>{translations.error_guild_not_found_description}</ErrorDescription>
         </ErrorRoot>
     </PageCenteredLayout>
 );

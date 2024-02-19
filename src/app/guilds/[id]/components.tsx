@@ -96,7 +96,7 @@ export const LayoutNavigation = (
                 pt: 2,
                 position: 'sticky',
                 top: { xs: theme.spacing(7), sm: theme.spacing(8) },
-                zIndex: 1,
+                zIndex: 2,
                 bgcolor: 'background.paper'
             })}
         >

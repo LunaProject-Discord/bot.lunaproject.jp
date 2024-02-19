@@ -184,6 +184,19 @@ export const translationsJa: Translations = {
         お手数ですが、下のボタンからホームに戻ってください。
     </Fragment>,
 
+    error_guild_not_found_title: 'サーバーが見つかりません',
+    error_guild_not_found_description: <Fragment>
+        指定されたサーバーが見つかりませんでした。<br />
+        あなたはそのサーバーに参加していないか、サーバーが存在しない可能性があります。<br />
+        サーバーが存在していることが明らかな場合は、ほかのアカウントに切り替えて再度お試しください。
+    </Fragment>,
+    error_member_not_found_title: 'メンバーが見つかりません',
+    error_member_not_found_description: <Fragment>
+        指定したキーワードに合うメンバーが見つかりませんでした。<br />
+        検索キーワードを変更して再度お試しください。<br />
+        もし、メンバーがサーバーに参加していることが明らかな場合は、ID を直接指定してみてください。
+    </Fragment>,
+
 
     welcome: 'ようこそ',
     welcome_to_name: 'ようこそ、%n さん！',
@@ -207,6 +220,10 @@ export const translationsJa: Translations = {
 
     leaderboard: 'リーダーボード',
     leaderboard_description: 'リーダーボードを表示したいサーバーを選択してください。',
+    leaderboard_profile_card: 'あなたの情報',
+    leaderboard_profile_card_total_experience: 'レベル %level の経験値',
+    leaderboard_profile_card_current_experience: '獲得した経験値',
+    leaderboard_profile_card_remaining_experience: '必要な残り経験値',
 
 
     dashboard: 'ダッシュボード',

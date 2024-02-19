@@ -175,6 +175,11 @@ export type TranslationKeys =
     | 'error_not_found_title'
     | 'error_not_found_description'
 
+    | 'error_guild_not_found_title'
+    | 'error_guild_not_found_description'
+    | 'error_member_not_found_title'
+    | 'error_member_not_found_description'
+
 
     | 'welcome'
     | 'welcome_to_name'
@@ -198,6 +203,10 @@ export type TranslationKeys =
 
     | 'leaderboard'
     | 'leaderboard_description'
+    | 'leaderboard_profile_card'
+    | 'leaderboard_profile_card_total_experience'
+    | 'leaderboard_profile_card_current_experience'
+    | 'leaderboard_profile_card_remaining_experience'
 
 
     | 'dashboard'

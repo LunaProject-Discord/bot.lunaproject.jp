@@ -184,6 +184,19 @@ export const translationsEn: Translations = {
         Please click the button below to return to the home page.
     </Fragment>,
 
+    error_guild_not_found_title: 'Server not found!',
+    error_guild_not_found_description: <Fragment>
+        The specified server could not be found.<br />
+        You are not a member of that server or the server may not exist.<br />
+        If it is clear that the server does exist, please switch to another account and try again.
+    </Fragment>,
+    error_member_not_found_title: 'Member not found!',
+    error_member_not_found_description: <Fragment>
+        No members matching the specified keywords were found.<br />
+        Please change your search keywords and try again.<br />
+        If it is obvious that the member has joined the server, try specifying the ID directly.
+    </Fragment>,
+
 
     welcome: 'Welcome',
     welcome_to_name: 'Welcome to %n!',
@@ -207,6 +220,10 @@ export const translationsEn: Translations = {
 
     leaderboard: 'Leaderboard',
     leaderboard_description: 'Select the server on which you want to display the leaderboard.',
+    leaderboard_profile_card: 'Your Information',
+    leaderboard_profile_card_total_experience: 'Experience at level %level',
+    leaderboard_profile_card_current_experience: 'Experience gained',
+    leaderboard_profile_card_remaining_experience: 'Required remaining experience',
 
 
     dashboard: 'Dashboard',

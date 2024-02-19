@@ -1,6 +1,6 @@
 'use client';
 
-import { LevelCard } from '@app/guilds/[id]/leaderboard/components';
+import { LevelProfileCard, LevelRewardsCard } from '@app/guilds/[id]/leaderboard/components';
 import { DesktopLevelItemRoot, LevelItem } from '@app/leaderboard/[id]/components';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
 import { CloudOffIcon, KeyboardArrowRightIcon, SearchIcon, TableRowsIcon } from '@components/icons';
@@ -31,7 +31,7 @@ interface Props extends GuildConfigurationViewProps {
     dashboardAccessible: boolean;
 }
 
-export const View = ({ guild, member, levels, dashboardAccessible, localization }: Props) => {
+export const View = ({ guild, member, levels, dashboardAccessible, configuration, localization }: Props) => {
     const { translations } = localization;
 
     const isMedium = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
@@ -59,6 +59,34 @@ export const View = ({ guild, member, levels, dashboardAccessible, localization 
     const level = levels.find((level) => level.user.id === member?.id);
     return (
         <Grid container spacing={2}>
+            {(dashboardAccessible || (level && level.member)) && <Grid
+                xs={12}
+                sx={{
+                    display: { xs: 'flex', md: 'none' },
+                    flexDirection: 'column',
+                    gap: 2
+                }}
+            >
+                {dashboardAccessible && <Button
+                    component={NextLink}
+                    href={`/dashboard/${guild.id}/level/manage`}
+                    variant="outlined"
+                    size="large"
+                    fullWidth
+                    endIcon={<KeyboardArrowRightIcon />}
+                    sx={{
+                        justifyContent: 'space-between',
+                        borderRadius: '10000px'
+                    }}
+                >
+                    {translations.level_manage}
+                </Button>}
+                {(level && level.member) && <LevelProfileCard
+                    level={level as Required<GuildLevel>}
+                    guild={guild}
+                    localization={localization}
+                />}
+            </Grid>}
             <Grid xs={12} md={8} lg={9}>
                 <Box
                     sx={{
@@ -143,14 +171,20 @@ export const View = ({ guild, member, levels, dashboardAccessible, localization 
                     ))}
                 </Section> : <ErrorRoot>
                     <CloudOffIcon sx={{ fontSize: '10rem' }} />
-                    <ErrorTitle>メンバーが見つかりません</ErrorTitle>
-                    <ErrorDescription>
-                        指定したキーワードに合うメンバーが見つかりませんでした。<br />
-                        検索キーワードを変更して再度お試しください。
-                    </ErrorDescription>
+                    <ErrorTitle>{translations.error_member_not_found_title}</ErrorTitle>
+                    <ErrorDescription>{translations.error_member_not_found_description}</ErrorDescription>
                 </ErrorRoot>}
             </Grid>
-            <Grid xs={12} md={4} lg={3} sx={{ order: { xs: -1, md: 0 } }}>
+            <Grid xs={12} sx={{ display: { md: 'none' } }}>
+                <LevelRewardsCard
+                    level={level?.level}
+                    type={configuration.level.reward.type}
+                    roles={configuration.level.reward.roles}
+                    guild={guild}
+                    localization={localization}
+                />
+            </Grid>
+            <Grid xs={12} md={4} lg={3} sx={{ display: { xs: 'none', md: 'block' } }}>
                 {dashboardAccessible && <Button
                     component={NextLink}
                     href={`/dashboard/${guild.id}/level/manage`}
@@ -169,14 +203,24 @@ export const View = ({ guild, member, levels, dashboardAccessible, localization 
                     sx={{
                         pt: 2,
                         position: 'sticky',
-                        top: { xs: (8 * 7) + (8 * 8) + 1, sm: ((8 * 8) * 2) + 1 }
+                        top: { sm: ((8 * 8) * 2) + 1 },
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 2
                     }}
                 >
-                    {(level && level.member) && <LevelCard
+                    {(level && level.member) && <LevelProfileCard
                         level={level as Required<GuildLevel>}
                         guild={guild}
                         localization={localization}
                     />}
+                    <LevelRewardsCard
+                        level={level?.level}
+                        type={configuration.level.reward.type}
+                        roles={configuration.level.reward.roles}
+                        guild={guild}
+                        localization={localization}
+                    />
                 </Box>
             </Grid>
         </Grid>
