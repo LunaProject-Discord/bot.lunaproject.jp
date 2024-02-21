@@ -17,17 +17,22 @@ import {
 import { RootLayout, RootStyles } from '@components/layout_v2';
 import { UserFlags } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
-import { StyleProvider } from '@lunaproject/web-core/dist/components/StyleProvider';
 import { Config, ConfigProvider } from '@lunaproject/web-core/dist/utils/config';
 import { borderAndBoxShadow, MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { buttonClasses, createTheme, linearProgressClasses, ThemeOptions, ThemeProvider } from '@mui/material';
+import {
+    buttonClasses,
+    createTheme,
+    linearProgressClasses,
+    ThemeOptions,
+    ThemeProvider,
+    useMediaQuery
+} from '@mui/material';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { appearanceAtom, AppearanceType } from '@states/appearance';
-import { COOKIE_APPEARANCE } from '@utils/cookie';
 import deepmerge from 'deepmerge';
 import { useAtom } from 'jotai/index';
-import { parseCookies } from 'nookies';
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';
 import { DefaultFontFamily } from './theme';
@@ -35,15 +40,21 @@ import { DefaultFontFamily } from './theme';
 interface LayoutProps extends LocalizationProps {
     user: OAuthUser | undefined;
     flags: UserFlags | undefined;
+    appearance: AppearanceType;
     children: ReactNode;
 }
 
-export const LayoutView = ({ user, flags, localization, children }: LayoutProps) => {
+export const LayoutView = ({ user, flags, appearance: initialAppearance, localization, children }: LayoutProps) => {
     const { locale } = localization;
 
     const [{ isDarkMode }, setAppearance] = useAtom(appearanceAtom);
+    const [loaded, setLoaded] = useState(false);
 
-    const theme = createTheme(
+    const isBrowserDarkScheme = useMediaQuery('(prefers-color-scheme: dark)');
+    const isInitialDarkScheme = initialAppearance === 'dark' || (initialAppearance === 'system' && isBrowserDarkScheme);
+    const isDarkTheme = loaded ? isDarkMode : isInitialDarkScheme;
+
+    const theme = useMemo(() => createTheme(
         {
             components: deepmerge<ThemeOptions['components']>(
                 MuiComponents,
@@ -126,7 +137,7 @@ export const LayoutView = ({ user, flags, localization, children }: LayoutProps)
                     }
                 }
             ),
-            palette: (isDarkMode ? MuiDarkTheme : MuiLightTheme).palette,
+            palette: (isDarkTheme ? MuiDarkTheme : MuiLightTheme).palette,
             typography: {
                 fontFamily: DefaultFontFamily
             }
@@ -134,7 +145,7 @@ export const LayoutView = ({ user, flags, localization, children }: LayoutProps)
         getMuiLocalizationByName(locale),
         getMuiDateLocalizationByName(locale),
         getMuiGridLocalizationByName(locale)
-    );
+    ), [isDarkTheme, locale]);
 
     const config: Config = {
         icons: {
@@ -145,17 +156,7 @@ export const LayoutView = ({ user, flags, localization, children }: LayoutProps)
         }
     };
 
-    const cookies = parseCookies();
-
     useEffect(() => {
-        const appearance = cookies[COOKIE_APPEARANCE] as AppearanceType | undefined ?? 'system';
-
-        const isBrowserDarkScheme = window.matchMedia('@media (prefers-color-scheme: dark)').matches;
-        setAppearance({
-            appearance: appearance,
-            isDarkMode: appearance === 'dark' || (appearance === 'system' && isBrowserDarkScheme)
-        });
-
         console.log(
             '%c警告',
             'font-size: 10rem; font-weight: 700; color: red; -webkit-text-stroke: 3px black; text-stroke: 3px black;'
@@ -175,16 +176,22 @@ export const LayoutView = ({ user, flags, localization, children }: LayoutProps)
     }, []);
 
     useEffect(() => {
+        setAppearance({ appearance: initialAppearance, isDarkMode: isInitialDarkScheme });
+        if (!loaded)
+            setLoaded(() => true);
+    }, [initialAppearance, isInitialDarkScheme, loaded, setAppearance]);
+
+    useEffect(() => {
         const documentElement = document.documentElement;
-        if (isDarkMode) {
+        if (isDarkTheme) {
             documentElement.classList.add('dark');
         } else {
             documentElement.classList.remove('dark');
         }
-    }, [isDarkMode]);
+    }, [isDarkTheme]);
 
     return (
-        <StyleProvider>
+        <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
                 <ConfigProvider value={config}>
                     <RootStyles />
@@ -194,6 +201,6 @@ export const LayoutView = ({ user, flags, localization, children }: LayoutProps)
                     </RootLayout>
                 </ConfigProvider>
             </ThemeProvider>
-        </StyleProvider>
+        </AppRouterCacheProvider>
     );
 };

@@ -99,7 +99,9 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
             />
         </head>
         <Body>
-            <LayoutView user={user} flags={userFlags} localization={localization}>{children}</LayoutView>
+            <LayoutView user={user} flags={userFlags} appearance={appearance} localization={localization}>
+                {children}
+            </LayoutView>
         </Body>
         </html>
     );

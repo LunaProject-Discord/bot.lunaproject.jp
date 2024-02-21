@@ -47,7 +47,7 @@ const AppearancePopoverContent = ({ localization: { translations } }: UserPopove
     const [{ appearance }, setAppearance] = useAtom(appearanceAtom);
 
     const handleAppearanceChange = (type: AppearanceType) => {
-        const isBrowserDarkScheme = window.matchMedia('@media (prefers-color-scheme: dark)').matches;
+        const isBrowserDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
         setAppearance({
             appearance: type,
             isDarkMode: type === 'dark' || (type === 'system' && isBrowserDarkScheme)
