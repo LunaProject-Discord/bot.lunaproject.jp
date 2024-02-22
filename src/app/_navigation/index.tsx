@@ -26,9 +26,10 @@ import { LocalizationProps } from '@interfaces/localization';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger } from '@mui/material';
+import { navigationAtom } from '@states/navigation';
 import { popoverAtom } from '@states/popover';
 import { getUserAvatar, getUserDisplayName } from '@utils/discord';
-import { useSetAtom } from 'jotai/index';
+import { useAtomValue, useSetAtom } from 'jotai/index';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEvent, useState } from 'react';
@@ -39,6 +40,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
     const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 0 });
 
     const setPopoverState = useSetAtom(popoverAtom);
+    const { disableElevation } = useAtomValue(navigationAtom);
 
     const handleDrawerToggle = () => setOpen((prevState) => !prevState);
 
@@ -56,7 +58,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
     return (
         <RootNavigationAppBar
             sx={{
-                boxShadow: (theme) => trigger ? `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)` : 'none'
+                boxShadow: (theme) => trigger && !disableElevation ? `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)` : 'none'
             }}
         >
             <NavigationToolbar>

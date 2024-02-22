@@ -95,7 +95,7 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                         pt: 2,
                         pb: { xs: 2, md: 0 },
                         position: 'sticky',
-                        top: { xs: (8 * 7) + (8 * 8) + 1, sm: ((8 * 8) * 2) + 1 },
+                        top: { xs: (8 * 7) + (8 * 6), sm: (8 * 8) + (8 * 6) },
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -203,7 +203,7 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                     sx={{
                         pt: 2,
                         position: 'sticky',
-                        top: { sm: ((8 * 8) * 2) + 1 },
+                        top: { sm: (8 * 8) + (8 * 6) },
                         display: 'flex',
                         flexDirection: 'column',
                         gap: 2

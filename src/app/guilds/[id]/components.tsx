@@ -2,13 +2,17 @@
 
 import { BrandingFontFamily } from '@app/theme';
 import { AddIcon, OpenInNewIcon } from '@components/icons';
+import { NavigationAppBarId } from '@components/navigation';
 import { RedisMember } from '@interfaces/redis';
 import { GuildConfigurationViewProps, GuildViewProps } from '@interfaces/view';
-import { Avatar, Box, Button, Link, Tab, Tabs, Typography } from '@mui/material';
+import { Avatar, Box, Button, Link, Slide, Tab, Tabs, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { navigationAtom } from '@states/navigation';
 import { getGuildIcon } from '@utils/cdn';
+import { useSetAtom } from 'jotai/index';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import Sticky, { Status } from 'react-stickynode';
 
 interface LayoutHeaderProps extends GuildViewProps {
     member: RedisMember | undefined;
@@ -16,7 +20,7 @@ interface LayoutHeaderProps extends GuildViewProps {
 
 export const LayoutHeader = ({ guild, member, localization }: LayoutHeaderProps) => {
     return (
-        <Box sx={{ p: 2, pb: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
+        <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 3 }}>
             <Box
                 sx={{
                     aspectRatio: '6 / 1',
@@ -88,45 +92,117 @@ export const LayoutNavigation = (
     const pathname = usePathname();
     const loweredPathname = pathname.toLowerCase();
 
+    const theme = useTheme();
+    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
+
+    const containerRef = useRef<HTMLDivElement | null>(null);
+
+    const setNavigation = useSetAtom(navigationAtom);
+    const [trigger, setTrigger] = useState(false);
+
+    const handleStickyStateChange = ({ status }: Status) => {
+        const isSticky = status === Sticky.STATUS_FIXED;
+        setTrigger(isSticky);
+        setNavigation({ disableElevation: isSticky });
+    };
+
+    useEffect(() => {
+        return () => setNavigation({ disableElevation: false });
+    }, [setNavigation]);
+
     const prefix = `/guilds/${guild.id}`;
     return (
         <Box
             sx={(theme) => ({
-                px: 2,
-                pt: 2,
-                position: 'sticky',
-                top: { xs: theme.spacing(7), sm: theme.spacing(8) },
-                zIndex: 2,
-                bgcolor: 'background.paper'
+                '& .sticky-outer-wrapper.active .sticky-inner-wrapper': {
+                    width: '100% !important',
+                    left: 0,
+                    transition: theme.transitions.create('box-shadow'),
+                    boxShadow: trigger ? `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)` : 'none'
+                }
             })}
         >
-            <Tabs value={loweredPathname} variant="scrollable">
-                <Tab
-                    component={NextLink}
-                    label={translations.home}
-                    href={prefix}
-                    value={prefix}
-                />
-                <Tab
-                    component={NextLink}
-                    label="投稿"
-                    href={`${prefix}/articles`}
-                    value={`${prefix}/articles`}
-                />
-                {leaderboardAccessible && <Tab
-                    component={NextLink}
-                    label={translations.leaderboard}
-                    href={`${prefix}/leaderboard`}
-                    value={`${prefix}/leaderboard`}
-                />}
-                {dashboardAccessible && <Tab
-                    component={NextLink}
-                    label={translations.dashboard}
-                    href={`/dashboard/${guild.id}`}
-                    value={`/dashboard/${guild.id}`}
-                    sx={{ ml: 'auto' }}
-                />}
-            </Tabs>
+            <Sticky
+                top={`#${NavigationAppBarId}`}
+                innerZ={2}
+                innerActiveClass="mui-fixed"
+                onStateChange={handleStickyStateChange}
+            >
+                <Box
+                    ref={containerRef}
+                    sx={{
+                        maxWidth: (theme) => theme.breakpoints.values.xl,
+                        margin: '0 auto',
+                        px: 2,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 2,
+                        bgcolor: 'background.paper'
+                    }}
+                >
+                    {isSmall && <Slide
+                        in={trigger}
+                        direction="down"
+                        container={containerRef.current}
+                        mountOnEnter
+                        unmountOnExit
+                        timeout={{ enter: theme.transitions.duration.enteringScreen, exit: 0 }}
+                    >
+                        <Box sx={{ display: 'flex', flexShrink: 0, alignItems: 'center', gap: 1 }}>
+                            <Avatar
+                                src={getGuildIcon(guild)}
+                                alt=" "
+                                sx={{ pointerEvents: 'none' }}
+                            />
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between',
+                                    overflow: 'hidden'
+                                }}
+                            >
+                                <Typography fontFamily={BrandingFontFamily} fontWeight={600}>{guild.name}</Typography>
+                            </Box>
+                        </Box>
+                    </Slide>}
+                    <Tabs
+                        value={loweredPathname}
+                        variant="scrollable"
+                        sx={{
+                            width: '100%',
+                            borderBottom: trigger ? 'none' : undefined
+                        }}
+                    >
+                        <Tab
+                            component={NextLink}
+                            label={translations.home}
+                            href={prefix}
+                            value={prefix}
+                        />
+                        <Tab
+                            component={NextLink}
+                            label="投稿"
+                            href={`${prefix}/articles`}
+                            value={`${prefix}/articles`}
+                        />
+                        {leaderboardAccessible && <Tab
+                            component={NextLink}
+                            label={translations.leaderboard}
+                            href={`${prefix}/leaderboard`}
+                            value={`${prefix}/leaderboard`}
+                        />}
+                        {dashboardAccessible && <Tab
+                            component={NextLink}
+                            label={translations.dashboard}
+                            href={`/dashboard/${guild.id}`}
+                            value={`/dashboard/${guild.id}`}
+                            sx={{ ml: 'auto' }}
+                        />}
+                    </Tabs>
+                </Box>
+            </Sticky>
         </Box>
     );
 };

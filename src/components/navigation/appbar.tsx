@@ -14,8 +14,16 @@ import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { ReactNode } from 'react';
 
+export const NavigationAppBarId = 'navigation-appbar';
+
 export const NavigationAppBar = styled(
-    (props: AppBarProps) => <MuiAppBar position="fixed" color="default" elevation={0} {...props} />
+    (props: AppBarProps) => (<MuiAppBar
+        id={NavigationAppBarId}
+        position="fixed"
+        color="default"
+        elevation={0}
+        {...props}
+    />)
 )<AppBarProps>(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
