@@ -1,27 +1,18 @@
 'use client';
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { CloudOffIcon, SearchIcon, TableRowsIcon } from '@components/icons';
+import { CloudOffIcon, SearchIcon } from '@components/icons';
 import { PageCenteredLayout, PageHeader, PageLayout } from '@components/layout_v2';
 import { GuildLevel } from '@interfaces/bot';
 import { LocalizationProps } from '@interfaces/localization';
 import { GuildConfigurationViewProps } from '@interfaces/view';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
-import {
-    Avatar,
-    Box,
-    CircularProgress,
-    InputBase,
-    TablePagination,
-    Theme,
-    Typography,
-    useMediaQuery
-} from '@mui/material';
+import { Avatar, Box, CircularProgress, InputBase, Typography } from '@mui/material';
 import { getGuildIcon } from '@utils/cdn';
-import { filterPredicateLevel, getLevelPages } from '@utils/level';
+import { filterPredicateLevel } from '@utils/level';
 import { useDebounce } from '@utils/react/debounce';
-import React, { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
-import { DesktopLevelItemRoot, LevelItem } from './components';
+import React, { Fragment, useState } from 'react';
+import { DesktopLevelItemRoot, Levels } from './components';
 
 interface Props extends GuildConfigurationViewProps {
     levels: GuildLevel[];
@@ -30,26 +21,12 @@ interface Props extends GuildConfigurationViewProps {
 export const View = ({ guild, levels, localization }: Props) => {
     const { translations } = localization;
 
-    const isMedium = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
-
-    const [pageIndex, setPageIndex] = useState(0);
-    const [perPageLimit, setPerPageLimit] = useState(50);
-
     const [search, setSearch] = useState('');
     const keyword = useDebounce(search, 500);
 
     const filteredLevels = levels.filter((level) => filterPredicateLevel(level, keyword));
-    const levelPages = getLevelPages(filteredLevels, perPageLimit);
-    const data = (keyword.length < 1 ? levelPages[pageIndex] : filteredLevels) ?? [];
 
-    const handlePageIndexChange = (e: MouseEvent<HTMLButtonElement> | null, index: number) => setPageIndex(index);
-
-    const handlePerPageLimitChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setPerPageLimit(Number(e.target.value));
-        setPageIndex(0);
-    };
-
-    if (keyword.length < 1 && data.length < 1)
+    if (keyword.length < 1 && filteredLevels.length < 1)
         return (<DataEmptyView localization={localization} />);
 
     return (
@@ -86,42 +63,21 @@ export const View = ({ guild, levels, localization }: Props) => {
                 <Box
                     sx={{
                         width: '100%',
+                        px: 1.5,
+                        py: 1,
                         display: 'flex',
-                        flexDirection: { xs: 'column', md: 'row' },
                         alignItems: 'center',
-                        gap: 2
+                        gap: 1,
+                        bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
+                        borderRadius: 1
                     }}
                 >
-                    <Box
-                        sx={{
-                            width: '100%',
-                            px: 1.5,
-                            py: 1,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 1,
-                            bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-                            borderRadius: 1
-                        }}
-                    >
-                        <SearchIcon color="action" />
-                        <InputBase
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                            placeholder={translations.search_members as string}
-                            fullWidth
-                        />
-                    </Box>
-                    <TablePagination
-                        component={Box}
-                        count={filteredLevels.length}
-                        page={pageIndex}
-                        onPageChange={handlePageIndexChange}
-                        rowsPerPage={perPageLimit}
-                        onRowsPerPageChange={handlePerPageLimitChange}
-                        labelRowsPerPage={<TableRowsIcon />}
-                        showFirstButton={isMedium}
-                        showLastButton={isMedium}
+                    <SearchIcon color="action" />
+                    <InputBase
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder={translations.search_members as string}
+                        fullWidth
                     />
                 </Box>
                 <DesktopLevelItemRoot>
@@ -139,16 +95,11 @@ export const View = ({ guild, levels, localization }: Props) => {
                     </Typography>
                 </DesktopLevelItemRoot>
             </Box>
-            {data.length > 0 ? <Section sx={{ p: 0, pt: { md: 1 }, gap: 1 }}>
-                {data.map((level) => (
-                    <LevelItem
-                        key={level.user.id}
-                        guild={guild}
-                        level={level}
-                        localization={localization}
-                    />
-                ))}
-            </Section> : <ErrorRoot>
+            {filteredLevels.length > 0 ? <Levels
+                guild={guild}
+                levels={filteredLevels}
+                localization={localization}
+            /> : <ErrorRoot>
                 <CloudOffIcon sx={{ fontSize: '10rem' }} />
                 <ErrorTitle>{translations.error_member_not_found_title}</ErrorTitle>
                 <ErrorDescription>{translations.error_member_not_found_description}</ErrorDescription>

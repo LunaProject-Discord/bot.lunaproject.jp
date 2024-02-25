@@ -1,14 +1,57 @@
+'use client';
+
 import { getMemberDisplay, getUserDisplay } from '@app/user';
 import { ItemFormContainer, ItemIcon, ItemRoot, ItemRowContainer, ItemTextBlock } from '@components/items';
 import { Code } from '@components/text';
 import { GuildLevel } from '@interfaces/bot';
 import { DataGuild, RedisGuild } from '@interfaces/redis';
 import { GuildViewProps } from '@interfaces/view';
-import { Avatar, Box, styled, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Section } from '@lunaproject/web-core/dist/components/Section';
+import { Avatar, Box, BoxProps, CircularProgress, styled, Typography } from '@mui/material';
 import { buildCdnUrl, getMemberAvatar, getUserAvatar } from '@utils/cdn';
-import React, { Fragment } from 'react';
+import clsx from 'clsx';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
+import { WindowVirtualizer, WindowVirtualizerProps } from 'virtua';
 
-export const DesktopLevelItemRoot = styled(Box)(({ theme }) => ({
+export const levelItemClasses = {
+    root: 'LevelItem-root',
+    mobileRoot: 'LevelItem-mobileRoot',
+    desktopRoot: 'LevelItem-desktopRoot'
+};
+
+export const LevelItemRoot = styled(
+    ({ className, ...props }: BoxProps) => (
+        <Box
+            className={clsx(levelItemClasses.root, className)}
+            {...props}
+        />
+    )
+)<BoxProps>(({ theme }) => ({
+    marginTop: theme.spacing(1)
+}));
+
+export const MobileLevelItemRoot = styled(
+    ({ className, ...props }: BoxProps) => (
+        <ItemRoot
+            className={clsx(levelItemClasses.mobileRoot, className)}
+            {...props}
+        />
+    )
+)<BoxProps>(({ theme }) => ({
+    padding: 0,
+    [theme.breakpoints.up('md')]: {
+        display: 'none'
+    }
+}));
+
+export const DesktopLevelItemRoot = styled(
+    ({ className, ...props }: BoxProps) => (
+        <Box
+            className={clsx(levelItemClasses.desktopRoot, className)}
+            {...props}
+        />
+    )
+)<BoxProps>(({ theme }) => ({
     width: '100%',
     padding: theme.spacing(0, 1.5),
     display: 'grid',
@@ -20,52 +63,25 @@ export const DesktopLevelItemRoot = styled(Box)(({ theme }) => ({
     }
 }));
 
-const ItemContainer = styled(Box)(({ theme }) => ({
-    padding: theme.spacing(0, 1.5),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    borderRadius: theme.shape.borderRadius,
-    transition: theme.transitions.create(['background-color', 'box-shadow', 'border-color', 'color'], {
-        duration: theme.transitions.duration.shortest
-    })
-}));
-
-const LevelItemRank = styled(Box)(({ theme }) => ({
+export const LevelItemRankRoot = styled(Box)(({ theme }) => ({
     width: theme.spacing(4),
     height: theme.spacing(4),
     display: 'flex',
     flexShrink: 0,
     placeItems: 'center',
     placeContent: 'center',
-    fontFamily: 'Renner',
+    fontFamily: 'Renner, sans-serif',
     color: theme.palette.common.white,
-    backgroundColor: theme.palette.primary.main,
     borderRadius: '50%'
 }));
 
-const LevelItemGroup = styled(Box)(({ theme }) => ({
+export const LevelItemGroup = styled(Box)(({ theme }) => ({
     display: 'flex',
-    placeItems: 'center',
-    placeContent: 'center',
+    alignItems: 'center',
     gap: theme.spacing(1)
 }));
 
-interface LevelItemProps extends GuildViewProps {
-    level: GuildLevel;
-}
-
-export const LevelItem = ({ guild, level, localization }: LevelItemProps) => {
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
-    return isDesktop ? (
-        <DesktopLevelItem guild={guild} level={level} localization={localization} />
-    ) : (
-        <MobileLevelItem guild={guild} level={level} localization={localization} />
-    );
-};
-
-interface LevelItemProfileProps {
+export interface LevelItemProfileProps {
     guild: RedisGuild | DataGuild;
     user: GuildLevel['user'];
     member: GuildLevel['member'];
@@ -124,26 +140,33 @@ export const LevelItemProfile = ({ guild, user, member }: LevelItemProfileProps)
     }
 };
 
-export const DesktopLevelItem = (
-    {
-        guild,
-        level: {
-            user,
-            member,
-            rank,
-            level,
-            experience
-        },
-        localization: { translations }
-    }: LevelItemProps
-) => (
-    <DesktopLevelItemRoot sx={{ height: 50 }}>
-        <LevelItemRank>{rank}</LevelItemRank>
-        <LevelItemProfile guild={guild} user={user} member={member} />
-        <Typography variant="h5" align="center" sx={{ fontFamily: 'Renner' }}>{level}</Typography>
-        <Typography variant="h5" align="center" sx={{ fontFamily: 'Renner' }}>{experience}</Typography>
-    </DesktopLevelItemRoot>
-);
+export interface LevelItemRankProps {
+    rank: number;
+}
+
+export const LevelItemRank = ({ rank }: LevelItemRankProps) => {
+    if (rank === 1) {
+        return (<LevelItemRankRoot sx={{ bgcolor: '#ffc006', fontSize: '1.25rem' }}>{rank}</LevelItemRankRoot>);
+    } else if (rank === 2) {
+        return (<LevelItemRankRoot sx={{ bgcolor: '#7fbfe2', fontSize: '1.25rem' }}>{rank}</LevelItemRankRoot>);
+    } else if (rank === 3) {
+        return (<LevelItemRankRoot sx={{ bgcolor: '#d18d52', fontSize: '1.25rem' }}>{rank}</LevelItemRankRoot>);
+    } else if (rank <= 10) {
+        return (<LevelItemRankRoot sx={{ bgcolor: 'primary.main' }}>{rank}</LevelItemRankRoot>);
+    } else {
+        return (
+            <LevelItemRankRoot
+                sx={{
+                    color: 'primary.main',
+                    bgcolor: 'transparent',
+                    border: (theme) => `solid 1px ${theme.palette.primary.main}`
+                }}
+            >
+                {rank}
+            </LevelItemRankRoot>
+        );
+    }
+};
 
 export const MobileLevelItem = (
     {
@@ -158,13 +181,13 @@ export const MobileLevelItem = (
         localization: { translations }
     }: LevelItemProps
 ) => (
-    <ItemRoot>
+    <MobileLevelItemRoot>
         <ItemRowContainer>
-            <LevelItemRank>{rank}</LevelItemRank>
+            <LevelItemRank rank={rank} />
             <LevelItemProfile guild={guild} user={user} member={member} />
         </ItemRowContainer>
         <ItemFormContainer sx={{ justifyContent: 'flex-start' }}>
-            <LevelItemGroup>
+            <LevelItemGroup sx={{ minWidth: '35%' }}>
                 <Typography variant="body2" color="text.secondary" sx={{ flexShrink: 0 }}>
                     {translations.level}
                 </Typography>
@@ -177,5 +200,86 @@ export const MobileLevelItem = (
                 <Typography variant="h5" sx={{ fontFamily: 'Renner' }}>{experience}</Typography>
             </LevelItemGroup>
         </ItemFormContainer>
-    </ItemRoot>
+    </MobileLevelItemRoot>
 );
+
+export const DesktopLevelItem = (
+    {
+        guild,
+        level: {
+            user,
+            member,
+            rank,
+            level,
+            experience
+        },
+        localization: { translations }
+    }: LevelItemProps
+) => (
+    <DesktopLevelItemRoot sx={{ height: 50 }}>
+        <LevelItemRank rank={rank} />
+        <LevelItemProfile guild={guild} user={user} member={member} />
+        <Typography variant="h5" align="center" sx={{ fontFamily: 'Renner' }}>{level}</Typography>
+        <Typography variant="h5" align="center" sx={{ fontFamily: 'Renner' }}>{experience}</Typography>
+    </DesktopLevelItemRoot>
+);
+
+export interface LevelItemProps extends GuildViewProps {
+    level: GuildLevel;
+}
+
+export const LevelItem = ({ guild, level, localization }: LevelItemProps) => (
+    <LevelItemRoot>
+        <MobileLevelItem guild={guild} level={level} localization={localization} />
+        <DesktopLevelItem guild={guild} level={level} localization={localization} />
+    </LevelItemRoot>
+);
+
+export interface LevelsProps extends GuildViewProps {
+    levels: GuildLevel[];
+}
+
+export const Levels = ({ guild, levels, localization }: LevelsProps) => {
+    const [items, setItems] = useState(levels.slice(0, 100));
+    const count = items.length;
+
+    const [loading, setLoading] = useState(false);
+    const fetchedCountRef = useRef(-1);
+
+    const handleRangeChange: WindowVirtualizerProps['onRangeChange'] = (_, end) => {
+        if (end + 50 <= count || fetchedCountRef.current >= count || levels.length === count)
+            return;
+
+        fetchedCountRef.current = count;
+
+        setLoading(true);
+        setItems((prevItems) => [...prevItems, ...levels.slice(prevItems.length, prevItems.length + 100)]);
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        fetchedCountRef.current = -1;
+        setItems(levels.slice(0, 100));
+        setLoading(false);
+    }, [levels]);
+
+    return (
+        <Section sx={{ mt: { xs: -1, md: 0 }, p: 0 }}>
+            <WindowVirtualizer onRangeChange={handleRangeChange}>
+                {items.map((level) => (
+                    <LevelItem
+                        key={level.user.id}
+                        guild={guild}
+                        level={level}
+                        localization={localization}
+                    />
+                ))}
+                {loading && <LevelItemRoot>
+                    <ItemRoot sx={{ justifyContent: 'center' }}>
+                        <CircularProgress />
+                    </ItemRoot>
+                </LevelItemRoot>}
+            </WindowVirtualizer>
+        </Section>
+    );
+};

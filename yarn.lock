@@ -3733,6 +3733,7 @@ __metadata:
     swr: "npm:2.2.4"
     tailwindcss: "npm:3.4.1"
     typescript: "npm:5.3.3"
+    virtua: "npm:0.27.5"
     zod: "npm:3.22.4"
   languageName: unknown
   linkType: soft
@@ -8378,6 +8379,27 @@ __metadata:
     d3-time: "npm:^3.0.0"
     d3-timer: "npm:^3.0.1"
   checksum: 10c0/eb5e0252390ffb10275602386aaa72e53f260e394b75aa6c16200e7e3e0259a3be5135360cd62db4d1ecac85d8b65c9caaba8cd9be8087e748e1a447cad7974b
+  languageName: node
+  linkType: hard
+
+"virtua@npm:0.27.5":
+  version: 0.27.5
+  resolution: "virtua@npm:0.27.5"
+  peerDependencies:
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
+    solid-js: ">=1.0"
+    vue: ">=3.2"
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    solid-js:
+      optional: true
+    vue:
+      optional: true
+  checksum: 10c0/d092ce0d6d86f3bd0f05ce7b73cb1813009376868ad015e50cf23c8bd830170d35f147e80e85c4c07ee1beece98acc7ab9319b34dc0c32d0e805c8f969ce520e
   languageName: node
   linkType: hard
 

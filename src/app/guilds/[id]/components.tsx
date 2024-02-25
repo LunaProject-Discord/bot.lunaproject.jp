@@ -136,7 +136,7 @@ export const LayoutNavigation = (
                         px: 2,
                         display: 'flex',
                         alignItems: 'center',
-                        gap: 2,
+                        gap: 3,
                         bgcolor: 'background.paper'
                     }}
                 >
@@ -186,6 +186,12 @@ export const LayoutNavigation = (
                             label="投稿"
                             href={`${prefix}/articles`}
                             value={`${prefix}/articles`}
+                        />
+                        <Tab
+                            component={NextLink}
+                            label="プラン"
+                            href={`${prefix}/plans`}
+                            value={`${prefix}/plans`}
                         />
                         {leaderboardAccessible && <Tab
                             component={NextLink}
