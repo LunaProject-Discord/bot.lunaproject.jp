@@ -1,5 +1,5 @@
-import { SnowflakeSchema } from '@schemas/snowflake';
-import { TimeZone } from '@utils/timezone';
+import { SnowflakeSchema } from '@/schemas/snowflake';
+import { TimeZone } from '@/utils/timezone';
 import { z } from 'zod';
 
 export const ConfigurationSnowflakeSchema = z.union([z.literal(''), z.literal('0'), SnowflakeSchema]);

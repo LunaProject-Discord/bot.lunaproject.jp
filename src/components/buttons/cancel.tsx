@@ -1,5 +1,5 @@
-import { CloseIcon } from '@components/icons';
-import { Key } from '@components/text';
+import { CloseIcon } from '@/components/icons';
+import { Key } from '@/components/text';
 import { Button, buttonClasses, ButtonProps } from '@mui/material';
 import React from 'react';
 import { isMacOs } from 'react-device-detect';

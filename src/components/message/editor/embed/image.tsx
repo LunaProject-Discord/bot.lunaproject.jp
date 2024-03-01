@@ -1,6 +1,6 @@
 'use client';
 
-import { LocalizationProps } from '@interfaces/localization';
+import { LocalizationProps } from '@/interfaces/localization';
 import { EmbedImage } from '@lunaproject/web-discord/dist/interfaces';
 import { OutlinedInput } from '@mui/material';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';

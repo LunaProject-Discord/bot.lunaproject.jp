@@ -1,14 +1,14 @@
-import { EditableItem, EditableItemProps, GroupProps } from '@app/dashboard/[id]/commands/_components';
-import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { getMemberDisplay } from '@app/user';
-import { AddIcon } from '@components/icons';
-import { MemberPopover } from '@components/items';
-import { GuildMembersViewProps } from '@interfaces/view';
+import { EditableItem, EditableItemProps, GroupProps } from '@/app/dashboard/[id]/commands/_components';
+import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
+import { getMemberDisplay } from '@/app/user';
+import { AddIcon } from '@/components/icons';
+import { MemberPopover } from '@/components/items';
+import { GuildMembersViewProps } from '@/interfaces/view';
+import { getMemberAvatar } from '@/utils/cdn';
+import { getStateActionValue } from '@/utils/react/state';
 import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { ItemIcon, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Avatar, Button } from '@mui/material';
-import { getMemberAvatar } from '@utils/cdn';
-import { getStateActionValue } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { Fragment, useState } from 'react';
 

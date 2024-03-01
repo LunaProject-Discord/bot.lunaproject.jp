@@ -1,12 +1,12 @@
 'use client';
 
-import { CancelButton } from '@components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
-import { DarkModeIcon, DeleteIcon, EditIcon, LightModeIcon, PreviewIcon, SaveIcon } from '@components/icons';
+import { CancelButton } from '@/components/buttons';
+import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
+import { DarkModeIcon, DeleteIcon, EditIcon, LightModeIcon, PreviewIcon, SaveIcon } from '@/components/icons';
+import { LocalizationProps } from '@/interfaces/localization';
+import { DataMessage } from '@/interfaces/message';
+import { toDataMessage, toEmbed, toMessage } from '@/libs/message';
 import { ThemeProvider } from '@emotion/react';
-import { LocalizationProps } from '@interfaces/localization';
-import { DataMessage } from '@interfaces/message';
-import { toDataMessage, toEmbed, toMessage } from '@libs/message';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { buildTheme } from '@lunaproject/web-core/dist/styles/theme';

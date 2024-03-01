@@ -1,4 +1,4 @@
-import { ConfigurationRootSchema } from '@schemas/bot';
+import { ConfigurationRootSchema } from '@/schemas/bot';
 import { z } from 'zod';
 
 export const GuildConfigurationVoteSchema = ConfigurationRootSchema.extend(({

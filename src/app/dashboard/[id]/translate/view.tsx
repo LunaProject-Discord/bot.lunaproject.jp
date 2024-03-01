@@ -1,14 +1,14 @@
 'use client';
 
-import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
-import { ActionItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout_v2';
-import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { GuildConfigurationTranslate } from '@interfaces/bot';
-import { GuildConfigurationViewProps } from '@interfaces/view';
+import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@/components/dialog';
+import { ActionItem, SwitchItem } from '@/components/items';
+import { PageHeader } from '@/components/layout_v2';
+import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { GuildConfigurationTranslate } from '@/interfaces/bot';
+import { GuildConfigurationViewProps } from '@/interfaces/view';
+import { GuildConfigurationTranslateSchema } from '@/schemas/bot';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { GuildConfigurationTranslateSchema } from '@schemas/bot';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
 

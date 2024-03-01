@@ -1,4 +1,4 @@
-import { RenderableReactNode } from '@interfaces/node';
+import { RenderableReactNode } from '@/interfaces/node';
 import { ReactNode } from 'react';
 
 /**

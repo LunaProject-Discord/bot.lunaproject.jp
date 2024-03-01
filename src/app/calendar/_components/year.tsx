@@ -1,4 +1,4 @@
-import { LocalizationProps } from '@interfaces/localization';
+import { LocalizationProps } from '@/interfaces/localization';
 import { Box, styled } from '@mui/material';
 
 const Week = styled(Box)(({ theme }) => ({

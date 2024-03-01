@@ -1,7 +1,7 @@
-import { Statistic, StatisticChannelsData, Statistics, StatisticsPeriodType } from '@interfaces/bot';
-import prisma from '@libs/prisma';
+import { Statistic, StatisticChannelsData, Statistics, StatisticsPeriodType } from '@/interfaces/bot';
+import prisma from '@/libs/prisma';
+import { toDBDate } from '@/utils/date';
 import { system_statistics } from '@prisma/client';
-import { toDBDate } from '@utils/date';
 import { endOfWeek, getDaysInMonth, startOfWeek } from 'date-fns';
 import { DateObjectUnits, DateTime, Settings } from 'luxon';
 

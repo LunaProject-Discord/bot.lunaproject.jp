@@ -1,7 +1,7 @@
 'use client';
 
-import { StatisticResponseProps } from '@app/statistics/_components/interfaces';
-import { Statistic } from '@interfaces/bot';
+import { StatisticResponseProps } from '@/app/statistics/_components/interfaces';
+import { Statistic } from '@/interfaces/bot';
 import { Theme, useMediaQuery } from '@mui/material';
 import { AreaChart as TremorAreaChart, AreaChartProps as TremorAreaChartProps } from '@tremor/react';
 import React from 'react';

@@ -1,6 +1,6 @@
 'use client';
 
-import { ServicesPopover, UserPopover } from '@app/_popovers';
+import { ServicesPopover, UserPopover } from '@/app/_popovers';
 import {
     AnalyticsIcon,
     AppsIcon,
@@ -11,7 +11,7 @@ import {
     MonitoringIcon,
     SettingsIcon,
     TuneIcon
-} from '@components/icons';
+} from '@/components/icons';
 import {
     NavigationAppBar as RootNavigationAppBar,
     NavigationDrawer as RootNavigationDrawer,
@@ -20,16 +20,16 @@ import {
     NavigationDrawerProps as RootNavigationDrawerProps,
     NavigationToolbar,
     NavigationToolbarItem
-} from '@components/navigation';
-import { UserFlags } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
+} from '@/components/navigation';
+import { UserFlags } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
+import { navigationAtom } from '@/states/navigation';
+import { popoverAtom } from '@/states/popover';
+import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger } from '@mui/material';
-import { navigationAtom } from '@states/navigation';
-import { popoverAtom } from '@states/popover';
-import { getUserAvatar, getUserDisplayName } from '@utils/discord';
-import { useAtomValue, useSetAtom } from 'jotai/index';
+import { useAtomValue, useSetAtom } from 'jotai';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEvent, useState } from 'react';

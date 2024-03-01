@@ -1,6 +1,6 @@
-import { WithIdParamProps } from '@interfaces/page';
+import { WithIdParamProps } from '@/interfaces/page';
+import { COOKIE_TOKEN } from '@/utils/cookie';
 import { getGuildById } from '@lunaproject/web-discord/dist/libs';
-import { COOKIE_TOKEN } from '@utils/cookie';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 

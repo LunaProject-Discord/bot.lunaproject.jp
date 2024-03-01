@@ -1,4 +1,4 @@
-import { Statistic } from '@interfaces/bot';
+import { Statistic } from '@/interfaces/bot';
 
 export interface StatisticResponseProps {
     getDate: (statistic: Statistic) => Date;

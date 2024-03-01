@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import {
     ArrowForwardIcon,
     CloudOffIcon,
@@ -9,15 +9,15 @@ import {
     LockPersonIcon,
     TaskAltIcon,
     WarningIcon
-} from '@components/icons';
-import { RouteLinkItem } from '@components/items';
-import { PageCenteredLayout, PageHeader } from '@components/layout_v2';
-import { GuildNotification } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
-import { GuildViewProps, UserViewProps } from '@interfaces/view';
+} from '@/components/icons';
+import { RouteLinkItem } from '@/components/items';
+import { PageCenteredLayout, PageHeader } from '@/components/layout_v2';
+import { GuildNotification } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
+import { GuildViewProps, UserViewProps } from '@/interfaces/view';
+import { getUserDisplayName } from '@/utils/discord';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { CircularProgress, Divider, Link } from '@mui/material';
-import { getUserDisplayName } from '@utils/discord';
 import NextLink from 'next/link';
 import React, { Fragment } from 'react';
 

@@ -1,17 +1,17 @@
 'use client';
 
-import { LevelProfileCard, LevelRewardsCard } from '@app/guilds/[id]/leaderboard/components';
-import { DesktopLevelItemRoot, Levels } from '@app/leaderboard/[id]/components';
-import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { CloudOffIcon, KeyboardArrowRightIcon, SearchIcon } from '@components/icons';
-import { PageHeader, PageLayout } from '@components/layout_v2';
-import { GuildLevel } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
-import { RedisMember } from '@interfaces/redis';
-import { GuildConfigurationViewProps } from '@interfaces/view';
+import { LevelProfileCard, LevelRewardsCard } from '@/app/guilds/[id]/leaderboard/components';
+import { DesktopLevelItemRoot, Levels } from '@/app/leaderboard/[id]/components';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
+import { CloudOffIcon, KeyboardArrowRightIcon, SearchIcon } from '@/components/icons';
+import { PageHeader, PageLayout } from '@/components/layout_v2';
+import { GuildLevel } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
+import { RedisMember } from '@/interfaces/redis';
+import { GuildConfigurationViewProps } from '@/interfaces/view';
+import { filterPredicateLevel } from '@/utils/level';
+import { useDebounce } from '@/utils/react/debounce';
 import { Box, Button, InputBase, Typography, Unstable_Grid2 as Grid } from '@mui/material';
-import { filterPredicateLevel } from '@utils/level';
-import { useDebounce } from '@utils/react/debounce';
 import NextLink from 'next/link';
 import React, { useState } from 'react';
 

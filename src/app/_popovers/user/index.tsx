@@ -1,8 +1,8 @@
-import { DesktopUserPopover, MobileUserPopover } from '@app/_popovers';
-import { LocalizationProps } from '@interfaces/localization';
+import { DesktopUserPopover, MobileUserPopover } from '@/app/_popovers';
+import { LocalizationProps } from '@/interfaces/localization';
+import { popoverAtom, UserPopoverState } from '@/states/popover';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { Theme, useMediaQuery } from '@mui/material';
-import { popoverAtom, UserPopoverState } from '@states/popover';
 import { atom } from 'jotai';
 
 export interface UserPopoverProps extends LocalizationProps {

@@ -1,4 +1,4 @@
-import { DataGuild, RedisGuild, RedisMember, RedisUser } from '@interfaces/redis';
+import { DataGuild, RedisGuild, RedisMember, RedisUser } from '@/interfaces/redis';
 import { GuildMember, OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { APIGuild, APIUser } from 'discord-api-types/v10';
 

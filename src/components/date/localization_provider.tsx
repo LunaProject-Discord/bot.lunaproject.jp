@@ -1,6 +1,6 @@
 'use client';
 
-import { useLocale } from '@localizations/client';
+import { useLocale } from '@/localizations/client';
 import { LocalizationProvider, LocalizationProviderProps } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { enUS, ja } from 'date-fns/locale';

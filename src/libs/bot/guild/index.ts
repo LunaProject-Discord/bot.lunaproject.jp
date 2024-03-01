@@ -1,10 +1,10 @@
-import { GuildConfiguration, GuildFlags } from '@interfaces/bot';
-import { DataGuild, RedisMember } from '@interfaces/redis';
-import { getUserPermission } from '@libs/bot';
-import prisma from '@libs/prisma';
-import { getMemberById } from '@libs/redis';
+import { GuildConfiguration, GuildFlags } from '@/interfaces/bot';
+import { DataGuild, RedisMember } from '@/interfaces/redis';
+import { getUserPermission } from '@/libs/bot';
+import prisma from '@/libs/prisma';
+import { getMemberById } from '@/libs/redis';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '@/utils/discord';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '@utils/discord';
 
 export const hasDashboardAccessUserPermission = async (user: OAuthUser): Promise<boolean> => {
     const permission = await getUserPermission(user.id);

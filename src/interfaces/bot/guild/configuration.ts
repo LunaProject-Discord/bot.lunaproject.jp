@@ -45,7 +45,7 @@ import {
     GuildConfigurationWelcomeRoleSchema,
     GuildConfigurationWelcomeSchema,
     PartialGuildConfigurationSchema
-} from '@schemas/bot';
+} from '@/schemas/bot';
 import { z } from 'zod';
 
 export type GuildConfiguration = z.infer<typeof GuildConfigurationSchema>;

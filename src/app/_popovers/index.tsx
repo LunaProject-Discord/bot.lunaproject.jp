@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckIcon } from '@components/icons';
+import { CheckIcon } from '@/components/icons';
 import { Link } from '@lunaproject/web-core/dist/components';
 import {
     CSSObject,

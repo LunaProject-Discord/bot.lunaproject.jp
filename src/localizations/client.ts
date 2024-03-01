@@ -1,7 +1,7 @@
 'use client';
 
-import { LocaleType } from '@interfaces/localization';
-import { COOKIE_LOCALE } from '@utils/cookie';
+import { LocaleType } from '@/interfaces/localization';
+import { COOKIE_LOCALE } from '@/utils/cookie';
 import { parseCookies } from 'nookies';
 import { getLocalizationByName, getTranslationByName } from './index';
 

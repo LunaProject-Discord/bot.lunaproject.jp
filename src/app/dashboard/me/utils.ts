@@ -1,4 +1,4 @@
-import { UserConfiguration } from '@interfaces/bot';
+import { UserConfiguration } from '@/interfaces/bot';
 
 export const saveUserConfiguration = async (configuration: Partial<UserConfiguration>) => {
     const res = await fetch(

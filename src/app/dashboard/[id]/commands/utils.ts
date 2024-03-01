@@ -1,6 +1,6 @@
-import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { GuildConfigurationCommand, GuildConfigurationCommandsPermissionOverrides } from '@interfaces/bot';
-import { RedisCommand } from '@interfaces/redis';
+import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
+import { GuildConfigurationCommand, GuildConfigurationCommandsPermissionOverrides } from '@/interfaces/bot';
+import { RedisCommand } from '@/interfaces/redis';
 import { nanoid } from 'nanoid';
 
 export const getCommandConfiguration = (command: RedisCommand, commands: GuildConfigurationCommand[]): GuildConfigurationCommand => commands.find(({ name }) => name === command.name) ?? getDefaultCommandConfiguration(command);

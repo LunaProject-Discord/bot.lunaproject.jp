@@ -1,4 +1,4 @@
-import { ConfigurationAccessControlSchema, ConfigurationRootSchema } from '@schemas/bot';
+import { ConfigurationAccessControlSchema, ConfigurationRootSchema } from '@/schemas/bot';
 import { z } from 'zod';
 
 export const GuildConfigurationQuoteSchema = ConfigurationRootSchema.extend({

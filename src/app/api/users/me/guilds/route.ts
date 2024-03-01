@@ -1,4 +1,4 @@
-import { getGuilds, getUser } from '@app/utils';
+import { getGuilds, getUser } from '@/app/utils';
 import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request) => {

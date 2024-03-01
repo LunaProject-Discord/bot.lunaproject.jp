@@ -1,10 +1,10 @@
-import { StatisticsPageProps } from '@app/statistics/interfaces';
-import { Statistic, StatisticsPeriodData, StatisticsPeriodType } from '@interfaces/bot';
-import { Localization } from '@interfaces/localization';
-import { getDateFnsLocaleByName } from '@localizations/index';
+import { StatisticsPageProps } from '@/app/statistics/interfaces';
+import { Statistic, StatisticsPeriodData, StatisticsPeriodType } from '@/interfaces/bot';
+import { Localization } from '@/interfaces/localization';
+import { getDateFnsLocaleByName } from '@/localizations/index';
 import { format } from '@lunaproject/web-core/dist/utils/date';
-import { max } from '@utils/array';
-import { fromDBDate } from '@utils/date';
+import { max } from '@/utils/array';
+import { fromDBDate } from '@/utils/date';
 import { endOfWeek, format as formatDateFns, startOfWeek } from 'date-fns';
 import { DateTime } from 'luxon';
 

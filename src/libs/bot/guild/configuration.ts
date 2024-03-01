@@ -1,6 +1,6 @@
-import { ConfigurationLanguage, GuildConfiguration } from '@interfaces/bot';
-import prisma from '@libs/prisma';
-import { TimeZone } from '@utils/timezone';
+import { ConfigurationLanguage, GuildConfiguration } from '@/interfaces/bot';
+import prisma from '@/libs/prisma';
+import { TimeZone } from '@/utils/timezone';
 
 export const getGuildConfiguration = async (id: string): Promise<GuildConfiguration | undefined> => {
     const guildConfigurationData = await prisma.guild_configurations.findUnique({ where: { guild_id: BigInt(id) } });

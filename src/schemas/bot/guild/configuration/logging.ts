@@ -1,4 +1,4 @@
-import { ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@schemas/bot';
+import { ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@/schemas/bot';
 import { z } from 'zod';
 
 export const GuildConfigurationLoggingRootSchema = ConfigurationRootSchema.extend({

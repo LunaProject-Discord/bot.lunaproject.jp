@@ -1,4 +1,4 @@
-import { PartialGuildConfiguration } from '@interfaces/bot';
+import { PartialGuildConfiguration } from '@/interfaces/bot';
 
 export const saveGuildConfiguration = async (id: string, configuration: PartialGuildConfiguration) => {
     const res = await fetch(

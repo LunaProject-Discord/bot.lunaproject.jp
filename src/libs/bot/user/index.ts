@@ -1,5 +1,5 @@
-import { UserFlags, UserPermission } from '@interfaces/bot';
-import prisma from '@libs/prisma';
+import { UserFlags, UserPermission } from '@/interfaces/bot';
+import prisma from '@/libs/prisma';
 
 export const getUserPermission = async (id: string): Promise<UserPermission> => {
     const userData = await prisma.users.findUnique({

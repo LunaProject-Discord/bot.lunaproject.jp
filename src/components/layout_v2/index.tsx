@@ -1,7 +1,7 @@
 'use client';
 
-import { DefaultFontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from '@app/theme';
-import { NAVIGATION_DRAWER_WIDTH } from '@components/navigation';
+import { DefaultFontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from '@/app/theme';
+import { NAVIGATION_DRAWER_WIDTH } from '@/components/navigation';
 import { Box, CssBaseline, GlobalStyles, styled, Typography, TypographyProps } from '@mui/material';
 import React, { Fragment, ReactNode } from 'react';
 

@@ -1,13 +1,17 @@
 'use client';
 
-import { LevelItemProfile } from '@app/leaderboard/[id]/components';
-import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { CloudOffIcon, DeleteIcon, SearchIcon, TableRowsIcon } from '@components/icons';
-import { PageCenteredLayout, PageHeader } from '@components/layout_v2';
-import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { GuildLevel, PartialGuildLevel, PartialGuildLevelRecord, PartialGuildLevels } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
-import { GuildConfigurationViewProps, GuildViewProps } from '@interfaces/view';
+import { LevelItemProfile } from '@/app/leaderboard/[id]/components';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
+import { CloudOffIcon, DeleteIcon, SearchIcon, TableRowsIcon } from '@/components/icons';
+import { PageCenteredLayout, PageHeader } from '@/components/layout_v2';
+import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { GuildLevel, PartialGuildLevel, PartialGuildLevelRecord, PartialGuildLevels } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
+import { GuildConfigurationViewProps, GuildViewProps } from '@/interfaces/view';
+import { PartialGuildLevelRecordSchema } from '@/schemas/bot';
+import { filterPredicateLevel, getLevelPages, getMaxExperience } from '@/utils/level';
+import { useDebounce } from '@/utils/react/debounce';
+import { getStateActionValue } from '@/utils/react/state';
 import { NumberField, numberFieldClasses } from '@lunaproject/web-core/dist/components/NumberField';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { ItemRowContainer } from '@lunaproject/web-core/dist/components/SectionItems';
@@ -25,10 +29,6 @@ import {
     Typography,
     useMediaQuery
 } from '@mui/material';
-import { PartialGuildLevelRecordSchema } from '@schemas/bot';
-import { filterPredicateLevel, getLevelPages, getMaxExperience } from '@utils/level';
-import { useDebounce } from '@utils/react/debounce';
-import { getStateActionValue } from '@utils/react/state';
 import clsx from 'clsx';
 import groupBy from 'lodash/groupBy';
 import React, { ChangeEvent, Fragment, MouseEvent, SetStateAction, useState } from 'react';

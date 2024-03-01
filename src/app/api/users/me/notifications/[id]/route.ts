@@ -1,6 +1,6 @@
-import { getUser } from '@app/utils';
-import { WithIdParamProps } from '@interfaces/page';
-import { getUserNotificationById } from '@libs/bot';
+import { getUser } from '@/app/utils';
+import { WithIdParamProps } from '@/interfaces/page';
+import { getUserNotificationById } from '@/libs/bot';
 import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {

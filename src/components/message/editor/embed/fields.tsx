@@ -1,16 +1,16 @@
 'use client';
 
-import { AddIcon, CloseIcon, ContentCopyIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@components/icons';
-import { LocalizationProps } from '@interfaces/localization';
-import { DefaultField, EmbedField } from '@lunaproject/web-discord/dist/interfaces';
-import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
+import { AddIcon, CloseIcon, ContentCopyIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@/components/icons';
+import { LocalizationProps } from '@/interfaces/localization';
 import {
     moveDown as moveDownArray,
     moveUp as moveUpArray,
     remove as removeArray,
     replace as replaceArray
-} from '@utils/array';
-import { getStateActionValue } from '@utils/react/state';
+} from '@/utils/array';
+import { getStateActionValue } from '@/utils/react/state';
+import { DefaultField, EmbedField } from '@lunaproject/web-discord/dist/interfaces';
+import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
 import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';

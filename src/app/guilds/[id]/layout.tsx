@@ -1,10 +1,10 @@
-import { LayoutHeader, LayoutNavigation } from '@app/guilds/[id]/components';
-import { getUser } from '@app/utils';
-import { PageLayout } from '@components/layout_v2';
-import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration, hasDashboardAccess, isLeaderboardAccessible } from '@libs/bot';
-import { getGuildById, getMemberById } from '@libs/redis';
-import { getLocalization } from '@localizations/server';
+import { LayoutHeader, LayoutNavigation } from '@/app/guilds/[id]/components';
+import { getUser } from '@/app/utils';
+import { PageLayout } from '@/components/layout_v2';
+import { WithIdParamProps } from '@/interfaces/page';
+import { getGuildConfiguration, hasDashboardAccess, isLeaderboardAccessible } from '@/libs/bot';
+import { getGuildById, getMemberById } from '@/libs/redis';
+import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import { notFound } from 'next/navigation';
 import React, { Fragment, ReactNode } from 'react';

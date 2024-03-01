@@ -1,7 +1,7 @@
-import { StatisticsPageProps } from '@app/statistics/interfaces';
-import { getPeriod } from '@app/statistics/utils';
-import { getLatestStatistic, getPeriodStatistics } from '@libs/bot';
-import { getLocalization } from '@localizations/server';
+import { StatisticsPageProps } from '@/app/statistics/interfaces';
+import { getPeriod } from '@/app/statistics/utils';
+import { getLatestStatistic, getPeriodStatistics } from '@/libs/bot';
+import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { NotFoundView, View } from './view';

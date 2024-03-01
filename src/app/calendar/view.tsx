@@ -1,9 +1,9 @@
 'use client';
 
-import { KeyboardArrowLeftIcon, KeyboardArrowRightIcon } from '@components/icons';
-import { PageContent } from '@components/layout';
-import { CalendarEvent } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
+import { KeyboardArrowLeftIcon, KeyboardArrowRightIcon } from '@/components/icons';
+import { PageContent } from '@/components/layout';
+import { CalendarEvent } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
 import { format } from '@lunaproject/web-core/dist/utils/date';
 import { Box, IconButton, styled, Typography } from '@mui/material';
 import { addMonths, eachDayOfInterval, subMonths } from 'date-fns';

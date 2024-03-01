@@ -5,15 +5,15 @@ import {
     BottomSheetContent,
     BottomSheetHeaderToggleButton,
     defaultSnapPoints
-} from '@components/bottom_sheet';
-import { RefreshIcon, SaveIcon } from '@components/icons';
-import { Changes } from '@components/save_confirm_v2/changes';
-import { Change, ChangesGroupByPath } from '@components/save_confirm_v2/changes/utils';
-import { Issues } from '@components/save_confirm_v2/issues';
-import { LocalizationProps } from '@interfaces/localization';
+} from '@/components/bottom_sheet';
+import { RefreshIcon, SaveIcon } from '@/components/icons';
+import { Changes } from '@/components/save_confirm_v2/changes';
+import { Change, ChangesGroupByPath } from '@/components/save_confirm_v2/changes/utils';
+import { Issues } from '@/components/save_confirm_v2/issues';
+import { LocalizationProps } from '@/interfaces/localization';
+import { isRenderableReactNode } from '@/utils/react/node';
 import { LoadingButton } from '@mui/lab';
 import { Box, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
-import { isRenderableReactNode } from '@utils/react/node';
 import deepEqual from 'deep-equal';
 import { diff, EmbeddedObjKeysMapType, EmbeddedObjKeysType } from 'json-diff-ts';
 import Mousetrap from 'mousetrap';

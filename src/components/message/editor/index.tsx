@@ -1,10 +1,10 @@
 'use client';
 
-import { ItemDisabledProps, ItemVariableProps } from '@components/items';
-import { LocalizationProps } from '@interfaces/localization';
+import { ItemDisabledProps, ItemVariableProps } from '@/components/items';
+import { LocalizationProps } from '@/interfaces/localization';
+import { getStateActionValue } from '@/utils/react/state';
 import { Message } from '@lunaproject/web-discord/dist/interfaces';
 import { Box, Divider } from '@mui/material';
-import { getStateActionValue } from '@utils/react/state';
 import React from 'react';
 import { TextArea } from '../text_area';
 import { EmbedsEditor } from './embed';

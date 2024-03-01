@@ -3,17 +3,17 @@
 import {
     ManageAfterPendingRolesDialog,
     ManageBeforePendingRolesDialog
-} from '@app/dashboard/[id]/member-join/_dialogs';
-import { ActionItem, ChannelItem, MessageItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout_v2';
-import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { CodeStyleContainer } from '@components/text';
-import { GuildConfigurationMemberJoin } from '@interfaces/bot';
-import { GuildConfigurationViewProps } from '@interfaces/view';
+} from '@/app/dashboard/[id]/member-join/_dialogs';
+import { ActionItem, ChannelItem, MessageItem, SwitchItem } from '@/components/items';
+import { PageHeader } from '@/components/layout_v2';
+import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { CodeStyleContainer } from '@/components/text';
+import { GuildConfigurationMemberJoin } from '@/interfaces/bot';
+import { GuildConfigurationViewProps } from '@/interfaces/view';
+import { GuildConfigurationMemberJoinSchema } from '@/schemas/bot';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress } from '@mui/material';
-import { GuildConfigurationMemberJoinSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';

@@ -1,4 +1,4 @@
-import { createSvgIcon } from '@components/icons/utils';
+import { createSvgIcon } from '@/components/icons/utils';
 import Add from '@material-symbols/svg-400/outlined/add.svg';
 import Analytics from '@material-symbols/svg-400/outlined/analytics.svg';
 import Apps from '@material-symbols/svg-400/outlined/apps.svg';

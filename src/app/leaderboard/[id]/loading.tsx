@@ -1,4 +1,4 @@
-import { getLocalization } from '@localizations/server';
+import { getLocalization } from '@/localizations/server';
 import { LoadingView } from './view';
 
 const Loading = () => {

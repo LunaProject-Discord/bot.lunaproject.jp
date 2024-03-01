@@ -1,5 +1,5 @@
-import { GuildLevel } from '@interfaces/bot';
-import { filterPredicateMember, filterPredicateUser } from '@utils/discord';
+import { GuildLevel } from '@/interfaces/bot';
+import { filterPredicateMember, filterPredicateUser } from '@/utils/discord';
 
 export const getMaxExperience = (level: number): number => 20 * Math.max(level, 1);
 

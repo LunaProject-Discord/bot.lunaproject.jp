@@ -8,7 +8,7 @@ import {
     ItemVariableProps,
     sectionItemClasses,
     SwitchItem
-} from '@components/items';
+} from '@/components/items';
 import {
     GuildConfigurationLoggingChannel,
     GuildConfigurationLoggingMember,
@@ -17,12 +17,12 @@ import {
     GuildConfigurationLoggingObject,
     GuildConfigurationLoggingRoot,
     GuildConfigurationLoggingVoice
-} from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
-import { RedisChannel } from '@interfaces/redis';
+} from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
+import { RedisChannel } from '@/interfaces/redis';
+import { getStateActionValue } from '@/utils/react/state';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { Box, buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
-import { getStateActionValue } from '@utils/react/state';
 import React, { ReactNode } from 'react';
 
 export const GridContainer = styled(Section)(({ theme }) => ({

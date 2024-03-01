@@ -1,4 +1,4 @@
-import { SnowflakeSchema } from '@schemas/snowflake';
+import { SnowflakeSchema } from '@/schemas/snowflake';
 import { z } from 'zod';
 
 export const LevelAndExperienceSchema = z.number().int('level_error_invalid_type_level_or_experience');

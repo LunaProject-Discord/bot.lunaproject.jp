@@ -1,4 +1,4 @@
-import { Localization, Translations } from '@interfaces/localization';
+import { Localization, Translations } from '@/interfaces/localization';
 import { enUS as muiEnUS, jaJP as muiJaJP } from '@mui/material/locale';
 import { enUS as muiGridEnUS, jaJP as muiGridJaJP } from '@mui/x-data-grid/locales';
 import { enUS as muiDateEnUS, jaJP as muiDateJaJP } from '@mui/x-date-pickers/locales';

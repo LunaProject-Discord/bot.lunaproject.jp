@@ -1,14 +1,14 @@
 'use client';
 
-import { ChannelItem, MessageItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout_v2';
-import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { CodeStyleContainer } from '@components/text';
-import { GuildConfigurationGoodbye } from '@interfaces/bot';
-import { GuildConfigurationViewProps } from '@interfaces/view';
+import { ChannelItem, MessageItem, SwitchItem } from '@/components/items';
+import { PageHeader } from '@/components/layout_v2';
+import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { CodeStyleContainer } from '@/components/text';
+import { GuildConfigurationGoodbye } from '@/interfaces/bot';
+import { GuildConfigurationViewProps } from '@/interfaces/view';
+import { GuildConfigurationGoodbyeSchema } from '@/schemas/bot';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { GuildConfigurationGoodbyeSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';

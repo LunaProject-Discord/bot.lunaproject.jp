@@ -1,5 +1,5 @@
-import { ExpandMoreIcon } from '@components/icons';
-import { LocalizationProps } from '@interfaces/localization';
+import { ExpandMoreIcon } from '@/components/icons';
+import { LocalizationProps } from '@/interfaces/localization';
 import { alpha, Box, getOverlayAlpha, IconButton, styled, Tooltip } from '@mui/material';
 import React from 'react';
 import { BottomSheet as BottomSheetRoot } from 'react-spring-bottom-sheet';

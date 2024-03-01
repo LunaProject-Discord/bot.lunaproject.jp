@@ -1,10 +1,10 @@
 'use client';
 
-import { EditIcon } from '@components/icons';
+import { EditIcon } from '@/components/icons';
+import { LocalizationProps } from '@/interfaces/localization';
+import { DataMessage } from '@/interfaces/message';
+import { toMessage } from '@/libs/message';
 import { ThemeProvider } from '@emotion/react';
-import { LocalizationProps } from '@interfaces/localization';
-import { DataMessage } from '@interfaces/message';
-import { toMessage } from '@libs/message';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { buildTheme } from '@lunaproject/web-core/dist/styles/theme';

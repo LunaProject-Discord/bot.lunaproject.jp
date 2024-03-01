@@ -1,7 +1,7 @@
-import { ConfigurationAccessControlSchema, ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@schemas/bot';
-import { LevelAndExperienceSchema } from '@schemas/bot/guild/level';
-import { DataMessageSchema } from '@schemas/message';
-import { SnowflakeSchema } from '@schemas/snowflake';
+import { ConfigurationAccessControlSchema, ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@/schemas/bot';
+import { LevelAndExperienceSchema } from '@/schemas/bot/guild/level';
+import { DataMessageSchema } from '@/schemas/message';
+import { SnowflakeSchema } from '@/schemas/snowflake';
 import { z } from 'zod';
 
 export const GuildConfigurationLevelAndExperienceSchema = LevelAndExperienceSchema.gte(1);

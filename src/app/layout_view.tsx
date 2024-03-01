@@ -13,10 +13,10 @@ import {
     TableRowsIcon,
     TaskAltIcon,
     WarningIcon
-} from '@components/icons';
-import { RootLayout, RootStyles } from '@components/layout_v2';
-import { UserFlags } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
+} from '@/components/icons';
+import { RootLayout, RootStyles } from '@/components/layout_v2';
+import { UserFlags } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
 import { Config, ConfigProvider } from '@lunaproject/web-core/dist/utils/config';
 import { borderAndBoxShadow, MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
@@ -29,9 +29,9 @@ import {
     useMediaQuery
 } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import { appearanceAtom, AppearanceType } from '@states/appearance';
+import { appearanceAtom, AppearanceType } from '@/states/appearance';
 import deepmerge from 'deepmerge';
-import { useAtom } from 'jotai/index';
+import { useAtom } from 'jotai';
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '../localizations';
 import { Navigation } from './_navigation';

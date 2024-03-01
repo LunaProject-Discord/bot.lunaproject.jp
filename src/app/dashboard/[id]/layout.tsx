@@ -1,7 +1,7 @@
-import { getGuilds, getUser } from '@app/utils';
-import { UnauthorizedView } from '@app/view';
-import { PageWithSidebarLayout } from '@components/layout_v2';
-import { WithIdParamProps } from '@interfaces/page';
+import { getGuilds, getUser } from '@/app/utils';
+import { UnauthorizedView } from '@/app/view';
+import { PageWithSidebarLayout } from '@/components/layout_v2';
+import { WithIdParamProps } from '@/interfaces/page';
 import {
     getGuildConfiguration,
     getGuildFlags,
@@ -9,11 +9,11 @@ import {
     hasDashboardAccess,
     hasDashboardAccessMemberPermission,
     hasDashboardAccessUserPermission
-} from '@libs/bot';
-import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@libs/redis';
-import { getLocalization } from '@localizations/server';
+} from '@/libs/bot';
+import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@/libs/redis';
+import { getLocalization } from '@/localizations/server';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@/utils/discord';
 import { Alert, AlertTitle, Box } from '@mui/material';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import { notFound } from 'next/navigation';
 import React, { ReactNode } from 'react';

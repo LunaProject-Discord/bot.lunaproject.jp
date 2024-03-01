@@ -5,7 +5,7 @@ import {
     DataEmbedImageSchema,
     DataEmbedSchema,
     DataMessageSchema
-} from '@schemas/message';
+} from '@/schemas/message';
 import { z } from 'zod';
 
 export type DataMessage = z.infer<typeof DataMessageSchema>;

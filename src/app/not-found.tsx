@@ -1,4 +1,4 @@
-import { getLocalization } from '@localizations/server';
+import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import { NotFoundView } from './view';
 

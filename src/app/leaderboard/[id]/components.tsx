@@ -1,14 +1,14 @@
 'use client';
 
-import { getMemberDisplay, getUserDisplay } from '@app/user';
-import { ItemFormContainer, ItemIcon, ItemRoot, ItemRowContainer, ItemTextBlock } from '@components/items';
-import { Code } from '@components/text';
-import { GuildLevel } from '@interfaces/bot';
-import { DataGuild, RedisGuild } from '@interfaces/redis';
-import { GuildViewProps } from '@interfaces/view';
+import { getMemberDisplay, getUserDisplay } from '@/app/user';
+import { ItemFormContainer, ItemIcon, ItemRoot, ItemRowContainer, ItemTextBlock } from '@/components/items';
+import { Code } from '@/components/text';
+import { GuildLevel } from '@/interfaces/bot';
+import { DataGuild, RedisGuild } from '@/interfaces/redis';
+import { GuildViewProps } from '@/interfaces/view';
+import { buildCdnUrl, getMemberAvatar, getUserAvatar } from '@/utils/cdn';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { Avatar, Box, BoxProps, CircularProgress, styled, Typography } from '@mui/material';
-import { buildCdnUrl, getMemberAvatar, getUserAvatar } from '@utils/cdn';
 import clsx from 'clsx';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { WindowVirtualizer, WindowVirtualizerProps } from 'virtua';

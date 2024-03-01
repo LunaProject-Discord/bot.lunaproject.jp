@@ -1,6 +1,6 @@
 'use client';
 
-import { ToggleOffIcon, ToggleOnIcon } from '@components/icons';
+import { ToggleOffIcon, ToggleOnIcon } from '@/components/icons';
 import {
     alpha,
     Drawer,

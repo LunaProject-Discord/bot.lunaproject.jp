@@ -1,6 +1,6 @@
 'use client';
 
-import { KeyboardArrowRightIcon } from '@components/icons';
+import { KeyboardArrowRightIcon } from '@/components/icons';
 import {
     Accordion as MuiAccordion,
     accordionClasses,

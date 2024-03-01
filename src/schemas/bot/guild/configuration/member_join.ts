@@ -1,6 +1,6 @@
-import { ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@schemas/bot';
-import { DataMessageSchema } from '@schemas/message';
-import { SnowflakeSchema } from '@schemas/snowflake';
+import { ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@/schemas/bot';
+import { DataMessageSchema } from '@/schemas/message';
+import { SnowflakeSchema } from '@/schemas/snowflake';
 import { z } from 'zod';
 
 export const GuildConfigurationMemberJoinMessageSchema = ConfigurationRootSchema.extend({

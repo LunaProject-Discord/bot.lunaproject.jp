@@ -1,7 +1,10 @@
-import { getMemberDisplay } from '@app/user';
-import { CheckIcon } from '@components/icons';
-import { GuildConfigurationLevelRewardRole, GuildConfigurationLevelRewardType, GuildLevel } from '@interfaces/bot';
-import { GuildViewProps } from '@interfaces/view';
+import { getMemberDisplay } from '@/app/user';
+import { CheckIcon } from '@/components/icons';
+import { GuildConfigurationLevelRewardRole, GuildConfigurationLevelRewardType, GuildLevel } from '@/interfaces/bot';
+import { GuildViewProps } from '@/interfaces/view';
+import { getMemberAvatar } from '@/utils/cdn';
+import { getRoleColor } from '@/utils/discord';
+import { getMaxExperience } from '@/utils/level';
 import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
 import {
     alpha,
@@ -16,9 +19,6 @@ import {
     Paper,
     Typography
 } from '@mui/material';
-import { getMemberAvatar } from '@utils/cdn';
-import { getRoleColor } from '@utils/discord';
-import { getMaxExperience } from '@utils/level';
 import groupBy from 'lodash/groupBy';
 import { size } from 'polished';
 import React from 'react';

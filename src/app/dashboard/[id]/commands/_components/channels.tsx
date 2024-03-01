@@ -3,14 +3,14 @@ import {
     EditableItem,
     EditableItemProps,
     OverrideGroupProps
-} from '@app/dashboard/[id]/commands/_components';
-import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { AddIcon, ChannelIcon } from '@components/icons';
-import { ChannelPopover } from '@components/items';
-import { GuildChannelsViewProps } from '@interfaces/view';
+} from '@/app/dashboard/[id]/commands/_components';
+import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
+import { AddIcon, ChannelIcon } from '@/components/icons';
+import { ChannelPopover } from '@/components/items';
+import { GuildChannelsViewProps } from '@/interfaces/view';
+import { getStateActionValue } from '@/utils/react/state';
 import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { Button, Typography } from '@mui/material';
-import { getStateActionValue } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { Fragment, useState } from 'react';
 

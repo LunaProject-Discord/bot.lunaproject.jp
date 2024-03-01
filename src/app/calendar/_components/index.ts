@@ -1,5 +1,5 @@
-import { CalendarEvent } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
+import { CalendarEvent } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
 
 export interface InternalCalendarEvent extends CalendarEvent {
     index: number;

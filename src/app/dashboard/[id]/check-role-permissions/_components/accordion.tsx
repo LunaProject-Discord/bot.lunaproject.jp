@@ -1,7 +1,7 @@
 'use client';
 
-import { KeyboardArrowDownIcon } from '@components/icons';
-import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
+import { KeyboardArrowDownIcon } from '@/components/icons';
+import { LocalizationProps, TranslationKeys } from '@/interfaces/localization';
 import {
     ADVANCED_PERMISSIONS,
     EVENTS_PERMISSIONS,
@@ -11,7 +11,7 @@ import {
     TEXT_PERMISSIONS,
     THREAD_PERMISSIONS,
     VOICE_PERMISSIONS
-} from '@interfaces/permissions';
+} from '@/interfaces/permissions';
 import { buttonActionStyled } from '@lunaproject/web-core/dist/components/ButtonBase';
 import {
     ItemDisabledProps,

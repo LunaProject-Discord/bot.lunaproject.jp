@@ -1,14 +1,14 @@
 'use client';
 
-import { BrandingFontFamily } from '@app/theme';
-import { AddIcon, OpenInNewIcon } from '@components/icons';
-import { NavigationAppBarId } from '@components/navigation';
-import { RedisMember } from '@interfaces/redis';
-import { GuildConfigurationViewProps, GuildViewProps } from '@interfaces/view';
+import { BrandingFontFamily } from '@/app/theme';
+import { AddIcon, OpenInNewIcon } from '@/components/icons';
+import { NavigationAppBarId } from '@/components/navigation';
+import { RedisMember } from '@/interfaces/redis';
+import { GuildConfigurationViewProps, GuildViewProps } from '@/interfaces/view';
+import { navigationAtom } from '@/states/navigation';
+import { getGuildIcon } from '@/utils/cdn';
 import { Avatar, Box, Button, Link, Slide, Tab, Tabs, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { navigationAtom } from '@states/navigation';
-import { getGuildIcon } from '@utils/cdn';
-import { useSetAtom } from 'jotai/index';
+import { useSetAtom } from 'jotai';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';

@@ -1,6 +1,6 @@
 'use client';
 
-import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@components/dialog';
+import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@/components/dialog';
 import {
     ActionItem,
     ChannelItem,
@@ -12,19 +12,19 @@ import {
     SelectItem,
     SwitchItem,
     TextFieldItem
-} from '@components/items';
-import { PageHeader } from '@components/layout_v2';
-import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { CodeStyleContainer } from '@components/text';
+} from '@/components/items';
+import { PageHeader } from '@/components/layout_v2';
+import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { CodeStyleContainer } from '@/components/text';
 import {
     GuildConfigurationLevel,
     GuildConfigurationLevelNotificationType,
     GuildConfigurationLevelRewardType
-} from '@interfaces/bot';
-import { GuildConfigurationViewProps } from '@interfaces/view';
+} from '@/interfaces/bot';
+import { GuildConfigurationViewProps } from '@/interfaces/view';
+import { GuildConfigurationLevelSchema } from '@/schemas/bot';
 import { Section, SectionContent, SectionParagraph, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { GuildConfigurationLevelSchema } from '@schemas/bot';
 import { ChannelType } from 'discord-api-types/v10';
 import uniqBy from 'lodash/uniqBy';
 import React, { Fragment, useEffect, useState } from 'react';

@@ -1,9 +1,9 @@
-import { CheckIcon, CloseIcon, CrownOutlined, DeleteIcon, RemoveIcon } from '@components/icons';
-import { TranslationKeys } from '@interfaces/localization';
-import { GuildRolesViewProps, GuildViewProps } from '@interfaces/view';
+import { CheckIcon, CloseIcon, CrownOutlined, DeleteIcon, RemoveIcon } from '@/components/icons';
+import { TranslationKeys } from '@/interfaces/localization';
+import { GuildRolesViewProps, GuildViewProps } from '@/interfaces/view';
+import { checkPermission, getRoleColor } from '@/utils/discord';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { alpha, Box, BoxProps, CSSObject, styled, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
-import { checkPermission, getRoleColor } from '@utils/discord';
 import clsx from 'clsx';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { size } from 'polished';

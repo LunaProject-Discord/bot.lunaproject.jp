@@ -1,11 +1,11 @@
 'use client';
 
-import { servicesPopoverStateAtom } from '@app/_popovers/services';
-import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@components/icons';
-import { LocalizationProps } from '@interfaces/localization';
+import { servicesPopoverStateAtom } from '@/app/_popovers/services';
+import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@/components/icons';
+import { LocalizationProps } from '@/interfaces/localization';
 import { NightlightRound } from '@mui/icons-material';
 import { Divider, List, ListItemText, Popover } from '@mui/material';
-import { useAtom } from 'jotai/index';
+import { useAtom } from 'jotai';
 import React from 'react';
 import { PopoverListItemIcon, PopoverListItemLinkButton } from '../index';
 

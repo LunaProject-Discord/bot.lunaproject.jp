@@ -3,8 +3,8 @@ import {
     DefaultEditableItemProps,
     EditableItem as OriginalEditableItem,
     EditableItemProps
-} from '@app/dashboard/[id]/commands/_components';
-import { StyledProps } from '@interfaces/mui';
+} from '@/app/dashboard/[id]/commands/_components';
+import { StyledProps } from '@/interfaces/mui';
 import { Box, styled, Typography } from '@mui/material';
 import React from 'react';
 

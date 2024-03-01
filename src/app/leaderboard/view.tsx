@@ -1,8 +1,9 @@
 'use client';
 
-import { FormatListBulletedIcon, GridViewIcon } from '@components/icons';
-import { PageHeader, PageLayout } from '@components/layout_v2';
-import { LocalizationProps } from '@interfaces/localization';
+import { FormatListBulletedIcon, GridViewIcon } from '@/components/icons';
+import { PageHeader, PageLayout } from '@/components/layout_v2';
+import { LocalizationProps } from '@/interfaces/localization';
+import { getGuildIcon } from '@/utils/discord';
 import { segmentedControlClasses } from '@lunaproject/web-core';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
@@ -10,7 +11,6 @@ import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItem
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, ButtonBase, CircularProgress } from '@mui/material';
-import { getGuildIcon } from '@utils/discord';
 import NextLink from 'next/link';
 import React, { Fragment, useState } from 'react';
 

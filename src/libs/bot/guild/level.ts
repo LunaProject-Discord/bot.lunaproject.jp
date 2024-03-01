@@ -1,6 +1,6 @@
-import { GuildLevel } from '@interfaces/bot';
-import prisma from '@libs/prisma';
-import { getMembers, getUsersByIds } from '@libs/redis';
+import { GuildLevel } from '@/interfaces/bot';
+import prisma from '@/libs/prisma';
+import { getMembers, getUsersByIds } from '@/libs/redis';
 
 export const getGuildLevels = async (id: string): Promise<GuildLevel[]> => {
     const guildLevels = await prisma.guild_levels_with_rank.findMany({

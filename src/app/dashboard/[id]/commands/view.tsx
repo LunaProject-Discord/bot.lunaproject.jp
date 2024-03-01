@@ -1,26 +1,26 @@
 'use client';
 
-import { Channels, Members, Roles } from '@app/dashboard/[id]/commands/_components';
+import { Channels, Members, Roles } from '@/app/dashboard/[id]/commands/_components';
 import {
     asCommandPermissionOverrides,
     asEditablePermissionOverrides,
     getCommandConfiguration,
     getDefaultCommandConfiguration,
     sortCommands
-} from '@app/dashboard/[id]/commands/utils';
-import { PageHeader } from '@components/layout_v2';
-import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { codeStyled } from '@components/text';
-import { GuildConfigurationCommand, GuildConfigurationCommands } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
-import { RedisCommand } from '@interfaces/redis';
-import { GuildConfigurationViewProps, GuildViewProps } from '@interfaces/view';
+} from '@/app/dashboard/[id]/commands/utils';
+import { PageHeader } from '@/components/layout_v2';
+import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { codeStyled } from '@/components/text';
+import { GuildConfigurationCommand, GuildConfigurationCommands } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
+import { RedisCommand } from '@/interfaces/redis';
+import { GuildConfigurationViewProps, GuildViewProps } from '@/interfaces/view';
+import { GuildConfigurationCommandsSchema } from '@/schemas/bot';
+import { getStateActionValue } from '@/utils/react/state';
 import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, styled, Switch, Typography, Unstable_Grid2 as Grid } from '@mui/material';
-import { GuildConfigurationCommandsSchema } from '@schemas/bot';
-import { getStateActionValue } from '@utils/react/state';
 import deepEqual from 'deep-equal';
 import React, { Dispatch, Fragment, memo, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';

@@ -1,4 +1,4 @@
-import { DeleteIcon } from '@components/icons';
+import { DeleteIcon } from '@/components/icons';
 import {
     changeClasses,
     ChangeCode,
@@ -8,8 +8,8 @@ import {
     ChangeIconSpacer,
     ChangeRoot,
     ChangeUndoButton
-} from '@components/save_confirm_v2/changes/index';
-import { LocalizationProps } from '@interfaces/localization';
+} from '@/components/save_confirm_v2/changes/index';
+import { LocalizationProps } from '@/interfaces/localization';
 import { Box, Tooltip, Typography } from '@mui/material';
 
 export const ChangeRemoveIcon = ({ localization: { translations } }: LocalizationProps) => (

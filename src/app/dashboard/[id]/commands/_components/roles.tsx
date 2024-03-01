@@ -3,15 +3,15 @@ import {
     EditableItem,
     EditableItemProps,
     OverrideGroupProps
-} from '@app/dashboard/[id]/commands/_components';
-import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { AddIcon } from '@components/icons';
-import { RolePopover } from '@components/items';
-import { GuildRolesViewProps } from '@interfaces/view';
+} from '@/app/dashboard/[id]/commands/_components';
+import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
+import { AddIcon } from '@/components/icons';
+import { RolePopover } from '@/components/items';
+import { GuildRolesViewProps } from '@/interfaces/view';
+import { getRoleColor } from '@/utils/discord';
+import { getStateActionValue } from '@/utils/react/state';
 import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { Box, Button, Typography } from '@mui/material';
-import { getRoleColor } from '@utils/discord';
-import { getStateActionValue } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import { size } from 'polished';
 import React, { Fragment, useState } from 'react';

@@ -1,4 +1,4 @@
-import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole, RedisUser } from '@interfaces/redis';
+import { DataGuild, RedisChannel, RedisGuild, RedisMember, RedisRole, RedisUser } from '@/interfaces/redis';
 import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
 import { APIGuildChannel, GuildMember, OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { APIGuild, APIRole, APIUser, PermissionFlagsBits } from 'discord-api-types/v10';

@@ -1,7 +1,7 @@
-import { getGuilds, getUser } from '@app/utils';
-import { getAndRequestUserGuildsById, getStatuses } from '@libs/redis';
-import { getLocalization } from '@localizations/server';
-import { sortGuilds } from '@utils/discord';
+import { getGuilds, getUser } from '@/app/utils';
+import { getAndRequestUserGuildsById, getStatuses } from '@/libs/redis';
+import { getLocalization } from '@/localizations/server';
+import { sortGuilds } from '@/utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { View } from './view';

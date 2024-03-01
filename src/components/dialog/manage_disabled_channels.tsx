@@ -1,7 +1,7 @@
 'use client';
 
-import { CancelButton } from '@components/buttons';
-import { GuildChannelsViewProps } from '@interfaces/view';
+import { CancelButton } from '@/components/buttons';
+import { GuildChannelsViewProps } from '@/interfaces/view';
 import { Dialog, DialogActions, DialogHeader } from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
@@ -24,7 +24,7 @@ import {
     Theme,
     useMediaQuery
 } from '@mui/material';
-import { filterPredicateChannel, sortChannels } from '@utils/discord';
+import { filterPredicateChannel, sortChannels } from '@/utils/discord';
 import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
 import React, { Fragment, useState } from 'react';

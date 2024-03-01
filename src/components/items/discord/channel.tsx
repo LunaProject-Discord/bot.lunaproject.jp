@@ -1,13 +1,13 @@
 'use client';
 
-import { LocalizationProps } from '@interfaces/localization';
-import { PopoverProps } from '@interfaces/mui';
-import { RedisChannel } from '@interfaces/redis';
+import { LocalizationProps } from '@/interfaces/localization';
+import { PopoverProps } from '@/interfaces/mui';
+import { RedisChannel } from '@/interfaces/redis';
+import { filterPredicateChannel, sortChannels } from '@/utils/discord';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { APIGuildChannel } from '@lunaproject/web-discord/dist/interfaces';
 import { ListItemButtonProps, ListItemText, popoverClasses, Theme, Typography, useMediaQuery } from '@mui/material';
-import { filterPredicateChannel, sortChannels } from '@utils/discord';
 import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
 import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';

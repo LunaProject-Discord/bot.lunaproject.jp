@@ -1,15 +1,15 @@
 'use client';
 
-import { ScheduleIcon, TranslateIcon } from '@components/icons';
-import { SelectItem } from '@components/items';
-import { PageHeader } from '@components/layout_v2';
-import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { ConfigurationLanguage, ConfigurationTimeAndLanguage } from '@interfaces/bot';
-import { GuildConfigurationViewProps } from '@interfaces/view';
+import { ScheduleIcon, TranslateIcon } from '@/components/icons';
+import { SelectItem } from '@/components/items';
+import { PageHeader } from '@/components/layout_v2';
+import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { ConfigurationLanguage, ConfigurationTimeAndLanguage } from '@/interfaces/bot';
+import { GuildConfigurationViewProps } from '@/interfaces/view';
+import { ConfigurationTimeAndLanguageSchema } from '@/schemas/bot';
+import { TimeZone, TimeZones } from '@/utils/timezone';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { ConfigurationTimeAndLanguageSchema } from '@schemas/bot';
-import { TimeZone, TimeZones } from '@utils/timezone';
 import React, { Fragment, ReactNode } from 'react';
 import spacetime from 'spacetime';
 import { saveGuildConfiguration } from '../utils';

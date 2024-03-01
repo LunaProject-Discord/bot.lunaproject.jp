@@ -3,7 +3,7 @@ import {
     ConfigurationRootSchema,
     ConfigurationTimeAndLanguageSchema,
     ConfigurationTimeZoneSchema
-} from '@schemas/bot';
+} from '@/schemas/bot';
 import { z } from 'zod';
 
 export type ConfigurationRoot = z.infer<typeof ConfigurationRootSchema>;

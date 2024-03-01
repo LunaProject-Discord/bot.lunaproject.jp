@@ -1,4 +1,4 @@
-import { Localization, Translations } from '@interfaces/localization';
+import { Localization, Translations } from '@/interfaces/localization';
 import React, { Fragment } from 'react';
 
 export const translationsJa: Translations = {

@@ -1,5 +1,5 @@
-import { RedisMember, RedisSnowflake, RedisUser } from '@interfaces/redis';
-import { PartialGuildLevelRecordSchema, PartialGuildLevelSchema, PartialGuildLevelsSchema } from '@schemas/bot';
+import { RedisMember, RedisSnowflake, RedisUser } from '@/interfaces/redis';
+import { PartialGuildLevelRecordSchema, PartialGuildLevelSchema, PartialGuildLevelsSchema } from '@/schemas/bot';
 import { z } from 'zod';
 
 export type PartialGuildLevel = z.infer<typeof PartialGuildLevelSchema>;

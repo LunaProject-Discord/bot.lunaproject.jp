@@ -1,8 +1,9 @@
 'use client';
 
-import { LocalizationProps } from '@interfaces/localization';
-import { PopoverProps } from '@interfaces/mui';
-import { RedisRole } from '@interfaces/redis';
+import { LocalizationProps } from '@/interfaces/localization';
+import { PopoverProps } from '@/interfaces/mui';
+import { RedisRole } from '@/interfaces/redis';
+import { filterPredicateRole, getRoleColor, sortRoles } from '@/utils/discord';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import {
@@ -14,7 +15,6 @@ import {
     Typography,
     useMediaQuery
 } from '@mui/material';
-import { filterPredicateRole, getRoleColor, sortRoles } from '@utils/discord';
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
 import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';

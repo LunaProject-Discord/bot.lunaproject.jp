@@ -1,9 +1,9 @@
 'use client';
 
-import { PageHeader } from '@components/layout_v2';
-import { GuildNotification } from '@interfaces/bot';
-import { GuildViewProps } from '@interfaces/view';
-import { useLocale } from '@localizations/client';
+import { PageHeader } from '@/components/layout_v2';
+import { GuildNotification } from '@/interfaces/bot';
+import { GuildViewProps } from '@/interfaces/view';
+import { useLocale } from '@/localizations/client';
 import { Section, SectionParagraph, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import React, { Fragment } from 'react';
 

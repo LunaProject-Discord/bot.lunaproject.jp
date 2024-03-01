@@ -1,8 +1,10 @@
 'use client';
 
-import { LocalizationProps } from '@interfaces/localization';
-import { PopoverProps } from '@interfaces/mui';
-import { RedisMember } from '@interfaces/redis';
+import { LocalizationProps } from '@/interfaces/localization';
+import { PopoverProps } from '@/interfaces/mui';
+import { RedisMember } from '@/interfaces/redis';
+import { getMemberAvatar, getUserAvatar } from '@/utils/cdn';
+import { filterPredicateMember, getMemberDisplayName, sortMembers } from '@/utils/discord';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { GuildMember } from '@lunaproject/web-discord/dist/interfaces';
@@ -15,8 +17,6 @@ import {
     Typography,
     useMediaQuery
 } from '@mui/material';
-import { getMemberAvatar, getUserAvatar } from '@utils/cdn';
-import { filterPredicateMember, getMemberDisplayName, sortMembers } from '@utils/discord';
 import { ellipsis } from 'polished';
 import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FixedSizeList } from 'react-window';

@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import {
     AnalyticsIcon,
     CloudOffIcon,
@@ -12,10 +12,10 @@ import {
     PersonOffIcon,
     SettingsIcon,
     TrailLengthShortIcon
-} from '@components/icons';
-import { PageCenteredLayout, PageLayout } from '@components/layout_v2';
-import { FeaturedGuild } from '@interfaces/bot';
-import { LocalizationProps } from '@interfaces/localization';
+} from '@/components/icons';
+import { PageCenteredLayout, PageLayout } from '@/components/layout_v2';
+import { FeaturedGuild } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
@@ -35,8 +35,8 @@ import {
     ListItemText,
     Typography
 } from '@mui/material';
-import { getGuildIcon } from '@utils/discord';
-import { fetchWithUser } from '@utils/swr';
+import { getGuildIcon } from '@/utils/discord';
+import { fetchWithUser } from '@/utils/swr';
 import NextLink from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { Fragment, useState } from 'react';

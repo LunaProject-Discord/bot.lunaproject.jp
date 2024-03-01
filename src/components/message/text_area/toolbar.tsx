@@ -6,7 +6,7 @@ import {
     FormatStrikethroughIcon,
     FormatUnderlinedIcon,
     MoodIcon
-} from '@components/icons';
+} from '@/components/icons';
 import { $convertToMarkdownString } from '@lexical/markdown';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';

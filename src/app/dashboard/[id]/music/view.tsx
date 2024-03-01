@@ -1,14 +1,14 @@
 'use client';
 
-import { NumberFieldItem, SwitchItem } from '@components/items';
-import { PageHeader } from '@components/layout_v2';
-import { SaveConfirmV2 } from '@components/save_confirm_v2';
-import { GuildConfigurationMusic } from '@interfaces/bot';
-import { GuildConfigurationViewProps } from '@interfaces/view';
+import { NumberFieldItem, SwitchItem } from '@/components/items';
+import { PageHeader } from '@/components/layout_v2';
+import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { GuildConfigurationMusic } from '@/interfaces/bot';
+import { GuildConfigurationViewProps } from '@/interfaces/view';
+import { GuildConfigurationMusicSchema } from '@/schemas/bot';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle } from '@mui/material';
-import { GuildConfigurationMusicSchema } from '@schemas/bot';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
 

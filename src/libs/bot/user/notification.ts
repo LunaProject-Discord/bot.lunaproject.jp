@@ -1,6 +1,6 @@
-import { UserNotification } from '@interfaces/bot';
-import prisma from '@libs/prisma';
-import { fromBinaryUUID, toBinaryUUID } from '@utils/uuid';
+import { UserNotification } from '@/interfaces/bot';
+import prisma from '@/libs/prisma';
+import { fromBinaryUUID, toBinaryUUID } from '@/utils/uuid';
 
 export const getUserNotifications = async (id: string): Promise<UserNotification[]> => {
     const userNotifications = await prisma.user_notifications.findMany({

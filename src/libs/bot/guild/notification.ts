@@ -1,6 +1,6 @@
-import { GuildNotification } from '@interfaces/bot';
-import prisma from '@libs/prisma';
-import { fromBinaryUUID, toBinaryUUID } from '@utils/uuid';
+import { GuildNotification } from '@/interfaces/bot';
+import prisma from '@/libs/prisma';
+import { fromBinaryUUID, toBinaryUUID } from '@/utils/uuid';
 
 export const getGuildNotifications = async (id: string): Promise<GuildNotification[]> => {
     const guildId = BigInt(id);

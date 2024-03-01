@@ -6,9 +6,10 @@ import {
     GridViewIcon,
     KeyboardArrowDownIcon,
     KeyboardArrowUpIcon
-} from '@components/icons';
-import { PageHeader, PageLayout } from '@components/layout_v2';
-import { LocalizationProps } from '@interfaces/localization';
+} from '@/components/icons';
+import { PageHeader, PageLayout } from '@/components/layout_v2';
+import { LocalizationProps } from '@/interfaces/localization';
+import { getGuildIcon } from '@/utils/discord';
 import { segmentedControlClasses } from '@lunaproject/web-core';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { Menu } from '@lunaproject/web-core/dist/components/Menu';
@@ -17,7 +18,6 @@ import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItem
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, Button, ButtonBase, CircularProgress, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
-import { getGuildIcon } from '@utils/discord';
 import NextLink from 'next/link';
 import React, { Fragment, MouseEvent, useState } from 'react';
 

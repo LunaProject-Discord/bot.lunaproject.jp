@@ -1,5 +1,5 @@
 import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { COOKIE_TOKEN } from '@utils/cookie';
+import { COOKIE_TOKEN } from '@/utils/cookie';
 import { cookies } from 'next/headers';
 import { getGuilds as getOriginalGuilds, getUser as getOriginalUser } from '../libs/discord';
 

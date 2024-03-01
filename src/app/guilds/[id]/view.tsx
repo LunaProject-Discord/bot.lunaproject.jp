@@ -1,8 +1,8 @@
-import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { CloudOffIcon } from '@components/icons';
-import { PageCenteredLayout, PageLayout } from '@components/layout_v2';
-import { LocalizationProps } from '@interfaces/localization';
-import { GuildViewProps } from '@interfaces/view';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
+import { CloudOffIcon } from '@/components/icons';
+import { PageCenteredLayout, PageLayout } from '@/components/layout_v2';
+import { LocalizationProps } from '@/interfaces/localization';
+import { GuildViewProps } from '@/interfaces/view';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { CircularProgress } from '@mui/material';
 import React, { Fragment } from 'react';

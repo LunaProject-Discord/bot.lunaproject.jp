@@ -1,6 +1,6 @@
 'use client';
 
-import { defaultPredicate, NavigationItemProps } from '@components/navigation/index';
+import { defaultPredicate, NavigationItemProps } from '@/components/navigation/index';
 import {
     alpha,
     AppBar as MuiAppBar,

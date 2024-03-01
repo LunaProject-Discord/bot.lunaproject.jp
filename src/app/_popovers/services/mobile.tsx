@@ -1,8 +1,8 @@
-import { PopoverListItemIcon, PopoverListItemLinkButton } from '@app/_popovers';
-import { servicesPopoverStateAtom } from '@app/_popovers/services';
-import { BottomSheet, BottomSheetContent } from '@components/bottom_sheet';
-import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@components/icons';
-import { LocalizationProps } from '@interfaces/localization';
+import { PopoverListItemIcon, PopoverListItemLinkButton } from '@/app/_popovers';
+import { servicesPopoverStateAtom } from '@/app/_popovers/services';
+import { BottomSheet, BottomSheetContent } from '@/components/bottom_sheet';
+import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@/components/icons';
+import { LocalizationProps } from '@/interfaces/localization';
 import { NightlightRound } from '@mui/icons-material';
 import { Divider, List, listItemButtonClasses, ListItemText } from '@mui/material';
 import { useAtom } from 'jotai';

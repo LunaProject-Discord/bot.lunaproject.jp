@@ -1,4 +1,4 @@
-import { SessionStatus } from '@interfaces/bot';
+import { SessionStatus } from '@/interfaces/bot';
 
 export interface RedisSnowflake {
     id: string;

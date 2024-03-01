@@ -1,4 +1,4 @@
-import { Statistics, StatisticsPeriodType } from '@interfaces/bot';
+import { Statistics, StatisticsPeriodType } from '@/interfaces/bot';
 
 export interface StatisticsPageProps {
     searchParams?: {

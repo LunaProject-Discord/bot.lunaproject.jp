@@ -26,29 +26,8 @@
         ],
         "baseUrl": ".",
         "paths": {
-            "@app/*": [
-                "src/app/*"
-            ],
-            "@components/*": [
-                "src/components/*"
-            ],
-            "@interfaces/*": [
-                "src/interfaces/*"
-            ],
-            "@libs/*": [
-                "src/libs/*"
-            ],
-            "@localizations/*": [
-                "src/localizations/*"
-            ],
-            "@schemas/*": [
-                "src/schemas/*"
-            ],
-            "@states/*": [
-                "src/states/*"
-            ],
-            "@utils/*": [
-                "src/utils/*"
+            "@/*": [
+                "src/*"
             ]
         },
         "typeRoots": [

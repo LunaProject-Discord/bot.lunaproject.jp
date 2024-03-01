@@ -1,8 +1,8 @@
-import { DesktopServicesPopover, MobileServicesPopover } from '@app/_popovers';
-import { LocalizationProps } from '@interfaces/localization';
+import { DesktopServicesPopover, MobileServicesPopover } from '@/app/_popovers';
+import { LocalizationProps } from '@/interfaces/localization';
+import { popoverAtom, ServicesPopoverState } from '@/states/popover';
 import { Theme, useMediaQuery } from '@mui/material';
-import { popoverAtom, ServicesPopoverState } from '@states/popover';
-import { atom } from 'jotai/index';
+import { atom } from 'jotai';
 
 export const servicesPopoverStateAtom = atom(
     (get) => {

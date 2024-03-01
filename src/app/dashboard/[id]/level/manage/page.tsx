@@ -1,8 +1,8 @@
-import { getUser } from '@app/utils';
-import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration, getGuildLevels, hasDashboardAccess } from '@libs/bot';
-import { getGuildById } from '@libs/redis';
-import { getLocalization } from '@localizations/server';
+import { getUser } from '@/app/utils';
+import { WithIdParamProps } from '@/interfaces/page';
+import { getGuildConfiguration, getGuildLevels, hasDashboardAccess } from '@/libs/bot';
+import { getGuildById } from '@/libs/redis';
+import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { NotFoundView } from '../../view';

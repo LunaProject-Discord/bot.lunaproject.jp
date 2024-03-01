@@ -1,10 +1,10 @@
-import { WithIdParamProps } from '@interfaces/page';
-import { getGuildConfiguration } from '@libs/bot';
-import prisma from '@libs/prisma';
-import { updateGuildById } from '@libs/redis';
+import { WithIdParamProps } from '@/interfaces/page';
+import { getGuildConfiguration } from '@/libs/bot';
+import prisma from '@/libs/prisma';
+import { updateGuildById } from '@/libs/redis';
+import { COOKIE_TOKEN } from '@/utils/cookie';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@/utils/discord';
 import { getGuildById } from '@lunaproject/web-discord/dist/libs';
-import { COOKIE_TOKEN } from '@utils/cookie';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@utils/discord';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 

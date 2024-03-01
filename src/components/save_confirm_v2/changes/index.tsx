@@ -1,10 +1,10 @@
-import { UndoIcon } from '@components/icons';
-import { ChangeAdd } from '@components/save_confirm_v2/changes/add';
-import { ChangeRemove } from '@components/save_confirm_v2/changes/remove';
-import { ChangeUpdate } from '@components/save_confirm_v2/changes/update';
-import { Change, ChangesGroupByPath, groupByChanges, mapChanges } from '@components/save_confirm_v2/changes/utils';
-import { Code } from '@components/text';
-import { LocalizationProps } from '@interfaces/localization';
+import { UndoIcon } from '@/components/icons';
+import { ChangeAdd } from '@/components/save_confirm_v2/changes/add';
+import { ChangeRemove } from '@/components/save_confirm_v2/changes/remove';
+import { ChangeUpdate } from '@/components/save_confirm_v2/changes/update';
+import { Change, ChangesGroupByPath, groupByChanges, mapChanges } from '@/components/save_confirm_v2/changes/utils';
+import { Code } from '@/components/text';
+import { LocalizationProps } from '@/interfaces/localization';
 import { Box, BoxProps, styled, Tooltip, Typography } from '@mui/material';
 import clsx from 'clsx';
 import { IChange } from 'json-diff-ts';

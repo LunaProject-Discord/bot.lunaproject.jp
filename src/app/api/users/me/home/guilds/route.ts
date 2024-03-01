@@ -1,8 +1,8 @@
-import { getGuilds, getUser } from '@app/utils';
-import { FeaturedGuild, GuildFeature } from '@interfaces/bot';
-import { getGuildConfiguration } from '@libs/bot';
-import { getAndRequestUserGuildsById } from '@libs/redis';
-import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@utils/discord';
+import { getGuilds, getUser } from '@/app/utils';
+import { FeaturedGuild, GuildFeature } from '@/interfaces/bot';
+import { getGuildConfiguration } from '@/libs/bot';
+import { getAndRequestUserGuildsById } from '@/libs/redis';
+import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@/utils/discord';
 import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request) => {

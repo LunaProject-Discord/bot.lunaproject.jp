@@ -1,16 +1,16 @@
-import { EditableItemProps, OverrideGroupProps } from '@app/dashboard/[id]/commands/_components';
+import { EditableItemProps, OverrideGroupProps } from '@/app/dashboard/[id]/commands/_components';
 import {
     DefaultEditableItem,
     EditableItem,
     Group,
     GroupTitle
-} from '@app/dashboard/[id]/commands/_dialog/_components/index';
-import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { AddIcon, ChannelIcon } from '@components/icons';
-import { ChannelPopover } from '@components/items';
-import { GuildChannelsViewProps } from '@interfaces/view';
+} from '@/app/dashboard/[id]/commands/_dialog/_components/index';
+import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
+import { AddIcon, ChannelIcon } from '@/components/icons';
+import { ChannelPopover } from '@/components/items';
+import { GuildChannelsViewProps } from '@/interfaces/view';
+import { getStateActionValue } from '@/utils/react/state';
 import { Button, Typography } from '@mui/material';
-import { getStateActionValue } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { Fragment, useState } from 'react';
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { NavigationAppBar, NavigationDrawerToolbar, NavigationProps } from '@app/_navigation';
-import { DateTimeEditor } from '@components/date';
+import { NavigationAppBar, NavigationDrawerToolbar, NavigationProps } from '@/app/_navigation';
+import { DateTimeEditor } from '@/components/date';
 import {
     ArrowBackIcon,
     DnsIcon,
@@ -11,18 +11,18 @@ import {
     MoodIcon,
     SignalCellularAltIcon,
     TagIcon
-} from '@components/icons';
+} from '@/components/icons';
 import {
     NavigationDrawer,
     NavigationDrawerContent,
     NavigationDrawerGroup,
     NavigationDrawerItem,
     NavigationRoot
-} from '@components/navigation';
-import { StatisticsPeriodType } from '@interfaces/bot';
+} from '@/components/navigation';
+import { StatisticsPeriodType } from '@/interfaces/bot';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Theme, Typography, useMediaQuery } from '@mui/material';
-import { getStateActionValue } from '@utils/react/state';
+import { getStateActionValue } from '@/utils/react/state';
 import { endOfToday } from 'date-fns';
 import { DateTime } from 'luxon';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';

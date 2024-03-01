@@ -10,7 +10,7 @@ import {
     RedisUser,
     RedisUserGuild,
     RedisUserGuilds
-} from '@interfaces/redis';
+} from '@/interfaces/redis';
 import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
 import Redis from 'ioredis';
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { NavigationAppBar, NavigationDrawerToolbar } from '@app/_navigation';
-import { GuildSelect } from '@app/dashboard/[id]/components';
+import { NavigationAppBar, NavigationDrawerToolbar } from '@/app/_navigation';
+import { GuildSelect } from '@/app/dashboard/[id]/components';
 import {
     ArrowBackIcon,
     CommandBoxIcon,
@@ -21,7 +21,7 @@ import {
     TagIcon,
     TextSnippetIcon,
     TranslateIcon
-} from '@components/icons';
+} from '@/components/icons';
 import {
     NavigationDrawer,
     NavigationDrawerContent,
@@ -29,14 +29,14 @@ import {
     NavigationDrawerItem,
     NavigationDrawerItemWithEnabledStatus,
     NavigationRoot
-} from '@components/navigation';
-import { GuildConfiguration, GuildFlags, UserFlags } from '@interfaces/bot';
-import { DataGuild, RedisGuild } from '@interfaces/redis';
-import { UserViewProps } from '@interfaces/view';
+} from '@/components/navigation';
+import { GuildConfiguration, GuildFlags, UserFlags } from '@/interfaces/bot';
+import { DataGuild, RedisGuild } from '@/interfaces/redis';
+import { UserViewProps } from '@/interfaces/view';
+import { getGuildIcon } from '@/utils/cdn';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, Box, Chip, Theme, Typography, useMediaQuery } from '@mui/material';
-import { getGuildIcon } from '@utils/cdn';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 

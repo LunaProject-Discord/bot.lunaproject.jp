@@ -1,5 +1,5 @@
-import { Code } from '@components/text';
-import { LocalizationProps } from '@interfaces/localization';
+import { Code } from '@/components/text';
+import { LocalizationProps } from '@/interfaces/localization';
 import { Box, styled, Typography } from '@mui/material';
 import React from 'react';
 import { ZodIssue } from 'zod';

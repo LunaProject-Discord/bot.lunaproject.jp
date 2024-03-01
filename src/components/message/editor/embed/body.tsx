@@ -1,9 +1,9 @@
 'use client';
 
+import { LocalizationProps } from '@/interfaces/localization';
+import { isValidHexColor } from '@/utils/color';
 import { useTheme } from '@emotion/react';
-import { LocalizationProps } from '@interfaces/localization';
 import { Box, ButtonBase, OutlinedInput, Popover } from '@mui/material';
-import { isValidHexColor } from '@utils/color';
 import Color from 'color';
 import React, { MouseEvent, useState } from 'react';
 import { ChromePicker } from 'react-color';

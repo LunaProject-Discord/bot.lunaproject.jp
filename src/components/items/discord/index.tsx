@@ -1,7 +1,7 @@
 'use client';
 
-import { ArrowDropDownIcon, ArrowDropUpIcon, SearchIcon } from '@components/icons';
-import { PopoverProps } from '@interfaces/mui';
+import { ArrowDropDownIcon, ArrowDropUpIcon, SearchIcon } from '@/components/icons';
+import { PopoverProps } from '@/interfaces/mui';
 import {
     alpha,
     Box,

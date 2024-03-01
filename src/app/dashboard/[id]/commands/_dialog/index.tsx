@@ -1,17 +1,17 @@
 'use client';
 
-import { Channels, Group, GroupTitle, Members, Roles } from '@app/dashboard/[id]/commands/_dialog/_components';
-import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@app/dashboard/[id]/commands/utils';
-import { CancelButton } from '@components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
-import { Code } from '@components/text';
-import { GuildConfigurationCommand } from '@interfaces/bot';
-import { GuildViewProps } from '@interfaces/view';
+import { Channels, Group, GroupTitle, Members, Roles } from '@/app/dashboard/[id]/commands/_dialog/_components';
+import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
+import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@/app/dashboard/[id]/commands/utils';
+import { CancelButton } from '@/components/buttons';
+import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
+import { Code } from '@/components/text';
+import { GuildConfigurationCommand } from '@/interfaces/bot';
+import { GuildViewProps } from '@/interfaces/view';
+import { sortChannels, sortMembers, sortRoles } from '@/utils/discord';
+import { getStateActionValue } from '@/utils/react/state';
 import { ItemFormContainer, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Box, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
-import { sortChannels, sortMembers, sortRoles } from '@utils/discord';
-import { getStateActionValue } from '@utils/react/state';
 import deepEqual from 'deep-equal';
 import React, { Fragment, memo, SetStateAction, useCallback, useState } from 'react';
 

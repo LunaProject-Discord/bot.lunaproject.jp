@@ -7,11 +7,18 @@ import {
     ExpandMoreIcon,
     KeyboardArrowDownIcon,
     KeyboardArrowUpIcon
-} from '@components/icons';
-import { ItemDisabledProps, ItemVariableProps } from '@components/items';
+} from '@/components/icons';
+import { ItemDisabledProps, ItemVariableProps } from '@/components/items';
+import { LocalizationProps } from '@/interfaces/localization';
+import { getNewEmbed } from '@/libs/message';
+import {
+    moveDown as moveDownArray,
+    moveUp as moveUpArray,
+    remove as removeArray,
+    replace as replaceArray
+} from '@/utils/array';
+import { getStateActionValue } from '@/utils/react/state';
 import { useTheme } from '@emotion/react';
-import { LocalizationProps } from '@interfaces/localization';
-import { getNewEmbed } from '@libs/message';
 import { Embed } from '@lunaproject/web-discord/dist/interfaces';
 import {
     Accordion as MuiAccordion,
@@ -25,13 +32,6 @@ import {
     styled,
     Tooltip
 } from '@mui/material';
-import {
-    moveDown as moveDownArray,
-    moveUp as moveUpArray,
-    remove as removeArray,
-    replace as replaceArray
-} from '@utils/array';
-import { getStateActionValue } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
 import { EmbedAccordionSummary } from './accordion';

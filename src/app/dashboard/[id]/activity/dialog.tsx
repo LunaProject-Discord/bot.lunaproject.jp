@@ -1,8 +1,8 @@
 'use client';
 
-import { CancelButton } from '@components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
-import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
+import { CancelButton } from '@/components/buttons';
+import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import {
     AddIcon,
     DeleteIcon,
@@ -14,13 +14,15 @@ import {
     SportsEsportsIcon,
     TagIcon,
     VideocamIcon
-} from '@components/icons';
-import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '@components/items';
-import { translatableTypographyStyled } from '@components/text';
-import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@interfaces/bot';
-import { LocalizationProps, TranslationKeys } from '@interfaces/localization';
-import { PopoverProps } from '@interfaces/mui';
-import { GuildViewProps } from '@interfaces/view';
+} from '@/components/icons';
+import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '@/components/items';
+import { translatableTypographyStyled } from '@/components/text';
+import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@/interfaces/bot';
+import { LocalizationProps, TranslationKeys } from '@/interfaces/localization';
+import { PopoverProps } from '@/interfaces/mui';
+import { GuildViewProps } from '@/interfaces/view';
+import { getInteractRolesByDataGuild } from '@/utils/discord';
+import { getStateActionValue, UniqueId, updateArrayState } from '@/utils/react/state';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import {
@@ -38,8 +40,6 @@ import {
     Tooltip,
     useMediaQuery
 } from '@mui/material';
-import { getInteractRolesByDataGuild } from '@utils/discord';
-import { getStateActionValue, UniqueId, updateArrayState } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import React, { Dispatch, Fragment, ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react';
 

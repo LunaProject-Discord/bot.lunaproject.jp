@@ -1,15 +1,17 @@
 'use client';
 
-import { CancelButton, SwitchButton } from '@components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@components/dialog';
-import { ErrorDescription, ErrorRoot, ErrorTitle } from '@components/error';
-import { AddIcon, DeleteIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon, LabelOffIcon } from '@components/icons';
-import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover } from '@components/items';
+import { CancelButton, SwitchButton } from '@/components/buttons';
+import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
+import { AddIcon, DeleteIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon, LabelOffIcon } from '@/components/icons';
+import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover } from '@/components/items';
 import {
     GuildConfigurationMemberJoinBeforePendingRole,
     GuildConfigurationMemberJoinBeforePendingRoleTargetType
-} from '@interfaces/bot';
-import { GuildViewProps } from '@interfaces/view';
+} from '@/interfaces/bot';
+import { GuildViewProps } from '@/interfaces/view';
+import { getInteractRolesByDataGuild, getRoleColor } from '@/utils/discord';
+import { getStateActionValue, UniqueId, updateArrayState } from '@/utils/react/state';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import {
     Box,
@@ -23,8 +25,6 @@ import {
     Typography,
     useMediaQuery
 } from '@mui/material';
-import { getInteractRolesByDataGuild, getRoleColor } from '@utils/discord';
-import { getStateActionValue, UniqueId, updateArrayState } from '@utils/react/state';
 import { nanoid } from 'nanoid';
 import { size } from 'polished';
 import React, { Dispatch, Fragment, SetStateAction, useEffect, useMemo, useState } from 'react';

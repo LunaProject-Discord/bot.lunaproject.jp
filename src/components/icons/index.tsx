@@ -1,7 +1,7 @@
 'use client';
 
-import { CategoryIcon } from '@components/icons/material_symbols';
-import { RedisChannel } from '@interfaces/redis';
+import { CategoryIcon } from '@/components/icons/material_symbols';
+import { RedisChannel } from '@/interfaces/redis';
 import {
     AnnouncementChannelIcon,
     ForumChannelIcon,

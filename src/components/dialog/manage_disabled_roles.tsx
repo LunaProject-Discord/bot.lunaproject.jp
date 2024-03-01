@@ -1,8 +1,8 @@
 'use client';
 
-import { CancelButton } from '@components/buttons';
-import { CloseIcon, SearchIcon } from '@components/icons';
-import { GuildRolesViewProps } from '@interfaces/view';
+import { CancelButton } from '@/components/buttons';
+import { CloseIcon, SearchIcon } from '@/components/icons';
+import { GuildRolesViewProps } from '@/interfaces/view';
 import { Dialog, DialogActions, DialogHeader } from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
@@ -17,7 +17,7 @@ import {
     Theme,
     useMediaQuery
 } from '@mui/material';
-import { filterPredicateRole, getRoleColor, sortRoles } from '@utils/discord';
+import { filterPredicateRole, getRoleColor, sortRoles } from '@/utils/discord';
 import { ellipsis, size } from 'polished';
 import React, { Fragment } from 'react';
 import { ListItemButton, ListItemIcon } from '../items';

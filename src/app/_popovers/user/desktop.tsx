@@ -1,6 +1,6 @@
 'use client';
 
-import { UserPopoverProps, userPopoverStateAtom } from '@app/_popovers';
+import { UserPopoverProps, userPopoverStateAtom } from '@/app/_popovers';
 import {
     ArrowBackIcon,
     BrushIcon,
@@ -10,8 +10,11 @@ import {
     OpenInNewIcon,
     SettingsIcon,
     TranslateIcon
-} from '@components/icons';
-import { LocaleType } from '@interfaces/localization';
+} from '@/components/icons';
+import { LocaleType } from '@/interfaces/localization';
+import { appearanceAtom, AppearanceType } from '@/states/appearance';
+import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '@/utils/cookie';
+import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
 import {
     alpha,
     Avatar,
@@ -26,10 +29,7 @@ import {
     Tooltip,
     Typography
 } from '@mui/material';
-import { appearanceAtom, AppearanceType } from '@states/appearance';
-import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '@utils/cookie';
-import { getUserAvatar, getUserDisplayName } from '@utils/discord';
-import { useAtom, useSetAtom } from 'jotai/index';
+import { useAtom, useSetAtom } from 'jotai';
 import NextLink from 'next/link';
 import { setCookie } from 'nookies';
 import React, { Fragment } from 'react';

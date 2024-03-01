@@ -1,4 +1,4 @@
-import { LocalizationProps } from '@interfaces/localization';
+import { LocalizationProps } from '@/interfaces/localization';
 import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
 import { ItemDisabledProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Switch, switchClasses, Typography } from '@mui/material';

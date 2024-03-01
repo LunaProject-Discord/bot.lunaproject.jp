@@ -1,8 +1,8 @@
-import { getUser } from '@app/utils';
-import { NotFoundView, UnauthorizedView } from '@app/view';
-import { PageWithSidebarLayout } from '@components/layout_v2';
-import { getUserConfiguration, getUserFlags } from '@libs/bot';
-import { getLocalization } from '@localizations/server';
+import { getUser } from '@/app/utils';
+import { NotFoundView, UnauthorizedView } from '@/app/view';
+import { PageWithSidebarLayout } from '@/components/layout_v2';
+import { getUserConfiguration, getUserFlags } from '@/libs/bot';
+import { getLocalization } from '@/localizations/server';
 import { Box } from '@mui/material';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React, { ReactNode } from 'react';

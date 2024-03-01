@@ -1,5 +1,5 @@
-import { ConfigurationRootSchema } from '@schemas/bot';
-import { SnowflakeSchema } from '@schemas/snowflake';
+import { ConfigurationRootSchema } from '@/schemas/bot';
+import { SnowflakeSchema } from '@/schemas/snowflake';
 import { z } from 'zod';
 
 export const GuildConfigurationActivityRoleTypeSchema = z.union([

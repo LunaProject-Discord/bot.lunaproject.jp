@@ -1,4 +1,4 @@
-import { SnowflakeSchema } from '@schemas/snowflake';
+import { SnowflakeSchema } from '@/schemas/snowflake';
 import { z } from 'zod';
 
 export const GuildConfigurationCommandsPermissionOverridesSchema = z.record(SnowflakeSchema, z.boolean());

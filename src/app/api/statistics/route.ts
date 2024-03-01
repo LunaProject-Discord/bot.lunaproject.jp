@@ -1,6 +1,6 @@
-import { getUser } from '@app/utils';
-import { StatisticsPeriodType } from '@interfaces/bot';
-import { getPeriodStatistics, getUserFlags } from '@libs/bot';
+import { getUser } from '@/app/utils';
+import { StatisticsPeriodType } from '@/interfaces/bot';
+import { getPeriodStatistics, getUserFlags } from '@/libs/bot';
 import { DateTime } from 'luxon';
 import { NextRequest, NextResponse } from 'next/server';
 

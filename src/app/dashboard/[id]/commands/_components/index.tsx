@@ -1,15 +1,15 @@
-import { EditablePermissionOverride } from '@app/dashboard/[id]/commands/interfaces';
-import { CheckIcon, CloseIcon, CommandIcon, DeleteIcon } from '@components/icons';
-import { ItemRoot, ItemRowContainer } from '@components/items';
-import { LocalizationProps } from '@interfaces/localization';
-import { StyledProps } from '@interfaces/mui';
+import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
+import { CheckIcon, CloseIcon, CommandIcon, DeleteIcon } from '@/components/icons';
+import { ItemRoot, ItemRowContainer } from '@/components/items';
+import { LocalizationProps } from '@/interfaces/localization';
+import { StyledProps } from '@/interfaces/mui';
+import { getStateActionValue } from '@/utils/react/state';
 import {
     ItemDisabledProps,
     ItemFormContainer,
     ItemVariableProps
 } from '@lunaproject/web-core/dist/components/SectionItems';
 import { IconButton, ToggleButton, toggleButtonClasses, ToggleButtonGroup, Tooltip } from '@mui/material';
-import { getStateActionValue } from '@utils/react/state';
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 
 type DefaultEditableValue = 'allow' | 'deny' | 'inherit';

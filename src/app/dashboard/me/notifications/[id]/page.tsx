@@ -1,8 +1,8 @@
-import { getUser } from '@app/utils';
-import { NotFoundView, UnauthorizedView } from '@app/view';
-import { WithIdParamProps } from '@interfaces/page';
-import { getUserNotificationById, setUserNotificationRead } from '@libs/bot';
-import { getLocalization } from '@localizations/server';
+import { getUser } from '@/app/utils';
+import { NotFoundView, UnauthorizedView } from '@/app/view';
+import { WithIdParamProps } from '@/interfaces/page';
+import { getUserNotificationById, setUserNotificationRead } from '@/libs/bot';
+import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
 import { View } from './view';

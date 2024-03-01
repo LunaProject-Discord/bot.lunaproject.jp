@@ -1,11 +1,11 @@
 'use client';
 
-import { AreaChart } from '@app/statistics/_components';
-import { StatisticsViewProps } from '@app/statistics/interfaces';
-import { formatDate, getDate } from '@app/statistics/utils';
-import { CloudOffIcon } from '@components/icons';
-import { PageHeader } from '@components/layout_v2';
-import { LocalizationProps } from '@interfaces/localization';
+import { AreaChart } from '@/app/statistics/_components';
+import { StatisticsViewProps } from '@/app/statistics/interfaces';
+import { formatDate, getDate } from '@/app/statistics/utils';
+import { CloudOffIcon } from '@/components/icons';
+import { PageHeader } from '@/components/layout_v2';
+import { LocalizationProps } from '@/interfaces/localization';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
