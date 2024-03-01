@@ -28,7 +28,7 @@ import { popoverAtom } from '@/states/popover';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger } from '@mui/material';
+import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger, useTheme } from '@mui/material';
 import { useAtomValue, useSetAtom } from 'jotai';
 import Image from 'next/image';
 import NextLink from 'next/link';
@@ -37,6 +37,7 @@ import React, { Fragment, MouseEvent, useState } from 'react';
 export type RootNavigationProps = NavigationProps & RootNavigationDrawerProps;
 
 export const NavigationAppBar = ({ setOpen, user, flags, localization: { translations } }: RootNavigationProps) => {
+    const theme = useTheme();
     const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 0 });
 
     const setPopoverState = useSetAtom(popoverAtom);
@@ -66,7 +67,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                     <MenuIcon />
                 </IconButton>
                 <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
-                    <Image src="/logo/yudzuki.svg" alt="" width={142} height={48} />
+                    <Image src={`/yudzuki/logo_${theme.palette.mode}.svg`} alt="" width={142} height={48} />
                 </RouteLink>
                 <Box sx={{ ml: 2, display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
                     <NavigationToolbarItem href="/status">
@@ -123,6 +124,8 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
 };
 
 export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) => {
+    const theme = useTheme();
+
     const handleDrawerToggle = () => setOpen((prevState) => !prevState);
 
     return (
@@ -139,7 +142,7 @@ export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) 
                 <MenuIcon />
             </IconButton>
             <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
-                <Image src="/logo/yudzuki.svg" alt="" width={142} height={48} />
+                <Image src={`/yudzuki/logo_${theme.palette.mode}.svg`} alt="" width={142} height={48} />
             </RouteLink>
         </NavigationToolbar>
     );

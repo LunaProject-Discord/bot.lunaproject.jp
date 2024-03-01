@@ -3,9 +3,9 @@
 import { servicesPopoverStateAtom } from '@/app/_popovers/services';
 import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
-import { NightlightRound } from '@mui/icons-material';
 import { Divider, List, ListItemText, Popover } from '@mui/material';
 import { useAtom } from 'jotai';
+import Image from 'next/image';
 import React from 'react';
 import { PopoverListItemIcon, PopoverListItemLinkButton } from '../index';
 
@@ -42,7 +42,7 @@ export const DesktopServicesPopover = ({ localization }: LocalizationProps) => {
             <List>
                 <PopoverListItemLinkButton href="https://lunaproject.jp/" target="_blank" dense>
                     <PopoverListItemIcon>
-                        <NightlightRound sx={{ color: '#ffc636', transform: 'rotate(-20deg)' }} />
+                        <Image src="/lunaproject/icon.svg" alt="" width={24} height={24} />
                     </PopoverListItemIcon>
                     <ListItemText primary="Luna Project" />
                     <OpenInNewIcon color="action" />
@@ -65,19 +65,19 @@ export const DesktopServicesPopover = ({ localization }: LocalizationProps) => {
                 </PopoverListItemLinkButton>
                 <PopoverListItemLinkButton href="https://yudzuki.lunaproject.jp/" dense>
                     <PopoverListItemIcon>
-                        <NightlightRound sx={{ color: '#959ac0', transform: 'rotate(-20deg)' }} />
+                        <Image src="/yudzuki/icon.svg" alt="" width={24} height={24} />
                     </PopoverListItemIcon>
                     <ListItemText primary="結月 -ゆづき-" />
                 </PopoverListItemLinkButton>
                 <PopoverListItemLinkButton href="https://satsuki.lunaproject.jp/" dense>
                     <PopoverListItemIcon>
-                        <NightlightRound sx={{ color: '#f792d5', transform: 'rotate(-20deg)' }} />
+                        <Image src="/satsuki/icon.svg" alt="" width={24} height={24} />
                     </PopoverListItemIcon>
                     <ListItemText primary="彩月 -さつき-" />
                 </PopoverListItemLinkButton>
                 <PopoverListItemLinkButton href="https://natsuki.lunaproject.jp/" dense>
                     <PopoverListItemIcon>
-                        <NightlightRound sx={{ color: '#b0ff7c', transform: 'rotate(-20deg)' }} />
+                        <Image src="/natsuki/icon.svg" alt="" width={24} height={24} />
                     </PopoverListItemIcon>
                     <ListItemText primary="菜月 -なつき-" />
                 </PopoverListItemLinkButton>
