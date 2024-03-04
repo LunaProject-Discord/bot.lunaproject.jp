@@ -1,3 +1,5 @@
+'use client';
+
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon } from '@/components/icons';
 import { PageCenteredLayout, PageLayout } from '@/components/layout_v2';

@@ -151,6 +151,7 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                 </Button>}
                 <Box
                     sx={{
+                        mt: !dashboardAccessible ? -2 : 0,
                         pt: 2,
                         position: 'sticky',
                         top: { sm: (8 * 8) + (8 * 6) },

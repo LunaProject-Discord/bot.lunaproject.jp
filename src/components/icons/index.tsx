@@ -79,5 +79,6 @@ export const CrownOutlined = (props: SvgIconProps) => (
     </SvgIcon>
 );
 
+export * from './branding';
 export * from './material_symbols';
 export * from './utils';

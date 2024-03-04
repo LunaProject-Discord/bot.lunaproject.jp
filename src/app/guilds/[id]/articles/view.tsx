@@ -1,3 +1,5 @@
+'use client';
+
 import { GuildViewProps } from '@/interfaces/view';
 import React, { Fragment } from 'react';
 

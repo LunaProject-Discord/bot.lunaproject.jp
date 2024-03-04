@@ -2,13 +2,13 @@ import { SvgIcon, SvgIconProps } from '@mui/material';
 import React, { ElementType, ReactNode } from 'react';
 
 export const createSvgIcon = (
-    component: { path: ElementType } | { node: ReactNode },
+    component: { props?: SvgIconProps } & ({ path: ElementType } | { node: ReactNode }),
     displayName: string
 ): typeof SvgIcon => {
     const Element = (props: SvgIconProps) => 'node' in component ? (
-        <SvgIcon {...props}>{component.node}</SvgIcon>
+        <SvgIcon {...component.props} {...props}>{component.node}</SvgIcon>
     ) : (
-        <SvgIcon component={component.path} inheritViewBox {...props} />
+        <SvgIcon component={component.path} inheritViewBox {...component.props} {...props} />
     );
     Element.displayName = displayName;
     Element.muiName = SvgIcon.muiName;

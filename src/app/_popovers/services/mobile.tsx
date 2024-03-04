@@ -1,11 +1,18 @@
 import { PopoverListItemIcon, PopoverListItemLinkButton } from '@/app/_popovers';
 import { servicesPopoverStateAtom } from '@/app/_popovers/services';
 import { BottomSheet, BottomSheetContent } from '@/components/bottom_sheet';
-import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@/components/icons';
+import {
+    DescriptionIcon,
+    LunaProjectIcon,
+    ManageAccountsIcon,
+    NatsukiIcon,
+    OpenInNewIcon,
+    SatsukiIcon,
+    YudzukiIcon
+} from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
 import { Divider, List, listItemButtonClasses, ListItemText } from '@mui/material';
 import { useAtom } from 'jotai';
-import Image from 'next/image';
 import React, { useRef } from 'react';
 import { BottomSheetRef } from 'react-spring-bottom-sheet';
 
@@ -37,7 +44,7 @@ export const MobileServicesPopover = ({ localization }: LocalizationProps) => {
                 <List>
                     <PopoverListItemLinkButton href="https://lunaproject.jp/" target="_blank">
                         <PopoverListItemIcon>
-                            <Image src="/lunaproject/icon.svg" alt="" width={24} height={24} />
+                            <LunaProjectIcon />
                         </PopoverListItemIcon>
                         <ListItemText primary="Luna Project" />
                         <OpenInNewIcon color="action" />
@@ -60,19 +67,19 @@ export const MobileServicesPopover = ({ localization }: LocalizationProps) => {
                     </PopoverListItemLinkButton>
                     <PopoverListItemLinkButton href="https://yudzuki.lunaproject.jp/">
                         <PopoverListItemIcon>
-                            <Image src="/yudzuki/icon.svg" alt="" width={24} height={24} />
+                            <YudzukiIcon />
                         </PopoverListItemIcon>
                         <ListItemText primary="結月 -ゆづき-" />
                     </PopoverListItemLinkButton>
                     <PopoverListItemLinkButton href="https://satsuki.lunaproject.jp/">
                         <PopoverListItemIcon>
-                            <Image src="/satsuki/icon.svg" alt="" width={24} height={24} />
+                            <SatsukiIcon />
                         </PopoverListItemIcon>
                         <ListItemText primary="彩月 -さつき-" />
                     </PopoverListItemLinkButton>
                     <PopoverListItemLinkButton href="https://natsuki.lunaproject.jp/">
                         <PopoverListItemIcon>
-                            <Image src="/natsuki/icon.svg" alt="" width={24} height={24} />
+                            <NatsukiIcon />
                         </PopoverListItemIcon>
                         <ListItemText primary="菜月 -なつき-" />
                     </PopoverListItemLinkButton>

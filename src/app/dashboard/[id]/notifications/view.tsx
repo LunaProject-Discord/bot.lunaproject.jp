@@ -5,7 +5,7 @@ import { RouteLinkItem } from '@/components/items';
 import { PageHeader } from '@/components/layout_v2';
 import { GuildNotification } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
-import { getDateFnsLocaleByName } from '@/localizations/index';
+import { getDateFnsLocaleByName } from '@/localizations';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { format } from '@lunaproject/web-core/dist/utils/date';
 import React, { Fragment } from 'react';
