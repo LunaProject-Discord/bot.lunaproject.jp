@@ -4,18 +4,24 @@ import { Channels, Group, GroupTitle, Members, Roles } from '@/app/dashboard/[id
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@/app/dashboard/[id]/commands/utils';
 import { CancelButton } from '@/components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
 import { Code } from '@/components/text';
 import { GuildConfigurationCommand } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { sortChannels, sortMembers, sortRoles } from '@/utils/discord';
 import { getStateActionValue } from '@/utils/react/state';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    ModalProps
+} from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemFormContainer, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Box, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, memo, SetStateAction, useCallback, useState } from 'react';
 
-type ManageCommandDialogProps = DialogProps & ItemVariableProps<GuildConfigurationCommand> & GuildViewProps;
+type ManageCommandDialogProps = ModalProps & ItemVariableProps<GuildConfigurationCommand> & GuildViewProps;
 
 const ManageCommandDialog = memo<ManageCommandDialogProps>((
     {

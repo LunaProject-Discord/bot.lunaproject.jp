@@ -7,11 +7,11 @@ import {
     KeyboardArrowDownIcon,
     KeyboardArrowUpIcon
 } from '@/components/icons';
-import { PageHeader, PageLayout } from '@/components/layout_v2';
 import { LocalizationProps } from '@/interfaces/localization';
 import { getGuildIcon } from '@/utils/discord';
 import { segmentedControlClasses } from '@lunaproject/web-core';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
+import { PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Menu } from '@lunaproject/web-core/dist/components/Menu';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';

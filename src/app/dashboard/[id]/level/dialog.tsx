@@ -1,7 +1,6 @@
 'use client';
 
 import { CancelButton, SwitchButton } from '@/components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { AddIcon, DeleteIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon, LabelOffIcon } from '@/components/icons';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover, RoleSelect } from '@/components/items';
@@ -9,6 +8,13 @@ import { GuildConfigurationLevelRewardRole } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { getInteractRolesByDataGuild } from '@/utils/discord';
 import { getStateActionValue, UniqueId, updateArrayState } from '@/utils/react/state';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    ModalProps
+} from '@lunaproject/web-core/dist/components/Dialog';
 import { NumberField } from '@lunaproject/web-core/dist/components/NumberField';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Button, Divider, IconButton, Theme, Tooltip, useMediaQuery } from '@mui/material';
@@ -72,7 +78,7 @@ const RoleItem = (
     );
 };
 
-type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildConfigurationLevelRewardRole[]> & GuildViewProps;
+type ManageRolesDialogProps = ModalProps & ItemVariableProps<GuildConfigurationLevelRewardRole[]> & GuildViewProps;
 
 export const ManageRolesDialog = (
     {

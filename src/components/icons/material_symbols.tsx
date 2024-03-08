@@ -1,4 +1,4 @@
-import { createSvgIcon } from '@/components/icons/utils';
+import { createSvgIcon } from '@lunaproject/web-core/dist/components/Icons';
 import Add from '@material-symbols/svg-400/outlined/add.svg';
 import Analytics from '@material-symbols/svg-400/outlined/analytics.svg';
 import Apps from '@material-symbols/svg-400/outlined/apps.svg';
@@ -28,6 +28,7 @@ import Dns from '@material-symbols/svg-400/outlined/dns.svg';
 import Edit from '@material-symbols/svg-400/outlined/edit.svg';
 import EmojiEvents from '@material-symbols/svg-400/outlined/emoji_events.svg';
 import Error from '@material-symbols/svg-400/outlined/error.svg';
+import ExpandLess from '@material-symbols/svg-400/outlined/expand_less.svg';
 import ExpandMore from '@material-symbols/svg-400/outlined/expand_more.svg';
 import FirstPage from '@material-symbols/svg-400/outlined/first_page.svg';
 import FormatBold from '@material-symbols/svg-400/outlined/format_bold.svg';
@@ -152,6 +153,8 @@ export const EditIcon = createSvgIcon({ path: Edit }, 'EditIcon');
 export const EmojiEventsIcon = createSvgIcon({ path: EmojiEvents }, 'EmojiEventsIcon');
 
 export const ErrorIcon = createSvgIcon({ path: Error }, 'ErrorIcon');
+
+export const ExpandLessIcon = createSvgIcon({ path: ExpandLess }, 'ExpandLessIcon');
 
 export const ExpandMoreIcon = createSvgIcon({ path: ExpandMore }, 'ExpandMoreIcon');
 

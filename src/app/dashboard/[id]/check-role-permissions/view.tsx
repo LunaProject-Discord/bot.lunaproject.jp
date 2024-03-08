@@ -2,10 +2,10 @@
 
 import { Grid, PermissionsItem } from '@/app/dashboard/[id]/check-role-permissions/_components';
 import { CheckIcon, CloseIcon, CrownOutlined, DeleteIcon, RemoveIcon } from '@/components/icons';
-import { PageHeader } from '@/components/layout_v2';
 import { ALL_PERMISSIONS } from '@/interfaces/permissions';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { sortRoles } from '@/utils/discord';
+import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle, Box } from '@mui/material';

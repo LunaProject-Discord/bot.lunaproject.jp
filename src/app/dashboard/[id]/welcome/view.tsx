@@ -2,13 +2,13 @@
 
 import { CancelButton } from '@/components/buttons';
 import { ChannelItem, MessageItem, SwitchItem } from '@/components/items';
-import { PageHeader } from '@/components/layout_v2';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { CodeStyleContainer } from '@/components/text';
 import { GuildConfigurationWelcome } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationWelcomeSchema } from '@/schemas/bot';
-import { DialogV2, DialogV2Actions, DialogV2Content, DialogV2Title } from '@lunaproject/web-core';
+import { Dialog, DialogActions, DialogContent, DialogTitle } from '@lunaproject/web-core/dist/components/Dialog';
+import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress, Typography } from '@mui/material';
@@ -142,11 +142,11 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 </SectionContent>
             </Section>
 
-            <DialogV2 open={openMigrationDialog} onClose={() => setOpenMigrationDialog(false)}>
-                <DialogV2Title>
+            <Dialog open={openMigrationDialog} onClose={() => setOpenMigrationDialog(false)}>
+                <DialogTitle>
                     「メンバーの参加」の利用開始
-                </DialogV2Title>
-                <DialogV2Content>
+                </DialogTitle>
+                <DialogContent>
                     <Typography>
                         現在、この機能はベータ公開中です。<br />
                         そのため、この機能を利用した際に発生した一切の損害についての責任は負いませんのでご注意ください。<br />
@@ -162,8 +162,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         この機能を利用するには ようこそ (参加) メッセージ の設定を引き継ぐか、新しく設定する必要があります。<br />
                         下のボタンを押して機能の利用開始方法を選択してください。
                     </Typography>
-                </DialogV2Content>
-                <DialogV2Actions>
+                </DialogContent>
+                <DialogActions>
                     <CancelButton onClick={() => setOpenMigrationDialog(false)} sx={{ mr: 'auto' }}>
                         {translations.cancel}
                     </CancelButton>
@@ -173,8 +173,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     <Button onClick={handleMigrateAction} variant="contained">
                         設定を引き継ぐ
                     </Button>
-                </DialogV2Actions>
-            </DialogV2>
+                </DialogActions>
+            </Dialog>
             <Backdrop open={openMigratingBackdrop} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}>
                 <CircularProgress color="inherit" />
             </Backdrop>

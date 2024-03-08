@@ -12,6 +12,12 @@ import {
     SettingsIcon,
     TuneIcon
 } from '@/components/icons';
+import { UserFlags } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
+import { navigationAtom } from '@/states/navigation';
+import { popoverAtom } from '@/states/popover';
+import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
+import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     NavigationAppBar as RootNavigationAppBar,
     NavigationDrawer as RootNavigationDrawer,
@@ -20,13 +26,7 @@ import {
     NavigationDrawerProps as RootNavigationDrawerProps,
     NavigationToolbar,
     NavigationToolbarItem
-} from '@/components/navigation';
-import { UserFlags } from '@/interfaces/bot';
-import { LocalizationProps } from '@/interfaces/localization';
-import { navigationAtom } from '@/states/navigation';
-import { popoverAtom } from '@/states/popover';
-import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
-import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
+} from '@lunaproject/web-core/dist/components/Navigation';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger, useTheme } from '@mui/material';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -84,7 +84,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                     </NavigationToolbarItem>
                     <NavigationToolbarItem
                         href="/dashboard"
-                        predicate={(pathname, href) => pathname.startsWith(href) && !pathname.startsWith('/dashboard/me')}
+                        predicate={(pathname, href) => pathname !== undefined && (pathname.startsWith(href) && !pathname.startsWith('/dashboard/me'))}
                     >
                         {translations.guild_settings}
                     </NavigationToolbarItem>
@@ -188,7 +188,7 @@ export const NavigationDrawer = ({ open, setOpen, flags, localization: { transla
                 />
                 <NavigationDrawerItem
                     href="/dashboard"
-                    predicate={(pathname, href) => pathname.startsWith(href) && !pathname.startsWith('/dashboard/me')}
+                    predicate={(pathname, href) => pathname !== undefined && (pathname.startsWith(href) && !pathname.startsWith('/dashboard/me'))}
                     icon={<SettingsIcon />}
                     primary={translations.guild_settings}
                     open={open}

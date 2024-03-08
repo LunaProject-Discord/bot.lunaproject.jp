@@ -2,12 +2,12 @@
 
 import { BadgeIcon, TagIcon } from '@/components/icons';
 import { TextFieldItem } from '@/components/items';
-import { PageHeader } from '@/components/layout_v2';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { CodeStyleContainer } from '@/components/text';
 import { GuildConfigurationPrefixAndNickname } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationPrefixAndNicknameSchema } from '@/schemas/bot';
+import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment } from 'react';

@@ -4,7 +4,7 @@ import { LevelProfileCard, LevelRewardsCard } from '@/app/guilds/[id]/leaderboar
 import { DesktopLevelItemRoot, Levels } from '@/app/leaderboard/[id]/components';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon, KeyboardArrowRightIcon, SearchIcon } from '@/components/icons';
-import { PageHeader, PageLayout } from '@/components/layout_v2';
+import { PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { GuildLevel } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { RedisMember } from '@/interfaces/redis';

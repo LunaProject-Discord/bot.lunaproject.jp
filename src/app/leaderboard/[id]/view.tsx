@@ -2,13 +2,13 @@
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon, SearchIcon } from '@/components/icons';
-import { PageCenteredLayout, PageHeader, PageLayout } from '@/components/layout_v2';
 import { GuildLevel } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { getGuildIcon } from '@/utils/cdn';
 import { filterPredicateLevel } from '@/utils/level';
 import { useDebounce } from '@/utils/react/debounce';
+import { PageCenteredLayout, PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { Avatar, Box, CircularProgress, InputBase, Typography } from '@mui/material';
 import React, { Fragment, useState } from 'react';

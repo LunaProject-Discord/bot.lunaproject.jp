@@ -1,7 +1,6 @@
 'use client';
 
 import { CancelButton } from '@/components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import {
     AddIcon,
@@ -23,6 +22,13 @@ import { PopoverProps } from '@/interfaces/mui';
 import { GuildViewProps } from '@/interfaces/view';
 import { getInteractRolesByDataGuild } from '@/utils/discord';
 import { getStateActionValue, UniqueId, updateArrayState } from '@/utils/react/state';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    ModalProps
+} from '@lunaproject/web-core/dist/components/Dialog';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import {
@@ -229,7 +235,7 @@ const RoleItem = (
     );
 };
 
-type ManageRolesDialogProps = DialogProps & ItemVariableProps<GuildConfigurationActivityRole[]> & GuildViewProps;
+type ManageRolesDialogProps = ModalProps & ItemVariableProps<GuildConfigurationActivityRole[]> & GuildViewProps;
 
 export const ManageRolesDialog = (
     {

@@ -6,7 +6,6 @@ import {
     UserPopoverProps,
     userPopoverStateAtom
 } from '@/app/_popovers';
-import { BottomSheet, BottomSheetContent } from '@/components/bottom_sheet';
 import {
     ArrowBackIcon,
     BrushIcon,
@@ -21,6 +20,7 @@ import { LocaleType } from '@/interfaces/localization';
 import { appearanceAtom, AppearanceType } from '@/states/appearance';
 import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '@/utils/cookie';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
+import { BottomSheet, BottomSheetContent } from '@lunaproject/web-core/dist/components/BottomSheet';
 import {
     alpha,
     Avatar,

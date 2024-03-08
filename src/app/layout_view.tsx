@@ -4,6 +4,8 @@ import {
     ArrowDropDownIcon,
     ArrowDropUpIcon,
     ErrorIcon,
+    ExpandLessIcon,
+    ExpandMoreIcon,
     FirstPageIcon,
     InfoIcon,
     KeyboardArrowLeftIcon,
@@ -12,30 +14,39 @@ import {
     OpenInNewIcon,
     TableRowsIcon,
     TaskAltIcon,
+    ToggleOffIcon,
+    ToggleOnIcon,
     WarningIcon
 } from '@/components/icons';
-import { RootLayout, RootStyles } from '@/components/layout_v2';
 import { UserFlags } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '@/localizations';
 import { appearanceAtom, AppearanceType } from '@/states/appearance';
+import { RootLayout, RootStyles } from '@lunaproject/web-core/dist/components/Layout';
 import { Config, ConfigProvider } from '@lunaproject/web-core/dist/utils/config';
-import { borderAndBoxShadow, MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
+import { MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    buttonClasses,
-    createTheme,
-    linearProgressClasses,
-    ThemeOptions,
-    ThemeProvider,
-    useMediaQuery
-} from '@mui/material';
+import { createTheme, GlobalStyles, ThemeOptions, ThemeProvider, useMediaQuery } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import deepmerge from 'deepmerge';
 import { useAtom } from 'jotai';
 import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Navigation } from './_navigation';
-import { DefaultFontFamily } from './theme';
+import { DefaultFontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from './theme';
+
+const insertGlobalStyles = (
+    <GlobalStyles
+        styles={{
+            Nunito,
+            M_Plus_Rounded_1c,
+            LINE_Seed_JP,
+
+            '*, ::before, ::after': {
+                fontFamily: DefaultFontFamily
+            }
+        }}
+    />
+);
 
 interface LayoutProps extends LocalizationProps {
     user: OAuthUser | undefined;
@@ -45,7 +56,7 @@ interface LayoutProps extends LocalizationProps {
 }
 
 export const LayoutView = ({ user, flags, appearance: initialAppearance, localization, children }: LayoutProps) => {
-    const { locale } = localization;
+    const { locale, translations } = localization;
 
     const [{ isDarkMode }, setAppearance] = useAtom(appearanceAtom);
     const [loaded, setLoaded] = useState(false);
@@ -69,35 +80,6 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
                             }
                         }
                     },
-                    MuiButton: {
-                        variants: [
-                            {
-                                props: {
-                                    variant: 'outlined',
-                                    color: 'monotone'
-                                },
-                                style: ({ theme }) => ({
-                                    borderColor: theme.palette.divider,
-                                    [`&:disabled, &.${buttonClasses.disabled}`]: {
-                                        borderColor: theme.palette.action.disabled
-                                    },
-                                    '&:hover': {
-                                        backgroundColor: theme.palette.divider,
-                                        borderColor: 'transparent'
-                                    }
-                                })
-                            }
-                        ]
-                    },
-                    MuiLinearProgress: {
-                        styleOverrides: {
-                            root: ({ theme }) => ({
-                                [`&, & .${linearProgressClasses.bar}`]: {
-                                    borderRadius: theme.shape.borderRadius
-                                }
-                            })
-                        }
-                    },
                     MuiTablePagination: {
                         defaultProps: {
                             labelRowsPerPage: (<TableRowsIcon />),
@@ -108,30 +90,6 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
                                     nextButtonIcon: KeyboardArrowRightIcon,
                                     previousButtonIcon: KeyboardArrowLeftIcon
                                 }
-                            },
-                            slotProps: {
-                                select: {
-                                    MenuProps: {
-                                        slotProps: {
-                                            paper: {
-                                                sx: (theme) => borderAndBoxShadow(theme)
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        styleOverrides: {
-                            root: {
-                                flexShrink: 0,
-                                userSelect: 'none',
-                                border: 'none'
-                            },
-                            toolbar: {
-                                padding: '0 !important'
-                            },
-                            selectLabel: {
-                                lineHeight: 0
                             }
                         }
                     }
@@ -150,9 +108,17 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
     const config: Config = {
         icons: {
             Decrement: ArrowDropDownIcon,
+            ExpandLess: ExpandLessIcon,
+            ExpandMore: ExpandMoreIcon,
             Increment: ArrowDropUpIcon,
             More: KeyboardArrowRightIcon,
-            OpenInNew: OpenInNewIcon
+            OpenInNew: OpenInNewIcon,
+            ToggleOff: ToggleOffIcon,
+            ToggleOn: ToggleOnIcon
+        },
+        translations: {
+            close: translations.close,
+            open: translations.open
         }
     };
 
@@ -195,6 +161,7 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
             <ThemeProvider theme={theme}>
                 <ConfigProvider value={config}>
                     <RootStyles />
+                    {insertGlobalStyles}
                     <Navigation user={user} flags={flags} localization={localization} />
                     <RootLayout>
                         {children}

@@ -2,13 +2,13 @@
 
 import { Status } from '@/app/status/components';
 import { CloudOffIcon } from '@/components/icons';
-import { PageHeader, PageLayout } from '@/components/layout_v2';
 import { LocalizationProps } from '@/interfaces/localization';
 import { RedisStatus } from '@/interfaces/redis';
+import { sortGuilds } from '@/utils/discord';
+import { PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { Alert, AlertTitle, Box, CircularProgress, Typography } from '@mui/material';
-import { sortGuilds } from '@/utils/discord';
 import React, { Fragment } from 'react';
 
 interface Props extends LocalizationProps {

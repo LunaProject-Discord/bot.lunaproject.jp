@@ -13,10 +13,12 @@ import {
     SettingsIcon,
     TrailLengthShortIcon
 } from '@/components/icons';
-import { PageCenteredLayout, PageLayout } from '@/components/layout_v2';
 import { FeaturedGuild } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
+import { getGuildIcon } from '@/utils/discord';
+import { fetchWithUser } from '@/utils/swr';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
+import { PageCenteredLayout, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
@@ -35,8 +37,6 @@ import {
     ListItemText,
     Typography
 } from '@mui/material';
-import { getGuildIcon } from '@/utils/discord';
-import { fetchWithUser } from '@/utils/swr';
 import NextLink from 'next/link';
 import { parseCookies } from 'nookies';
 import React, { Fragment, useState } from 'react';

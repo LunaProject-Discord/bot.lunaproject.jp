@@ -1,16 +1,14 @@
 'use client';
 
 import { servicesPopoverStateAtom } from '@/app/_popovers/services';
+import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@/components/icons';
+import { LocalizationProps } from '@/interfaces/localization';
 import {
-    DescriptionIcon,
     LunaProjectIcon,
-    ManageAccountsIcon,
     NatsukiIcon,
-    OpenInNewIcon,
     SatsukiIcon,
     YudzukiIcon
-} from '@/components/icons';
-import { LocalizationProps } from '@/interfaces/localization';
+} from '@lunaproject/web-core/dist/components/Icons/branding';
 import { Divider, List, ListItemText, Popover } from '@mui/material';
 import { useAtom } from 'jotai';
 import React from 'react';

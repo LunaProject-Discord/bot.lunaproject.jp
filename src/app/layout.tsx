@@ -1,9 +1,9 @@
 import { getUser } from '@/app/utils';
-import { Body } from '@/components/layout_v2';
 import { getUserFlags } from '@/libs/bot';
 import { getLocale, getLocalization } from '@/localizations/server';
 import { AppearanceType } from '@/states/appearance';
 import { COOKIE_APPEARANCE } from '@/utils/cookie';
+import { Body } from '@lunaproject/web-core/dist/components/Layout';
 import { Metadata, Viewport } from 'next';
 import { cookies } from 'next/headers';
 import React, { ReactNode } from 'react';

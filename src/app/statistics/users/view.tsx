@@ -5,13 +5,13 @@ import { LatestWidget, MaxWidget, MinWidget } from '@/app/statistics/_components
 import { StatisticsViewProps } from '@/app/statistics/interfaces';
 import { formatDate, getDate, getMaxShards } from '@/app/statistics/utils';
 import { CloudOffIcon } from '@/components/icons';
-import { PageHeader } from '@/components/layout_v2';
 import { Statistic } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
+import { max, min } from '@/utils/array';
+import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { Box, CircularProgress, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { GridColDef, GridRowsProp, GridValidRowModel } from '@mui/x-data-grid';
-import { max, min } from '@/utils/array';
 import React, { Fragment } from 'react';
 
 const getValue = (statistic: Statistic) => statistic.users.total;

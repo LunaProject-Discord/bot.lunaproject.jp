@@ -1,12 +1,18 @@
 'use client';
 
 import { CancelButton } from '@/components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
 import { DarkModeIcon, DeleteIcon, EditIcon, LightModeIcon, PreviewIcon, SaveIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
 import { DataMessage } from '@/interfaces/message';
 import { toDataMessage, toEmbed, toMessage } from '@/libs/message';
 import { ThemeProvider } from '@emotion/react';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    ModalProps
+} from '@lunaproject/web-core/dist/components/Dialog';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { buildTheme } from '@lunaproject/web-core/dist/styles/theme';
@@ -30,7 +36,7 @@ import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } fr
 
 type ViewType = 'editor' | 'preview';
 
-interface Props extends DialogProps, LocalizationProps {
+interface Props extends ModalProps, LocalizationProps {
     message: DataMessage;
     setMessage: (value: DataMessage | ((prevValue: DataMessage) => DataMessage)) => void;
 }

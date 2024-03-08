@@ -11,11 +11,11 @@ import {
     WarningIcon
 } from '@/components/icons';
 import { RouteLinkItem } from '@/components/items';
-import { PageCenteredLayout, PageHeader } from '@/components/layout_v2';
 import { GuildNotification } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { GuildViewProps, UserViewProps } from '@/interfaces/view';
 import { getUserDisplayName } from '@/utils/discord';
+import { PageCenteredLayout, PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { CircularProgress, Divider, Link } from '@mui/material';
 import NextLink from 'next/link';

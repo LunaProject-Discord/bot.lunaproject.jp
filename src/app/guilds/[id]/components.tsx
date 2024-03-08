@@ -2,7 +2,7 @@
 
 import { BrandingFontFamily } from '@/app/theme';
 import { AddIcon, OpenInNewIcon } from '@/components/icons';
-import { NavigationAppBarId } from '@/components/navigation';
+import { NavigationAppBarId } from '@lunaproject/web-core/dist/components/Navigation';
 import { RedisMember } from '@/interfaces/redis';
 import { GuildConfigurationViewProps, GuildViewProps } from '@/interfaces/view';
 import { navigationAtom } from '@/states/navigation';

@@ -3,7 +3,6 @@
 import { LevelItemProfile } from '@/app/leaderboard/[id]/components';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon, DeleteIcon, SearchIcon, TableRowsIcon } from '@/components/icons';
-import { PageCenteredLayout, PageHeader } from '@/components/layout_v2';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildLevel, PartialGuildLevel, PartialGuildLevelRecord, PartialGuildLevels } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
@@ -12,6 +11,7 @@ import { PartialGuildLevelRecordSchema } from '@/schemas/bot';
 import { filterPredicateLevel, getLevelPages, getMaxExperience } from '@/utils/level';
 import { useDebounce } from '@/utils/react/debounce';
 import { getStateActionValue } from '@/utils/react/state';
+import { PageCenteredLayout, PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { NumberField, numberFieldClasses } from '@lunaproject/web-core/dist/components/NumberField';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { ItemRowContainer } from '@lunaproject/web-core/dist/components/SectionItems';

@@ -1,16 +1,14 @@
 import { PopoverListItemIcon, PopoverListItemLinkButton } from '@/app/_popovers';
 import { servicesPopoverStateAtom } from '@/app/_popovers/services';
-import { BottomSheet, BottomSheetContent } from '@/components/bottom_sheet';
+import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@/components/icons';
+import { LocalizationProps } from '@/interfaces/localization';
+import { BottomSheet, BottomSheetContent } from '@lunaproject/web-core/dist/components/BottomSheet';
 import {
-    DescriptionIcon,
     LunaProjectIcon,
-    ManageAccountsIcon,
     NatsukiIcon,
-    OpenInNewIcon,
     SatsukiIcon,
     YudzukiIcon
-} from '@/components/icons';
-import { LocalizationProps } from '@/interfaces/localization';
+} from '@lunaproject/web-core/dist/components/Icons/branding';
 import { Divider, List, listItemButtonClasses, ListItemText } from '@mui/material';
 import { useAtom } from 'jotai';
 import React, { useRef } from 'react';

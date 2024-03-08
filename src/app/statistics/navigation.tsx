@@ -12,17 +12,17 @@ import {
     SignalCellularAltIcon,
     TagIcon
 } from '@/components/icons';
+import { StatisticsPeriodType } from '@/interfaces/bot';
+import { getStateActionValue } from '@/utils/react/state';
+import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     NavigationDrawer,
     NavigationDrawerContent,
     NavigationDrawerGroup,
     NavigationDrawerItem,
     NavigationRoot
-} from '@/components/navigation';
-import { StatisticsPeriodType } from '@/interfaces/bot';
-import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
+} from '@lunaproject/web-core/dist/components/Navigation';
 import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Theme, Typography, useMediaQuery } from '@mui/material';
-import { getStateActionValue } from '@/utils/react/state';
 import { endOfToday } from 'date-fns';
 import { DateTime } from 'luxon';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';

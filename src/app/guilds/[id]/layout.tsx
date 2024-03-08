@@ -1,6 +1,6 @@
 import { LayoutHeader, LayoutNavigation } from '@/app/guilds/[id]/components';
 import { getUser } from '@/app/utils';
-import { PageLayout } from '@/components/layout_v2';
+import { PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { WithIdParamProps } from '@/interfaces/page';
 import { getGuildConfiguration, hasDashboardAccess, isLeaderboardAccessible } from '@/libs/bot';
 import { getGuildById, getMemberById } from '@/libs/redis';

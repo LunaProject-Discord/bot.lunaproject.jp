@@ -22,6 +22,11 @@ import {
     TextSnippetIcon,
     TranslateIcon
 } from '@/components/icons';
+import { GuildConfiguration, GuildFlags, UserFlags } from '@/interfaces/bot';
+import { DataGuild, RedisGuild } from '@/interfaces/redis';
+import { UserViewProps } from '@/interfaces/view';
+import { getGuildIcon } from '@/utils/cdn';
+import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     NavigationDrawer,
     NavigationDrawerContent,
@@ -29,12 +34,7 @@ import {
     NavigationDrawerItem,
     NavigationDrawerItemWithEnabledStatus,
     NavigationRoot
-} from '@/components/navigation';
-import { GuildConfiguration, GuildFlags, UserFlags } from '@/interfaces/bot';
-import { DataGuild, RedisGuild } from '@/interfaces/redis';
-import { UserViewProps } from '@/interfaces/view';
-import { getGuildIcon } from '@/utils/cdn';
-import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
+} from '@lunaproject/web-core/dist/components/Navigation';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, Box, Chip, Theme, Typography, useMediaQuery } from '@mui/material';
 import { useRouter } from 'next/navigation';

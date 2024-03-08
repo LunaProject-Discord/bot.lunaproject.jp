@@ -3,27 +3,22 @@
 import { CancelButton } from '@/components/buttons';
 import { CloseIcon, SearchIcon } from '@/components/icons';
 import { GuildRolesViewProps } from '@/interfaces/view';
-import { Dialog, DialogActions, DialogHeader } from '@lunaproject/web-core/dist/components/Dialog';
+import { filterPredicateRole, getRoleColor, sortRoles } from '@/utils/discord';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    ModalProps
+} from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
-import {
-    Box,
-    DialogContent,
-    IconButton,
-    InputBase,
-    ListItemText,
-    Switch,
-    switchClasses,
-    Theme,
-    useMediaQuery
-} from '@mui/material';
-import { filterPredicateRole, getRoleColor, sortRoles } from '@/utils/discord';
+import { Box, IconButton, InputBase, ListItemText, Switch, switchClasses, Theme, useMediaQuery } from '@mui/material';
 import { ellipsis, size } from 'polished';
 import React, { Fragment } from 'react';
 import { ListItemButton, ListItemIcon } from '../items';
-import { DialogProps } from './index';
 
-type ManageDisabledRolesDialogProps = DialogProps & ItemVariableProps<string[]> & GuildRolesViewProps;
+type ManageDisabledRolesDialogProps = ModalProps & ItemVariableProps<string[]> & GuildRolesViewProps;
 
 export const ManageDisabledRolesDialog = (
     {
@@ -58,9 +53,9 @@ export const ManageDisabledRolesDialog = (
                 maxWidth="sm"
                 sx={{ zIndex: (theme) => theme.zIndex.modal + 100 }}
             >
-                <DialogHeader>
+                <DialogTitle>
                     {translations.manage_disabled_roles}
-                </DialogHeader>
+                </DialogTitle>
                 <DialogContent
                     dividers
                     sx={{

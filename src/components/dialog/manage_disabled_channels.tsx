@@ -2,7 +2,14 @@
 
 import { CancelButton } from '@/components/buttons';
 import { GuildChannelsViewProps } from '@/interfaces/view';
-import { Dialog, DialogActions, DialogHeader } from '@lunaproject/web-core/dist/components/Dialog';
+import { filterPredicateChannel, sortChannels } from '@/utils/discord';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    ModalProps
+} from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import {
@@ -14,7 +21,6 @@ import {
     accordionSummaryClasses,
     AccordionSummaryProps,
     Box,
-    DialogContent,
     IconButton,
     InputBase,
     ListItemText,
@@ -24,13 +30,11 @@ import {
     Theme,
     useMediaQuery
 } from '@mui/material';
-import { filterPredicateChannel, sortChannels } from '@/utils/discord';
 import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
 import React, { Fragment, useState } from 'react';
 import { ChannelIcon, CloseIcon, KeyboardArrowRightIcon, SearchIcon } from '../icons';
 import { ListItemButton, ListItemIcon } from '../items';
-import { DialogProps } from './index';
 
 const Accordion = styled(
     ({ children, ...props }: AccordionProps) => <MuiAccordion disableGutters elevation={0} {...props}>
@@ -70,7 +74,7 @@ const AccordionDetails = styled(MuiAccordionDetails)({
     flexDirection: 'column'
 });
 
-type ManageDisabledChannelsDialogProps = DialogProps & ItemVariableProps<string[]> & GuildChannelsViewProps;
+type ManageDisabledChannelsDialogProps = ModalProps & ItemVariableProps<string[]> & GuildChannelsViewProps;
 
 export const ManageDisabledChannelsDialog = (
     {
@@ -118,9 +122,9 @@ export const ManageDisabledChannelsDialog = (
                 maxWidth="sm"
                 sx={{ zIndex: (theme) => theme.zIndex.modal + 100 }}
             >
-                <DialogHeader>
+                <DialogTitle>
                     {translations.manage_disabled_channels}
-                </DialogHeader>
+                </DialogTitle>
                 <DialogContent
                     dividers
                     sx={{

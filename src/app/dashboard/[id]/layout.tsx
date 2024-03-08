@@ -1,6 +1,5 @@
 import { getGuilds, getUser } from '@/app/utils';
 import { UnauthorizedView } from '@/app/view';
-import { PageWithSidebarLayout } from '@/components/layout_v2';
 import { WithIdParamProps } from '@/interfaces/page';
 import {
     getGuildConfiguration,
@@ -13,6 +12,7 @@ import {
 import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@/utils/discord';
+import { PageWithSidebarLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Alert, AlertTitle, Box } from '@mui/material';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import { notFound } from 'next/navigation';

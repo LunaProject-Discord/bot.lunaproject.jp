@@ -2,12 +2,12 @@
 
 import { ScheduleIcon, TranslateIcon } from '@/components/icons';
 import { SelectItem } from '@/components/items';
-import { PageHeader } from '@/components/layout_v2';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { ConfigurationLanguage, ConfigurationTimeAndLanguage } from '@/interfaces/bot';
 import { UserConfigurationViewProps } from '@/interfaces/view';
 import { ConfigurationTimeAndLanguageSchema } from '@/schemas/bot';
 import { TimeZone, TimeZones } from '@/utils/timezone';
+import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment, ReactNode } from 'react';

@@ -2,14 +2,14 @@
 
 import { NavigationAppBar, NavigationDrawerToolbar, NavigationProps } from '@/app/_navigation';
 import { ArrowBackIcon, HomeIcon, NotificationsIcon, ScheduleIcon } from '@/components/icons';
+import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     NavigationDrawer,
     NavigationDrawerContent,
     NavigationDrawerGroup,
     NavigationDrawerItem,
     NavigationRoot
-} from '@/components/navigation';
-import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
+} from '@lunaproject/web-core/dist/components/Navigation';
 import { Box, Theme, Typography, useMediaQuery } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 

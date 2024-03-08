@@ -1,7 +1,6 @@
 'use client';
 
 import { CancelButton, SwitchButton } from '@/components/buttons';
-import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle } from '@/components/dialog';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { AddIcon, DeleteIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon, LabelOffIcon } from '@/components/icons';
 import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover } from '@/components/items';
@@ -9,6 +8,13 @@ import { GuildConfigurationMemberJoinAfterPendingRole } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { getInteractRolesByDataGuild, getRoleColor } from '@/utils/discord';
 import { getStateActionValue, UniqueId, updateArrayState } from '@/utils/react/state';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    ModalProps
+} from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { Box, Button, Divider, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import { nanoid } from 'nanoid';
@@ -76,7 +82,7 @@ const RoleItem = (
 };
 
 type ManageAfterPendingRolesDialogProps =
-    DialogProps
+    ModalProps
     & ItemVariableProps<GuildConfigurationMemberJoinAfterPendingRole[]>
     & GuildViewProps;
 

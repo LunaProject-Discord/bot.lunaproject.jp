@@ -8,7 +8,6 @@ import {
     getDefaultCommandConfiguration,
     sortCommands
 } from '@/app/dashboard/[id]/commands/utils';
-import { PageHeader } from '@/components/layout_v2';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { codeStyled } from '@/components/text';
 import { GuildConfigurationCommand, GuildConfigurationCommands } from '@/interfaces/bot';
@@ -18,6 +17,7 @@ import { GuildConfigurationViewProps, GuildViewProps } from '@/interfaces/view';
 import { GuildConfigurationCommandsSchema } from '@/schemas/bot';
 import { getStateActionValue } from '@/utils/react/state';
 import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
+import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, styled, Switch, Typography, Unstable_Grid2 as Grid } from '@mui/material';

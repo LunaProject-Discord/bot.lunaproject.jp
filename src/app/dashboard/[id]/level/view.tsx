@@ -13,7 +13,6 @@ import {
     SwitchItem,
     TextFieldItem
 } from '@/components/items';
-import { PageHeader } from '@/components/layout_v2';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { CodeStyleContainer } from '@/components/text';
 import {
@@ -23,6 +22,7 @@ import {
 } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationLevelSchema } from '@/schemas/bot';
+import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionParagraph, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { ChannelType } from 'discord-api-types/v10';
