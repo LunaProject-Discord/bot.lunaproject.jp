@@ -36,15 +36,19 @@ import { DefaultFontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from './th
 
 const insertGlobalStyles = (
     <GlobalStyles
-        styles={{
+        styles={(theme) => ({
             Nunito,
             M_Plus_Rounded_1c,
             LINE_Seed_JP,
 
             '*, ::before, ::after': {
                 fontFamily: DefaultFontFamily
+            },
+
+            'em-emoji-picker': {
+                borderRadius: theme.shape.borderRadius
             }
-        }}
+        })}
     />
 );
 
