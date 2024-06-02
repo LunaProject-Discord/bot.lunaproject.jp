@@ -15,14 +15,14 @@ import {
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
-import { buildTheme } from '@lunaproject/web-core/dist/styles/theme';
+import { buildDiscordTheme } from '@lunaproject/web-core/dist/styles/theme';
 import { Message } from '@lunaproject/web-discord/dist/interfaces';
 import {
     Box,
     Button,
     DialogProps as MuiDialogProps,
     IconButton,
-    Theme as MuiTheme,
+    Theme,
     Tooltip,
     useMediaQuery,
     useTheme
@@ -45,12 +45,12 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
     const { translations } = localization;
 
     const theme = useTheme();
-    const isMobile = useMediaQuery<MuiTheme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 
     const [lightTheme, setLightTheme] = useState(theme.palette.mode === 'light');
     const [compactMode, setCompactMode] = useState(false);
 
-    const defaultTheme = buildTheme({
+    const defaultTheme = buildDiscordTheme({
         color: lightTheme ? 'light' : 'dark',
         display: !compactMode ? 'cozy' : 'compact'
     });

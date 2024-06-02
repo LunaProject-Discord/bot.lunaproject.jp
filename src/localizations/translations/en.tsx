@@ -135,6 +135,7 @@ export const translationsEn: Translations = {
 
 
     search: 'Search',
+    search_guilds: 'Search servers...',
     search_channels: 'Search channels...',
     search_roles: 'Search roles...',
     search_members: 'Search members...',

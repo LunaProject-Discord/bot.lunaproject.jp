@@ -135,6 +135,7 @@ export const translationsJa: Translations = {
 
 
     search: '検索',
+    search_guilds: 'サーバーを検索...',
     search_channels: 'チャンネルを検索...',
     search_roles: '役職を検索...',
     search_members: 'メンバーを検索...',

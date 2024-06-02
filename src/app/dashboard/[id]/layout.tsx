@@ -12,8 +12,8 @@ import {
 import { getAndRequestUserGuildsById, getGuildById, getMemberById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@/utils/discord';
-import { PageWithSidebarLayout } from '@lunaproject/web-core/dist/components/Layout';
-import { Alert, AlertTitle, Box } from '@mui/material';
+import { PageSidebarLayout, RootSidebarLayout } from '@lunaproject/web-core/dist/components/Layout';
+import { Alert, AlertTitle } from '@mui/material';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import { notFound } from 'next/navigation';
 import React, { ReactNode } from 'react';
@@ -106,7 +106,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const filteredSortedGuilds = sortedGuilds.filter((sortedGuild) => mutualGuildIds.includes(sortedGuild.id));
 
     return (
-        <Box sx={{ p: 2, display: 'flex', gap: 2 }}>
+        <RootSidebarLayout>
             <Navigation
                 user={user}
                 userManager={isManager}
@@ -118,7 +118,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
                 mutualGuilds={mutualGuildIds}
                 localization={localization}
             />
-            <PageWithSidebarLayout sx={{ pb: 9 }}>
+            <PageSidebarLayout sx={{ pb: 9 }}>
                 {(isManager && filteredSortedGuilds.every((sortedGuild) => sortedGuild.id !== guild.id)) && <Alert
                     severity="warning"
                     className="mb-6"
@@ -128,8 +128,8 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
                     このサーバーの管理者よりサポートの要求が行われたなどの理由以外で、本来権限がないサーバーの設定を変更することは禁止されています。
                 </Alert>}
                 {children}
-            </PageWithSidebarLayout>
-        </Box>
+            </PageSidebarLayout>
+        </RootSidebarLayout>
     );
 };
 

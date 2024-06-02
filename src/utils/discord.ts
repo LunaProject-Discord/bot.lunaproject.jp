@@ -74,8 +74,8 @@ export const filterPredicateRole = (role: APIRole | RedisRole, keyword: string) 
     || role.name.toLowerCase().includes(keyword.toLowerCase());
 
 export const filterPredicateMember = (member: GuildMember | RedisMember, keyword: string) => keyword.length < 1
-    || filterPredicateUser(member.user, keyword)
-    || member.nick?.toLowerCase().includes(keyword.toLowerCase());
+    || member.nick?.toLowerCase().includes(keyword.toLowerCase())
+    || filterPredicateUser(member.user, keyword);
 
 export const filterPredicateUser = (user: OAuthUser | APIUser | RedisUser, keyword: string) => keyword.length < 1
     || user.id.includes(keyword)

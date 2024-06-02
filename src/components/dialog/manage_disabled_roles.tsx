@@ -12,7 +12,7 @@ import {
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
-import { useResettableState } from '@lunaproject/web-core/dist/utils/state';
+import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, IconButton, InputBase, ListItemText, Switch, switchClasses, Theme, useMediaQuery } from '@mui/material';
 import { ellipsis, size } from 'polished';
 import React, { Fragment } from 'react';

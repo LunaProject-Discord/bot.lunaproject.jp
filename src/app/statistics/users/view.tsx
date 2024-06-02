@@ -35,21 +35,21 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
             field: 'date',
             type: 'dateTime',
             headerName: String(translations.statistics_table_date),
-            valueFormatter: (params) => formatDate(params.value, type, localization),
+            valueFormatter: (value: Date) => formatDate(value, type, localization),
             width: 250
         },
         {
             field: 'total',
             type: 'number',
             headerName: String(translations.statistics_table_total),
-            valueFormatter: (params) => formatValue(params.value),
+            valueFormatter: (value: number) => formatValue(value),
             width: 120
         },
         ...Object.keys(shards).map((shard): GridColDef<GridValidRowModel, number | undefined, string> => ({
             field: `shard_${shard}`,
             type: 'number',
             headerName: String(translations.statistics_table_shard_with_id).replace('%id', (Number(shard) + 1).toLocaleString()),
-            valueFormatter: (params) => params.value ? formatValue(params.value) : 'N/A',
+            valueFormatter: (value: number | undefined) => value ? formatValue(value) : 'N/A',
             width: 120
         }))
     ];

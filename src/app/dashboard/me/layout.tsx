@@ -2,8 +2,7 @@ import { getUser } from '@/app/utils';
 import { NotFoundView, UnauthorizedView } from '@/app/view';
 import { getUserConfiguration, getUserFlags } from '@/libs/bot';
 import { getLocalization } from '@/localizations/server';
-import { PageWithSidebarLayout } from '@lunaproject/web-core/dist/components/Layout';
-import { Box } from '@mui/material';
+import { PageSidebarLayout, RootSidebarLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
@@ -56,10 +55,10 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         return (<NotFoundView localization={localization} />);
 
     return (
-        <Box sx={{ p: 2, display: 'flex', gap: 2 }}>
+        <RootSidebarLayout>
             <Navigation user={user} flags={userFlags} localization={localization} />
-            <PageWithSidebarLayout sx={{ pb: 8 }}>{children}</PageWithSidebarLayout>
-        </Box>
+            <PageSidebarLayout sx={{ pb: 8 }}>{children}</PageSidebarLayout>
+        </RootSidebarLayout>
     );
 };
 

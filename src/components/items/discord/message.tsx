@@ -7,7 +7,7 @@ import { toMessage } from '@/libs/message';
 import { ThemeProvider } from '@emotion/react';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
-import { buildTheme } from '@lunaproject/web-core/dist/styles/theme';
+import { buildDiscordTheme } from '@lunaproject/web-core/dist/styles/theme';
 import { Box, Button, styled, Typography, useTheme } from '@mui/material';
 import React, { Dispatch, Fragment, ReactNode, SetStateAction, useState } from 'react';
 import { MessageBuilder } from '../../message/builder';
@@ -105,7 +105,7 @@ export const MessageItem = (
                 <ItemQueryContainer>
                     <ItemGridContainer>
                         <Box sx={{ width: { xs: '100%', md: '60%' } }}>
-                            <ThemeProvider theme={buildTheme({ color: theme.palette.mode })}>
+                            <ThemeProvider theme={buildDiscordTheme({ color: theme.palette.mode })}>
                                 <MessagePreviewContainer sx={{ height: '100%' }}>
                                     <MessageContainer style={{ height: '100%' }}>
                                         <MessagePreview message={toMessage(value)} />

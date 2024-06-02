@@ -136,6 +136,7 @@ export type TranslationKeys =
 
 
     | 'search'
+    | 'search_guilds'
     | 'search_channels'
     | 'search_roles'
     | 'search_members'

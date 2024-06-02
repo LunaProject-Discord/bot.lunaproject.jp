@@ -1,4 +1,4 @@
-import { ConfigurationTimeAndLanguageSchema } from '@/schemas/bot/configuration';
+import { ConfigurationTimeAndLanguageSchema } from '@/schemas/bot';
 import { SnowflakeSchema } from '@/schemas/snowflake';
 
 export const UserConfigurationSchema = ConfigurationTimeAndLanguageSchema.extend({
