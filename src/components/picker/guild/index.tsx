@@ -4,7 +4,7 @@ import { SnowflakePicker, SnowflakePickerItemProps, SnowflakePickerProps } from 
 import { DataGuild, RedisGuild } from '@/interfaces/redis';
 import { getGuildIcon } from '@/utils/cdn';
 import { filterPredicateGuild, sortGuilds } from '@/utils/discord';
-import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import deepmerge from 'deepmerge';

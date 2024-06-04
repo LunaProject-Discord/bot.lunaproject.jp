@@ -1,6 +1,6 @@
 import { GuildNotification } from '@/interfaces/bot';
 import prisma from '@/libs/prisma';
-import { fromBinaryUUID, toBinaryUUID } from '@/utils/uuid';
+import { fromBinaryUUID, toBinaryUUID } from '@lunaproject/web-core/dist/utils';
 
 export const getGuildNotifications = async (id: string): Promise<GuildNotification[]> => {
     const guildId = BigInt(id);

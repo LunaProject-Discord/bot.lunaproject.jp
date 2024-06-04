@@ -13,10 +13,10 @@ import {
     DialogTitle,
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
-import { MessageContainer, MessagePreview } from '@lunaproject/web-core/dist/components/Message';
 import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
-import { buildDiscordTheme } from '@lunaproject/web-core/dist/styles/theme';
+import { MessageContainer, MessagePreview } from '@lunaproject/web-discord/dist/components/Message';
 import { Message } from '@lunaproject/web-discord/dist/interfaces';
+import { buildDiscordTheme } from '@lunaproject/web-discord/dist/styles';
 import {
     Box,
     Button,

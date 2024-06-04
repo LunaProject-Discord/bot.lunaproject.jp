@@ -5,7 +5,7 @@ import {
     generateSectionControlCardClasses,
     SectionCard,
     sectionCardClasses
-} from '@lunaproject/web-core/dist/components';
+} from '@lunaproject/web-core/dist/components/SectionCard';
 import { useTheme } from '@mui/material';
 import clsx from 'clsx';
 import deepmerge from 'deepmerge';

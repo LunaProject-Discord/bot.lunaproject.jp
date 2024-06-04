@@ -1,13 +1,6 @@
 'use client';
 
-import {
-    AddIcon,
-    CloseIcon,
-    ContentCopyIcon,
-    ExpandMoreIcon,
-    KeyboardArrowDownIcon,
-    KeyboardArrowUpIcon
-} from '@/components/icons';
+import { AddIcon, CloseIcon, ContentCopyIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@/components/icons';
 import { ItemDisabledProps, ItemVariableProps } from '@/components/items';
 import { LocalizationProps } from '@/interfaces/localization';
 import { getNewEmbed } from '@/libs/message';
@@ -16,8 +9,8 @@ import {
     moveUp as moveUpArray,
     remove as removeArray,
     replace as replaceArray
-} from '@/utils/array';
-import { getStateActionValue } from '@/utils/react/state';
+} from '@lunaproject/web-core/dist/utils';
+import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { useTheme } from '@emotion/react';
 import { Embed } from '@lunaproject/web-discord/dist/interfaces';
 import {
@@ -76,7 +69,7 @@ const Accordion = styled(
 }));
 
 const AccordionSummary = styled(
-    (props: AccordionSummaryProps) => (<MuiAccordionSummary expandIcon={<ExpandMoreIcon />} {...props} />)
+    (props: AccordionSummaryProps) => (<MuiAccordionSummary expandIcon={<KeyboardArrowDownIcon />} {...props} />)
 )(({ theme }) => ({
     height: 40,
     minHeight: '40px !important',

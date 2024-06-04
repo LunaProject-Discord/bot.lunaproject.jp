@@ -15,7 +15,7 @@ import {
 } from '@/components/picker';
 import { RedisChannel } from '@/interfaces/redis';
 import { filterPredicateChannel, sortChannels } from '@/utils/discord';
-import { SectionCardDisabledProps, SlotRootProps } from '@lunaproject/web-core/dist/components';
+import { SectionCardDisabledProps, SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { APIGuildChannel } from '@lunaproject/web-discord/dist/interfaces';
 import { SlotComponentProps } from '@mui/base';
 import { List, ListItemButton, ListItemIcon, ListItemText, Theme, useMediaQuery } from '@mui/material';

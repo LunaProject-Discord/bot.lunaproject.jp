@@ -7,7 +7,7 @@ import { UserViewProps } from '@/interfaces/view';
 import { getDateFnsLocaleByName } from '@/localizations';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
-import { format } from '@lunaproject/web-core/dist/utils/date';
+import { format } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment } from 'react';
 
 interface Props extends UserViewProps {

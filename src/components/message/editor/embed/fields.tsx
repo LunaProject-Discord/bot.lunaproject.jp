@@ -3,12 +3,12 @@
 import { AddIcon, CloseIcon, ContentCopyIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
 import {
+    getStateActionValue,
     moveDown as moveDownArray,
     moveUp as moveUpArray,
     remove as removeArray,
     replace as replaceArray
-} from '@/utils/array';
-import { getStateActionValue } from '@/utils/react/state';
+} from '@lunaproject/web-core/dist/utils';
 import { DefaultField, EmbedField } from '@lunaproject/web-discord/dist/interfaces';
 import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
 import { nanoid } from 'nanoid';

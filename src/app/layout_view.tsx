@@ -4,12 +4,12 @@ import {
     ArrowDropDownIcon,
     ArrowDropUpIcon,
     ErrorIcon,
-    ExpandLessIcon,
-    ExpandMoreIcon,
     FirstPageIcon,
     InfoIcon,
+    KeyboardArrowDownIcon,
     KeyboardArrowLeftIcon,
     KeyboardArrowRightIcon,
+    KeyboardArrowUpIcon,
     LastPageIcon,
     OpenInNewIcon,
     TableRowsIcon,
@@ -23,8 +23,7 @@ import { LocalizationProps } from '@/interfaces/localization';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '@/localizations';
 import { appearanceAtom, AppearanceType } from '@/states/appearance';
 import { RootLayout, RootStyles } from '@lunaproject/web-core/dist/components/Layout';
-import { Config, ConfigProvider } from '@lunaproject/web-core/dist/utils/config';
-import { MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
+import { Config, ConfigProvider, MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { createTheme, GlobalStyles, ThemeOptions, ThemeProvider, useMediaQuery } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
@@ -112,8 +111,8 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
     const config: Config = {
         icons: {
             Decrement: ArrowDropDownIcon,
-            ExpandLess: ExpandLessIcon,
-            ExpandMore: ExpandMoreIcon,
+            ExpandLess: KeyboardArrowUpIcon,
+            ExpandMore: KeyboardArrowDownIcon,
             Increment: ArrowDropUpIcon,
             More: KeyboardArrowRightIcon,
             OpenInNew: OpenInNewIcon,

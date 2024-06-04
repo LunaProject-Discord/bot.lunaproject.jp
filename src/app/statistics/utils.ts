@@ -2,9 +2,8 @@ import { StatisticsPageProps } from '@/app/statistics/interfaces';
 import { Statistic, StatisticsPeriodData, StatisticsPeriodType } from '@/interfaces/bot';
 import { Localization } from '@/interfaces/localization';
 import { getDateFnsLocaleByName } from '@/localizations';
-import { max } from '@/utils/array';
 import { fromDBDate } from '@/utils/date';
-import { format } from '@lunaproject/web-core/dist/utils/date';
+import { format, max } from '@lunaproject/web-core/dist/utils';
 import { endOfWeek, format as formatDateFns, startOfWeek } from 'date-fns';
 import { DateTime } from 'luxon';
 

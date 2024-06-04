@@ -4,7 +4,7 @@ import { getUserConfiguration } from '@/libs/bot';
 import prisma from '@/libs/prisma';
 import { updateUserById } from '@/libs/redis';
 import { PartialUserConfigurationSchema } from '@/schemas/bot';
-import { errorWithName } from '@lunaproject/web-core/dist/utils/logger';
+import { errorWithName } from '@lunaproject/web-core/dist/utils';
 import { Prisma } from '@prisma/client';
 import { addHours } from 'date-fns';
 import { NextRequest, NextResponse } from 'next/server';

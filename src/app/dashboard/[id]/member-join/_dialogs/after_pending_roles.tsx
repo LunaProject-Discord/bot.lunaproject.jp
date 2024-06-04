@@ -7,7 +7,6 @@ import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover } from '@/co
 import { GuildConfigurationMemberJoinAfterPendingRole } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { getInteractRolesByDataGuild, getRoleColor } from '@/utils/discord';
-import { getStateActionValue, UniqueId, updateArrayState } from '@/utils/react/state';
 import {
     Dialog,
     DialogActions,
@@ -16,6 +15,7 @@ import {
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { getStateActionValue, UniqueId, updateArrayState } from '@lunaproject/web-core/dist/utils';
 import { Box, Button, Divider, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import { nanoid } from 'nanoid';
 import { size } from 'polished';

@@ -9,7 +9,7 @@ import {
     TextChannelIcon,
     ThreadIcon,
     VoiceChannelIcon
-} from '@lunaproject/web-core/dist/components/Icons/channels';
+} from '@lunaproject/web-core/dist/components/Icons';
 import { SvgIcon, SvgIconProps } from '@mui/material';
 import { APIChannel, ChannelType } from 'discord-api-types/v10';
 import React, { Fragment } from 'react';

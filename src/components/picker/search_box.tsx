@@ -1,7 +1,7 @@
 'use client';
 
 import { SearchIcon } from '@/components/icons';
-import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components';
+import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
 import { Box, BoxProps, InputBase, styled } from '@mui/material';
 import clsx from 'clsx';

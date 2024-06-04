@@ -21,7 +21,6 @@ import { LocalizationProps, TranslationKeys } from '@/interfaces/localization';
 import { PopoverProps } from '@/interfaces/mui';
 import { GuildViewProps } from '@/interfaces/view';
 import { getInteractRolesByDataGuild } from '@/utils/discord';
-import { getStateActionValue, UniqueId, updateArrayState } from '@/utils/react/state';
 import {
     Dialog,
     DialogActions,
@@ -31,6 +30,7 @@ import {
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { getStateActionValue, UniqueId, updateArrayState } from '@lunaproject/web-core/dist/utils';
 import {
     Box,
     Button,

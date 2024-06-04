@@ -8,7 +8,6 @@ import { Code } from '@/components/text';
 import { GuildConfigurationCommand } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { sortChannels, sortMembers, sortRoles } from '@/utils/discord';
-import { getStateActionValue } from '@/utils/react/state';
 import {
     Dialog,
     DialogActions,
@@ -17,6 +16,7 @@ import {
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemFormContainer, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Box, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, memo, SetStateAction, useCallback, useState } from 'react';

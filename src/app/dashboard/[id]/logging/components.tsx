@@ -20,8 +20,8 @@ import {
 } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { RedisChannel } from '@/interfaces/redis';
-import { getStateActionValue } from '@/utils/react/state';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Box, buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
 import React, { ReactNode } from 'react';
 

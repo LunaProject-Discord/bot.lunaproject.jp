@@ -5,7 +5,7 @@ import { GuildViewProps } from '@/interfaces/view';
 import { getMemberAvatar } from '@/utils/cdn';
 import { getRoleColor } from '@/utils/discord';
 import { getMaxExperience } from '@/utils/level';
-import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
+import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils';
 import {
     alpha,
     Avatar,

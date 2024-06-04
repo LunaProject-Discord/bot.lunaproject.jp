@@ -1,6 +1,6 @@
 import { ArrowDropDownIcon } from '@/components/icons';
 import { SelectInputProps, SelectInputRootProps } from '@/components/select';
-import { SlotRootProps } from '@lunaproject/web-core/dist/components';
+import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
 import { SlotComponentProps } from '@mui/base';
 import { Box, BoxProps, styled, typographyClasses } from '@mui/material';

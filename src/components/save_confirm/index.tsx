@@ -2,7 +2,7 @@
 
 import { RefreshIcon, SaveIcon } from '@/components/icons';
 import { useTranslation } from '@/localizations/client';
-import { MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils/theme';
+import { MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProvider, useTheme } from '@mui/material';
 import Mousetrap from 'mousetrap';

@@ -10,7 +10,7 @@ import {
     usePickerSearch
 } from '@/components/picker';
 import { LocalizationProps } from '@/interfaces/localization';
-import { SlotRootProps } from '@lunaproject/web-core/dist/components';
+import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SomeRequired } from '@lunaproject/web-core/dist/utils';
 import { SlotComponentProps } from '@mui/base';
 import { Theme, useMediaQuery } from '@mui/material';

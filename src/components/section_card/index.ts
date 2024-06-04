@@ -4,7 +4,7 @@ import {
     SectionCardDisabledProps,
     SectionCardProps,
     SectionCardVariableProps
-} from '@lunaproject/web-core/dist/components';
+} from '@lunaproject/web-core/dist/components/SectionCard';
 
 export interface SectionSnowflakeSelectCardRootProps<T extends SnowflakePickerRootType> extends SectionCardDisabledProps, LocalizationProps {
     choices: T[];

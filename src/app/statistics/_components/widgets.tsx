@@ -5,7 +5,7 @@ import { getDate } from '@/app/statistics/utils';
 import { TodayIcon, TrendingDownIcon, TrendingFlatIcon, TrendingUpIcon } from '@/components/icons';
 import { Statistic, StatisticsPeriodType } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
-import { format } from '@lunaproject/web-core/dist/utils/date';
+import { format } from '@lunaproject/web-core/dist/utils';
 import { SvgIconComponent } from '@mui/icons-material';
 import { Box, Paper, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import {

@@ -3,12 +3,12 @@ import { CheckIcon, CloseIcon, CommandIcon, DeleteIcon } from '@/components/icon
 import { ItemRoot, ItemRowContainer } from '@/components/items';
 import { LocalizationProps } from '@/interfaces/localization';
 import { StyledProps } from '@/interfaces/mui';
-import { getStateActionValue } from '@/utils/react/state';
 import {
     ItemDisabledProps,
     ItemFormContainer,
     ItemVariableProps
 } from '@lunaproject/web-core/dist/components/SectionItems';
+import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { IconButton, ToggleButton, toggleButtonClasses, ToggleButtonGroup, Tooltip } from '@mui/material';
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 

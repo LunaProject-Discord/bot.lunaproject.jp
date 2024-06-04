@@ -5,7 +5,7 @@ import { Changes } from '@/components/save_confirm_v2/changes';
 import { Change, ChangesGroupByPath } from '@/components/save_confirm_v2/changes/utils';
 import { Issues } from '@/components/save_confirm_v2/issues';
 import { LocalizationProps } from '@/interfaces/localization';
-import { isRenderableReactNode } from '@/utils/react/node';
+import { isRenderableReactNode } from '@lunaproject/web-core/dist/utils';
 import {
     BottomSheet,
     BottomSheetContent,

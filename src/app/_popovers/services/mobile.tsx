@@ -3,12 +3,7 @@ import { servicesPopoverStateAtom } from '@/app/_popovers/services';
 import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
 import { BottomSheet, BottomSheetContent } from '@lunaproject/web-core/dist/components/BottomSheet';
-import {
-    LunaProjectIcon,
-    NatsukiIcon,
-    SatsukiIcon,
-    YudzukiIcon
-} from '@lunaproject/web-core/dist/components/Icons/branding';
+import { LunaProjectIcon, NatsukiIcon, SatsukiIcon, YudzukiIcon } from '@lunaproject/web-core/dist/components/Icons';
 import { Divider, List, listItemButtonClasses, ListItemText } from '@mui/material';
 import { useAtom } from 'jotai';
 import React, { useRef } from 'react';

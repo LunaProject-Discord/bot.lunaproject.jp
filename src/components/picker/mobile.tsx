@@ -8,7 +8,8 @@ import {
     pickerSearchBoxClasses,
     useMobilePickerRef
 } from '@/components/picker';
-import { BottomSheet, BottomSheetContent, SlotRootProps } from '@lunaproject/web-core/dist/components';
+import { BottomSheet, BottomSheetContent } from '@lunaproject/web-core/dist/components/BottomSheet';
+import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SlotComponentProps } from '@mui/base';
 import { Box, BoxProps, listClasses, listItemButtonClasses, listSubheaderClasses, styled } from '@mui/material';
 import React, { cloneElement } from 'react';

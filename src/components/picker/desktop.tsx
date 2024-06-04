@@ -1,7 +1,7 @@
 'use client';
 
 import { PickerInternalProps, PickerSearchBox } from '@/components/picker';
-import { SlotRootProps } from '@lunaproject/web-core/dist/components';
+import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SlotComponentProps } from '@mui/base';
 import { Box, listClasses, listItemButtonClasses, Popover, popoverClasses, styled } from '@mui/material';
 import React, { cloneElement, useCallback } from 'react';

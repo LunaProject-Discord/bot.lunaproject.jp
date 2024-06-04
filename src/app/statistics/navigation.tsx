@@ -13,7 +13,6 @@ import {
     TagIcon
 } from '@/components/icons';
 import { StatisticsPeriodType } from '@/interfaces/bot';
-import { getStateActionValue } from '@/utils/react/state';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     NavigationDrawer,
@@ -22,6 +21,7 @@ import {
     NavigationDrawerItem,
     NavigationRoot
 } from '@lunaproject/web-core/dist/components/Navigation';
+import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Theme, Typography, useMediaQuery } from '@mui/material';
 import { endOfToday } from 'date-fns';
 import { DateTime } from 'luxon';

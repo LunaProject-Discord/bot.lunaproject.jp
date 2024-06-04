@@ -3,7 +3,7 @@
 import { SnowflakePicker, SnowflakePickerItemProps, SnowflakePickerProps } from '@/components/picker';
 import { RedisRole } from '@/interfaces/redis';
 import { filterPredicateRole, getRoleColor, sortRoles } from '@/utils/discord';
-import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { Box, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import deepmerge from 'deepmerge';
 import { APIRole } from 'discord-api-types/v10';

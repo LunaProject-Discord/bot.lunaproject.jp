@@ -4,7 +4,7 @@ import { SnowflakePicker, SnowflakePickerItemProps, SnowflakePickerProps } from 
 import { RedisMember } from '@/interfaces/redis';
 import { getMemberAvatar, getUserAvatar } from '@/utils/cdn';
 import { filterPredicateMember, getMemberDisplayName, sortMembers } from '@/utils/discord';
-import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { GuildMember } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import deepmerge from 'deepmerge';

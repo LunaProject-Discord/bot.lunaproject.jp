@@ -1,7 +1,7 @@
 'use client';
 
 import { getSnowflakeChoiceId, Picker, PickerInternalProps, PickerItemProps, PickerProps } from '@/components/picker';
-import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import React from 'react';
 
 export type SnowflakePickerRootType = ({ id: string } | { user: { id: string } }) & SectionCardDisabledProps;

@@ -28,8 +28,6 @@ import Dns from '@material-symbols/svg-400/outlined/dns.svg';
 import Edit from '@material-symbols/svg-400/outlined/edit.svg';
 import EmojiEvents from '@material-symbols/svg-400/outlined/emoji_events.svg';
 import Error from '@material-symbols/svg-400/outlined/error.svg';
-import ExpandLess from '@material-symbols/svg-400/outlined/expand_less.svg';
-import ExpandMore from '@material-symbols/svg-400/outlined/expand_more.svg';
 import FirstPage from '@material-symbols/svg-400/outlined/first_page.svg';
 import FormatBold from '@material-symbols/svg-400/outlined/format_bold.svg';
 import FormatItalic from '@material-symbols/svg-400/outlined/format_italic.svg';
@@ -153,10 +151,6 @@ export const EditIcon = createSvgIcon({ path: Edit }, 'EditIcon');
 export const EmojiEventsIcon = createSvgIcon({ path: EmojiEvents }, 'EmojiEventsIcon');
 
 export const ErrorIcon = createSvgIcon({ path: Error }, 'ErrorIcon');
-
-export const ExpandLessIcon = createSvgIcon({ path: ExpandLess }, 'ExpandLessIcon');
-
-export const ExpandMoreIcon = createSvgIcon({ path: ExpandMore }, 'ExpandMoreIcon');
 
 export const FirstPageIcon = createSvgIcon({ path: FirstPage }, 'FirstPageIcon');
 

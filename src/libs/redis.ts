@@ -11,7 +11,7 @@ import {
     RedisUserGuild,
     RedisUserGuilds
 } from '@/interfaces/redis';
-import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils/array';
+import { filterPredicateNonNullable } from '@lunaproject/web-core/dist/utils';
 import Redis from 'ioredis';
 
 const HASH_GUILDS = 'guilds';

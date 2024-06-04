@@ -1,6 +1,6 @@
 'use client';
 
-import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils/theme';
+import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils';
 import { DataGrid as MuiDataGrid, DataGridProps, GridToolbar } from '@mui/x-data-grid';
 
 export const DataGrid = (props: DataGridProps) => (

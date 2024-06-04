@@ -1,6 +1,6 @@
 import { SnowflakePickerRootType } from '@/components/picker';
 import { LocalizationProps } from '@/interfaces/localization';
-import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components';
+import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { BoxProps } from '@mui/material';
 
 export interface SnowflakeSelectRootProps<T extends SnowflakePickerRootType> extends SectionCardDisabledProps, LocalizationProps {

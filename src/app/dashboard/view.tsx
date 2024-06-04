@@ -9,13 +9,12 @@ import {
 } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
 import { getGuildIcon } from '@/utils/discord';
-import { segmentedControlClasses } from '@lunaproject/web-core';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Menu } from '@lunaproject/web-core/dist/components/Menu';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
-import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
+import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, Button, ButtonBase, CircularProgress, ListItemIcon, ListItemText, MenuItem } from '@mui/material';
 import NextLink from 'next/link';

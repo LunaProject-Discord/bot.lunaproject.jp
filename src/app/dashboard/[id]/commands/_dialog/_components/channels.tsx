@@ -9,7 +9,7 @@ import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interf
 import { AddIcon, ChannelIcon } from '@/components/icons';
 import { ChannelPopover } from '@/components/items';
 import { GuildChannelsViewProps } from '@/interfaces/view';
-import { getStateActionValue } from '@/utils/react/state';
+import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Button, Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
 import React, { Fragment, useState } from 'react';

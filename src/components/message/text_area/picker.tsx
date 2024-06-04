@@ -3,7 +3,7 @@
 import data from '@emoji-mart/data/sets/14/twitter.json';
 import EmojiPicker from '@emoji-mart/react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { Popover } from '@lunaproject/web-core';
+import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { PopoverProps, useTheme } from '@mui/material';
 import { $getSelection } from 'lexical';
 import React, { useCallback } from 'react';
