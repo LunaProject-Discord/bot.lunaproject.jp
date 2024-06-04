@@ -1472,7 +1472,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@discordjs/rest@npm:^2.2.0":
+"@discordjs/rest@npm:^2.3.0":
   version: 2.3.0
   resolution: "@discordjs/rest@npm:2.3.0"
   dependencies:
@@ -1496,10 +1496,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emoji-mart/data@npm:1.1.2":
-  version: 1.1.2
-  resolution: "@emoji-mart/data@npm:1.1.2"
-  checksum: 10c0/595032fbbd7b646a75490729488f654085b1a80dfb52aa4ec355ec1be304f3fbb3fa7d2b9d6da7b4b609fbf1bcd34df5d9031d9db294d7bf651108df96c0ecd2
+"@emoji-mart/data@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@emoji-mart/data@npm:1.2.1"
+  checksum: 10c0/6784b97bf49a0d3ff110d8447bbd3b0449fcbc497294be3d1c3a6cb1609308776895c7520200be604cbecaa5e172c76927e47f34419c72ba8a76fd4e5a53674b
   languageName: node
   linkType: hard
 
@@ -2135,24 +2135,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lunaproject/web-core@npm:1.6.0-beta.49":
-  version: 1.6.0-beta.49
-  resolution: "@lunaproject/web-core@npm:1.6.0-beta.49"
+"@lunaproject/web-core@npm:1.6.0-beta.53, @lunaproject/web-core@npm:^1.6.0-beta.53":
+  version: 1.6.0-beta.53
+  resolution: "@lunaproject/web-core@npm:1.6.0-beta.53"
   dependencies:
-    "@lunaproject/web-discord": "npm:^1.1.4"
     "@types/color": "npm:^3.0.6"
     "@types/deep-equal": "npm:^1.0.4"
     clsx: "npm:^2.1.0"
-    color: "npm:^4.2.3"
     date-fns: "npm:^3.6.0"
     deep-equal: "npm:^2.2.3"
     deepmerge: "npm:^4.3.1"
-    highlight.js: "npm:10.7.3"
     jotai: "npm:^2.8.0"
     nookies: "npm:^2.5.2"
     polished: "npm:^4.3.1"
     react-spring-bottom-sheet: "npm:^3.4.1"
-    simple-markdown: "npm:^0.7.3"
   peerDependencies:
     "@emotion/react": ^11.11.0
     "@emotion/styled": ^11.11.0
@@ -2174,24 +2170,45 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10c0/a5285e718871b0b2ab9a59c7ad0f46e94363d26158f879541084c3598a94b97129f7b6b1b389211349ad9f2b119b3d37448154e4cfa7f956ad3ab129bb08405a
+  checksum: 10c0/69ae1b2204519e6083b2aa212277f91094179d3df07a0383eeaac23b843b3adb8d366d953d59e5299f203ae5191f698b75725c4cf4570c280b4659381ccea579
   languageName: node
   linkType: hard
 
-"@lunaproject/web-discord@npm:1.1.4, @lunaproject/web-discord@npm:^1.1.4":
-  version: 1.1.4
-  resolution: "@lunaproject/web-discord@npm:1.1.4"
+"@lunaproject/web-discord@npm:1.1.11":
+  version: 1.1.11
+  resolution: "@lunaproject/web-discord@npm:1.1.11"
   dependencies:
-    "@discordjs/rest": "npm:^2.2.0"
-    discord-api-types: "npm:^0.37.79"
-  checksum: 10c0/c12929a2725e65df3101471360accb2c6666971b0e7d2abc77d5505c51a52003d4eefaa55e60973fe2ffa1287bcd8de44396c1902ea1207c30781822da56df38
+    "@discordjs/rest": "npm:^2.3.0"
+    "@lunaproject/web-core": "npm:^1.6.0-beta.53"
+    "@types/color": "npm:^3.0.6"
+    clsx: "npm:^2.1.0"
+    color: "npm:^4.2.3"
+    date-fns: "npm:^3.6.0"
+    discord-api-types: "npm:0.37.83"
+    highlight.js: "npm:10.7.3"
+    polished: "npm:^4.3.1"
+    simple-markdown: "npm:^0.7.3"
+  peerDependencies:
+    "@emotion/react": ^11.11.0
+    "@emotion/styled": ^11.11.0
+    "@types/react": ^18.2.0
+    "@types/react-dom": ^18.2.0
+    next: ^14.2.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    "@types/react-dom":
+      optional: true
+  checksum: 10c0/787964f8353788ce7ee430c437d452cd1080a3479708cd0b5d29dbbe05d82ba40a387a0f2744ac0cfdf3fb56b1cca85cb2263581e973646276bb8772c6ef2ad5
   languageName: node
   linkType: hard
 
-"@material-symbols/svg-400@npm:0.17.4":
-  version: 0.17.4
-  resolution: "@material-symbols/svg-400@npm:0.17.4"
-  checksum: 10c0/5cbf46ce0a2f06f72324439dd45dd40c41771835d92e1a2d34729e90f825374d18442ff23ee16932899def9664f1c648b56df3be868e4c75464967bb9552333b
+"@material-symbols/svg-400@npm:0.19.0":
+  version: 0.19.0
+  resolution: "@material-symbols/svg-400@npm:0.19.0"
+  checksum: 10c0/73c48d1eb90f456eb0a459246cba0d591e0afb78cce685ba9addc79047008f5fb414c2fd0d85d7f88b8e9dc50718ff6bc1341555dcd7fafaa259667afa4cb4ac
   languageName: node
   linkType: hard
 
@@ -2669,61 +2686,61 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:5.13.0":
-  version: 5.13.0
-  resolution: "@prisma/client@npm:5.13.0"
+"@prisma/client@npm:5.15.0":
+  version: 5.15.0
+  resolution: "@prisma/client@npm:5.15.0"
   peerDependencies:
     prisma: "*"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: 10c0/19a0d08237fd7bae6009417476dc3588df77102131e3c8df01a024e5dee78417a8079d5a3dbbb3ffee7b4117067a9c10912f5084a3a40884de8fde5314fb1227
+  checksum: 10c0/ee88b2fd60bc293d45f31b38629a9105de96b952c3dcfa9a71f23a6ce3d3d0200fb9a78e6f570eef29f707043f321545fc536974ba7cbd17d59a7dcd7d0c72dc
   languageName: node
   linkType: hard
 
-"@prisma/debug@npm:5.13.0":
-  version: 5.13.0
-  resolution: "@prisma/debug@npm:5.13.0"
-  checksum: 10c0/9e3a84e473a77ae16adeeae3de27ec9f8431bffdd563fd7441f42596c6f6a7a766832c3c17a84a8d89e4133028b361dd274b48291425f388b4fb4575093cf3ed
+"@prisma/debug@npm:5.15.0":
+  version: 5.15.0
+  resolution: "@prisma/debug@npm:5.15.0"
+  checksum: 10c0/1e475e52d4ff02c176903b6c9108c2bbc6cd96c365a8389a492f9264cbf643af13cd47acb00ac7541a34cc3ff2bfabbeb8beb230d899ea056672bf2bdf9fd0b4
   languageName: node
   linkType: hard
 
-"@prisma/engines-version@npm:5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b":
-  version: 5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b
-  resolution: "@prisma/engines-version@npm:5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b"
-  checksum: 10c0/459f991a8f05da8c3b69cb36148537658b8fbaa3d83de32fd35e293dbc978a2fd49d2a140921967dfd76dd942197f08af1ba89d218c09e46db96b917eef02f92
+"@prisma/engines-version@npm:5.15.0-29.12e25d8d06f6ea5a0252864dd9a03b1bb51f3022":
+  version: 5.15.0-29.12e25d8d06f6ea5a0252864dd9a03b1bb51f3022
+  resolution: "@prisma/engines-version@npm:5.15.0-29.12e25d8d06f6ea5a0252864dd9a03b1bb51f3022"
+  checksum: 10c0/e35d696e97225a36b90abf9c5b54b1016391bb396e098b2f3e40a85a4a3be31c413928ab4a0206c865d96768e06a195d161c7b6c563f107f2d4c63e6bddfb7e8
   languageName: node
   linkType: hard
 
-"@prisma/engines@npm:5.13.0":
-  version: 5.13.0
-  resolution: "@prisma/engines@npm:5.13.0"
+"@prisma/engines@npm:5.15.0":
+  version: 5.15.0
+  resolution: "@prisma/engines@npm:5.15.0"
   dependencies:
-    "@prisma/debug": "npm:5.13.0"
-    "@prisma/engines-version": "npm:5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b"
-    "@prisma/fetch-engine": "npm:5.13.0"
-    "@prisma/get-platform": "npm:5.13.0"
-  checksum: 10c0/533772a7ed24daf515b74fc96123a3eec028a66a2cdee60e9509dc0308f572f91185746e90050a8b3ff4366465a5ef82bf7c015b6f600090add3d672f7bdaf1d
+    "@prisma/debug": "npm:5.15.0"
+    "@prisma/engines-version": "npm:5.15.0-29.12e25d8d06f6ea5a0252864dd9a03b1bb51f3022"
+    "@prisma/fetch-engine": "npm:5.15.0"
+    "@prisma/get-platform": "npm:5.15.0"
+  checksum: 10c0/869a49dbf9d366c2a143776bb0837d9fec8b2683018399a15740e23a40a583411fb841f9e21d87c5a7930ee78c89d5c9a6199048e62b7985a98a53729b9232cd
   languageName: node
   linkType: hard
 
-"@prisma/fetch-engine@npm:5.13.0":
-  version: 5.13.0
-  resolution: "@prisma/fetch-engine@npm:5.13.0"
+"@prisma/fetch-engine@npm:5.15.0":
+  version: 5.15.0
+  resolution: "@prisma/fetch-engine@npm:5.15.0"
   dependencies:
-    "@prisma/debug": "npm:5.13.0"
-    "@prisma/engines-version": "npm:5.13.0-23.b9a39a7ee606c28e3455d0fd60e78c3ba82b1a2b"
-    "@prisma/get-platform": "npm:5.13.0"
-  checksum: 10c0/44bd142d11a826b98974b6187d43490653a0bf47e63ce4db1f1dfda3cf254721102c796e7984e18ecfbec709be30d9b2e77f8dcb685d9a47670ac7c6f833778a
+    "@prisma/debug": "npm:5.15.0"
+    "@prisma/engines-version": "npm:5.15.0-29.12e25d8d06f6ea5a0252864dd9a03b1bb51f3022"
+    "@prisma/get-platform": "npm:5.15.0"
+  checksum: 10c0/5d3c51d77cc0686ca7005da945ef85cd366cf72607823cc9002e8a7583e1387332a089045fcd6fd3932db90f20505c610d21cb472a3a069d9f440d5e6dbe6b07
   languageName: node
   linkType: hard
 
-"@prisma/get-platform@npm:5.13.0":
-  version: 5.13.0
-  resolution: "@prisma/get-platform@npm:5.13.0"
+"@prisma/get-platform@npm:5.15.0":
+  version: 5.15.0
+  resolution: "@prisma/get-platform@npm:5.15.0"
   dependencies:
-    "@prisma/debug": "npm:5.13.0"
-  checksum: 10c0/c90cf7738fe886f096cd4563938b2f05d3ebd94b1391ade81ae9b9d863f6ab34082d12be97e7ae6b649f37278dc0b1c65c3c0aa113d1276a942798a2c8ac469b
+    "@prisma/debug": "npm:5.15.0"
+  checksum: 10c0/e0d3af38a1c75e8a009ba41fbc60a8ca02b02f53f8e59d2abdc9874aab32f05d2d7e29c4b74ebdbe116c629ab3a10aa4a1b14565f087228f23eaec97803a91b8
   languageName: node
   linkType: hard
 
@@ -2967,22 +2984,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tremor/react@npm:3.16.2":
-  version: 3.16.2
-  resolution: "@tremor/react@npm:3.16.2"
+"@tremor/react@npm:3.17.2":
+  version: 3.17.2
+  resolution: "@tremor/react@npm:3.17.2"
   dependencies:
     "@floating-ui/react": "npm:^0.19.2"
     "@headlessui/react": "npm:^1.7.19"
     "@headlessui/tailwindcss": "npm:^0.2.0"
-    date-fns: "npm:^2.30.0"
-    react-day-picker: "npm:^8.9.1"
+    date-fns: "npm:^3.6.0"
+    react-day-picker: "npm:^8.10.1"
     react-transition-state: "npm:^2.1.1"
-    recharts: "npm:^2.12.6"
+    recharts: "npm:^2.12.7"
     tailwind-merge: "npm:^1.14.0"
   peerDependencies:
     react: ^18.0.0
     react-dom: ">=16.6.0"
-  checksum: 10c0/84e7a4a4adc92ce145a3a1720080356de07881eead0694b2935b700e15bc634429ae2233c49ae7f21f8fda77a684f092017267837a7d26617fa7a6c3f5de4141
+  checksum: 10c0/d0ec9bfcc9ac6cefc485e7468844949277caedc3563b3129b9aba175cd092d00c6f26745ac597e814f3c704657494ebb2038d7ee1ec3ecdb3e0ae4687a3674cf
   languageName: node
   linkType: hard
 
@@ -3711,24 +3728,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "bot.lunaproject.jp@workspace:."
   dependencies:
-    "@emoji-mart/data": "npm:1.1.2"
+    "@emoji-mart/data": "npm:1.2.1"
     "@emoji-mart/react": "npm:1.1.1"
     "@emotion/react": "npm:11.11.4"
     "@emotion/styled": "npm:11.11.5"
     "@lexical/markdown": "npm:0.13.1"
     "@lexical/react": "npm:0.13.1"
-    "@lunaproject/web-core": "npm:1.6.0-beta.49"
-    "@lunaproject/web-discord": "npm:1.1.4"
-    "@material-symbols/svg-400": "npm:0.17.4"
+    "@lunaproject/web-core": "npm:1.6.0-beta.53"
+    "@lunaproject/web-discord": "npm:1.1.11"
+    "@material-symbols/svg-400": "npm:0.19.0"
     "@mui/icons-material": "npm:5.15.15"
     "@mui/lab": "npm:5.0.0-alpha.170"
     "@mui/material": "npm:5.15.15"
     "@mui/material-nextjs": "npm:5.15.11"
     "@mui/x-data-grid": "npm:7.2.0"
     "@mui/x-date-pickers": "npm:6.19.9"
-    "@prisma/client": "npm:5.13.0"
+    "@prisma/client": "npm:5.15.0"
     "@svgr/webpack": "npm:8.1.0"
-    "@tremor/react": "npm:3.16.2"
+    "@tremor/react": "npm:3.17.2"
     "@types/lodash": "npm:4.17.1"
     "@types/luxon": "npm:3.4.2"
     "@types/mousetrap": "npm:1.6.15"
@@ -3741,7 +3758,7 @@ __metadata:
     autoprefixer: "npm:10.4.19"
     country-code-emoji: "npm:2.3.0"
     date-fns: "npm:2.30.0"
-    emoji-mart: "npm:5.5.2"
+    emoji-mart: "npm:5.6.0"
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.3"
     eslint-plugin-react-hooks: "npm:4.6.2"
@@ -3757,7 +3774,7 @@ __metadata:
     nanoid: "npm:5.0.4"
     next: "npm:14.2.3"
     postcss: "npm:8.4.38"
-    prisma: "npm:5.13.0"
+    prisma: "npm:5.15.0"
     react: "npm:18.3.1"
     react-color: "npm:2.19.3"
     react-device-detect: "npm:2.2.3"
@@ -3768,8 +3785,8 @@ __metadata:
     swr: "npm:2.2.5"
     tailwindcss: "npm:3.4.3"
     typescript: "npm:5.4.5"
-    virtua: "npm:0.27.5"
-    zod: "npm:3.22.4"
+    virtua: "npm:0.31.0"
+    zod: "npm:3.23.8"
   languageName: unknown
   linkType: soft
 
@@ -4323,7 +4340,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:2.30.0, date-fns@npm:^2.30.0":
+"date-fns@npm:2.30.0":
   version: 2.30.0
   resolution: "date-fns@npm:2.30.0"
   dependencies:
@@ -4473,13 +4490,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-api-types@npm:^0.37.79":
-  version: 0.37.86
-  resolution: "discord-api-types@npm:0.37.86"
-  checksum: 10c0/796443c8160965382ec3c9ba1a3407bc9d62596d9e7b56bbf310e7038c5d1f6f3417f227a453d6a24e1a8e872b88d5baa567ec5d4ed081bfb95b6d7143f4536b
-  languageName: node
-  linkType: hard
-
 "dlv@npm:^1.1.3":
   version: 1.1.3
   resolution: "dlv@npm:1.1.3"
@@ -4577,10 +4587,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emoji-mart@npm:5.5.2":
-  version: 5.5.2
-  resolution: "emoji-mart@npm:5.5.2"
-  checksum: 10c0/398a7d7f27930d39487648beb0c79d1e1424223bbd5985b0159188dadb90c2188022a3fa06afdf7ae9fb293b8cf7cbe3b46e60426b1edc7cf0f7ddf3b33cb01e
+"emoji-mart@npm:5.6.0":
+  version: 5.6.0
+  resolution: "emoji-mart@npm:5.6.0"
+  checksum: 10c0/23e68ab10984f101b696d8f8e103e553ffa8e4d644e9a315190a9657903f71b833db09aac51b05de20f33bb9eef5bc1425eecdb2437042b25aff2dad0231f029
   languageName: node
   linkType: hard
 
@@ -7108,14 +7118,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:5.13.0":
-  version: 5.13.0
-  resolution: "prisma@npm:5.13.0"
+"prisma@npm:5.15.0":
+  version: 5.15.0
+  resolution: "prisma@npm:5.15.0"
   dependencies:
-    "@prisma/engines": "npm:5.13.0"
+    "@prisma/engines": "npm:5.15.0"
   bin:
     prisma: build/index.js
-  checksum: 10c0/226e03b9d3bded1b0b186f40702f971dc34745d67ef4518897380d5a8ba5ce0c438190b3b1d807db7cca3d06b02d89a344e3fc064626c8b448823d7adce07044
+  checksum: 10c0/cc45342f44c46891a38341f4bea20c007ff5edf62e00c47e24ecd51782500728a5e85abbbd7728b0757792025c5e39ba4c871f5ee59e35a13c8249e52a38ad79
   languageName: node
   linkType: hard
 
@@ -7201,7 +7211,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-day-picker@npm:^8.9.1":
+"react-day-picker@npm:^8.10.1":
   version: 8.10.1
   resolution: "react-day-picker@npm:8.10.1"
   peerDependencies:
@@ -7413,7 +7423,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"recharts@npm:^2.12.6":
+"recharts@npm:^2.12.7":
   version: 2.12.7
   resolution: "recharts@npm:2.12.7"
   dependencies:
@@ -8534,13 +8544,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"virtua@npm:0.27.5":
-  version: 0.27.5
-  resolution: "virtua@npm:0.27.5"
+"virtua@npm:0.31.0":
+  version: 0.31.0
+  resolution: "virtua@npm:0.31.0"
   peerDependencies:
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
     solid-js: ">=1.0"
+    svelte: ">=4.0"
     vue: ">=3.2"
   peerDependenciesMeta:
     react:
@@ -8549,9 +8560,11 @@ __metadata:
       optional: true
     solid-js:
       optional: true
+    svelte:
+      optional: true
     vue:
       optional: true
-  checksum: 10c0/d092ce0d6d86f3bd0f05ce7b73cb1813009376868ad015e50cf23c8bd830170d35f147e80e85c4c07ee1beece98acc7ab9319b34dc0c32d0e805c8f969ce520e
+  checksum: 10c0/f65aa37a99f8d034efd61d8043fada5f5ea679f0174d5fadb744374b1d945a0afcd496ae18f5022cb76eff5646d9569809169498df7c0a16e12d7a9b3fe4d0c3
   languageName: node
   linkType: hard
 
@@ -8724,9 +8737,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:3.22.4":
-  version: 3.22.4
-  resolution: "zod@npm:3.22.4"
-  checksum: 10c0/7578ab283dac0eee66a0ad0fc4a7f28c43e6745aadb3a529f59a4b851aa10872b3890398b3160f257f4b6817b4ce643debdda4fb21a2c040adda7862cab0a587
+"zod@npm:3.23.8":
+  version: 3.23.8
+  resolution: "zod@npm:3.23.8"
+  checksum: 10c0/8f14c87d6b1b53c944c25ce7a28616896319d95bc46a9660fe441adc0ed0a81253b02b5abdaeffedbeb23bdd25a0bf1c29d2c12dd919aef6447652dd295e3e69
   languageName: node
   linkType: hard

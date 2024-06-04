@@ -13,26 +13,26 @@
         "deploy": "npm run build && npm run start"
     },
     "dependencies": {
-        "@emoji-mart/data": "1.1.2",
+        "@emoji-mart/data": "1.2.1",
         "@emoji-mart/react": "1.1.1",
         "@emotion/react": "11.11.4",
         "@emotion/styled": "11.11.5",
         "@lexical/markdown": "0.13.1",
         "@lexical/react": "0.13.1",
-        "@lunaproject/web-core": "1.6.0-beta.49",
-        "@lunaproject/web-discord": "1.1.4",
-        "@material-symbols/svg-400": "0.17.4",
+        "@lunaproject/web-core": "1.6.0-beta.53",
+        "@lunaproject/web-discord": "1.1.11",
+        "@material-symbols/svg-400": "0.19.0",
         "@mui/icons-material": "5.15.15",
         "@mui/lab": "5.0.0-alpha.170",
         "@mui/material": "5.15.15",
         "@mui/material-nextjs": "5.15.11",
         "@mui/x-data-grid": "7.2.0",
         "@mui/x-date-pickers": "6.19.9",
-        "@prisma/client": "5.13.0",
-        "@tremor/react": "3.16.2",
+        "@prisma/client": "5.15.0",
+        "@tremor/react": "3.17.2",
         "country-code-emoji": "2.3.0",
         "date-fns": "2.30.0",
-        "emoji-mart": "5.5.2",
+        "emoji-mart": "5.6.0",
         "eslint": "8.57.0",
         "eslint-config-next": "14.2.3",
         "i18n-iso-countries": "7.8.0",
@@ -55,8 +55,8 @@
         "spacetime": "7.5.0",
         "swr": "2.2.5",
         "typescript": "5.4.5",
-        "virtua": "0.27.5",
-        "zod": "3.22.4"
+        "virtua": "0.31.0",
+        "zod": "3.23.8"
     },
     "devDependencies": {
         "@svgr/webpack": "8.1.0",
@@ -72,7 +72,7 @@
         "autoprefixer": "10.4.19",
         "eslint-plugin-react-hooks": "4.6.2",
         "postcss": "8.4.38",
-        "prisma": "5.13.0",
+        "prisma": "5.15.0",
         "tailwindcss": "3.4.3"
     }
 }
