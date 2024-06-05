@@ -188,7 +188,7 @@ const ManageCommandDialog = memo<ManageCommandDialogProps>((
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <CancelButton onClick={() => setOpen(false)} variant="contained">
+                    <CancelButton onClick={() => setOpen(false)} variant="outlined" corners="extended">
                         {translations.close}
                     </CancelButton>
                 </DialogActions>

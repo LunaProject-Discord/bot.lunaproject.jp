@@ -1,8 +1,8 @@
 'use client';
 
 import { CancelButton } from '@/components/buttons';
-import { ChannelItem, MessageItem, SwitchItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { SectionChannelSelectCard, SectionMessageCard } from '@/components/section_card';
 import { CodeStyleContainer } from '@/components/text';
 import { GuildConfigurationWelcome } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
@@ -10,6 +10,7 @@ import { GuildConfigurationWelcomeSchema } from '@/schemas/bot';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@lunaproject/web-core/dist/components/Dialog';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress, Typography } from '@mui/material';
 import { ChannelType } from 'discord-api-types/v10';
@@ -114,12 +115,12 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.welcome_message_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
-                    <ChannelItem
+                    <SectionChannelSelectCard
                         primary={translations.send_message_channel}
                         value={channelId}
                         setValue={setChannelId}
@@ -127,18 +128,20 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         disabled={!enabled}
                         localization={localization}
                     />
-                    <MessageItem
+                    <SectionMessageCard
                         primary={translations.customize_message}
                         secondary={translations.welcome_message_edit_description}
                         value={message}
                         setValue={setMessage}
-                        disabled={!enabled}
                         open={openMessageBuilder}
                         setOpen={setOpenMessageBuilder}
+                        disabled={!enabled}
                         localization={localization}
                     >
-                        <CodeStyleContainer>{translations.welcome_message_edit_hint}</CodeStyleContainer>
-                    </MessageItem>
+                        <CodeStyleContainer>
+                            {translations.welcome_message_edit_hint}
+                        </CodeStyleContainer>
+                    </SectionMessageCard>
                 </SectionContent>
             </Section>
 

@@ -1,17 +1,18 @@
 'use client';
 
 import { AddIcon, CloseIcon, ContentCopyIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@/components/icons';
-import { ItemDisabledProps, ItemVariableProps } from '@/components/items';
 import { LocalizationProps } from '@/interfaces/localization';
 import { getNewEmbed } from '@/libs/message';
+import { useTheme } from '@emotion/react';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
+import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import {
+    getStateActionValue,
     moveDown as moveDownArray,
     moveUp as moveUpArray,
     remove as removeArray,
     replace as replaceArray
 } from '@lunaproject/web-core/dist/utils';
-import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { useTheme } from '@emotion/react';
 import { Embed } from '@lunaproject/web-discord/dist/interfaces';
 import {
     Accordion as MuiAccordion,
@@ -20,7 +21,6 @@ import {
     AccordionSummary as MuiAccordionSummary,
     AccordionSummaryProps,
     Box,
-    Button,
     IconButton,
     styled,
     Tooltip
@@ -82,7 +82,9 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     padding: theme.spacing(0)
 }));
 
-interface EmbedEditorProps extends ItemDisabledProps, ItemVariableProps<Embed>, LocalizationProps {
+export interface EmbedEditorProps extends SectionCardVariableProps<{
+    value: Embed;
+}>, SectionCardDisabledProps, LocalizationProps {
     index: number;
     remove: (e: MouseEvent<HTMLButtonElement>) => void;
     visibleMoveUpButton: boolean;
@@ -202,7 +204,10 @@ export const EmbedEditor = (
     );
 };
 
-type EmbedsEditorProps = ItemDisabledProps & ItemVariableProps<Embed[]> & LocalizationProps;
+export type EmbedsEditorProps =
+    SectionCardVariableProps<{ value: Embed[]; }>
+    & SectionCardDisabledProps
+    & LocalizationProps;
 
 export const EmbedsEditor = ({ value, setValue, disabled, localization }: EmbedsEditorProps) => {
     const { translations } = localization;
@@ -229,7 +234,8 @@ export const EmbedsEditor = ({ value, setValue, disabled, localization }: Embeds
                     onClick={add}
                     disabled={disabled || value.length > 9}
                     disableElevation
-                    variant="contained"
+                    variant="outlined"
+                    corners="extended"
                     startIcon={<AddIcon />}
                 >
                     {translations.embed_add}

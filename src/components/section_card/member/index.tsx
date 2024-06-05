@@ -1,3 +1,5 @@
+'use client';
+
 import { MemberPickerType } from '@/components/picker';
 import { SectionSnowflakeSelectCardProps } from '@/components/section_card';
 import { MemberSelect, MemberSelectProps } from '@/components/select';
@@ -68,10 +70,7 @@ export const SectionMemberSelectCard = (
                                 root: {
                                     className: sectionMemberSelectCardClasses.control,
                                     sx: {
-                                        width: {
-                                            xs: '100%',
-                                            md: 300
-                                        }
+                                        width: { xs: '100%', md: 300 }
                                     }
                                 }
                             }

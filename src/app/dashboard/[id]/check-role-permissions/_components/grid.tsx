@@ -1,3 +1,5 @@
+'use client';
+
 import { CheckIcon, CloseIcon, CrownOutlined, DeleteIcon, RemoveIcon } from '@/components/icons';
 import { TranslationKeys } from '@/interfaces/localization';
 import { GuildRolesViewProps, GuildViewProps } from '@/interfaces/view';
@@ -162,7 +164,7 @@ export interface GridProps extends GuildViewProps, GuildRolesViewProps {
 export const Grid = ({ guild, roles, permissions, localization: { translations } }: GridProps) => {
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 
-    const gridHeaderSectionRef = useRef<HTMLDivElement | null>(null);
+    const gridHeaderSectionRef = useRef<HTMLElement | null>(null);
     const gridHeaderRef = useRef<HTMLDivElement | null>(null);
     const gridBodyRef = useRef<HTMLDivElement | null>(null);
     const desktopRoleColumnHeaderRef = useRef<HTMLDivElement | null>(null);
@@ -206,7 +208,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
 
         setGridHeaderHeight(() => {
             const gridHeaderSectionRect = gridHeaderSection.getBoundingClientRect();
-            return gridHeaderSectionRect.height;
+            return gridHeaderSectionRect.height - 2;
         });
     }, [mainWidth, gridHeaderSectionRef]);
 
@@ -243,9 +245,11 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
             <Section
                 ref={gridHeaderSectionRef}
                 sx={(theme) => ({
-                    // width: mainWidth,
                     position: 'sticky',
-                    top: { xs: 56, sm: theme.spacing(8) },
+                    top: {
+                        xs: theme.spacing(7),
+                        sm: theme.spacing(8)
+                    },
                     zIndex: 3,
                     bgcolor: 'background.paper'
                 })}
@@ -287,7 +291,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                     </GridRoot>
                 </SectionContent>
             </Section>
-            <Section sx={{ /* width: mainWidth, */ mt: `${-(gridHeaderHeight)}px` }}>
+            <Section sx={{ mt: `${-(gridHeaderHeight)}px` }}>
                 <SectionContent>
                     <GridRoot ref={gridBodyRef} onScroll={handleGridBodyScroll}>
                         <DesktopGridColumnHeader ref={desktopRoleColumnHeaderRef}>

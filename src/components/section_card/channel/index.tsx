@@ -1,3 +1,5 @@
+'use client';
+
 import { ChannelPickerType } from '@/components/picker';
 import { SectionSnowflakeSelectCardProps } from '@/components/section_card';
 import { ChannelSelect, ChannelSelectProps } from '@/components/select';
@@ -34,7 +36,6 @@ export const SectionChannelSelectCard = (
 ) => {
     const theme = useTheme();
 
-
     return (
         <SectionCard
             disabled={disabled}
@@ -69,10 +70,7 @@ export const SectionChannelSelectCard = (
                                 root: {
                                     className: sectionChannelSelectCardClasses.control,
                                     sx: {
-                                        width: {
-                                            xs: '100%',
-                                            md: 300
-                                        }
+                                        width: { xs: '100%', md: 300 }
                                     }
                                 }
                             }

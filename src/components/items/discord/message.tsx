@@ -146,8 +146,8 @@ export const MessageItem = (
             <MessageBuilder
                 open={open ?? __open}
                 setOpen={setOpen ?? __setOpen}
-                message={value}
-                setMessage={setMessage}
+                value={value}
+                setValue={setMessage}
                 localization={localization}
             />
         </Fragment>

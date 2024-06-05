@@ -1,15 +1,16 @@
 'use client';
 
-import { SwitchItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildConfigurationLogging } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationLoggingSchema } from '@/schemas/bot';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
-import { useResettableState } from '@lunaproject/web-core/dist/utils';
+import { SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
+import { ConfigContext, ConfigProvider, useResettableState } from '@lunaproject/web-core/dist/utils';
+import deepmerge from 'deepmerge';
 import { ChannelType } from 'discord-api-types/v10';
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { saveGuildConfiguration } from '../utils';
 import {
     Category,
@@ -29,6 +30,8 @@ import {
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
+
+    const config = useContext(ConfigContext);
 
     const loggingConfiguration = configuration.logging;
     const [enabled, setEnabled, resetEnabled] = useResettableState(loggingConfiguration.enabled);
@@ -86,99 +89,114 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <PageHeader primary={translations.logging} secondary={translations.logging_description} />
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.logging_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
                 </SectionContent>
             </Section>
-            <GridContainer>
-                <Moderation
-                    value={moderation}
-                    setValue={setModeration}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Member
-                    value={member}
-                    setValue={setMember}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Voice
-                    value={voice}
-                    setValue={setVoice}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Category
-                    value={category}
-                    setValue={setCategory}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <TextChannel
-                    value={textChannel}
-                    setValue={setTextChannel}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <VoiceChannel
-                    value={voiceChannel}
-                    setValue={setVoiceChannel}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Role
-                    value={role}
-                    setValue={setRole}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Emote
-                    value={emote}
-                    setValue={setEmote}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Invite
-                    value={invite}
-                    setValue={setInvite}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Webhook
-                    value={webhook}
-                    setValue={setWebhook}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Integration
-                    value={integration}
-                    setValue={setIntegration}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-                <Message
-                    value={message}
-                    setValue={setMessage}
-                    channels={channels}
-                    disabled={!enabled}
-                    localization={localization}
-                />
-            </GridContainer>
+            <ConfigProvider
+                value={
+                    deepmerge(
+                        config,
+                        {
+                            components: {
+                                SectionCard: {
+                                    variant: 'standard'
+                                }
+                            }
+                        }
+                    )
+                }
+            >
+                <GridContainer>
+                    <Moderation
+                        value={moderation}
+                        setValue={setModeration}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Member
+                        value={member}
+                        setValue={setMember}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Voice
+                        value={voice}
+                        setValue={setVoice}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Category
+                        value={category}
+                        setValue={setCategory}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <TextChannel
+                        value={textChannel}
+                        setValue={setTextChannel}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <VoiceChannel
+                        value={voiceChannel}
+                        setValue={setVoiceChannel}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Role
+                        value={role}
+                        setValue={setRole}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Emote
+                        value={emote}
+                        setValue={setEmote}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Invite
+                        value={invite}
+                        setValue={setInvite}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Webhook
+                        value={webhook}
+                        setValue={setWebhook}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Integration
+                        value={integration}
+                        setValue={setIntegration}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                    <Message
+                        value={message}
+                        setValue={setMessage}
+                        channels={channels}
+                        disabled={!enabled}
+                        localization={localization}
+                    />
+                </GridContainer>
+            </ConfigProvider>
 
             <SaveConfirmV2
                 label={translations.save_confirm_settings}

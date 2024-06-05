@@ -1,3 +1,5 @@
+'use client';
+
 import {
     DefaultEditableItem,
     EditableItem,
@@ -6,13 +8,14 @@ import {
 } from '@/app/dashboard/[id]/commands/_components';
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { AddIcon, ChannelIcon } from '@/components/icons';
-import { ChannelPopover } from '@/components/items';
+import { ChannelPicker, ChannelPickerType, PickerChoiceClickHandler } from '@/components/picker';
 import { GuildChannelsViewProps } from '@/interfaces/view';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 
 type ChannelItemProps = EditableItemProps & GuildChannelsViewProps;
 
@@ -48,9 +51,9 @@ export const Channels = (
 ) => {
     const { translations } = localization;
 
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const updateOverride = (id: string, data: EditablePermissionOverride | undefined) => setOverrides((values) => {
+    const updateOverride = useCallback((id: string, data: EditablePermissionOverride | undefined) => setOverrides((values) => {
         let array = [...values];
 
         const i = array.findIndex((data) => data._id === id);
@@ -61,7 +64,13 @@ export const Channels = (
             array.push(data);
 
         return array;
-    });
+    }), [setOverrides]);
+
+    const handleChoiceClick: PickerChoiceClickHandler<ChannelPickerType> = useCallback((_, channel) => {
+        const _id = nanoid();
+        updateOverride(_id, { _id, id: channel.id, override: true });
+        setAnchorEl(undefined);
+    }, [updateOverride]);
 
     return (
         <Fragment>
@@ -71,7 +80,8 @@ export const Channels = (
                     <Button
                         onClick={({ currentTarget }) => setAnchorEl(currentTarget)}
                         disableElevation
-                        variant="contained"
+                        variant="outlined"
+                        corners="extended"
                         startIcon={<AddIcon />}
                         sx={{ ml: 'auto' }}
                     >
@@ -92,17 +102,25 @@ export const Channels = (
                 ))}
             </Section>
 
-            <ChannelPopover
+            <ChannelPicker
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                value=""
-                setValue={(action) => {
-                    const _id = nanoid();
-                    updateOverride(_id, { _id, id: getStateActionValue(action, ''), override: true });
-                }}
                 choices={channels.filter((channel) => !overrides.some(({ id }) => id === channel.id))}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                onClick={handleChoiceClick}
+                slotProps={{
+                    desktop: {
+                        root: {
+                            anchorOrigin: {
+                                vertical: 'bottom',
+                                horizontal: 'right'
+                            },
+                            transformOrigin: {
+                                vertical: 'top',
+                                horizontal: 'right'
+                            }
+                        }
+                    }
+                }}
                 localization={localization}
             />
         </Fragment>

@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowDropDownIcon } from '@/components/icons';
 import { SelectInputProps, SelectInputRootProps } from '@/components/select';
 import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';

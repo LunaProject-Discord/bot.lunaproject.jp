@@ -1,12 +1,16 @@
 'use client';
 
-import { NumberFieldItem, SwitchItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildConfigurationMusic } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationMusicSchema } from '@/schemas/bot';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import {
+    SectionNumberFieldCard,
+    SectionSliderCard,
+    SectionSwitchCard
+} from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle } from '@mui/material';
 import React, { Fragment } from 'react';
@@ -65,38 +69,50 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <PageHeader primary={translations.music} secondary={translations.music_description} />
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_web_panel}
                         checked={webPanel}
                         setChecked={setWebPanel}
                         disabled={!enabled}
                     />
-                    <NumberFieldItem
+                    <SectionSliderCard
                         primary={translations.music_default_volume}
                         value={defaultVolume}
                         setValue={setDefaultVolume}
-                        pattern="\d*"
-                        step={1}
-                        min={0}
-                        max={100}
                         disabled={!enabled}
+                        slotProps={{
+                            control: {
+                                min: 0,
+                                max: 100,
+                                marks: [
+                                    { value: 0, label: '0%' },
+                                    { value: 25, label: '25%' },
+                                    { value: 50, label: '50%' },
+                                    { value: 75, label: '75%' },
+                                    { value: 100, label: '100%' }
+                                ],
+                                valueLabelFormat: (value) => `${value}%`
+                            }
+                        }}
                     />
-                    <NumberFieldItem
+                    <SectionNumberFieldCard
                         primary={translations.music_timeout_seconds}
                         value={timeoutSeconds}
                         setValue={setTimeoutSeconds}
-                        pattern="\d*"
-                        step={1}
-                        min={0}
-                        max={300}
                         disabled={!enabled}
+                        slotProps={{
+                            control: {
+                                min: 0,
+                                max: 300
+                            }
+                        }}
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_next_media_notification}
                         secondary={translations.music_next_media_notification_description}
                         checked={nextMediaNotification}
@@ -114,38 +130,38 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         <AlertTitle>{translations.dashboard_error_cannot_be_enabled_alert_title}</AlertTitle>
                         {translations.music_source_youtube_error_cannot_be_enabled_alert_description}
                     </Alert>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_source_youtube}
                         checked={false}
                         setChecked={() => {
                         }}
                         disabled
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_source_niconico}
                         checked={niconico}
                         setChecked={setNiconico}
                         disabled={!enabled}
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_source_soundcloud}
                         checked={soundcloud}
                         setChecked={setSoundcloud}
                         disabled={!enabled}
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_source_twitch}
                         checked={twitch}
                         setChecked={setTwitch}
                         disabled={!enabled}
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_source_bandcamp}
                         checked={bandcamp}
                         setChecked={setBandcamp}
                         disabled={!enabled}
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.music_source_vimeo}
                         checked={vimeo}
                         setChecked={setVimeo}

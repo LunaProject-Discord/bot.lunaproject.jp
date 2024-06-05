@@ -1,12 +1,12 @@
 'use client';
 
-import { SwitchItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildConfigurationVote } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationVoteSchema } from '@/schemas/bot';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -33,7 +33,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <PageHeader primary={translations.vote} secondary={translations.vote_description} />
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.vote_enabled}
                         checked={enabled}
                         setChecked={setEnabled}

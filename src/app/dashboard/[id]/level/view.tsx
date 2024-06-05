@@ -1,19 +1,9 @@
 'use client';
 
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@/components/dialog';
-import {
-    ActionItem,
-    ChannelItem,
-    LinkItem,
-    MessageItem,
-    NumberFieldItem,
-    RadioItem,
-    RouteLinkItem,
-    SelectItem,
-    SwitchItem,
-    TextFieldItem
-} from '@/components/items';
+import { OpenInNewIcon } from '@/components/icons';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { SectionChannelSelectCard, SectionMessageCard } from '@/components/section_card';
 import { CodeStyleContainer } from '@/components/text';
 import {
     GuildConfigurationLevel,
@@ -22,9 +12,24 @@ import {
 } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationLevelSchema } from '@/schemas/bot';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
-import { Section, SectionContent, SectionParagraph, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import {
+    SectionAccordionCard,
+    sectionAccordionCardClasses,
+    SectionButtonActionCard,
+    sectionCardClasses,
+    sectionCardDisplayClasses,
+    SectionNumberFieldCard,
+    SectionRadioCard,
+    SectionRouteLinkCard,
+    SectionSelectCard,
+    SectionSwitchCard,
+    SectionTextFieldCard
+} from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
+import { Box, switchClasses, Typography } from '@mui/material';
 import { ChannelType } from 'discord-api-types/v10';
 import uniqBy from 'lodash/uniqBy';
 import React, { Fragment, useEffect, useState } from 'react';
@@ -105,35 +110,37 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <PageHeader primary={translations.level} secondary={translations.level_description} />
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.level_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
-                    <NumberFieldItem
+                    <SectionNumberFieldCard
                         primary={translations.level_experience_per_message}
                         value={experiencePerMessage}
                         setValue={setExperiencePerMessage}
-                        pattern="\d*"
-                        step={1}
-                        min={1}
                         disabled={!enabled}
+                        slotProps={{
+                            control: {
+                                min: 1
+                            }
+                        }}
                     />
-                    <RouteLinkItem
+                    <SectionRouteLinkCard
                         primary={translations.level_manage}
                         href={`/dashboard/${guild.id}/level/manage`}
                         disabled={!enabled}
                     />
-                    <ActionItem
+                    <SectionButtonActionCard
                         primary={translations.manage_disabled_channels}
                         secondary={translations.level_manage_disabled_channels_description}
-                        onAction={() => setOpenDisabledChannelsDialog(true)}
+                        onClick={() => setOpenDisabledChannelsDialog(true)}
                         disabled={!enabled}
                     />
-                    <ActionItem
+                    <SectionButtonActionCard
                         primary={translations.manage_disabled_roles}
                         secondary={translations.level_manage_disabled_roles_description}
-                        onAction={() => setOpenDisabledRolesDialog(true)}
+                        onClick={() => setOpenDisabledRolesDialog(true)}
                         disabled={!enabled}
                     />
                 </SectionContent>
@@ -143,38 +150,54 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     {translations.level_reward}
                 </SectionTitle>
                 <SectionContent>
-                    <SectionParagraph variant="h6" fontWeight={400} color={enabled ? 'text.primary' : 'text.disabled'}>
-                        {translations.level_reward_type}
-                    </SectionParagraph>
-                    <RadioItem<GuildConfigurationLevelRewardType>
-                        primary={translations.level_reward_type_stack}
-                        secondary={translations.level_reward_type_stack_description}
-                        name="reward_type"
-                        value="STACK_PREVIOUS_ROLES"
-                        selected={rewardType}
-                        setSelected={setRewardType}
-                        disabled={!enabled}
-                    />
-                    <RadioItem<GuildConfigurationLevelRewardType>
-                        primary={translations.level_reward_type_replace}
-                        secondary={translations.level_reward_type_replace_description}
-                        name="reward_type"
-                        value="REMOVE_PREVIOUS_ROLES"
-                        selected={rewardType}
-                        setSelected={setRewardType}
-                        disabled={!enabled}
-                    />
-                </SectionContent>
-                <SectionContent>
-                    <SwitchItem
+                    <SectionAccordionCard
+                        primary={translations.level_reward_type}
+                        headerChildren={
+                            <Typography variant="body2" color="text.secondary" sx={{ mt: .25 }}>
+                                {rewardType === 'STACK_PREVIOUS_ROLES' ? translations.level_reward_type_stack : translations.level_reward_type_replace}
+                            </Typography>
+                        }
+                        readOnly={!enabled}
+                        sx={{
+                            [`&.${sectionAccordionCardClasses.readOnly} .${sectionAccordionCardClasses.header}`]: {
+                                [[
+                                    `& .${sectionCardDisplayClasses.root} *`,
+                                    `& .${sectionCardDisplayClasses.icon} *`,
+                                    `& .${sectionCardDisplayClasses.primary} *`,
+                                    `& .${sectionCardDisplayClasses.secondary} *`,
+                                    `& .${sectionCardClasses.content} *:not(.${switchClasses.root} *)`
+                                ].join(',')]: {
+                                    color: 'action.disabled'
+                                }
+                            }
+                        }}
+                    >
+                        <SectionRadioCard<GuildConfigurationLevelRewardType>
+                            primary={translations.level_reward_type_stack}
+                            secondary={translations.level_reward_type_stack_description}
+                            name="reward_type"
+                            value="STACK_PREVIOUS_ROLES"
+                            selected={rewardType}
+                            setSelected={setRewardType}
+                        />
+                        <SectionRadioCard<GuildConfigurationLevelRewardType>
+                            primary={translations.level_reward_type_replace}
+                            secondary={translations.level_reward_type_replace_description}
+                            name="reward_type"
+                            value="REMOVE_PREVIOUS_ROLES"
+                            selected={rewardType}
+                            setSelected={setRewardType}
+                        />
+                    </SectionAccordionCard>
+                    <SectionSwitchCard
                         primary={translations.level_reward_remove_role_demoted}
                         checked={rewardRemoveRoleDemoted}
                         setChecked={setRewardRemoveRoleDemoted}
                         disabled={!enabled}
                     />
-                    <ActionItem
+                    <SectionButtonActionCard
                         primary={translations.level_reward_manage_roles}
-                        onAction={() => setOpenRolesDialog(true)}
+                        onClick={() => setOpenRolesDialog(true)}
                         disabled={!enabled}
                     />
                 </SectionContent>
@@ -184,7 +207,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     {translations.level_notification}
                 </SectionTitle>
                 <SectionContent>
-                    <SelectItem<GuildConfigurationLevelNotificationType>
+                    <SectionSelectCard<GuildConfigurationLevelNotificationType>
                         primary={translations.level_notification_type}
                         value={notificationType}
                         setValue={setNotificationType}
@@ -205,7 +228,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         ]}
                         disabled={!enabled}
                     />
-                    <ChannelItem
+                    <SectionChannelSelectCard
                         primary={translations.level_notification_channel}
                         value={notificationChannelId}
                         setValue={setNotificationChannelId}
@@ -213,54 +236,85 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         disabled={!enabled || notificationType !== 'CUSTOM_CHANNEL'}
                         localization={localization}
                     />
-                    <MessageItem
+                    <SectionMessageCard
                         primary={translations.customize_message}
                         secondary={translations.level_notification_edit_description}
                         value={notificationMessage}
                         setValue={setNotificationMessage}
-                        disabled={!enabled || notificationType === 'DISABLED'}
                         open={openMessageBuilder}
                         setOpen={setOpenMessageBuilder}
+                        disabled={!enabled || notificationType === 'DISABLED'}
                         localization={localization}
                     >
-                        <CodeStyleContainer>{translations.level_notification_edit_hint}</CodeStyleContainer>
-                    </MessageItem>
+                        <CodeStyleContainer>
+                            {translations.level_notification_edit_hint}
+                        </CodeStyleContainer>
+                    </SectionMessageCard>
                 </SectionContent>
             </Section>
             <Section>
-                <SectionTitle color={enabled ? 'text.primary' : 'text.disabled'}>
-                    {translations.level_leaderboard}
-                </SectionTitle>
-                <SectionContent>
-                    <LinkItem
-                        primary={translations.level_leaderboard_view}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: {
+                            xs: 'column',
+                            sm: 'row'
+                        },
+                        alignItems: {
+                            xs: 'stretch',
+                            sm: 'center'
+                        },
+                        justifyContent: {
+                            xs: 'center',
+                            sm: 'space-between'
+                        },
+                        columnGap: 1,
+                        rowGap: .5
+                    }}
+                >
+                    <SectionTitle color={enabled ? 'text.primary' : 'text.disabled'}>
+                        {translations.level_leaderboard}
+                    </SectionTitle>
+                    <Button
+                        component="a"
                         href={`/leaderboard/${guild.id}`}
                         target="_blank"
                         disabled={!enabled}
-                    />
-                    <SwitchItem
+                        variant="outlined"
+                        corners="extended"
+                        endIcon={<OpenInNewIcon color={enabled ? 'action' : 'disabled'} />}
+                    >
+                        {translations.level_leaderboard_view}
+                    </Button>
+                </Box>
+                <SectionContent>
+                    <SectionSwitchCard
                         primary={translations.level_leaderboard_public}
                         checked={leaderboardPublic}
                         setChecked={setLeaderboardPublic}
                         disabled={!enabled}
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.level_leaderboard_allow_join}
                         checked={leaderboardAllowJoin}
                         setChecked={setLeaderboardAllowJoin}
                         disabled={!enabled || !leaderboardPublic}
                     />
-                    <TextFieldItem
+                    <SectionTextFieldCard
                         primary={translations.level_leaderboard_vanity_code}
                         secondary={`${origin}/leaderboard/${leaderboardVanityCode && leaderboardVanityCode.length > 0 ? leaderboardVanityCode : guild.id}`}
-                        secondaryTypographyProps={{
-                            sx: {
-                                wordBreak: 'break-all'
-                            }
-                        }}
                         value={leaderboardVanityCode}
                         setValue={setLeaderboardVanityCode}
                         disabled={!enabled}
+                        slotProps={{
+                            display: {
+                                secondary: {
+                                    sx: {
+                                        wordBreak: 'break-all'
+                                    }
+                                }
+                            }
+                        }}
                     />
                 </SectionContent>
             </Section>

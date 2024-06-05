@@ -1,12 +1,12 @@
 'use client';
 
 import { ErrorIcon, InfoIcon, TaskAltIcon, WarningIcon } from '@/components/icons';
-import { RouteLinkItem } from '@/components/items';
 import { GuildNotification } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { getDateFnsLocaleByName } from '@/localizations';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import { SectionRouteLinkCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { format } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment } from 'react';
 
@@ -40,7 +40,7 @@ export const View = ({ guild, notifications, localization: { locale, translation
                         </SectionTitle>
                         <SectionContent>
                             {guildNotifications[date].sort((a, b) => b.createdAt - a.createdAt).map((notification) => (
-                                <RouteLinkItem
+                                <SectionRouteLinkCard
                                     key={notification.id}
                                     icon={<Fragment>
                                         {notification.type === 'success' && <TaskAltIcon color="success" />}
@@ -50,14 +50,18 @@ export const View = ({ guild, notifications, localization: { locale, translation
                                     </Fragment>}
                                     primary={notification.title}
                                     secondary={notification.description.split('\n').length > 1 ? notification.description.split('\n')[0] : notification.description}
-                                    secondaryTypographyProps={{
-                                        sx: {
-                                            whiteSpace: 'nowrap',
-                                            textOverflow: 'ellipsis',
-                                            overflow: 'hidden'
+                                    href={`/dashboard/${guild.id}/notifications/${notification.id}`}
+                                    slotProps={{
+                                        display: {
+                                            secondary: {
+                                                sx: {
+                                                    whiteSpace: 'nowrap',
+                                                    textOverflow: 'ellipsis',
+                                                    overflow: 'hidden'
+                                                }
+                                            }
                                         }
                                     }}
-                                    href={`/dashboard/${guild.id}/notifications/${notification.id}`}
                                 />
                             ))}
                         </SectionContent>

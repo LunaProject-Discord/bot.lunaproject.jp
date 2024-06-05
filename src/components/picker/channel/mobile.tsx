@@ -48,7 +48,7 @@ export const MobileChannelPicker = (
             }
             {...slotProps?.root}
         >
-            <MobilePickerContent ref={setSheetContentRef} {...slotProps?.content}>
+            <MobilePickerContent ref={setSheetContentRef} sx={{ pt: 0 }} {...slotProps?.content}>
                 <Virtualizer scrollRef={sheetScrollRef} overscan={2}>
                     {categories.map((category) => (
                         <ChannelPickerGroup

@@ -1,16 +1,19 @@
+'use client';
+
 import { EditableItemProps, GroupProps } from '@/app/dashboard/[id]/commands/_components';
-import { EditableItem, Group, GroupTitle } from '@/app/dashboard/[id]/commands/_dialog/_components/index';
+import { EditableItem, Group, GroupTitle } from '@/app/dashboard/[id]/commands/_dialog/_components';
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { getMemberDisplay } from '@/app/user';
 import { AddIcon } from '@/components/icons';
-import { MemberPopover } from '@/components/items';
+import { MemberPicker, MemberPickerType, PickerChoiceClickHandler } from '@/components/picker';
 import { GuildMembersViewProps } from '@/interfaces/view';
 import { getMemberAvatar } from '@/utils/cdn';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { ItemIcon, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { Avatar, Button } from '@mui/material';
+import { Avatar } from '@mui/material';
 import { nanoid } from 'nanoid';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 
 type MemberItemProps = EditableItemProps & GuildMembersViewProps;
 
@@ -54,9 +57,9 @@ export const MemberItem = ({ value, setValue, members, disabled, localization }:
 export const Members = ({ value, setValue, members, localization }: GroupProps & GuildMembersViewProps) => {
     const { translations } = localization;
 
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const updateValue = (id: string, data: EditablePermissionOverride | undefined) => setValue((values) => {
+    const updateValue = useCallback((id: string, data: EditablePermissionOverride | undefined) => setValue((values) => {
         let array = [...values];
 
         const i = array.findIndex((data) => data._id === id);
@@ -67,7 +70,13 @@ export const Members = ({ value, setValue, members, localization }: GroupProps &
             array.push(data);
 
         return array;
-    });
+    }), [setValue]);
+
+    const handleChoiceClick: PickerChoiceClickHandler<MemberPickerType> = useCallback((_, member) => {
+        const _id = nanoid();
+        updateValue(_id, { _id, id: member.user.id, override: true });
+        setAnchorEl(undefined);
+    }, [updateValue]);
 
     return (
         <Fragment>
@@ -76,8 +85,8 @@ export const Members = ({ value, setValue, members, localization }: GroupProps &
                     {translations.command_permissions_members}
                     <Button
                         onClick={({ currentTarget }) => setAnchorEl(currentTarget)}
-                        disableElevation
-                        variant="contained"
+                        variant="outlined"
+                        corners="extended"
                         size="small"
                         startIcon={<AddIcon />}
                         sx={{ ml: 'auto' }}
@@ -96,17 +105,25 @@ export const Members = ({ value, setValue, members, localization }: GroupProps &
                 ))}
             </Group>
 
-            <MemberPopover
+            <MemberPicker
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                value=""
-                setValue={(action) => {
-                    const _id = nanoid();
-                    updateValue(_id, { _id, id: getStateActionValue(action, ''), override: true });
-                }}
                 choices={members.filter((member) => !value.some(({ id }) => id === member.id))}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                onClick={handleChoiceClick}
+                slotProps={{
+                    desktop: {
+                        root: {
+                            anchorOrigin: {
+                                vertical: 'bottom',
+                                horizontal: 'right'
+                            },
+                            transformOrigin: {
+                                vertical: 'top',
+                                horizontal: 'right'
+                            }
+                        }
+                    }
+                }}
                 localization={localization}
             />
         </Fragment>

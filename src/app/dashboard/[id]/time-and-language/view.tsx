@@ -1,7 +1,6 @@
 'use client';
 
 import { ScheduleIcon, TranslateIcon } from '@/components/icons';
-import { SelectItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { ConfigurationLanguage, ConfigurationTimeAndLanguage } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
@@ -9,6 +8,7 @@ import { ConfigurationTimeAndLanguageSchema } from '@/schemas/bot';
 import { TimeZone, TimeZones } from '@/utils/timezone';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import { SectionSelectCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment, ReactNode } from 'react';
 import spacetime from 'spacetime';
@@ -42,7 +42,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <Section>
                 <SectionTitle>{translations.date_and_time}</SectionTitle>
                 <SectionContent>
-                    <SelectItem<TimeZone>
+                    <SectionSelectCard<TimeZone>
                         icon={<ScheduleIcon />}
                         primary={translations.timezone}
                         secondary={translations.timezone_description}
@@ -71,7 +71,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <Section>
                 <SectionTitle>{translations.language}</SectionTitle>
                 <SectionContent>
-                    <SelectItem<ConfigurationLanguage>
+                    <SectionSelectCard<ConfigurationLanguage>
                         icon={<TranslateIcon />}
                         primary={translations.language}
                         secondary={translations.guild_language_description}

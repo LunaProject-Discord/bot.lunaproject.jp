@@ -13,7 +13,7 @@ import { LocalizationProps } from '@/interfaces/localization';
 import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SomeRequired } from '@lunaproject/web-core/dist/utils';
 import { SlotComponentProps } from '@mui/base';
-import { Theme, useMediaQuery } from '@mui/material';
+import { ListItemIcon, ListItemText, listItemTextClasses, styled, Theme, useMediaQuery } from '@mui/material';
 import deepmerge from 'deepmerge';
 import React, { Dispatch, MouseEvent, ReactElement, SetStateAction } from 'react';
 
@@ -52,6 +52,20 @@ export interface PickerItemProps<T> {
     selected?: boolean;
     onClick?: PickerChoiceClickHandler<T>;
 }
+
+export const PickerItemIcon = styled(ListItemIcon)(({ theme }) => ({
+    minWidth: theme.spacing(3),
+    placeItems: 'center',
+    placeContent: 'center'
+}));
+
+export const PickerItemText = styled(ListItemText)({
+    [`& .${listItemTextClasses.primary}`]: {
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
+    }
+});
 
 export const Picker = <T, >(
     {

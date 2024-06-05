@@ -7,6 +7,8 @@ import {
     DesktopChannelPicker,
     getSnowflakeChoiceId,
     MobileChannelPicker,
+    PickerItemIcon,
+    PickerItemText,
     PickerSearchBox,
     SnowflakePickerInternalProps,
     SnowflakePickerItemProps,
@@ -18,9 +20,8 @@ import { filterPredicateChannel, sortChannels } from '@/utils/discord';
 import { SectionCardDisabledProps, SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { APIGuildChannel } from '@lunaproject/web-discord/dist/interfaces';
 import { SlotComponentProps } from '@mui/base';
-import { List, ListItemButton, ListItemIcon, ListItemText, Theme, useMediaQuery } from '@mui/material';
+import { Box, List, ListItemButton, Theme, useMediaQuery } from '@mui/material';
 import deepmerge from 'deepmerge';
-import { ellipsis } from 'polished';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type ChannelPickerType = (APIGuildChannel | RedisChannel) & SectionCardDisabledProps;
@@ -39,14 +40,28 @@ export interface ChannelPickerGroupProps extends Pick<ChannelPickerInternalProps
 
 export type ChannelPickerItemProps = SnowflakePickerItemProps<ChannelPickerType>;
 
-export const ChannelPickerGroup = ({ category, channels, selected, onClick }: ChannelPickerGroupProps) => {
-    const messageChannels = channels.filter((channel) => ChannelSortOrders.Message.includes(channel.type));
-    const audioChannels = channels.filter((channel) => ChannelSortOrders.Audio.includes(channel.type));
+export const ChannelPickerGroup = (
+    {
+        category,
+        channels: _channels,
+        selected,
+        onClick
+    }: ChannelPickerGroupProps
+) => {
+    const messageChannels = _channels.filter((channel) => ChannelSortOrders.Message.includes(channel.type));
+    const audioChannels = _channels.filter((channel) => ChannelSortOrders.Audio.includes(channel.type));
+
+    const channels = [...messageChannels, ...audioChannels];
+    if (channels.length < 1)
+        return null;
 
     return (
         <List>
-            {category && <ListSubheader sx={{ top: (theme) => theme.spacing(-1) }}>{category.name}</ListSubheader>}
-            {[...messageChannels, ...audioChannels].map((channel, index) => {
+            {category ? <ListSubheader>{category.name}</ListSubheader> : <Box
+                component="li"
+                sx={{ height: (theme) => theme.spacing(1) }}
+            />}
+            {channels.map((channel, index) => {
                 const id = getSnowflakeChoiceId(channel, index);
 
                 return (
@@ -75,13 +90,10 @@ export const ChannelPickerItem = (
 
     return (
         <ListItemButton onClick={handleClick} selected={selected} disabled={channel.disabled}>
-            <ListItemIcon sx={{ minWidth: 0 }}>
+            <PickerItemIcon>
                 <ChannelIcon channel={channel} />
-            </ListItemIcon>
-            <ListItemText
-                primary={channel.name}
-                primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }}
-            />
+            </PickerItemIcon>
+            <PickerItemText primary={channel.name} />
         </ListItemButton>
     );
 };

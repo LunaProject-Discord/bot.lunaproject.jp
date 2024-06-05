@@ -5,8 +5,6 @@ import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import {
     AddIcon,
     DeleteIcon,
-    KeyboardArrowDownIcon,
-    KeyboardArrowUpIcon,
     LabelOffIcon,
     LiveTvIcon,
     MusicNoteIcon,
@@ -14,13 +12,14 @@ import {
     TagIcon,
     VideocamIcon
 } from '@/components/icons';
-import { ItemFormContainer, ItemRoot, ItemRowContainer, RoleSelect, Select } from '@/components/items';
+import { RoleSelect, SelectOutlinedInput } from '@/components/select';
 import { translatableTypographyStyled } from '@/components/text';
 import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@/interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '@/interfaces/localization';
 import { PopoverProps } from '@/interfaces/mui';
 import { GuildViewProps } from '@/interfaces/view';
 import { getInteractRolesByDataGuild } from '@/utils/discord';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     Dialog,
     DialogActions,
@@ -29,11 +28,16 @@ import {
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
-import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import {
+    SectionCardContent,
+    SectionCardDisabledProps,
+    SectionCardDisplayRoot,
+    SectionCardRoot,
+    SectionCardVariableProps
+} from '@lunaproject/web-core/dist/components/SectionCard';
 import { getStateActionValue, UniqueId, updateArrayState } from '@lunaproject/web-core/dist/utils';
 import {
     Box,
-    Button,
     IconButton,
     ListItemIcon,
     ListItemText,
@@ -44,6 +48,7 @@ import {
     OutlinedInput,
     Theme,
     Tooltip,
+    Typography,
     useMediaQuery
 } from '@mui/material';
 import { nanoid } from 'nanoid';
@@ -150,7 +155,7 @@ const SelectActivityTypePopover = (
     );
 };
 
-interface RoleItemProps extends ItemDisabledProps, GuildViewProps {
+interface RoleItemProps extends SectionCardDisabledProps, GuildViewProps {
     value: EditableObject;
     setValue: Dispatch<SetStateAction<EditableObject | undefined>>;
 }
@@ -170,23 +175,34 @@ const RoleItem = (
 
     return (
         <Fragment>
-            <ItemRoot sx={{ p: 0 }}>
-                <ItemRowContainer sx={{ mb: { xs: -1, md: 0 } }}>
+            <SectionCardRoot sx={{ minHeight: 0, p: 0 }}>
+                <SectionCardDisplayRoot sx={{ width: { xs: '100%', md: 'auto' } }}>
                     <RoleSelect
                         value={value.id}
-                        setValue={(action) => setValue({ ...value, id: getStateActionValue(action, value.id) })}
+                        setValue={(action) => setValue({
+                            ...value,
+                            id: getStateActionValue(action, value.id)
+                        })}
                         choices={getInteractRolesByDataGuild(guild)}
-                        disabled={disabled}
+                        disabled={disabled || !value.enabled}
+                        slotProps={{
+                            input: {
+                                root: {
+                                    sx: {
+                                        width: { xs: '100%', md: 300 }
+                                    }
+                                }
+                            }
+                        }}
                         localization={localization}
-                        sx={{ width: { xs: '100%', md: 300 } }}
                     />
-                </ItemRowContainer>
-                <ItemFormContainer sx={{ height: { xs: 'auto', md: 50 }, flexDirection: { xs: 'column', md: 'row' } }}>
+                </SectionCardDisplayRoot>
+                <SectionCardContent sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
                     <OutlinedInput
                         value={value.name}
                         onChange={(e) => setValue({ ...value, name: e.target.value })}
                         type="text"
-                        disabled={disabled}
+                        disabled={disabled || !value.enabled}
                         size="small"
                         margin="none"
                         sx={{ width: { xs: '100%', md: 300 } }}
@@ -202,40 +218,42 @@ const RoleItem = (
                         }}
                     >
                         {locale === 'ja' ? 'を' : 'is'}
-                        <Select
+                        <SelectOutlinedInput
                             open={Boolean(anchorEl)}
                             onClick={(e) => setAnchorEl(e.currentTarget)}
-                            disabled={disabled}
-                            sx={{
-                                width: {
-                                    xs: '100%',
-                                    md: 'auto'
-                                }
-                            }}
+                            disabled={disabled || !value.enabled}
                         >
-                            {translations[`activity_type_${value.type === 'CUSTOM_STATUS' ? 'custom_status' : value.type.toLowerCase()}_short` as TranslationKeys]}
-                        </Select>
+                            <Typography>
+                                {translations[`activity_type_${value.type === 'CUSTOM_STATUS' ? 'custom_status' : value.type.toLowerCase()}_short` as TranslationKeys]}
+                            </Typography>
+                        </SelectOutlinedInput>
                         <Tooltip title={translations.remove}>
                             <IconButton onClick={() => setValue(undefined)} disabled={disabled} color="error">
                                 <DeleteIcon />
                             </IconButton>
                         </Tooltip>
                     </Box>
-                </ItemFormContainer>
-            </ItemRoot>
+                </SectionCardContent>
+            </SectionCardRoot>
 
             <SelectActivityTypePopover
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
                 selected={value.type}
-                setSelected={(action) => setValue({ ...value, type: getStateActionValue(action, value.type) })}
+                setSelected={(action) => setValue({
+                    ...value,
+                    type: getStateActionValue(action, value.type)
+                })}
                 localization={localization}
             />
         </Fragment>
     );
 };
 
-type ManageRolesDialogProps = ModalProps & ItemVariableProps<GuildConfigurationActivityRole[]> & GuildViewProps;
+type ManageRolesDialogProps =
+    ModalProps
+    & SectionCardVariableProps<{ value: GuildConfigurationActivityRole[]; }>
+    & GuildViewProps;
 
 export const ManageRolesDialog = (
     {
@@ -267,7 +285,7 @@ export const ManageRolesDialog = (
     useEffect(() => {
         if (!open)
             setRoles(initialValues);
-    }, [open, value]);
+    }, [initialValues, open, value]);
 
     return (
         <Fragment>
@@ -284,23 +302,28 @@ export const ManageRolesDialog = (
                         onClick={(e) => setAnchorEl(e.currentTarget)}
                         disableElevation
                         variant="contained"
+                        corners="extended"
                         startIcon={<AddIcon />}
-                        endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}
                     </Button>
                 </DialogTitle>
                 <DialogContent sx={{ height: { xs: '100%', md: 500 }, gap: { xs: 1, md: 0 } }}>
-                    {roles.length > 0 ? roles.map((role) => (
-                        <RoleItem
-                            key={role._id}
-                            value={role}
-                            setValue={(action) => updateRole(role._id, getStateActionValue(action, role))}
-                            guild={guild}
-                            localization={localization}
-                        />
-                    )) : <ErrorRoot>
+                    {roles.length > 0 ? <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        {roles.map((role) => (
+                            <RoleItem
+                                key={role._id}
+                                value={role}
+                                setValue={(action) => updateRole(
+                                    role._id,
+                                    getStateActionValue(action, role)
+                                )}
+                                guild={guild}
+                                localization={localization}
+                            />
+                        ))}
+                    </Box> : <ErrorRoot>
                         <LabelOffIcon sx={{ fontSize: '10rem' }} />
                         <ErrorTitle>
                             {translations.dashboard_error_manage_roles_empty_dialog_title}
@@ -311,7 +334,9 @@ export const ManageRolesDialog = (
                     </ErrorRoot>}
                 </DialogContent>
                 <DialogActions>
-                    <CancelButton onClick={handleClose} variant="contained">{translations.close}</CancelButton>
+                    <CancelButton onClick={handleClose} variant="outlined" corners="extended">
+                        {translations.close}
+                    </CancelButton>
                 </DialogActions>
             </Dialog>
 

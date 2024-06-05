@@ -1,13 +1,14 @@
 'use client';
 
-import { ChannelItem, MessageItem, SwitchItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { SectionChannelSelectCard, SectionMessageCard } from '@/components/section_card';
 import { CodeStyleContainer } from '@/components/text';
 import { GuildConfigurationGoodbye } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationGoodbyeSchema } from '@/schemas/bot';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useState } from 'react';
@@ -38,12 +39,12 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <PageHeader primary={translations.goodbye_message} secondary={translations.goodbye_message_description} />
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.goodbye_message_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
-                    <ChannelItem
+                    <SectionChannelSelectCard
                         primary={translations.send_message_channel}
                         value={channelId}
                         setValue={setChannelId}
@@ -51,18 +52,20 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         disabled={!enabled}
                         localization={localization}
                     />
-                    <MessageItem
+                    <SectionMessageCard
                         primary={translations.customize_message}
                         secondary={translations.goodbye_message_edit_description}
                         value={message}
                         setValue={setMessage}
-                        disabled={!enabled}
                         open={openMessageBuilder}
                         setOpen={setOpenMessageBuilder}
+                        disabled={!enabled}
                         localization={localization}
                     >
-                        <CodeStyleContainer>{translations.goodbye_message_edit_hint}</CodeStyleContainer>
-                    </MessageItem>
+                        <CodeStyleContainer>
+                            {translations.goodbye_message_edit_hint}
+                        </CodeStyleContainer>
+                    </SectionMessageCard>
                 </SectionContent>
             </Section>
 

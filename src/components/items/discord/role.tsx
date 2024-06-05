@@ -268,12 +268,7 @@ export const RoleItem = (
                     choices={choices}
                     disabled={disabled}
                     localization={localization}
-                    sx={{
-                        width: {
-                            xs: '100%',
-                            md: 300
-                        }
-                    }}
+                    sx={{ width: { xs: '100%', md: 300 } }}
                 />
             </ItemFormContainer>
         </ItemRoot>

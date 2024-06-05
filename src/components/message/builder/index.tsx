@@ -6,6 +6,7 @@ import { LocalizationProps } from '@/interfaces/localization';
 import { DataMessage } from '@/interfaces/message';
 import { toDataMessage, toEmbed, toMessage } from '@/libs/message';
 import { ThemeProvider } from '@emotion/react';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     Dialog,
     DialogActions,
@@ -13,35 +14,24 @@ import {
     DialogTitle,
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
+import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-discord/dist/components/Message';
 import { Message } from '@lunaproject/web-discord/dist/interfaces';
 import { buildDiscordTheme } from '@lunaproject/web-discord/dist/styles';
-import {
-    Box,
-    Button,
-    DialogProps as MuiDialogProps,
-    IconButton,
-    Theme,
-    Tooltip,
-    useMediaQuery,
-    useTheme
-} from '@mui/material';
+import { Box, DialogProps as MuiDialogProps, IconButton, Theme, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import { GridTableRowsIcon, GridViewHeadlineIcon } from '@mui/x-data-grid';
 import deepEqual from 'deep-equal';
 import React, { Fragment, useEffect, useState } from 'react';
-import { Editor } from '../editor';
+import { MessageEditor } from '../editor';
 import { MessagePreviewContainer } from '../preview';
 import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } from './components';
 
 type ViewType = 'editor' | 'preview';
 
-interface Props extends ModalProps, LocalizationProps {
-    message: DataMessage;
-    setMessage: (value: DataMessage | ((prevValue: DataMessage) => DataMessage)) => void;
-}
+export type MessageBuilderProps = ModalProps & SectionCardVariableProps<{ value: DataMessage; }> & LocalizationProps;
 
-export const MessageBuilder = ({ open, setOpen, message, setMessage, localization }: Props) => {
+export const MessageBuilder = ({ open, setOpen, value, setValue, localization }: MessageBuilderProps) => {
     const { translations } = localization;
 
     const theme = useTheme();
@@ -57,8 +47,8 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
 
     const [viewType, setViewType] = useState<ViewType>('editor');
 
-    const [editableMessage, setEditableMessage] = useState<Message>(toMessage(message));
-    const isChanged = !deepEqual(message, toDataMessage(editableMessage), { strict: true });
+    const [editableMessage, setEditableMessage] = useState<Message>(toMessage(value));
+    const isChanged = !deepEqual(value, toDataMessage(editableMessage), { strict: true });
 
     const handleClose = () => setOpen(false);
 
@@ -68,7 +58,7 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
     };
 
     const handleSaveButtonClick = () => {
-        setMessage(toDataMessage(editableMessage));
+        setValue(toDataMessage(editableMessage));
         handleClose();
     };
 
@@ -83,8 +73,8 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
     useEffect(() => {
         setEditableMessage((msg) => ({
             ...msg,
-            content: message?.content ?? '',
-            embeds: (message?.embeds ?? []).map((embed) => toEmbed(embed))
+            content: value?.content ?? '',
+            embeds: (value?.embeds ?? []).map((embed) => toEmbed(embed))
         }));
     }, [open]);
 
@@ -157,7 +147,7 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
                     <ThemeProvider theme={defaultTheme}>
                         <MessageEditorWrapper>
                             <MessageEditorSection active={viewType === 'editor'}>
-                                <Editor
+                                <MessageEditor
                                     value={editableMessage}
                                     setValue={setEditableMessage}
                                     localization={localization}
@@ -177,6 +167,8 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
             <DialogActions>
                 <Button
                     onClick={handleResetButtonClick}
+                    variant="outlined"
+                    corners="extended"
                     color="error"
                     startIcon={<DeleteIcon />}
                     sx={{ mr: 'auto' }}
@@ -184,13 +176,19 @@ export const MessageBuilder = ({ open, setOpen, message, setMessage, localizatio
                     {translations.reset}
                 </Button>
                 {isChanged ? <Fragment>
-                    <CancelButton onClick={handleClose}>
+                    <CancelButton onClick={handleClose} variant="outlined" corners="extended">
                         {translations.cancel}
                     </CancelButton>
-                    <Button onClick={handleSaveButtonClick} variant="contained" startIcon={<SaveIcon />}>
+                    <Button
+                        onClick={handleSaveButtonClick}
+                        disableElevation
+                        variant="contained"
+                        corners="extended"
+                        startIcon={<SaveIcon />}
+                    >
                         {translations.save}
                     </Button>
-                </Fragment> : <CancelButton onClick={handleClose} variant="contained">
+                </Fragment> : <CancelButton onClick={handleClose} variant="outlined" corners="extended">
                     {translations.close}
                 </CancelButton>}
             </DialogActions>

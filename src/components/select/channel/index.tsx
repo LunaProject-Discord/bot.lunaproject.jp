@@ -31,7 +31,7 @@ export const ChannelSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleClick = useCallback((_: MouseEvent<HTMLDivElement>, channel: ChannelPickerType) => {
+    const handleChoiceClick = useCallback((_: MouseEvent<HTMLDivElement>, channel: ChannelPickerType) => {
         if (multiple) {
             setValue((channels) => xor(channels, [channel.id]));
         } else {
@@ -62,7 +62,7 @@ export const ChannelSelect = (
                 setAnchorEl={setAnchorEl}
                 choices={choices}
                 selected={multiple ? value : [value]}
-                onClick={handleClick}
+                onClick={handleChoiceClick}
                 slotProps={slotProps?.picker}
                 localization={localization}
             />

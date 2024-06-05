@@ -30,7 +30,7 @@ export const PickerSearchBoxRoot = styled(
     backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
 }));
 
-export interface PickerSearchBoxProps extends SectionCardVariableProps<{ value: string }>, SectionCardDisabledProps {
+export interface PickerSearchBoxProps extends SectionCardVariableProps<{ value: string; }>, SectionCardDisabledProps {
     placeholder?: string;
 }
 
@@ -49,7 +49,7 @@ export const PickerSearchBox = forwardRef<HTMLInputElement, PickerSearchBoxProps
         <PickerSearchBoxRoot>
             <SearchIcon color="action" />
             <InputBase
-                ref={ref}
+                inputRef={ref}
                 value={value}
                 onChange={handleChange}
                 disabled={disabled}

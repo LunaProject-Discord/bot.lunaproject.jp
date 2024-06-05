@@ -1,6 +1,6 @@
 'use client';
 
-import { BaseDateTimeEditorProps } from '@/components/date/index';
+import { BaseDateTimeEditorProps } from '@/components/date';
 import { TodayIcon } from '@/components/icons';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { IconButton, InputAdornment, Theme, useMediaQuery } from '@mui/material';

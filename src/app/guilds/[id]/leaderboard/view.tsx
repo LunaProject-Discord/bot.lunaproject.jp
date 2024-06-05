@@ -1,17 +1,18 @@
 'use client';
 
 import { LevelProfileCard, LevelRewardsCard } from '@/app/guilds/[id]/leaderboard/components';
-import { DesktopLevelItemRoot, Levels } from '@/app/leaderboard/[id]/components';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon, KeyboardArrowRightIcon, SearchIcon } from '@/components/icons';
+import { SectionLevelView, SectionLevelViewHeader } from '@/components/section';
 import { GuildLevel } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { RedisMember } from '@/interfaces/redis';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { filterPredicateLevel } from '@/utils/level';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { useDebounce } from '@lunaproject/web-core/dist/utils';
-import { Box, Button, InputBase, Typography, Unstable_Grid2 as Grid } from '@mui/material';
+import { Box, InputBase, Unstable_Grid2 as Grid } from '@mui/material';
 import NextLink from 'next/link';
 import React, { useState } from 'react';
 
@@ -47,13 +48,11 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                     component={NextLink}
                     href={`/dashboard/${guild.id}/level/manage`}
                     variant="outlined"
+                    corners="extended"
                     size="large"
                     fullWidth
                     endIcon={<KeyboardArrowRightIcon />}
-                    sx={{
-                        justifyContent: 'space-between',
-                        borderRadius: '10000px'
-                    }}
+                    sx={{ justifyContent: 'space-between' }}
                 >
                     {translations.level_manage}
                 </Button>}
@@ -65,20 +64,20 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
             </Grid>}
             <Grid xs={12} md={8} lg={9}>
                 <Box
-                    sx={{
+                    sx={(theme) => ({
                         width: '100%',
                         mt: -2,
                         pt: 2,
-                        pb: { xs: 2, md: 0 },
+                        pb: { xs: 2, md: .75 },
                         position: 'sticky',
-                        top: { xs: (8 * 7) + (8 * 6), sm: (8 * 8) + (8 * 6) },
+                        top: { xs: theme.spacing(7 + 6), sm: theme.spacing(8 + 6) },
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        gap: 2,
+                        gap: 1,
                         zIndex: 1,
                         bgcolor: 'background.paper'
-                    }}
+                    })}
                 >
                     <Box
                         sx={{
@@ -100,22 +99,9 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                             fullWidth
                         />
                     </Box>
-                    <DesktopLevelItemRoot>
-                        <Typography variant="body2" color="text.secondary" align="center">
-                            {translations.rank}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" sx={{ gridColumn: 3 }}>
-                            {translations.member}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" align="center">
-                            {translations.level}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary" align="center">
-                            {translations.experience}
-                        </Typography>
-                    </DesktopLevelItemRoot>
+                    <SectionLevelViewHeader localization={localization} />
                 </Box>
-                {filteredLevels.length > 0 ? <Levels
+                {filteredLevels.length > 0 ? <SectionLevelView
                     guild={guild}
                     levels={filteredLevels}
                     localization={localization}
@@ -139,13 +125,11 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                     component={NextLink}
                     href={`/dashboard/${guild.id}/level/manage`}
                     variant="outlined"
+                    corners="extended"
                     size="large"
                     fullWidth
                     endIcon={<KeyboardArrowRightIcon />}
-                    sx={{
-                        justifyContent: 'space-between',
-                        borderRadius: '10000px'
-                    }}
+                    sx={{ justifyContent: 'space-between' }}
                 >
                     {translations.level_manage}
                 </Button>}
@@ -165,13 +149,13 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                         guild={guild}
                         localization={localization}
                     />}
-                    <LevelRewardsCard
+                    {configuration.level.reward.roles.filter((role) => role.enabled).length > 0 && <LevelRewardsCard
                         level={level?.level}
                         type={configuration.level.reward.type}
                         roles={configuration.level.reward.roles}
                         guild={guild}
                         localization={localization}
-                    />
+                    />}
                 </Box>
             </Grid>
         </Grid>

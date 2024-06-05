@@ -1,12 +1,12 @@
 'use client';
 
-import { ActionItem, SwitchItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildConfigurationActivity } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationActivitySchema } from '@/schemas/bot';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { SectionButtonActionCard, SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -35,14 +35,14 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <PageHeader primary={translations.activity} secondary={translations.activity_description} />
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.activity_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
-                    <ActionItem
+                    <SectionButtonActionCard
                         primary={translations.activity_manage_roles}
-                        onAction={() => setOpenRolesDialog(true)}
+                        onClick={() => setOpenRolesDialog(true)}
                         disabled={!enabled}
                     />
                 </SectionContent>

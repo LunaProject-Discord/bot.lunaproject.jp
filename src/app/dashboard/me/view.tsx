@@ -1,13 +1,13 @@
 'use client';
 
 import { ArrowForwardIcon, ErrorIcon, InfoIcon, TaskAltIcon, WarningIcon } from '@/components/icons';
-import { RouteLinkItem } from '@/components/items';
 import { UserNotification } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { UserViewProps } from '@/interfaces/view';
 import { getUserDisplayName } from '@/utils/discord';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import { SectionRouteLinkCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { CircularProgress, Divider, Link } from '@mui/material';
 import NextLink from 'next/link';
 import React, { Fragment } from 'react';
@@ -26,7 +26,7 @@ export const View = ({ user, notifications, localization: { translations } }: Pr
             <SectionTitle>{getUserDisplayName(user)} さんへのお知らせ</SectionTitle>
             <SectionContent>
                 {notifications.filter((notification) => !notification.read).slice(0, 4).map((notification) => (
-                    <RouteLinkItem
+                    <SectionRouteLinkCard
                         key={notification.id}
                         icon={<Fragment>
                             {notification.type === 'success' && <TaskAltIcon color="success" />}
@@ -36,14 +36,18 @@ export const View = ({ user, notifications, localization: { translations } }: Pr
                         </Fragment>}
                         primary={notification.title}
                         secondary={notification.description.split('\n').length > 1 ? notification.description.split('\n')[0] : notification.description}
-                        secondaryTypographyProps={{
-                            sx: {
-                                whiteSpace: 'nowrap',
-                                textOverflow: 'ellipsis',
-                                overflow: 'hidden'
+                        href={`/dashboard/me/notifications/${notification.id}`}
+                        slotProps={{
+                            display: {
+                                secondary: {
+                                    sx: {
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        overflow: 'hidden'
+                                    }
+                                }
                             }
                         }}
-                        href={`/dashboard/me/notifications/${notification.id}`}
                     />
                 ))}
             </SectionContent>

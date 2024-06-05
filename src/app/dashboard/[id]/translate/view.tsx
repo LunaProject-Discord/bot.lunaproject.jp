@@ -1,13 +1,13 @@
 'use client';
 
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@/components/dialog';
-import { ActionItem, SwitchItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildConfigurationTranslate } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationTranslateSchema } from '@/schemas/bot';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { SectionButtonActionCard, SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -47,27 +47,27 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             <PageHeader primary={translations.translate} secondary={translations.translate_description} />
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.translate_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
                     />
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.translate_reaction}
                         checked={reaction}
                         setChecked={setReaction}
                         disabled={!enabled}
                     />
-                    <ActionItem
+                    <SectionButtonActionCard
                         primary={translations.manage_disabled_channels}
                         secondary={translations.translate_manage_disabled_channels_description}
-                        onAction={() => setOpenDisabledChannelsDialog(true)}
+                        onClick={() => setOpenDisabledChannelsDialog(true)}
                         disabled={!enabled}
                     />
-                    <ActionItem
+                    <SectionButtonActionCard
                         primary={translations.manage_disabled_roles}
                         secondary={translations.translate_manage_disabled_roles_description}
-                        onAction={() => setOpenDisabledRolesDialog(true)}
+                        onClick={() => setOpenDisabledRolesDialog(true)}
                         disabled={!enabled}
                     />
                 </SectionContent>

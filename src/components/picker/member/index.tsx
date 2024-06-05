@@ -1,14 +1,19 @@
 'use client';
 
-import { SnowflakePicker, SnowflakePickerItemProps, SnowflakePickerProps } from '@/components/picker';
+import {
+    PickerItemIcon,
+    PickerItemText,
+    SnowflakePicker,
+    SnowflakePickerItemProps,
+    SnowflakePickerProps
+} from '@/components/picker';
 import { RedisMember } from '@/interfaces/redis';
 import { getMemberAvatar, getUserAvatar } from '@/utils/cdn';
 import { filterPredicateMember, getMemberDisplayName, sortMembers } from '@/utils/discord';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { GuildMember } from '@lunaproject/web-discord/dist/interfaces';
-import { Avatar, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Avatar, ListItemButton } from '@mui/material';
 import deepmerge from 'deepmerge';
-import { ellipsis } from 'polished';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type MemberPickerType = (GuildMember | RedisMember) & SectionCardDisabledProps;
@@ -29,17 +34,14 @@ export const MemberPickerItem = (
 
     return (
         <ListItemButton onClick={handleClick} selected={selected} disabled={member.disabled}>
-            <ListItemIcon sx={{ minWidth: 0 }}>
+            <PickerItemIcon>
                 <Avatar
                     src={'guild_id' in member ? getMemberAvatar(member, member.guild_id) : getUserAvatar(member.user)}
                     alt=" "
                     sx={{ width: 24, height: 24, pointerEvents: 'none' }}
                 />
-            </ListItemIcon>
-            <ListItemText
-                primary={getMemberDisplayName(member)}
-                primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }}
-            />
+            </PickerItemIcon>
+            <PickerItemText primary={getMemberDisplayName(member)} />
         </ListItemButton>
     );
 };

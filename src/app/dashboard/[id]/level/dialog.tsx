@@ -2,11 +2,13 @@
 
 import { CancelButton, SwitchButton } from '@/components/buttons';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
-import { AddIcon, DeleteIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon, LabelOffIcon } from '@/components/icons';
-import { ItemFormContainer, ItemRoot, ItemRowContainer, RolePopover, RoleSelect } from '@/components/items';
+import { AddIcon, DeleteIcon, LabelOffIcon } from '@/components/icons';
+import { PickerChoiceClickHandler, RolePicker, RolePickerType } from '@/components/picker';
+import { RoleSelect } from '@/components/select';
 import { GuildConfigurationLevelRewardRole } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { getInteractRolesByDataGuild } from '@/utils/discord';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     Dialog,
     DialogActions,
@@ -14,16 +16,22 @@ import {
     DialogTitle,
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
-import { NumberField } from '@lunaproject/web-core/dist/components/NumberField';
-import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { OutlinedNumberField } from '@lunaproject/web-core/dist/components/NumberField';
+import {
+    SectionCardContent,
+    SectionCardDisabledProps,
+    SectionCardDisplayRoot,
+    SectionCardRoot,
+    SectionCardVariableProps
+} from '@lunaproject/web-core/dist/components/SectionCard';
 import { getStateActionValue, UniqueId, updateArrayState } from '@lunaproject/web-core/dist/utils';
-import { Button, Divider, IconButton, Theme, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, Divider, IconButton, Theme, Tooltip, useMediaQuery } from '@mui/material';
 import { nanoid } from 'nanoid';
-import React, { Dispatch, Fragment, SetStateAction, useEffect, useMemo, useState } from 'react';
+import React, { Dispatch, Fragment, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 
 type EditableObject = GuildConfigurationLevelRewardRole & UniqueId;
 
-interface RoleItemProps extends ItemDisabledProps, GuildViewProps {
+interface RoleItemProps extends SectionCardDisabledProps, GuildViewProps {
     value: EditableObject;
     setValue: Dispatch<SetStateAction<EditableObject | undefined>>;
 }
@@ -40,22 +48,35 @@ const RoleItem = (
     const { translations } = localization;
 
     return (
-        <ItemRoot sx={{ p: 0 }}>
-            <ItemRowContainer sx={{ mb: { xs: -2, md: 0 } }}>
+        <SectionCardRoot sx={{ minHeight: 0, p: 0 }}>
+            <SectionCardDisplayRoot sx={{ width: { xs: '100%', md: 'auto' } }}>
                 <RoleSelect
                     value={value.id}
-                    setValue={(action) => setValue({ ...value, id: getStateActionValue(action, value.id) })}
+                    setValue={(action) => setValue({
+                        ...value,
+                        id: getStateActionValue(action, value.id)
+                    })}
                     choices={getInteractRolesByDataGuild(guild)}
                     disabled={disabled || !value.enabled}
+                    slotProps={{
+                        input: {
+                            root: {
+                                sx: {
+                                    width: { xs: '100%', md: 300 }
+                                }
+                            }
+                        }
+                    }}
                     localization={localization}
-                    sx={{ width: { xs: '100%', md: 300 } }}
                 />
-            </ItemRowContainer>
-            <ItemFormContainer>
-                <NumberField
+            </SectionCardDisplayRoot>
+            <SectionCardContent>
+                <OutlinedNumberField
                     value={value.level}
-                    setValue={(action) => setValue({ ...value, level: getStateActionValue(action, value.level) })}
-                    pattern="\d*"
+                    setValue={(action) => setValue({
+                        ...value,
+                        level: getStateActionValue(action, value.level)
+                    })}
                     step={1}
                     min={1}
                     disabled={disabled || !value.enabled}
@@ -63,22 +84,28 @@ const RoleItem = (
                 />
                 <SwitchButton
                     checked={value.enabled}
-                    setChecked={(action) => setValue({ ...value, enabled: getStateActionValue(action, value.enabled) })}
+                    setChecked={(action) => setValue({
+                        ...value,
+                        enabled: getStateActionValue(action, value.enabled)
+                    })}
                     disabled={disabled}
                     localization={localization}
                 />
-                <Divider orientation="vertical" flexItem sx={{ my: 2 }} />
+                <Divider orientation="vertical" flexItem sx={{ my: 1.5 }} />
                 <Tooltip title={translations.remove}>
                     <IconButton onClick={() => setValue(undefined)} disabled={disabled} color="error">
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
-            </ItemFormContainer>
-        </ItemRoot>
+            </SectionCardContent>
+        </SectionCardRoot>
     );
 };
 
-type ManageRolesDialogProps = ModalProps & ItemVariableProps<GuildConfigurationLevelRewardRole[]> & GuildViewProps;
+type ManageRolesDialogProps =
+    ModalProps
+    & SectionCardVariableProps<{ value: GuildConfigurationLevelRewardRole[]; }>
+    & GuildViewProps;
 
 export const ManageRolesDialog = (
     {
@@ -94,7 +121,7 @@ export const ManageRolesDialog = (
 
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
     const initialValues = useMemo(() => value.map((role): EditableObject => ({ _id: nanoid(), ...role })), [value]);
     const [roles, setRoles] = useState(initialValues);
@@ -107,10 +134,16 @@ export const ManageRolesDialog = (
         setOpen(false);
     };
 
+    const handleChoiceClick: PickerChoiceClickHandler<RolePickerType> = useCallback((_, role) => {
+        const _id = nanoid();
+        updateRole(_id, { _id, enabled: true, id: role.id, level: 1 });
+        setAnchorEl(undefined);
+    }, [updateRole]);
+
     useEffect(() => {
         if (!open)
             setRoles(initialValues);
-    }, [open, value]);
+    }, [initialValues, open, value]);
 
     return (
         <Fragment>
@@ -127,23 +160,28 @@ export const ManageRolesDialog = (
                         onClick={(e) => setAnchorEl(e.currentTarget)}
                         disableElevation
                         variant="contained"
+                        corners="extended"
                         startIcon={<AddIcon />}
-                        endIcon={anchorEl ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         sx={{ ml: 'auto' }}
                     >
                         {translations.add}
                     </Button>
                 </DialogTitle>
                 <DialogContent sx={{ height: { xs: '100%', md: 500 } }}>
-                    {roles.length > 0 ? roles.map((role) => (
-                        <RoleItem
-                            key={role._id}
-                            value={role}
-                            setValue={(action) => updateRole(role._id, getStateActionValue(action, role))}
-                            guild={guild}
-                            localization={localization}
-                        />
-                    )) : <ErrorRoot>
+                    {roles.length > 0 ? <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        {roles.map((role) => (
+                            <RoleItem
+                                key={role._id}
+                                value={role}
+                                setValue={(action) => updateRole(
+                                    role._id,
+                                    getStateActionValue(action, role)
+                                )}
+                                guild={guild}
+                                localization={localization}
+                            />
+                        ))}
+                    </Box> : <ErrorRoot>
                         <LabelOffIcon sx={{ fontSize: '10rem' }} />
                         <ErrorTitle>
                             {translations.dashboard_error_manage_roles_empty_dialog_title}
@@ -154,29 +192,31 @@ export const ManageRolesDialog = (
                     </ErrorRoot>}
                 </DialogContent>
                 <DialogActions>
-                    <CancelButton onClick={handleClose} variant="contained">{translations.close}</CancelButton>
+                    <CancelButton onClick={handleClose} variant="outlined" corners="extended">
+                        {translations.close}
+                    </CancelButton>
                 </DialogActions>
             </Dialog>
 
-            <RolePopover
+            <RolePicker
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                value=""
-                setValue={(action) => {
-                    const _id = nanoid();
-                    updateRole(
-                        _id,
-                        {
-                            _id,
-                            enabled: true,
-                            id: getStateActionValue(action, ''),
-                            level: 1
-                        }
-                    );
-                }}
                 choices={getInteractRolesByDataGuild(guild)}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                onClick={handleChoiceClick}
+                slotProps={{
+                    desktop: {
+                        root: {
+                            anchorOrigin: {
+                                vertical: 'bottom',
+                                horizontal: 'right'
+                            },
+                            transformOrigin: {
+                                vertical: 'top',
+                                horizontal: 'right'
+                            }
+                        }
+                    }
+                }}
                 localization={localization}
             />
         </Fragment>

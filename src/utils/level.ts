@@ -1,6 +1,8 @@
 import { GuildLevel } from '@/interfaces/bot';
 import { filterPredicateMember, filterPredicateUser } from '@/utils/discord';
 
+export const MAX_LEVEL_AND_EXPERIENCE = 9223372036854775807;
+
 export const getMaxExperience = (level: number): number => 20 * Math.max(level, 1);
 
 export const filterPredicateLevel = (level: GuildLevel, keyword: string) => keyword.length < 1

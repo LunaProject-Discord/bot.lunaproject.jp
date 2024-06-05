@@ -1,20 +1,23 @@
+'use client';
+
 import { EditableItemProps, OverrideGroupProps } from '@/app/dashboard/[id]/commands/_components';
 import {
     DefaultEditableItem,
     EditableItem,
     Group,
     GroupTitle
-} from '@/app/dashboard/[id]/commands/_dialog/_components/index';
+} from '@/app/dashboard/[id]/commands/_dialog/_components';
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { AddIcon } from '@/components/icons';
-import { RolePopover } from '@/components/items';
+import { PickerChoiceClickHandler, RolePicker, RolePickerType } from '@/components/picker';
 import { GuildRolesViewProps } from '@/interfaces/view';
 import { getRoleColor } from '@/utils/discord';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { nanoid } from 'nanoid';
 import { size } from 'polished';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 
 type RoleItemProps = EditableItemProps & GuildRolesViewProps;
 
@@ -42,9 +45,9 @@ export const Roles = (
 ) => {
     const { translations } = localization;
 
-    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const updateOverride = (id: string, data: EditablePermissionOverride | undefined) => setOverrides((values) => {
+    const updateOverride = useCallback((id: string, data: EditablePermissionOverride | undefined) => setOverrides((values) => {
         let array = [...values];
 
         const i = array.findIndex((data) => data._id === id);
@@ -55,7 +58,13 @@ export const Roles = (
             array.push(data);
 
         return array;
-    });
+    }), [setOverrides]);
+
+    const handleChoiceClick: PickerChoiceClickHandler<RolePickerType> = useCallback((_, role) => {
+        const _id = nanoid();
+        updateOverride(_id, { _id, id: role.id, override: true });
+        setAnchorEl(undefined);
+    }, [updateOverride]);
 
     return (
         <Fragment>
@@ -64,8 +73,8 @@ export const Roles = (
                     {translations.command_permissions_roles}
                     <Button
                         onClick={({ currentTarget }) => setAnchorEl(currentTarget)}
-                        disableElevation
-                        variant="contained"
+                        variant="outlined"
+                        corners="extended"
                         size="small"
                         startIcon={<AddIcon />}
                         sx={{ ml: 'auto' }}
@@ -87,17 +96,25 @@ export const Roles = (
                 ))}
             </Group>
 
-            <RolePopover
+            <RolePicker
                 anchorEl={anchorEl}
                 setAnchorEl={setAnchorEl}
-                value=""
-                setValue={(action) => {
-                    const _id = nanoid();
-                    updateOverride(_id, { _id, id: getStateActionValue(action, ''), override: true });
-                }}
                 choices={roles.filter((role) => !overrides.some(({ id }) => id === role.id))}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                onClick={handleChoiceClick}
+                slotProps={{
+                    desktop: {
+                        root: {
+                            anchorOrigin: {
+                                vertical: 'bottom',
+                                horizontal: 'right'
+                            },
+                            transformOrigin: {
+                                vertical: 'top',
+                                horizontal: 'right'
+                            }
+                        }
+                    }
+                }}
                 localization={localization}
             />
         </Fragment>

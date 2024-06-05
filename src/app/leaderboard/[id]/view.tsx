@@ -2,6 +2,7 @@
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon, SearchIcon } from '@/components/icons';
+import { SectionLevelView, SectionLevelViewHeader } from '@/components/section';
 import { GuildLevel } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
@@ -10,9 +11,8 @@ import { filterPredicateLevel } from '@/utils/level';
 import { PageCenteredLayout, PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { useDebounce } from '@lunaproject/web-core/dist/utils';
-import { Avatar, Box, CircularProgress, InputBase, Typography } from '@mui/material';
+import { Avatar, Box, CircularProgress, InputBase } from '@mui/material';
 import React, { Fragment, useState } from 'react';
-import { DesktopLevelItemRoot, Levels } from './components';
 
 interface Props extends GuildConfigurationViewProps {
     levels: GuildLevel[];
@@ -49,13 +49,13 @@ export const View = ({ guild, levels, localization }: Props) => {
                 sx={(theme) => ({
                     width: '100%',
                     pt: 2,
-                    pb: { xs: 2, md: 0 },
+                    pb: { xs: 2, md: .75 },
                     position: 'sticky',
                     top: { xs: theme.spacing(7), sm: theme.spacing(8) },
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    gap: 2,
+                    gap: 1,
                     zIndex: 1,
                     bgcolor: 'background.paper'
                 })}
@@ -80,22 +80,9 @@ export const View = ({ guild, levels, localization }: Props) => {
                         fullWidth
                     />
                 </Box>
-                <DesktopLevelItemRoot>
-                    <Typography variant="body2" color="text.secondary" align="center">
-                        {translations.rank}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ gridColumn: 3 }}>
-                        {translations.member}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" align="center">
-                        {translations.level}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" align="center">
-                        {translations.experience}
-                    </Typography>
-                </DesktopLevelItemRoot>
+                <SectionLevelViewHeader localization={localization} />
             </Box>
-            {filteredLevels.length > 0 ? <Levels
+            {filteredLevels.length > 0 ? <SectionLevelView
                 guild={guild}
                 levels={filteredLevels}
                 localization={localization}

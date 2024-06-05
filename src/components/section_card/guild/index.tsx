@@ -1,3 +1,5 @@
+'use client';
+
 import { GuildPickerType } from '@/components/picker';
 import { SectionSnowflakeSelectCardProps } from '@/components/section_card';
 import { GuildSelect, GuildSelectProps } from '@/components/select';
@@ -68,10 +70,7 @@ export const SectionGuildSelectCard = (
                                 root: {
                                     className: sectionGuildSelectCardClasses.control,
                                     sx: {
-                                        width: {
-                                            xs: '100%',
-                                            md: 300
-                                        }
+                                        width: { xs: '100%', md: 300 }
                                     }
                                 }
                             }

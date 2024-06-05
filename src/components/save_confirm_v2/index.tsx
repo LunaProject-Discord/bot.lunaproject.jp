@@ -5,14 +5,14 @@ import { Changes } from '@/components/save_confirm_v2/changes';
 import { Change, ChangesGroupByPath } from '@/components/save_confirm_v2/changes/utils';
 import { Issues } from '@/components/save_confirm_v2/issues';
 import { LocalizationProps } from '@/interfaces/localization';
-import { isRenderableReactNode } from '@lunaproject/web-core/dist/utils';
 import {
     BottomSheet,
     BottomSheetContent,
     BottomSheetHeaderToggleButton,
     defaultSnapPoints
 } from '@lunaproject/web-core/dist/components/BottomSheet';
-import { LoadingButton } from '@mui/lab';
+import { LoadingButton } from '@lunaproject/web-core/dist/components/Button';
+import { isRenderableReactNode } from '@lunaproject/web-core/dist/utils';
 import { Box, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { diff, EmbeddedObjKeysMapType, EmbeddedObjKeysType } from 'json-diff-ts';
@@ -165,10 +165,10 @@ export const SaveConfirmV2 = <T, >(
                         expanded={sheetExpanded}
                         setExpanded={(open) => sheetRef.current?.snapTo(({ snapPoints }) => open ? Math.max(...snapPoints) : Math.min(...snapPoints))}
                     />
-                    {parseResult.success ? <Typography>
+                    {parseResult.success ? <Typography align="left">
                         {isRenderableReactNode(label) ? label : translations.save_confirm}
                     </Typography> : <Box>
-                        <Typography>
+                        <Typography align="left">
                             {String(translations.save_confirm_settings_error_cannot_save_alert_title).replace(
                                 '%c',
                                 parseResult.error.issues.length.toLocaleString()
@@ -188,27 +188,25 @@ export const SaveConfirmV2 = <T, >(
                                 <RefreshIcon sx={{ transform: 'scale(-1, 1)' }} />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title={translations.save}>
-                            <LoadingButton
-                                ref={saveButtonRef}
-                                onClick={handleSaveButtonClick}
-                                disabled={!parseResult.success}
-                                loading={loading || pending}
-                                variant="contained"
-                                size="large"
-                                sx={{
-                                    minWidth: 0,
-                                    p: 1,
-                                    borderRadius: '50%'
-                                }}
-                            >
-                                <SaveIcon />
-                            </LoadingButton>
-                        </Tooltip>
+                        <LoadingButton
+                            ref={saveButtonRef}
+                            onClick={handleSaveButtonClick}
+                            disabled={!parseResult.success}
+                            loading={loading || pending}
+                            variant="contained"
+                            corners="extended"
+                            size="large"
+                            startIcon={<SaveIcon />}
+                        >
+                            {translations.save}
+                        </LoadingButton>
                     </Box>
                 </Box>
             }
             sx={{
+                '& [data-rsbs-backdrop], & [data-rsbs-overlay], &:after': {
+                    zIndex: (theme) => theme.zIndex.drawer + 1
+                },
                 '& [data-rsbs-scroll]': {
                     overflow: 'auto'
                 }

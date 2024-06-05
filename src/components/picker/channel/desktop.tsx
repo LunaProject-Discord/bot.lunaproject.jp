@@ -26,15 +26,6 @@ export const DesktopChannelPicker = (
         slotProps
     }: DesktopChannelPickerProps
 ) => {
-    /*
-    const searchRef = useRef<HTMLInputElement | null>(null);
-
-    useEffect(() => {
-        if (anchorEl !== undefined)
-            setTimeout(() => searchRef.current?.focus());
-    }, [anchorEl]);
-    */
-
     const focusInput = useCallback((input: HTMLInputElement | null) => {
         if (anchorEl !== undefined && input)
             setTimeout(() => input.focus());
@@ -56,7 +47,7 @@ export const DesktopChannelPicker = (
                 {...slotProps?.searchBox}
             />
             <DesktopPickerContent {...slotProps?.content}>
-                <VList style={{ padding: 8 }}>
+                <VList style={{ padding: 8, paddingTop: 0 }}>
                     {categories.map((category) => (
                         <ChannelPickerGroup
                             key={category?.id}

@@ -40,7 +40,6 @@ export const MobilePickerContent = styled(BottomSheetContent)(({ theme }) => ({
         padding: 0
     },
     [`& .${listSubheaderClasses.root}`]: {
-        top: 0,
         padding: theme.spacing(1.5, 2, .5)
     },
     [`& .${listItemButtonClasses.root}`]: {

@@ -2135,9 +2135,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lunaproject/web-core@npm:1.6.0-beta.53, @lunaproject/web-core@npm:^1.6.0-beta.53":
-  version: 1.6.0-beta.53
-  resolution: "@lunaproject/web-core@npm:1.6.0-beta.53"
+"@lunaproject/web-core@npm:1.6.0-beta.91":
+  version: 1.6.0-beta.91
+  resolution: "@lunaproject/web-core@npm:1.6.0-beta.91"
   dependencies:
     "@types/color": "npm:^3.0.6"
     "@types/deep-equal": "npm:^1.0.4"
@@ -2156,11 +2156,11 @@ __metadata:
     "@mui/lab": ^5.0.0-alpha.170
     "@mui/material": ^5.15.15
     "@mui/x-date-pickers": ^7.2.0
-    "@types/react": ^18.2.0
-    "@types/react-dom": ^18.2.0
+    "@types/react": ^18.2.0 || ^18.3.0
+    "@types/react-dom": ^18.2.0 || ^18.3.0
     next: ^14.2.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
+    react: ^18.2.0 || ^18.3.0
+    react-dom: ^18.2.0 || ^18.3.0
   peerDependenciesMeta:
     "@emotion/react":
       optional: true
@@ -2170,16 +2170,15 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10c0/69ae1b2204519e6083b2aa212277f91094179d3df07a0383eeaac23b843b3adb8d366d953d59e5299f203ae5191f698b75725c4cf4570c280b4659381ccea579
+  checksum: 10c0/9227779567348a0b37b0ca46c8cef1969ca6b8befdb3c46179d300aff80ab4e461e7d478f3cddbb429613fe6a273800e59f1f075d7ee39abaeb32e08197638f1
   languageName: node
   linkType: hard
 
-"@lunaproject/web-discord@npm:1.1.11":
-  version: 1.1.11
-  resolution: "@lunaproject/web-discord@npm:1.1.11"
+"@lunaproject/web-discord@npm:1.1.13":
+  version: 1.1.13
+  resolution: "@lunaproject/web-discord@npm:1.1.13"
   dependencies:
     "@discordjs/rest": "npm:^2.3.0"
-    "@lunaproject/web-core": "npm:^1.6.0-beta.53"
     "@types/color": "npm:^3.0.6"
     clsx: "npm:^2.1.0"
     color: "npm:^4.2.3"
@@ -2191,17 +2190,17 @@ __metadata:
   peerDependencies:
     "@emotion/react": ^11.11.0
     "@emotion/styled": ^11.11.0
-    "@types/react": ^18.2.0
-    "@types/react-dom": ^18.2.0
+    "@types/react": ^18.2.0 || ^18.3.0
+    "@types/react-dom": ^18.2.0 || ^18.3.0
     next: ^14.2.0
-    react: ^18.2.0
-    react-dom: ^18.2.0
+    react: ^18.2.0 || ^18.3.0
+    react-dom: ^18.2.0 || ^18.3.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10c0/787964f8353788ce7ee430c437d452cd1080a3479708cd0b5d29dbbe05d82ba40a387a0f2744ac0cfdf3fb56b1cca85cb2263581e973646276bb8772c6ef2ad5
+  checksum: 10c0/4fd0b57aa66f6a173a5c0bf6efaa3ef7a0b3334764a357b5618326f3fd7df9554702425afc5f74c34e80e3fc623eadfeac3257cf67a38f7247f8260175999fe2
   languageName: node
   linkType: hard
 
@@ -3111,6 +3110,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/event-stream@npm:^4":
+  version: 4.0.5
+  resolution: "@types/event-stream@npm:4.0.5"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10c0/413260d3e52ac8fad2960862ef8a7b23c0093d5ecb7befae6c2db0e250ea21f4ad26f23213addc8b7c98437c4c34ea98708f1b3bedf6699d6740a88ad21cc898
+  languageName: node
+  linkType: hard
+
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
@@ -3136,6 +3144,15 @@ __metadata:
   version: 1.6.15
   resolution: "@types/mousetrap@npm:1.6.15"
   checksum: 10c0/6aec93b46cdf6d23b1b61990e199edb35d84bd032309ebfd8daf94f4ad78806155730059a83229b04b3754ddb2593fd5490ce3186b921a9db2098ea589c9f1ad
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:*":
+  version: 20.14.9
+  resolution: "@types/node@npm:20.14.9"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: 10c0/911ffa444dc032897f4a23ed580c67903bd38ea1c5ec99b1d00fa10b83537a3adddef8e1f29710cbdd8e556a61407ed008e06537d834e48caf449ce59f87d387
   languageName: node
   linkType: hard
 
@@ -3734,8 +3751,8 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@lexical/markdown": "npm:0.13.1"
     "@lexical/react": "npm:0.13.1"
-    "@lunaproject/web-core": "npm:1.6.0-beta.53"
-    "@lunaproject/web-discord": "npm:1.1.11"
+    "@lunaproject/web-core": "npm:1.6.0-beta.91"
+    "@lunaproject/web-discord": "npm:1.1.13"
     "@material-symbols/svg-400": "npm:0.19.0"
     "@mui/icons-material": "npm:5.15.15"
     "@mui/lab": "npm:5.0.0-alpha.170"
@@ -3746,6 +3763,7 @@ __metadata:
     "@prisma/client": "npm:5.15.0"
     "@svgr/webpack": "npm:8.1.0"
     "@tremor/react": "npm:3.17.2"
+    "@types/event-stream": "npm:^4"
     "@types/lodash": "npm:4.17.1"
     "@types/luxon": "npm:3.4.2"
     "@types/mousetrap": "npm:1.6.15"

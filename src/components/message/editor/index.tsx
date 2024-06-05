@@ -1,7 +1,7 @@
 'use client';
 
-import { ItemDisabledProps, ItemVariableProps } from '@/components/items';
 import { LocalizationProps } from '@/interfaces/localization';
+import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Message } from '@lunaproject/web-discord/dist/interfaces';
 import { Box, Divider } from '@mui/material';
@@ -9,9 +9,12 @@ import React from 'react';
 import { TextArea } from '../text_area';
 import { EmbedsEditor } from './embed';
 
-type Props = ItemDisabledProps & ItemVariableProps<Message> & LocalizationProps;
+export type MessageEditorProps =
+    SectionCardVariableProps<{ value: Message; }>
+    & SectionCardDisabledProps
+    & LocalizationProps;
 
-export const Editor = ({ value, setValue, disabled, localization }: Props) => (
+export const MessageEditor = ({ value, setValue, disabled, localization }: MessageEditorProps) => (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <TextArea
             value={value.content}

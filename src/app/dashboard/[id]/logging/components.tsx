@@ -1,14 +1,8 @@
 import {
-    ButtonItemRoot,
-    ChannelItem as OriginalChannelItem,
-    ChannelItemProps,
-    ItemDisabledProps,
-    ItemFormContainer,
-    ItemRowContainer,
-    ItemVariableProps,
-    sectionItemClasses,
-    SwitchItem
-} from '@/components/items';
+    SectionChannelSelectCard as OriginalSectionChannelSelectCard,
+    sectionChannelSelectCardClasses,
+    SectionChannelSelectCardProps
+} from '@/components/section_card';
 import {
     GuildConfigurationLoggingChannel,
     GuildConfigurationLoggingMember,
@@ -18,14 +12,23 @@ import {
     GuildConfigurationLoggingRoot,
     GuildConfigurationLoggingVoice
 } from '@/interfaces/bot';
-import { LocalizationProps } from '@/interfaces/localization';
-import { RedisChannel } from '@/interfaces/redis';
-import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
+import { GuildChannelsViewProps } from '@/interfaces/view';
+import {
+    Section as LPSection,
+    SectionContent as LPSectionContent
+} from '@lunaproject/web-core/dist/components/Section';
+import {
+    sectionCardClasses,
+    SectionCardDisabledProps,
+    SectionCardVariableProps,
+    SectionSwitchCard
+} from '@lunaproject/web-core/dist/components/SectionCard';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { Box, buttonBaseClasses, Paper, styled, Switch, switchClasses, Typography } from '@mui/material';
+import { Box, styled } from '@mui/material';
 import React, { ReactNode } from 'react';
 
-export const GridContainer = styled(Section)(({ theme }) => ({
+export const GridContainer = styled(Box)(({ theme }) => ({
+    padding: theme.spacing(2, 0, 0),
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gridGap: theme.spacing(2),
@@ -34,84 +37,78 @@ export const GridContainer = styled(Section)(({ theme }) => ({
     }
 }));
 
-const ItemContainer = styled(Paper)(({ theme }) => ({
+const Section = styled(LPSection)(({ theme }) => ({
+    padding: 0,
     display: 'flex',
     flexDirection: 'column',
-    backgroundImage: 'none',
+    gap: 0,
     border: `solid 1px ${theme.palette.divider}`,
-    boxShadow: 'none'
+    borderRadius: theme.shape.borderRadius
 }));
 
-const ItemContent = styled(SectionContent)(({ theme }) => ({
-    [`& .${buttonBaseClasses.root}`]: {
+const SectionContent = styled(LPSectionContent)(({ theme }) => ({
+    gap: 0,
+    [`& .${sectionCardClasses.root}`]: {
+        minHeight: theme.spacing(7),
+        borderTop: `solid 1px ${theme.palette.divider} !important`,
         borderRadius: 0
     },
-    [`& .${buttonBaseClasses.root}:last-child`]: {
+    [`& .${sectionCardClasses.root}:last-child`]: {
         borderBottomLeftRadius: theme.shape.borderRadius,
         borderBottomRightRadius: theme.shape.borderRadius
     }
 }));
 
-interface ItemHeaderProps extends ItemDisabledProps {
+interface SectionHeaderProps extends SectionCardVariableProps<{ enabled: boolean; }>, SectionCardDisabledProps {
     label: ReactNode;
-    enabled: boolean;
-    setEnabled: (enabled: boolean) => void;
 }
 
-const ItemHeader = ({ label, enabled, setEnabled, disabled }: ItemHeaderProps) => (
-    <ButtonItemRoot
-        onClick={() => setEnabled(!enabled)}
+const SectionHeader = ({ label, enabled, setEnabled, disabled }: SectionHeaderProps) => (
+    <SectionSwitchCard
+        primary={label}
+        checked={enabled}
+        setChecked={setEnabled}
         disabled={disabled}
-        sx={{
-            borderBottomLeftRadius: 0,
-            borderBottomRightRadius: 0
+        slotProps={{
+            display: {
+                primary: {
+                    sx: (theme) => ({
+                        ...theme.typography.h6
+                    })
+                }
+            }
         }}
-    >
-        <ItemRowContainer>
-            <Typography variant="h6" align="left" sx={{ width: '100%' }}>{label}</Typography>
-            <ItemFormContainer sx={{ mr: -.75 }}>
-                <Switch
-                    checked={enabled}
-                    onChange={() => setEnabled(!enabled)}
-                    disabled={disabled}
-                    disableRipple
-                    tabIndex={-1}
-                    sx={{ [`& .${switchClasses.switchBase}`]: { backgroundColor: 'transparent !important' } }}
-                />
-            </ItemFormContainer>
-        </ItemRowContainer>
-    </ButtonItemRoot>
+        sx={{
+            borderRadius: 0,
+            borderTopLeftRadius: (theme) => theme.shape.borderRadius,
+            borderTopRightRadius: (theme) => theme.shape.borderRadius
+        }}
+    />
 );
 
-const ChannelItem = (props: ChannelItemProps) => (
+const SectionChannelSelectCard = (props: SectionChannelSelectCardProps) => (
     <Box
         sx={(theme) => ({
             containerType: 'inline-size',
             // アイテムのラベル: 200px, チャンネルのセレクトボックス: 300px, パディングとギャップ: 8 * 1.5 * 3
             [`@container (max-width: ${(200 + 300 + ((8 * 1.5) * 3)) - .05}px)`]: {
-                [`& > .${sectionItemClasses.root}`]: {
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                    justifyContent: 'center',
-                    [`& > :not(.${sectionItemClasses.formContainer})`]: {
-                        height: 'auto',
-                        minHeight: 'auto',
-                        pt: 1.5
-                    },
-                    [`& > .${sectionItemClasses.formContainer}, & > .${sectionItemClasses.formContainer} > div`]: {
+                [`& > .${sectionChannelSelectCardClasses.root}`]: {
+                    flexWrap: 'wrap',
+                    [`& .${sectionCardClasses.content}`]: {
                         width: '100%'
                     }
                 }
             }
         })}
     >
-        <OriginalChannelItem {...props} />
+        <OriginalSectionChannelSelectCard {...props} />
     </Box>
 );
 
-interface Props<T extends GuildConfigurationLoggingRoot> extends ItemDisabledProps, ItemVariableProps<T>, LocalizationProps {
-    channels: RedisChannel[];
-}
+type SectionProps<T extends GuildConfigurationLoggingRoot> =
+    SectionCardVariableProps<{ value: T; }>
+    & SectionCardDisabledProps
+    & GuildChannelsViewProps;
 
 export const Moderation = (
     {
@@ -120,20 +117,23 @@ export const Moderation = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingModeration>
+    }: SectionProps<GuildConfigurationLoggingModeration>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_moderation}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -144,38 +144,53 @@ export const Moderation = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_moderation_update}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_moderation_kick}
                     checked={value.kick}
-                    setChecked={(checked) => setValue({ ...value, kick: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        kick: getStateActionValue(checked, value.kick)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_moderation_prune}
                     checked={value.prune}
-                    setChecked={(checked) => setValue({ ...value, prune: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        prune: getStateActionValue(checked, value.prune)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_moderation_ban}
                     checked={value.ban}
-                    setChecked={(checked) => setValue({ ...value, ban: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        ban: getStateActionValue(checked, value.ban)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_moderation_unban}
                     checked={value.unban}
-                    setChecked={(checked) => setValue({ ...value, unban: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        unban: getStateActionValue(checked, value.unban)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -186,20 +201,23 @@ export const Member = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingMember>
+    }: SectionProps<GuildConfigurationLoggingMember>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_member}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -210,38 +228,53 @@ export const Member = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_member_join}
                     checked={value.join}
-                    setChecked={(checked) => setValue({ ...value, join: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        join: getStateActionValue(checked, value.join)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_member_leave}
                     checked={value.leave}
-                    setChecked={(checked) => setValue({ ...value, leave: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        leave: getStateActionValue(checked, value.leave)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_member_update}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_member_role_add}
                     checked={value.role_add}
-                    setChecked={(checked) => setValue({ ...value, role_add: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        role_add: getStateActionValue(checked, value.role_add)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_member_role_remove}
                     checked={value.role_remove}
-                    setChecked={(checked) => setValue({ ...value, role_remove: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        role_remove: getStateActionValue(checked, value.role_remove)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -252,20 +285,23 @@ export const Voice = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingVoice>
+    }: SectionProps<GuildConfigurationLoggingVoice>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_voice}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -276,38 +312,53 @@ export const Voice = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_voice_join}
                     checked={value.join}
-                    setChecked={(checked) => setValue({ ...value, join: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        join: getStateActionValue(checked, value.join)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_voice_leave}
                     checked={value.leave}
-                    setChecked={(checked) => setValue({ ...value, leave: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        leave: getStateActionValue(checked, value.leave)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_voice_move}
                     checked={value.move}
-                    setChecked={(checked) => setValue({ ...value, move: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        move: getStateActionValue(checked, value.move)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_voice_mute}
                     checked={value.mute}
-                    setChecked={(checked) => setValue({ ...value, mute: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        mute: getStateActionValue(checked, value.mute)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_voice_deafen}
                     checked={value.deafen}
-                    setChecked={(checked) => setValue({ ...value, deafen: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        deafen: getStateActionValue(checked, value.deafen)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -318,20 +369,23 @@ export const Category = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingChannel>
+    }: SectionProps<GuildConfigurationLoggingChannel>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_category}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -342,32 +396,44 @@ export const Category = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_create).replace('%n', String(translations.logging_category))}
                     checked={value.create}
-                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        create: getStateActionValue(checked, value.create)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_category))}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_update).replace('%n', String(translations.logging_category))}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_channel_permission_update}
                     checked={value.permissions_update}
-                    setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        permissions_update: getStateActionValue(checked, value.permissions_update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -378,20 +444,23 @@ export const TextChannel = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingChannel>
+    }: SectionProps<GuildConfigurationLoggingChannel>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_text_channel}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -402,32 +471,44 @@ export const TextChannel = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_create).replace('%n', String(translations.logging_text_channel))}
                     checked={value.create}
-                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        create: getStateActionValue(checked, value.create)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_text_channel))}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_update).replace('%n', String(translations.logging_text_channel))}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_channel_permission_update}
                     checked={value.permissions_update}
-                    setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        permissions_update: getStateActionValue(checked, value.permissions_update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -438,20 +519,23 @@ export const VoiceChannel = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingChannel>
+    }: SectionProps<GuildConfigurationLoggingChannel>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_voice_channel}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -462,32 +546,44 @@ export const VoiceChannel = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_create).replace('%n', String(translations.logging_voice_channel))}
                     checked={value.create}
-                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        create: getStateActionValue(checked, value.create)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_voice_channel))}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_update).replace('%n', String(translations.logging_voice_channel))}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_channel_permission_update}
                     checked={value.permissions_update}
-                    setChecked={(checked) => setValue({ ...value, permissions_update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        permissions_update: getStateActionValue(checked, value.permissions_update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -498,20 +594,23 @@ export const Role = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingObject>
+    }: SectionProps<GuildConfigurationLoggingObject>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_role}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -522,26 +621,35 @@ export const Role = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_create).replace('%n', String(translations.logging_role))}
                     checked={value.create}
-                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        create: getStateActionValue(checked, value.create)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_role))}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_update).replace('%n', String(translations.logging_role))}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -552,20 +660,23 @@ export const Emote = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingObject>
+    }: SectionProps<GuildConfigurationLoggingObject>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_emote}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -576,26 +687,35 @@ export const Emote = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_create).replace('%n', String(translations.logging_emote))}
                     checked={value.create}
-                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        create: getStateActionValue(checked, value.create)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_emote))}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_update).replace('%n', String(translations.logging_emote))}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -606,20 +726,23 @@ export const Invite = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingObject>
+    }: SectionProps<GuildConfigurationLoggingObject>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_invite}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -630,26 +753,35 @@ export const Invite = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_create).replace('%n', String(translations.logging_invite))}
                     checked={value.create}
-                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        create: getStateActionValue(checked, value.create)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_invite))}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_update).replace('%n', String(translations.logging_invite))}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -660,20 +792,23 @@ export const Webhook = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingObject>
+    }: SectionProps<GuildConfigurationLoggingObject>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_webhook}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -684,26 +819,35 @@ export const Webhook = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_create).replace('%n', String(translations.logging_webhook))}
                     checked={value.create}
-                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        create: getStateActionValue(checked, value.create)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_webhook))}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_update).replace('%n', String(translations.logging_webhook))}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -714,20 +858,23 @@ export const Integration = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingObject>
+    }: SectionProps<GuildConfigurationLoggingObject>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_integration}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -738,26 +885,35 @@ export const Integration = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_create).replace('%n', String(translations.logging_integration))}
                     checked={value.create}
-                    setChecked={(checked) => setValue({ ...value, create: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        create: getStateActionValue(checked, value.create)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_delete).replace('%n', String(translations.logging_integration))}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={String(translations.logging_object_update).replace('%n', String(translations.logging_integration))}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };
 
@@ -768,20 +924,23 @@ export const Message = (
         channels,
         disabled,
         localization
-    }: Props<GuildConfigurationLoggingMessage>
+    }: SectionProps<GuildConfigurationLoggingMessage>
 ) => {
     const { translations } = localization;
 
     return (
-        <ItemContainer>
-            <ItemHeader
+        <Section>
+            <SectionHeader
                 label={translations.logging_message}
                 enabled={value.enabled}
-                setEnabled={(enabled) => setValue({ ...value, enabled })}
+                setEnabled={(enabled) => setValue({
+                    ...value,
+                    enabled: getStateActionValue(enabled, value.enabled)
+                })}
                 disabled={disabled}
             />
-            <ItemContent>
-                <ChannelItem
+            <SectionContent>
+                <SectionChannelSelectCard
                     primary={translations.logging_channel}
                     value={value.channel_id}
                     setValue={(action) => setValue({
@@ -792,37 +951,52 @@ export const Message = (
                     disabled={disabled || !value.enabled}
                     localization={localization}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_message_update}
                     checked={value.update}
-                    setChecked={(checked) => setValue({ ...value, update: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        update: getStateActionValue(checked, value.update)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_message_delete}
                     checked={value.delete}
-                    setChecked={(checked) => setValue({ ...value, delete: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        delete: getStateActionValue(checked, value.delete)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_message_purge}
                     checked={value.purge}
-                    setChecked={(checked) => setValue({ ...value, purge: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        purge: getStateActionValue(checked, value.purge)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_message_pin}
                     checked={value.pin}
-                    setChecked={(checked) => setValue({ ...value, pin: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        pin: getStateActionValue(checked, value.pin)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-                <SwitchItem
+                <SectionSwitchCard
                     primary={translations.logging_message_unpin}
                     checked={value.unpin}
-                    setChecked={(checked) => setValue({ ...value, unpin: checked })}
+                    setChecked={(checked) => setValue({
+                        ...value,
+                        unpin: getStateActionValue(checked, value.unpin)
+                    })}
                     disabled={disabled || !value.enabled}
                 />
-            </ItemContent>
-        </ItemContainer>
+            </SectionContent>
+        </Section>
     );
 };

@@ -109,6 +109,11 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
     ), [isDarkTheme, locale]);
 
     const config: Config = {
+        components: {
+            SectionCard: {
+                variant: 'outlined'
+            }
+        },
         icons: {
             Decrement: ArrowDropDownIcon,
             ExpandLess: KeyboardArrowUpIcon,

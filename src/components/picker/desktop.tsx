@@ -2,6 +2,7 @@
 
 import { PickerInternalProps, PickerSearchBox } from '@/components/picker';
 import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
+import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils';
 import { SlotComponentProps } from '@mui/base';
 import { Box, listClasses, listItemButtonClasses, Popover, popoverClasses, styled } from '@mui/material';
 import React, { cloneElement, useCallback } from 'react';
@@ -10,8 +11,7 @@ import { VList } from 'virtua';
 export const DesktopPickerRoot = styled(Popover)(({ theme }) => ({
     [`& .${popoverClasses.paper}`]: {
         width: 300,
-        border: `solid 1px ${theme.palette.divider}`,
-        boxShadow: `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+        ...borderAndBoxShadow(theme)
     }
 }));
 
@@ -51,15 +51,6 @@ export const DesktopPicker = <T, >(
         slotProps
     }: DesktopPickerProps<T>
 ) => {
-    /*
-    const searchRef = useRef<HTMLInputElement | null>(null);
-
-    useEffect(() => {
-        if (anchorEl !== undefined)
-            setTimeout(() => searchRef.current?.focus());
-    }, [anchorEl]);
-    */
-
     const focusInput = useCallback((input: HTMLInputElement | null) => {
         if (anchorEl !== undefined && input)
             setTimeout(() => input.focus());

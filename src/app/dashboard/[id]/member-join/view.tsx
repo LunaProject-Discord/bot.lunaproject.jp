@@ -4,14 +4,15 @@ import {
     ManageAfterPendingRolesDialog,
     ManageBeforePendingRolesDialog
 } from '@/app/dashboard/[id]/member-join/_dialogs';
-import { ActionItem, ChannelItem, MessageItem, SwitchItem } from '@/components/items';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
+import { SectionChannelSelectCard, SectionMessageCard } from '@/components/section_card';
 import { CodeStyleContainer } from '@/components/text';
 import { GuildConfigurationMemberJoin } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationMemberJoinSchema } from '@/schemas/bot';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
+import { SectionButtonActionCard, SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress } from '@mui/material';
 import { ChannelType } from 'discord-api-types/v10';
@@ -141,7 +142,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
             <Section>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.member_join_enabled}
                         checked={enabled}
                         setChecked={setEnabled}
@@ -153,7 +154,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     {translations.member_join_before_pending}
                 </SectionTitle>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.member_join_before_pending_enabled}
                         checked={beforePendingEnabled}
                         setChecked={setBeforePendingEnabled}
@@ -170,13 +171,13 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     {translations.member_join_message}
                 </SectionTitle>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.member_join_before_pending_message_enabled}
                         checked={beforePendingMessageEnabled}
                         setChecked={setBeforePendingMessageEnabled}
                         disabled={!enabled || !beforePendingEnabled}
                     />
-                    <ChannelItem
+                    <SectionChannelSelectCard
                         primary={translations.send_message_channel}
                         value={beforePendingMessageChannelId}
                         setValue={setBeforePendingMessageChannelId}
@@ -184,18 +185,20 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         disabled={!enabled || !beforePendingEnabled || !beforePendingMessageEnabled}
                         localization={localization}
                     />
-                    <MessageItem
+                    <SectionMessageCard
                         primary={translations.customize_message}
                         secondary={translations.member_join_before_pending_message_edit_description}
                         value={beforePendingMessageMessage}
                         setValue={setBeforePendingMessageMessage}
-                        disabled={!enabled || !beforePendingEnabled || !beforePendingMessageEnabled}
                         open={openBeforePendingMessageBuilder}
                         setOpen={setOpenBeforePendingMessageBuilder}
+                        disabled={!enabled || !beforePendingEnabled || !beforePendingMessageEnabled}
                         localization={localization}
                     >
-                        <CodeStyleContainer>{translations.member_join_message_edit_hint}</CodeStyleContainer>
-                    </MessageItem>
+                        <CodeStyleContainer>
+                            {translations.member_join_message_edit_hint}
+                        </CodeStyleContainer>
+                    </SectionMessageCard>
                 </SectionContent>
             </Section>
             <Section>
@@ -207,15 +210,15 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     {translations.member_join_roles}
                 </SectionTitle>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.member_join_before_pending_roles_enabled}
                         checked={beforePendingRolesEnabled}
                         setChecked={setBeforePendingRolesEnabled}
                         disabled={!enabled || !beforePendingEnabled}
                     />
-                    <ActionItem
+                    <SectionButtonActionCard
                         primary={translations.member_join_manage_roles}
-                        onAction={() => setOpenBeforePendingRolesDialog(true)}
+                        onClick={() => setOpenBeforePendingRolesDialog(true)}
                         disabled={!enabled || !beforePendingEnabled || !beforePendingRolesEnabled}
                     />
                 </SectionContent>
@@ -229,7 +232,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         <AlertTitle>{translations.dashboard_error_cannot_be_enabled_alert_title}</AlertTitle>
                         {translations.member_join_after_pending_error_cannot_be_enabled_alert_description}
                     </Alert>}
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.member_join_after_pending_enabled}
                         checked={afterPendingEnabled}
                         setChecked={setAfterPendingEnabled}
@@ -246,13 +249,13 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     {translations.member_join_message}
                 </SectionTitle>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.member_join_after_pending_message_enabled}
                         checked={afterPendingMessageEnabled}
                         setChecked={setAfterPendingMessageEnabled}
                         disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled}
                     />
-                    <ChannelItem
+                    <SectionChannelSelectCard
                         primary={translations.send_message_channel}
                         value={afterPendingMessageChannelId}
                         setValue={setAfterPendingMessageChannelId}
@@ -260,18 +263,20 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled || !afterPendingMessageEnabled}
                         localization={localization}
                     />
-                    <MessageItem
+                    <SectionMessageCard
                         primary={translations.customize_message}
                         secondary={translations.member_join_after_pending_message_edit_description}
                         value={afterPendingMessageMessage}
                         setValue={setAfterPendingMessageMessage}
-                        disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled || !afterPendingMessageEnabled}
                         open={openAfterPendingMessageBuilder}
                         setOpen={setOpenAfterPendingMessageBuilder}
+                        disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled || !afterPendingMessageEnabled}
                         localization={localization}
                     >
-                        <CodeStyleContainer>{translations.member_join_message_edit_hint}</CodeStyleContainer>
-                    </MessageItem>
+                        <CodeStyleContainer>
+                            {translations.member_join_message_edit_hint}
+                        </CodeStyleContainer>
+                    </SectionMessageCard>
                 </SectionContent>
             </Section>
             <Section>
@@ -283,15 +288,15 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     {translations.member_join_roles}
                 </SectionTitle>
                 <SectionContent>
-                    <SwitchItem
+                    <SectionSwitchCard
                         primary={translations.member_join_after_pending_roles_enabled}
                         checked={afterPendingRolesEnabled}
                         setChecked={setAfterPendingRolesEnabled}
                         disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled}
                     />
-                    <ActionItem
+                    <SectionButtonActionCard
                         primary={translations.member_join_manage_roles}
-                        onAction={() => setOpenAfterPendingRolesDialog(true)}
+                        onClick={() => setOpenAfterPendingRolesDialog(true)}
                         disabled={!enabled || !isMemberVerificationGateEnabled || !afterPendingEnabled || !afterPendingRolesEnabled}
                     />
                 </SectionContent>

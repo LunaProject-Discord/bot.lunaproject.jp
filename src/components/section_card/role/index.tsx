@@ -1,3 +1,5 @@
+'use client';
+
 import { RolePickerType } from '@/components/picker';
 import { SectionSnowflakeSelectCardProps } from '@/components/section_card';
 import { RoleSelect, RoleSelectProps } from '@/components/select';
@@ -68,10 +70,7 @@ export const SectionRoleSelectCard = (
                                 root: {
                                     className: sectionRoleSelectCardClasses.control,
                                     sx: {
-                                        width: {
-                                            xs: '100%',
-                                            md: 300
-                                        }
+                                        width: { xs: '100%', md: 300 }
                                     }
                                 }
                             }

@@ -1,7 +1,6 @@
 'use client';
 
 import { NavigationAppBar, NavigationDrawerToolbar } from '@/app/_navigation';
-import { GuildSelect } from '@/app/dashboard/[id]/components';
 import {
     ArrowBackIcon,
     CommandBoxIcon,
@@ -22,6 +21,7 @@ import {
     TextSnippetIcon,
     TranslateIcon
 } from '@/components/icons';
+import { GuildSelect } from '@/components/select';
 import { GuildConfiguration, GuildFlags, UserFlags } from '@/interfaces/bot';
 import { DataGuild, RedisGuild } from '@/interfaces/redis';
 import { UserViewProps } from '@/interfaces/view';
@@ -125,8 +125,8 @@ export const Navigation = (
                             </Box> : <GuildSelect
                                 value={guild.id}
                                 setValue={(value) => router.push(`/dashboard/${value}`)}
-                                guilds={guilds}
-                                mutualGuilds={mutualGuilds}
+                                choices={guilds.filter((guild) => mutualGuilds.includes(guild.id))}
+                                localization={localization}
                             />}
                     </Box>
                     <NavigationDrawerContent>

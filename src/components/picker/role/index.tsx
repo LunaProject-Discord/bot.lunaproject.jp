@@ -1,13 +1,19 @@
 'use client';
 
-import { SnowflakePicker, SnowflakePickerItemProps, SnowflakePickerProps } from '@/components/picker';
+import {
+    PickerItemIcon,
+    PickerItemText,
+    SnowflakePicker,
+    SnowflakePickerItemProps,
+    SnowflakePickerProps
+} from '@/components/picker';
 import { RedisRole } from '@/interfaces/redis';
 import { filterPredicateRole, getRoleColor, sortRoles } from '@/utils/discord';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
-import { Box, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, ListItemButton } from '@mui/material';
 import deepmerge from 'deepmerge';
 import { APIRole } from 'discord-api-types/v10';
-import { ellipsis, size } from 'polished';
+import { size } from 'polished';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type RolePickerType = (APIRole | RedisRole) & SectionCardDisabledProps;
@@ -28,13 +34,10 @@ export const RolePickerItem = (
 
     return (
         <ListItemButton onClick={handleClick} selected={selected} disabled={role.disabled}>
-            <ListItemIcon sx={{ minWidth: 0 }}>
+            <PickerItemIcon>
                 <Box sx={{ ...size(16), bgcolor: getRoleColor(role), borderRadius: '50%' }} />
-            </ListItemIcon>
-            <ListItemText
-                primary={role.name}
-                primaryTypographyProps={{ sx: { ...ellipsis(), display: 'block' } }}
-            />
+            </PickerItemIcon>
+            <PickerItemText primary={role.name} />
         </ListItemButton>
     );
 };
