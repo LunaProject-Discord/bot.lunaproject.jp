@@ -3,11 +3,12 @@
 import { AreaChart } from '@/app/statistics/_components';
 import { StatisticsViewProps } from '@/app/statistics/interfaces';
 import { formatDate, getDate } from '@/app/statistics/utils';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import React, { Fragment } from 'react';
 
 type Props = StatisticsViewProps & LocalizationProps;
@@ -112,22 +113,10 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <Fragment>
         <PageHeader primary={translations.statistics} />
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
+        <ErrorRoot sx={{ height: (theme) => `calc(100% - ${theme.spacing(5.25)})` }}>
             <CloudOffIcon sx={{ fontSize: '10rem' }} />
-            <Typography variant="h4">データがありません</Typography>
-            <Typography align="center">
-                現在、表示できるデータはありません。<br />
-                しばらく待ってから再度お試しください。
-            </Typography>
-        </Box>
+            <ErrorTitle>{translations.error_data_not_found_title}</ErrorTitle>
+            <ErrorDescription>{translations.error_data_not_found_description}</ErrorDescription>
+        </ErrorRoot>
     </Fragment>
 );

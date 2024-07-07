@@ -174,7 +174,7 @@ export const SectionLevelEditCard = (
                     }
                 }}
             />
-            <SectionCard primary="レベルと経験値を 0 にする">
+            <SectionCard primary={translations.level_manage_reset}>
                 <Button
                     onClick={() => setValue({ user_id: user.id, level: 0, experience: 0 })}
                     variant="outlined"

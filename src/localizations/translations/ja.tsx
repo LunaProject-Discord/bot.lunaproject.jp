@@ -185,6 +185,11 @@ export const translationsJa: Translations = {
         お手数ですが、下のボタンからホームに戻ってください。
     </Fragment>,
 
+    error_data_not_found_title: 'データがありません',
+    error_data_not_found_description: <Fragment>
+        現在、表示できるデータはありません。<br />
+        しばらく待ってから再度お試しください。
+    </Fragment>,
     error_guild_not_found_title: 'サーバーが見つかりません',
     error_guild_not_found_description: <Fragment>
         指定されたサーバーが見つかりませんでした。<br />
@@ -403,6 +408,7 @@ export const translationsJa: Translations = {
     level_enabled: 'レベルを有効にする',
     level_experience_per_message: 'メッセージあたりの経験値',
     level_manage: 'レベルの管理',
+    level_manage_reset: 'レベルと経験値を 0 にする',
     level_manage_disabled_channels_description: '設定されたチャンネルのいずれかで発言した場合、レベルが上がらないようにします。',
     level_manage_disabled_roles_description: '設定された役職のいずれかがユーザーに付与されている場合、レベルが上がらないようにします。',
     level_reward: '報酬',

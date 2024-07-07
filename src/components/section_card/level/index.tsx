@@ -30,37 +30,6 @@ export const sectionLevelCardClasses = generateComponentClasses(
     ]
 );
 
-export const sectionLevelCardRootStyled = (theme: Theme): CSSObject => ({
-    display: 'grid',
-    gridTemplateColumns: '32px 40px 1fr',
-    gridTemplateRows: '1fr 1fr',
-    [`& .${sectionLevelCardClasses.profile}`]: {
-        gridColumn: '2 / span 2',
-        gridRow: 1
-    },
-    [`& .${sectionLevelCardClasses.status}`]: {
-        gridColumn: '1 / span 3',
-        gridRow: 2,
-        display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
-        gap: 'inherit'
-    },
-    [theme.breakpoints.up('md')]: {
-        gridTemplateColumns: '32px 40px 1fr 10% 10%',
-        gridTemplateRows: '1fr',
-        [`& .${sectionLevelCardClasses.profile}`]: {
-            gridColumn: '2 / span 2',
-            gridRow: 1
-        },
-        [`& .${sectionLevelCardClasses.status}`]: {
-            gridColumn: '4 / span 2',
-            gridRow: 1,
-            display: 'grid',
-            gridTemplateColumns: 'subgrid'
-        }
-    }
-});
-
 export const SectionLevelCardProfileRoot = ({ className, ...props }: BoxProps) => (
     <SectionCardDisplayRoot
         className={clsx(sectionLevelCardClasses.profile, className)}
@@ -301,6 +270,37 @@ export const SectionLevelCardStatus = (
         <SectionLevelCardExperience experience={experience} localization={localization} {...experienceProps} />
     </Box>
 );
+
+export const sectionLevelCardRootStyled = (theme: Theme): CSSObject => ({
+    display: 'grid',
+    gridTemplateColumns: '32px 40px 1fr',
+    gridTemplateRows: '1fr 1fr',
+    [`& .${sectionLevelCardClasses.profile}`]: {
+        gridColumn: '2 / span 2',
+        gridRow: 1
+    },
+    [`& .${sectionLevelCardClasses.status}`]: {
+        gridColumn: '1 / span 3',
+        gridRow: 2,
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gap: 'inherit'
+    },
+    [theme.breakpoints.up('md')]: {
+        gridTemplateColumns: '32px 40px 1fr 10% 10%',
+        gridTemplateRows: '1fr',
+        [`& .${sectionLevelCardClasses.profile}`]: {
+            gridColumn: '2 / span 2',
+            gridRow: 1
+        },
+        [`& .${sectionLevelCardClasses.status}`]: {
+            gridColumn: '4 / span 2',
+            gridRow: 1,
+            display: 'grid',
+            gridTemplateColumns: 'subgrid'
+        }
+    }
+});
 
 export * from './edit';
 export * from './view';

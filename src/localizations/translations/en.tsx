@@ -185,6 +185,11 @@ export const translationsEn: Translations = {
         Please click the button below to return to the home page.
     </Fragment>,
 
+    error_data_not_found_title: 'Data not found!',
+    error_data_not_found_description: <Fragment>
+        There is no data available for display at this time.<br />
+        Please wait a while and try again.
+    </Fragment>,
     error_guild_not_found_title: 'Server not found!',
     error_guild_not_found_description: <Fragment>
         The specified server could not be found.<br />
@@ -400,6 +405,7 @@ export const translationsEn: Translations = {
     level_enabled: 'Enable Level',
     level_experience_per_message: 'Experience per message',
     level_manage: 'Manage Levels',
+    level_manage_reset: 'Set level and experience to 0',
     level_manage_disabled_channels_description: 'If you speak on one of the set channels, the level will not be raised.',
     level_manage_disabled_roles_description: 'If one of the set roles is assigned to the user, the level will not be raised.',
     level_reward: 'Reward',

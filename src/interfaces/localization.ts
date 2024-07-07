@@ -176,6 +176,8 @@ export type TranslationKeys =
     | 'error_not_found_title'
     | 'error_not_found_description'
 
+    | 'error_data_not_found_title'
+    | 'error_data_not_found_description'
     | 'error_guild_not_found_title'
     | 'error_guild_not_found_description'
     | 'error_member_not_found_title'
@@ -337,6 +339,7 @@ export type TranslationKeys =
     | 'level_enabled'
     | 'level_experience_per_message'
     | 'level_manage'
+    | 'level_manage_reset'
     | 'level_manage_disabled_channels_description'
     | 'level_manage_disabled_roles_description'
     | 'level_reward'

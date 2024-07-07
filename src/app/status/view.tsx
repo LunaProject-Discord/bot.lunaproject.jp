@@ -1,6 +1,7 @@
 'use client';
 
-import { Status } from '@/app/status/components';
+import { SectionStatusCard } from '@/app/status/components';
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
 import { RedisStatus } from '@/interfaces/redis';
@@ -8,7 +9,7 @@ import { sortGuilds } from '@/utils/discord';
 import { PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { Alert, AlertTitle, Box, CircularProgress, Typography } from '@mui/material';
+import { Alert, AlertTitle, CircularProgress } from '@mui/material';
 import React, { Fragment } from 'react';
 
 interface Props extends LocalizationProps {
@@ -45,7 +46,7 @@ export const View = ({ statuses, user, guilds, localization }: Props) => {
             <Section>
                 <SectionContent>
                     {statuses.map((status) => (
-                        <Status
+                        <SectionStatusCard
                             key={status.id}
                             status={status}
                             user={user}
@@ -71,22 +72,10 @@ export const LoadingView = ({ localization: { translations } }: LocalizationProp
 export const NotFoundView = ({ localization: { translations } }: LocalizationProps) => (
     <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
         <PageHeader primary={translations.status} />
-        <Box
-            sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                placeItems: 'center',
-                placeContent: 'center',
-                gap: 1
-            }}
-        >
+        <ErrorRoot>
             <CloudOffIcon sx={{ fontSize: '10rem' }} />
-            <Typography variant="h4">データがありません</Typography>
-            <Typography align="center">
-                現在、表示できるデータはありません。<br />
-                しばらく待ってから再度お試しください。
-            </Typography>
-        </Box>
+            <ErrorTitle>{translations.error_data_not_found_title}</ErrorTitle>
+            <ErrorDescription>{translations.error_data_not_found_description}</ErrorDescription>
+        </ErrorRoot>
     </PageLayout>
 );

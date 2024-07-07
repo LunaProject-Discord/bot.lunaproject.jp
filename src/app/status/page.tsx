@@ -4,7 +4,7 @@ import { getLocalization } from '@/localizations/server';
 import { sortGuilds } from '@/utils/discord';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
-import { View } from './view';
+import { NotFoundView, View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
     const { translations } = getLocalization();
@@ -36,6 +36,9 @@ const Page = async () => {
     const guildsData = getGuilds();
     const statusesData = getStatuses();
     const [user, guilds, statuses] = await Promise.all([userData, guildsData, statusesData]);
+
+    if (statuses.length < 1)
+        return (<NotFoundView localization={localization} />);
 
     const mutualGuilds = user ? await getAndRequestUserGuildsById(user.id) : [];
     const mutualGuildIds = mutualGuilds.map((mutualGuild) => mutualGuild.id);
