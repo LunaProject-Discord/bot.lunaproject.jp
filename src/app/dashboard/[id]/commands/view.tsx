@@ -113,6 +113,7 @@ const CommandItem = memo<CommandItemProps>((
                 setOpen={setDialogOpen}
                 value={value}
                 setValue={setCommandValue}
+                command={command}
                 guild={guild}
                 localization={localization}
             />

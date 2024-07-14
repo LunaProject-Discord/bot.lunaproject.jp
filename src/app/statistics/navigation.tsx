@@ -23,7 +23,7 @@ import {
 } from '@lunaproject/web-core/dist/components/Navigation';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Theme, Typography, useMediaQuery } from '@mui/material';
-import { endOfToday } from 'date-fns';
+import { endOfToday } from 'date-fns/endOfToday';
 import { DateTime } from 'luxon';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { Fragment, SetStateAction, useState } from 'react';

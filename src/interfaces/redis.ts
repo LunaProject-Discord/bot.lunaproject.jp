@@ -94,5 +94,6 @@ export interface RedisCommand {
     category: string;
     aliases: string[];
     usages: string[];
-    permissions: string;
+    user_permissions: string;
+    bot_permissions: string;
 }

@@ -1,4 +1,5 @@
-import { addHours, subHours } from 'date-fns';
+import { addHours } from 'date-fns/addHours';
+import { subHours } from 'date-fns/subHours';
 
 export const toDBDate = (date: Date) => {
     const offset = date.getTimezoneOffset() !== 0 ? date.getTimezoneOffset() : -(9 * 60);

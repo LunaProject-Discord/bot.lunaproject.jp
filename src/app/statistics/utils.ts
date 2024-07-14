@@ -4,7 +4,9 @@ import { Localization } from '@/interfaces/localization';
 import { getDateFnsLocaleByName } from '@/localizations';
 import { fromDBDate } from '@/utils/date';
 import { format, max } from '@lunaproject/web-core/dist/utils';
-import { endOfWeek, format as formatDateFns, startOfWeek } from 'date-fns';
+import { endOfWeek } from 'date-fns/endOfWeek';
+import { format as formatDateFns } from 'date-fns/format';
+import { startOfWeek } from 'date-fns/startOfWeek';
 import { DateTime } from 'luxon';
 
 export const getDate = (statistic: Statistic) => fromDBDate(new Date(statistic.createdAt));

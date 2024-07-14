@@ -6,7 +6,7 @@ import { updateUserById } from '@/libs/redis';
 import { PartialUserConfigurationSchema } from '@/schemas/bot';
 import { errorWithName } from '@lunaproject/web-core/dist/utils';
 import { Prisma } from '@prisma/client';
-import { addHours } from 'date-fns';
+import { addHours } from 'date-fns/addHours';
 import { NextRequest, NextResponse } from 'next/server';
 
 type valueOf<T> = T[keyof T];

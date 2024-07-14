@@ -2,7 +2,9 @@ import { Statistic, StatisticChannelsData, Statistics, StatisticsPeriodType } fr
 import prisma from '@/libs/prisma';
 import { toDBDate } from '@/utils/date';
 import { system_statistics } from '@prisma/client';
-import { endOfWeek, getDaysInMonth, startOfWeek } from 'date-fns';
+import { endOfWeek } from 'date-fns/endOfWeek';
+import { getDaysInMonth } from 'date-fns/getDaysInMonth';
+import { startOfWeek } from 'date-fns/startOfWeek';
 import { DateObjectUnits, DateTime, Settings } from 'luxon';
 
 export const getStatistic = async (statisticOrId: system_statistics | number): Promise<Statistic | undefined> => {

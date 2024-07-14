@@ -8,18 +8,16 @@ import { LocalizationProps } from '@/interfaces/localization';
 import { format } from '@lunaproject/web-core/dist/utils';
 import { SvgIconComponent } from '@mui/icons-material';
 import { Box, Paper, Typography, Unstable_Grid2 as Grid } from '@mui/material';
-import {
-    differenceInCalendarWeeks,
-    differenceInHours,
-    isSameDay,
-    isSameHour,
-    isSameMonth,
-    isSameWeek,
-    isSameYear,
-    subDays,
-    subMonths,
-    subWeeks
-} from 'date-fns';
+import { differenceInCalendarWeeks } from 'date-fns/differenceInCalendarWeeks';
+import { differenceInHours } from 'date-fns/differenceInHours';
+import { isSameDay } from 'date-fns/isSameDay';
+import { isSameHour } from 'date-fns/isSameHour';
+import { isSameMonth } from 'date-fns/isSameMonth';
+import { isSameWeek } from 'date-fns/isSameWeek';
+import { isSameYear } from 'date-fns/isSameYear';
+import { subDays } from 'date-fns/subDays';
+import { subMonths } from 'date-fns/subMonths';
+import { subWeeks } from 'date-fns/subWeeks';
 import React, { ReactNode } from 'react';
 
 export interface StatisticWidgetDifference<T> {

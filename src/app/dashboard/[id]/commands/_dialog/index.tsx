@@ -6,6 +6,7 @@ import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@/a
 import { CancelButton } from '@/components/buttons';
 import { Code } from '@/components/text';
 import { GuildConfigurationCommand } from '@/interfaces/bot';
+import { RedisCommand } from '@/interfaces/redis';
 import { GuildViewProps } from '@/interfaces/view';
 import { sortChannels, sortMembers, sortRoles } from '@/utils/discord';
 import {
@@ -15,13 +16,18 @@ import {
     DialogTitle,
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
-import { ItemFormContainer, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
+import { ItemFormContainer } from '@lunaproject/web-core/dist/components/SectionItems';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Box, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, memo, SetStateAction, useCallback, useState } from 'react';
 
-type ManageCommandDialogProps = ModalProps & ItemVariableProps<GuildConfigurationCommand> & GuildViewProps;
+export interface ManageCommandDialogProps extends ModalProps, SectionCardVariableProps<{
+    value: GuildConfigurationCommand;
+}>, GuildViewProps {
+    command: RedisCommand;
+}
 
 const ManageCommandDialog = memo<ManageCommandDialogProps>((
     {
@@ -29,6 +35,7 @@ const ManageCommandDialog = memo<ManageCommandDialogProps>((
         setOpen,
         value,
         setValue,
+        command,
         guild,
         localization
     }
@@ -159,9 +166,15 @@ const ManageCommandDialog = memo<ManageCommandDialogProps>((
                     <Box sx={{ px: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
                         <Group>
                             <GroupTitle>{translations.command_user_permissions}</GroupTitle>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
+
+                            </Box>
                         </Group>
                         <Group>
                             <GroupTitle>{translations.command_bot_permissions}</GroupTitle>
+                            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
+
+                            </Box>
                         </Group>
                         <Channels
                             default={defaultChannels}

@@ -1,9 +1,12 @@
-import { ItemDisabledProps, ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
+import { PickerValidDate } from '@mui/x-date-pickers';
 import { BaseTimeValidationProps } from '@mui/x-date-pickers/internals/models/validation';
 
-export interface BaseDateTimeEditorProps<T = Date> extends ItemDisabledProps, ItemVariableProps<T>, BaseTimeValidationProps {
-    minDate?: T;
-    maxDate?: T;
+export interface BaseDateTimeEditorProps<TDate extends PickerValidDate, TValue = TDate> extends SectionCardVariableProps<{
+    value: TValue;
+}>, SectionCardDisabledProps, BaseTimeValidationProps {
+    minDate?: TDate;
+    maxDate?: TDate;
 }
 
 export * from './date_time_editor';
