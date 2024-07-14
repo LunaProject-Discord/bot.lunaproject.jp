@@ -2151,9 +2151,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@lunaproject/web-core@npm:1.6.1":
-  version: 1.6.1
-  resolution: "@lunaproject/web-core@npm:1.6.1"
+"@lunaproject/web-core@npm:1.6.2":
+  version: 1.6.2
+  resolution: "@lunaproject/web-core@npm:1.6.2"
   dependencies:
     "@types/color": "npm:^3.0.6"
     "@types/deep-equal": "npm:^1.0.4"
@@ -2186,7 +2186,7 @@ __metadata:
       optional: true
     "@types/react-dom":
       optional: true
-  checksum: 10c0/4cfd559fc9bb3a6148489d9caa36ba7b1ec6c452ee72fe7571ec70172cff35c475a40727e1b2f5a5f1cbf2a1d8174db32d547fba90976f51e4c91eff7dbcc5da
+  checksum: 10c0/9b36e47c33ff3a3327e2f3e8f5227a3cb911e2815951c79cf326d90daa25a3920f35cc630da4bd457edbcd15b52b821172cb185a905b1d6d568614dbcab3b2a5
   languageName: node
   linkType: hard
 
@@ -3792,7 +3792,7 @@ __metadata:
     "@emotion/styled": "npm:11.11.5"
     "@lexical/markdown": "npm:0.16.1"
     "@lexical/react": "npm:0.16.1"
-    "@lunaproject/web-core": "npm:1.6.1"
+    "@lunaproject/web-core": "npm:1.6.2"
     "@lunaproject/web-discord": "npm:1.1.16"
     "@material-symbols/svg-400": "npm:0.21.1"
     "@mui/icons-material": "npm:5.16.1"
