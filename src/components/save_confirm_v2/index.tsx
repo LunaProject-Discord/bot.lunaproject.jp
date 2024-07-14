@@ -64,7 +64,13 @@ export const SaveConfirmV2 = <T, >(
     const cancelButtonRef = useRef<HTMLButtonElement | null>(null);
 
     const parseResult = useMemo(() => schema.safeParse(target), [schema, target]);
-    const diffResult = useMemo(() => diff(source, target, embeddedObjectKeyMapping), [source, target, embeddedObjectKeyMapping]);
+    const diffResult = useMemo(() => diff(
+        source,
+        target,
+        {
+            embeddedObjKeys: embeddedObjectKeyMapping
+        }
+    ), [source, target, embeddedObjectKeyMapping]);
 
     const sheetOpen = useMemo(() => !deepEqual(source, target, { strict: true }), [source, target]);
     const [sheetExpanded, setSheetExpanded] = useState(false);

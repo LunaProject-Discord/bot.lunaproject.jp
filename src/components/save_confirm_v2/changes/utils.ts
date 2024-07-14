@@ -1,4 +1,4 @@
-import { flattenChangeset, IChange } from 'json-diff-ts';
+import { atomizeChangeset, IChange } from 'json-diff-ts';
 import groupBy from 'lodash/groupBy';
 import mapValues from 'lodash/mapValues';
 
@@ -13,7 +13,7 @@ export interface Change {
     oldValue?: any;
 }
 
-export const mapChanges = (changes: IChange[]): Change[] => flattenChangeset(changes).map((change): Change => ({
+export const mapChanges = (changes: IChange[]): Change[] => atomizeChangeset(changes).map((change): Change => ({
     action: change.type.toLowerCase() as ActionType,
     key: change.key,
     path: change.path,
