@@ -571,8 +571,8 @@ export const translationsJa: Translations = {
 
 
     send_message_channel: 'メッセージを送信するチャンネル',
-    manage_disabled_channels: '無効なチャンネルの管理',
-    manage_disabled_roles: '無効な役職の管理',
+    manage_disabled_channels: '有効なチャンネルの管理',
+    manage_disabled_roles: '有効な役職の管理',
 
 
     message_builder: 'メッセージ ビルダー',

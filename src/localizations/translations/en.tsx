@@ -568,8 +568,8 @@ export const translationsEn: Translations = {
 
 
     send_message_channel: 'Channel to send message',
-    manage_disabled_channels: 'Manage Disabled Channels',
-    manage_disabled_roles: 'Manage Disabled Roles',
+    manage_disabled_channels: 'Manage Enabled Channels',
+    manage_disabled_roles: 'Manage Enabled Roles',
 
 
     message_builder: 'Message Builder',
