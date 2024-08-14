@@ -13,6 +13,13 @@ export const someCheckMemberPermissions = (guild: RedisGuild | DataGuild, member
 
 export const everyCheckMemberPermissions = (guild: RedisGuild | DataGuild, member: RedisMember, ...permissions: bigint[]) => guild.owner === member.id || permissions.every((permission) => checkPermission(member.permissions, permission));
 
+export const getPermissions = (_permissions: string | bigint | undefined): bigint[] => {
+    if (!_permissions)
+        return [];
+
+    const permissions = typeof _permissions === 'string' ? BigInt(_permissions) : _permissions;
+    return Object.values(PermissionFlagsBits).filter((permission) => (permissions & permission) === permission);
+};
 
 export const getUserDisplayName = (user: OAuthUser | APIUser | RedisUser) => 'username' in user ? (user.global_name ?? user.username) : (user.display_name ?? user.name);
 

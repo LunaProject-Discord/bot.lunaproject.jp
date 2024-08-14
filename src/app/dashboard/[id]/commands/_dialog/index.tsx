@@ -6,9 +6,10 @@ import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@/a
 import { CancelButton } from '@/components/buttons';
 import { Code } from '@/components/text';
 import { GuildConfigurationCommand } from '@/interfaces/bot';
+import { TranslationKeys } from '@/interfaces/localization';
 import { RedisCommand } from '@/interfaces/redis';
 import { GuildViewProps } from '@/interfaces/view';
-import { sortChannels, sortMembers, sortRoles } from '@/utils/discord';
+import { getPermissions, sortChannels, sortMembers, sortRoles } from '@/utils/discord';
 import {
     Dialog,
     DialogActions,
@@ -19,7 +20,7 @@ import {
 import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { ItemFormContainer } from '@lunaproject/web-core/dist/components/SectionItems';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { Box, ButtonBase, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, ButtonBase, Chip, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, memo, SetStateAction, useCallback, useState } from 'react';
 
@@ -164,16 +165,26 @@ const ManageCommandDialog = memo<ManageCommandDialogProps>((
                         </ItemFormContainer>
                     </ButtonBase>
                     <Box sx={{ px: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                        <Group>
+                        <Group sx={{ gap: 1 }}>
                             <GroupTitle>{translations.command_user_permissions}</GroupTitle>
                             <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
-
+                                {getPermissions(command.user_permissions).map((permission) => (
+                                    <Chip
+                                        key={permission}
+                                        label={translations[`permission_${permission}` as TranslationKeys]}
+                                    />
+                                ))}
                             </Box>
                         </Group>
-                        <Group>
+                        <Group sx={{ gap: 1 }}>
                             <GroupTitle>{translations.command_bot_permissions}</GroupTitle>
                             <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1 }}>
-
+                                {getPermissions(command.bot_permissions).map((permission) => (
+                                    <Chip
+                                        key={permission}
+                                        label={translations[`permission_${permission}` as TranslationKeys]}
+                                    />
+                                ))}
                             </Box>
                         </Group>
                         <Channels
