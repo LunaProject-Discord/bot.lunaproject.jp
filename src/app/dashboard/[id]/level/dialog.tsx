@@ -8,6 +8,7 @@ import { RoleSelect } from '@/components/select';
 import { GuildConfigurationLevelRewardRole } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { getInteractRolesByDataGuild } from '@/utils/discord';
+import { MAX_LEVEL_AND_EXPERIENCE } from '@/utils/level';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     Dialog,
@@ -79,6 +80,7 @@ const RoleItem = (
                     })}
                     step={1}
                     min={1}
+                    max={MAX_LEVEL_AND_EXPERIENCE}
                     disabled={disabled || !value.enabled}
                     sx={{ width: { xs: '100%', md: 300 } }}
                 />

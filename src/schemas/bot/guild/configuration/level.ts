@@ -4,7 +4,7 @@ import { DataMessageSchema } from '@/schemas/message';
 import { SnowflakeSchema } from '@/schemas/snowflake';
 import { z } from 'zod';
 
-export const GuildConfigurationLevelAndExperienceSchema = LevelAndExperienceSchema.gte(1);
+export const GuildConfigurationLevelAndExperienceSchema = LevelAndExperienceSchema.step(1).gte(1);
 
 export const GuildConfigurationLevelLeaderboardSchema = z.object({
     public: z.boolean(),

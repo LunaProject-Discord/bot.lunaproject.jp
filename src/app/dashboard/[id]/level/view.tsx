@@ -12,6 +12,7 @@ import {
 } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
 import { GuildConfigurationLevelSchema } from '@/schemas/bot';
+import { MAX_LEVEL_AND_EXPERIENCE } from '@/utils/level';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
@@ -122,7 +123,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         disabled={!enabled}
                         slotProps={{
                             control: {
-                                min: 1
+                                min: 1,
+                                max: MAX_LEVEL_AND_EXPERIENCE
                             }
                         }}
                     />
