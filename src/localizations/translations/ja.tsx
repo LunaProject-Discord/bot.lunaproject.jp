@@ -540,6 +540,9 @@ export const translationsJa: Translations = {
     user_settings: 'ユーザー設定',
     user_time_and_language_description: 'ユーザーが実行した機能で使用される日時や言語の設定ができます。',
     user_language_description: 'あなたが実行したコマンドの応答は、ここで設定した言語で行われます。',
+    user_translate_target_language_override: '翻訳先の言語',
+    user_translate_target_language_override_description: 'コンテキスト コマンド (右クリックメニュー) からメッセージの翻訳を行うときの翻訳先の言語を設定します。',
+    user_translate_target_language_override_inherit: 'Discord の言語設定を使用する',
 
 
     save_confirm: '変更を保存しますか？',

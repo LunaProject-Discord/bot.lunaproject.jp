@@ -135,7 +135,6 @@ model guild_punishment_warns {
 
 model guilds {
   id                       BigInt                     @id
-  prefix                   String                     @default("#.") @db.VarChar(20)
   flags                    String                     @default("{\"verified\":false,\"partner\":false,\"tester\":false}") @db.LongText
   prohibit                 String                     @default("{\"enabled\":false,\"type\":\"CUSTOM\",\"reason\":null,\"expired_at\":null}") @db.LongText
   updated_at               DateTime                   @db.DateTime(0)
@@ -209,6 +208,7 @@ model user_configurations {
   language      String   @default("ja-JP") @db.VarChar(8)
   timezone      String   @default("Asia/Tokyo") @db.VarChar(32)
   accent_color  String   @default("#959ac0") @db.VarChar(16)
+  translate     String   @default("{\"target_language_override\":null}") @db.LongText
   authenticator String   @default("{\"key\":null,\"verification_code\":null,\"scratch_codes\":[]}") @db.LongText
   token         String   @default("") @db.Text
   token_secret  String   @default("") @db.Text
