@@ -297,41 +297,6 @@ export const translationsJa: Translations = {
     role_permissions_grid_inherited_administrator: 'この役職に管理者権限が付与されています',
     role_permissions_grid_deletable: 'この役職から権限を剥奪できます',
 
-    welcome_message: 'ようこそ (参加) メッセージ',
-    welcome_message_description: 'ユーザーがサーバーに参加したときにメッセージを送信できます。',
-    welcome_message_enabled: 'ようこそメッセージを有効にする',
-    welcome_message_edit_description: 'ユーザーがサーバーに参加したときに送信されるメッセージをカスタマイズできます。',
-    welcome_message_edit_hint: <Fragment>
-        <b>下記のプレースホルダーを設定することでユーザーの名前などに置き換えできます。</b>
-        <ul className="mt-1">
-            <li>サーバーのID: <code>{'{'}guild:id{'}'}</code></li>
-            <li>サーバーの名前: <code>{'{'}guild:name{'}'}</code></li>
-            <li>サーバーのメンバー数: <code>{'{'}guild:members{'}'}</code></li>
-            <li>ルールチャンネルのメンション (設定されている場合のみ): <code>{'{'}guild:rules{'}'}</code></li>
-            <li>ユーザーのID: <code>{'{'}user:id{'}'}</code></li>
-            <li>ユーザーの名前: <code>{'{'}user:name{'}'}</code></li>
-            <li>ユーザーのタグ: <code>{'{'}user:discriminator{'}'}</code></li>
-            <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
-        </ul>
-    </Fragment>,
-
-    goodbye_message: 'さよなら (退出) メッセージ',
-    goodbye_message_description: 'ユーザーがサーバーから退出したときにメッセージを送信できます。',
-    goodbye_message_enabled: 'さよならメッセージを有効にする',
-    goodbye_message_edit_description: 'ユーザーがサーバーから退出したときに送信されるメッセージをカスタマイズできます。',
-    goodbye_message_edit_hint: <Fragment>
-        <b>下記のプレースホルダーを設定することでユーザーの名前などに置き換えできます。</b>
-        <ul className="mt-1">
-            <li>サーバーのID: <code>{'{'}guild:id{'}'}</code></li>
-            <li>サーバーの名前: <code>{'{'}guild:name{'}'}</code></li>
-            <li>サーバーのメンバー数: <code>{'{'}guild:members{'}'}</code></li>
-            <li>ユーザーのID: <code>{'{'}user:id{'}'}</code></li>
-            <li>ユーザーの名前: <code>{'{'}user:name{'}'}</code></li>
-            <li>ユーザーのタグ: <code>{'{'}user:discriminator{'}'}</code></li>
-            <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
-        </ul>
-    </Fragment>,
-
     member_join: 'メンバーの参加',
     member_join_description: 'メンバーがサーバーに参加したときにメッセージを送信できます。',
     member_join_enabled: 'メンバーの参加を有効にする',
@@ -373,6 +338,23 @@ export const translationsJa: Translations = {
     </Fragment>,
     member_join_roles: '役職の付与',
     member_join_manage_roles: '付与する役職の管理',
+
+    goodbye_message: 'さよなら (退出) メッセージ',
+    goodbye_message_description: 'ユーザーがサーバーから退出したときにメッセージを送信できます。',
+    goodbye_message_enabled: 'さよならメッセージを有効にする',
+    goodbye_message_edit_description: 'ユーザーがサーバーから退出したときに送信されるメッセージをカスタマイズできます。',
+    goodbye_message_edit_hint: <Fragment>
+        <b>下記のプレースホルダーを設定することでユーザーの名前などに置き換えできます。</b>
+        <ul className="mt-1">
+            <li>サーバーのID: <code>{'{'}guild:id{'}'}</code></li>
+            <li>サーバーの名前: <code>{'{'}guild:name{'}'}</code></li>
+            <li>サーバーのメンバー数: <code>{'{'}guild:members{'}'}</code></li>
+            <li>ユーザーのID: <code>{'{'}user:id{'}'}</code></li>
+            <li>ユーザーの名前: <code>{'{'}user:name{'}'}</code></li>
+            <li>ユーザーのタグ: <code>{'{'}user:discriminator{'}'}</code></li>
+            <li>ユーザーのメンション: <code>{'{'}user:mention{'}'}</code></li>
+        </ul>
+    </Fragment>,
 
     activity: 'アクティビティ ロール',
     activity_description: 'ゲームのプレイ中や音楽の再生中に役職を付与することができます。',

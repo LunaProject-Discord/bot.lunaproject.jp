@@ -45,6 +45,5 @@ export const GuildConfigurationMemberJoinBeforePendingSchema = ConfigurationRoot
 
 export const GuildConfigurationMemberJoinSchema = ConfigurationRootSchema.extend({
     before_pending: GuildConfigurationMemberJoinBeforePendingSchema,
-    after_pending: GuildConfigurationMemberJoinAfterPendingSchema,
-    _migrated: z.boolean()
+    after_pending: GuildConfigurationMemberJoinAfterPendingSchema
 });

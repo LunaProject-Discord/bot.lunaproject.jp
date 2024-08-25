@@ -12,17 +12,15 @@ import {
     GuildConfigurationPrefixAndNicknameSchema,
     GuildConfigurationQuoteSchema,
     GuildConfigurationTranslateSchema,
-    GuildConfigurationVoteSchema,
-    GuildConfigurationWelcomeSchema
+    GuildConfigurationVoteSchema
 } from '@/schemas/bot';
 import { SnowflakeSchema } from '@/schemas/snowflake';
 
 export const GuildConfigurationSchema = GuildConfigurationPrefixAndNicknameSchema.extend(ConfigurationTimeAndLanguageSchema.shape).extend({
     id: SnowflakeSchema,
     commands: GuildConfigurationCommandsSchema,
-    welcome: GuildConfigurationWelcomeSchema,
-    goodbye: GuildConfigurationGoodbyeSchema,
     member_join: GuildConfigurationMemberJoinSchema,
+    goodbye: GuildConfigurationGoodbyeSchema,
     activity: GuildConfigurationActivitySchema,
     global_chat: ConfigurationRootSchema,
     global_ban: GuildConfigurationGlobalBanSchema,
@@ -48,4 +46,3 @@ export * from './prefix_and_nickname';
 export * from './quote';
 export * from './translate';
 export * from './vote';
-export * from './welcome';

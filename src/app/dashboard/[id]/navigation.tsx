@@ -198,32 +198,14 @@ export const Navigation = (
                             />
                         </NavigationDrawerGroup>
                         <NavigationDrawerGroup label={translations.settings_features_and_options}>
-                            {guildConfiguration.member_join._migrated ? <NavigationDrawerItemWithEnabledStatus
+                            <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/member-join`}
                                 icon={<PersonAddIcon />}
-                                primary={
-                                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                                        {translations.member_join}
-                                        <Chip
-                                            label="Beta"
-                                            variant="rounded"
-                                            color="info"
-                                            size="small"
-                                            sx={{ height: 20, ml: 1 }}
-                                        />
-                                    </Box>
-                                }
+                                primary={translations.member_join}
                                 enabled={guildConfiguration.member_join.enabled}
                                 open={open}
                                 setOpen={setOpen}
-                            /> : <NavigationDrawerItemWithEnabledStatus
-                                href={`${prefix}/welcome`}
-                                icon={<PersonAddIcon />}
-                                primary={translations.welcome_message}
-                                enabled={guildConfiguration.welcome.enabled}
-                                open={open}
-                                setOpen={setOpen}
-                            />}
+                            />
                             <NavigationDrawerItemWithEnabledStatus
                                 href={`${prefix}/goodbye`}
                                 icon={<PersonRemoveIcon />}

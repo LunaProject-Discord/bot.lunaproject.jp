@@ -42,8 +42,6 @@ import {
     GuildConfigurationSchema,
     GuildConfigurationTranslateSchema,
     GuildConfigurationVoteSchema,
-    GuildConfigurationWelcomeRoleSchema,
-    GuildConfigurationWelcomeSchema,
     PartialGuildConfigurationSchema
 } from '@/schemas/bot';
 import { z } from 'zod';
@@ -66,12 +64,6 @@ export type GuildConfigurationCommandsPermissionOverrides = z.infer<typeof Guild
 
 export type GuildConfigurationCommand = z.infer<typeof GuildConfigurationCommandSchema>;
 
-export type GuildConfigurationWelcome = z.infer<typeof GuildConfigurationWelcomeSchema>;
-
-export type GuildConfigurationWelcomeRole = z.infer<typeof GuildConfigurationWelcomeRoleSchema>;
-
-export type GuildConfigurationGoodbye = z.infer<typeof GuildConfigurationGoodbyeSchema>;
-
 export type GuildConfigurationMemberJoin = z.infer<typeof GuildConfigurationMemberJoinSchema>;
 
 export type GuildConfigurationMemberJoinBeforePending = z.infer<typeof GuildConfigurationMemberJoinBeforePendingSchema>;
@@ -89,6 +81,8 @@ export type GuildConfigurationMemberJoinAfterPendingRoles = z.infer<typeof Guild
 export type GuildConfigurationMemberJoinAfterPendingRole = z.infer<typeof GuildConfigurationMemberJoinAfterPendingRoleSchema>;
 
 export type GuildConfigurationMemberJoinMessage = z.infer<typeof GuildConfigurationMemberJoinMessageSchema>;
+
+export type GuildConfigurationGoodbye = z.infer<typeof GuildConfigurationGoodbyeSchema>;
 
 export type GuildConfigurationActivity = z.infer<typeof GuildConfigurationActivitySchema>;
 
