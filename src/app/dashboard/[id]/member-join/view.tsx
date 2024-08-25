@@ -14,18 +14,13 @@ import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { SectionButtonActionCard, SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Alert, AlertTitle, Backdrop, Box, Button, CircularProgress } from '@mui/material';
+import { Alert, AlertTitle } from '@mui/material';
 import { ChannelType } from 'discord-api-types/v10';
-import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;
-
-    const router = useRouter();
-
-    const [openMigratingBackdrop, setOpenMigratingBackdrop] = useState(false);
 
     const [openBeforePendingMessageBuilder, setOpenBeforePendingMessageBuilder] = useState(false);
     const [openBeforePendingRolesDialog, setOpenBeforePendingRolesDialog] = useState(false);
@@ -74,8 +69,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                 enabled: afterPendingRolesEnabled,
                 roles: afterPendingRolesRoles
             }
-        },
-        _migrated: memberJoinConfiguration._migrated
+        }
     });
 
     const handleSaveAction = () => saveGuildConfiguration(guild.id, { member_join: toObject() });
@@ -96,50 +90,9 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
         resetAfterPendingRolesRoles();
     };
 
-    const handleRollbackAction = async () => {
-        setOpenMigratingBackdrop(true);
-
-        const result = await saveGuildConfiguration(
-            guild.id,
-            {
-                member_join: {
-                    ...toObject(),
-                    enabled: false,
-                    _migrated: false
-                }
-            }
-        );
-
-        setOpenMigratingBackdrop(false);
-
-        if (result) {
-            router.refresh();
-            router.push(`/dashboard/${guild.id}/welcome`);
-        }
-    };
-
     return (
         <Fragment>
             <PageHeader primary={translations.member_join} secondary={translations.member_join_description} />
-            <Section>
-                <SectionContent>
-                    <Alert severity="warning">
-                        <AlertTitle>ベータ版の機能を利用しています！</AlertTitle>
-                        <Box sx={{ mb: .5 }}>
-                            現在、ベータ公開中の機能を利用しています。<br />
-                            この機能の利用をやめて安定版を利用するには、下のボタンを押してください。
-                        </Box>
-                        <Button
-                            onClick={handleRollbackAction}
-                            disableElevation
-                            variant="contained"
-                            color="inherit"
-                        >
-                            利用をやめる
-                        </Button>
-                    </Alert>
-                </SectionContent>
-            </Section>
             <Section>
                 <SectionContent>
                     <SectionSwitchCard
@@ -301,10 +254,6 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                     />
                 </SectionContent>
             </Section>
-
-            <Backdrop open={openMigratingBackdrop} sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 1 }}>
-                <CircularProgress color="inherit" />
-            </Backdrop>
 
             <ManageBeforePendingRolesDialog
                 open={openBeforePendingRolesDialog}
