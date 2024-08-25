@@ -10,6 +10,7 @@ export const getUserConfiguration = async (id: string): Promise<UserConfiguratio
     return {
         id,
         language: userConfigurationData.language as ConfigurationLanguage,
-        timezone: userConfigurationData.timezone as TimeZone
+        timezone: userConfigurationData.timezone as TimeZone,
+        translate: JSON.parse(userConfigurationData.translate)
     };
 };

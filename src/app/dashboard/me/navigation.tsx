@@ -1,7 +1,7 @@
 'use client';
 
 import { NavigationAppBar, NavigationDrawerToolbar, NavigationProps } from '@/app/_navigation';
-import { ArrowBackIcon, HomeIcon, NotificationsIcon, ScheduleIcon } from '@/components/icons';
+import { ArrowBackIcon, HomeIcon, NotificationsIcon, ScheduleIcon, TranslateIcon } from '@/components/icons';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     NavigationDrawer,
@@ -79,6 +79,15 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
                                 href={`${prefix}/time-and-language`}
                                 icon={<ScheduleIcon />}
                                 primary={translations.time_and_language}
+                                open={open}
+                                setOpen={setOpen}
+                            />
+                        </NavigationDrawerGroup>
+                        <NavigationDrawerGroup label={translations.settings_features_and_options}>
+                            <NavigationDrawerItem
+                                href={`${prefix}/translate`}
+                                icon={<TranslateIcon />}
+                                primary={translations.translate}
                                 open={open}
                                 setOpen={setOpen}
                             />

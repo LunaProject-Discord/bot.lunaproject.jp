@@ -207,6 +207,7 @@ model user_configurations {
   language      String   @default("ja-JP") @db.VarChar(8)
   timezone      String   @default("Asia/Tokyo") @db.VarChar(32)
   accent_color  String   @default("#959ac0") @db.VarChar(16)
+  translate     String   @default("{\"target_language_override\":null}") @db.LongText
   authenticator String   @default("{\"key\":null,\"verification_code\":null,\"scratch_codes\":[]}") @db.LongText
   token         String   @default("") @db.Text
   token_secret  String   @default("") @db.Text

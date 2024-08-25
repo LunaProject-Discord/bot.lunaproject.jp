@@ -1,6 +1,6 @@
 SELECT `A`.`guild_id`   AS `guild_id`,
        `A`.`user_id`    AS `user_id`,
-       `b`.`rank` AS `rank`,
+       `b`.`rank`       AS `rank`,
        `A`.`level`      AS `level`,
        `A`.`experience` AS `experience`,
        `A`.`updated_at` AS `updated_at`,

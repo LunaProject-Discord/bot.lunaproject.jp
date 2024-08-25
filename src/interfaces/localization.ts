@@ -443,6 +443,9 @@ export type TranslationKeys =
     | 'user_settings'
     | 'user_time_and_language_description'
     | 'user_language_description'
+    | 'user_translate_target_language_override'
+    | 'user_translate_target_language_override_description'
+    | 'user_translate_target_language_override_inherit'
 
 
     | 'save_confirm'

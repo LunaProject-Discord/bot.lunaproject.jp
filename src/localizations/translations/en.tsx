@@ -519,6 +519,9 @@ export const translationsEn: Translations = {
     user_settings: 'User Settings',
     user_time_and_language_description: 'You can set the date, time, and language used in the functions performed by the user.',
     user_language_description: 'Responses to commands you execute will be in the language you set here.',
+    user_translate_target_language_override: 'Target Language Override',
+    user_translate_target_language_override_description: 'Sets the language to which messages are translated from context commands (right-click menu).',
+    user_translate_target_language_override_inherit: 'Use Discord language settings',
 
 
     save_confirm: 'Do you want to save changes?',
