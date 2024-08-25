@@ -3820,10 +3820,7 @@ __metadata:
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.5"
     eslint-plugin-react-hooks: "npm:4.6.2"
-    i18n-iso-countries: "npm:7.11.2"
     ioredis: "npm:5.4.1"
-    iso-639-1: "npm:3.1.2"
-    iso-639-1-jp: "npm:1.0.10"
     json-diff-ts: "npm:4.0.1"
     lexical: "npm:0.16.1"
     lodash: "npm:4.17.21"
@@ -4506,13 +4503,6 @@ __metadata:
   version: 2.0.3
   resolution: "dequal@npm:2.0.3"
   checksum: 10c0/f98860cdf58b64991ae10205137c0e97d384c3a4edc7f807603887b7c4b850af1224a33d88012009f150861cbee4fa2d322c4cc04b9313bee312e47f6ecaa888
-  languageName: node
-  linkType: hard
-
-"diacritics@npm:1.3.0":
-  version: 1.3.0
-  resolution: "diacritics@npm:1.3.0"
-  checksum: 10c0/bc99c3d2e64315b1830f1573eafe1f7b06fd5dbc9687f35ea8e2e25ce8618d1444d0a2c8313b98467b0aff1d0ee35b8f9f67ef214e56e810b37da3cdb29785ac
   languageName: node
   linkType: hard
 
@@ -5653,15 +5643,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18n-iso-countries@npm:7.11.2":
-  version: 7.11.2
-  resolution: "i18n-iso-countries@npm:7.11.2"
-  dependencies:
-    diacritics: "npm:1.3.0"
-  checksum: 10c0/111ee228f8bc943afa45a62933de77bca6ea0cafe8f80b8b34d42acfcb725e26d8f43e30933efebddaa5647b591c220db063871f989c5058494acef33188b92e
-  languageName: node
-  linkType: hard
-
 "iconv-lite@npm:^0.6.2":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
@@ -6051,20 +6032,6 @@ __metadata:
   version: 3.1.1
   resolution: "isexe@npm:3.1.1"
   checksum: 10c0/9ec257654093443eb0a528a9c8cbba9c0ca7616ccb40abd6dde7202734d96bb86e4ac0d764f0f8cd965856aacbff2f4ce23e730dc19dfb41e3b0d865ca6fdcc7
-  languageName: node
-  linkType: hard
-
-"iso-639-1-jp@npm:1.0.10":
-  version: 1.0.10
-  resolution: "iso-639-1-jp@npm:1.0.10"
-  checksum: 10c0/f5b4027444282eba2ec0ff397c11e9a844cfd8387baff6d30de1c300b0935d8cb03dd36cd6429f15258a23326d1304f534a02688cf66c7e3eb95197fb30e3191
-  languageName: node
-  linkType: hard
-
-"iso-639-1@npm:3.1.2":
-  version: 3.1.2
-  resolution: "iso-639-1@npm:3.1.2"
-  checksum: 10c0/ebfd65da0bf46be60f1a34b772fc50624b5eac33752a2da1a265b05d7aa3d26a19523b7424bee099406f6aa1580efd057010c9251cba8abc7b24c8bf6fd574bd
   languageName: node
   linkType: hard
 
