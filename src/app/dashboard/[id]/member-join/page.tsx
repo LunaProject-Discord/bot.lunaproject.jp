@@ -4,7 +4,6 @@ import { getGuildConfiguration, hasDashboardAccess } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
-import { redirect, RedirectType } from 'next/navigation';
 import React from 'react';
 import { NotFoundView } from '../view';
 import { View } from './view';
@@ -47,9 +46,6 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
 
     if (!guild || !guildConfiguration)
         return (<NotFoundView />);
-
-    if (!guildConfiguration.member_join._migrated)
-        return redirect(`/dashboard/${id}/welcome`, RedirectType.replace);
 
     return (<View guild={guild} configuration={guildConfiguration} localization={localization} />);
 };

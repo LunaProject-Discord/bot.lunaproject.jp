@@ -295,41 +295,6 @@ export const translationsEn: Translations = {
     role_permissions_grid_inherited_administrator: 'Administrator permission has been granted for this role',
     role_permissions_grid_deletable: 'I can revoke your permission from this role',
 
-    welcome_message: 'Welcome Message',
-    welcome_message_description: 'Messages can be sent when a user joins the server.',
-    welcome_message_enabled: 'Enable Welcome Message',
-    welcome_message_edit_description: 'Customize the message sent when a user joins the server.',
-    welcome_message_edit_hint: <Fragment>
-        <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
-        <ul className="mt-1">
-            <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
-            <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
-            <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
-            <li>Rule channel mentions (if set): <code>{'{'}guild:rules{'}'}</code></li>
-            <li>User ID: <code>{'{'}user:id{'}'}</code></li>
-            <li>User Name: <code>{'{'}user:name{'}'}</code></li>
-            <li>User Discriminator: <code>{'{'}user:discriminator{'}'}</code></li>
-            <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
-        </ul>
-    </Fragment>,
-
-    goodbye_message: 'Goodbye Message',
-    goodbye_message_description: 'A message can be sent when a user leaves the server.',
-    goodbye_message_enabled: 'Enable Goodbye Message',
-    goodbye_message_edit_description: 'Customize the message sent when a user leaves the server.',
-    goodbye_message_edit_hint: <Fragment>
-        <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
-        <ul className="mt-1">
-            <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
-            <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
-            <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
-            <li>User ID: <code>{'{'}user:id{'}'}</code></li>
-            <li>User Name: <code>{'{'}user:name{'}'}</code></li>
-            <li>User Discriminator: <code>{'{'}user:discriminator{'}'}</code></li>
-            <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
-        </ul>
-    </Fragment>,
-
     member_join: 'Member Join',
     member_join_description: 'Messages can be sent when a member joins the server.',
     member_join_enabled: 'Enable Member Join',
@@ -371,6 +336,23 @@ export const translationsEn: Translations = {
     </Fragment>,
     member_join_roles: 'Assignment of Roles',
     member_join_manage_roles: 'Manage Roles',
+
+    goodbye_message: 'Goodbye Message',
+    goodbye_message_description: 'A message can be sent when a user leaves the server.',
+    goodbye_message_enabled: 'Enable Goodbye Message',
+    goodbye_message_edit_description: 'Customize the message sent when a user leaves the server.',
+    goodbye_message_edit_hint: <Fragment>
+        <b>The following placeholder can be set to replace the user&#39;s name, etc.</b>
+        <ul className="mt-1">
+            <li>Server ID: <code>{'{'}guild:id{'}'}</code></li>
+            <li>Server Name: <code>{'{'}guild:name{'}'}</code></li>
+            <li>Server Members Count: <code>{'{'}guild:members{'}'}</code></li>
+            <li>User ID: <code>{'{'}user:id{'}'}</code></li>
+            <li>User Name: <code>{'{'}user:name{'}'}</code></li>
+            <li>User Discriminator: <code>{'{'}user:discriminator{'}'}</code></li>
+            <li>User Mention: <code>{'{'}user:mention{'}'}</code></li>
+        </ul>
+    </Fragment>,
 
     activity: 'Activity Roles',
     activity_description: 'Roles can be assigned during game play or music playback.',

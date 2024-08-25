@@ -272,18 +272,6 @@ export type TranslationKeys =
     | 'role_permissions_grid_inherited_administrator'
     | 'role_permissions_grid_deletable'
 
-    | 'welcome_message'
-    | 'welcome_message_description'
-    | 'welcome_message_enabled'
-    | 'welcome_message_edit_description'
-    | 'welcome_message_edit_hint'
-
-    | 'goodbye_message'
-    | 'goodbye_message_description'
-    | 'goodbye_message_enabled'
-    | 'goodbye_message_edit_description'
-    | 'goodbye_message_edit_hint'
-
     | 'member_join'
     | 'member_join_description'
     | 'member_join_enabled'
@@ -307,6 +295,12 @@ export type TranslationKeys =
     | 'member_join_message_edit_hint'
     | 'member_join_roles'
     | 'member_join_manage_roles'
+
+    | 'goodbye_message'
+    | 'goodbye_message_description'
+    | 'goodbye_message_enabled'
+    | 'goodbye_message_edit_description'
+    | 'goodbye_message_edit_hint'
 
     | 'activity'
     | 'activity_description'

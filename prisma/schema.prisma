@@ -15,9 +15,8 @@ model guild_configurations {
   language       String   @default("ja-JP") @db.VarChar(8)
   timezone       String   @default("Asia/Tokyo") @db.VarChar(32)
   commands       String   @default("{\"permissions\":{\"channels\":{\"default\":null,\"overrides\":{}},\"roles\":{\"default\":null,\"overrides\":{}},\"members\":{}},\"commands\":[]}") @db.LongText
-  welcome        String   @default("{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"ようこそ！**{user:display_name}** さんが参加しました。\",\"embeds\":[]},\"roles\":[]}") @db.LongText
+  member_join    String   @default("{\"enabled\":false,\"before_pending\":{\"enabled\":false,\"message\":{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"ようこそ！**{user:display_name}** さんが参加しました。\",\"embeds\":[]}},\"roles\":{\"enabled\":false,\"roles\":[]}},\"after_pending\":{\"enabled\":false,\"message\":{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"ようこそ！**{user:display_name}** さんが参加しました。\",\"embeds\":[]}},\"roles\":{\"enabled\":false,\"roles\":[]}}}") @db.LongText
   goodbye        String   @default("{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"さようなら…。**{user:display_name}** さんが退出しました。\",\"embeds\":[]}}") @db.LongText
-  member_join    String   @default("{\"enabled\":false,\"before_pending\":{\"enabled\":false,\"message\":{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"ようこそ！**{user:display_name}** さんが参加しました。\",\"embeds\":[]}},\"roles\":{\"enabled\":false,\"roles\":[]}},\"after_pending\":{\"enabled\":false,\"message\":{\"enabled\":false,\"channel_id\":\"0\",\"message\":{\"content\":\"ようこそ！**{user:display_name}** さんが参加しました。\",\"embeds\":[]}},\"roles\":{\"enabled\":false,\"roles\":[]}},\"_migrated\":false}") @db.LongText
   activity       String   @default("{\"enabled\":false,\"roles\":[]}") @db.LongText
   global_chat    String   @default("{\"enabled\":true}") @db.LongText
   global_ban     String   @default("{\"enabled\":false,\"minimum_evaluate_value\":4.0}") @db.LongText
