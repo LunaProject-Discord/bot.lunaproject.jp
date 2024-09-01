@@ -65,7 +65,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
     const userFlags = user ? await getUserFlags(user.id) : undefined;
 
     return (
-        <html lang={locale}>
+        <html lang={locale} className={appearance !== 'system' ? appearance : undefined}>
         <head>
             <link
                 rel="preload"
@@ -96,6 +96,28 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
                 as="font"
                 type="font/woff2"
                 href="/fonts/line-seed-jp/line-seed-jp_600_normal.woff2"
+            />
+            <script
+                suppressHydrationWarning
+                dangerouslySetInnerHTML={{
+                    __html: `
+                        (function() {
+                            try {
+                                if ('${appearance}' !== 'system')
+                                    return;
+                                
+                                const documentElement = document.documentElement;
+                                
+                                documentElement.classList.remove('light', 'dark');
+                                
+                                const matches = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                                documentElement.classList.add(matches ? 'dark' : 'light');
+                            } catch (e) {
+                            
+                            }
+                        })();
+                    `
+                }}
             />
         </head>
         <Body>

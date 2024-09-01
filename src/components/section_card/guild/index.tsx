@@ -13,7 +13,7 @@ import clsx from 'clsx';
 import deepmerge from 'deepmerge';
 import React from 'react';
 
-export const sectionGuildSelectCardClasses = generateSectionControlCardClasses('Guild');
+export const sectionGuildSelectCardClasses = generateSectionControlCardClasses('GuildSelect');
 
 export type SectionGuildSelectCardProps = SectionSnowflakeSelectCardProps<GuildPickerType, GuildSelectProps>;
 

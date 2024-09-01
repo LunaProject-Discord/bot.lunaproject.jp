@@ -68,7 +68,7 @@ export const ChangeRoot = styled(
         duration: theme.transitions.duration.shortest
     }),
     '&:hover': {
-        backgroundColor: theme.palette.action.hover,
+        backgroundColor: theme.vars.palette.action.hover,
         [`& .${changeClasses.icon}`]: {
             visibility: 'hidden'
         },
@@ -104,9 +104,9 @@ export const ChangeUndoButtonRoot = styled(
     justifyContent: 'center',
     visibility: 'hidden',
     cursor: 'pointer',
-    color: theme.palette.action.active,
+    color: theme.vars.palette.action.active,
     '&:hover': {
-        color: theme.palette.text.primary
+        color: theme.vars.palette.text.primary
     }
 }));
 

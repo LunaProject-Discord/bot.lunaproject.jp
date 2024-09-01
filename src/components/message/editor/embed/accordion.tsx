@@ -20,6 +20,7 @@ export const EmbedAccordion = styled(
 )<AccordionProps>(({ theme }) => ({
     padding: theme.spacing(0, 1),
     backgroundColor: 'unset',
+    backgroundImage: 'none',
     border: 'none',
     [`&.${accordionClasses.disabled}`]: {
         backgroundColor: 'inherit'

@@ -15,17 +15,17 @@ import { LocaleType } from '@/interfaces/localization';
 import { appearanceAtom, AppearanceType } from '@/states/appearance';
 import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '@/utils/cookie';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
+import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils';
 import {
-    alpha,
     Avatar,
     Box,
     Divider,
-    getOverlayAlpha,
     IconButton,
     List,
     ListItemText,
     ListSubheader,
     Popover,
+    Theme,
     Tooltip,
     Typography
 } from '@mui/material';
@@ -164,11 +164,10 @@ export const DesktopUserPopover = ({ user, localization }: UserPopoverProps) => 
             }}
             slotProps={{
                 paper: {
-                    sx: {
+                    sx: (theme: Theme) => ({
                         width: 300,
-                        border: (theme) => `solid 1px ${theme.palette.divider}`,
-                        boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
-                    }
+                        ...borderAndBoxShadow(theme)
+                    })
                 }
             }}
         >
@@ -245,19 +244,16 @@ export const DesktopUserPopover = ({ user, localization }: UserPopoverProps) => 
                 <List subheader={user ? (
                     <ListSubheader
                         component="div"
-                        sx={{
+                        sx={(theme) => ({
                             pt: 1,
                             pb: .5,
                             px: 1.5,
                             lineHeight: 'unset',
-                            backgroundImage: (theme) => theme.palette.mode === 'dark' ? `linear-gradient(${alpha(
-                                '#fff',
-                                Number(getOverlayAlpha(8))
-                            )}, ${alpha(
-                                '#fff',
-                                Number(getOverlayAlpha(8))
-                            )})` : 'none'
-                        }}
+                            backgroundImage: 'none',
+                            ...theme.applyStyles('dark', {
+                                backgroundImage: theme.vars.overlays[8]
+                            })
+                        })}
                     >
                         {translations.site_settings}
                     </ListSubheader>

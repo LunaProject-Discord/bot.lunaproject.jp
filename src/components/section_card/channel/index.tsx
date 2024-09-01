@@ -13,7 +13,7 @@ import clsx from 'clsx';
 import deepmerge from 'deepmerge';
 import React from 'react';
 
-export const sectionChannelSelectCardClasses = generateSectionControlCardClasses('Channel');
+export const sectionChannelSelectCardClasses = generateSectionControlCardClasses('ChannelSelect');
 
 export type SectionChannelSelectCardProps = SectionSnowflakeSelectCardProps<ChannelPickerType, ChannelSelectProps>;
 

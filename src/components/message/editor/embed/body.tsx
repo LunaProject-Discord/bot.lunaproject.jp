@@ -81,10 +81,10 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
                             slotProps={{
                                 paper: {
-                                    sx: {
-                                        border: (theme) => `solid 1px ${theme.palette.divider}`,
-                                        boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
-                                    }
+                                    sx: (theme) => ({
+                                        border: `solid 1px ${theme.vars.palette.divider}`,
+                                        boxShadow: `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+                                    })
                                 }
                             }}
                             sx={{ zIndex: 1600 }}
@@ -101,7 +101,7 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                                     width: 40,
                                     height: 40,
                                     flexShrink: 0,
-                                    border: (theme) => `solid 1px ${theme.palette.divider}`,
+                                    border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
                                     borderRadius: 1
                                 }}
                             >

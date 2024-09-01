@@ -1,10 +1,12 @@
 'use client';
 
+import { appearanceAtom } from '@/states/appearance';
 import data from '@emoji-mart/data/sets/14/twitter.json';
 import EmojiPicker from '@emoji-mart/react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
-import { PopoverProps, useTheme } from '@mui/material';
+import { PopoverProps } from '@mui/material';
+import { useAtomValue } from 'jotai';
 import { $getSelection } from 'lexical';
 import React, { useCallback } from 'react';
 
@@ -15,7 +17,7 @@ interface Props {
 }
 
 export const Picker = ({ open, anchorEl, onClose }: Props) => {
-    const theme = useTheme();
+    const { isDarkMode } = useAtomValue(appearanceAtom);
 
     const [editor] = useLexicalComposerContext();
 
@@ -40,7 +42,7 @@ export const Picker = ({ open, anchorEl, onClose }: Props) => {
                 set="twitter"
                 skinTonePosition="search"
                 locale="ja"
-                theme={theme.palette.mode === 'dark' ? 'dark' : 'light'}
+                theme={isDarkMode ? 'dark' : 'light'}
                 style={{ border: 'none' }}
             />
         </Popover>

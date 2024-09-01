@@ -232,8 +232,12 @@ export const SectionStatusCardGuilds = (
 
 
 export const SectionStatusCardContentAlert = styled(SectionCardRoot)(({ theme }) => ({
-    color: (theme.palette.mode === 'light' ? darken : lighten)(theme.palette.error.light, .6),
-    backgroundColor: (theme.palette.mode === 'light' ? lighten : darken)(theme.palette.error.light, .9),
+    color: darken(theme.palette.error.light, .6),
+    backgroundColor: lighten(theme.palette.error.light, .9),
+    ...theme.applyStyles('dark', {
+        color: lighten(theme.palette.error.light, .6),
+        backgroundColor: darken(theme.palette.error.light, .9)
+    }),
     [`& .${typographyClasses.root}`]: {
         marginTop: theme.spacing(.25)
     }

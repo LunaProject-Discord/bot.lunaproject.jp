@@ -22,11 +22,9 @@ import { COOKIE_APPEARANCE, COOKIE_LOCALE } from '@/utils/cookie';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
 import { BottomSheet, BottomSheetContent } from '@lunaproject/web-core/dist/components/BottomSheet';
 import {
-    alpha,
     Avatar,
     Box,
     Divider,
-    getOverlayAlpha,
     IconButton,
     List,
     listItemButtonClasses,
@@ -238,19 +236,16 @@ export const MobileUserPopover = ({ user, localization }: UserPopoverProps) => {
                     <List subheader={user ? (
                         <ListSubheader
                             component="div"
-                            sx={{
+                            sx={(theme) => ({
                                 pt: 1.5,
                                 pb: .5,
                                 px: 2,
                                 lineHeight: 'unset',
-                                backgroundImage: (theme) => theme.palette.mode === 'dark' ? `linear-gradient(${alpha(
-                                    '#fff',
-                                    Number(getOverlayAlpha(8))
-                                )}, ${alpha(
-                                    '#fff',
-                                    Number(getOverlayAlpha(8))
-                                )})` : 'none'
-                            }}
+                                backgroundImage: 'none',
+                                ...theme.applyStyles('dark', {
+                                    backgroundImage: theme.vars.overlays[8]
+                                })
+                            })}
                         >
                             {translations.site_settings}
                         </ListSubheader>

@@ -14,6 +14,7 @@ import {
 } from '@/components/icons';
 import { UserFlags } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
+import { appearanceClasses } from '@/states/appearance';
 import { navigationAtom } from '@/states/navigation';
 import { popoverAtom } from '@/states/popover';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
@@ -28,7 +29,8 @@ import {
     NavigationToolbarItem
 } from '@lunaproject/web-core/dist/components/Navigation';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
-import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger, useTheme } from '@mui/material';
+import { Avatar, Box, Divider, IconButton, Tooltip, useScrollTrigger } from '@mui/material';
+import clsx from 'clsx';
 import { useAtomValue, useSetAtom } from 'jotai';
 import Image from 'next/image';
 import NextLink from 'next/link';
@@ -37,7 +39,6 @@ import React, { Fragment, MouseEvent, useState } from 'react';
 export type RootNavigationProps = NavigationProps & RootNavigationDrawerProps;
 
 export const NavigationAppBar = ({ setOpen, user, flags, localization: { translations } }: RootNavigationProps) => {
-    const theme = useTheme();
     const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 0 });
 
     const setPopoverState = useSetAtom(popoverAtom);
@@ -66,13 +67,42 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                 <IconButton onClick={handleDrawerToggle} sx={{ display: { md: 'none' } }}>
                     <MenuIcon />
                 </IconButton>
-                <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
+                <RouteLink
+                    href="/"
+                    sx={(theme) => ({
+                        display: 'flex',
+                        placeItems: 'center',
+                        placeContent: 'center',
+                        [`& .${appearanceClasses.root}`]: {
+                            display: 'none',
+                            ...theme.applyStyles('light', {
+                                [`&.${appearanceClasses.light}`]: {
+                                    display: 'block'
+                                }
+                            }),
+                            ...theme.applyStyles('dark', {
+                                [`&.${appearanceClasses.dark}`]: {
+                                    display: 'block'
+                                }
+                            })
+                        }
+                    })}
+                >
                     <Image
-                        src={`/yudzuki/logo_${theme.palette.mode}.svg`}
+                        src="/yudzuki/logo_light.svg"
                         alt=""
                         width={142}
                         height={48}
                         quality={100}
+                        className={clsx(appearanceClasses.root, appearanceClasses.light)}
+                    />
+                    <Image
+                        src="/yudzuki/logo_dark.svg"
+                        alt=""
+                        width={142}
+                        height={48}
+                        quality={100}
+                        className={clsx(appearanceClasses.root, appearanceClasses.dark)}
                     />
                 </RouteLink>
                 <Box sx={{ ml: 2, display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
@@ -130,8 +160,6 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
 };
 
 export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) => {
-    const theme = useTheme();
-
     const handleDrawerToggle = () => setOpen((prevState) => !prevState);
 
     return (
@@ -147,13 +175,42 @@ export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) 
             <IconButton onClick={handleDrawerToggle}>
                 <MenuIcon />
             </IconButton>
-            <RouteLink href="/" sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
+            <RouteLink
+                href="/"
+                sx={(theme) => ({
+                    display: 'flex',
+                    placeItems: 'center',
+                    placeContent: 'center',
+                    [`& .${appearanceClasses.root}`]: {
+                        display: 'none',
+                        ...theme.applyStyles('light', {
+                            [`&.${appearanceClasses.light}`]: {
+                                display: 'block'
+                            }
+                        }),
+                        ...theme.applyStyles('dark', {
+                            [`&.${appearanceClasses.dark}`]: {
+                                display: 'block'
+                            }
+                        })
+                    }
+                })}
+            >
                 <Image
-                    src={`/yudzuki/logo_${theme.palette.mode}.svg`}
+                    src="/yudzuki/logo_light.svg"
                     alt=""
                     width={142}
                     height={48}
                     quality={100}
+                    className={clsx(appearanceClasses.root, appearanceClasses.light)}
+                />
+                <Image
+                    src="/yudzuki/logo_dark.svg"
+                    alt=""
+                    width={142}
+                    height={48}
+                    quality={100}
+                    className={clsx(appearanceClasses.root, appearanceClasses.dark)}
                 />
             </RouteLink>
         </NavigationToolbar>

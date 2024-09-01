@@ -2,6 +2,7 @@
 
 import { AddIcon, CloseIcon, ContentCopyIcon, KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     getStateActionValue,
     moveDown as moveDownArray,
@@ -10,7 +11,7 @@ import {
     replace as replaceArray
 } from '@lunaproject/web-core/dist/utils';
 import { DefaultField, EmbedField } from '@lunaproject/web-discord/dist/interfaces';
-import { Box, Button, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, IconButton, OutlinedInput, Tooltip } from '@mui/material';
 import { nanoid } from 'nanoid';
 import React, { MouseEvent } from 'react';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
@@ -168,7 +169,8 @@ export const EmbedFieldsEditor = ({ value, setValue, disabled, localization }: E
                             onClick={add}
                             disabled={disabled || value.length > 24}
                             disableElevation
-                            variant="contained"
+                            variant="outlined"
+                            corners="extended"
                             startIcon={<AddIcon />}
                         >
                             {translations.embed_field_add}

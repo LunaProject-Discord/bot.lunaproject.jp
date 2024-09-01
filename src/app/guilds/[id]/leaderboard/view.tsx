@@ -12,7 +12,7 @@ import { filterPredicateLevel } from '@/utils/level';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { useDebounce } from '@lunaproject/web-core/dist/utils';
-import { Box, InputBase, Unstable_Grid2 as Grid } from '@mui/material';
+import { Box, Grid2 as Grid, InputBase } from '@mui/material';
 import NextLink from 'next/link';
 import React, { useState } from 'react';
 
@@ -37,7 +37,7 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
     return (
         <Grid container spacing={2}>
             {(dashboardAccessible || (level && level.member)) && <Grid
-                xs={12}
+                size={12}
                 sx={{
                     display: { xs: 'flex', md: 'none' },
                     flexDirection: 'column',
@@ -62,7 +62,7 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                     localization={localization}
                 />}
             </Grid>}
-            <Grid xs={12} md={8} lg={9}>
+            <Grid size={{ xs: 12, md: 8, lg: 9 }}>
                 <Box
                     sx={(theme) => ({
                         width: '100%',
@@ -80,16 +80,19 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                     })}
                 >
                     <Box
-                        sx={{
+                        sx={(theme) => ({
                             width: '100%',
                             px: 1.5,
                             py: 1,
                             display: 'flex',
                             alignItems: 'center',
                             gap: 1,
-                            bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-                            borderRadius: 1
-                        }}
+                            bgcolor: theme.vars.palette.grey[100],
+                            borderRadius: 1,
+                            ...theme.applyStyles('dark', {
+                                bgcolor: theme.vars.palette.grey[900]
+                            })
+                        })}
                     >
                         <SearchIcon color="action" />
                         <InputBase
@@ -111,7 +114,7 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                     <ErrorDescription>{translations.error_member_not_found_description}</ErrorDescription>
                 </ErrorRoot>}
             </Grid>
-            <Grid xs={12} sx={{ display: { md: 'none' } }}>
+            <Grid size={12} sx={{ display: { md: 'none' } }}>
                 <LevelRewardsCard
                     level={level?.level}
                     type={configuration.level.reward.type}
@@ -120,7 +123,7 @@ export const View = ({ guild, member, levels, dashboardAccessible, configuration
                     localization={localization}
                 />
             </Grid>
-            <Grid xs={12} md={4} lg={3} sx={{ display: { xs: 'none', md: 'block' } }}>
+            <Grid size={{ xs: 12, md: 4, lg: 3 }} sx={{ display: { xs: 'none', md: 'block' } }}>
                 {dashboardAccessible && <Button
                     component={NextLink}
                     href={`/dashboard/${guild.id}/level/manage`}

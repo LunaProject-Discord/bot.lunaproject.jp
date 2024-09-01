@@ -23,13 +23,19 @@ import { LocalizationProps } from '@/interfaces/localization';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '@/localizations';
 import { appearanceAtom, AppearanceType } from '@/states/appearance';
 import { RootLayout, RootStyles } from '@lunaproject/web-core/dist/components/Layout';
-import { Config, ConfigProvider, MuiComponents, MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils';
+import {
+    Config,
+    ConfigProvider,
+    MuiColorSchemes,
+    MuiComponents,
+    MuiCssVariables
+} from '@lunaproject/web-core/dist/utils';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { createTheme, GlobalStyles, ThemeOptions, ThemeProvider, useMediaQuery } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import deepmerge from 'deepmerge';
 import { useAtom } from 'jotai';
-import React, { ReactNode, useEffect, useMemo, useState } from 'react';
+import React, { ReactNode, useEffect, useMemo } from 'react';
 import { Navigation } from './_navigation';
 import { DefaultFontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from './theme';
 
@@ -61,15 +67,9 @@ interface LayoutProps extends LocalizationProps {
 export const LayoutView = ({ user, flags, appearance: initialAppearance, localization, children }: LayoutProps) => {
     const { locale, translations } = localization;
 
-    const [{ isDarkMode }, setAppearance] = useAtom(appearanceAtom);
-    const [loaded, setLoaded] = useState(false);
-
-    const isBrowserDarkScheme = useMediaQuery('(prefers-color-scheme: dark)');
-    const isInitialDarkScheme = initialAppearance === 'dark' || (initialAppearance === 'system' && isBrowserDarkScheme);
-    const isDarkTheme = loaded ? isDarkMode : isInitialDarkScheme;
-
     const theme = useMemo(() => createTheme(
         {
+            cssVariables: MuiCssVariables,
             components: deepmerge<ThemeOptions['components']>(
                 MuiComponents,
                 {
@@ -98,7 +98,7 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
                     }
                 }
             ),
-            palette: (isDarkTheme ? MuiDarkTheme : MuiLightTheme).palette,
+            colorSchemes: MuiColorSchemes,
             typography: {
                 fontFamily: DefaultFontFamily
             }
@@ -106,7 +106,7 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
         getMuiLocalizationByName(locale),
         getMuiDateLocalizationByName(locale),
         getMuiGridLocalizationByName(locale)
-    ), [isDarkTheme, locale]);
+    ), [locale]);
 
     const config: Config = {
         components: {
@@ -130,7 +130,28 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
         }
     };
 
+    const [{ appearance }, setAppearance] = useAtom(appearanceAtom);
+
+    const isBrowserDarkScheme = useMediaQuery('(prefers-color-scheme: dark)');
+    const isInitialDarkScheme = initialAppearance === 'dark' || (initialAppearance === 'system' && isBrowserDarkScheme);
+
     useEffect(() => {
+        const documentElement = document.documentElement;
+
+        documentElement.classList.remove('light', 'dark');
+
+        if (appearance !== 'system') {
+            documentElement.classList.add(appearance);
+            return;
+        }
+
+        documentElement.classList.add(isBrowserDarkScheme ? 'dark' : 'light');
+        setAppearance({ appearance, isDarkMode: isBrowserDarkScheme });
+    }, [appearance, isBrowserDarkScheme, setAppearance]);
+
+    useEffect(() => {
+        setAppearance({ appearance: initialAppearance, isDarkMode: isInitialDarkScheme });
+
         console.log(
             '%c警告',
             'font-size: 10rem; font-weight: 700; color: red; -webkit-text-stroke: 3px black; text-stroke: 3px black;'
@@ -149,24 +170,9 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
         );
     }, []);
 
-    useEffect(() => {
-        setAppearance({ appearance: initialAppearance, isDarkMode: isInitialDarkScheme });
-        if (!loaded)
-            setLoaded(() => true);
-    }, [initialAppearance, isInitialDarkScheme, loaded, setAppearance]);
-
-    useEffect(() => {
-        const documentElement = document.documentElement;
-        if (isDarkTheme) {
-            documentElement.classList.add('dark');
-        } else {
-            documentElement.classList.remove('dark');
-        }
-    }, [isDarkTheme]);
-
     return (
         <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={theme} colorSchemeNode={null}>
                 <ConfigProvider value={config}>
                     <RootStyles />
                     {insertGlobalStyles}

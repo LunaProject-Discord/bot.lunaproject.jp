@@ -124,16 +124,19 @@ export const View = ({ guild, levels, localization }: ViewProps) => {
                 })}
             >
                 <Box
-                    sx={{
+                    sx={(theme) => ({
                         width: '100%',
                         px: 1.5,
                         py: 1,
                         display: 'flex',
                         alignItems: 'center',
                         gap: 1,
-                        bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-                        borderRadius: 1
-                    }}
+                        bgcolor: theme.vars.palette.grey[100],
+                        borderRadius: 1,
+                        ...theme.applyStyles('dark', {
+                            bgcolor: theme.vars.palette.grey[900]
+                        })
+                    })}
                 >
                     <SearchIcon color="action" />
                     <InputBase

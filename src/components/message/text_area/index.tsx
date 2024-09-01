@@ -3,7 +3,7 @@
 import { $convertFromMarkdownString } from '@lexical/markdown';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
+import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
@@ -19,7 +19,7 @@ import { Toolbar } from './toolbar';
 const Container = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
-    border: `solid 1px ${theme.palette.divider}`,
+    border: `solid 1px ${theme.vars.palette.divider}`,
     borderRadius: theme.shape.borderRadius
 }));
 
@@ -49,7 +49,7 @@ const Placeholder = styled(Box)(({ theme }) => ({
     position: 'absolute',
     top: theme.spacing(2),
     left: theme.spacing(2),
-    color: theme.palette.text.secondary,
+    color: theme.vars.palette.text.secondary,
     pointerEvents: 'none',
     userSelect: 'none'
 }));

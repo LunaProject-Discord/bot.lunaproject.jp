@@ -4,6 +4,7 @@ import { servicesPopoverStateAtom } from '@/app/_popovers/services';
 import { DescriptionIcon, ManageAccountsIcon, OpenInNewIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
 import { LunaProjectIcon, NatsukiIcon, SatsukiIcon, YudzukiIcon } from '@lunaproject/web-core/dist/components/Icons';
+import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils';
 import { Divider, List, ListItemText, Popover } from '@mui/material';
 import { useAtom } from 'jotai';
 import React from 'react';
@@ -31,11 +32,10 @@ export const DesktopServicesPopover = ({ localization }: LocalizationProps) => {
             }}
             slotProps={{
                 paper: {
-                    sx: {
+                    sx: (theme) => ({
                         width: 300,
-                        border: (theme) => `solid 1px ${theme.palette.divider}`,
-                        boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
-                    }
+                        ...borderAndBoxShadow(theme)
+                    })
                 }
             }}
         >

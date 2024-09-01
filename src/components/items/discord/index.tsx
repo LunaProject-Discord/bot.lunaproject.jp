@@ -3,10 +3,8 @@
 import { ArrowDropDownIcon, ArrowDropUpIcon, SearchIcon } from '@/components/icons';
 import { PopoverProps } from '@/interfaces/mui';
 import {
-    alpha,
     Box,
     BoxProps,
-    getOverlayAlpha,
     InputBase,
     InputBaseProps,
     List as MuiList,
@@ -40,15 +38,16 @@ const SelectRoot = styled(Box)<SelectContainerProps>(({ theme, open, disabled })
     gap: theme.spacing(1),
     cursor: !disabled ? 'pointer' : 'default',
     userSelect: 'none',
-    color: !disabled ? theme.palette.text.primary : theme.palette.text.disabled,
+    color: theme.vars.palette.text.disabled,
     ...(!disabled && {
+        color: theme.vars.palette.text.primary,
         '&:hover div.select-outline': {
-            borderColor: theme.palette.text.primary
+            borderColor: theme.vars.palette.text.primary
         },
         ...(open && {
             '& div.select-outline': {
                 borderWidth: 2,
-                borderColor: theme.palette.primary.main
+                borderColor: theme.vars.palette.primary.main
             }
         })
     })
@@ -77,8 +76,11 @@ const SelectOutline = styled(
     overflow: 'hidden',
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)',
-    borderRadius: theme.shape.borderRadius
+    borderColor: 'rgba(0, 0, 0, 0.23)',
+    borderRadius: theme.shape.borderRadius,
+    ...theme.applyStyles('dark', {
+        borderColor: 'rgba(255, 255, 255, 0.23)'
+    })
 }));
 
 export interface SelectProps extends BoxProps {
@@ -172,13 +174,10 @@ export const ListSubheader = styled(MuiListSubheader)(({ theme }) => ({
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
-    backgroundImage: theme.palette.mode === 'dark' ? `linear-gradient(${alpha(
-        theme.palette.common.white,
-        Number(getOverlayAlpha(8))
-    )}, ${alpha(
-        theme.palette.common.white,
-        Number(getOverlayAlpha(8))
-    )})` : 'none',
+    backgroundImage: 'none',
+    ...theme.applyStyles('dark', {
+        backgroundImage: theme.vars.overlays[8]
+    }),
     [theme.breakpoints.down('sm')]: {
         padding: theme.spacing(1, 1.5, .5)
     }
@@ -186,14 +185,17 @@ export const ListSubheader = styled(MuiListSubheader)(({ theme }) => ({
 
 export const SearchBox = (props: InputBaseProps) => (
     <Box
-        sx={{
+        sx={(theme) => ({
             px: 2,
             py: 1.5,
             display: 'flex',
             alignItems: 'center',
             gap: 1.5,
-            bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
-        }}
+            bgcolor: theme.vars.palette.grey[100],
+            ...theme.applyStyles('dark', {
+                bgcolor: theme.vars.palette.grey[900]
+            })
+        })}
     >
         <SearchIcon color="action" />
         <InputBase {...props} fullWidth />

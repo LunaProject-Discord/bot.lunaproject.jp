@@ -135,7 +135,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                                 component={NextLink}
                                 href="/status"
                                 sx={{
-                                    borderBottom: (theme) => `solid 1px ${theme.palette.divider}`
+                                    borderBottom: (theme) => `solid 1px ${theme.vars.palette.divider}`
                                 }}
                             >
                                 <ListItemIcon>
@@ -147,7 +147,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                                 component={NextLink}
                                 href="/leaderboard"
                                 sx={{
-                                    borderBottom: (theme) => `solid 1px ${theme.palette.divider}`
+                                    borderBottom: (theme) => `solid 1px ${theme.vars.palette.divider}`
                                 }}
                             >
                                 <ListItemIcon>
@@ -159,7 +159,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                                 component={NextLink}
                                 href="/dashboard"
                                 sx={{
-                                    borderBottom: (theme) => `solid 1px ${theme.palette.divider}`
+                                    borderBottom: (theme) => `solid 1px ${theme.vars.palette.divider}`
                                 }}
                             >
                                 <ListItemIcon>

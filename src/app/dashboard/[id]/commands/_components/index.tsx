@@ -43,15 +43,18 @@ export const DefaultEditableSwitch = ({ value, setValue, disabled }: DefaultEdit
         </ToggleButton>
         <ToggleButton
             value="inherit"
-            sx={{
+            sx={(theme) => ({
                 px: 1.375,
                 py: .375,
                 color: 'action.active',
                 [`&.${toggleButtonClasses.selected}, &.${toggleButtonClasses.selected}:hover`]: {
                     color: 'common.white',
-                    bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.action.active : theme.palette.grey[700]
+                    bgcolor: theme.vars.palette.action.active,
+                    ...theme.applyStyles('dark', {
+                        bgcolor: theme.vars.palette.grey[700]
+                    })
                 }
-            }}
+            })}
         >
             <CommandIcon sx={{ width: 20, height: 20 }} />
         </ToggleButton>

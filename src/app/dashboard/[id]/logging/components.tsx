@@ -42,7 +42,7 @@ const Section = styled(LPSection)(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: 0,
-    border: `solid 1px ${theme.palette.divider}`,
+    border: `solid 1px ${theme.vars.palette.divider}`,
     borderRadius: theme.shape.borderRadius
 }));
 
@@ -50,7 +50,7 @@ const SectionContent = styled(LPSectionContent)(({ theme }) => ({
     gap: 0,
     [`& .${sectionCardClasses.root}`]: {
         minHeight: theme.spacing(7),
-        borderTop: `solid 1px ${theme.palette.divider} !important`,
+        borderTop: `solid 1px ${theme.vars.palette.divider} !important`,
         borderRadius: 0
     },
     [`& .${sectionCardClasses.root}:last-child`]: {
@@ -91,10 +91,10 @@ const SectionChannelSelectCard = (props: SectionChannelSelectCardProps) => (
         sx={(theme) => ({
             containerType: 'inline-size',
             // アイテムのラベル: 200px, チャンネルのセレクトボックス: 300px, パディングとギャップ: 8 * 1.5 * 3
-            [`@container (max-width: ${(200 + 300 + ((8 * 1.5) * 3)) - .05}px)`]: {
+            [theme.containerQueries.down(200 + 300 + ((8 * 1.5) * 3))]: {
                 [`& > .${sectionChannelSelectCardClasses.root}`]: {
                     flexWrap: 'wrap',
-                    [`& .${sectionCardClasses.content}`]: {
+                    [`& .${sectionCardClasses.content}, & .${sectionCardClasses.content} .${sectionChannelSelectCardClasses.control}`]: {
                         width: '100%'
                     }
                 }

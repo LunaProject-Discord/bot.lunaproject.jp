@@ -20,7 +20,7 @@ export const GroupTitle = styled(Typography)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacing(.5),
-    borderBottom: `solid 1px ${theme.palette.divider}`
+    borderBottom: `solid 1px ${theme.vars.palette.divider}`
 }));
 
 export const DefaultEditableItem = (

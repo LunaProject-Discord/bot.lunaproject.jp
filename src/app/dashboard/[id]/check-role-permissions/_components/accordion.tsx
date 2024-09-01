@@ -30,8 +30,8 @@ import {
     Checkbox,
     FormControlLabel,
     FormGroup,
-    styled,
-    Unstable_Grid2 as Grid
+    Grid2 as Grid,
+    styled
 } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { memo, ReactNode, useCallback } from 'react';
@@ -183,7 +183,7 @@ const PermissionsItem = memo<PermissionsItemProps>(({ value, setValue, disabled,
             </AccordionSummary>
             <AccordionDetails>
                 <Grid container spacing={2} sx={{ py: 3 }}>
-                    <Grid xs={12} sm={6} xl={4}>
+                    <Grid size={{ xs: 12, sm: 6, xl: 4 }}>
                         <PermissionGroup
                             label={translations.permissions_advanced}
                             permissions={permissions(ADVANCED_PERMISSIONS)}
@@ -201,7 +201,7 @@ const PermissionsItem = memo<PermissionsItemProps>(({ value, setValue, disabled,
                             localization={localization}
                         />
                     </Grid>
-                    <Grid xs={12} sm={6} xl={3}>
+                    <Grid size={{ xs: 12, sm: 6, xl: 3 }}>
                         <PermissionGroup
                             label={translations.permissions_membership}
                             permissions={permissions(MEMBERSHIP_PERMISSIONS)}
@@ -219,7 +219,7 @@ const PermissionsItem = memo<PermissionsItemProps>(({ value, setValue, disabled,
                             localization={localization}
                         />
                     </Grid>
-                    <Grid xs={12} sm={6} xl={5}>
+                    <Grid size={{ xs: 12, sm: 6, xl: 5 }}>
                         <PermissionGroup
                             label={translations.permissions_text}
                             permissions={permissions(TEXT_PERMISSIONS)}
@@ -229,7 +229,7 @@ const PermissionsItem = memo<PermissionsItemProps>(({ value, setValue, disabled,
                             localization={localization}
                         />
                     </Grid>
-                    <Grid xs={12} sm={6} xl={4}>
+                    <Grid size={{ xs: 12, sm: 6, xl: 4 }}>
                         <PermissionGroup
                             label={translations.permissions_thread}
                             permissions={permissions(THREAD_PERMISSIONS)}
@@ -239,7 +239,7 @@ const PermissionsItem = memo<PermissionsItemProps>(({ value, setValue, disabled,
                             localization={localization}
                         />
                     </Grid>
-                    <Grid xs={12} sm={6} xl={4}>
+                    <Grid size={{ xs: 12, sm: 6, xl: 4 }}>
                         <PermissionGroup
                             label={translations.permissions_voice}
                             permissions={permissions(VOICE_PERMISSIONS)}
@@ -249,7 +249,7 @@ const PermissionsItem = memo<PermissionsItemProps>(({ value, setValue, disabled,
                             localization={localization}
                         />
                     </Grid>
-                    <Grid xs={12} sm={6} xl={4}>
+                    <Grid size={{ xs: 12, sm: 6, xl: 4 }}>
                         <PermissionGroup
                             label={translations.permissions_stage}
                             permissions={permissions(STAGE_PERMISSIONS)}

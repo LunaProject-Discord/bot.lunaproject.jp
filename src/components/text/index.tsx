@@ -10,9 +10,12 @@ export const codeStyled = (theme: Theme): SystemStyleObject<Theme> => ({
     fontSize: '.87em',
     userSelect: 'all',
     color: 'unset',
-    backgroundColor: theme.palette.mode === 'light' ? '#f8f8f8' : 'rgba(255, 255, 255, 0.12)',
-    border: `solid 1px ${theme.palette.divider}`,
-    borderRadius: theme.spacing(.5)
+    backgroundColor: '#f8f8f8',
+    border: `solid 1px ${theme.vars.palette.divider}`,
+    borderRadius: theme.spacing(.5),
+    ...theme.applyStyles('dark', {
+        backgroundColor: 'rgba(255, 255, 255, 0.12)'
+    })
 });
 
 export const CodeStyleContainer = styled(Box)(({ theme }) => ({
@@ -32,9 +35,12 @@ export const keyStyled = (theme: Theme): SystemStyleObject<Theme> => ({
     letterSpacing: .5,
     textTransform: 'none',
     userSelect: 'none',
-    color: theme.palette.text.secondary,
-    backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
-    borderBottom: `solid 3px ${theme.palette.divider}`,
+    color: theme.vars.palette.text.secondary,
+    backgroundColor: theme.vars.palette.grey[100],
+    borderBottom: `solid 3px ${theme.vars.palette.divider}`,
+    ...theme.applyStyles('dark', {
+        backgroundColor: theme.vars.palette.grey[900]
+    }),
     '@media (any-hover: none)': {
         display: 'none'
     }

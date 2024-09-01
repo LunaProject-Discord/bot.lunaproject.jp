@@ -18,8 +18,6 @@ import {
     Accordion as MuiAccordion,
     AccordionDetails as MuiAccordionDetails,
     AccordionProps,
-    AccordionSummary as MuiAccordionSummary,
-    AccordionSummaryProps,
     Box,
     IconButton,
     styled,
@@ -43,38 +41,12 @@ const ContainerAccordion = styled(
     { shouldForwardProp: (prop) => prop !== 'borderColor' }
 )<ContainerAccordionProps>(({ theme, borderColor }) => ({
     // border: 'solid 1px rgb(235, 237, 239)',
-    border: `solid 1px ${theme.palette.divider}`,
+    border: `solid 1px ${theme.vars.palette.divider}`,
     borderLeft: `solid 4px ${borderColor}`,
     borderRadius: 4,
     boxShadow: 'rgb(0 0 0 / 8%) 0px 4px 4px',
     '&::before': {
         content: 'none'
-    }
-}));
-
-const Accordion = styled(
-    (props: AccordionProps) => (<MuiAccordion disableGutters elevation={0} {...props} />)
-)(({ theme }) => ({
-    border: 'none',
-    borderBottom: `solid 1px ${theme.palette.divider}`,
-    borderRadius: '0 !important',
-    boxShadow: 'none',
-    '&::before': {
-        content: 'none'
-    },
-    '&:last-of-type': {
-        border: 'none',
-        borderBottomRightRadius: `4px !important`
-    }
-}));
-
-const AccordionSummary = styled(
-    (props: AccordionSummaryProps) => (<MuiAccordionSummary expandIcon={<KeyboardArrowDownIcon />} {...props} />)
-)(({ theme }) => ({
-    height: 40,
-    minHeight: '40px !important',
-    '&:hover': {
-        background: theme.palette.action.hover
     }
 }));
 
@@ -125,7 +97,7 @@ export const EmbedEditor = (
                     minHeight: '40px !important',
                     px: 1,
                     '&:hover': {
-                        background: (theme) => theme.palette.action.hover
+                        background: (theme) => theme.vars.palette.action.hover
                     }
                 }}
             >

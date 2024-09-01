@@ -95,7 +95,10 @@ export const LevelProfileCard = (
                         size={70}
                         thickness={2.4}
                         sx={(theme) => ({
-                            color: theme.palette.mode === 'light' ? lighten(theme.palette.primary.main, .62) : darken(theme.palette.primary.main, .5)
+                            color: lighten(theme.palette.primary.main, .62),
+                            ...theme.applyStyles('dark', {
+                                color: darken(theme.palette.primary.main, .5)
+                            })
                         })}
                     />
                     <CircularProgress
@@ -235,12 +238,15 @@ export const LevelRewardsCard = (
                                         </Box>
                                     }
                                     label={role.name}
-                                    sx={{
-                                        bgcolor: (theme) => alpha(getRoleColor(role), theme.palette.mode === 'light' ? .12 : .24),
+                                    sx={(theme) => ({
+                                        bgcolor: alpha(getRoleColor(role), .12),
+                                        ...theme.applyStyles('dark', {
+                                            bgcolor: alpha(getRoleColor(role), .24)
+                                        }),
                                         [`& .${chipClasses.label}`]: {
                                             pl: 1
                                         }
-                                    }}
+                                    })}
                                 />
                             ))
                         }

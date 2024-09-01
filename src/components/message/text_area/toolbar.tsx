@@ -20,9 +20,12 @@ const Container = styled(Box)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacing(.5),
-    backgroundColor: theme.palette.mode === 'light' ? theme.palette.grey[100] : '#121212',
+    backgroundColor: theme.vars.palette.grey[100],
     borderTopLeftRadius: theme.shape.borderRadius,
-    borderTopRightRadius: theme.shape.borderRadius
+    borderTopRightRadius: theme.shape.borderRadius,
+    ...theme.applyStyles('dark', {
+        backgroundColor: '#121212'
+    })
 }));
 
 const Button = styled(ButtonBase)(({ theme }) => ({

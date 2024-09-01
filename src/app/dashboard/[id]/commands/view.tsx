@@ -19,7 +19,7 @@ import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { getStateActionValue, useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Box, styled, Switch, Typography, Unstable_Grid2 as Grid } from '@mui/material';
+import { Box, Grid2 as Grid, styled, Switch, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Dispatch, Fragment, memo, SetStateAction, useCallback, useMemo, useState } from 'react';
 import { saveGuildConfiguration } from '../utils';
@@ -36,7 +36,7 @@ const GridButton = styled(ButtonBase)(({ theme }) => ({
     justifyContent: 'flex-start',
     gap: theme.spacing(1),
     textAlign: 'start',
-    border: `solid 1px ${theme.palette.divider}`,
+    border: `solid 1px ${theme.vars.palette.divider}`,
     borderRadius: theme.spacing(.5)
 }));
 
@@ -80,7 +80,7 @@ const CommandItem = memo<CommandItemProps>((
 
     return (
         <Fragment>
-            <Grid xs={12} md={3}>
+            <Grid size={{ xs: 12, md: 3 }}>
                 <GridButton onClick={() => setDialogOpen(true)}>
                     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
                         <Typography

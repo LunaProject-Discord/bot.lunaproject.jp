@@ -66,14 +66,17 @@ export const ManageDisabledRolesDialog = (
                     }}
                 >
                     <Box
-                        sx={{
+                        sx={(theme) => ({
                             px: 2,
                             py: 1.5,
                             display: 'flex',
                             alignItems: 'center',
                             gap: 1.5,
-                            bgcolor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900]
-                        }}
+                            bgcolor: theme.vars.palette.grey[100],
+                            ...theme.applyStyles('dark', {
+                                bgcolor: theme.vars.palette.grey[900]
+                            })
+                        })}
                     >
                         <SearchIcon color="action" />
                         <InputBase

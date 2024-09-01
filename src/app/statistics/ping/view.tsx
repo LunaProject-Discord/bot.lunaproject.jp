@@ -11,7 +11,7 @@ import { LocalizationProps } from '@/interfaces/localization';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { max, min } from '@lunaproject/web-core/dist/utils';
-import { CircularProgress, Unstable_Grid2 as Grid } from '@mui/material';
+import { CircularProgress, Grid2 as Grid } from '@mui/material';
 import { GridColDef, GridRowsProp, GridValidRowModel } from '@mui/x-data-grid';
 import React, { Fragment } from 'react';
 

@@ -7,7 +7,7 @@ import { Statistic, StatisticsPeriodType } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { format } from '@lunaproject/web-core/dist/utils';
 import { SvgIconComponent } from '@mui/icons-material';
-import { Box, Paper, Typography, Unstable_Grid2 as Grid } from '@mui/material';
+import { Box, Grid2 as Grid, Paper, Typography } from '@mui/material';
 import { differenceInCalendarWeeks } from 'date-fns/differenceInCalendarWeeks';
 import { differenceInHours } from 'date-fns/differenceInHours';
 import { isSameDay } from 'date-fns/isSameDay';
@@ -131,7 +131,7 @@ export const LatestWidget = (
     const differenceLabel = getDifferenceLabel(statistic, difference, type);
 
     return (
-        <Grid xs={12} md={3}>
+        <Grid size={{ xs: 12, md: 3 }}>
             <Paper variant="outlined" elevation={0} sx={{ p: 3, borderColor: 'primary.main' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
                     <Typography variant="caption" color="text.secondary">
@@ -165,7 +165,7 @@ export const MinWidget = (
         localization: { translations }
     }: WidgetProps
 ) => (
-    <Grid xs={12} md={3}>
+    <Grid size={{ xs: 12, md: 3 }}>
         <Paper variant="outlined" elevation={0} sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="caption" color="text.secondary">
@@ -195,7 +195,7 @@ export const MaxWidget = (
         localization: { translations }
     }: WidgetProps
 ) => (
-    <Grid xs={12} md={3}>
+    <Grid size={{ xs: 12, md: 3 }}>
         <Paper variant="outlined" elevation={0} sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
                 <Typography variant="caption" color="text.secondary">

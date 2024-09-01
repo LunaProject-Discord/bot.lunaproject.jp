@@ -5,7 +5,7 @@ import { TranslationKeys } from '@/interfaces/localization';
 import { GuildRolesViewProps, GuildViewProps } from '@/interfaces/view';
 import { checkPermission, getRoleColor } from '@/utils/discord';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
-import { alpha, Box, BoxProps, CSSObject, styled, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
+import { Box, BoxProps, CSSObject, styled, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import clsx from 'clsx';
 import { PermissionFlagsBits } from 'discord-api-types/v10';
 import { size } from 'polished';
@@ -29,7 +29,7 @@ const StyledGridRoot = styled(Box)(({ theme }) => ({
     whiteSpace: 'nowrap',
     overflowX: 'auto',
     [`& .${gridClasses.column}:not(.${gridClasses.columnHeader}):not(:last-child)`]: {
-        borderRight: `solid 1px ${theme.palette.divider}`
+        borderRight: `solid 1px ${theme.vars.palette.divider}`
     }
 }));
 
@@ -46,7 +46,7 @@ const gridColumnStyled = (theme: Theme): CSSObject => ({
     display: 'flex',
     flexDirection: 'column',
     [`& .${gridClasses.cell}:not(:last-child)`]: {
-        borderBottom: `solid 1px ${theme.palette.divider}`
+        borderBottom: `solid 1px ${theme.vars.palette.divider}`
     }
 });
 
@@ -58,8 +58,8 @@ const gridColumnHeaderStyled = (theme: Theme): CSSObject => ({
     position: 'sticky',
     left: 0,
     zIndex: 1,
-    backgroundColor: theme.palette.background.paper,
-    borderRight: `solid ${gridBorderWidth}px ${theme.palette.divider}`
+    backgroundColor: theme.vars.palette.background.paper,
+    borderRight: `solid ${gridBorderWidth}px ${theme.vars.palette.divider}`
 });
 
 const GridColumnHeader = styled(
@@ -260,7 +260,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                         sx={{
                             overflow: 'hidden',
                             [`& .${gridClasses.column}`]: {
-                                borderBottom: (theme) => `solid ${gridBorderWidth}px ${theme.palette.divider}`
+                                borderBottom: (theme) => `solid ${gridBorderWidth}px ${theme.vars.palette.divider}`
                             }
                         }}
                     >
@@ -371,7 +371,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                 >
                                                     <GridCell
                                                         sx={{
-                                                            bgcolor: (theme) => alpha(theme.palette.warning.main, .1)
+                                                            bgcolor: (theme) => `rgb(${theme.vars.palette.warning.mainChannel} / .1)`
                                                         }}
                                                     >
                                                         <DeleteIcon color="warning" />
@@ -387,7 +387,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                 >
                                                     <GridCell
                                                         sx={{
-                                                            bgcolor: (theme) => alpha(theme.palette.info.main, .1)
+                                                            bgcolor: (theme) => `rgb(${theme.vars.palette.info.mainChannel} / .1)`
                                                         }}
                                                     >
                                                         <CrownOutlined color="info" />
@@ -406,9 +406,8 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                     enterTouchDelay={100}
                                                 >
                                                     <GridCell
-
                                                         sx={{
-                                                            bgcolor: (theme) => alpha(theme.palette.warning.main, .1)
+                                                            bgcolor: (theme) => `rgb(${theme.vars.palette.warning.mainChannel} / .1)`
                                                         }}
                                                     >
                                                         <DeleteIcon color="warning" />
@@ -424,7 +423,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                                 >
                                                     <GridCell
                                                         sx={{
-                                                            bgcolor: (theme) => alpha(theme.palette.info.main, .1)
+                                                            bgcolor: (theme) => `rgb(${theme.vars.palette.info.mainChannel} / .1)`
                                                         }}
                                                     >
                                                         <RemoveIcon color="info" />
@@ -443,7 +442,7 @@ export const Grid = ({ guild, roles, permissions, localization: { translations }
                                             >
                                                 <GridCell
                                                     sx={{
-                                                        bgcolor: (theme) => alpha(theme.palette.primary.main, .1)
+                                                        bgcolor: (theme) => `rgb(${theme.vars.palette.primary.mainChannel} / .1)`
                                                     }}
                                                 >
                                                     <CheckIcon color="primary" />

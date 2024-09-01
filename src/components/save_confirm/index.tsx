@@ -2,9 +2,11 @@
 
 import { RefreshIcon, SaveIcon } from '@/components/icons';
 import { useTranslation } from '@/localizations/client';
-import { MuiDarkTheme, MuiLightTheme } from '@lunaproject/web-core/dist/utils';
+import { appearanceAtom } from '@/states/appearance';
+import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses, ThemeProvider, useTheme } from '@mui/material';
+import { Box, Button, buttonClasses, Snackbar, snackbarContentClasses } from '@mui/material';
+import { useAtomValue } from 'jotai';
 import Mousetrap from 'mousetrap';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState, useTransition } from 'react';
@@ -22,8 +24,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
 
     const translations = useTranslation();
 
-    const theme = useTheme();
-    const invertedTheme = theme.palette.mode === 'light' ? MuiDarkTheme : MuiLightTheme;
+    const { isDarkMode } = useAtomValue(appearanceAtom);
 
     const saveButton = useRef<HTMLButtonElement | null>(null);
     const cancelButton = useRef<HTMLButtonElement | null>(null);
@@ -66,13 +67,13 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
     };
 
     return (
-        <ThemeProvider theme={invertedTheme}>
+        <Box className={isDarkMode ? 'light' : 'dark'}>
             <Snackbar
                 open={open}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 message="データを保存しますか？"
                 action={
-                    <ThemeProvider theme={theme}>
+                    <Box className={isDarkMode ? 'dark' : 'light'}>
                         <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: .75 }}>
                             <Button
                                 ref={cancelButton}
@@ -101,16 +102,15 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                                 <Key sx={{ ml: 1, mr: -.5 }}>s</Key>
                             </LoadingButton>
                         </Box>
-                    </ThemeProvider>
+                    </Box>
                 }
-                sx={{
-                    zIndex: (theme) => theme.zIndex.snackbar - 101,
+                sx={(theme) => ({
+                    zIndex: theme.zIndex.snackbar - 101,
                     [`& .${snackbarContentClasses.root}`]: {
-                        border: `solid 1px ${theme.palette.divider}`,
-                        boxShadow: (theme) => `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+                        ...borderAndBoxShadow(theme)
                     }
-                }}
+                })}
             />
-        </ThemeProvider>
+        </Box>
     );
 };

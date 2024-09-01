@@ -1,6 +1,7 @@
 'use client';
 
 import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils';
+import { Theme } from '@mui/material';
 import { DataGrid as MuiDataGrid, DataGridProps, GridToolbar } from '@mui/x-data-grid';
 
 export const DataGrid = (props: DataGridProps) => (
@@ -10,11 +11,13 @@ export const DataGrid = (props: DataGridProps) => (
         }}
         slotProps={{
             pagination: {
-                SelectProps: {
-                    MenuProps: {
-                        slotProps: {
-                            paper: {
-                                sx: (theme) => borderAndBoxShadow(theme)
+                slotProps: {
+                    select: {
+                        MenuProps: {
+                            slotProps: {
+                                paper: {
+                                    sx: (theme: Theme) => borderAndBoxShadow(theme)
+                                }
                             }
                         }
                     }

@@ -5,6 +5,7 @@ import { MessageBuilder, MessagePreviewContainer } from '@/components/message';
 import { LocalizationProps } from '@/interfaces/localization';
 import { DataMessage } from '@/interfaces/message';
 import { toMessage } from '@/libs/message';
+import { appearanceClasses } from '@/states/appearance';
 import { ThemeProvider } from '@emotion/react';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
@@ -18,7 +19,7 @@ import {
 import { ConfigContext, generateComponentClasses, SomePartial } from '@lunaproject/web-core/dist/utils';
 import { MessageContainer, MessagePreview } from '@lunaproject/web-discord/dist/components/Message';
 import { buildDiscordTheme } from '@lunaproject/web-discord/dist/styles';
-import { Box, BoxProps, styled, Typography, useTheme } from '@mui/material';
+import { Box, BoxProps, styled, Typography } from '@mui/material';
 import { BoxTypeMap } from '@mui/system';
 import clsx from 'clsx';
 import React, { ElementType, Fragment, useContext, useState } from 'react';
@@ -45,7 +46,7 @@ export const SectionMessageCardQueryContainer = styled(
 )<BoxProps>(({ theme }) => ({
     width: '100%',
     containerType: 'inline-size',
-    [`@container (max-width: ${750 - .05}px)`]: {
+    [theme.containerQueries.down(750)]: {
         [`& .${sectionMessageCardClasses.header}`]: {
             flexWrap: 'wrap',
             [`& .${sectionMessageCardClasses.headerContent}`]: {
@@ -154,8 +155,6 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
         } = {}
     } = components?.SectionCard ?? {};
 
-    const theme = useTheme();
-
     const [__open, __setOpen] = useState(false);
     const open = _open ?? __open;
     const setOpen = _setOpen ?? __setOpen;
@@ -199,13 +198,44 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
                 </SectionMessageCardQueryContainer>
                 <SectionMessageCardQueryContainer>
                     <SectionMessageCardGridContainer>
-                        <ThemeProvider theme={buildDiscordTheme({ color: theme.palette.mode })}>
-                            <MessagePreviewContainer sx={{ height: '100%' }}>
-                                <MessageContainer style={{ height: '100%' }}>
-                                    <MessagePreview message={toMessage(value)} />
-                                </MessageContainer>
-                            </MessagePreviewContainer>
-                        </ThemeProvider>
+                        <Box
+                            sx={(theme) => ({
+                                [`& .${appearanceClasses.root}`]: {
+                                    display: 'none',
+                                    ...theme.applyStyles('light', {
+                                        [`&.${appearanceClasses.light}`]: {
+                                            display: 'block'
+                                        }
+                                    }),
+                                    ...theme.applyStyles('dark', {
+                                        [`&.${appearanceClasses.dark}`]: {
+                                            display: 'block'
+                                        }
+                                    })
+                                }
+                            })}
+                        >
+                            <ThemeProvider theme={buildDiscordTheme({ color: 'light' })}>
+                                <MessagePreviewContainer
+                                    className={clsx(appearanceClasses.root, appearanceClasses.light)}
+                                    sx={{ height: '100%' }}
+                                >
+                                    <MessageContainer style={{ height: '100%' }}>
+                                        <MessagePreview message={toMessage(value)} />
+                                    </MessageContainer>
+                                </MessagePreviewContainer>
+                            </ThemeProvider>
+                            <ThemeProvider theme={buildDiscordTheme({ color: 'dark' })}>
+                                <MessagePreviewContainer
+                                    className={clsx(appearanceClasses.root, appearanceClasses.dark)}
+                                    sx={{ height: '100%' }}
+                                >
+                                    <MessageContainer style={{ height: '100%' }}>
+                                        <MessagePreview message={toMessage(value)} />
+                                    </MessageContainer>
+                                </MessagePreviewContainer>
+                            </ThemeProvider>
+                        </Box>
                         <Box>
                             {children && <Typography
                                 component="div"

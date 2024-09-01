@@ -5,6 +5,7 @@ import { DarkModeIcon, DeleteIcon, EditIcon, LightModeIcon, PreviewIcon, SaveIco
 import { LocalizationProps } from '@/interfaces/localization';
 import { DataMessage } from '@/interfaces/message';
 import { toDataMessage, toEmbed, toMessage } from '@/libs/message';
+import { appearanceAtom } from '@/states/appearance';
 import { ThemeProvider } from '@emotion/react';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
@@ -22,6 +23,7 @@ import { buildDiscordTheme } from '@lunaproject/web-discord/dist/styles';
 import { Box, DialogProps as MuiDialogProps, IconButton, Theme, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import { GridTableRowsIcon, GridViewHeadlineIcon } from '@mui/x-data-grid';
 import deepEqual from 'deep-equal';
+import { useAtomValue } from 'jotai';
 import React, { Fragment, useEffect, useState } from 'react';
 import { MessageEditor } from '../editor';
 import { MessagePreviewContainer } from '../preview';
@@ -37,7 +39,9 @@ export const MessageBuilder = ({ open, setOpen, value, setValue, localization }:
     const theme = useTheme();
     const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
 
-    const [lightTheme, setLightTheme] = useState(theme.palette.mode === 'light');
+    const { isDarkMode } = useAtomValue(appearanceAtom);
+
+    const [lightTheme, setLightTheme] = useState(!isDarkMode);
     const [compactMode, setCompactMode] = useState(false);
 
     const defaultTheme = buildDiscordTheme({
@@ -71,6 +75,9 @@ export const MessageBuilder = ({ open, setOpen, value, setValue, localization }:
     };
 
     useEffect(() => {
+        if (open)
+            setLightTheme(!isDarkMode);
+
         setEditableMessage((msg) => ({
             ...msg,
             content: value?.content ?? '',
@@ -155,7 +162,7 @@ export const MessageBuilder = ({ open, setOpen, value, setValue, localization }:
                             </MessageEditorSection>
                             <MessageEditorSection active={viewType === 'preview'}>
                                 <MessagePreviewContainer sx={{ height: '100%' }}>
-                                    <MessageContainer style={{ border: `solid 1px ${theme.palette.divider}` }}>
+                                    <MessageContainer style={{ border: `solid 1px ${theme.vars.palette.divider}` }}>
                                         <MessagePreview message={editableMessage} />
                                     </MessageContainer>
                                 </MessagePreviewContainer>

@@ -100,7 +100,7 @@ export const SectionLevelCardRankRoot = styled(
     flexShrink: 0,
     placeItems: 'center',
     placeContent: 'center',
-    color: theme.palette.common.white,
+    color: theme.vars.palette.common.white,
     borderRadius: '50%'
 })) as typeof Box;
 
@@ -140,7 +140,7 @@ export const SectionLevelCardRank = ({ rank, ...props }: SectionLevelCardRankPro
             sx={{
                 color: 'primary.main',
                 bgcolor: 'transparent',
-                border: (theme) => `solid 1px ${theme.palette.primary.main}`
+                border: (theme) => `solid 1px ${theme.vars.palette.primary.main}`
             }}
             {...props}
         >

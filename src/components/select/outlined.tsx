@@ -45,26 +45,26 @@ export const SelectOutlinedInputRoot = styled(
     gap: theme.spacing(1),
     userSelect: 'none',
     cursor: 'pointer',
-    color: theme.palette.text.primary,
+    color: theme.vars.palette.text.primary,
     [`&.${selectOutlinedInputClasses.open}`]: {
         [`& .${selectOutlinedInputClasses.icon}`]: {
             transform: 'rotate(180deg)'
         },
         [`&:not(.${selectOutlinedInputClasses.disabled})`]: {
             [`&:hover .${selectOutlinedInputClasses.outline}`]: {
-                borderColor: theme.palette.text.primary
+                borderColor: theme.vars.palette.text.primary
             },
             [`& .${selectOutlinedInputClasses.outline}`]: {
                 borderWidth: 2,
-                borderColor: theme.palette.primary.main
+                borderColor: theme.vars.palette.primary.main
             }
         }
     },
     [`&.${selectOutlinedInputClasses.disabled}`]: {
         cursor: 'default',
-        color: theme.palette.text.disabled,
+        color: theme.vars.palette.text.disabled,
         [`& .${selectOutlinedInputClasses.icon}`]: {
-            color: theme.palette.text.disabled
+            color: theme.vars.palette.text.disabled
         }
     }
 }));
@@ -82,7 +82,7 @@ export const SelectOutlinedInputIcon = styled(
     display: 'flex',
     placeItems: 'center',
     placeContent: 'center',
-    color: theme.palette.action.active
+    color: theme.vars.palette.action.active
 }));
 
 export const SelectOutlinedInputContent = styled(
@@ -120,8 +120,11 @@ export const SelectOutlinedInputOutline = styled(
     overflow: 'hidden',
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)',
-    borderRadius: theme.shape.borderRadius
+    borderColor: 'rgba(0, 0, 0, 0.23)',
+    borderRadius: theme.shape.borderRadius,
+    ...theme.applyStyles('dark', {
+        borderColor: 'rgba(255, 255, 255, 0.23)'
+    })
 }));
 
 export interface SelectOutlinedInputSlotProps {
