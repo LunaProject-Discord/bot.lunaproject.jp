@@ -172,7 +172,7 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
 
     return (
         <AppRouterCacheProvider>
-            <ThemeProvider theme={theme} colorSchemeNode={null}>
+            <ThemeProvider theme={theme} colorSchemeNode={null} disableTransitionOnChange>
                 <ConfigProvider value={config}>
                     <RootStyles />
                     {insertGlobalStyles}
