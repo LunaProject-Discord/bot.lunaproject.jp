@@ -107,7 +107,7 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
                             <ArrowBackIcon fontSize="small" />
                             {translations.back_to_home}
                         </RouteLink>
-                    </Fragment> : <Typography variant="h5">{translations.statistics}</Typography>}
+                    </Fragment> : <Typography variant="h3">{translations.statistics}</Typography>}
                     <Box sx={{ px: { xs: 1, md: 0 }, display: 'flex', flexDirection: 'column', gap: .5 }}>
                         <Typography variant="body2" color="text.secondary">
                             {translations.statistics_mode}

@@ -117,7 +117,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
             <Section>
                 <SectionTitle
-                    variant="h6"
+                    component="h3"
+                    variant="h4"
                     fontWeight={400}
                     color={enabled && beforePendingEnabled ? 'text.primary' : 'text.disabled'}
                 >
@@ -156,7 +157,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
             <Section>
                 <SectionTitle
-                    variant="h6"
+                    component="h3"
+                    variant="h4"
                     fontWeight={400}
                     color={enabled && beforePendingEnabled ? 'text.primary' : 'text.disabled'}
                 >
@@ -195,7 +197,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
             <Section>
                 <SectionTitle
-                    variant="h6"
+                    component="h3"
+                    variant="h4"
                     fontWeight={400}
                     color={enabled && afterPendingEnabled ? 'text.primary' : 'text.disabled'}
                 >
@@ -234,7 +237,8 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
             </Section>
             <Section>
                 <SectionTitle
-                    variant="h6"
+                    component="h3"
+                    variant="h4"
                     fontWeight={400}
                     color={enabled && afterPendingEnabled ? 'text.primary' : 'text.disabled'}
                 >

@@ -191,7 +191,7 @@ export const DesktopUserPopover = ({ user, localization }: UserPopoverProps) => 
                             }}
                         >
                             <Typography
-                                variant="h6"
+                                variant="h4"
                                 fontSize="1.2rem"
                                 lineHeight={1.2}
                                 whiteSpace="nowrap"

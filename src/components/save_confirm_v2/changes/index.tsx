@@ -157,7 +157,7 @@ export const Changes = ({ changes, groupByPath, localization }: ChangesProps) =>
 
     return (
         <ChangesRoot>
-            <Typography variant="h6" fontWeight={400}>
+            <Typography variant="h4" fontWeight={400}>
                 {String(translations.save_confirm_changes).replace('%c', mapChanges(changes).length.toLocaleString())}
             </Typography>
             {Object.entries(groupedChanges.add).map(([path, changes]) => (

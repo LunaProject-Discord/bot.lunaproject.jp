@@ -97,7 +97,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
 
     return (
         <PageLayout sx={{ maxWidth: (theme) => theme.breakpoints.values.lg, mx: 'auto' }}>
-            <Typography variant="h4">{translations.welcome}</Typography>
+            <Typography variant="h1">{translations.welcome}</Typography>
             <Alert severity="warning" sx={{ mt: 3 }}>
                 このサイトは現在開発中です。大部分は利用できません。
             </Alert>

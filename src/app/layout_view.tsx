@@ -28,11 +28,13 @@ import {
     ConfigProvider,
     MuiColorSchemes,
     MuiComponents,
-    MuiCssVariables
+    MuiCssVariables,
+    MuiTypography
 } from '@lunaproject/web-core/dist/utils';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { createTheme, GlobalStyles, ThemeOptions, ThemeProvider, useMediaQuery } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { TypographyOptions } from '@mui/material/styles/createTypography';
 import deepmerge from 'deepmerge';
 import { useAtom } from 'jotai';
 import React, { ReactNode, useEffect, useMemo } from 'react';
@@ -99,9 +101,12 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
                 }
             ),
             colorSchemes: MuiColorSchemes,
-            typography: {
-                fontFamily: DefaultFontFamily
-            }
+            typography: deepmerge<TypographyOptions>(
+                MuiTypography,
+                {
+                    fontFamily: DefaultFontFamily
+                }
+            )
         },
         getMuiLocalizationByName(locale),
         getMuiDateLocalizationByName(locale),

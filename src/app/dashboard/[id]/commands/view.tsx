@@ -84,7 +84,7 @@ const CommandItem = memo<CommandItemProps>((
                 <GridButton onClick={() => setDialogOpen(true)}>
                     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
                         <Typography
-                            variant="h6"
+                            variant="h4"
                             sx={(theme) => ({
                                 ...codeStyled(theme),
                                 fontSize: 'initial'

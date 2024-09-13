@@ -185,7 +185,7 @@ export const SectionLevelCardStatusItemLabel = ({ className, sx, ...props }: Typ
 
 export const SectionLevelCardStatusItemContent = ({ className, ...props }: TypographyProps) => (
     <SectionLevelCardTypography
-        variant="h5"
+        variant="h3"
         align="center"
         className={clsx(sectionLevelCardStatusItemClasses.content, className)}
         {...props}

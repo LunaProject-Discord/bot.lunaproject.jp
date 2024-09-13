@@ -54,7 +54,7 @@ export const LevelProfileCard = (
                 gap: 1
             }}
         >
-            <Typography variant="h6" fontWeight={400}>{translations.leaderboard_profile_card}</Typography>
+            <Typography variant="h4" fontWeight={400}>{translations.leaderboard_profile_card}</Typography>
             <Divider flexItem sx={{ mb: 1 }} />
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Avatar
@@ -83,7 +83,7 @@ export const LevelProfileCard = (
                         {secondary}
                     </Typography>
                 </Box>
-                <Typography variant="h5" color="primary" fontFamily="Renner">
+                <Typography variant="h3" color="primary" fontFamily="Renner">
                     #{rank}
                 </Typography>
             </Box>
@@ -132,7 +132,7 @@ export const LevelProfileCard = (
                         >
                             {translations.level}
                         </Typography>
-                        <Typography variant="h5" color="primary" fontFamily="Renner" lineHeight={1}>
+                        <Typography variant="h3" color="primary" fontFamily="Renner" lineHeight={1}>
                             {level}
                         </Typography>
                     </Box>
@@ -198,7 +198,7 @@ export const LevelRewardsCard = (
 
     return (
         <Paper variant="outlined" elevation={0} sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <Typography variant="h6" fontWeight={400}>{translations.level_reward}</Typography>
+            <Typography variant="h4" fontWeight={400}>{translations.level_reward}</Typography>
             <Divider flexItem sx={{ mb: 1 }} />
             {Object.entries(roleGroups).map(([lv, roles], i) => (
                 <Box key={lv} sx={{ display: 'flex', flexDirection: 'column' }}>

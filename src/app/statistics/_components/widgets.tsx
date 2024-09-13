@@ -137,7 +137,7 @@ export const LatestWidget = (
                     <Typography variant="caption" color="text.secondary">
                         {translations.statistics_widget_live}
                     </Typography>
-                    <Typography variant="h4" color="primary.main" sx={{ fontFamily: 'Renner, sans-serif' }}>
+                    <Typography variant="h2" color="primary.main" sx={{ fontFamily: 'Renner, sans-serif' }}>
                         {formatValue(getValue(statistic))}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: .5 }}>
@@ -171,7 +171,7 @@ export const MinWidget = (
                 <Typography variant="caption" color="text.secondary">
                     {translations.statistics_widget_min}
                 </Typography>
-                <Typography variant="h4" sx={{ fontFamily: 'Renner, sans-serif' }}>
+                <Typography variant="h2" sx={{ fontFamily: 'Renner, sans-serif' }}>
                     {formatValue(getValue(statistic))}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: .5, color: 'text.secondary' }}>
@@ -201,7 +201,7 @@ export const MaxWidget = (
                 <Typography variant="caption" color="text.secondary">
                     {translations.statistics_widget_max}
                 </Typography>
-                <Typography variant="h4" sx={{ fontFamily: 'Renner, sans-serif' }}>
+                <Typography variant="h2" sx={{ fontFamily: 'Renner, sans-serif' }}>
                     {formatValue(getValue(statistic))}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: .5, color: 'text.secondary' }}>

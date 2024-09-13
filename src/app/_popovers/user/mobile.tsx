@@ -192,7 +192,7 @@ export const MobileUserPopover = ({ user, localization }: UserPopoverProps) => {
                                 }}
                             >
                                 <Typography
-                                    variant="h5"
+                                    variant="h3"
                                     fontWeight={500}
                                     whiteSpace="nowrap"
                                     textOverflow="ellipsis"

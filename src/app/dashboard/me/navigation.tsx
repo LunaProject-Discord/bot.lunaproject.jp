@@ -53,7 +53,7 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
                             {translations.back_to_home}
                         </RouteLink>
                     </Fragment> : <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
-                        <Typography variant="h5">{translations.dashboard}</Typography>
+                        <Typography variant="h3">{translations.dashboard}</Typography>
                         <Typography color="text.secondary">{translations.user_settings}</Typography>
                     </Box>}
                     <NavigationDrawerContent>

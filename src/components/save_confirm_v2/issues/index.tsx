@@ -22,7 +22,7 @@ export interface IssuesProps extends LocalizationProps {
 
 export const Issues = ({ issues, localization: { translations } }: IssuesProps) => (
     <IssuesRoot>
-        <Typography variant="h6" fontWeight={400}>
+        <Typography variant="h4" fontWeight={400}>
             {String(translations.save_confirm_issues).replace('%c', issues.length.toLocaleString())}
         </Typography>
         {issues.map((issue) => (

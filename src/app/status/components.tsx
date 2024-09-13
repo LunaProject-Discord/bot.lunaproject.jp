@@ -421,7 +421,7 @@ export const SectionStatusCard = (
                         <Typography variant="body2" color="text.secondary">
                             {translations.status_average_ping}
                         </Typography>
-                        <Typography variant="h4" color="primary.main" sx={{ fontFamily: 'Renner, sans-serif' }}>
+                        <Typography variant="h2" color="primary.main" sx={{ fontFamily: 'Renner, sans-serif' }}>
                             {ping.toLocaleString()}ms
                         </Typography>
                     </Box>

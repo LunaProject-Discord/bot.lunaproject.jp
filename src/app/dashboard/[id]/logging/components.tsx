@@ -72,9 +72,7 @@ const SectionHeader = ({ label, enabled, setEnabled, disabled }: SectionHeaderPr
         slotProps={{
             display: {
                 primary: {
-                    sx: (theme) => ({
-                        ...theme.typography.h6
-                    })
+                    sx: (theme) => theme.typography.h4
                 }
             }
         }}

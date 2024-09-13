@@ -14,7 +14,7 @@ export const ErrorRoot = styled(Box)(({ theme }) => ({
 }));
 
 export const ErrorTitle = styled(
-    (props: TypographyProps) => <TranslatableTypography variant="h4" align="center" {...props} />
+    (props: TypographyProps) => <TranslatableTypography variant="h2" align="center" {...props} />
 )<TypographyProps>();
 
 export const ErrorDescription = styled(

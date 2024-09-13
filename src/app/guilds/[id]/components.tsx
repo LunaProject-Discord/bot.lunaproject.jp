@@ -52,7 +52,7 @@ export const LayoutHeader = ({ guild, member, localization }: LayoutHeaderProps)
                     })}
                 />
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 1, md: 2 } }}>
-                    <Typography variant="h4" fontFamily={BrandingFontFamily} fontSize="2.25rem" fontWeight={600}>
+                    <Typography variant="h1" fontFamily={BrandingFontFamily} fontWeight={600}>
                         {guild.name}
                     </Typography>
                     <Button
