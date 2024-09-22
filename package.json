@@ -1,9 +1,9 @@
 {
     "name": "bot.lunaproject.jp",
-    "packageManager": "yarn@4.3.1",
+    "packageManager": "yarn@4.5.0",
     "volta": {
         "node": "20.11.0",
-        "yarn": "4.3.1"
+        "yarn": "4.5.0"
     },
     "scripts": {
         "postinstall": "echo \"Post installing...\" && npx prisma db pull && npx prisma generate",
