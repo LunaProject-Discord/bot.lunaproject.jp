@@ -1,7 +1,7 @@
 import { PartialGuildConfiguration } from '@/interfaces/bot';
 
 export const saveGuildConfiguration = async (id: string, configuration: PartialGuildConfiguration) => {
-    const res = await fetch(
+    const response = await fetch(
         `/api/guilds/${id}/configuration`,
         {
             method: 'PATCH',
@@ -10,5 +10,5 @@ export const saveGuildConfiguration = async (id: string, configuration: PartialG
         }
     );
 
-    return res.ok;
+    return response.ok;
 };

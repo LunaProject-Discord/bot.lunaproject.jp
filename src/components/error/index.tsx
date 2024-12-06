@@ -1,10 +1,28 @@
 'use client';
 
-import { Box, styled, TypographyProps } from '@mui/material';
+import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
+import { Box, BoxProps, styled, TypographyProps } from '@mui/material';
+import clsx from 'clsx';
 import React from 'react';
 import { TranslatableTypography } from '../text';
 
-export const ErrorRoot = styled(Box)(({ theme }) => ({
+export const errorClasses = generateComponentClasses(
+    'Error',
+    [
+        'root',
+        'title',
+        'description'
+    ]
+);
+
+export const ErrorRoot = styled(
+    ({ className, ...props }: BoxProps) => (
+        <Box
+            className={clsx(errorClasses.root, className)}
+            {...props}
+        />
+    )
+)(({ theme }) => ({
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -14,9 +32,22 @@ export const ErrorRoot = styled(Box)(({ theme }) => ({
 }));
 
 export const ErrorTitle = styled(
-    (props: TypographyProps) => <TranslatableTypography variant="h2" align="center" {...props} />
+    ({ className, ...props }: TypographyProps) => (
+        <TranslatableTypography
+            variant="h2"
+            align="center"
+            className={clsx(errorClasses.title, className)}
+            {...props}
+        />
+    )
 )<TypographyProps>();
 
 export const ErrorDescription = styled(
-    (props: TypographyProps) => <TranslatableTypography align="center" {...props} />
+    ({ className, ...props }: TypographyProps) => (
+        <TranslatableTypography
+            align="center"
+            className={clsx(errorClasses.description, className)}
+            {...props}
+        />
+    )
 )<TypographyProps>();

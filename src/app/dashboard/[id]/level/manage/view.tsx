@@ -22,7 +22,7 @@ import groupBy from 'lodash/groupBy';
 import React, { Fragment, SetStateAction, useCallback, useState } from 'react';
 
 const saveGuildLevels = async (id: string, levels: PartialGuildLevels) => {
-    const res = await fetch(
+    const response = await fetch(
         `/api/guilds/${id}/levels`,
         {
             method: 'PATCH',
@@ -31,7 +31,7 @@ const saveGuildLevels = async (id: string, levels: PartialGuildLevels) => {
         }
     );
 
-    return res.ok;
+    return response.ok;
 };
 
 interface ViewProps extends GuildConfigurationViewProps {

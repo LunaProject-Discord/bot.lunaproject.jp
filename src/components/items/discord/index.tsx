@@ -76,10 +76,10 @@ const SelectOutline = styled(
     overflow: 'hidden',
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.23)',
+    borderColor: 'rgb(0 0 0 / .23)',
     borderRadius: theme.shape.borderRadius,
     ...theme.applyStyles('dark', {
-        borderColor: 'rgba(255, 255, 255, 0.23)'
+        borderColor: 'rgb(255 255 255 / .23)'
     })
 }));
 

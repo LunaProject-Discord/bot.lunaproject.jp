@@ -162,7 +162,7 @@ export interface GridProps extends GuildViewProps, GuildRolesViewProps {
 }
 
 export const Grid = ({ guild, roles, permissions, localization: { translations } }: GridProps) => {
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const gridHeaderSectionRef = useRef<HTMLElement | null>(null);
     const gridHeaderRef = useRef<HTMLDivElement | null>(null);

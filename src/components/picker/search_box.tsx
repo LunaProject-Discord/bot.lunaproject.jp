@@ -46,7 +46,7 @@ export const PickerSearchBox = forwardRef<HTMLInputElement, PickerSearchBoxProps
     },
     ref
 ) => {
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => setValue(e.currentTarget.value);
 
     return (
         <PickerSearchBoxRoot>

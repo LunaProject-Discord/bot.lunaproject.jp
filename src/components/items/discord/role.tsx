@@ -6,15 +6,7 @@ import { RedisRole } from '@/interfaces/redis';
 import { filterPredicateRole, getRoleColor, sortRoles } from '@/utils/discord';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
-import {
-    Box,
-    ListItemButtonProps,
-    ListItemText,
-    popoverClasses,
-    Theme,
-    Typography,
-    useMediaQuery
-} from '@mui/material';
+import { Box, ListItemButtonProps, ListItemText, popoverClasses, Typography, useMediaQuery } from '@mui/material';
 import { APIRole } from 'discord-api-types/v10';
 import { ellipsis, size } from 'polished';
 import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';
@@ -64,8 +56,8 @@ export const RolePopover = (
 ) => {
     const ref = useRef<FixedSizeList | null>(null);
 
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
-    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     const open = Boolean(anchorEl);
 
@@ -86,7 +78,7 @@ export const RolePopover = (
     };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value);
+        setSearch(e.currentTarget.value);
         setSelectedIndex(-1);
     };
 

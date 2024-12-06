@@ -22,7 +22,7 @@ import {
     NavigationRoot
 } from '@lunaproject/web-core/dist/components/Navigation';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, FormControl, MenuItem, Select, SelectChangeEvent, Typography, useMediaQuery } from '@mui/material';
 import { endOfToday } from 'date-fns/endOfToday';
 import { DateTime } from 'luxon';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -35,7 +35,7 @@ export const Navigation = ({ user, flags, localization }: NavigationProps) => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
 
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
     const [open, setOpen] = useState(false);
 

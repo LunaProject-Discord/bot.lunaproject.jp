@@ -4,7 +4,7 @@ import { BaseDateTimeEditorProps } from '@/components/date';
 import { TodayIcon } from '@/components/icons';
 import { useLocale } from '@/localizations/client';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
-import { IconButton, InputAdornment, Theme, useMediaQuery } from '@mui/material';
+import { IconButton, InputAdornment, useMediaQuery } from '@mui/material';
 import {
     DateTimeField,
     DateTimeFieldProps,
@@ -47,7 +47,7 @@ export const DateTimeEditor = (
 ) => {
     const locale = useLocale();
 
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const open = Boolean(anchorEl);

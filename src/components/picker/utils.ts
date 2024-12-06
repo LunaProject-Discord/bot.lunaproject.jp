@@ -1,10 +1,11 @@
 import { PickerChoiceFilter } from '@/components/picker';
+import { useDebounce } from '@lunaproject/web-core/dist/utils';
 import { Dispatch, SetStateAction, useCallback, useRef, useState } from 'react';
 import { SnapPointProps } from 'react-spring-bottom-sheet/dist/types';
 
 export const usePickerSearch = (_search?: string, _setSearch?: Dispatch<SetStateAction<string>>) => {
     const [__search, __setSearch] = useState('');
-    const search = _search ?? __search;
+    const search = useDebounce(_search ?? __search, 500);
     const setSearch = _setSearch ?? __setSearch;
 
     return { search, setSearch };

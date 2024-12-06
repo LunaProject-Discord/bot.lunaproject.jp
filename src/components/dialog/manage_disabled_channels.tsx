@@ -27,7 +27,6 @@ import {
     styled,
     Switch,
     switchClasses,
-    Theme,
     useMediaQuery
 } from '@mui/material';
 import { ChannelType } from 'discord-api-types/v10';
@@ -86,7 +85,7 @@ export const ManageDisabledChannelsDialog = (
         localization: { translations }
     }: ManageDisabledChannelsDialogProps
 ) => {
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const [search, setSearch, resetSearch] = useResettableState('');
 

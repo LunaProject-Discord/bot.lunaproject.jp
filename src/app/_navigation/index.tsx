@@ -60,7 +60,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
     return (
         <RootNavigationAppBar
             sx={{
-                boxShadow: (theme) => trigger && !disableElevation ? `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)` : 'none'
+                boxShadow: (theme) => trigger && !disableElevation ? `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgb(0 0 0 / .15)` : 'none'
             }}
         >
             <NavigationToolbar>
@@ -168,8 +168,8 @@ export const NavigationDrawerToolbar = ({ setOpen }: RootNavigationDrawerProps) 
                 px: { md: `${theme.spacing(1)} !important` },
                 position: 'sticky',
                 top: 0,
-                bgcolor: 'background.default',
-                zIndex: 1
+                zIndex: 1,
+                bgcolor: 'background.default'
             })}
         >
             <IconButton onClick={handleDrawerToggle}>

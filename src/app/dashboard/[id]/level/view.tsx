@@ -1,5 +1,6 @@
 'use client';
 
+import { saveGuildConfiguration } from '@/app/dashboard/[id]/utils';
 import { ManageDisabledChannelsDialog, ManageDisabledRolesDialog } from '@/components/dialog';
 import { OpenInNewIcon } from '@/components/icons';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
@@ -34,7 +35,6 @@ import { Box, switchClasses, Typography } from '@mui/material';
 import { ChannelType } from 'discord-api-types/v10';
 import uniqBy from 'lodash/uniqBy';
 import React, { Fragment, useEffect, useState } from 'react';
-import { saveGuildConfiguration } from '../utils';
 import { ManageRolesDialog } from './dialog';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {

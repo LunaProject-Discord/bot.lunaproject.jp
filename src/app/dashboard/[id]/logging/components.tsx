@@ -31,7 +31,7 @@ export const GridContainer = styled(Box)(({ theme }) => ({
     padding: theme.spacing(2, 0, 0),
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
-    gridGap: theme.spacing(2),
+    gap: theme.spacing(2),
     [theme.breakpoints.down('lg')]: {
         gridTemplateColumns: '1fr'
     }

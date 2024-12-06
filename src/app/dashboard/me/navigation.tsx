@@ -10,13 +10,13 @@ import {
     NavigationDrawerItem,
     NavigationRoot
 } from '@lunaproject/web-core/dist/components/Navigation';
-import { Box, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 import React, { Fragment, useState } from 'react';
 
 export const Navigation = ({ user, flags, localization }: NavigationProps) => {
     const { translations } = localization;
 
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
     const [open, setOpen] = useState(false);
 

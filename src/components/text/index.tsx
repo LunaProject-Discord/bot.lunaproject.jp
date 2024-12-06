@@ -14,7 +14,7 @@ export const codeStyled = (theme: Theme): SystemStyleObject<Theme> => ({
     border: `solid 1px ${theme.vars.palette.divider}`,
     borderRadius: theme.spacing(.5),
     ...theme.applyStyles('dark', {
-        backgroundColor: 'rgba(255, 255, 255, 0.12)'
+        backgroundColor: 'rgb(255 255 255 / .12)'
     })
 });
 

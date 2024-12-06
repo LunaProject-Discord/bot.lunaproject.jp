@@ -7,7 +7,7 @@ import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { sectionAccordionCardClasses, SectionCardRoot } from '@lunaproject/web-core/dist/components/SectionCard';
 import { CircularProgress } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
-import { WindowVirtualizer, WindowVirtualizerProps } from 'virtua';
+import { WindowVirtualizer, WindowVirtualizerHandle } from 'virtua';
 
 export const SectionLevelEditHeader = (
     {
@@ -38,14 +38,19 @@ export const SectionLevelEdit = (
         localization
     }: SectionLevelEditProps
 ) => {
+    const ref = useRef<WindowVirtualizerHandle>(null);
+
     const [items, setItems] = useState(levels.slice(0, 100));
     const count = items.length;
 
     const [loading, setLoading] = useState(false);
     const fetchedCountRef = useRef(-1);
 
-    const handleRangeChange: WindowVirtualizerProps['onRangeChange'] = (_, end) => {
-        if (end + 50 <= count || fetchedCountRef.current >= count || levels.length === count)
+    const handleScroll = async () => {
+        if (!ref.current)
+            return;
+
+        if (fetchedCountRef.current >= count || ref.current.endIndex + 50 <= count || levels.length === count)
             return;
 
         fetchedCountRef.current = count;
@@ -71,7 +76,7 @@ export const SectionLevelEdit = (
                 }
             }}
         >
-            <WindowVirtualizer onRangeChange={handleRangeChange}>
+            <WindowVirtualizer ref={ref} onScroll={handleScroll}>
                 {items.map((level) => {
                     const partialLevel = partialLevels.find((partialLevel) => partialLevel.user_id === level.user.id);
 

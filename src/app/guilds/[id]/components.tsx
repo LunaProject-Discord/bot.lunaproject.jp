@@ -8,7 +8,7 @@ import { navigationAtom } from '@/states/navigation';
 import { getGuildIcon } from '@/utils/cdn';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { NavigationAppBarId } from '@lunaproject/web-core/dist/components/Navigation';
-import { Avatar, Box, Link, Slide, Tab, Tabs, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Avatar, Box, Link, Slide, Tab, Tabs, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useSetAtom } from 'jotai';
 import NextLink from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -94,7 +94,7 @@ export const LayoutNavigation = (
     const loweredPathname = pathname.toLowerCase();
 
     const theme = useTheme();
-    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
     const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -119,7 +119,7 @@ export const LayoutNavigation = (
                     width: '100% !important',
                     left: 0,
                     transition: theme.transitions.create('box-shadow'),
-                    boxShadow: trigger ? `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)` : 'none'
+                    boxShadow: trigger ? `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgb(0 0 0 / .15)` : 'none'
                 }
             })}
         >

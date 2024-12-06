@@ -1,3 +1,4 @@
+import { NotFoundView } from '@/app/dashboard/[id]/view';
 import { getUser } from '@/app/utils';
 import { WithIdParamProps } from '@/interfaces/page';
 import { getGuildConfiguration, hasDashboardAccess } from '@/libs/bot';
@@ -5,7 +6,6 @@ import { getCommands, getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
 import React from 'react';
-import { NotFoundView } from '../view';
 import { View } from './view';
 
 export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {

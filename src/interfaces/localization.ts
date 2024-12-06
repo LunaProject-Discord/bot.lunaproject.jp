@@ -29,9 +29,18 @@ export type TranslationKeys =
     | 'discard_changes'
     | 'open'
     | 'close'
+    | 'back'
+    | 'forward'
     | 'move_up'
     | 'move_down'
     | 'duplicate'
+
+
+    | 'name'
+    | 'description'
+    | 'icon'
+    | 'color'
+    | 'slug'
 
 
     | 'shard'
@@ -226,6 +235,7 @@ export type TranslationKeys =
     | 'settings_guild_management'
     | 'settings_moderation_and_management'
     | 'settings_features_and_options'
+    | 'settings_web'
 
     | 'prefix_and_nickname'
     | 'prefix_and_nickname_description'
@@ -438,6 +448,25 @@ export type TranslationKeys =
     | 'logging_message_purge'
     | 'logging_message_pin'
     | 'logging_message_unpin'
+
+    | 'web_categories'
+    | 'web_categories_description'
+    | 'web_category_pages'
+    | 'web_category_undo_remove'
+    | 'web_category_slug_description'
+    | 'web_category_color_description'
+    | 'web_category_name_description'
+    | 'web_category_description_description'
+    | 'web_category_parent_category'
+
+    | 'web_tags'
+    | 'web_tags_description'
+    | 'web_tag_pages'
+    | 'web_tag_undo_remove'
+    | 'web_tag_slug_description'
+    | 'web_tag_color_description'
+    | 'web_tag_name_description'
+    | 'web_tag_description_description'
 
 
     | 'user_settings'

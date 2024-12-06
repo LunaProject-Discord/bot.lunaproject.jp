@@ -46,7 +46,6 @@ import {
     menuItemClasses,
     MenuList,
     OutlinedInput,
-    Theme,
     Tooltip,
     Typography,
     useMediaQuery
@@ -267,7 +266,7 @@ export const ManageRolesDialog = (
 ) => {
     const { translations } = localization;
 
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 

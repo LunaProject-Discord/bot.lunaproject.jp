@@ -1,4 +1,12 @@
 import { Localization, Translations } from '@/interfaces/localization';
+import {
+    GuildWebCategoryDescriptionSchema,
+    GuildWebCategoryNameSchema,
+    GuildWebCategorySlugSchema,
+    GuildWebTagDescriptionSchema,
+    GuildWebTagNameSchema,
+    GuildWebTagSlugSchema
+} from '@/schemas/bot';
 import React, { Fragment } from 'react';
 
 export const translationsEn: Translations = {
@@ -28,9 +36,18 @@ export const translationsEn: Translations = {
     discard_changes: 'Discard Changes',
     open: 'Open',
     close: 'Close',
+    back: 'Back',
+    forward: 'Forward',
     move_up: 'Move Up',
     move_down: 'Move Down',
     duplicate: 'Duplicate',
+
+
+    name: 'Name',
+    description: 'Description',
+    icon: 'Icon',
+    color: 'Color',
+    slug: 'Slug',
 
 
     shard: 'Shard',
@@ -246,6 +263,7 @@ export const translationsEn: Translations = {
     settings_guild_management: 'Server Management',
     settings_moderation_and_management: 'Moderation & Management',
     settings_features_and_options: 'Features & Options',
+    settings_web: 'Server Pages',
 
     prefix_and_nickname: 'Prefix & Nickname',
     prefix_and_nickname_description: 'You can set how the Bot is called and its nickname.',
@@ -514,6 +532,35 @@ export const translationsEn: Translations = {
     logging_message_purge: 'Purge Messages',
     logging_message_pin: 'Pinning Message',
     logging_message_unpin: 'Unpin a Message',
+
+    web_categories: 'Categories',
+    web_categories_description: 'You can manage the categories assigned to articles on the server page.',
+    web_category_pages: '%c pages',
+    web_category_undo_remove: 'Undo Remove',
+    web_category_slug_description: <Fragment>
+        Only letters (lowercase), numbers, hyphens (<code>-</code>), and underscores (<code>_</code>) between a maximum
+        of {GuildWebCategorySlugSchema.maxLength} characters can be set, and once set, cannot be changed.
+    </Fragment>,
+    web_category_color_description: <Fragment>
+        <code>#RRGGBB</code> or <code>#RRGGBBAA</code> format.
+    </Fragment>,
+    web_category_name_description: `Must be set between a minimum of 1 character and a maximum of ${GuildWebCategoryNameSchema.maxLength} characters.`,
+    web_category_description_description: `Up to ${GuildWebCategoryDescriptionSchema.maxLength} characters can be set.`,
+    web_category_parent_category: 'Parent Category',
+
+    web_tags: 'Tags',
+    web_tags_description: 'You can manage the tags assigned to articles on the server page.',
+    web_tag_pages: '%c pages',
+    web_tag_undo_remove: 'Undo Remove',
+    web_tag_slug_description: <Fragment>
+        Only letters (lowercase), numbers, hyphens (<code>-</code>), and underscores (<code>_</code>) between a maximum
+        of {GuildWebTagSlugSchema.maxLength} characters can be set, and once set, cannot be changed.
+    </Fragment>,
+    web_tag_color_description: <Fragment>
+        <code>#RRGGBB</code> or <code>#RRGGBBAA</code> format.
+    </Fragment>,
+    web_tag_name_description: `Must be set between a minimum of 1 character and a maximum of ${GuildWebTagNameSchema.maxLength} characters.`,
+    web_tag_description_description: `Up to ${GuildWebTagDescriptionSchema.maxLength} characters can be set.`,
 
 
     user_settings: 'User Settings',

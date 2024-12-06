@@ -1,7 +1,7 @@
 import { DesktopServicesPopover, MobileServicesPopover } from '@/app/_popovers';
 import { LocalizationProps } from '@/interfaces/localization';
 import { popoverAtom, ServicesPopoverState } from '@/states/popover';
-import { Theme, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import { atom } from 'jotai';
 
 export const servicesPopoverStateAtom = atom(
@@ -23,7 +23,7 @@ export const servicesPopoverStateAtom = atom(
 );
 
 export const ServicesPopover = ({ localization }: LocalizationProps) => {
-    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.up('sm'));
     const Popover = isSmall ? DesktopServicesPopover : MobileServicesPopover;
     return (<Popover localization={localization} />);
 };

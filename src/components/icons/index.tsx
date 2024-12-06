@@ -72,4 +72,24 @@ export const CrownOutlined = (props: SvgIconProps) => (
     </SvgIcon>
 );
 
+export const RowDeleteIcon = (props: SvgIconProps) => (
+    <SvgIcon viewBox="0 0 32 32" {...props}>
+        <path
+            d="M24,30H4a2.0021,2.0021,0,0,1-2-2V22a2.0021,2.0021,0,0,1,2-2H24a2.0021,2.0021,0,0,1,2,2v6A2.0021,2.0021,0,0,1,24,30ZM4,22H3.9985L4,28H24V22Z" />
+        <polygon
+            points="30 3.41 28.59 2 25 5.59 21.41 2 20 3.41 23.59 7 20 10.59 21.41 12 25 8.41 28.59 12 30 10.59 26.41 7 30 3.41" />
+        <path d="M4,14V8H18V6H4A2.0023,2.0023,0,0,0,2,8v6a2.0023,2.0023,0,0,0,2,2H26V14Z" />
+    </SvgIcon>
+);
+
+export const ColumnDeleteIcon = (props: SvgIconProps) => (
+    <SvgIcon viewBox="0 0 32 32" {...props}>
+        <polygon
+            points="30 3.41 28.59 2 25 5.59 21.41 2 20 3.41 23.59 7 20 10.59 21.41 12 25 8.41 28.59 12 30 10.59 26.41 7 30 3.41" />
+        <path d="M24,14V28H18V6H16V28a2.0023,2.0023,0,0,0,2,2h6a2.0023,2.0023,0,0,0,2-2V14Z" />
+        <path
+            d="M10,30H4a2.0021,2.0021,0,0,1-2-2V8A2.0021,2.0021,0,0,1,4,6h6a2.0021,2.0021,0,0,1,2,2V28A2.0021,2.0021,0,0,1,10,30ZM4,8V28h6V8Z" />
+    </SvgIcon>
+);
+
 export * from './material_symbols';

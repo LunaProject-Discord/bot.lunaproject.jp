@@ -1,4 +1,12 @@
 import { Localization, Translations } from '@/interfaces/localization';
+import {
+    GuildWebCategoryDescriptionSchema,
+    GuildWebCategoryNameSchema,
+    GuildWebCategorySlugSchema,
+    GuildWebTagDescriptionSchema,
+    GuildWebTagNameSchema,
+    GuildWebTagSlugSchema
+} from '@/schemas/bot';
 import React, { Fragment } from 'react';
 
 export const translationsJa: Translations = {
@@ -28,9 +36,18 @@ export const translationsJa: Translations = {
     discard_changes: '変更を破棄する',
     open: '開く',
     close: '閉じる',
+    back: '戻る',
+    forward: '進む',
     move_up: '上に移動',
     move_down: '下に移動',
     duplicate: '複製',
+
+
+    name: '名前',
+    description: '説明',
+    icon: 'アイコン',
+    color: '色',
+    slug: 'スラッグ',
 
 
     shard: 'シャード',
@@ -249,6 +266,7 @@ export const translationsJa: Translations = {
     settings_guild_management: 'サーバー管理',
     settings_moderation_and_management: 'モデレーションと管理',
     settings_features_and_options: '機能とオプション',
+    settings_web: 'サーバー ページ',
 
     prefix_and_nickname: 'プレフィックスとニックネーム',
     prefix_and_nickname_description: 'Bot の呼び出し方やニックネームを設定できます。',
@@ -517,6 +535,35 @@ export const translationsJa: Translations = {
     logging_message_purge: 'メッセージの一括削除',
     logging_message_pin: 'メッセージのピン留め',
     logging_message_unpin: 'メッセージのピン留め解除',
+
+    web_categories: 'カテゴリ',
+    web_categories_description: 'サーバー ページの投稿に割り当てるカテゴリの管理ができます。',
+    web_category_pages: '%c 個のページ',
+    web_category_undo_remove: '削除を取り消す',
+    web_category_slug_description: <Fragment>
+        最大{GuildWebCategorySlugSchema.maxLength}文字までの間で英字 (小文字) と数字、ハイフン (<code>-</code>) 、アンダースコア
+        (<code>_</code>) のみが設定でき、一度設定すると変更することができません。
+    </Fragment>,
+    web_category_color_description: <Fragment>
+        <code>#RRGGBB</code> または <code>#RRGGBBAA</code> の形式で設定することができます。
+    </Fragment>,
+    web_category_name_description: `最小1文字、最大${GuildWebCategoryNameSchema.maxLength}文字の間で設定する必要があります。`,
+    web_category_description_description: `最大${GuildWebCategoryDescriptionSchema.maxLength}文字まで設定することができます。`,
+    web_category_parent_category: '親カテゴリ',
+
+    web_tags: 'タグ',
+    web_tags_description: 'サーバー ページの投稿に割り当てるタグの管理ができます。',
+    web_tag_pages: '%c 個のページ',
+    web_tag_undo_remove: '削除を取り消す',
+    web_tag_slug_description: <Fragment>
+        最大{GuildWebTagSlugSchema.maxLength}文字までの間で英字 (小文字) と数字、ハイフン (<code>-</code>) 、アンダースコア
+        (<code>_</code>) のみが設定でき、一度設定すると変更することができません。
+    </Fragment>,
+    web_tag_color_description: <Fragment>
+        <code>#RRGGBB</code> または <code>#RRGGBBAA</code> の形式で設定することができます。
+    </Fragment>,
+    web_tag_name_description: `最小1文字、最大${GuildWebTagNameSchema.maxLength}文字の間で設定する必要があります。`,
+    web_tag_description_description: `最大${GuildWebTagDescriptionSchema.maxLength}文字まで設定することができます。`,
 
 
     user_settings: 'ユーザー設定',

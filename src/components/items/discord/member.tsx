@@ -8,15 +8,7 @@ import { filterPredicateMember, getMemberDisplayName, sortMembers } from '@/util
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { GuildMember } from '@lunaproject/web-discord/dist/interfaces';
-import {
-    Avatar,
-    ListItemButtonProps,
-    ListItemText,
-    popoverClasses,
-    Theme,
-    Typography,
-    useMediaQuery
-} from '@mui/material';
+import { Avatar, ListItemButtonProps, ListItemText, popoverClasses, Typography, useMediaQuery } from '@mui/material';
 import { ellipsis } from 'polished';
 import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { FixedSizeList } from 'react-window';
@@ -72,8 +64,8 @@ export const MemberPopover = (
 ) => {
     const ref = useRef<FixedSizeList | null>(null);
 
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
-    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
     const open = Boolean(anchorEl);
 
@@ -94,7 +86,7 @@ export const MemberPopover = (
     };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value);
+        setSearch(e.currentTarget.value);
         setSelectedIndex(-1);
     };
 

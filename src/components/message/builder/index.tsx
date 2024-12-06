@@ -20,7 +20,7 @@ import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core
 import { MessageContainer, MessagePreview } from '@lunaproject/web-discord/dist/components/Message';
 import { Message } from '@lunaproject/web-discord/dist/interfaces';
 import { buildDiscordTheme } from '@lunaproject/web-discord/dist/styles';
-import { Box, DialogProps as MuiDialogProps, IconButton, Theme, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, DialogProps as MuiDialogProps, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import { GridTableRowsIcon, GridViewHeadlineIcon } from '@mui/x-data-grid';
 import deepEqual from 'deep-equal';
 import { useAtomValue } from 'jotai';
@@ -37,7 +37,7 @@ export const MessageBuilder = ({ open, setOpen, value, setValue, localization }:
     const { translations } = localization;
 
     const theme = useTheme();
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const { isDarkMode } = useAtomValue(appearanceAtom);
 

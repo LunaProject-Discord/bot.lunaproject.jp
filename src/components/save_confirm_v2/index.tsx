@@ -13,7 +13,7 @@ import {
 } from '@lunaproject/web-core/dist/components/BottomSheet';
 import { LoadingButton } from '@lunaproject/web-core/dist/components/Button';
 import { isRenderableReactNode } from '@lunaproject/web-core/dist/utils';
-import { Box, IconButton, Theme, Tooltip, Typography, useMediaQuery } from '@mui/material';
+import { Box, IconButton, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';
 import { diff, EmbeddedObjKeysMapType, EmbeddedObjKeysType } from 'json-diff-ts';
 import Mousetrap from 'mousetrap';
@@ -57,7 +57,7 @@ export const SaveConfirmV2 = <T, >(
 
     const router = useRouter();
 
-    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
     const sheetRef = useRef<BottomSheetRef | null>(null);
     const saveButtonRef = useRef<HTMLButtonElement | null>(null);

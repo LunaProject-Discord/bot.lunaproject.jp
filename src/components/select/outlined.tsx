@@ -1,7 +1,7 @@
 'use client';
 
 import { ArrowDropDownIcon } from '@/components/icons';
-import { SelectInputProps, SelectInputRootProps } from '@/components/select';
+import { SelectInputProps, SelectInputRootProps } from '@/components/select/index';
 import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
 import { SlotComponentProps } from '@mui/base';
@@ -120,10 +120,10 @@ export const SelectOutlinedInputOutline = styled(
     overflow: 'hidden',
     borderStyle: 'solid',
     borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.23)',
+    borderColor: 'rgb(0 0 0 / .23)',
     borderRadius: theme.shape.borderRadius,
     ...theme.applyStyles('dark', {
-        borderColor: 'rgba(255, 255, 255, 0.23)'
+        borderColor: 'rgb(255 255 255 / .23)'
     })
 }));
 

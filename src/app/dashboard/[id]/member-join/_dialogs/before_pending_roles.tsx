@@ -27,7 +27,7 @@ import {
     SectionCardVariableProps
 } from '@lunaproject/web-core/dist/components/SectionCard';
 import { getStateActionValue, UniqueId, updateArrayState } from '@lunaproject/web-core/dist/utils';
-import { Box, Divider, IconButton, MenuItem, Select, Theme, Tooltip, useMediaQuery } from '@mui/material';
+import { Box, Divider, IconButton, MenuItem, Select, Tooltip, useMediaQuery } from '@mui/material';
 import { nanoid } from 'nanoid';
 import React, { Dispatch, Fragment, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -137,7 +137,7 @@ export const ManageBeforePendingRolesDialog = (
 ) => {
     const { translations } = localization;
 
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 

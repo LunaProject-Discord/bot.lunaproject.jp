@@ -20,7 +20,7 @@ import {
 import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { ItemFormContainer } from '@lunaproject/web-core/dist/components/SectionItems';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { Box, ButtonBase, Chip, Switch, switchClasses, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Box, ButtonBase, Chip, Switch, switchClasses, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Fragment, memo, SetStateAction, useCallback, useState } from 'react';
 
@@ -43,7 +43,7 @@ const ManageCommandDialog = memo<ManageCommandDialogProps>((
 ) => {
     const { translations } = localization;
 
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const choiceChannels = sortChannels(guild.channels);
     const choiceRoles = sortRoles(guild.roles).filter((role) => role.position !== 0);

@@ -13,7 +13,7 @@ import { Section } from '@lunaproject/web-core/dist/components/Section';
 import { sectionCardClasses, SectionCardRoot } from '@lunaproject/web-core/dist/components/SectionCard';
 import { CircularProgress } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
-import { WindowVirtualizer, WindowVirtualizerProps } from 'virtua';
+import { WindowVirtualizer, WindowVirtualizerHandle } from 'virtua';
 
 export const SectionLevelViewHeader = (
     {
@@ -42,14 +42,19 @@ export interface SectionLevelViewProps extends GuildViewProps {
 }
 
 export const SectionLevelView = ({ guild, levels, localization }: SectionLevelViewProps) => {
+    const ref = useRef<WindowVirtualizerHandle>(null);
+
     const [items, setItems] = useState(levels.slice(0, 100));
     const count = items.length;
 
     const [loading, setLoading] = useState(false);
     const fetchedCountRef = useRef(-1);
 
-    const handleRangeChange: WindowVirtualizerProps['onRangeChange'] = (_, end) => {
-        if (end + 50 <= count || fetchedCountRef.current >= count || levels.length === count)
+    const handleScroll = async () => {
+        if (!ref.current)
+            return;
+
+        if (fetchedCountRef.current >= count || ref.current.endIndex + 50 <= count || levels.length === count)
             return;
 
         fetchedCountRef.current = count;
@@ -75,7 +80,7 @@ export const SectionLevelView = ({ guild, levels, localization }: SectionLevelVi
                 }
             }}
         >
-            <WindowVirtualizer onRangeChange={handleRangeChange}>
+            <WindowVirtualizer onScroll={handleScroll}>
                 {items.map(({ user, member, rank, level, experience }) => (
                     <SectionLevelViewCard
                         key={user.id}

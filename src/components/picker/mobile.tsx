@@ -1,5 +1,7 @@
 'use client';
 
+import { errorClasses, ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
+import { CloudOffIcon } from '@/components/icons';
 import {
     getMobilePickerDefaultSnap,
     getMobilePickerSnapPoints,
@@ -28,6 +30,11 @@ export const MobilePickerRoot = styled(BottomSheet)(({ theme }) => ({
         zIndex: 1,
         '& [data-rsbs-content]': {
             overflow: 'unset'
+        },
+        [`&:has(.${errorClasses.root})`]: {
+            display: 'flex',
+            placeItems: 'center',
+            placeContent: 'center'
         }
     }
 }));
@@ -69,7 +76,8 @@ export const MobilePicker = <T, >(
         onClick,
         search,
         setSearch,
-        slotProps
+        slotProps,
+        localization: { translations }
     }: MobilePickerProps<T>
 ) => {
     const { sheetScrollRef, setSheetContentRef } = useMobilePickerRef();
@@ -92,7 +100,7 @@ export const MobilePicker = <T, >(
             {...slotProps?.root}
         >
             <MobilePickerContent ref={setSheetContentRef} {...slotProps?.content}>
-                <Virtualizer scrollRef={sheetScrollRef} overscan={2}>
+                {choices.length > 0 ? <Virtualizer scrollRef={sheetScrollRef} overscan={2}>
                     {choices.map((choice, index) => {
                         const id = getChoiceId(choice, index);
 
@@ -108,7 +116,11 @@ export const MobilePicker = <T, >(
                             }
                         );
                     })}
-                </Virtualizer>
+                </Virtualizer> : <ErrorRoot>
+                    <CloudOffIcon sx={{ fontSize: '7rem' }} />
+                    <ErrorTitle variant="h3">{translations.error_data_not_found_title}</ErrorTitle>
+                    <ErrorDescription variant="body2">{translations.error_data_not_found_description}</ErrorDescription>
+                </ErrorRoot>}
             </MobilePickerContent>
         </MobilePickerRoot>
     );

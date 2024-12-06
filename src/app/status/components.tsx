@@ -33,7 +33,6 @@ import {
     lighten,
     styled,
     SvgIcon,
-    Theme,
     Typography,
     typographyClasses,
     TypographyProps,
@@ -372,7 +371,7 @@ export const SectionStatusCard = (
 
     const [expanded, setExpanded] = useState(Boolean(defaultExpanded));
 
-    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
     const statusLabel = getStatusLabel(status, localization);
     const isConnected = status === 'CONNECTED';

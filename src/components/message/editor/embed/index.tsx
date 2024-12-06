@@ -40,11 +40,11 @@ const ContainerAccordion = styled(
     (props: AccordionProps) => (<MuiAccordion disableGutters elevation={0} {...props} />),
     { shouldForwardProp: (prop) => prop !== 'borderColor' }
 )<ContainerAccordionProps>(({ theme, borderColor }) => ({
-    // border: 'solid 1px rgb(235, 237, 239)',
+    // border: 'solid 1px rgb(235 237 239)',
     border: `solid 1px ${theme.vars.palette.divider}`,
     borderLeft: `solid 4px ${borderColor}`,
     borderRadius: 4,
-    boxShadow: 'rgb(0 0 0 / 8%) 0px 4px 4px',
+    boxShadow: 'rgb(0 0 0 / .08) 0px 4px 4px',
     '&::before': {
         content: 'none'
     }

@@ -3,6 +3,7 @@
 import { NavigationAppBar, NavigationDrawerToolbar } from '@/app/_navigation';
 import {
     ArrowBackIcon,
+    CategoryIcon,
     CommandBoxIcon,
     DirectionsRunIcon,
     EmojiEventsIcon,
@@ -36,7 +37,7 @@ import {
     NavigationRoot
 } from '@lunaproject/web-core/dist/components/Navigation';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
-import { Avatar, Box, Chip, Theme, Typography, useMediaQuery } from '@mui/material';
+import { Avatar, Box, Chip, Typography, useMediaQuery } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { Fragment, useState } from 'react';
 
@@ -67,7 +68,7 @@ export const Navigation = (
 
     const router = useRouter();
 
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
     const [open, setOpen] = useState(false);
 
@@ -303,6 +304,29 @@ export const Navigation = (
                                 icon={<TextSnippetIcon />}
                                 primary={translations.logging}
                                 enabled={guildConfiguration.logging.enabled}
+                                open={open}
+                                setOpen={setOpen}
+                            />
+                        </NavigationDrawerGroup>
+                        <NavigationDrawerGroup label={translations.settings_web}>
+                            <NavigationDrawerItem
+                                href={`${prefix}/web/pages`}
+                                icon={<MusicNoteIcon />}
+                                primary={translations.web_categories}
+                                open={open}
+                                setOpen={setOpen}
+                            />
+                            <NavigationDrawerItem
+                                href={`${prefix}/web/categories`}
+                                icon={<CategoryIcon />}
+                                primary={translations.web_categories}
+                                open={open}
+                                setOpen={setOpen}
+                            />
+                            <NavigationDrawerItem
+                                href={`${prefix}/web/tags`}
+                                icon={<LabelIcon />}
+                                primary={translations.web_tags}
                                 open={open}
                                 setOpen={setOpen}
                             />

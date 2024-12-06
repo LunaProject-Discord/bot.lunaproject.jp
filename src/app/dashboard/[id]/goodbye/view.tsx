@@ -1,5 +1,6 @@
 'use client';
 
+import { saveGuildConfiguration } from '@/app/dashboard/[id]/utils';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { SectionChannelSelectCard, SectionMessageCard } from '@/components/section_card';
 import { CodeStyleContainer } from '@/components/text';
@@ -12,7 +13,6 @@ import { SectionSwitchCard } from '@lunaproject/web-core/dist/components/Section
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useState } from 'react';
-import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;

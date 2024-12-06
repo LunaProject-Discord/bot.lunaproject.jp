@@ -17,13 +17,16 @@ import { ListItemIcon, ListItemText, listItemTextClasses, styled, Theme, useMedi
 import deepmerge from 'deepmerge';
 import React, { Dispatch, MouseEvent, ReactElement, SetStateAction } from 'react';
 
+export interface PickerBaseProps extends LocalizationProps {
+    anchorEl: HTMLElement | undefined;
+    setAnchorEl: Dispatch<SetStateAction<HTMLElement | undefined>>;
+}
+
 export type PickerGetChoiceId<T> = (choice: T, index: number) => string;
 export type PickerChoiceClickHandler<T> = (event: MouseEvent<HTMLDivElement>, choice: T, index: number) => void;
 export type PickerChoiceFilter<T> = (choice: T, search: string) => boolean;
 
-export interface PickerRootProps<T> extends LocalizationProps {
-    anchorEl: HTMLElement | undefined;
-    setAnchorEl: Dispatch<SetStateAction<HTMLElement | undefined>>;
+export interface PickerRootProps<T> extends PickerBaseProps {
     renderChoice: (props: PickerItemProps<T>) => ReactElement<PickerItemProps<T>>;
     getChoiceId: PickerGetChoiceId<T>;
     choices: T[];
@@ -80,7 +83,7 @@ export const Picker = <T, >(
     const { search, setSearch } = usePickerSearch(_search, _setSearch);
     const choices = getPickerChoices(_choices, search, filter);
 
-    const isSmall = useMediaQuery<Theme>((theme) => theme.breakpoints.up('sm'));
+    const isSmall = useMediaQuery((theme) => theme.breakpoints.up('sm'));
     const pickerProps = { choices, search, setSearch, ...props };
 
     if (isSmall) {
@@ -114,13 +117,10 @@ export const Picker = <T, >(
     }
 };
 
-export * from './channel';
-export * from './guild';
-export * from './member';
-export * from './role';
-export * from './snowflake';
-
+export * from './color';
 export * from './desktop';
 export * from './mobile';
 export * from './search_box';
+export * from './snowflake';
 export * from './utils';
+export * from './web';

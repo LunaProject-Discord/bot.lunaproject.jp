@@ -17,3 +17,4 @@ export type GuildFeature = 'manage' | 'level';
 export * from './configuration';
 export * from './level';
 export * from './notification';
+export * from './web';

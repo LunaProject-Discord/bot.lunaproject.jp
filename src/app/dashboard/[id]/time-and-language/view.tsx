@@ -1,5 +1,6 @@
 'use client';
 
+import { saveGuildConfiguration } from '@/app/dashboard/[id]/utils';
 import { ScheduleIcon, TranslateIcon } from '@/components/icons';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { ConfigurationLanguage, ConfigurationTimeAndLanguage } from '@/interfaces/bot';
@@ -12,7 +13,6 @@ import { SectionSelectCard } from '@lunaproject/web-core/dist/components/Section
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment, ReactNode } from 'react';
 import spacetime from 'spacetime';
-import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;

@@ -83,7 +83,7 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                                 paper: {
                                     sx: (theme) => ({
                                         border: `solid 1px ${theme.vars.palette.divider}`,
-                                        boxShadow: `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgba(0, 0, 0, .15)`
+                                        boxShadow: `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgb(0 0 0 / .15)`
                                     })
                                 }
                             }}

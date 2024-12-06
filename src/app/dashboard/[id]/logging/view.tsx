@@ -1,5 +1,6 @@
 'use client';
 
+import { saveGuildConfiguration } from '@/app/dashboard/[id]/utils';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildConfigurationLogging } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
@@ -11,7 +12,6 @@ import { ConfigContext, ConfigProvider, useResettableState } from '@lunaproject/
 import deepmerge from 'deepmerge';
 import { ChannelType } from 'discord-api-types/v10';
 import React, { Fragment, useContext } from 'react';
-import { saveGuildConfiguration } from '../utils';
 import {
     Category,
     Emote,

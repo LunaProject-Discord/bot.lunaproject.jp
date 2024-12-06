@@ -13,7 +13,7 @@ import {
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import { Box, IconButton, InputBase, ListItemText, Switch, switchClasses, Theme, useMediaQuery } from '@mui/material';
+import { Box, IconButton, InputBase, ListItemText, Switch, switchClasses, useMediaQuery } from '@mui/material';
 import { ellipsis, size } from 'polished';
 import React, { Fragment } from 'react';
 import { ListItemButton, ListItemIcon } from '../items';
@@ -30,7 +30,7 @@ export const ManageDisabledRolesDialog = (
         localization: { translations }
     }: ManageDisabledRolesDialogProps
 ) => {
-    const isMobile = useMediaQuery<Theme>((theme) => theme.breakpoints.down('md'));
+    const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const [search, setSearch, resetSearch] = useResettableState('');
 

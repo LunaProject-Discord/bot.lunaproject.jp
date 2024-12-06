@@ -7,7 +7,7 @@ import { filterPredicateChannel, sortChannels } from '@/utils/discord';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
 import { ItemDisabledProps, ItemProps } from '@lunaproject/web-core/dist/components/SectionItems';
 import { APIGuildChannel } from '@lunaproject/web-discord/dist/interfaces';
-import { ListItemButtonProps, ListItemText, popoverClasses, Theme, Typography, useMediaQuery } from '@mui/material';
+import { ListItemButtonProps, ListItemText, popoverClasses, Typography, useMediaQuery } from '@mui/material';
 import { ChannelType } from 'discord-api-types/v10';
 import { ellipsis } from 'polished';
 import React, { ChangeEvent, Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react';
@@ -94,7 +94,7 @@ export const ChannelPopover = (
         ...props
     }: ChannelPopoverProps
 ) => {
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
     const open = Boolean(anchorEl);
 
@@ -122,7 +122,7 @@ export const ChannelPopover = (
     };
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearch(e.target.value);
+        setSearch(e.currentTarget.value);
         setSelectedIndex(-1);
     };
 

@@ -1,7 +1,7 @@
 import { UserConfiguration } from '@/interfaces/bot';
 
 export const saveUserConfiguration = async (configuration: Partial<UserConfiguration>) => {
-    const res = await fetch(
+    const response = await fetch(
         '/api/users/me/configuration',
         {
             method: 'PATCH',
@@ -10,5 +10,5 @@ export const saveUserConfiguration = async (configuration: Partial<UserConfigura
         }
     );
 
-    return res.ok;
+    return response.ok;
 };

@@ -1,5 +1,7 @@
 'use client';
 
+import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
+import { CloudOffIcon } from '@/components/icons';
 import { PickerInternalProps, PickerSearchBox } from '@/components/picker';
 import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils';
@@ -48,7 +50,8 @@ export const DesktopPicker = <T, >(
         onClick,
         search,
         setSearch,
-        slotProps
+        slotProps,
+        localization: { translations }
     }: DesktopPickerProps<T>
 ) => {
     const focusInput = useCallback((input: HTMLInputElement | null) => {
@@ -72,7 +75,7 @@ export const DesktopPicker = <T, >(
                 {...slotProps?.searchBox}
             />
             <DesktopPickerContent {...slotProps?.content}>
-                <VList style={{ padding: 8 }}>
+                {choices.length > 0 ? <VList style={{ padding: 8 }}>
                     {choices.map((choice, index) => {
                         const id = getChoiceId(choice, index);
 
@@ -88,7 +91,11 @@ export const DesktopPicker = <T, >(
                             }
                         );
                     })}
-                </VList>
+                </VList> : <ErrorRoot>
+                    <CloudOffIcon sx={{ fontSize: '7rem' }} />
+                    <ErrorTitle variant="h3">{translations.error_data_not_found_title}</ErrorTitle>
+                    <ErrorDescription variant="body2">{translations.error_data_not_found_description}</ErrorDescription>
+                </ErrorRoot>}
             </DesktopPickerContent>
         </DesktopPickerRoot>
     );

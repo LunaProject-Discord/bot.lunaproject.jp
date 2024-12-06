@@ -1,5 +1,6 @@
 'use client';
 
+import { saveGuildConfiguration } from '@/app/dashboard/[id]/utils';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildConfigurationActivity } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
@@ -9,7 +10,6 @@ import { Section, SectionContent } from '@lunaproject/web-core/dist/components/S
 import { SectionButtonActionCard, SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import React, { Fragment, useState } from 'react';
-import { saveGuildConfiguration } from '../utils';
 import { ManageRolesDialog } from './dialog';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {

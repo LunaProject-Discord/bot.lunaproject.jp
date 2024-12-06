@@ -74,7 +74,7 @@ export const SaveConfirm = ({ open, disableKeyboardShortcuts, onSave, onCancel }
                 message="データを保存しますか？"
                 action={
                     <Box className={isDarkMode ? 'dark' : 'light'}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', flexShrink: 0, gap: .75 }}>
+                        <Box sx={{ display: 'flex', flexShrink: 0, alignItems: 'center', gap: .75 }}>
                             <Button
                                 ref={cancelButton}
                                 onClick={onCancel}

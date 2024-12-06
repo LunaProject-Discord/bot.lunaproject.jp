@@ -1,5 +1,6 @@
 'use client';
 
+import { saveGuildConfiguration } from '@/app/dashboard/[id]/utils';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { GuildConfigurationMusic } from '@/interfaces/bot';
 import { GuildConfigurationViewProps } from '@/interfaces/view';
@@ -14,7 +15,6 @@ import {
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Alert, AlertTitle } from '@mui/material';
 import React, { Fragment } from 'react';
-import { saveGuildConfiguration } from '../utils';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
     const { translations } = localization;

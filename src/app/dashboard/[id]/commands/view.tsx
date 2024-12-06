@@ -8,6 +8,7 @@ import {
     getDefaultCommandConfiguration,
     sortCommands
 } from '@/app/dashboard/[id]/commands/utils';
+import { saveGuildConfiguration } from '@/app/dashboard/[id]/utils';
 import { SaveConfirmV2 } from '@/components/save_confirm_v2';
 import { codeStyled } from '@/components/text';
 import { GuildConfigurationCommand, GuildConfigurationCommands } from '@/interfaces/bot';
@@ -22,7 +23,6 @@ import { getStateActionValue, useResettableState } from '@lunaproject/web-core/d
 import { Box, Grid2 as Grid, styled, Switch, Typography } from '@mui/material';
 import deepEqual from 'deep-equal';
 import React, { Dispatch, Fragment, memo, SetStateAction, useCallback, useMemo, useState } from 'react';
-import { saveGuildConfiguration } from '../utils';
 import { ManageCommandDialog } from './_dialog';
 
 const GridButton = styled(ButtonBase)(({ theme }) => ({
@@ -122,11 +122,11 @@ const CommandItem = memo<CommandItemProps>((
 }, ({ value: oldValue }, { value: newValue }) => deepEqual(oldValue, newValue, { strict: true }));
 CommandItem.displayName = 'CommandItem';
 
-interface Props extends GuildConfigurationViewProps {
+interface ViewProps extends GuildConfigurationViewProps {
     commands: RedisCommand[];
 }
 
-export const View = ({ guild, configuration, commands: redisCommands, localization }: Props) => {
+export const View = ({ guild, configuration, commands: redisCommands, localization }: ViewProps) => {
     const { translations } = localization;
 
     const categorizedCommands = useMemo(() => Object.entries(redisCommands.reduce((acc, command) => {

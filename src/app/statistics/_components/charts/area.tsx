@@ -2,7 +2,7 @@
 
 import { StatisticResponseProps } from '@/app/statistics/_components/interfaces';
 import { Statistic } from '@/interfaces/bot';
-import { Theme, useMediaQuery } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import { AreaChart as TremorAreaChart, AreaChartProps as TremorAreaChartProps } from '@tremor/react';
 import React from 'react';
 
@@ -20,7 +20,7 @@ export const AreaChart = ({
                               formatValue,
                               ...props
                           }: AreaChartProps) => {
-    const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up('md'));
+    const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
     return (
         <TremorAreaChart

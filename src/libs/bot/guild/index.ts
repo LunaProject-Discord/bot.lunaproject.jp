@@ -66,3 +66,4 @@ export const getGuildFlags = async (id: string): Promise<GuildFlags | undefined>
 export * from './configuration';
 export * from './level';
 export * from './notification';
+export * from './web';
