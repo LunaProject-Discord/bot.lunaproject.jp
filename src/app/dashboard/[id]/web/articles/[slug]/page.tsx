@@ -1,6 +1,6 @@
 import { NotFoundView } from '@/app/dashboard/[id]/view';
 import { getUser } from '@/app/utils';
-import { WithIdParamProps } from '@/interfaces/page';
+import { ArticlePageParamsProps } from '@/interfaces/page';
 import { getGuildWebPage, hasDashboardAccess } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
@@ -8,13 +8,7 @@ import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interfa
 import React from 'react';
 import { View } from './view';
 
-type PageProps = WithIdParamProps & {
-    params: {
-        pageId: string;
-    };
-}
-
-export const generateMetadata = async ({ params: { id } }: PageProps, parent: ResolvingMetadata) => {
+export const generateMetadata = async ({ params: { id, slug } }: ArticlePageParamsProps, parent: ResolvingMetadata) => {
     const { translations } = getLocalization();
     const title = translations.vote;
 
@@ -42,12 +36,12 @@ export const generateMetadata = async ({ params: { id } }: PageProps, parent: Re
     };
 };
 
-const Page = async ({ params: { id, pageId } }: PageProps) => {
+const Page = async ({ params: { id, slug } }: ArticlePageParamsProps) => {
     const localization = getLocalization();
 
     const userData = getUser();
     const guildData = getGuildById(id);
-    const guildWebPageData = getGuildWebPage(pageId);
+    const guildWebPageData = getGuildWebPage(slug);
 
     const [user, guild, guildWebPage] = await Promise.all([userData, guildData, guildWebPageData]);
 

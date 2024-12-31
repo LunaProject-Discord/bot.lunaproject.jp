@@ -7,7 +7,7 @@ import {
     UpdateGuildWebPageContent
 } from '@/interfaces/bot';
 import { getGuildWebCategoryByPageId, getGuildWebTagsByPageId } from '@/libs/bot';
-import prisma, { guild_web_page_content, guild_web_page_contents, guild_web_pages } from '@/libs/prisma';
+import prisma, { guild_web_page_contents, guild_web_pages } from '@/libs/prisma';
 import { ulid } from 'ulid';
 
 export const getGuildWebPages = async (guildId: string): Promise<GuildWebPage[]> => {
@@ -16,8 +16,11 @@ export const getGuildWebPages = async (guildId: string): Promise<GuildWebPage[]>
             guild_id: BigInt(guildId)
         },
         include: {
-            guild_web_page_content: true,
-            guild_web_page_contents: true
+            guild_web_page_contents: {
+                include: {
+                    guild_web_page: true
+                }
+            }
         }
     });
 
@@ -32,34 +35,55 @@ export const getGuildWebPages = async (guildId: string): Promise<GuildWebPage[]>
 };
 
 export interface PrismaGuildWebPage extends guild_web_pages {
-    guild_web_page_content: guild_web_page_content | null;
-    guild_web_page_contents: guild_web_page_contents[];
+    guild_web_page_contents: (guild_web_page_contents & {
+        guild_web_page: guild_web_pages;
+    })[];
 }
 
-export const getGuildWebPage = async (pageOrId: PrismaGuildWebPage | string): Promise<GuildWebPage | undefined> => {
-    const guildWebPage = typeof pageOrId === 'string' ? await prisma.guild_web_pages.findUnique({
+export const getGuildWebPage = async (pageOrIdOrSlug: PrismaGuildWebPage | string): Promise<GuildWebPage | undefined> => {
+    const guildWebPage = typeof pageOrIdOrSlug === 'string' ? await prisma.guild_web_pages.findFirst({
         where: {
-            id: pageOrId
+            OR: [
+                {
+                    id: pageOrIdOrSlug
+                },
+                {
+                    slug: pageOrIdOrSlug
+                }
+            ]
         },
         include: {
-            guild_web_page_content: true,
-            guild_web_page_contents: true
+            guild_web_page_contents: {
+                include: {
+                    guild_web_page: true
+                }
+            }
         }
-    }) : pageOrId;
+    }) : pageOrIdOrSlug;
     if (!guildWebPage)
         return undefined;
 
     const id = guildWebPage.id;
-    const contents = await getGuildWebPageContents(id);
-    const contentId = guildWebPage.guild_web_page_content?.page_content_id;
+    const contentId = guildWebPage.page_content_id ?? undefined;
+
+
+    const contents: GuildWebPageContent[] = [];
+    for (const guildWebPageContent of guildWebPage.guild_web_page_contents) {
+        const content = await getGuildWebPageContent(guildWebPageContent);
+        if (content)
+            contents.push(content);
+    }
 
     return {
         id,
         guildId: guildWebPage.guild_id.toString(),
         slug: guildWebPage.slug || undefined,
         contentId,
-        content: contentId ? contents.find(content => content.id === contentId) : undefined,
-        contents,
+        content: contentId ? contents.find((content) => content.id === contentId) : undefined,
+        contents: [
+            ...contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1).slice(0, 5),
+            ...(contentId ? contents.filter((content) => content.id !== contentId) : [])
+        ],
         category: await getGuildWebCategoryByPageId(id),
         tags: await getGuildWebTagsByPageId(id),
         deletedAt: guildWebPage.deleted_at ?? undefined,
@@ -74,19 +98,13 @@ export const createGuildWebPage = async (guildId: string, data: CreateGuildWebPa
             id: ulid(),
             guild_id: BigInt(guildId),
             slug: data.slug || undefined,
-            guild_web_page_content: {
+            guild_web_page_contents: {
                 create: {
-                    guild_web_page_contents: {
-                        connect: {
-                            id: ulid(),
-                            icon: data.content.icon,
-                            title: data.content.title,
-                            content: data.content.content,
-                            is_published: data.content.published,
-                            updated_at: new Date(),
-                            created_at: new Date()
-                        }
-                    },
+                    id: ulid(),
+                    icon: data.content.icon,
+                    title: data.content.title,
+                    content: data.content.content,
+                    is_published: data.content.published,
                     updated_at: new Date(),
                     created_at: new Date()
                 }
@@ -117,8 +135,11 @@ export const createGuildWebPage = async (guildId: string, data: CreateGuildWebPa
             created_at: new Date()
         },
         include: {
-            guild_web_page_content: true,
-            guild_web_page_contents: true
+            guild_web_page_contents: {
+                include: {
+                    guild_web_page: true
+                }
+            }
         }
     });
 
@@ -201,7 +222,7 @@ export const getGuildWebPageContents = async (pageId: string): Promise<GuildWebP
             page_id: pageId
         },
         include: {
-            guild_web_pages: true
+            guild_web_page: true
         }
     });
 
@@ -216,7 +237,7 @@ export const getGuildWebPageContents = async (pageId: string): Promise<GuildWebP
 };
 
 export interface PrismaGuildWebPageContent extends guild_web_page_contents {
-    guild_web_pages: guild_web_pages;
+    guild_web_page: guild_web_pages;
 }
 
 export const getGuildWebPageContent = async (pageContentOrId: PrismaGuildWebPageContent | string): Promise<GuildWebPageContent | undefined> => {
@@ -225,7 +246,7 @@ export const getGuildWebPageContent = async (pageContentOrId: PrismaGuildWebPage
             id: pageContentOrId
         },
         include: {
-            guild_web_pages: true
+            guild_web_page: true
         }
     }) : pageContentOrId;
     if (!guildWebPageContent)
@@ -233,7 +254,7 @@ export const getGuildWebPageContent = async (pageContentOrId: PrismaGuildWebPage
 
     return {
         id: guildWebPageContent.id,
-        guildId: guildWebPageContent.guild_web_pages.guild_id.toString(),
+        guildId: guildWebPageContent.guild_web_page.guild_id.toString(),
         pageId: guildWebPageContent.page_id,
         icon: guildWebPageContent.icon || undefined,
         title: guildWebPageContent.title,
@@ -258,7 +279,7 @@ export const createGuildWebPageContent = async (pageId: string, data: CreateGuil
             created_at: new Date()
         },
         include: {
-            guild_web_pages: true
+            guild_web_page: true
         }
     });
 
@@ -276,7 +297,7 @@ export const updateGuildWebPageContent = async (pageContentId: string, data: Upd
             updated_at: new Date()
         },
         include: {
-            guild_web_pages: true
+            guild_web_page: true
         }
     });
 

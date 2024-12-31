@@ -1,7 +1,6 @@
 'use client';
 
-import { EditorSaveState } from '@/components/editor';
-import { NotificationsIcon, RedoIcon, SaveIcon, UndoIcon } from '@/components/icons';
+import { CloudSyncIcon, NotificationsIcon, RedoIcon, SaveIcon, SyncProblemIcon, UndoIcon } from '@/components/icons';
 import { UserViewProps } from '@/interfaces/view';
 import { editorAtom } from '@/states/editor';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
@@ -21,7 +20,8 @@ import {
 import { Avatar, Box, BoxProps, Collapse, IconButton, styled, Tooltip, Typography } from '@mui/material';
 import { useCurrentEditor } from '@tiptap/react';
 import clsx from 'clsx';
-import { useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
+import NextLink from 'next/link';
 import React, { Fragment } from 'react';
 
 export const editorHeaderClasses = generateComponentClasses(
@@ -45,16 +45,16 @@ export const EditorHeaderRoot = styled(
     flexDirection: 'column',
     zIndex: 4,
     backgroundColor: theme.vars.palette.background.paper,
+    backgroundImage: theme.vars.overlays[8],
     boxShadow: `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgb(0 0 0 / .15)`
 }));
 
 export interface EditorHeaderProps extends UserViewProps {
     tabs: EditorRibbonTab[];
-    saveState: EditorSaveState;
 }
 
-export const EditorHeader = ({ tabs, saveState, user, localization: { translations } }: EditorHeaderProps) => {
-    const setEditorState = useSetAtom(editorAtom);
+export const EditorHeader = ({ tabs, user, localization: { translations } }: EditorHeaderProps) => {
+    const [{ save }, setEditorState] = useAtom(editorAtom);
 
     const { editor } = useCurrentEditor();
     if (!editor)
@@ -79,7 +79,9 @@ export const EditorHeader = ({ tabs, saveState, user, localization: { translatio
                     <RibbonGroupRoot>
                         <Tooltip title={translations.save} placement="bottom">
                             <IconButton>
-                                <SaveIcon />
+                                {save?.type === 'success' && <CloudSyncIcon />}
+                                {save?.type === 'error' && <SyncProblemIcon />}
+                                {(!save || save.type === 'loading') && <SaveIcon />}
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={translations.undo} placement="bottom">
@@ -111,9 +113,9 @@ export const EditorHeader = ({ tabs, saveState, user, localization: { translatio
                             gap: 1
                         }}
                     >
-                        {saveState === 'success' && '保存済み'}
-                        {saveState === 'failed' && '保存できませんでした'}
-                        {saveState === 'saving' && '保存中...'}
+                        {save?.type === 'success' && '保存済み'}
+                        {save?.type === 'error' && '保存できませんでした'}
+                        {save?.type === 'loading' && '保存中...'}
                     </Typography>
                     <Box
                         sx={{
@@ -123,6 +125,9 @@ export const EditorHeader = ({ tabs, saveState, user, localization: { translatio
                         }}
                     >
                         <Button
+                            component={NextLink}
+                            href={save?.type === 'success' ? `/guilds/${save.data.guildId}/articles/${save.data.pageId}/revisions/${save.data.id}` : '#'}
+                            disabled={!save || save.type !== 'success'}
                             variant="outlined"
                             corners="extended"
                         >

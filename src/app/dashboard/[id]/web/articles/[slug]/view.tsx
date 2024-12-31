@@ -8,7 +8,6 @@ import {
     EditorNavigationSidebar,
     EditorPublishSidebar,
     EditorRoot,
-    EditorSaveState,
     EditorSelectionMenu,
     EditorTitleInput,
     RibbonTabs
@@ -42,7 +41,6 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
     ] = useAtom(editorAtom);
 
     const [loaded, setLoaded] = useState(false);
-    const [saveState, setSaveState] = useState<EditorSaveState>(undefined);
 
     const latestPageContent = useMemo(() => {
         const contents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
@@ -95,7 +93,12 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
             if (!loaded)
                 return;
 
-            setSaveState('saving');
+            setEditorState((prevState) => ({
+                ...prevState,
+                save: {
+                    type: 'loading'
+                }
+            }));
             setContent(editor.getJSON());
         }
     });
@@ -131,7 +134,7 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
             };
 
             const response = await fetch(
-                `/api/guilds/${guild.id}/web/pages/${page.id}/contents`,
+                `/api/guilds/${guild.id}/web/articles/${page.id}/contents`,
                 {
                     method: 'POST',
                     body: JSON.stringify(data),
@@ -140,14 +143,25 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
             );
 
             if (!response.ok) {
-                setSaveState('failed');
+                setEditorState((prevState) => ({
+                    ...prevState,
+                    save: {
+                        type: 'error'
+                    }
+                }));
                 console.error('Failed to save page content!');
                 return;
             }
 
             const pageContent: GuildWebPageContent = await response.json();
 
-            setSaveState('success');
+            setEditorState((prevState) => ({
+                ...prevState,
+                save: {
+                    type: 'success',
+                    data: pageContent
+                }
+            }));
             console.log('Saved page content! ', pageContent);
         })();
 
@@ -159,12 +173,14 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
             <Dialog
                 open
                 fullScreen
-                sx={(theme) => ({
+                sx={{
                     [`& .${dialogClasses.paper}`]: {
                         gap: 0,
-                        bgcolor: theme.vars.palette.background.default
+                        overflow: 'hidden',
+                        bgcolor: 'background.default',
+                        backgroundImage: 'none'
                     }
-                })}
+                }}
             >
                 <EditorContext.Provider value={{ editor }}>
                     <EditorHeader
@@ -219,7 +235,6 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
                             RibbonTabs[3],
                             RibbonTabs[4]
                         ]}
-                        saveState={saveState}
                         user={user}
                         localization={localization}
                     />
@@ -235,6 +250,7 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
                             sx={(theme) => ({
                                 '--content-width': (theme) => `minmax(auto, ${theme.breakpoints.values.md}px)`,
                                 '--margin-width': (theme) => theme.spacing(2),
+
                                 width: '100%',
                                 ml: navigationOpen ? 0 : `-${NAVIGATION_DRAWER_WIDTH}px`,
                                 mr: publishOpen ? 0 : `-${NAVIGATION_DRAWER_WIDTH}px`,

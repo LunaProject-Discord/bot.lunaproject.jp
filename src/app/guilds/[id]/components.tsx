@@ -186,7 +186,7 @@ export const LayoutNavigation = (
                             component={NextLink}
                             label="投稿"
                             href={`${prefix}/articles`}
-                            value={`${prefix}/articles`}
+                            value={loweredPathname.startsWith(`${prefix}/articles/`) ? loweredPathname : `${prefix}/articles`}
                         />
                         <Tab
                             component={NextLink}

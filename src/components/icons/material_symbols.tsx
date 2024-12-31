@@ -25,6 +25,7 @@ import Checklist from '@material-symbols/svg-400/outlined/checklist.svg';
 import ClearAll from '@material-symbols/svg-400/outlined/clear_all.svg';
 import Close from '@material-symbols/svg-400/outlined/close.svg';
 import CloudOff from '@material-symbols/svg-400/outlined/cloud_off.svg';
+import CloudSync from '@material-symbols/svg-400/outlined/cloud_sync.svg';
 import Code from '@material-symbols/svg-400/outlined/code.svg';
 import ContentCopy from '@material-symbols/svg-400/outlined/content_copy.svg';
 import ContentCut from '@material-symbols/svg-400/outlined/content_cut.svg';
@@ -109,6 +110,8 @@ import SplitscreenTop from '@material-symbols/svg-400/outlined/splitscreen_top.s
 import SportsEsports from '@material-symbols/svg-400/outlined/sports_esports.svg';
 import Subscript from '@material-symbols/svg-400/outlined/subscript.svg';
 import Superscript from '@material-symbols/svg-400/outlined/superscript.svg';
+import Sync from '@material-symbols/svg-400/outlined/sync.svg';
+import SyncProblem from '@material-symbols/svg-400/outlined/sync_problem.svg';
 import Table from '@material-symbols/svg-400/outlined/table.svg';
 import TableRows from '@material-symbols/svg-400/outlined/table_rows.svg';
 import Tag from '@material-symbols/svg-400/outlined/tag.svg';
@@ -178,6 +181,8 @@ export const ClearAllIcon = createSvgIcon({ path: ClearAll }, 'ClearAllIcon');
 export const CloseIcon = createSvgIcon({ path: Close }, 'CloseIcon');
 
 export const CloudOffIcon = createSvgIcon({ path: CloudOff }, 'CloudOffIcon');
+
+export const CloudSyncIcon = createSvgIcon({ path: CloudSync }, 'CloudSyncIcon');
 
 export const CodeIcon = createSvgIcon({ path: Code }, 'CodeIcon');
 
@@ -346,6 +351,10 @@ export const SportsEsportsIcon = createSvgIcon({ path: SportsEsports }, 'SportsE
 export const SubscriptIcon = createSvgIcon({ path: Subscript }, 'SubscriptIcon');
 
 export const SuperscriptIcon = createSvgIcon({ path: Superscript }, 'SuperscriptIcon');
+
+export const SyncIcon = createSvgIcon({ path: Sync }, 'SyncIcon');
+
+export const SyncProblemIcon = createSvgIcon({ path: SyncProblem }, 'SyncProblemIcon');
 
 export const TableIcon = createSvgIcon({ path: Table }, 'TableIcon');
 

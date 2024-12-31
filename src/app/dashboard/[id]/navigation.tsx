@@ -310,7 +310,7 @@ export const Navigation = (
                         </NavigationDrawerGroup>
                         <NavigationDrawerGroup label={translations.settings_web}>
                             <NavigationDrawerItem
-                                href={`${prefix}/web/pages`}
+                                href={`${prefix}/web/articles`}
                                 icon={<MusicNoteIcon />}
                                 primary={translations.web_categories}
                                 open={open}

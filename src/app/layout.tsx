@@ -6,6 +6,7 @@ import { COOKIE_APPEARANCE } from '@/utils/cookie';
 import { Body } from '@lunaproject/web-core/dist/components/Layout';
 import { Metadata, Viewport } from 'next';
 import { cookies } from 'next/headers';
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React, { ReactNode } from 'react';
 import { LayoutView } from './layout_view';
 
@@ -121,9 +122,11 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
             />
         </head>
         <Body>
-            <LayoutView user={user} flags={userFlags} appearance={appearance} localization={localization}>
-                {children}
-            </LayoutView>
+            <NuqsAdapter>
+                <LayoutView user={user} flags={userFlags} appearance={appearance} localization={localization}>
+                    {children}
+                </LayoutView>
+            </NuqsAdapter>
         </Body>
         </html>
     );

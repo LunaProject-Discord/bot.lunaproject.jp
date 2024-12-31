@@ -1,7 +1,35 @@
+import { GuildWebPageContent } from '@/interfaces/bot';
 import { TableOfContentDataItem } from '@tiptap-pro/extension-table-of-contents';
 import { atom } from 'jotai';
 
+export type EditorSaveStateType = 'success' | 'error' | 'loading';
+
+export interface EditorSaveStateRoot {
+    type: EditorSaveStateType;
+}
+
+export interface EditorSaveStateSuccess extends EditorSaveStateRoot {
+    type: 'success';
+    data: GuildWebPageContent;
+}
+
+export interface EditorSaveStateError extends EditorSaveStateRoot {
+    type: 'error';
+    message?: string;
+}
+
+export interface EditorSaveStateLoading extends EditorSaveStateRoot {
+    type: 'loading';
+}
+
+export type EditorSaveState =
+    EditorSaveStateSuccess
+    | EditorSaveStateError
+    | EditorSaveStateLoading
+    | undefined;
+
 export interface EditorState {
+    save: EditorSaveState;
     navigation: {
         open: boolean;
         tableOfContents: TableOfContentDataItem[];
@@ -10,6 +38,7 @@ export interface EditorState {
 }
 
 export const editorAtom = atom<EditorState>({
+    save: undefined,
     navigation: {
         open: false,
         tableOfContents: []

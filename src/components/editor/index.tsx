@@ -3,11 +3,10 @@
 import { codeStyled } from '@/components/text';
 import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
 import { TextareaAutosize, TextareaAutosizeProps } from '@mui/base';
-import { Box, BoxProps, styled } from '@mui/material';
+import { Box, BoxProps, checkboxClasses, CSSObject, styled, Theme } from '@mui/material';
+import { blueGrey } from '@mui/material/colors';
 import clsx from 'clsx';
 import React from 'react';
-
-export type EditorSaveState = 'success' | 'failed' | 'saving' | undefined;
 
 export const editorClasses = generateComponentClasses(
     'Editor',
@@ -18,6 +17,25 @@ export const editorClasses = generateComponentClasses(
     ]
 );
 
+export const editorProseMirrorClasses = generateComponentClasses(
+    'ProseMirror',
+    [
+        'focused',
+        'selectednode',
+        'gapcursor'
+    ]
+);
+
+const editorRootPlaceholderStyled = (theme: Theme) => (placeholder: string): CSSObject => ({
+    '&.is-empty::before': {
+        content: `"${placeholder}"`,
+        height: 0,
+        float: 'left',
+        pointerEvents: 'none',
+        color: theme.vars.palette.text.disabled
+    }
+});
+
 export const EditorRoot = styled(
     ({ className, ...props }: BoxProps) => (
         <Box
@@ -25,100 +43,126 @@ export const EditorRoot = styled(
             {...props}
         />
     )
-)(({ theme }) => ({
-    padding: theme.spacing(3, 0),
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(3),
-    [theme.breakpoints.up('md')]: {
-        padding: theme.spacing(12, 0),
-        gap: theme.spacing(6)
-    },
-    [`& .${editorClasses.content}`]: {
-        '&.ProseMirror, &.ProseMirror-focused': {
-            outline: 'none',
-            '&.resize-cursor': {
-                cursor: ['ew-resize', 'col-resize']
-            }
-        },
-        '& .ProseMirror-gapcursor::after': {
-            borderTopColor: theme.vars.palette.text.primary
-        },
+)(({ theme }) => {
+    const placeholderStyled = editorRootPlaceholderStyled(theme);
 
-        '& h2': {
-            ...theme.typography.h2,
-            scrollMarginTop: theme.spacing(3),
-            '&:not(:last-child)': {
-                marginBottom: '.35em'
-            },
+    return {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: theme.spacing(2),
+        [`&:has(.${editorClasses.content}[contenteditable="true"])`]: {
+            padding: theme.spacing(3, 0),
+            gap: theme.spacing(3),
             [theme.breakpoints.up('md')]: {
-                scrollMarginTop: theme.spacing(12)
+                padding: theme.spacing(12, 0),
+                gap: theme.spacing(6)
             }
         },
-        '& h3': {
-            ...theme.typography.h3,
-            scrollMarginTop: theme.spacing(3),
-            '&:not(:last-child)': {
-                marginBottom: '.35em'
-            },
+        [`&:has(.${editorClasses.content}[contenteditable="false"])`]: {
             [theme.breakpoints.up('md')]: {
-                scrollMarginTop: theme.spacing(12)
+                padding: theme.spacing(3),
+                gap: theme.spacing(3),
+                border: `solid 1px ${theme.vars.palette.divider}`,
+                borderRadius: theme.shape.borderRadius
             }
         },
-        '& h4': {
-            ...theme.typography.h4,
-            scrollMarginTop: theme.spacing(3),
-            '&:not(:last-child)': {
-                marginBottom: '.35em'
+        [`& .${editorClasses.content}`]: {
+            [`&.ProseMirror, &.${editorProseMirrorClasses.focused}`]: {
+                outline: 'none',
+                '&.resize-cursor': {
+                    cursor: ['ew-resize', 'col-resize']
+                }
             },
-            [theme.breakpoints.up('md')]: {
-                scrollMarginTop: theme.spacing(12)
-            }
-        },
-        '& p': {
-            ...theme.typography.body1,
-            '&:not(:last-child)': {
-                marginBottom: '.35em'
+            [`& .${editorProseMirrorClasses.gapcursor}::after`]: {
+                borderTopColor: theme.vars.palette.text.primary
             },
-            '&.is-editor-empty:first-child::before': {
-                content: 'attr(data-placeholder)',
+
+            // プレースホルダー
+            '& figure.is-empty figcaption::before': {
+                content: `"キャプションを入力..."`,
                 height: 0,
                 float: 'left',
                 pointerEvents: 'none',
                 color: theme.vars.palette.text.disabled
-            }
-        },
-        '& code': codeStyled(theme),
-        '& a': {
-            textDecoration: 'underline',
-            color: theme.vars.palette.primary.main
-        },
-        '& ul': {
-            marginLeft: '1.4rem',
-            listStyleType: 'disc',
-            '&:not(:last-child)': {
-                marginBottom: '.35em'
             },
-            '& > li > ul': {
-                listStyleType: 'circle',
-                '& > li > ul': {
-                    listStyleType: 'square'
+
+            // ブロック
+            '& p': {
+                ...theme.typography.body1,
+                ...placeholderStyled('本文を入力するか「/」と入力してコマンドを実行...'),
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                },
+                '&:where(li *)': {
+                    ...placeholderStyled('項目を入力...')
                 }
-            }
-        },
-        '& ol': {
-            marginLeft: '1.4rem',
-            listStyleType: 'decimal',
-            '&:not(:last-child)': {
-                marginBottom: '.35em'
-            }
-        },
-        '& li:not(:last-child)': {
-            marginBottom: '.35em'
-        },
-        '& .tableWrapper': {
-            margin: '.35em 0',
+            },
+            '& h2, & h3, & h4': {
+                ...placeholderStyled('見出しを入力...'),
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                }
+                /*
+                [`&:where(.${editorClasses.content}[contenteditable="true"] *)`]: {
+                    scrollMarginTop: theme.spacing(3),
+                    [theme.breakpoints.up('md')]: {
+                        scrollMarginTop: theme.spacing(12)
+                    }
+                },
+                [`&:where(.${editorClasses.content}[contenteditable="false"] *)`]: {
+                    // グローバル ヘッダー: 56px, ローカル ヘッダー: 48px, マージン: 16px
+                    scrollMarginTop: theme.spacing(7 + 6 + 2),
+                    [theme.breakpoints.up('sm')]: {
+                        // グローバル ヘッダー: 64px, ローカル ヘッダー: 48px, マージン: 16px
+                        scrollMarginTop: theme.spacing(8 + 6 + 2)
+                    }
+                }
+                */
+            },
+            '& h2': theme.typography.h2,
+            '& h3': theme.typography.h3,
+            '& h4': theme.typography.h4,
+            '& ul': {
+                marginLeft: '1.4rem',
+                listStyleType: 'disc',
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                },
+                '&[data-type="taskList"]': {
+                    marginLeft: 0,
+                    listStyleType: 'none'
+                },
+                '& > li > ul': {
+                    listStyleType: 'circle',
+                    '& > li > ul': {
+                        listStyleType: 'square'
+                    }
+                }
+            },
+            '& ol': {
+                marginLeft: '1.4rem',
+                listStyleType: 'decimal',
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                }
+            },
+            '& li': {
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                },
+                '&.react-renderer.node-taskItem': {
+                    '& [data-node-view-wrapper]': {
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: theme.spacing(.5)
+                    },
+                    [`& .${checkboxClasses.root}`]: {
+                        padding: 0
+                    }
+                }
+            },
             '& table': {
+                margin: '.35em 0',
                 '& td, & th': {
                     position: 'relative',
                     padding: theme.spacing(1, 1.5),
@@ -145,41 +189,177 @@ export const EditorRoot = styled(
                     width: theme.spacing(.5),
                     position: 'absolute',
                     top: 0,
-                    bottom: -2,
-                    right: -2,
+                    bottom: theme.spacing(-.25),
+                    right: theme.spacing(-.25),
                     pointerEvents: 'none',
                     backgroundColor: theme.vars.palette.selection.main
                 }
-            }
-        },
-        '& blockquote': {
-            paddingLeft: theme.spacing(2),
-            position: 'relative',
-            '&:not(:last-child)': {
-                marginBottom: '.35em'
             },
-            '&::before': {
-                content: '""',
-                width: theme.spacing(.5),
-                position: 'absolute',
-                inset: 0,
-                backgroundColor: theme.vars.palette.divider,
+            '& blockquote': {
+                paddingLeft: theme.spacing(2),
+                position: 'relative',
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                },
+                '&::before': {
+                    content: '""',
+                    width: theme.spacing(.5),
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundColor: theme.vars.palette.divider,
+                    borderRadius: theme.shape.borderRadius
+                },
+                '& h2, & h3, & h4': {
+                    padding: theme.spacing(2, 0, 1.5)
+                }
+            },
+            '& pre': {
+                '--mui-palette-selection-main': '#5d769c',
+
+                padding: theme.spacing(1),
+                fontFamily: 'HackGen, Consolas, monospace',
+                fontSize: theme.typography.body2.fontSize,
+                backgroundColor: blueGrey[900],
+                borderRadius: theme.shape.borderRadius,
+                '&:not(:last-child)': {
+                    marginBottom: '.35rem'
+                },
+                '& code, & span': {
+                    margin: 0,
+                    padding: 0,
+                    userSelect: 'auto',
+                    fontFamily: 'inherit',
+                    fontSize: 'inherit',
+                    backgroundColor: 'unset',
+                    border: 'unset',
+                    borderRadius: 'unset'
+                }
+            },
+            /*
+            '& .codeblock': {
+                width: '100%',
+                display: 'grid',
+                gridTemplateColumns: '1fr',
+                gridTemplateRows: '1fr',
+                '& pre': {
+                    gridColumn: 1,
+                    gridRow: 1,
+                    fontFamily: 'HackGen, Consolas, monospace',
+                    fontSize: theme.typography.body2.fontSize,
+                    '& code, & span, & [data-node-view-content-react]': {
+                        margin: 0,
+                        padding: 0,
+                        fontFamily: 'inherit',
+                        fontSize: 'inherit',
+                        backgroundColor: 'unset',
+                        border: 'unset',
+                        borderRadius: 'unset'
+                    },
+                    '& [data-node-view-content-react]': {
+                        color: 'transparent',
+                        backgroundColor: 'transparent',
+                        caretColor: theme.vars.palette.text.primary
+                    }
+                }
+            },
+            */
+            '& img, & video, & audio, & iframe': {
+                maxWidth: '100%',
+                width: '100%',
+                outline: 'none',
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                },
+                [`&.${editorProseMirrorClasses.selectednode}, .${editorProseMirrorClasses.selectednode} > &`]: {
+                    outline: `solid ${theme.spacing(.5)} ${theme.vars.palette.selection.main}`
+                }
+            },
+            '& img, & video': {
+                height: 'auto',
                 borderRadius: theme.shape.borderRadius
             },
-            '& h2, & h3, & h4': {
-                padding: theme.spacing(2, 0, 1.5)
-            }
-        },
-        '& img, & video': {
-            maxWidth: '100%',
-            height: 'auto',
-            borderRadius: theme.shape.borderRadius,
-            '&:not(:last-child)': {
-                marginBottom: '.35em'
+            '& iframe[src^="https://www.youtube.com/embed/"], & iframe[src^="https://embed.nicovideo.jp/watch/"]': {
+                height: 'auto',
+                aspectRatio: '16 / 9',
+                borderRadius: theme.shape.borderRadius
+            },
+            '& figure': {
+                // position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: theme.spacing(.5),
+                cursor: 'default',
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                },
+                /*
+                '&::before': {
+                    content: '""',
+                    width: theme.spacing(5),
+                    height: theme.spacing(5),
+                    position: 'absolute',
+                    top: theme.spacing(1),
+                    left: theme.spacing(1),
+                    maskImage: `url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 -960 960 960"><path d="M349.91-160q-28.91 0-49.41-20.59-20.5-20.59-20.5-49.5t20.59-49.41q20.59-20.5 49.5-20.5t49.41 20.59q20.5 20.59 20.5 49.5t-20.59 49.41q-20.59 20.5-49.5 20.5Zm260 0q-28.91 0-49.41-20.59-20.5-20.59-20.5-49.5t20.59-49.41q20.59-20.5 49.5-20.5t49.41 20.59q20.5 20.59 20.5 49.5t-20.59 49.41q-20.59 20.5-49.5 20.5Zm-260-250q-28.91 0-49.41-20.59-20.5-20.59-20.5-49.5t20.59-49.41q20.59-20.5 49.5-20.5t49.41 20.59q20.5 20.59 20.5 49.5t-20.59 49.41q-20.59 20.5-49.5 20.5Zm260 0q-28.91 0-49.41-20.59-20.5-20.59-20.5-49.5t20.59-49.41q20.59-20.5 49.5-20.5t49.41 20.59q20.5 20.59 20.5 49.5t-20.59 49.41q-20.59 20.5-49.5 20.5Zm-260-250q-28.91 0-49.41-20.59-20.5-20.59-20.5-49.5t20.59-49.41q20.59-20.5 49.5-20.5t49.41 20.59q20.5 20.59 20.5 49.5t-20.59 49.41q-20.59 20.5-49.5 20.5Zm260 0q-28.91 0-49.41-20.59-20.5-20.59-20.5-49.5t20.59-49.41q20.59-20.5 49.5-20.5t49.41 20.59q20.5 20.59 20.5 49.5t-20.59 49.41q-20.59 20.5-49.5 20.5Z" /></svg>')`,
+                    maskRepeat: 'no-repeat',
+                    maskSize: theme.spacing(4),
+                    maskPosition: 'center',
+                    backgroundColor: theme.vars.palette.common.white
+                },
+                */
+                '& img, & video, & audio, & iframe': {
+                    '&:not(:last-child)': {
+                        marginBottom: 0
+                    }
+                },
+                '& figcaption': {
+                    ...theme.typography.body2,
+                    cursor: 'text',
+                    color: theme.vars.palette.text.secondary
+                }
+            },
+
+            // マーク
+            '& code': codeStyled(theme),
+            '& a': {
+                textDecoration: 'underline',
+                color: theme.vars.palette.primary.main
+            },
+
+            '&[contenteditable="true"]': {
+                '& h2, & h3, & h4': {
+                    scrollMarginTop: theme.spacing(3),
+                    [theme.breakpoints.up('md')]: {
+                        scrollMarginTop: theme.spacing(12)
+                    }
+                },
+                '& figure': {
+                    '& img, & video, & audio': {
+                        // pointerEvents: 'none',
+                        WebkitUserDrag: 'none',
+                        userDrag: 'none',
+                        cursor: 'default'
+                    }
+                }
+            },
+            '&[contenteditable="false"]': {
+                '& h2, & h3, & h4': {
+                    // グローバル ヘッダー: 56px, ローカル ヘッダー: 48px, マージン: 16px
+                    scrollMarginTop: theme.spacing(7 + 6 + 2),
+                    [theme.breakpoints.up('sm')]: {
+                        // グローバル ヘッダー: 64px, ローカル ヘッダー: 48px, マージン: 16px
+                        scrollMarginTop: theme.spacing(8 + 6 + 2)
+                    }
+                },
+                '& li.react-renderer.node-taskItem': {
+                    [`& .${checkboxClasses.root}`]: {
+                        cursor: 'default'
+                    }
+                }
             }
         }
-    }
-}));
+    };
+});
 
 export const EditorTitleInput = styled(
     ({ className, ...props }: TextareaAutosizeProps) => (

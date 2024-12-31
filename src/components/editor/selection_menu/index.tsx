@@ -27,7 +27,7 @@ import {
     ToggleButtonProps,
     Tooltip
 } from '@mui/material';
-import { BubbleMenu, useCurrentEditor } from '@tiptap/react';
+import { BubbleMenu, isTextSelection, useCurrentEditor } from '@tiptap/react';
 import clsx from 'clsx';
 import React, { forwardRef, useState } from 'react';
 import { z } from 'zod';
@@ -55,6 +55,7 @@ export const EditorSelectionMenuRoot = styled(
     alignItems: 'center',
     gap: theme.spacing(.5),
     backgroundColor: theme.vars.palette.background.paper,
+    backgroundImage: theme.vars.overlays[8],
     borderRadius: theme.shape.borderRadius,
     ...borderAndBoxShadow(theme)
 }));
@@ -149,7 +150,10 @@ export const EditorSelectionMenu = () => {
     return (
         <BubbleMenu
             editor={editor}
-            shouldShow={({ editor, state }) => !state.selection.empty && !editor.isActive('image')}
+            shouldShow={({ editor, state }) => {
+                const selection = state.selection;
+                return isTextSelection(selection) && !selection.empty && !editor.isActive('codeBlock');
+            }}
         >
             {linkEditing ? <EditorSelectionMenuRoot>
                 <InputBase
