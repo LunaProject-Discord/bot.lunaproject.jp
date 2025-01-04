@@ -1,9 +1,9 @@
 {
     "name": "bot.lunaproject.jp",
-    "packageManager": "yarn@4.5.1",
+    "packageManager": "yarn@4.6.0",
     "volta": {
         "node": "20.11.0",
-        "yarn": "4.5.0"
+        "yarn": "4.6.0"
     },
     "scripts": {
         "postinstall": "echo \"Post installing...\" && npx prisma db pull && npx prisma generate",
@@ -20,9 +20,9 @@
         "@emotion/styled": "11.13.0",
         "@lexical/markdown": "0.16.1",
         "@lexical/react": "0.16.1",
-        "@lunaproject/web-core": "2.0.0-beta.13",
+        "@lunaproject/web-core": "2.0.0-beta.15",
         "@lunaproject/web-discord": "1.2.3",
-        "@lunaproject/web-editor": "1.0.62",
+        "@lunaproject/web-editor": "1.0.83",
         "@material-symbols/svg-400": "0.26.0",
         "@mui/icons-material": "6.1.7",
         "@mui/lab": "6.0.0-beta.15",
@@ -31,8 +31,7 @@
         "@mui/x-data-grid": "7.22.2",
         "@mui/x-date-pickers": "7.22.2",
         "@prisma/client": "5.22.0",
-        "@tiptap-pro/extension-table-of-contents": "2.16.3",
-        "@tiptap/extension-code-block": "2.10.4",
+        "@tiptap-pro/extension-table-of-contents": "2.17.1",
         "@tremor/react": "3.18.4",
         "@uiw/react-color": "2.3.2",
         "country-code-emoji": "2.3.0",
@@ -40,7 +39,6 @@
         "emoji-mart": "5.6.0",
         "eslint": "8.57.0",
         "eslint-config-next": "14.2.22",
-        "hast-util-to-jsx-runtime": "2.3.2",
         "ioredis": "5.4.1",
         "json-diff-ts": "4.0.1",
         "lexical": "0.16.1",
@@ -54,13 +52,11 @@
         "react-color": "2.19.3",
         "react-device-detect": "2.2.3",
         "react-dom": "18.3.1",
-        "react-stickynode": "4.1.1",
-        "react-window": "1.8.10",
-        "shiki": "1.24.3",
+        "react-stickynode": "5.0.1",
+        "react-window": "1.8.11",
         "spacetime": "7.6.0",
         "swr": "2.2.5",
-        "tiptap-extension-code-block-shiki": "0.4.0",
-        "typescript": "5.6.3",
+        "typescript": "5.7.2",
         "ulid": "2.3.0",
         "virtua": "0.37.0",
         "zod": "3.23.8"
@@ -71,9 +67,9 @@
         "@types/luxon": "3.4.2",
         "@types/mousetrap": "1.6.15",
         "@types/node": "20.11.30",
-        "@types/react": "18.3.12",
-        "@types/react-color": "3.0.12",
-        "@types/react-dom": "18.3.1",
+        "@types/react": "18.3.18",
+        "@types/react-color": "3.0.13",
+        "@types/react-dom": "18.3.5",
         "@types/react-stickynode": "4.0.3",
         "@types/react-window": "1.8.8",
         "autoprefixer": "10.4.20",
@@ -81,5 +77,8 @@
         "postcss": "8.4.49",
         "prisma": "5.22.0",
         "tailwindcss": "3.4.15"
+    },
+    "resolutions": {
+        "@types/react": "18.3.18"
     }
 }
