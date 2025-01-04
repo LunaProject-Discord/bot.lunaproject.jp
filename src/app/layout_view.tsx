@@ -1,8 +1,12 @@
 'use client';
 
 import {
+    ArrowBackIcon,
+    ArrowDownwardIcon,
     ArrowDropDownIcon,
     ArrowDropUpIcon,
+    ArrowForwardIcon,
+    ArrowUpwardIcon,
     ErrorIcon,
     FirstPageIcon,
     InfoIcon,
@@ -120,10 +124,18 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
             }
         },
         icons: {
+            ArrowBack: ArrowBackIcon,
+            ArrowDownward: ArrowDownwardIcon,
+            ArrowForward: ArrowForwardIcon,
+            ArrowUpward: ArrowUpwardIcon,
             Decrement: ArrowDropDownIcon,
             ExpandLess: KeyboardArrowUpIcon,
             ExpandMore: KeyboardArrowDownIcon,
             Increment: ArrowDropUpIcon,
+            KeyboardArrowDown: KeyboardArrowDownIcon,
+            KeyboardArrowLeft: KeyboardArrowLeftIcon,
+            KeyboardArrowRight: KeyboardArrowRightIcon,
+            KeyboardArrowUp: KeyboardArrowUpIcon,
             More: KeyboardArrowRightIcon,
             OpenInNew: OpenInNewIcon,
             ToggleOff: ToggleOffIcon,

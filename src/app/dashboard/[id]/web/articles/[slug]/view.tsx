@@ -3,16 +3,15 @@
 import {
     editorClasses,
     editorDefaultExtensions,
+    EditorDialogs,
     EditorHeader,
     EditorLinkSelectionMenu,
     EditorNavigationSidebar,
     EditorPublishSidebar,
     EditorRoot,
     EditorSelectionMenu,
-    EditorTitleInput,
-    RibbonTabs
+    EditorTitleInput
 } from '@/components/editor';
-import { DockToLeftFillIcon, DockToLeftIcon, DockToRightFillIcon, DockToRightIcon } from '@/components/icons';
 import { CreateGuildWebPageContent, GuildWebPage, GuildWebPageContent } from '@/interfaces/bot';
 import { GuildViewProps, UserViewProps } from '@/interfaces/view';
 import { editorAtom } from '@/states/editor';
@@ -183,68 +182,8 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
                 }}
             >
                 <EditorContext.Provider value={{ editor }}>
-                    <EditorHeader
-                        tabs={[
-                            RibbonTabs[0],
-                            RibbonTabs[1],
-                            {
-                                name: 'view',
-                                label: '表示',
-                                accessKey: 'V',
-                                content: [
-                                    {
-                                        name: 'sidebar',
-                                        label: 'サイドバー',
-                                        accessKey: 'S',
-                                        content: [
-                                            {
-                                                name: 'navigation',
-                                                icon: navigationOpen ? DockToRightFillIcon : DockToRightIcon,
-                                                label: 'ナビゲーション',
-                                                accessKey: 'N',
-                                                selected: navigationOpen,
-                                                perform: () => {
-                                                    setEditorState((prevState) => ({
-                                                        ...prevState,
-                                                        navigation: {
-                                                            ...prevState.navigation,
-                                                            open: !prevState.navigation.open
-                                                        }
-                                                    }));
-                                                    return true;
-                                                }
-                                            },
-                                            {
-                                                name: 'publish',
-                                                icon: publishOpen ? DockToLeftFillIcon : DockToLeftIcon,
-                                                label: '投稿の公開設定',
-                                                accessKey: 'P',
-                                                selected: publishOpen,
-                                                perform: () => {
-                                                    setEditorState((prevState) => ({
-                                                        ...prevState,
-                                                        publish: !prevState.publish
-                                                    }));
-                                                    return true;
-                                                }
-                                            }
-                                        ]
-                                    }
-                                ]
-                            },
-                            RibbonTabs[3],
-                            RibbonTabs[4]
-                        ]}
-                        user={user}
-                        localization={localization}
-                    />
-                    <DialogContent
-                        sx={{
-                            p: 0,
-                            flexDirection: 'row',
-                            overflow: 'hidden'
-                        }}
-                    >
+                    <EditorHeader user={user} guild={guild} localization={localization} />
+                    <DialogContent sx={{ p: 0, flexDirection: 'row', overflow: 'hidden' }}>
                         <EditorNavigationSidebar localization={localization} />
                         <Box
                             sx={(theme) => ({
@@ -294,6 +233,8 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
 
                     <EditorSelectionMenu />
                     <EditorLinkSelectionMenu />
+
+                    <EditorDialogs localization={localization} />
                 </EditorContext.Provider>
             </Dialog>
         </Fragment>

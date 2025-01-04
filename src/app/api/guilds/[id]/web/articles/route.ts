@@ -4,6 +4,7 @@ import { createGuildWebPage, getGuildWebPages, hasDashboardAccess } from '@/libs
 import { getGuildById } from '@/libs/redis';
 import { CreateGuildWebPageSchema } from '@/schemas/bot';
 import { errorWithName } from '@lunaproject/web-core/dist/utils';
+import deepmerge from 'deepmerge';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
@@ -40,7 +41,14 @@ export const POST = async (req: NextRequest, { params: { id } }: WithIdParamProp
     if (!result.success)
         return NextResponse.json({ message: 'Invalid body!', issues: result.error.issues }, { status: 400 });
 
-    const data = result.data;
+    const data: Parameters<typeof createGuildWebPage>[1] = deepmerge(
+        result.data,
+        {
+            content: {
+                userId: user.id
+            }
+        }
+    );
 
     try {
         return NextResponse.json(await createGuildWebPage(id, data), { status: 200 });

@@ -1,14 +1,15 @@
+'use client';
+
 import { LocalizationProps } from '@/interfaces/localization';
 import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
-import { ItemDisabledProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import {
+    SectionCardDisabledProps,
+    SectionSwitchCardRootProps
+} from '@lunaproject/web-core/dist/components/SectionCard';
 import { Switch, switchClasses, Typography } from '@mui/material';
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 
-export interface SwitchButtonProps extends ItemDisabledProps, LocalizationProps {
-    checked: boolean;
-    setChecked: Dispatch<SetStateAction<boolean>>;
-    defaultChecked?: boolean;
-}
+export type SwitchButtonProps = SectionCardDisabledProps & SectionSwitchCardRootProps & LocalizationProps;
 
 export const SwitchButton = (
     {

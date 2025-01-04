@@ -4,6 +4,7 @@ import { createGuildWebPageContent, getGuildWebPage, getGuildWebPageContents, ha
 import { getGuildById } from '@/libs/redis';
 import { CreateGuildWebPageContentSchema } from '@/schemas/bot';
 import { errorWithName } from '@lunaproject/web-core/dist/utils';
+import deepmerge from 'deepmerge';
 import { NextRequest, NextResponse } from 'next/server';
 
 type RouteProps = WithIdParamProps & {
@@ -54,7 +55,12 @@ export const POST = async (req: NextRequest, { params: { id, pageId } }: RoutePr
     if (!result.success)
         return NextResponse.json({ message: 'Invalid body!', issues: result.error.issues }, { status: 400 });
 
-    const data = result.data;
+    const data: Parameters<typeof createGuildWebPageContent>[1] = deepmerge(
+        result.data,
+        {
+            userId: user.id
+        }
+    );
 
     try {
         return NextResponse.json(await createGuildWebPageContent(page.id, data), { status: 200 });

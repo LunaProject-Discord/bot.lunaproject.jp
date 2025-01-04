@@ -1,17 +1,18 @@
 'use client';
 
+import { MonospaceFontFamily } from '@/app/theme';
 import { EditorSelectionMenuButton, EditorSelectionMenuIconButton, EditorSelectionMenuRoot } from '@/components/editor';
 import { CheckIcon, CloseIcon, EditIcon, LinkOffIcon, OpenInNewIcon } from '@/components/icons';
+import { REGEX_URL } from '@/utils/regex';
 import { InputBase, inputBaseClasses, Tooltip } from '@mui/material';
 import { BubbleMenu, EditorEvents, useCurrentEditor } from '@tiptap/react';
 import React, { useEffect, useState } from 'react';
-import { z } from 'zod';
 
 export const EditorLinkSelectionMenu = () => {
     const [currentHref, setCurrentHref] = useState('');
 
     const [editing, setEditing] = useState(false);
-    const [inputValue, setInputValue] = useState('');
+    const [href, setHref] = useState('');
 
     const { editor } = useCurrentEditor();
 
@@ -27,11 +28,11 @@ export const EditorLinkSelectionMenu = () => {
         if (!editor)
             return;
 
-        const result = z.string().url().safeParse(inputValue);
-        if (!result.success)
+        const validUrl = REGEX_URL.test(href);
+        if (!validUrl)
             return;
 
-        editor.chain().focus().setLink({ href: result.data }).run();
+        editor.chain().focus().setLink({ href }).run();
         setEditing(false);
     };
 
@@ -53,7 +54,7 @@ export const EditorLinkSelectionMenu = () => {
 
             setEditing(false);
             setCurrentHref(href);
-            setInputValue(href);
+            setHref(href);
         };
 
         editor.on('selectionUpdate', handleEditorSelectionUpdate);
@@ -72,15 +73,15 @@ export const EditorLinkSelectionMenu = () => {
         >
             {editing ? <EditorSelectionMenuRoot>
                 <InputBase
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
+                    value={href}
+                    onChange={(e) => setHref(e.target.value)}
                     placeholder="URL を入力..."
                     sx={{
                         p: .5,
                         borderBottom: (theme) => `solid 1px ${theme.vars.palette.divider}`,
                         [`& .${inputBaseClasses.input}`]: {
                             p: 0,
-                            fontFamily: 'HackGen, Consolas, monospace'
+                            fontFamily: MonospaceFontFamily
                         }
                     }}
                 />

@@ -4,6 +4,8 @@ export const DefaultFontFamily = '"Nunito", "M PLUS Rounded 1c", "Noto Color Emo
 
 export const BrandingFontFamily = '"LINE Seed JP", "Noto Color Emoji", sans-serif';
 
+export const MonospaceFontFamily = '"HackGen", "Consolas", monospace';
+
 export const Nunito = css`
     @font-face {
         font-display: fallback;

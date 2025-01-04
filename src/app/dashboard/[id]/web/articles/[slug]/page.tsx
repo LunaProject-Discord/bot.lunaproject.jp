@@ -10,7 +10,7 @@ import { View } from './view';
 
 export const generateMetadata = async ({ params: { id, slug } }: ArticlePageParamsProps, parent: ResolvingMetadata) => {
     const { translations } = getLocalization();
-    const title = translations.vote;
+    const title = translations.web_pages;
 
     const user = await getUser();
     const guild = await getGuildById(id);

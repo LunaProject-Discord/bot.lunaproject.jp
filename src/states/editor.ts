@@ -28,8 +28,11 @@ export type EditorSaveState =
     | EditorSaveStateLoading
     | undefined;
 
+export type EditorDialogState = 'image' | 'video' | 'audio' | undefined;
+
 export interface EditorState {
     save: EditorSaveState;
+    dialog: EditorDialogState;
     navigation: {
         open: boolean;
         tableOfContents: TableOfContentDataItem[];
@@ -39,6 +42,7 @@ export interface EditorState {
 
 export const editorAtom = atom<EditorState>({
     save: undefined,
+    dialog: undefined,
     navigation: {
         open: false,
         tableOfContents: []

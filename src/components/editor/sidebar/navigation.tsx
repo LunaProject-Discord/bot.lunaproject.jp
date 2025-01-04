@@ -99,7 +99,7 @@ export const EditorNavigationSidebar = ({ localization: { translations } }: Edit
                         key={item.id}
                         onClick={handleListItemButtonClick(item.id)}
                         sx={{
-                            pl: 1.5 + (item.level - 2),
+                            pl: 1.5 + ((item.level - 2) * 2),
                             pr: 1.5,
                             py: 1,
                             borderRadius: 1

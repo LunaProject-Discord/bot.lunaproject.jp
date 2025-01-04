@@ -1,5 +1,6 @@
 'use client';
 
+import { MonospaceFontFamily } from '@/app/theme';
 import { codeStyled } from '@/components/text';
 import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
 import { TextareaAutosize, TextareaAutosizeProps } from '@mui/base';
@@ -217,7 +218,7 @@ export const EditorRoot = styled(
                 '--mui-palette-selection-main': '#5d769c',
 
                 padding: theme.spacing(1),
-                fontFamily: 'HackGen, Consolas, monospace',
+                fontFamily: MonospaceFontFamily,
                 fontSize: theme.typography.body2.fontSize,
                 backgroundColor: blueGrey[900],
                 borderRadius: theme.shape.borderRadius,
@@ -244,7 +245,7 @@ export const EditorRoot = styled(
                 '& pre': {
                     gridColumn: 1,
                     gridRow: 1,
-                    fontFamily: 'HackGen, Consolas, monospace',
+                    fontFamily: MonospaceFontFamily,
                     fontSize: theme.typography.body2.fontSize,
                     '& code, & span, & [data-node-view-content-react]': {
                         margin: 0,
@@ -380,8 +381,9 @@ export const EditorTitleInput = styled(
     }
 }));
 
+export * from './commands';
+export * from './dialogs';
 export * from './extensions';
 export * from './header';
-export * from './ribbon';
 export * from './selection_menu';
 export * from './sidebar';

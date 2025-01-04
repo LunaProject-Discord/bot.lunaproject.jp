@@ -1,6 +1,6 @@
 import {
     CreateGuildWebPage,
-    CreateGuildWebPageContent,
+    CreateGuildWebPageContent as OriginalCreateGuildWebPageContent,
     GuildWebPage,
     GuildWebPageContent,
     UpdateGuildWebPage,
@@ -64,8 +64,7 @@ export const getGuildWebPage = async (pageOrIdOrSlug: PrismaGuildWebPage | strin
         return undefined;
 
     const id = guildWebPage.id;
-    const contentId = guildWebPage.page_content_id ?? undefined;
-
+    const contentId = guildWebPage.content_id ?? undefined;
 
     const contents: GuildWebPageContent[] = [];
     for (const guildWebPageContent of guildWebPage.guild_web_page_contents) {
@@ -82,8 +81,8 @@ export const getGuildWebPage = async (pageOrIdOrSlug: PrismaGuildWebPage | strin
         content: contentId ? contents.find((content) => content.id === contentId) : undefined,
         contents: [
             ...contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1).slice(0, 5),
-            ...(contentId ? contents.filter((content) => content.id !== contentId) : [])
-        ],
+            contents.find((content) => content.id === contentId)
+        ].filter((content) => content !== undefined),
         category: await getGuildWebCategoryByPageId(id),
         tags: await getGuildWebTagsByPageId(id),
         deletedAt: guildWebPage.deleted_at ?? undefined,
@@ -92,7 +91,14 @@ export const getGuildWebPage = async (pageOrIdOrSlug: PrismaGuildWebPage | strin
     };
 };
 
-export const createGuildWebPage = async (guildId: string, data: CreateGuildWebPage): Promise<GuildWebPage> => {
+interface CreateGuildWebPageContent extends OriginalCreateGuildWebPageContent {
+    userId: string;
+}
+
+export const createGuildWebPage = async (
+    guildId: string,
+    data: CreateGuildWebPage & { content: CreateGuildWebPageContent; }
+): Promise<GuildWebPage> => {
     const guildWebPage = await prisma.guild_web_pages.create({
         data: {
             id: ulid(),
@@ -101,6 +107,7 @@ export const createGuildWebPage = async (guildId: string, data: CreateGuildWebPa
             guild_web_page_contents: {
                 create: {
                     id: ulid(),
+                    user_id: BigInt(data.content.userId),
                     icon: data.content.icon,
                     title: data.content.title,
                     content: data.content.content,
@@ -254,8 +261,9 @@ export const getGuildWebPageContent = async (pageContentOrId: PrismaGuildWebPage
 
     return {
         id: guildWebPageContent.id,
-        guildId: guildWebPageContent.guild_web_page.guild_id.toString(),
         pageId: guildWebPageContent.page_id,
+        guildId: guildWebPageContent.guild_web_page.guild_id.toString(),
+        userId: guildWebPageContent.user_id.toString(),
         icon: guildWebPageContent.icon || undefined,
         title: guildWebPageContent.title,
         content: guildWebPageContent.content,
@@ -271,6 +279,7 @@ export const createGuildWebPageContent = async (pageId: string, data: CreateGuil
         data: {
             id: ulid(),
             page_id: pageId,
+            user_id: BigInt(data.userId),
             icon: data.icon,
             title: data.title,
             content: data.content,

@@ -1,12 +1,13 @@
 'use client';
 
+import { MonospaceFontFamily } from '@/app/theme';
 import { Box, CSSObject, styled, Theme, Typography } from '@mui/material';
 import { SystemStyleObject } from '@mui/system/styleFunctionSx/styleFunctionSx';
 
 export const codeStyled = (theme: Theme): SystemStyleObject<Theme> => ({
     margin: theme.spacing(0, .25),
     padding: theme.spacing(.25, .5),
-    fontFamily: 'HackGen, Consolas, monospace',
+    fontFamily: MonospaceFontFamily,
     fontSize: '.87em',
     userSelect: 'all',
     color: 'unset',

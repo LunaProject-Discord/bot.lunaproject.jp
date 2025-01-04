@@ -77,13 +77,13 @@ export const View = ({ guild, page, localization }: ViewProps) => {
 
     return (
         <Grid container spacing={2}>
-            <Grid size={{ xs: 12, xl: 9 }}>
+            <Grid size={{ xs: 12, lg: 9 }}>
                 <EditorRoot>
                     <Typography variant="h1" className={editorClasses.title}>{pageContentTitle}</Typography>
                     <EditorContent editor={editor} />
                 </EditorRoot>
             </Grid>
-            <Grid size={{ xs: 12, xl: 3 }}>
+            <Grid size={{ xs: 12, lg: 3 }}>
                 <Box
                     sx={(theme) => ({
                         mt: -2,
@@ -110,7 +110,7 @@ export const View = ({ guild, page, localization }: ViewProps) => {
                                     key={item.id}
                                     onClick={handleTableOfContentsItemButtonClick(item.id)}
                                     sx={{
-                                        pl: 1.5 + (item.level - 2),
+                                        pl: 1.5 + ((item.level - 2) * 2),
                                         pr: 1.5,
                                         py: 1,
                                         borderRadius: 1

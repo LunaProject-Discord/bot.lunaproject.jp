@@ -14,6 +14,8 @@ export const GuildWebPageContentContentSchema = z.string();
 
 export const GuildWebPageContentPublishedSchema = z.boolean().default(false);
 
+export const GuildWebPageContentCommentSchema = z.string().max(128, 'web_page_content_error_too_big_comment');
+
 export const GuildWebPageIdSchema = z.string().ulid('web_page_error_invalid_type_id');
 
 export const GuildWebPageSlugSchema = z.string().max(64, 'web_page_error_too_big_slug').regex(REGEX_SLUG, 'web_page_error_invalid_match_slug');
@@ -26,11 +28,13 @@ export const CreateGuildWebPageContentSchema = z.object({
     icon: GuildWebPageContentIconSchema.optional(),
     title: GuildWebPageContentTitleSchema,
     content: GuildWebPageContentContentSchema,
-    published: GuildWebPageContentPublishedSchema.optional()
+    published: GuildWebPageContentPublishedSchema.optional(),
+    comment: GuildWebPageContentCommentSchema.optional()
 });
 
 export const UpdateGuildWebPageContentSchema = z.object({
     published: GuildWebPageContentPublishedSchema.optional(),
+    comment: GuildWebPageContentCommentSchema.optional(),
     deleted: z.boolean().optional()
 });
 

@@ -1,23 +1,41 @@
 'use client';
 
-import { CloudSyncIcon, NotificationsIcon, RedoIcon, SaveIcon, SyncProblemIcon, UndoIcon } from '@/components/icons';
-import { UserViewProps } from '@/interfaces/view';
+import { EditorRibbonTabs } from '@/components/editor';
+import {
+    CloseIcon,
+    CloudSyncIcon,
+    NotificationsIcon,
+    RedoIcon,
+    SaveIcon,
+    SyncProblemIcon,
+    UndoIcon
+} from '@/components/icons';
+import { GuildViewProps, UserViewProps } from '@/interfaces/view';
 import { editorAtom } from '@/states/editor';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { YudzukiIcon } from '@lunaproject/web-core/dist/components/Icons';
 import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
 import {
-    EditorRibbonTab,
     RibbonDivider,
     RibbonGroupRoot,
     RibbonProvider,
-    RibbonTabContentRoot,
     RibbonTabContext,
+    RibbonTabHeader,
     RibbonTabPanel,
     RibbonTabs
 } from '@lunaproject/web-editor';
-import { Avatar, Box, BoxProps, Collapse, IconButton, styled, Tooltip, Typography } from '@mui/material';
+import {
+    Avatar,
+    Box,
+    BoxProps,
+    Collapse,
+    IconButton,
+    styled,
+    svgIconClasses,
+    Tooltip,
+    Typography
+} from '@mui/material';
 import { useCurrentEditor } from '@tiptap/react';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
@@ -45,15 +63,17 @@ export const EditorHeaderRoot = styled(
     flexDirection: 'column',
     zIndex: 4,
     backgroundColor: theme.vars.palette.background.paper,
-    backgroundImage: theme.vars.overlays[8],
-    boxShadow: `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgb(0 0 0 / .15)`
+    boxShadow: `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgb(0 0 0 / .15)`,
+    ...theme.applyStyles('dark', {
+        backgroundImage: theme.vars.overlays[8]
+    })
 }));
 
-export interface EditorHeaderProps extends UserViewProps {
-    tabs: EditorRibbonTab[];
-}
+export type EditorHeaderProps = UserViewProps & GuildViewProps;
 
-export const EditorHeader = ({ tabs, user, localization: { translations } }: EditorHeaderProps) => {
+export const EditorHeader = ({ user, guild, localization }: EditorHeaderProps) => {
+    const { translations } = localization;
+
     const [{ save }, setEditorState] = useAtom(editorAtom);
 
     const { editor } = useCurrentEditor();
@@ -61,20 +81,31 @@ export const EditorHeader = ({ tabs, user, localization: { translations } }: Edi
         return null;
 
     return (
-        <RibbonProvider editor={editor} tabs={tabs}>
+        <RibbonProvider editor={editor} tabs={EditorRibbonTabs(localization)}>
             <EditorHeaderRoot>
-                <RibbonTabContentRoot>
-                    <Box
-                        sx={(theme) => ({
-                            width: theme.spacing(5),
-                            height: theme.spacing(5),
-                            display: 'flex',
-                            placeItems: 'center',
-                            placeContent: 'center'
-                        })}
-                    >
-                        <YudzukiIcon />
-                    </Box>
+                <RibbonTabHeader>
+                    <Tooltip title={translations.close} placement="bottom">
+                        <IconButton
+                            component={NextLink}
+                            href={`/dashboard/${guild.id}/web/articles`}
+                            sx={{
+                                [`& .${svgIconClasses.colorError}`]: {
+                                    display: 'none'
+                                },
+                                ['&:hover, &:focus, &:active']: {
+                                    [`& .${svgIconClasses.root}`]: {
+                                        display: 'none'
+                                    },
+                                    [`& .${svgIconClasses.colorError}`]: {
+                                        display: 'block'
+                                    }
+                                }
+                            }}
+                        >
+                            <YudzukiIcon className="default" />
+                            <CloseIcon color="error" />
+                        </IconButton>
+                    </Tooltip>
                     <RibbonDivider sx={{ my: 2, ml: -1 }} />
                     <RibbonGroupRoot>
                         <Tooltip title={translations.save} placement="bottom">
@@ -126,7 +157,8 @@ export const EditorHeader = ({ tabs, user, localization: { translations } }: Edi
                     >
                         <Button
                             component={NextLink}
-                            href={save?.type === 'success' ? `/guilds/${save.data.guildId}/articles/${save.data.pageId}/revisions/${save.data.id}` : '#'}
+                            href={save?.type === 'success' ? `/guilds/${guild.id}/articles/${save.data.pageId.toLowerCase()}/revisions/${save.data.id.toLowerCase()}` : '#'}
+                            target="_blank"
                             disabled={!save || save.type !== 'success'}
                             variant="outlined"
                             corners="extended"
@@ -169,10 +201,10 @@ export const EditorHeader = ({ tabs, user, localization: { translations } }: Edi
                             </Tooltip>
                         </Box>
                     </Fragment>}
-                </RibbonTabContentRoot>
+                </RibbonTabHeader>
                 <RibbonTabContext.Consumer>
                     {({ open }) => (
-                        <Collapse in={open} mountOnEnter unmountOnExit>
+                        <Collapse in={open}>
                             <Box sx={{ minHeight: (theme) => theme.spacing(6) }}>
                                 <RibbonTabPanel editor={editor} />
                             </Box>
@@ -183,3 +215,5 @@ export const EditorHeader = ({ tabs, user, localization: { translations } }: Edi
         </RibbonProvider>
     );
 };
+
+export * from './ribbon';

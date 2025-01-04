@@ -60,7 +60,7 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     };
 };
 
-const Layout = async ({ children, params: { id } }: WithIdParamProps & { children: ReactNode }) => {
+const Layout = async ({ children, params: { id } }: WithIdParamProps & { children: ReactNode; }) => {
     if (!/^\d+$/.test(id))
         return notFound();
 

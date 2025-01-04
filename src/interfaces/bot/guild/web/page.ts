@@ -27,8 +27,9 @@ export type UpdateGuildWebPage = z.infer<typeof UpdateGuildWebPageSchema>;
 
 export interface GuildWebPageContent {
     id: string;
-    guildId: string;
     pageId: string;
+    guildId: string;
+    userId: string;
     icon?: string;
     title: string;
     content: string;

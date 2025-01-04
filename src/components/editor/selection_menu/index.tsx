@@ -1,5 +1,6 @@
 'use client';
 
+import { MonospaceFontFamily } from '@/app/theme';
 import {
     CheckIcon,
     CloseIcon,
@@ -10,6 +11,7 @@ import {
     FormatUnderlinedIcon,
     LinkIcon
 } from '@/components/icons';
+import { REGEX_URL } from '@/utils/regex';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { ButtonBase } from '@lunaproject/web-core/dist/components/ButtonBase';
 import { borderAndBoxShadow, generateComponentClasses } from '@lunaproject/web-core/dist/utils';
@@ -30,7 +32,6 @@ import {
 import { BubbleMenu, isTextSelection, useCurrentEditor } from '@tiptap/react';
 import clsx from 'clsx';
 import React, { forwardRef, useState } from 'react';
-import { z } from 'zod';
 
 export const editorSelectionMenuClasses = generateComponentClasses(
     'EditorSelectionMenu',
@@ -55,9 +56,11 @@ export const EditorSelectionMenuRoot = styled(
     alignItems: 'center',
     gap: theme.spacing(.5),
     backgroundColor: theme.vars.palette.background.paper,
-    backgroundImage: theme.vars.overlays[8],
     borderRadius: theme.shape.borderRadius,
-    ...borderAndBoxShadow(theme)
+    ...borderAndBoxShadow(theme),
+    ...theme.applyStyles('dark', {
+        backgroundImage: theme.vars.overlays[8]
+    })
 }));
 
 export const EditorSelectionMenuButton = styled(
@@ -116,7 +119,7 @@ export const EditorSelectionMenuToggleButton = styled(
 
 export const EditorSelectionMenu = () => {
     const [linkEditing, setLinkEditing] = useState(false);
-    const [hrefInputValue, setHrefInputValue] = useState('');
+    const [href, setHref] = useState('');
 
     const { editor } = useCurrentEditor();
 
@@ -136,11 +139,11 @@ export const EditorSelectionMenu = () => {
         if (!editor)
             return;
 
-        const result = z.string().url().safeParse(hrefInputValue);
-        if (!result.success)
+        const validUrl = REGEX_URL.test(href);
+        if (!validUrl)
             return;
 
-        editor.chain().focus().setLink({ href: result.data }).run();
+        editor.chain().focus().setLink({ href }).run();
         setLinkEditing(false);
     };
 
@@ -157,15 +160,15 @@ export const EditorSelectionMenu = () => {
         >
             {linkEditing ? <EditorSelectionMenuRoot>
                 <InputBase
-                    value={hrefInputValue}
-                    onChange={(e) => setHrefInputValue(e.target.value)}
+                    value={href}
+                    onChange={(e) => setHref(e.target.value)}
                     placeholder="URL を入力..."
                     sx={{
                         p: .5,
                         borderBottom: (theme) => `solid 1px ${theme.vars.palette.divider}`,
                         [`& .${inputBaseClasses.input}`]: {
                             p: 0,
-                            fontFamily: 'HackGen, Consolas, monospace'
+                            fontFamily: MonospaceFontFamily
                         }
                     }}
                 />

@@ -19,7 +19,7 @@ export const View = ({ guild, pages, localization }: ViewProps) => {
 
     return (
         <Fragment>
-            <PageHeader primary={translations.web_categories} secondary={translations.web_categories_description}>
+            <PageHeader primary={translations.web_pages} secondary={translations.web_pages_description}>
                 <Button
                     // onClick={handleAddButtonClick}
                     disableElevation
@@ -39,7 +39,7 @@ export const View = ({ guild, pages, localization }: ViewProps) => {
                         <SectionRouteLinkCard
                             key={page.id}
                             primary={page.content?.title}
-                            href={`/dashboard/${guild.id}/web/pages/${page.id.toLowerCase()}`}
+                            href={`/dashboard/${guild.id}/web/articles/${page.id.toLowerCase()}`}
                         />
                     ))}
                 </SectionContent>
