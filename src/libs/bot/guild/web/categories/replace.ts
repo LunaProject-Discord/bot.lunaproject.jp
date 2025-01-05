@@ -13,7 +13,7 @@ export const replaceGuildWebCategories = async (guildId: string, data: ReplaceGu
 
     const updateCategories = data.filter((category): category is ReplaceGuildWebCategoriesUpdate => 'id' in category);
     const createCategories = data.filter((category): category is ReplaceGuildWebCategoriesCreate => !('id' in category));
-    const deleteCategories = categories.filter((category) => !updateCategories.find((updateCategory) => updateCategory.id === category.id));
+    const deleteCategories = categories.filter((category) => !updateCategories.some((updateCategory) => updateCategory.id === category.id));
 
     await prisma.$transaction([
         ...updateCategories.map((category) => prisma.guild_web_categories.update({

@@ -32,14 +32,15 @@ export const TagSelect = (
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((_: MouseEvent<HTMLDivElement>, tag: TagPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, tag: TagPickerType) => {
         if (multiple) {
-            setValue((tags) => xor(tags, [tag.id]));
+            setValue((prevValue) => xor(prevValue, [tag.id]));
         } else {
             setValue(tag.id);
         }
 
-        setAnchorEl(undefined);
+        if (!e.shiftKey)
+            setAnchorEl(undefined);
     }, [setValue, multiple]);
 
     const tag = choices.find((choice) => choice.id === value);

@@ -32,14 +32,15 @@ export const MemberSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((_: MouseEvent<HTMLDivElement>, member: MemberPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, member: MemberPickerType) => {
         if (multiple) {
-            setValue((members) => xor(members, [member.user.id]));
+            setValue((prevValue) => xor(prevValue, [member.user.id]));
         } else {
             setValue(member.user.id);
         }
 
-        setAnchorEl(undefined);
+        if (!e.shiftKey)
+            setAnchorEl(undefined);
     }, [setValue, multiple]);
 
     const member = choices.find((choice) => choice.user.id === value);

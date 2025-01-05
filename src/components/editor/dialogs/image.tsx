@@ -26,9 +26,9 @@ import React, { KeyboardEvent, useMemo } from 'react';
 export type EditorImageDialogViewType = 'file' | 'url';
 
 export const EditorImageDialog = ({ localization: { translations } }: LocalizationProps) => {
-    const { editor } = useCurrentEditor();
-
     const isXSSize = useMediaQuery((theme) => theme.breakpoints.only('xs'));
+
+    const { editor } = useCurrentEditor();
 
     const [{ dialog }, setEditorState] = useAtom(editorAtom);
 

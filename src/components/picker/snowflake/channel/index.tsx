@@ -110,8 +110,8 @@ export const ChannelPicker = (
 ) => {
     const { translations } = props.localization;
 
-    const { search, setSearch } = usePickerSearch(_search, _setSearch);
-    const channels = sortChannels(_choices).filter((channel) => filterPredicateChannel(channel, search));
+    const { debouncedSearch, search, setSearch } = usePickerSearch(_search, _setSearch);
+    const channels = sortChannels(_choices).filter((channel) => filterPredicateChannel(channel, debouncedSearch));
     const categories = [
         undefined,
         ...channels.filter((category) => ChannelSortOrders.Category === category.type)

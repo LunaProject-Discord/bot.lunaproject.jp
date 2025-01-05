@@ -5,10 +5,11 @@ import { SnapPointProps } from 'react-spring-bottom-sheet/dist/types';
 
 export const usePickerSearch = (_search?: string, _setSearch?: Dispatch<SetStateAction<string>>) => {
     const [__search, __setSearch] = useState('');
-    const search = useDebounce(_search ?? __search, 500);
+    const search = _search ?? __search;
     const setSearch = _setSearch ?? __setSearch;
 
-    return { search, setSearch };
+    const debouncedSearch = useDebounce(search, 500);
+    return { debouncedSearch, search, setSearch };
 };
 
 export const getPickerChoices = <T>(choices: T[], search: string, filter: PickerChoiceFilter<T> | undefined) => filter ? choices.filter((choice) => filter(choice, search)) : choices;

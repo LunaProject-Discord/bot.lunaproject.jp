@@ -15,7 +15,6 @@ import { ReplaceGuildWebTagsSchema } from '@/schemas/bot';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { hexToHsva, hsvaToHexa } from '@uiw/react-color';
-import sortBy from 'lodash/sortBy';
 import React, { Fragment, useCallback, useMemo, useState } from 'react';
 
 const saveGuildWebTags = (id: string, data: ReplaceGuildWebTags) => fetch(
@@ -34,40 +33,34 @@ interface ViewProps extends GuildViewProps {
 export const View = ({ guild, tags, localization }: ViewProps) => {
     const { translations } = localization;
 
-    const initialValues = useMemo(() => sortBy(
-        tags.map((tag): Tag => ({
-            id: tag.id,
-            slug: tag.slug || '',
-            color: hexToHsva(tag.color || '#00000000'),
-            name: tag.name,
-            description: tag.description,
-            deleted: false
-        })),
-        'name'
-    ), [tags]);
+    const initialValues = useMemo(() => tags.map((tag): Tag => ({
+        id: tag.id,
+        slug: tag.slug || '',
+        color: hexToHsva(tag.color || '#00000000'),
+        name: tag.name,
+        description: tag.description,
+        deleted: false
+    })).toSorted((a, b) => a.name.localeCompare(b.name)), [tags]);
     const [values, setValues] = useState(initialValues);
     const resetValues = () => setValues(initialValues);
 
-    const toSourceObject = useCallback((): ReplaceGuildWebTags => sortBy(
-        initialValues.map((initialValue) => {
-            let tag: ReplaceGuildWebTagsUpdate = {
-                id: initialValue.id
-            };
+    const toSourceObject = useCallback((): ReplaceGuildWebTags => initialValues.map((initialValue) => {
+        let tag: ReplaceGuildWebTagsUpdate = {
+            id: initialValue.id
+        };
 
-            const value = values.find((value) => value.id === tag.id);
-            if (initialValue.slug !== value?.slug)
-                tag.slug = initialValue.slug;
-            if (hsvaToHexa(initialValue.color) !== (value?.color ? hsvaToHexa(value.color) : undefined))
-                tag.color = hsvaToHexa(initialValue.color);
-            if (initialValue.name !== value?.name)
-                tag.name = initialValue.name;
-            if (initialValue.description !== value?.description)
-                tag.description = initialValue.description;
+        const value = values.find((value) => value.id === tag.id);
+        if (initialValue.slug !== value?.slug)
+            tag.slug = initialValue.slug;
+        if (hsvaToHexa(initialValue.color) !== (value?.color ? hsvaToHexa(value.color) : undefined))
+            tag.color = hsvaToHexa(initialValue.color);
+        if (initialValue.name !== value?.name)
+            tag.name = initialValue.name;
+        if (initialValue.description !== value?.description)
+            tag.description = initialValue.description;
 
-            return tag;
-        }),
-        'id'
-    ), [initialValues, values]);
+        return tag;
+    }).toSorted((a, b) => a.id.localeCompare(b.id)), [initialValues, values]);
 
     const toTargetObject = useCallback((): ReplaceGuildWebTags => {
         const notDeletedValues = values.filter((value) => !value.deleted);
@@ -75,26 +68,23 @@ export const View = ({ guild, tags, localization }: ViewProps) => {
         const createTags = notDeletedValues.filter((value) => !tags.some((tag) => tag.id === value.id));
 
         return [
-            ...sortBy(
-                updateTags.map((updateTag): ReplaceGuildWebTagsUpdate => {
-                    let tag: ReplaceGuildWebTagsUpdate = {
-                        id: updateTag.id
-                    };
+            ...updateTags.map((updateTag): ReplaceGuildWebTagsUpdate => {
+                let tag: ReplaceGuildWebTagsUpdate = {
+                    id: updateTag.id
+                };
 
-                    const initialValue = initialValues.find((initialValue) => initialValue.id === tag.id);
-                    if (updateTag.slug !== initialValue?.slug)
-                        tag.slug = updateTag.slug;
-                    if (hsvaToHexa(updateTag.color) !== (initialValue?.color ? hsvaToHexa(initialValue.color) : undefined))
-                        tag.color = hsvaToHexa(updateTag.color);
-                    if (updateTag.name !== initialValue?.name)
-                        tag.name = updateTag.name;
-                    if (updateTag.description !== initialValue?.description)
-                        tag.description = updateTag.description;
+                const initialValue = initialValues.find((initialValue) => initialValue.id === tag.id);
+                if (updateTag.slug !== initialValue?.slug)
+                    tag.slug = updateTag.slug;
+                if (hsvaToHexa(updateTag.color) !== (initialValue?.color ? hsvaToHexa(initialValue.color) : undefined))
+                    tag.color = hsvaToHexa(updateTag.color);
+                if (updateTag.name !== initialValue?.name)
+                    tag.name = updateTag.name;
+                if (updateTag.description !== initialValue?.description)
+                    tag.description = updateTag.description;
 
-                    return tag;
-                }),
-                'id'
-            ),
+                return tag;
+            }).toSorted((a, b) => a.id.localeCompare(b.id)),
             ...createTags.map((createTag): ReplaceGuildWebTagsCreate => ({
                 slug: createTag.slug,
                 color: hsvaToHexa(createTag.color),
@@ -125,17 +115,14 @@ export const View = ({ guild, tags, localization }: ViewProps) => {
 
         const tags: GuildWebTag[] = await response.json();
         setValues(
-            sortBy(
-                tags.map((tag): Tag => ({
-                    id: tag.id,
-                    slug: tag.slug || '',
-                    color: hexToHsva(tag.color || '#00000000'),
-                    name: tag.name,
-                    description: tag.description,
-                    deleted: false
-                })),
-                'name'
-            )
+            tags.map((tag): Tag => ({
+                id: tag.id,
+                slug: tag.slug || '',
+                color: hexToHsva(tag.color || '#00000000'),
+                name: tag.name,
+                description: tag.description,
+                deleted: false
+            })).toSorted((a, b) => a.name.localeCompare(b.name))
         );
 
         return true;
@@ -145,7 +132,7 @@ export const View = ({ guild, tags, localization }: ViewProps) => {
 
     return (
         <Fragment>
-            <PageHeader primary={translations.web_tags} secondary={translations.web_tags_description}>
+            <PageHeader primary={translations.tags} secondary={translations.web_tags_description}>
                 <Button
                     onClick={handleAddButtonClick}
                     disableElevation

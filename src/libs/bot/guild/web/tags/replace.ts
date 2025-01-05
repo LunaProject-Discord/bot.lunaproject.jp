@@ -13,7 +13,7 @@ export const replaceGuildWebTags = async (guildId: string, data: ReplaceGuildWeb
 
     const updateTags = data.filter((tag): tag is ReplaceGuildWebTagsUpdate => 'id' in tag);
     const createTags = data.filter((tag): tag is ReplaceGuildWebTagsCreate => !('id' in tag));
-    const deleteTags = tags.filter((tag) => !updateTags.find((updateTag) => updateTag.id === tag.id));
+    const deleteTags = tags.filter((tag) => !updateTags.some((updateTag) => updateTag.id === tag.id));
 
     await prisma.$transaction([
         ...updateTags.map((tag) => prisma.guild_web_tags.update({

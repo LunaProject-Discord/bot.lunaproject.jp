@@ -40,6 +40,7 @@ const editorRootPlaceholderStyled = (theme: Theme) => (placeholder: string): CSS
 export const EditorRoot = styled(
     ({ className, ...props }: BoxProps) => (
         <Box
+            component="article"
             className={clsx(editorClasses.root, className)}
             {...props}
         />
@@ -381,9 +382,7 @@ export const EditorTitleInput = styled(
     }
 }));
 
-export * from './commands';
-export * from './dialogs';
-export * from './extensions';
+export * from './aside';
 export * from './header';
 export * from './selection_menu';
 export * from './sidebar';

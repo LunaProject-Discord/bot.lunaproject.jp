@@ -31,14 +31,15 @@ export const GuildSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((_: MouseEvent<HTMLDivElement>, guild: GuildPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, guild: GuildPickerType) => {
         if (multiple) {
-            setValue((guilds) => xor(guilds, [guild.id]));
+            setValue((prevValue) => xor(prevValue, [guild.id]));
         } else {
             setValue(guild.id);
         }
 
-        setAnchorEl(undefined);
+        if (!e.shiftKey)
+            setAnchorEl(undefined);
     }, [setValue, multiple]);
 
     const guild = choices.find((choice) => choice.id === value);

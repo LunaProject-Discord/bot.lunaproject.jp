@@ -15,7 +15,6 @@ import { ReplaceGuildWebCategoriesSchema } from '@/schemas/bot';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { hexToHsva, hsvaToHexa } from '@uiw/react-color';
-import sortBy from 'lodash/sortBy';
 import React, { Fragment, useCallback, useMemo, useState } from 'react';
 
 const saveGuildWebCategories = (id: string, data: ReplaceGuildWebCategories) => fetch(
@@ -34,43 +33,37 @@ interface ViewProps extends GuildViewProps {
 export const View = ({ guild, categories, localization }: ViewProps) => {
     const { translations } = localization;
 
-    const initialValues = useMemo(() => sortBy(
-        categories.map((category): Category => ({
-            id: category.id,
-            slug: category.slug || '',
-            color: hexToHsva(category.color || '#00000000'),
-            name: category.name,
-            description: category.description,
-            parentId: category.parent?.id ?? null,
-            deleted: false
-        })),
-        'name'
-    ), [categories]);
+    const initialValues = useMemo(() => categories.map((category): Category => ({
+        id: category.id,
+        slug: category.slug || '',
+        color: hexToHsva(category.color || '#00000000'),
+        name: category.name,
+        description: category.description,
+        parentId: category.parent?.id ?? null,
+        deleted: false
+    })).toSorted((a, b) => a.name.localeCompare(b.name)), [categories]);
     const [values, setValues] = useState(initialValues);
     const resetValues = () => setValues(initialValues);
 
-    const toSourceObject = useCallback((): ReplaceGuildWebCategories => sortBy(
-        initialValues.map((initialValue) => {
-            let category: ReplaceGuildWebCategoriesUpdate = {
-                id: initialValue.id
-            };
+    const toSourceObject = useCallback((): ReplaceGuildWebCategories => initialValues.map((initialValue) => {
+        let category: ReplaceGuildWebCategoriesUpdate = {
+            id: initialValue.id
+        };
 
-            const value = values.find((value) => value.id === category.id);
-            if (initialValue.slug !== value?.slug)
-                category.slug = initialValue.slug;
-            if (hsvaToHexa(initialValue.color) !== (value?.color ? hsvaToHexa(value.color) : undefined))
-                category.color = hsvaToHexa(initialValue.color);
-            if (initialValue.name !== value?.name)
-                category.name = initialValue.name;
-            if (initialValue.description !== value?.description)
-                category.description = initialValue.description;
-            if (initialValue.parentId !== value?.parentId)
-                category.parentId = initialValue.parentId;
+        const value = values.find((value) => value.id === category.id);
+        if (initialValue.slug !== value?.slug)
+            category.slug = initialValue.slug;
+        if (hsvaToHexa(initialValue.color) !== (value?.color ? hsvaToHexa(value.color) : undefined))
+            category.color = hsvaToHexa(initialValue.color);
+        if (initialValue.name !== value?.name)
+            category.name = initialValue.name;
+        if (initialValue.description !== value?.description)
+            category.description = initialValue.description;
+        if (initialValue.parentId !== value?.parentId)
+            category.parentId = initialValue.parentId;
 
-            return category;
-        }),
-        'id'
-    ), [initialValues, values]);
+        return category;
+    }).toSorted((a, b) => a.id.localeCompare(b.id)), [initialValues, values]);
 
     const toTargetObject = useCallback((): ReplaceGuildWebCategories => {
         const notDeletedValues = values.filter((value) => !value.deleted);
@@ -78,28 +71,25 @@ export const View = ({ guild, categories, localization }: ViewProps) => {
         const createCategories = notDeletedValues.filter((value) => !categories.some((category) => category.id === value.id));
 
         return [
-            ...sortBy(
-                updateCategories.map((updateCategory): ReplaceGuildWebCategoriesUpdate => {
-                    let category: ReplaceGuildWebCategoriesUpdate = {
-                        id: updateCategory.id
-                    };
+            ...updateCategories.map((updateCategory): ReplaceGuildWebCategoriesUpdate => {
+                let category: ReplaceGuildWebCategoriesUpdate = {
+                    id: updateCategory.id
+                };
 
-                    const initialValue = initialValues.find((initialValue) => initialValue.id === category.id);
-                    if (updateCategory.slug !== initialValue?.slug)
-                        category.slug = updateCategory.slug;
-                    if (hsvaToHexa(updateCategory.color) !== (initialValue?.color ? hsvaToHexa(initialValue.color) : undefined))
-                        category.color = hsvaToHexa(updateCategory.color);
-                    if (updateCategory.name !== initialValue?.name)
-                        category.name = updateCategory.name;
-                    if (updateCategory.description !== initialValue?.description)
-                        category.description = updateCategory.description;
-                    if (updateCategory.parentId !== initialValue?.parentId)
-                        category.parentId = updateCategory.parentId;
+                const initialValue = initialValues.find((initialValue) => initialValue.id === category.id);
+                if (updateCategory.slug !== initialValue?.slug)
+                    category.slug = updateCategory.slug;
+                if (hsvaToHexa(updateCategory.color) !== (initialValue?.color ? hsvaToHexa(initialValue.color) : undefined))
+                    category.color = hsvaToHexa(updateCategory.color);
+                if (updateCategory.name !== initialValue?.name)
+                    category.name = updateCategory.name;
+                if (updateCategory.description !== initialValue?.description)
+                    category.description = updateCategory.description;
+                if (updateCategory.parentId !== initialValue?.parentId)
+                    category.parentId = updateCategory.parentId;
 
-                    return category;
-                }),
-                'id'
-            ),
+                return category;
+            }).toSorted((a, b) => a.id.localeCompare(b.id)),
             ...createCategories.map((createCategory): ReplaceGuildWebCategoriesCreate => ({
                 slug: createCategory.slug,
                 color: hsvaToHexa(createCategory.color),
@@ -131,18 +121,15 @@ export const View = ({ guild, categories, localization }: ViewProps) => {
 
         const categories: GuildWebCategory[] = await response.json();
         setValues(
-            sortBy(
-                categories.map((category): Category => ({
-                    id: category.id,
-                    slug: category.slug || '',
-                    color: hexToHsva(category.color || '#00000000'),
-                    name: category.name,
-                    description: category.description,
-                    parentId: category.parent?.id ?? null,
-                    deleted: false
-                })),
-                'name'
-            )
+            categories.map((category): Category => ({
+                id: category.id,
+                slug: category.slug || '',
+                color: hexToHsva(category.color || '#00000000'),
+                name: category.name,
+                description: category.description,
+                parentId: category.parent?.id ?? null,
+                deleted: false
+            })).toSorted((a, b) => a.name.localeCompare(b.name))
         );
 
         return true;
@@ -152,7 +139,7 @@ export const View = ({ guild, categories, localization }: ViewProps) => {
 
     return (
         <Fragment>
-            <PageHeader primary={translations.web_categories} secondary={translations.web_categories_description}>
+            <PageHeader primary={translations.categories} secondary={translations.web_categories_description}>
                 <Button
                     onClick={handleAddButtonClick}
                     disableElevation

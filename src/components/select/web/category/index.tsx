@@ -32,14 +32,15 @@ export const CategorySelect = (
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((_: MouseEvent<HTMLDivElement>, category: CategoryPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, category: CategoryPickerType) => {
         if (multiple) {
-            setValue((categories) => xor(categories, [category.id]));
+            setValue((prevValue) => xor(prevValue, [category.id]));
         } else {
             setValue(category.id);
         }
 
-        setAnchorEl(undefined);
+        if (!e.shiftKey)
+            setAnchorEl(undefined);
     }, [setValue, multiple]);
 
     const category = choices.find((choice) => choice.id === value);

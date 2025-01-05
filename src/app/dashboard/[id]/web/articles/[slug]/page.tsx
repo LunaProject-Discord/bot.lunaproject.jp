@@ -1,7 +1,12 @@
 import { NotFoundView } from '@/app/dashboard/[id]/view';
 import { getUser } from '@/app/utils';
 import { ArticlePageParamsProps } from '@/interfaces/page';
-import { getGuildWebPage, hasDashboardAccess } from '@/libs/bot';
+import {
+    getGuildWebCategoriesByGuildId,
+    getGuildWebPage,
+    getGuildWebTagsByGuildId,
+    hasDashboardAccess
+} from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
@@ -42,13 +47,24 @@ const Page = async ({ params: { id, slug } }: ArticlePageParamsProps) => {
     const userData = getUser();
     const guildData = getGuildById(id);
     const guildWebPageData = getGuildWebPage(slug);
+    const guildWebCategoriesData = getGuildWebCategoriesByGuildId(id);
+    const guildWebTagsData = getGuildWebTagsByGuildId(id);
 
-    const [user, guild, guildWebPage] = await Promise.all([userData, guildData, guildWebPageData]);
+    const [user, guild, guildWebPage, guildWebCategories, guildWebTags] = await Promise.all([userData, guildData, guildWebPageData, guildWebCategoriesData, guildWebTagsData]);
 
     if (!user || !guild || !guildWebPage)
         return (<NotFoundView />);
 
-    return (<View user={user} guild={guild} page={guildWebPage} localization={localization} />);
+    return (
+        <View
+            user={user}
+            guild={guild}
+            page={guildWebPage}
+            categories={guildWebCategories}
+            tags={guildWebTags}
+            localization={localization}
+        />
+    );
 };
 
 export default Page;

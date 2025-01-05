@@ -20,6 +20,8 @@ export const GuildWebPageIdSchema = z.string().ulid('web_page_error_invalid_type
 
 export const GuildWebPageSlugSchema = z.string().max(64, 'web_page_error_too_big_slug').regex(REGEX_SLUG, 'web_page_error_invalid_match_slug');
 
+export const GuildWebPageContentSchema = GuildWebPageContentIdSchema;
+
 export const GuildWebPageCategorySchema = GuildWebCategoryIdSchema;
 
 export const GuildWebPageTagsSchema = z.array(GuildWebTagIdSchema);
@@ -47,6 +49,7 @@ export const CreateGuildWebPageSchema = z.object({
 
 export const UpdateGuildWebPageSchema = z.object({
     slug: GuildWebPageSlugSchema.nullish(),
+    content: GuildWebPageContentSchema.nullish(),
     category: GuildWebPageCategorySchema.nullish(),
     tags: GuildWebPageTagsSchema.nullish(),
     deleted: z.boolean().optional()

@@ -1,4 +1,4 @@
-import { GuildWebPageContent } from '@/interfaces/bot';
+import { GuildWebPage } from '@/interfaces/bot';
 import { TableOfContentDataItem } from '@tiptap-pro/extension-table-of-contents';
 import { atom } from 'jotai';
 
@@ -10,7 +10,7 @@ export interface EditorSaveStateRoot {
 
 export interface EditorSaveStateSuccess extends EditorSaveStateRoot {
     type: 'success';
-    data: GuildWebPageContent;
+    data: GuildWebPage;
 }
 
 export interface EditorSaveStateError extends EditorSaveStateRoot {

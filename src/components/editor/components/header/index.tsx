@@ -74,9 +74,20 @@ export type EditorHeaderProps = UserViewProps & GuildViewProps;
 export const EditorHeader = ({ user, guild, localization }: EditorHeaderProps) => {
     const { translations } = localization;
 
+    const { editor } = useCurrentEditor();
+
     const [{ save }, setEditorState] = useAtom(editorAtom);
 
-    const { editor } = useCurrentEditor();
+    const handlePreviewButtonClick = () => {
+        if (!save || save.type !== 'success')
+            return;
+
+        const page = save.data;
+        const pageContents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
+
+        window.open(`/guilds/${guild.id}/articles/${page.id.toLowerCase()}/revisions/${pageContents[0].id.toLowerCase()}`, '_blank');
+    };
+
     if (!editor)
         return null;
 
@@ -156,9 +167,7 @@ export const EditorHeader = ({ user, guild, localization }: EditorHeaderProps) =
                         }}
                     >
                         <Button
-                            component={NextLink}
-                            href={save?.type === 'success' ? `/guilds/${guild.id}/articles/${save.data.pageId.toLowerCase()}/revisions/${save.data.id.toLowerCase()}` : '#'}
-                            target="_blank"
+                            onClick={handlePreviewButtonClick}
                             disabled={!save || save.type !== 'success'}
                             variant="outlined"
                             corners="extended"

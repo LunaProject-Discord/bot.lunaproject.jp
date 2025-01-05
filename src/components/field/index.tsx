@@ -26,17 +26,13 @@ export const Field = styled(
     gap: theme.spacing(.5)
 }));
 
-export const FieldLabel = styled(
-    ({ className, ...props }: BoxProps<'label'>) => (
-        <Box
-            component="label"
-            className={clsx(fieldClasses.label, className)}
-            {...props}
-        />
-    )
-)(({ theme }) => ({
-    ...theme.typography.body1
-}));
+export const FieldLabel = ({ className, ...props }: TypographyProps<'label'>) => (
+    <Typography
+        component="label"
+        className={clsx(fieldClasses.label, className)}
+        {...props}
+    />
+);
 
 export const FieldRequired = ({ className, sx, ...props }: TypographyProps) => (
     <Typography

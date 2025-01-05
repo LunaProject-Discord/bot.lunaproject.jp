@@ -13,7 +13,7 @@ import { LocalizationProps } from '@/interfaces/localization';
 import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SomeRequired } from '@lunaproject/web-core/dist/utils';
 import { SlotComponentProps } from '@mui/base';
-import { ListItemIcon, ListItemText, listItemTextClasses, styled, Theme, useMediaQuery } from '@mui/material';
+import { ListItemIcon, ListItemText, listItemTextClasses, styled, useMediaQuery } from '@mui/material';
 import deepmerge from 'deepmerge';
 import React, { Dispatch, MouseEvent, ReactElement, SetStateAction } from 'react';
 
@@ -80,8 +80,8 @@ export const Picker = <T, >(
         ...props
     }: PickerProps<T>
 ) => {
-    const { search, setSearch } = usePickerSearch(_search, _setSearch);
-    const choices = getPickerChoices(_choices, search, filter);
+    const { debouncedSearch, search, setSearch } = usePickerSearch(_search, _setSearch);
+    const choices = getPickerChoices(_choices, debouncedSearch, filter);
 
     const isSmall = useMediaQuery((theme) => theme.breakpoints.up('sm'));
     const pickerProps = { choices, search, setSearch, ...props };

@@ -319,14 +319,14 @@ export const Navigation = (
                             <NavigationDrawerItem
                                 href={`${prefix}/web/categories`}
                                 icon={<CategoryIcon />}
-                                primary={translations.web_categories}
+                                primary={translations.categories}
                                 open={open}
                                 setOpen={setOpen}
                             />
                             <NavigationDrawerItem
                                 href={`${prefix}/web/tags`}
                                 icon={<LabelIcon />}
-                                primary={translations.web_tags}
+                                primary={translations.tags}
                                 open={open}
                                 setOpen={setOpen}
                             />

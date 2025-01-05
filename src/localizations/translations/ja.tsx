@@ -25,6 +25,7 @@ export const translationsJa: Translations = {
     enabled: '有効',
     disabled: '無効',
     default: 'デフォルト',
+    none: 'なし',
     add: '追加',
     remove: '削除',
     create: '作成',
@@ -52,6 +53,11 @@ export const translationsJa: Translations = {
     color: '色',
     url: 'URL',
     slug: 'スラッグ',
+    uncategorized: '未分類',
+    category: 'カテゴリ',
+    categories: 'カテゴリ',
+    tag: 'タグ',
+    tags: 'タグ',
 
 
     shard: 'シャード',
@@ -646,7 +652,6 @@ export const translationsJa: Translations = {
     web_page_editor_ribbon_view: '表示',
     web_page_editor_ribbon_view_sidebar: 'サイドバー',
 
-    web_categories: 'カテゴリ',
     web_categories_description: 'サーバー ページの投稿に割り当てるカテゴリの管理ができます。',
     web_category_pages: '%c 個の投稿',
     web_category_undo_remove: '削除を取り消す',
@@ -661,7 +666,6 @@ export const translationsJa: Translations = {
     web_category_description_description: `最大${GuildWebCategoryDescriptionSchema.maxLength}文字まで設定することができます。`,
     web_category_parent_category: '親カテゴリ',
 
-    web_tags: 'タグ',
     web_tags_description: 'サーバー ページの投稿に割り当てるタグの管理ができます。',
     web_tag_pages: '%c 個の投稿',
     web_tag_undo_remove: '削除を取り消す',

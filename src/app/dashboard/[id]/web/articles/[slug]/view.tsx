@@ -1,6 +1,7 @@
 'use client';
 
 import {
+    EditorCategorySelectButton,
     editorClasses,
     editorDefaultExtensions,
     EditorDialogs,
@@ -10,9 +11,10 @@ import {
     EditorPublishSidebar,
     EditorRoot,
     EditorSelectionMenu,
+    EditorTagSelectButton,
     EditorTitleInput
 } from '@/components/editor';
-import { CreateGuildWebPageContent, GuildWebPage, GuildWebPageContent } from '@/interfaces/bot';
+import { GuildWebCategory, GuildWebPage, GuildWebTag } from '@/interfaces/bot';
 import { GuildViewProps, UserViewProps } from '@/interfaces/view';
 import { editorAtom } from '@/states/editor';
 import { Dialog, DialogContent } from '@lunaproject/web-core/dist/components/Dialog';
@@ -23,12 +25,24 @@ import { getHierarchicalIndexes, TableOfContents } from '@tiptap-pro/extension-t
 import { EditorContent, EditorContext, JSONContent, useEditor } from '@tiptap/react';
 import { useAtom } from 'jotai';
 import React, { Fragment, KeyboardEvent, useEffect, useMemo, useState } from 'react';
+import { saveGuildWebPage, saveGuildWebPageContent } from './utils';
 
 interface ViewProps extends UserViewProps, GuildViewProps {
     page: GuildWebPage;
+    categories: GuildWebCategory[];
+    tags: GuildWebTag[];
 }
 
-export const View = ({ user, guild, page, localization }: ViewProps) => {
+export const View = (
+    {
+        user,
+        guild,
+        page,
+        categories: guildWebCategories,
+        tags: guildWebTags,
+        localization
+    }: ViewProps
+) => {
     const { translations, locale } = localization;
 
     const [
@@ -42,8 +56,8 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
     const [loaded, setLoaded] = useState(false);
 
     const latestPageContent = useMemo(() => {
-        const contents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
-        return contents[0];
+        const pageContents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
+        return pageContents[0];
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -62,6 +76,8 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
 
     const [title, setTitle] = useState(latestPageContentTitle);
     const [content, setContent] = useState(latestPageContentContent);
+    const [category, setCategory] = useState<string | undefined>(page.category?.id);
+    const [tags, setTags] = useState<string[]>(page.tags.map((tag) => tag.id));
 
     const debouncedTitle = useDebounce(title, 1000);
     const debouncedContent = useDebounce(content, 1000);
@@ -87,18 +103,28 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
                 class: editorClasses.content
             }
         },
-        onCreate: () => setLoaded(true),
+        onCreate: () => {
+            setLoaded(true);
+
+            setEditorState((prevState) => ({
+                ...prevState,
+                save: {
+                    type: 'success',
+                    data: page
+                }
+            }));
+        },
         onUpdate: ({ editor }) => {
             if (!loaded)
                 return;
 
+            setContent(editor.getJSON());
             setEditorState((prevState) => ({
                 ...prevState,
                 save: {
                     type: 'loading'
                 }
             }));
-            setContent(editor.getJSON());
         }
     });
 
@@ -127,45 +153,62 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
             return;
 
         (async () => {
-            const data: CreateGuildWebPageContent = {
-                title: debouncedTitle,
-                content: JSON.stringify(debouncedContent)
-            };
+            setEditorState((prevState) => ({
+                ...prevState,
+                save: {
+                    type: 'loading'
+                }
+            }));
 
-            const response = await fetch(
-                `/api/guilds/${guild.id}/web/articles/${page.id}/contents`,
+            const newPageContent = await saveGuildWebPageContent(
+                guild.id,
+                page.id,
                 {
-                    method: 'POST',
-                    body: JSON.stringify(data),
-                    credentials: 'include'
+                    title: debouncedTitle,
+                    content: JSON.stringify(debouncedContent)
                 }
             );
 
-            if (!response.ok) {
+            if (!newPageContent) {
                 setEditorState((prevState) => ({
                     ...prevState,
                     save: {
                         type: 'error'
                     }
                 }));
-                console.error('Failed to save page content!');
                 return;
             }
 
-            const pageContent: GuildWebPageContent = await response.json();
+            const newPage = await saveGuildWebPage(
+                guild.id,
+                page.id,
+                {
+                    category,
+                    tags
+                }
+            );
+
+            if (!newPage) {
+                setEditorState((prevState) => ({
+                    ...prevState,
+                    save: {
+                        type: 'error'
+                    }
+                }));
+                return;
+            }
 
             setEditorState((prevState) => ({
                 ...prevState,
                 save: {
                     type: 'success',
-                    data: pageContent
+                    data: newPage
                 }
             }));
-            console.log('Saved page content! ', pageContent);
         })();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [debouncedContent, debouncedTitle, guild.id, page.id]);
+    }, [category, debouncedContent, debouncedTitle, guild.id, page.id, tags]);
 
     return (
         <Fragment>
@@ -219,6 +262,20 @@ export const View = ({ user, guild, page, localization }: ViewProps) => {
                                     onKeyDown={handleTitleInputKeyDown}
                                     placeholder="ここにタイトルを入力..."
                                 />
+                                <Box component="aside" sx={{ display: 'flex', flexDirection: 'column' }}>
+                                    <EditorCategorySelectButton
+                                        value={category}
+                                        setValue={setCategory}
+                                        categories={guildWebCategories}
+                                        localization={localization}
+                                    />
+                                    <EditorTagSelectButton
+                                        value={tags}
+                                        setValue={setTags}
+                                        tags={guildWebTags}
+                                        localization={localization}
+                                    />
+                                </Box>
                                 <EditorContext.Consumer>
                                     {({ editor: currentEditor }) => (
                                         <Fragment>

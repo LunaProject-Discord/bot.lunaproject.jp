@@ -11,6 +11,7 @@ import {
 } from '@tiptap-pro/extension-table-of-contents';
 import { TextSelection } from '@tiptap/pm/state';
 import { EditorContent, JSONContent, useEditor } from '@tiptap/react';
+import { DateTime } from 'luxon';
 import React, { useCallback, useMemo, useState } from 'react';
 
 interface ViewProps extends GuildViewProps {
@@ -19,8 +20,8 @@ interface ViewProps extends GuildViewProps {
 
 export const View = ({ guild, page, localization }: ViewProps) => {
     const pageContent = useMemo(() => {
-        const contents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
-        return contents[0];
+        const pageContents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
+        return pageContents[0];
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -79,7 +80,12 @@ export const View = ({ guild, page, localization }: ViewProps) => {
         <Grid container spacing={2}>
             <Grid size={{ xs: 12, lg: 9 }}>
                 <EditorRoot>
-                    <Typography variant="h1" className={editorClasses.title}>{pageContentTitle}</Typography>
+                    <Box component="hgroup" sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
+                        <Typography variant="h1" className={editorClasses.title}>{pageContentTitle}</Typography>
+                        <Typography color="text.secondary">
+                            {DateTime.fromJSDate(pageContent.createdAt).setLocale('ja').toFormat('yyyy/MM/dd (EEE) HH:mm')}
+                        </Typography>
+                    </Box>
                     <EditorContent editor={editor} />
                 </EditorRoot>
             </Grid>

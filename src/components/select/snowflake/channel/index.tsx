@@ -31,14 +31,15 @@ export const ChannelSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((_: MouseEvent<HTMLDivElement>, channel: ChannelPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, channel: ChannelPickerType) => {
         if (multiple) {
-            setValue((channels) => xor(channels, [channel.id]));
+            setValue((prevValue) => xor(prevValue, [channel.id]));
         } else {
             setValue(channel.id);
         }
 
-        setAnchorEl(undefined);
+        if (!e.shiftKey)
+            setAnchorEl(undefined);
     }, [setValue, multiple]);
 
     const channel = choices.find((choice) => choice.id === value);

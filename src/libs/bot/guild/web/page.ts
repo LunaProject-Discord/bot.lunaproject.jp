@@ -160,6 +160,7 @@ export const updateGuildWebPage = async (pageId: string, data: UpdateGuildWebPag
                 id: pageId
             },
             data: {
+                content_id: data.content,
                 slug: data.slug,
                 deleted_at: data.deleted ? new Date() : undefined,
                 updated_at: new Date()

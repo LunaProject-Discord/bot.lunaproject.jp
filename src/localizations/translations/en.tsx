@@ -25,6 +25,7 @@ export const translationsEn: Translations = {
     enabled: 'Enabled',
     disabled: 'Disabled',
     default: 'Default',
+    none: 'None',
     add: 'Add',
     remove: 'Remove',
     create: 'Create',
@@ -52,6 +53,11 @@ export const translationsEn: Translations = {
     color: 'Color',
     url: 'URL',
     slug: 'Slug',
+    uncategorized: 'Uncategorized',
+    category: 'Category',
+    categories: 'Categories',
+    tag: 'Tag',
+    tags: 'Tags',
 
 
     shard: 'Shard',
@@ -643,7 +649,6 @@ export const translationsEn: Translations = {
     web_page_editor_ribbon_view: 'View',
     web_page_editor_ribbon_view_sidebar: 'Sidebar',
 
-    web_categories: 'Categories',
     web_categories_description: 'You can manage the categories assigned to articles on the server page.',
     web_category_pages: '%c articles',
     web_category_undo_remove: 'Undo Remove',
@@ -658,7 +663,6 @@ export const translationsEn: Translations = {
     web_category_description_description: `Up to ${GuildWebCategoryDescriptionSchema.maxLength} characters can be set.`,
     web_category_parent_category: 'Parent Category',
 
-    web_tags: 'Tags',
     web_tags_description: 'You can manage the tags assigned to articles on the server page.',
     web_tag_pages: '%c articles',
     web_tag_undo_remove: 'Undo Remove',

@@ -32,14 +32,15 @@ export const RoleSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((_: MouseEvent<HTMLDivElement>, role: RolePickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, role: RolePickerType) => {
         if (multiple) {
-            setValue((roles) => xor(roles, [role.id]));
+            setValue((prevValue) => xor(prevValue, [role.id]));
         } else {
             setValue(role.id);
         }
 
-        setAnchorEl(undefined);
+        if (!e.shiftKey)
+            setAnchorEl(undefined);
     }, [setValue, multiple]);
 
     const role = choices.find((choice) => choice.id === value);

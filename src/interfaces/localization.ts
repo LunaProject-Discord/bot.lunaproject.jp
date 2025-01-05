@@ -18,6 +18,7 @@ export type TranslationKeys =
     | 'enabled'
     | 'disabled'
     | 'default'
+    | 'none'
     | 'add'
     | 'remove'
     | 'create'
@@ -45,6 +46,11 @@ export type TranslationKeys =
     | 'color'
     | 'url'
     | 'slug'
+    | 'uncategorized'
+    | 'category'
+    | 'categories'
+    | 'tag'
+    | 'tags'
 
 
     | 'shard'
@@ -559,7 +565,6 @@ export type TranslationKeys =
     | 'web_page_editor_ribbon_view'
     | 'web_page_editor_ribbon_view_sidebar'
 
-    | 'web_categories'
     | 'web_categories_description'
     | 'web_category_pages'
     | 'web_category_undo_remove'
@@ -569,7 +574,6 @@ export type TranslationKeys =
     | 'web_category_description_description'
     | 'web_category_parent_category'
 
-    | 'web_tags'
     | 'web_tags_description'
     | 'web_tag_pages'
     | 'web_tag_undo_remove'
