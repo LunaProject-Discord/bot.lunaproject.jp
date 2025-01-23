@@ -1,7 +1,6 @@
 'use client';
 
 import { ChannelIcon } from '@/components/icons';
-import { ListSubheader } from '@/components/items';
 import {
     ChannelSortOrders,
     DesktopChannelPicker,
@@ -20,7 +19,7 @@ import { filterPredicateChannel, sortChannels } from '@/utils/discord';
 import { SectionCardDisabledProps, SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { APIGuildChannel } from '@lunaproject/web-discord/dist/interfaces';
 import { SlotComponentProps } from '@mui/base';
-import { Box, List, ListItemButton, useMediaQuery } from '@mui/material';
+import { Box, List, ListItemButton, ListSubheader as MuiListSubheader, styled, useMediaQuery } from '@mui/material';
 import deepmerge from 'deepmerge';
 import React, { MouseEvent, useCallback } from 'react';
 
@@ -57,7 +56,7 @@ export const ChannelPickerGroup = (
 
     return (
         <List>
-            {category ? <ListSubheader>{category.name}</ListSubheader> : <Box
+            {category ? <ChannelPickerGroupSubheader>{category.name}</ChannelPickerGroupSubheader> : <Box
                 component="li"
                 sx={{ height: (theme) => theme.spacing(1) }}
             />}
@@ -77,6 +76,21 @@ export const ChannelPickerGroup = (
         </List>
     );
 };
+
+export const ChannelPickerGroupSubheader = styled(MuiListSubheader)(({ theme }) => ({
+    padding: theme.spacing(1, 1, .5),
+    lineHeight: 'unset',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    backgroundImage: 'none',
+    ...theme.applyStyles('dark', {
+        backgroundImage: theme.vars.overlays[8]
+    }),
+    [theme.breakpoints.down('sm')]: {
+        padding: theme.spacing(1, 1.5, .5)
+    }
+}));
 
 export const ChannelPickerItem = (
     {
