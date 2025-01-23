@@ -1,5 +1,5 @@
 import { WithIdParamProps } from '@/interfaces/page';
-import { getGuildNotificationById } from '@/libs/bot';
+import { getGuildNotification } from '@/libs/bot';
 import { COOKIE_TOKEN } from '@/utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@/utils/discord';
 import { getGuildById } from '@lunaproject/web-discord/dist/libs';
@@ -25,7 +25,7 @@ export const GET = async (req: Request, { params: { id, notificationId } }: Prop
     if (!someCheckPermissions(guild, ...ADMINISTRATOR_OR_MANAGE_GUILD))
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    const notification = await getGuildNotificationById(id, notificationId);
+    const notification = await getGuildNotification(id, notificationId);
     if (!notification)
         return NextResponse.json({ message: 'Notification not found!' }, { status: 404 });
 

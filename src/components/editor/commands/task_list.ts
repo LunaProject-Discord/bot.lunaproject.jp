@@ -41,9 +41,17 @@ export const EditorToggleTaskListRibbonButton: LocalizedEditorRibbonButtonFactor
     );
 };
 
-export const EditorInsertTaskListRibbonButton: LocalizedEditorRibbonButtonFactory = (localization) => asRibbonButton(
-    EditorInsertTaskListCommand(localization),
-    {
-        accessKey: 'C'
-    }
-);
+export const EditorInsertTaskListRibbonButton: LocalizedEditorRibbonButtonFactory = (localization) => {
+    const { translations } = localization;
+
+    return asRibbonButton(
+        EditorInsertTaskListCommand(localization),
+        {
+            label: undefined,
+            accessKey: 'C',
+            tooltip: {
+                children: translations.task_list
+            }
+        }
+    );
+};

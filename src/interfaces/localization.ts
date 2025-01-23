@@ -46,6 +46,7 @@ export type TranslationKeys =
     | 'color'
     | 'url'
     | 'slug'
+    | 'table_of_contents'
     | 'uncategorized'
     | 'category'
     | 'categories'
@@ -82,6 +83,7 @@ export type TranslationKeys =
     | 'ordered_list'
     | 'task_list'
     | 'table'
+    | 'code_block'
     | 'media'
     | 'media_enabled_controls'
     | 'media_enabled_loop'
@@ -94,7 +96,6 @@ export type TranslationKeys =
     | 'audio'
     | 'audio_source_url'
     | 'file'
-    | 'code_block'
 
     | 'format'
     | 'bold'
@@ -194,6 +195,10 @@ export type TranslationKeys =
     | 'pattern_time'
     | 'pattern_datetime'
 
+    | 'pattern_date_luxon'
+    | 'pattern_time_luxon'
+    | 'pattern_datetime_luxon'
+
 
     | 'search'
     | 'search_guilds'
@@ -262,6 +267,15 @@ export type TranslationKeys =
     | 'status_mutual_guilds_with_count'
     | 'status_mutual_guilds_empty'
     | 'status_mutual_guilds_not_logged_in'
+
+
+    | 'guild_article_not_latest_version_title'
+    | 'guild_article_not_latest_version_description'
+    | 'guild_article_not_latest_version_action'
+    | 'guild_article_not_published_title'
+    | 'guild_article_not_published_description'
+    | 'guild_article_not_published_description_not_joined_user'
+    | 'guild_article_not_published_description_without_permissions_member'
 
 
     | 'leaderboard'
@@ -502,6 +516,11 @@ export type TranslationKeys =
 
     | 'web_pages'
     | 'web_pages_description'
+    | 'web_page_editor_title_placeholder'
+    | 'web_page_editor_content_placeholder_paragraph'
+    | 'web_page_editor_content_placeholder_heading'
+    | 'web_page_editor_content_placeholder_list_item'
+    | 'web_page_editor_content_placeholder_caption'
     | 'web_page_editor_command_insert_paragraph_description'
     | 'web_page_editor_command_toggle_heading_large_description'
     | 'web_page_editor_command_toggle_heading_medium_description'

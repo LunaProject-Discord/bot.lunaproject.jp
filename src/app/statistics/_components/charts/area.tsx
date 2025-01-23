@@ -11,15 +11,17 @@ export interface AreaChartProps extends StatisticResponseProps, Omit<TremorAreaC
     label: string;
 }
 
-export const AreaChart = ({
-                              statistics,
-                              label,
-                              getDate,
-                              getValue,
-                              formatDate,
-                              formatValue,
-                              ...props
-                          }: AreaChartProps) => {
+export const AreaChart = (
+    {
+        statistics,
+        label,
+        getDate,
+        getValue,
+        formatDate,
+        formatValue,
+        ...props
+    }: AreaChartProps
+) => {
     const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
     return (

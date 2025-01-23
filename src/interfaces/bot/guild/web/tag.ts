@@ -10,12 +10,13 @@ import { z } from 'zod';
 export interface GuildWebTag {
     id: string;
     guildId: string;
-    slug?: string;
+    slug: string | null;
     color: string;
     name: string;
     description: string;
-    updatedAt: Date;
-    createdAt: Date;
+    pageCount: number;
+    updatedAt: number;
+    createdAt: number;
 }
 
 export type CreateGuildWebTag = z.infer<typeof CreateGuildWebTagSchema>;

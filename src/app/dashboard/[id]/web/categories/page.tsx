@@ -4,7 +4,7 @@ import { WithIdParamProps } from '@/interfaces/page';
 import { getGuildWebCategoriesByGuildId, hasDashboardAccess } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { View } from './view';
 

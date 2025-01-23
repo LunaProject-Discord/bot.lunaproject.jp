@@ -3,7 +3,7 @@ import { getAndRequestUserGuildsById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@/utils/discord';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { getGuilds, getUser } from '../utils';
 import { View } from './view';

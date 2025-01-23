@@ -54,9 +54,9 @@ export const DesktopPicker = <T, >(
         localization: { translations }
     }: DesktopPickerProps<T>
 ) => {
-    const focusInput = useCallback((input: HTMLInputElement | null) => {
-        if (anchorEl !== undefined && input)
-            setTimeout(() => input.focus());
+    const focusInput = useCallback((element: HTMLInputElement | null) => {
+        if (anchorEl !== undefined && element)
+            setTimeout(() => element.focus());
     }, [anchorEl]);
 
     return (

@@ -5,6 +5,7 @@ import { SessionStatus } from '@/interfaces/bot';
 import { Localization, LocalizationProps } from '@/interfaces/localization';
 import { RedisStatus } from '@/interfaces/redis';
 import { getGuildIcon } from '@/utils/cdn';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     SectionAccordionCard,
     SectionAccordionCardHeaderIcon,
@@ -25,12 +26,12 @@ import {
     AvatarGroup,
     Box,
     BoxProps,
-    Button,
     ButtonBaseProps,
     Chip,
     darken,
     Divider,
     lighten,
+    Link,
     styled,
     SvgIcon,
     Typography,
@@ -40,7 +41,6 @@ import {
 } from '@mui/material';
 import { BoxTypeMap } from '@mui/system';
 import clsx from 'clsx';
-import NextLink from 'next/link';
 import React, { ElementType, Fragment, useContext, useState } from 'react';
 
 const getStatusColor = (status: SessionStatus) => {
@@ -459,10 +459,11 @@ export const SectionStatusCard = (
                     </Fragment> : <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                         <Typography>{translations.status_mutual_guilds_not_logged_in}</Typography>
                         <Button
-                            component={NextLink}
+                            component={Link}
                             href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                             disableElevation
                             variant="contained"
+                            corners="extended"
                             startIcon={<LoginIcon />}
                             sx={{ width: 'fit-content' }}
                         >

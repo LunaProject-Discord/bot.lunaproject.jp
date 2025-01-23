@@ -54,38 +54,47 @@ export const EditorTagSelectButton = (
             <EditorSelectButton onClick={(e) => setAnchorEl(e.currentTarget)} disabled={disabled}>
                 <EditorSelectButtonLabel>{translations.tags}</EditorSelectButtonLabel>
                 <EditorSelectButtonContent>
-                    {tags.filter((tag) => value.includes(tag.id)).map((tag) => (
-                        <Chip
-                            key={tag.id}
-                            icon={
-                                <Box
-                                    sx={{
-                                        ...size(24),
-                                        display: 'flex',
-                                        flexShrink: 0,
-                                        placeItems: 'center',
-                                        placeContent: 'center'
-                                    }}
-                                >
-                                    <ColorPickerPreview
-                                        hsva={hexToHsva(tag.color)}
-                                        width={theme.spacing(1.5)}
-                                        height={theme.spacing(1.5)}
-                                    />
-                                </Box>
-                            }
-                            label={tag.name}
-                            sx={(theme) => ({
-                                bgcolor: alpha(tag.color, .12),
-                                ...theme.applyStyles('dark', {
-                                    bgcolor: alpha(tag.color, .24)
-                                }),
-                                [`& .${chipClasses.label}`]: {
-                                    pl: 1
+                    {tags.filter((tag) => value.includes(tag.id)).map((tag) => {
+                        const colorAlpha = hexToHsva(tag.color).a;
+
+                        return (
+                            <Chip
+                                key={tag.id}
+                                icon={
+                                    colorAlpha > 0 ? <Box
+                                        sx={{
+                                            ...size(24),
+                                            display: 'flex',
+                                            flexShrink: 0,
+                                            placeItems: 'center',
+                                            placeContent: 'center'
+                                        }}
+                                    >
+                                        <ColorPickerPreview
+                                            hsva={hexToHsva(tag.color)}
+                                            width={theme.spacing(1.5)}
+                                            height={theme.spacing(1.5)}
+                                        />
+                                    </Box> : undefined
                                 }
-                            })}
-                        />
-                    ))}
+                                label={tag.name}
+                                sx={(theme) => {
+                                    if (colorAlpha === 0)
+                                        return {};
+
+                                    return {
+                                        bgcolor: alpha(tag.color, .12),
+                                        ...theme.applyStyles('dark', {
+                                            bgcolor: alpha(tag.color, .24)
+                                        }),
+                                        [`& .${chipClasses.label}`]: {
+                                            pl: 1
+                                        }
+                                    };
+                                }}
+                            />
+                        );
+                    })}
                     {value.length === 0 && <Typography>{translations.none}</Typography>}
                 </EditorSelectButtonContent>
             </EditorSelectButton>

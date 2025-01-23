@@ -17,6 +17,7 @@ import { FeaturedGuild } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { getGuildIcon } from '@/utils/discord';
 import { fetchWithUser } from '@/utils/swr';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { PageCenteredLayout, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
@@ -28,9 +29,9 @@ import {
     AlertTitle,
     Avatar,
     Box,
-    Button,
     ButtonBase,
     CircularProgress,
+    Link,
     List,
     ListItemButton,
     ListItemIcon,
@@ -189,7 +190,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                         下のボタンからログインをしてください。
                     </Box>
                     <Button
-                        component={NextLink}
+                        component={Link}
                         href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
                         disableElevation
                         variant="contained"
@@ -213,9 +214,11 @@ export const UnauthorizedView = ({ localization: { translations } }: Localizatio
             <ErrorTitle>{translations.error_unauthorized_title}</ErrorTitle>
             <ErrorDescription>{translations.error_unauthorized_description}</ErrorDescription>
             <Button
-                component={NextLink}
+                component={Link}
                 href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+                disableElevation
                 variant="contained"
+                corners="extended"
                 size="large"
                 startIcon={<LoginIcon />}
             >
@@ -246,7 +249,9 @@ export const NotFoundView = ({ localization: { translations } }: LocalizationPro
                 component={NextLink}
                 href="/"
                 prefetch={false}
+                disableElevation
                 variant="contained"
+                corners="extended"
                 size="large"
                 startIcon={<HomeIcon />}
             >

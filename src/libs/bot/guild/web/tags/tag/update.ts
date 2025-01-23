@@ -1,20 +1,18 @@
+import { database, Guild_Web_Tags } from '@/database';
 import { GuildWebTag, UpdateGuildWebTag } from '@/interfaces/bot';
 import { getGuildWebTag } from '@/libs/bot';
-import prisma from '@/libs/prisma';
+import { eq } from 'drizzle-orm';
 
-export const updateGuildWebTag = async (tagId: string, data: UpdateGuildWebTag): Promise<GuildWebTag> => {
-    const guildWebTag = await prisma.guild_web_tags.update({
-        where: {
-            id: tagId
-        },
-        data: {
-            slug: data.slug,
+export const updateGuildWebTag = async (id: string, data: UpdateGuildWebTag): Promise<GuildWebTag> => {
+    await database
+        .update(Guild_Web_Tags)
+        .set({
+            slug: data.slug || undefined,
             color: data.color,
             name: data.name,
-            description: data.description,
-            updated_at: new Date()
-        }
-    });
+            description: data.description
+        })
+        .where(eq(Guild_Web_Tags.id, id));
 
-    return (await getGuildWebTag(guildWebTag))!;
+    return (await getGuildWebTag(id))!;
 };

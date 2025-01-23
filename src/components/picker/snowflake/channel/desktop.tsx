@@ -29,9 +29,9 @@ export const DesktopChannelPicker = (
         localization: { translations }
     }: DesktopChannelPickerProps
 ) => {
-    const focusInput = useCallback((input: HTMLInputElement | null) => {
-        if (anchorEl !== undefined && input)
-            setTimeout(() => input.focus());
+    const focusInput = useCallback((element: HTMLInputElement | null) => {
+        if (anchorEl !== undefined && element)
+            setTimeout(() => element.focus());
     }, [anchorEl]);
 
     return (

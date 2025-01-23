@@ -1,21 +1,19 @@
+import { database, Guild_Web_Categories } from '@/database';
 import { GuildWebCategory, UpdateGuildWebCategory } from '@/interfaces/bot';
 import { getGuildWebCategory } from '@/libs/bot';
-import prisma from '@/libs/prisma';
+import { eq } from 'drizzle-orm';
 
-export const updateGuildWebCategory = async (categoryId: string, data: UpdateGuildWebCategory): Promise<GuildWebCategory> => {
-    const guildWebCategory = await prisma.guild_web_categories.update({
-        where: {
-            id: categoryId
-        },
-        data: {
-            slug: data.slug,
+export const updateGuildWebCategory = async (id: string, data: UpdateGuildWebCategory): Promise<GuildWebCategory> => {
+    await database
+        .update(Guild_Web_Categories)
+        .set({
+            slug: data.slug || undefined,
             color: data.color,
             name: data.name,
             description: data.description,
-            parent_id: data.parentId,
-            updated_at: new Date()
-        }
-    });
+            parentId: data.parentId
+        })
+        .where(eq(Guild_Web_Categories.id, id));
 
-    return (await getGuildWebCategory(guildWebCategory))!;
+    return (await getGuildWebCategory(id))!;
 };

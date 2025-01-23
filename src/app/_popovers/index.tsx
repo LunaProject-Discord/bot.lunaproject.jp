@@ -1,9 +1,9 @@
 'use client';
 
 import { CheckIcon } from '@/components/icons';
-import { Link } from '@lunaproject/web-core/dist/components/Link';
 import {
     CSSObject,
+    Link,
     LinkProps,
     ListItemButton as MuiListItemButton,
     ListItemButtonProps,

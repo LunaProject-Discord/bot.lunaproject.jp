@@ -1,6 +1,6 @@
 'use client';
 
-import { EditorAudioDialog, EditorImageDialog } from '@/components/editor';
+import { EditorAudioDialog, EditorImageDialog, EditorPublishDialog } from '@/components/editor';
 import { EditorVideoDialog } from '@/components/editor/dialogs/video';
 import { LocalizationProps } from '@/interfaces/localization';
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@lunaproject/web-core/dist/components/Dialog';
@@ -53,8 +53,10 @@ export const EditorDialogHeader = styled(
         />
     )
 )(({ theme }) => ({
-    padding: theme.spacing(.5, 2, 0),
-    borderBottom: `solid 1px ${theme.vars.palette.divider}`
+    [`& .${editorDialogHeaderTabsClasses.root}`]: {
+        padding: theme.spacing(.5, 2, 0),
+        borderBottom: `solid 1px ${theme.vars.palette.divider}`
+    }
 }));
 
 export const EditorDialogContent = styled(
@@ -149,6 +151,7 @@ export const EditorDialogSwitchControl = (
 export const EditorDialogs = ({ localization }: LocalizationProps) => {
     return (
         <Fragment>
+            <EditorPublishDialog localization={localization} />
             <EditorImageDialog localization={localization} />
             <EditorVideoDialog localization={localization} />
             <EditorAudioDialog localization={localization} />
@@ -158,4 +161,5 @@ export const EditorDialogs = ({ localization }: LocalizationProps) => {
 
 export * from './audio';
 export * from './image';
+export * from './publish';
 export * from './video';

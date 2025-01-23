@@ -1,9 +1,8 @@
-import prisma from '@/libs/prisma';
+import { database, Guild_Web_Tags } from '@/database';
+import { eq } from 'drizzle-orm';
 
-export const deleteGuildWebTag = async (tagId: string) => {
-    await prisma.guild_web_tags.delete({
-        where: {
-            id: tagId
-        }
-    });
+export const deleteGuildWebTag = async (id: string) => {
+    await database
+        .delete(Guild_Web_Tags)
+        .where(eq(Guild_Web_Tags.id, id));
 };

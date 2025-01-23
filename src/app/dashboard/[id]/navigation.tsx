@@ -6,6 +6,7 @@ import {
     CategoryIcon,
     CommandBoxIcon,
     DirectionsRunIcon,
+    DocsIcon,
     EmojiEventsIcon,
     FormatQuoteIcon,
     HomeIcon,
@@ -311,7 +312,7 @@ export const Navigation = (
                         <NavigationDrawerGroup label={translations.settings_web}>
                             <NavigationDrawerItem
                                 href={`${prefix}/web/articles`}
-                                icon={<MusicNoteIcon />}
+                                icon={<DocsIcon />}
                                 primary={translations.web_pages}
                                 open={open}
                                 setOpen={setOpen}

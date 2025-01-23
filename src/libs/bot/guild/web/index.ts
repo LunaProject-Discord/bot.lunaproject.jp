@@ -1,3 +1,3 @@
 export * from './categories';
-export * from './page';
+export * from './pages';
 export * from './tags';

@@ -1,6 +1,11 @@
 import { getUser } from '@/app/utils';
 import { WithIdParamProps } from '@/interfaces/page';
-import { createGuildWebPageContent, getGuildWebPage, getGuildWebPageContents, hasDashboardAccess } from '@/libs/bot';
+import {
+    createGuildWebPageContent,
+    getGuildWebPage,
+    getGuildWebPageContentsByPageId,
+    hasDashboardAccess
+} from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { CreateGuildWebPageContentSchema } from '@/schemas/bot';
 import { errorWithName } from '@lunaproject/web-core/dist/utils';
@@ -30,7 +35,7 @@ export const GET = async (req: Request, { params: { id, pageId } }: RouteProps) 
     if (!page || page.guildId !== id)
         return NextResponse.json({ message: 'Page not found!' }, { status: 404 });
 
-    return NextResponse.json(await getGuildWebPageContents(page.id), { status: 200 });
+    return NextResponse.json(await getGuildWebPageContentsByPageId(page.id), { status: 200 });
 };
 
 export const POST = async (req: NextRequest, { params: { id, pageId } }: RouteProps) => {
@@ -58,7 +63,7 @@ export const POST = async (req: NextRequest, { params: { id, pageId } }: RoutePr
     const data: Parameters<typeof createGuildWebPageContent>[1] = deepmerge(
         result.data,
         {
-            userId: user.id
+            user: user.id
         }
     );
 

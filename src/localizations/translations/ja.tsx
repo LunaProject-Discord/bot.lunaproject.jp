@@ -53,6 +53,7 @@ export const translationsJa: Translations = {
     color: '色',
     url: 'URL',
     slug: 'スラッグ',
+    table_of_contents: '目次',
     uncategorized: '未分類',
     category: 'カテゴリ',
     categories: 'カテゴリ',
@@ -201,6 +202,10 @@ export const translationsJa: Translations = {
     pattern_time: 'HH:mm',
     pattern_datetime: 'yyyy年M月d日 (E) HH:mm',
 
+    pattern_date_luxon: 'yyyy年M月d日 (EEE)',
+    pattern_time_luxon: 'HH:mm',
+    pattern_datetime_luxon: 'yyyy年M月d日 (EEE) HH:mm',
+
 
     search: '検索',
     search_guilds: 'サーバーを検索...',
@@ -249,8 +254,8 @@ export const translationsJa: Translations = {
     error_not_found_title: 'ページが見つかりません',
     error_not_found_description: <Fragment>
         指定されたページが見つかりませんでした。<br />
-        ページのURLが変更されたか、ページそのものが削除された可能性があります。<br />
-        お手数ですが、下のボタンからホームに戻ってください。
+        ページの URL が変更されたか、ページそのものが削除された可能性があります。<br />
+        お手数ですが、下のボタンを押してはじめからやり直してください。
     </Fragment>,
 
     error_data_not_found_title: 'データがありません',
@@ -298,6 +303,18 @@ export const translationsJa: Translations = {
     leaderboard_profile_card_total_experience: 'レベル %level の経験値',
     leaderboard_profile_card_current_experience: '獲得した経験値',
     leaderboard_profile_card_remaining_experience: '必要な残り経験値',
+
+
+    guild_article_not_latest_version_title: '最新版ではありません！',
+    guild_article_not_latest_version_description: <Fragment>
+        この投稿は現時点で公開されているものと差異があります。<br />
+        この投稿の最新版を閲覧するには下のボタンを押してください。
+    </Fragment>,
+    guild_article_not_latest_version_action: '最新版を見る',
+    guild_article_not_published_title: 'この投稿は公開されていません！',
+    guild_article_not_published_description: 'この投稿の URL を共有しても下記に該当するユーザーは閲覧できません。',
+    guild_article_not_published_description_not_joined_user: 'サーバーに参加していないユーザー',
+    guild_article_not_published_description_without_permissions_member: '下記の権限が付与されていないメンバー',
 
 
     dashboard: 'ダッシュボード',
@@ -589,6 +606,11 @@ export const translationsJa: Translations = {
 
     web_pages: '投稿',
     web_pages_description: 'サーバー ページの投稿を管理できます。',
+    web_page_editor_title_placeholder: 'ここにタイトルを入力...',
+    web_page_editor_content_placeholder_paragraph: '本文を入力するか「/」と入力してコマンドを実行...',
+    web_page_editor_content_placeholder_heading: '見出しを入力...',
+    web_page_editor_content_placeholder_list_item: '項目を入力...',
+    web_page_editor_content_placeholder_caption: 'キャプションを入力...',
     web_page_editor_command_insert_paragraph_description: '現在のブロックの下に新しい段落を挿入します。',
     web_page_editor_command_toggle_heading_large_description: '選択したブロックのスタイルを段落と大見出しの間で切り替えます。',
     web_page_editor_command_toggle_heading_medium_description: '選択したブロックのスタイルを段落と中見出しの間で切り替えます。',

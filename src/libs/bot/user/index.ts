@@ -1,19 +1,18 @@
+import { database, Users } from '@/database';
 import { UserFlags, UserPermission } from '@/interfaces/bot';
-import prisma from '@/libs/prisma';
+import { eq } from 'drizzle-orm';
 
 export const getUserPermission = async (id: string): Promise<UserPermission> => {
-    const userData = await prisma.users.findUnique({
-        where: {
-            id: BigInt(id)
-        },
-        select: {
+    const user = await database.query.Users.findFirst({
+        where: eq(Users.id, BigInt(id)),
+        columns: {
             permission: true
         }
     });
-    if (!userData)
+    if (!user)
         return 'default';
 
-    switch (userData.permission) {
+    switch (user.permission) {
         case 4:
             return 'owner';
         case 3:
@@ -28,22 +27,20 @@ export const getUserPermission = async (id: string): Promise<UserPermission> => 
 };
 
 export const getUserFlags = async (id: string): Promise<UserFlags | undefined> => {
-    const userData = await prisma.users.findUnique({
-        where: {
-            id: BigInt(id)
-        },
-        select: {
+    const user = await database.query.Users.findFirst({
+        where: eq(Users.id, BigInt(id)),
+        columns: {
             permission: true,
             flags: true
         }
     });
-    if (!userData)
+    if (!user)
         return undefined;
 
-    const flags = userData ? JSON.parse(userData.flags) : {};
+    const flags = user.flags;
     return {
         id,
-        manager: (userData?.permission ?? 0) > 0,
+        manager: (user?.permission ?? 0) > 0,
         verified: flags.verified,
         partner: flags.partner,
         tester: flags.tester,

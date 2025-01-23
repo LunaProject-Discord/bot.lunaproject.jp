@@ -2,7 +2,7 @@ import { getGuilds, getUser } from '@/app/utils';
 import { getAndRequestUserGuildsById, getStatuses } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { sortGuilds } from '@/utils/discord';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { NotFoundView, View } from './view';
 
@@ -35,6 +35,7 @@ const Page = async () => {
     const userData = getUser();
     const guildsData = getGuilds();
     const statusesData = getStatuses();
+
     const [user, guilds, statuses] = await Promise.all([userData, guildsData, statusesData]);
 
     if (statuses.length < 1)

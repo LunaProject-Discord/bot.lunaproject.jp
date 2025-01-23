@@ -4,15 +4,17 @@ import { BaseDateTimeEditorProps } from '@/components/date';
 import { TodayIcon } from '@/components/icons';
 import { useLocale } from '@/localizations/client';
 import { Popover } from '@lunaproject/web-core/dist/components/Popover';
-import { IconButton, InputAdornment, useMediaQuery } from '@mui/material';
+import { createTheme, IconButton, InputAdornment, typographyClasses, useMediaQuery } from '@mui/material';
 import {
     DateTimeField,
     DateTimeFieldProps,
+    dateTimePickerToolbarClasses,
     MobileDateTimePicker,
     PickerValidDate,
     StaticDateTimePicker
 } from '@mui/x-date-pickers';
 import { BaseDateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker/shared';
+import { pickersToolbarTextClasses } from '@mui/x-date-pickers/internals';
 import {
     ExportedUseMobilePickerSlotProps
 } from '@mui/x-date-pickers/internals/hooks/useMobilePicker/useMobilePicker.types';
@@ -28,6 +30,8 @@ export interface DateTimeEditorProps<TDate extends PickerValidDate, TValue = TDa
         picker?: BaseDateTimePickerProps<TDate, DateOrTimeView>;
     };
 }
+
+const defaultTheme = createTheme();
 
 export const DateTimeEditor = (
     {
@@ -78,6 +82,20 @@ export const DateTimeEditor = (
                         },
                         textField: {
                             size: 'small'
+                        },
+                        toolbar: {
+                            sx: {
+                                [`& .${dateTimePickerToolbarClasses.dateContainer} .${pickersToolbarTextClasses.root}.${typographyClasses.h4}`]: {
+                                    fontSize: defaultTheme.typography.h4.fontSize,
+                                    fontWeight: defaultTheme.typography.h4.fontWeight,
+                                    lineHeight: defaultTheme.typography.h4.lineHeight
+                                },
+                                [`& .${dateTimePickerToolbarClasses.timeDigitsContainer} .${pickersToolbarTextClasses.root}.${typographyClasses.h3}`]: {
+                                    fontSize: defaultTheme.typography.h3.fontSize,
+                                    fontWeight: defaultTheme.typography.h3.fontWeight,
+                                    lineHeight: defaultTheme.typography.h3.lineHeight
+                                }
+                            }
                         }
                     }}
                     {...picker}
@@ -141,6 +159,20 @@ export const DateTimeEditor = (
                             },
                             calendarHeader: {
                                 format: locale === 'ja' ? 'yyyy年M月' : 'MMM yyyy'
+                            },
+                            toolbar: {
+                                sx: {
+                                    [`& .${dateTimePickerToolbarClasses.dateContainer} .${pickersToolbarTextClasses.root}.${typographyClasses.h4}`]: {
+                                        fontSize: defaultTheme.typography.h4.fontSize,
+                                        fontWeight: defaultTheme.typography.h4.fontWeight,
+                                        lineHeight: defaultTheme.typography.h4.lineHeight
+                                    },
+                                    [`& .${dateTimePickerToolbarClasses.timeDigitsContainer} .${pickersToolbarTextClasses.root}.${typographyClasses.h3}`]: {
+                                        fontSize: defaultTheme.typography.h3.fontSize,
+                                        fontWeight: defaultTheme.typography.h3.fontWeight,
+                                        lineHeight: defaultTheme.typography.h3.lineHeight
+                                    }
+                                }
                             }
                         }}
                         {...picker}

@@ -12,7 +12,7 @@ export const GuildWebTagNameSchema = z.string().min(1, 'web_tag_error_too_small_
 export const GuildWebTagDescriptionSchema = z.string().max(128, 'web_tag_error_too_big_description');
 
 export const CreateGuildWebTagSchema = z.object({
-    slug: GuildWebTagSlugSchema.optional(),
+    slug: GuildWebTagSlugSchema.nullish(),
     color: GuildWebTagColorSchema.optional(),
     name: GuildWebTagNameSchema,
     description: GuildWebTagDescriptionSchema.optional()

@@ -89,6 +89,11 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
                             }
                         }
                     },
+                    MuiDialogTitle: {
+                        styleOverrides: {
+                            root: ({ theme }) => theme.typography.h4
+                        }
+                    },
                     MuiTablePagination: {
                         defaultProps: {
                             labelRowsPerPage: (<TableRowsIcon />),

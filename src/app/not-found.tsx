@@ -1,5 +1,5 @@
 import { getLocalization } from '@/localizations/server';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import { NotFoundView } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {

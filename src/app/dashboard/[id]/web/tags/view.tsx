@@ -14,8 +14,9 @@ import { GuildViewProps } from '@/interfaces/view';
 import { ReplaceGuildWebTagsSchema } from '@/schemas/bot';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
+import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { hexToHsva, hsvaToHexa } from '@uiw/react-color';
-import React, { Fragment, useCallback, useMemo, useState } from 'react';
+import React, { Fragment, useCallback, useMemo } from 'react';
 
 const saveGuildWebTags = (id: string, data: ReplaceGuildWebTags) => fetch(
     `/api/guilds/${id}/web/tags`,
@@ -41,8 +42,7 @@ export const View = ({ guild, tags, localization }: ViewProps) => {
         description: tag.description,
         deleted: false
     })).toSorted((a, b) => a.name.localeCompare(b.name)), [tags]);
-    const [values, setValues] = useState(initialValues);
-    const resetValues = () => setValues(initialValues);
+    const [values, setValues, resetValues] = useResettableState(initialValues);
 
     const toSourceObject = useCallback((): ReplaceGuildWebTags => initialValues.map((initialValue) => {
         let tag: ReplaceGuildWebTagsUpdate = {

@@ -27,7 +27,7 @@ export const EditorSelectButton = styled(
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(.5),
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -55,13 +55,15 @@ export const EditorSelectButtonContent = styled(
         />
     )
 )(({ theme }) => ({
-    margin: theme.spacing(-.5, 0),
     display: 'flex',
     alignItems: 'center',
     gap: theme.spacing(.5),
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    [theme.breakpoints.up('sm')]: {
+        margin: theme.spacing(-.5, 0)
+    }
 }));
 
 export * from './category';

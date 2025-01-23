@@ -1,6 +1,6 @@
 import { getUser } from '@/app/utils';
 import { WithIdParamProps } from '@/interfaces/page';
-import { getUserNotificationById } from '@/libs/bot';
+import { getUserNotification } from '@/libs/bot';
 import { NextResponse } from 'next/server';
 
 export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
@@ -8,7 +8,7 @@ export const GET = async (req: Request, { params: { id } }: WithIdParamProps) =>
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
 
-    const notification = await getUserNotificationById(user.id, id);
+    const notification = await getUserNotification(user.id, id);
     if (!notification)
         return NextResponse.json({ message: 'Notification not found!' }, { status: 404 });
 

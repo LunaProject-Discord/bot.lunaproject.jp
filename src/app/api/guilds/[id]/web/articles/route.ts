@@ -1,6 +1,6 @@
 import { getUser } from '@/app/utils';
 import { WithIdParamProps } from '@/interfaces/page';
-import { createGuildWebPage, getGuildWebPages, hasDashboardAccess } from '@/libs/bot';
+import { createGuildWebPage, getGuildWebPagesByGuildId, hasDashboardAccess } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { CreateGuildWebPageSchema } from '@/schemas/bot';
 import { errorWithName } from '@lunaproject/web-core/dist/utils';
@@ -20,7 +20,7 @@ export const GET = async (req: Request, { params: { id } }: WithIdParamProps) =>
     if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    return NextResponse.json(await getGuildWebPages(id), { status: 200 });
+    return NextResponse.json(await getGuildWebPagesByGuildId(id), { status: 200 });
 };
 
 export const POST = async (req: NextRequest, { params: { id } }: WithIdParamProps) => {
@@ -43,11 +43,11 @@ export const POST = async (req: NextRequest, { params: { id } }: WithIdParamProp
 
     const data: Parameters<typeof createGuildWebPage>[1] = deepmerge(
         result.data,
-        {
+        result.data.content ? {
             content: {
-                userId: user.id
+                user: user.id
             }
-        }
+        } : {}
     );
 
     try {

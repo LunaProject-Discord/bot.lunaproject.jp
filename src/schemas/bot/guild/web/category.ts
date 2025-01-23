@@ -14,11 +14,11 @@ export const GuildWebCategoryDescriptionSchema = z.string().max(256, 'web_catego
 export const GuildWebCategoryParentIdSchema = z.string().ulid('web_category_error_invalid_type_parent_id');
 
 export const CreateGuildWebCategorySchema = z.object({
-    slug: GuildWebCategorySlugSchema.optional(),
+    slug: GuildWebCategorySlugSchema.nullish(),
     color: GuildWebCategoryColorSchema.optional(),
     name: GuildWebCategoryNameSchema,
     description: GuildWebCategoryDescriptionSchema.optional(),
-    parentId: GuildWebCategoryParentIdSchema.optional()
+    parentId: GuildWebCategoryParentIdSchema.nullish()
 });
 
 export const UpdateGuildWebCategorySchema = z.object({

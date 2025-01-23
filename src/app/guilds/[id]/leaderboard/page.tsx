@@ -4,7 +4,7 @@ import { WithIdParamProps } from '@/interfaces/page';
 import { getGuildConfiguration, getGuildLevels, hasDashboardAccess, isLeaderboardAccessible } from '@/libs/bot';
 import { getGuildById, getMemberById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { View } from './view';
@@ -18,6 +18,7 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     const guildConfigurationData = getGuildConfiguration(id);
 
     const [user, guild, guildConfiguration] = await Promise.all([userData, guildData, guildConfigurationData]);
+
     if (!guild || !guildConfiguration)
         return parent;
 
@@ -51,12 +52,7 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
     const guildLevelsData = getGuildLevels(id);
     const guildConfigurationData = getGuildConfiguration(id);
 
-    const [user, guild, guildLevels, guildConfiguration] = await Promise.all([
-        userData,
-        guildData,
-        guildLevelsData,
-        guildConfigurationData
-    ]);
+    const [user, guild, guildLevels, guildConfiguration] = await Promise.all([userData, guildData, guildLevelsData, guildConfigurationData]);
 
     if (!guild || !guildConfiguration)
         return (<NotFoundView localization={localization} />);
@@ -64,6 +60,7 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
     const member = user ? await getMemberById(user.id, guild.id) : undefined;
     const allowLeaderboard = await isLeaderboardAccessible(user, guild, guildConfiguration);
     const allowDashboard = user ? await hasDashboardAccess(guild, user) : false;
+
     if (!allowLeaderboard)
         return (<NotFoundView localization={localization} />);
 

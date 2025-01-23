@@ -1,10 +1,11 @@
+import { database, Guilds } from '@/database';
 import { GuildConfiguration, GuildFlags } from '@/interfaces/bot';
 import { DataGuild, RedisMember } from '@/interfaces/redis';
 import { getUserPermission } from '@/libs/bot';
-import prisma from '@/libs/prisma';
 import { getMemberById } from '@/libs/redis';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckMemberPermissions } from '@/utils/discord';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
+import { eq } from 'drizzle-orm';
 
 export const hasDashboardAccessUserPermission = async (user: OAuthUser): Promise<boolean> => {
     const permission = await getUserPermission(user.id);
@@ -13,7 +14,10 @@ export const hasDashboardAccessUserPermission = async (user: OAuthUser): Promise
 
 export const hasDashboardAccessMemberPermission = (guild: DataGuild, member: RedisMember) => someCheckMemberPermissions(guild, member, ...ADMINISTRATOR_OR_MANAGE_GUILD);
 
-export const hasDashboardAccess = async (guild: DataGuild, user: OAuthUser): Promise<boolean> => {
+export const hasDashboardAccess = async (guild: DataGuild, user: OAuthUser | undefined): Promise<boolean> => {
+    if (!user)
+        return false;
+
     const isManager = await hasDashboardAccessUserPermission(user);
     if (isManager)
         return true;
@@ -42,18 +46,16 @@ export const isLeaderboardAccessible = async (user: OAuthUser | undefined, guild
 };
 
 export const getGuildFlags = async (id: string): Promise<GuildFlags | undefined> => {
-    const guildData = await prisma.guilds.findUnique({
-        where: {
-            id: BigInt(id)
-        },
-        select: {
+    const guild = await database.query.Guilds.findFirst({
+        where: eq(Guilds.id, BigInt(id)),
+        columns: {
             flags: true
         }
     });
-    if (!guildData)
+    if (!guild)
         return undefined;
 
-    const flags = guildData ? JSON.parse(guildData.flags) : {};
+    const flags = guild.flags;
     return {
         id,
         verified: flags.verified,

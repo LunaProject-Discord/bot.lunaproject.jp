@@ -151,7 +151,7 @@ export const SectionCategoryCard = (
                 />
             }
             primary={name}
-            secondary={String(translations.web_category_pages).replace('%c', (0).toString())}
+            secondary={String(translations.web_category_pages).replace('%c', (category?.pageCount ?? 0).toString())}
             headerChildren={
                 deleted && (
                     <Button

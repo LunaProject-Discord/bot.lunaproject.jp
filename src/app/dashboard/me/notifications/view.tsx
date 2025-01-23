@@ -3,11 +3,10 @@
 import { ErrorIcon, InfoIcon, TaskAltIcon, WarningIcon } from '@/components/icons';
 import { UserNotification } from '@/interfaces/bot';
 import { UserViewProps } from '@/interfaces/view';
-import { getDateFnsLocaleByName } from '@/localizations';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { SectionRouteLinkCard } from '@lunaproject/web-core/dist/components/SectionCard';
-import { format } from '@lunaproject/web-core/dist/utils';
+import { DateTime } from 'luxon';
 import React, { Fragment } from 'react';
 
 interface Props extends UserViewProps {
@@ -18,7 +17,14 @@ export const View = ({ user, notifications, localization: { locale, translations
     const userNotifications: Record<string, UserNotification[]> = {};
 
     notifications.forEach((notification) => {
-        const date = format(notification.createdAt, 'yyyy-MM-dd');
+        const date = DateTime.fromMillis(
+            notification.createdAt,
+            {
+                zone: 'Asia/Tokyo',
+                locale
+            }
+        ).toFormat(translations.pattern_date_luxon as string);
+
         if (!userNotifications[date])
             userNotifications[date] = [];
 
@@ -32,11 +38,7 @@ export const View = ({ user, notifications, localization: { locale, translations
                 return (
                     <Section key={date}>
                         <SectionTitle>
-                            {format(
-                                date,
-                                translations.pattern_date as string,
-                                { locale: getDateFnsLocaleByName(locale) }
-                            )}
+                            {date}
                         </SectionTitle>
                         <SectionContent>
                             {userNotifications[date].sort((a, b) => b.createdAt - a.createdAt).map((notification) => (

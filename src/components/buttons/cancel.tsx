@@ -2,7 +2,7 @@
 
 import { CloseIcon } from '@/components/icons';
 import { Key } from '@/components/text';
-import { Button, ButtonRootProps } from '@lunaproject/web-core/dist/components';
+import { Button, ButtonRootProps } from '@lunaproject/web-core/dist/components/Button';
 import { ButtonProps } from '@mui/material';
 import React from 'react';
 import { isMacOs } from 'react-device-detect';

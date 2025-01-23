@@ -1,19 +1,28 @@
+import {
+    database,
+    System_Statistics,
+    System_Statistics_Days,
+    System_Statistics_Hours,
+    System_Statistics_Months,
+    System_Statistics_Weeks
+} from '@/database';
 import { Statistic, StatisticChannelsData, Statistics, StatisticsPeriodType } from '@/interfaces/bot';
-import prisma from '@/libs/prisma';
-import { toDBDate } from '@/utils/date';
-import { system_statistics } from '@prisma/client';
+import { fromSQLDate, toSQLDate } from '@/utils/date';
 import { endOfWeek } from 'date-fns/endOfWeek';
 import { getDaysInMonth } from 'date-fns/getDaysInMonth';
 import { startOfWeek } from 'date-fns/startOfWeek';
+import { and, desc, eq, gte, lte } from 'drizzle-orm';
 import { DateObjectUnits, DateTime, Settings } from 'luxon';
 
-export const getStatistic = async (statisticOrId: system_statistics | number): Promise<Statistic | undefined> => {
-    const systemStatistic = typeof statisticOrId === 'number' ? await prisma.system_statistics.findUnique({ where: { id: statisticOrId } }) : statisticOrId;
+export const getStatistic = async (statisticOrId: typeof System_Statistics.$inferSelect | number): Promise<Statistic | undefined> => {
+    const systemStatistic = typeof statisticOrId === 'number' ? await database.query.System_Statistics.findFirst({
+        where: eq(System_Statistics.id, statisticOrId)
+    }) : statisticOrId;
     if (!systemStatistic)
         return undefined;
 
-    const channels = JSON.parse(systemStatistic.channels);
-    const channelsShards = channels.shards as Record<number, any>;
+    const channels = systemStatistic.channels;
+    const channelsShards = channels.shards;
 
     const channelsShardsRecord: Record<number, StatisticChannelsData> = {};
     for (const [key, value] of Object.entries(channelsShards)) {
@@ -31,9 +40,9 @@ export const getStatistic = async (statisticOrId: system_statistics | number): P
 
     return {
         id: systemStatistic.id,
-        statuses: JSON.parse(systemStatistic.statuses),
-        pings: JSON.parse(systemStatistic.pings),
-        guilds: JSON.parse(systemStatistic.guilds),
+        statuses: systemStatistic.statuses,
+        pings: systemStatistic.pings,
+        guilds: systemStatistic.guilds,
         channels: {
             total: channels.total,
             categories: channels.categories,
@@ -45,16 +54,18 @@ export const getStatistic = async (statisticOrId: system_statistics | number): P
             threads: channels.threads,
             shards: channelsShardsRecord
         },
-        roles: JSON.parse(systemStatistic.roles),
-        emojis: JSON.parse(systemStatistic.emojis),
-        users: JSON.parse(systemStatistic.users),
-        updatedAt: systemStatistic.updated_at.getTime(),
-        createdAt: systemStatistic.created_at.getTime()
+        roles: systemStatistic.roles,
+        emojis: systemStatistic.emojis,
+        users: systemStatistic.users,
+        updatedAt: fromSQLDate(systemStatistic.updatedAt).toMillis(),
+        createdAt: fromSQLDate(systemStatistic.createdAt).toMillis()
     };
 };
 
 export const getLatestStatistic = async (): Promise<Statistic | undefined> => {
-    const systemStatistic = await prisma.system_statistics.findFirst({ orderBy: { created_at: 'desc' } });
+    const systemStatistic = await database.query.System_Statistics.findFirst({
+        orderBy: [desc(System_Statistics.createdAt)]
+    });
     if (!systemStatistic)
         return undefined;
 
@@ -62,7 +73,7 @@ export const getLatestStatistic = async (): Promise<Statistic | undefined> => {
 };
 
 export const getStatistics = async (): Promise<Statistic[]> => {
-    const systemStatistics = await prisma.system_statistics.findMany();
+    const systemStatistics = await database.query.System_Statistics.findMany();
     if (!systemStatistics)
         return [];
 
@@ -76,6 +87,7 @@ export const getStatistics = async (): Promise<Statistic[]> => {
     return lists;
 };
 
+
 export interface DatePeriod {
     start?: DateTime;
     end?: DateTime;
@@ -86,32 +98,33 @@ export const getHoursStatistics = async (period?: DatePeriod): Promise<Statistic
     const start = period?.start ?? DateTime.now().minus({ day: 1, hour: 1 });
     const end = period?.end ?? DateTime.now().minus({ hour: 1 });
 
-    const systemStatistics = await prisma.system_statistics_hours.findMany({
-        where: {
-            created_at: {
-                gte: toDBDate(setHoursDateTime(start, 'start').toJSDate()),
-                lte: toDBDate(setHoursDateTime(end, 'end').toJSDate())
-            }
-        }
-    });
+    const systemStatistics = await database
+        .select()
+        .from(System_Statistics_Hours)
+        .where(
+            and(
+                gte(System_Statistics_Hours.createdAt, toSQLDate(setHoursDateTime(start, 'start'))),
+                lte(System_Statistics_Hours.createdAt, toSQLDate(setHoursDateTime(end, 'end')))
+            )
+        );
     if (!systemStatistics || systemStatistics.length < 1)
         return undefined;
 
-    const lists: Statistic[] = [];
+    const statistics: Statistic[] = [];
     for (const systemStatistic of systemStatistics) {
-        const list = await getStatistic(systemStatistic);
-        if (list)
-            lists.push(list);
+        const statistic = await getStatistic(systemStatistic);
+        if (statistic)
+            statistics.push(statistic);
     }
 
     return {
-        total: lists.length,
+        total: statistics.length,
         period: {
             type: 'hours',
-            startedAt: setHoursDateTime(DateTime.fromMillis(lists[0].createdAt), 'start').toMillis(),
-            endedAt: setHoursDateTime(DateTime.fromMillis(lists[lists.length - 1].createdAt), 'end').toMillis()
+            startedAt: setHoursDateTime(DateTime.fromMillis(statistics[0].createdAt), 'start').toMillis(),
+            endedAt: setHoursDateTime(DateTime.fromMillis(statistics[statistics.length - 1].createdAt), 'end').toMillis()
         },
-        statistics: lists
+        statistics
     };
 };
 
@@ -120,32 +133,33 @@ export const getDaysStatistics = async (period?: DatePeriod): Promise<Statistics
     const start = period?.start ?? DateTime.now().minus({ month: 1 });
     const end = period?.end ?? DateTime.now().minus({ day: 1 });
 
-    const systemStatistics = await prisma.system_statistics_days.findMany({
-        where: {
-            created_at: {
-                gte: toDBDate(setDaysDateTime(start, 'start').toJSDate()),
-                lte: toDBDate(setDaysDateTime(end, 'end').toJSDate())
-            }
-        }
-    });
+    const systemStatistics = await database
+        .select()
+        .from(System_Statistics_Days)
+        .where(
+            and(
+                gte(System_Statistics_Days.createdAt, toSQLDate(setDaysDateTime(start, 'start'))),
+                lte(System_Statistics_Days.createdAt, toSQLDate(setDaysDateTime(end, 'end')))
+            )
+        );
     if (!systemStatistics || systemStatistics.length < 1)
         return undefined;
 
-    const lists: Statistic[] = [];
+    const statistics: Statistic[] = [];
     for (const systemStatistic of systemStatistics) {
-        const list = await getStatistic(systemStatistic);
-        if (list)
-            lists.push(list);
+        const statistic = await getStatistic(systemStatistic);
+        if (statistic)
+            statistics.push(statistic);
     }
 
     return {
-        total: lists.length,
+        total: statistics.length,
         period: {
             type: 'days',
-            startedAt: setDaysDateTime(DateTime.fromMillis(lists[0].createdAt), 'start').toMillis(),
-            endedAt: setDaysDateTime(DateTime.fromMillis(lists[lists.length - 1].createdAt), 'end').toMillis()
+            startedAt: setDaysDateTime(DateTime.fromMillis(statistics[0].createdAt), 'start').toMillis(),
+            endedAt: setDaysDateTime(DateTime.fromMillis(statistics[statistics.length - 1].createdAt), 'end').toMillis()
         },
-        statistics: lists
+        statistics
     };
 };
 
@@ -154,32 +168,33 @@ export const getWeeksStatistics = async (period?: DatePeriod): Promise<Statistic
     const start = period?.start ?? DateTime.now().minus({ week: 7 });
     const end = period?.end ?? DateTime.now().minus({ week: 1 });
 
-    const systemStatistics = await prisma.system_statistics_weeks.findMany({
-        where: {
-            created_at: {
-                gte: toDBDate(setWeeksDateTime(start, 'start').toJSDate()),
-                lte: toDBDate(setWeeksDateTime(end, 'end').toJSDate())
-            }
-        }
-    });
+    const systemStatistics = await database
+        .select()
+        .from(System_Statistics_Weeks)
+        .where(
+            and(
+                gte(System_Statistics_Weeks.createdAt, toSQLDate(setWeeksDateTime(start, 'start'))),
+                lte(System_Statistics_Weeks.createdAt, toSQLDate(setWeeksDateTime(end, 'end')))
+            )
+        );
     if (!systemStatistics || systemStatistics.length < 1)
         return undefined;
 
-    const lists: Statistic[] = [];
+    const statistics: Statistic[] = [];
     for (const systemStatistic of systemStatistics) {
-        const list = await getStatistic(systemStatistic);
-        if (list)
-            lists.push(list);
+        const statistic = await getStatistic(systemStatistic);
+        if (statistic)
+            statistics.push(statistic);
     }
 
     return {
-        total: lists.length,
+        total: statistics.length,
         period: {
             type: 'weeks',
-            startedAt: setWeeksDateTime(DateTime.fromMillis(lists[0].createdAt), 'start').toMillis(),
-            endedAt: setWeeksDateTime(DateTime.fromMillis(lists[lists.length - 1].createdAt), 'end').toMillis()
+            startedAt: setWeeksDateTime(DateTime.fromMillis(statistics[0].createdAt), 'start').toMillis(),
+            endedAt: setWeeksDateTime(DateTime.fromMillis(statistics[statistics.length - 1].createdAt), 'end').toMillis()
         },
-        statistics: lists
+        statistics
     };
 };
 
@@ -188,32 +203,33 @@ export const getMonthsStatistics = async (period?: DatePeriod): Promise<Statisti
     const start = period?.start ?? DateTime.now().minus({ month: 7 });
     const end = period?.end ?? DateTime.now().minus({ month: 1 });
 
-    const systemStatistics = await prisma.system_statistics_months.findMany({
-        where: {
-            created_at: {
-                gte: toDBDate(setMonthsDateTime(start, 'start').toJSDate()),
-                lte: toDBDate(setMonthsDateTime(end, 'end').toJSDate())
-            }
-        }
-    });
+    const systemStatistics = await database
+        .select()
+        .from(System_Statistics_Months)
+        .where(
+            and(
+                gte(System_Statistics_Months.createdAt, toSQLDate(setMonthsDateTime(start, 'start'))),
+                lte(System_Statistics_Months.createdAt, toSQLDate(setMonthsDateTime(end, 'end')))
+            )
+        );
     if (!systemStatistics || systemStatistics.length < 1)
         return undefined;
 
-    const lists: Statistic[] = [];
+    const statistics: Statistic[] = [];
     for (const systemStatistic of systemStatistics) {
-        const list = await getStatistic(systemStatistic);
-        if (list)
-            lists.push(list);
+        const statistic = await getStatistic(systemStatistic);
+        if (statistic)
+            statistics.push(statistic);
     }
 
     return {
-        total: lists.length,
+        total: statistics.length,
         period: {
             type: 'months',
-            startedAt: setMonthsDateTime(DateTime.fromMillis(lists[0].createdAt), 'start').toMillis(),
-            endedAt: setMonthsDateTime(DateTime.fromMillis(lists[lists.length - 1].createdAt), 'end').toMillis()
+            startedAt: setMonthsDateTime(DateTime.fromMillis(statistics[0].createdAt), 'start').toMillis(),
+            endedAt: setMonthsDateTime(DateTime.fromMillis(statistics[statistics.length - 1].createdAt), 'end').toMillis()
         },
-        statistics: lists
+        statistics
     };
 };
 
@@ -229,6 +245,7 @@ export const getPeriodStatistics = async (type: StatisticsPeriodType, period?: D
             return getMonthsStatistics(period);
     }
 };
+
 
 export type PeriodType = 'start' | 'end';
 

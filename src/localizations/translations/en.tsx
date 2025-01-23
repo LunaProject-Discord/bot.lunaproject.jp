@@ -53,6 +53,7 @@ export const translationsEn: Translations = {
     color: 'Color',
     url: 'URL',
     slug: 'Slug',
+    table_of_contents: 'Table of Contents',
     uncategorized: 'Uncategorized',
     category: 'Category',
     categories: 'Categories',
@@ -90,9 +91,9 @@ export const translationsEn: Translations = {
     task_list: 'Check List',
     table: 'Table',
     media: 'Media',
-    media_enabled_controls: 'コントロールを有効にする',
-    media_enabled_loop: '繰り返し再生を有効にする',
-    media_default_muted: 'デフォルトの音量をミュートにする',
+    media_enabled_controls: 'Enable Controls',
+    media_enabled_loop: 'Enable repeat playback',
+    media_default_muted: 'Mute default volume',
     image: 'Image',
     image_source_url: 'URL of the image file',
     image_alternative_text: 'Alternative text',
@@ -201,6 +202,10 @@ export const translationsEn: Translations = {
     pattern_time: 'hh:mm a',
     pattern_datetime: 'EEEE, MMMM d, yyyy hh:mm a',
 
+    pattern_date_luxon: 'EEEE, MMMM d, yyyy',
+    pattern_time_luxon: 'hh:mm a',
+    pattern_datetime_luxon: 'EEEE, MMMM d, yyyy hh:mm a',
+
 
     search: 'Search',
     search_guilds: 'Search servers...',
@@ -239,7 +244,7 @@ export const translationsEn: Translations = {
     error_unauthorized_title: 'Login is required!',
     error_unauthorized_description: <Fragment>
         You must be logged in to access this page.<br />
-        Please click the button below to log in.
+        Please click the button below to login.
     </Fragment>,
     error_forbidden_title: 'Forbidden!',
     error_forbidden_description: <Fragment>
@@ -290,6 +295,18 @@ export const translationsEn: Translations = {
     status_mutual_guilds_with_count: '%c mutual servers',
     status_mutual_guilds_empty: 'No mutual servers',
     status_mutual_guilds_not_logged_in: 'You can view mutual servers by logging in.',
+
+
+    guild_article_not_latest_version_title: 'Not the latest version!',
+    guild_article_not_latest_version_description: <Fragment>
+        This article differs from the one published at this time.<br />
+        To view the latest version of this article, please click the button below.
+    </Fragment>,
+    guild_article_not_latest_version_action: 'View the latest version',
+    guild_article_not_published_title: 'This article has not been published!',
+    guild_article_not_published_description: 'Sharing the URL of this article will not allow users who fall under the following categories to view it.',
+    guild_article_not_published_description_not_joined_user: 'Users who have not joined the server',
+    guild_article_not_published_description_without_permissions_member: 'Members who have not been granted the following permissions',
 
 
     leaderboard: 'Leaderboard',
@@ -586,6 +603,11 @@ export const translationsEn: Translations = {
 
     web_pages: 'Articles',
     web_pages_description: 'You can manage server page articles.',
+    web_page_editor_title_placeholder: 'Enter title here...',
+    web_page_editor_content_placeholder_paragraph: 'Enter the text or type "/" to execute the command...',
+    web_page_editor_content_placeholder_heading: 'Enter a heading...',
+    web_page_editor_content_placeholder_list_item: 'Enter a item...',
+    web_page_editor_content_placeholder_caption: 'Enter a caption...',
     web_page_editor_command_insert_paragraph_description: 'Inserts a new paragraph below the current block.',
     web_page_editor_command_toggle_heading_large_description: 'Toggles the style of the selected block between paragraph and large heading.',
     web_page_editor_command_toggle_heading_medium_description: 'Toggles the style of the selected block between paragraph and medium heading.',

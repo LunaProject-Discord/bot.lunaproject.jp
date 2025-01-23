@@ -1,12 +1,12 @@
-import { PartialGuildLevels } from '@/interfaces/bot';
+import { database, Guild_Levels } from '@/database';
 import { WithIdParamProps } from '@/interfaces/page';
 import { getGuildLevels } from '@/libs/bot';
-import prisma from '@/libs/prisma';
 import { updateGuildById } from '@/libs/redis';
 import { PartialGuildLevelsSchema } from '@/schemas/bot';
 import { COOKIE_TOKEN } from '@/utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@/utils/discord';
 import { getGuildById } from '@lunaproject/web-discord/dist/libs';
+import { and, eq } from 'drizzle-orm';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -46,22 +46,26 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
     if (!result.success)
         return NextResponse.json({ message: 'Invalid body!', issues: result.error.issues }, { status: 400 });
 
-    const levels: PartialGuildLevels = result.data;
+    const levels = result.data;
 
-    const guildLevels = await prisma.$transaction(levels.map((level) => prisma.guild_levels.update({
-        where: {
-            guild_id_user_id: {
-                guild_id: BigInt(id),
-                user_id: BigInt(level.user_id)
-            }
-        },
-        data: {
-            level: level.level,
-            experience: level.experience
+    await database.transaction(async (transaction) => {
+        for (const { user_id, level, experience } of levels) {
+            await transaction
+                .update(Guild_Levels)
+                .set({
+                    level: level,
+                    experience: experience
+                })
+                .where(
+                    and(
+                        eq(Guild_Levels.guildId, BigInt(id)),
+                        eq(Guild_Levels.userId, BigInt(user_id))
+                    )
+                );
         }
-    })));
+    });
 
     await updateGuildById(id);
 
-    return new NextResponse(null, { status: guildLevels.length > 0 ? 200 : 204 });
+    return new NextResponse(null, { status: 204 });
 };

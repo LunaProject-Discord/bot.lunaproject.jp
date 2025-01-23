@@ -1,3 +1,4 @@
+import { database, Guild_Web_Tags } from '@/database';
 import {
     GuildWebTag,
     ReplaceGuildWebTags,
@@ -5,8 +6,7 @@ import {
     ReplaceGuildWebTagsUpdate
 } from '@/interfaces/bot';
 import { getGuildWebTagsByGuildId } from '@/libs/bot';
-import prisma from '@/libs/prisma';
-import { ulid } from 'ulid';
+import { and, eq } from 'drizzle-orm';
 
 export const replaceGuildWebTags = async (guildId: string, data: ReplaceGuildWebTags): Promise<GuildWebTag[]> => {
     const tags = await getGuildWebTagsByGuildId(guildId);
@@ -15,37 +15,50 @@ export const replaceGuildWebTags = async (guildId: string, data: ReplaceGuildWeb
     const createTags = data.filter((tag): tag is ReplaceGuildWebTagsCreate => !('id' in tag));
     const deleteTags = tags.filter((tag) => !updateTags.some((updateTag) => updateTag.id === tag.id));
 
-    await prisma.$transaction([
-        ...updateTags.map((tag) => prisma.guild_web_tags.update({
-            where: {
-                id: tag.id
-            },
-            data: {
-                slug: tag.slug,
-                color: tag.color,
-                name: tag.name,
-                description: tag.description,
-                updated_at: new Date()
-            }
-        })),
-        ...createTags.map((tag) => prisma.guild_web_tags.create({
-            data: {
-                id: ulid(),
-                guild_id: BigInt(guildId),
-                slug: tag.slug || undefined,
-                color: tag.color,
-                name: tag.name,
-                description: tag.description,
-                updated_at: new Date(),
-                created_at: new Date()
-            }
-        })),
-        ...deleteTags.map((tag) => prisma.guild_web_tags.delete({
-            where: {
-                id: tag.id
-            }
-        }))
-    ]);
+    await database.transaction(async (transaction) => {
+        for (const tag of updateTags) {
+            if (Object.keys(tag).length < 2)
+                continue;
+
+            await transaction
+                .update(Guild_Web_Tags)
+                .set({
+                    slug: tag.slug || undefined,
+                    color: tag.color,
+                    name: tag.name,
+                    description: tag.description
+                })
+                .where(
+                    and(
+                        eq(Guild_Web_Tags.id, tag.id),
+                        eq(Guild_Web_Tags.guildId, BigInt(guildId))
+                    )
+                );
+        }
+
+        if (createTags.length > 0)
+            await transaction
+                .insert(Guild_Web_Tags)
+                .values(
+                    createTags.map((tag) => ({
+                        guildId: BigInt(guildId),
+                        slug: tag.slug || undefined,
+                        color: tag.color,
+                        name: tag.name,
+                        description: tag.description
+                    }))
+                );
+
+        for (const tag of deleteTags)
+            await transaction
+                .delete(Guild_Web_Tags)
+                .where(
+                    and(
+                        eq(Guild_Web_Tags.id, tag.id),
+                        eq(Guild_Web_Tags.guildId, BigInt(guildId))
+                    )
+                );
+    });
 
     return await getGuildWebTagsByGuildId(guildId);
 };

@@ -128,7 +128,7 @@ export const SectionTagCard = (
                 />
             }
             primary={name}
-            secondary={String(translations.web_tag_pages).replace('%c', (0).toString())}
+            secondary={String(translations.web_tag_pages).replace('%c', (tag?.pageCount ?? 0).toString())}
             headerChildren={
                 deleted && (
                     <Button

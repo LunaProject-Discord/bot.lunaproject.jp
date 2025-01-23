@@ -2,7 +2,8 @@
 
 import { MonospaceFontFamily } from '@/app/theme';
 import { codeStyled } from '@/components/text';
-import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
+import { LocalizationProps } from '@/interfaces/localization';
+import { generateComponentClasses, MuiDarkTheme } from '@lunaproject/web-core/dist/utils';
 import { TextareaAutosize, TextareaAutosizeProps } from '@mui/base';
 import { Box, BoxProps, checkboxClasses, CSSObject, styled, Theme } from '@mui/material';
 import { blueGrey } from '@mui/material/colors';
@@ -13,6 +14,7 @@ export const editorClasses = generateComponentClasses(
     'Editor',
     [
         'root',
+        'thumbnail',
         'title',
         'content'
     ]
@@ -28,12 +30,20 @@ export const editorProseMirrorClasses = generateComponentClasses(
 );
 
 const editorRootPlaceholderStyled = (theme: Theme) => (placeholder: string): CSSObject => ({
-    '&.is-empty::before': {
-        content: `"${placeholder}"`,
-        height: 0,
-        float: 'left',
-        pointerEvents: 'none',
-        color: theme.vars.palette.text.disabled
+    '&:not(&:where(tr *))': {
+        '&.is-empty': {
+            position: 'relative',
+            '&::before': {
+                content: `"${placeholder.replaceAll('"', '\\"')}"`,
+                height: 0,
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                pointerEvents: 'none',
+                textAlign: 'inherit',
+                color: theme.vars.palette.text.disabled
+            }
+        }
     }
 });
 
@@ -45,7 +55,7 @@ export const EditorRoot = styled(
             {...props}
         />
     )
-)(({ theme }) => {
+)<LocalizationProps>(({ theme, localization: { translations } }) => {
     const placeholderStyled = editorRootPlaceholderStyled(theme);
 
     return {
@@ -81,7 +91,7 @@ export const EditorRoot = styled(
 
             // プレースホルダー
             '& figure.is-empty figcaption::before': {
-                content: `"キャプションを入力..."`,
+                content: `"${translations.web_page_editor_content_placeholder_caption}"`,
                 height: 0,
                 float: 'left',
                 pointerEvents: 'none',
@@ -91,35 +101,19 @@ export const EditorRoot = styled(
             // ブロック
             '& p': {
                 ...theme.typography.body1,
-                ...placeholderStyled('本文を入力するか「/」と入力してコマンドを実行...'),
+                ...placeholderStyled(translations.web_page_editor_content_placeholder_paragraph as string),
                 '&:not(:last-child)': {
                     marginBottom: '.35em'
                 },
                 '&:where(li *)': {
-                    ...placeholderStyled('項目を入力...')
+                    ...placeholderStyled(translations.web_page_editor_content_placeholder_list_item as string)
                 }
             },
             '& h2, & h3, & h4': {
-                ...placeholderStyled('見出しを入力...'),
+                ...placeholderStyled(translations.web_page_editor_content_placeholder_heading as string),
                 '&:not(:last-child)': {
                     marginBottom: '.35em'
                 }
-                /*
-                [`&:where(.${editorClasses.content}[contenteditable="true"] *)`]: {
-                    scrollMarginTop: theme.spacing(3),
-                    [theme.breakpoints.up('md')]: {
-                        scrollMarginTop: theme.spacing(12)
-                    }
-                },
-                [`&:where(.${editorClasses.content}[contenteditable="false"] *)`]: {
-                    // グローバル ヘッダー: 56px, ローカル ヘッダー: 48px, マージン: 16px
-                    scrollMarginTop: theme.spacing(7 + 6 + 2),
-                    [theme.breakpoints.up('sm')]: {
-                        // グローバル ヘッダー: 64px, ローカル ヘッダー: 48px, マージン: 16px
-                        scrollMarginTop: theme.spacing(8 + 6 + 2)
-                    }
-                }
-                */
             },
             '& h2': theme.typography.h2,
             '& h3': theme.typography.h3,
@@ -215,16 +209,26 @@ export const EditorRoot = styled(
                     padding: theme.spacing(2, 0, 1.5)
                 }
             },
+            '& hr': {
+                borderColor: theme.vars.palette.divider,
+                '&:not(:last-child)': {
+                    marginBottom: '.35em'
+                }
+            },
             '& pre': {
-                '--mui-palette-selection-main': '#5d769c',
+                '--mui-palette-selection-main': MuiDarkTheme.palette.selection.main,
 
                 padding: theme.spacing(1),
                 fontFamily: MonospaceFontFamily,
                 fontSize: theme.typography.body2.fontSize,
+                color: theme.vars.palette.common.white,
                 backgroundColor: blueGrey[900],
                 borderRadius: theme.shape.borderRadius,
                 '&:not(:last-child)': {
                     marginBottom: '.35rem'
+                },
+                '&:has(code[class^="language-"])': {
+                    color: '#e1e4e8'
                 },
                 '& code, & span': {
                     margin: 0,
@@ -236,6 +240,23 @@ export const EditorRoot = styled(
                     border: 'unset',
                     borderRadius: 'unset'
                 }
+                /*
+                '& code': {
+                    counterReset: 'line',
+                    counterIncrement: 'line 0',
+                    '& .line::before': {
+                        content: 'counter(line)',
+                        counterIncrement: 'line',
+                        width: '1rem',
+                        marginRight: '1.5rem',
+                        display: 'inline-block',
+                        fontFamily: 'inherit',
+                        whiteSpace: 'nowrap',
+                        textAlign: 'right',
+                        color: theme.vars.palette.text.secondary
+                    }
+                }
+                */
             },
             /*
             '& .codeblock': {
@@ -362,6 +383,24 @@ export const EditorRoot = styled(
         }
     };
 });
+
+export const EditorThumbnail = styled(
+    ({ className, ...props }: BoxProps<'img'>) => (
+        <Box
+            component="img"
+            className={clsx(editorClasses.thumbnail, className)}
+            {...props}
+        />
+    )
+)(({ theme }) => ({
+    borderRadius: theme.shape.borderRadius,
+    [theme.breakpoints.up('md')]: {
+        width: `calc(100% + calc(${theme.spacing(3)} * 2))`,
+        maxWidth: 'none',
+        margin: theme.spacing(-3, -3, 0),
+        borderRadius: theme.spacing(.375, .375, 0, 0)
+    }
+}));
 
 export const EditorTitleInput = styled(
     ({ className, ...props }: TextareaAutosizeProps) => (

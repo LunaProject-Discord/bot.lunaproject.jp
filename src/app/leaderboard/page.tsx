@@ -4,7 +4,7 @@ import { getAndRequestUserGuildsById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { sortGuilds } from '@/utils/discord';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { getGuilds, getUser } from '../utils';
 import { View } from './view';
@@ -37,6 +37,7 @@ const Page = async () => {
 
     const guildsData = getGuilds();
     const mutualGuildsData = getAndRequestUserGuildsById(user.id);
+
     const [guilds, mutualGuilds] = await Promise.all([guildsData, mutualGuildsData]);
 
     const mutualGuildIds = mutualGuilds.map((guild) => guild.id);
@@ -50,6 +51,7 @@ const Page = async () => {
     }
 
     const sortedGuilds = sortGuilds(levelEnabledGuilds);
+
     return (<View guilds={sortedGuilds} localization={localization} />);
 };
 

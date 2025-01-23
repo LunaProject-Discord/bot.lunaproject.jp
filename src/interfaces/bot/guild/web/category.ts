@@ -10,14 +10,15 @@ import { z } from 'zod';
 export interface GuildWebCategory {
     id: string;
     guildId: string;
-    slug?: string;
+    slug: string | null;
     color: string;
     name: string;
     description: string;
-    parentId?: string;
-    parent?: GuildWebCategory;
-    updatedAt: Date;
-    createdAt: Date;
+    parentId: string | null;
+    parent: GuildWebCategory | null;
+    pageCount: number;
+    updatedAt: number;
+    createdAt: number;
 }
 
 export type CreateGuildWebCategory = z.infer<typeof CreateGuildWebCategorySchema>;

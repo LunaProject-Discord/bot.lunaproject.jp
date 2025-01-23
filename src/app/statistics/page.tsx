@@ -2,7 +2,7 @@ import { StatisticsPageProps } from '@/app/statistics/interfaces';
 import { getPeriod } from '@/app/statistics/utils';
 import { getPeriodStatistics } from '@/libs/bot';
 import { getLocalization } from '@/localizations/server';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { NotFoundView, View } from './view';
 
@@ -33,6 +33,7 @@ const Page = async (props: StatisticsPageProps) => {
     const localization = getLocalization();
 
     const { type, startedAt, endedAt } = getPeriod(props);
+
     const statistics = await getPeriodStatistics(type, { start: startedAt, end: endedAt });
     if (!statistics)
         return (<NotFoundView localization={localization} />);

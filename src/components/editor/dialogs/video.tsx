@@ -24,7 +24,7 @@ import { REGEX_NICONICO, REGEX_YOUTUBE } from '@lunaproject/web-editor';
 import { OutlinedInput, outlinedInputClasses, useMediaQuery } from '@mui/material';
 import { useCurrentEditor } from '@tiptap/react';
 import { useAtom } from 'jotai';
-import React, { KeyboardEvent, useMemo } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useMemo } from 'react';
 
 export type EditorVideoDialogViewType = 'file' | 'url' | 'youtube' | 'niconico';
 
@@ -57,7 +57,7 @@ export const EditorVideoDialog = ({ localization: { translations } }: Localizati
         resetMuted();
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setSrc(value);
 

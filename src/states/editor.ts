@@ -28,7 +28,7 @@ export type EditorSaveState =
     | EditorSaveStateLoading
     | undefined;
 
-export type EditorDialogState = 'image' | 'video' | 'audio' | undefined;
+export type EditorDialogState = 'publish' | 'image' | 'video' | 'audio' | undefined;
 
 export interface EditorState {
     save: EditorSaveState;

@@ -1,4 +1,4 @@
-import { NotFoundView } from '@/app/dashboard/[id]/view';
+import { NotFoundView as OriginalNotFoundView } from '@/app/dashboard/[id]/view';
 import { getUser } from '@/app/utils';
 import { ArticlePageParamsProps } from '@/interfaces/page';
 import {
@@ -9,9 +9,9 @@ import {
 } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React from 'react';
-import { View } from './view';
+import { NotFoundView, View } from './view';
 
 export const generateMetadata = async ({ params: { id, slug } }: ArticlePageParamsProps, parent: ResolvingMetadata) => {
     const { translations } = getLocalization();
@@ -52,8 +52,11 @@ const Page = async ({ params: { id, slug } }: ArticlePageParamsProps) => {
 
     const [user, guild, guildWebPage, guildWebCategories, guildWebTags] = await Promise.all([userData, guildData, guildWebPageData, guildWebCategoriesData, guildWebTagsData]);
 
-    if (!user || !guild || !guildWebPage)
-        return (<NotFoundView />);
+    if (!user || !guild)
+        return (<OriginalNotFoundView />);
+
+    if (!guildWebPage)
+        return (<NotFoundView id={id} localization={localization} />);
 
     return (
         <View

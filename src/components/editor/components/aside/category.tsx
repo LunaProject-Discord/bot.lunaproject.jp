@@ -50,6 +50,8 @@ export const EditorCategorySelectButton = (
     }, [setValue]);
 
     const category = categories.find((choice) => choice.id === value);
+    const categoryColorAlpha = hexToHsva(category?.color || '#00000000').a;
+
     return (
         <Fragment>
             <EditorSelectButton onClick={(e) => setAnchorEl(e.currentTarget)} disabled={disabled}>
@@ -57,7 +59,7 @@ export const EditorCategorySelectButton = (
                 <EditorSelectButtonContent>
                     {category ? <Chip
                         icon={
-                            <Box
+                            categoryColorAlpha > 0 ? <Box
                                 sx={{
                                     ...size(24),
                                     display: 'flex',
@@ -71,18 +73,23 @@ export const EditorCategorySelectButton = (
                                     width={theme.spacing(1.5)}
                                     height={theme.spacing(1.5)}
                                 />
-                            </Box>
+                            </Box> : undefined
                         }
                         label={category.name}
-                        sx={(theme) => ({
-                            bgcolor: alpha(category.color, .12),
-                            ...theme.applyStyles('dark', {
-                                bgcolor: alpha(category.color, .24)
-                            }),
-                            [`& .${chipClasses.label}`]: {
-                                pl: 1
-                            }
-                        })}
+                        sx={(theme) => {
+                            if (categoryColorAlpha === 0)
+                                return {};
+
+                            return {
+                                bgcolor: alpha(category.color, .12),
+                                ...theme.applyStyles('dark', {
+                                    bgcolor: alpha(category.color, .24)
+                                }),
+                                [`& .${chipClasses.label}`]: {
+                                    pl: 1
+                                }
+                            };
+                        }}
                     /> : <Typography>{translations.uncategorized}</Typography>}
                 </EditorSelectButtonContent>
             </EditorSelectButton>

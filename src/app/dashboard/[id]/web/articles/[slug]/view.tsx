@@ -14,18 +14,26 @@ import {
     EditorTagSelectButton,
     EditorTitleInput
 } from '@/components/editor';
+import { ErrorDescription, ErrorTitle } from '@/components/error';
+import { ArrowBackIcon, CloudOffIcon } from '@/components/icons';
 import { GuildWebCategory, GuildWebPage, GuildWebTag } from '@/interfaces/bot';
+import { LocalizationProps } from '@/interfaces/localization';
 import { GuildViewProps, UserViewProps } from '@/interfaces/view';
 import { editorAtom } from '@/states/editor';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { Dialog, DialogContent } from '@lunaproject/web-core/dist/components/Dialog';
 import { NAVIGATION_DRAWER_WIDTH } from '@lunaproject/web-core/dist/components/Navigation';
 import { useDebounce } from '@lunaproject/web-core/dist/utils';
-import { Box, dialogClasses } from '@mui/material';
+import { Box, CircularProgress, dialogClasses } from '@mui/material';
 import { getHierarchicalIndexes, TableOfContents } from '@tiptap-pro/extension-table-of-contents';
-import { EditorContent, EditorContext, JSONContent, useEditor } from '@tiptap/react';
+import { EditorContent, EditorContext, useEditor } from '@tiptap/react';
 import { useAtom } from 'jotai';
-import React, { Fragment, KeyboardEvent, useEffect, useMemo, useState } from 'react';
-import { saveGuildWebPage, saveGuildWebPageContent } from './utils';
+import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
+import { isMacOs } from 'react-device-detect';
+import { tinykeys } from 'tinykeys';
+import { save } from './utils';
 
 interface ViewProps extends UserViewProps, GuildViewProps {
     page: GuildWebPage;
@@ -45,15 +53,16 @@ export const View = (
 ) => {
     const { translations, locale } = localization;
 
+    const router = useRouter();
+
     const [
         {
+            save: saveState,
             navigation: { open: navigationOpen },
             publish: publishOpen
         },
         setEditorState
     ] = useAtom(editorAtom);
-
-    const [loaded, setLoaded] = useState(false);
 
     const latestPageContent = useMemo(() => {
         const pageContents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
@@ -62,7 +71,7 @@ export const View = (
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const latestPageContentTitle = latestPageContent?.title ?? '';
-    const latestPageContentContent: JSONContent = latestPageContent?.content ? JSON.parse(latestPageContent.content) : {
+    const latestPageContentContent = latestPageContent?.content ?? {
         type: 'doc',
         content: [
             {
@@ -76,8 +85,8 @@ export const View = (
 
     const [title, setTitle] = useState(latestPageContentTitle);
     const [content, setContent] = useState(latestPageContentContent);
-    const [category, setCategory] = useState<string | undefined>(page.category?.id);
-    const [tags, setTags] = useState<string[]>(page.tags.map((tag) => tag.id));
+    const [category, setCategory] = useState(page.category?.id);
+    const [tags, setTags] = useState(page.tags.map((tag) => tag.id));
 
     const debouncedTitle = useDebounce(title, 1000);
     const debouncedContent = useDebounce(content, 1000);
@@ -104,8 +113,6 @@ export const View = (
             }
         },
         onCreate: () => {
-            setLoaded(true);
-
             setEditorState((prevState) => ({
                 ...prevState,
                 save: {
@@ -115,7 +122,7 @@ export const View = (
             }));
         },
         onUpdate: ({ editor }) => {
-            if (!loaded)
+            if (!editor.isInitialized || editor.isDestroyed)
                 return;
 
             setContent(editor.getJSON());
@@ -128,7 +135,7 @@ export const View = (
         }
     });
 
-    const handleTitleInputKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleTitleInputKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.nativeEvent.isComposing)
             return;
 
@@ -149,63 +156,87 @@ export const View = (
     };
 
     useEffect(() => {
-        if (!loaded)
+        const unsubscribe = tinykeys(
+            window,
+            {
+                '$mod+s': async (e) => {
+                    e.preventDefault();
+
+                    if (!editor || !editor.isInitialized || editor.isDestroyed)
+                        return;
+
+                    setEditorState((prevState) => ({
+                        ...prevState,
+                        save: {
+                            type: 'loading'
+                        }
+                    }));
+
+                    const newPage = await save(
+                        guild.id,
+                        page.id,
+                        {
+                            page: {
+                                category,
+                                tags
+                            },
+                            content: {
+                                title: debouncedTitle,
+                                content: debouncedContent,
+                                autoSave: e.code === 'AutoSave'
+                            }
+                        }
+                    );
+
+                    if (!newPage) {
+                        setEditorState((prevState) => ({
+                            ...prevState,
+                            save: {
+                                type: 'error'
+                            }
+                        }));
+                        return;
+                    }
+
+                    setEditorState((prevState) => ({
+                        ...prevState,
+                        save: {
+                            type: 'success',
+                            data: newPage
+                        }
+                    }));
+
+                    router.refresh();
+                },
+                '$mod+p': (e) => {
+                    e.preventDefault();
+
+                    setEditorState((prevState) => ({
+                        ...prevState,
+                        dialog: 'publish'
+                    }));
+                }
+            }
+        );
+
+        return () => unsubscribe();
+    }, [category, debouncedContent, debouncedTitle, editor, guild.id, page.id, router, saveState, setEditorState, tags]);
+
+    useEffect(() => {
+        if (!editor || !editor.isInitialized || editor.isDestroyed)
             return;
 
-        (async () => {
-            setEditorState((prevState) => ({
-                ...prevState,
-                save: {
-                    type: 'loading'
-                }
-            }));
-
-            const newPageContent = await saveGuildWebPageContent(
-                guild.id,
-                page.id,
+        window.dispatchEvent(
+            new KeyboardEvent(
+                'keydown',
                 {
-                    title: debouncedTitle,
-                    content: JSON.stringify(debouncedContent)
+                    key: 's',
+                    ctrlKey: !isMacOs,
+                    metaKey: isMacOs,
+                    code: 'AutoSave'
                 }
-            );
-
-            if (!newPageContent) {
-                setEditorState((prevState) => ({
-                    ...prevState,
-                    save: {
-                        type: 'error'
-                    }
-                }));
-                return;
-            }
-
-            const newPage = await saveGuildWebPage(
-                guild.id,
-                page.id,
-                {
-                    category,
-                    tags
-                }
-            );
-
-            if (!newPage) {
-                setEditorState((prevState) => ({
-                    ...prevState,
-                    save: {
-                        type: 'error'
-                    }
-                }));
-                return;
-            }
-
-            setEditorState((prevState) => ({
-                ...prevState,
-                save: {
-                    type: 'success',
-                    data: newPage
-                }
-            }));
-        })();
+            )
+        );
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [category, debouncedContent, debouncedTitle, guild.id, page.id, tags]);
@@ -229,6 +260,7 @@ export const View = (
                     <DialogContent sx={{ p: 0, flexDirection: 'row', overflow: 'hidden' }}>
                         <EditorNavigationSidebar localization={localization} />
                         <Box
+                            id="editor"
                             sx={(theme) => ({
                                 '--content-width': (theme) => `minmax(auto, ${theme.breakpoints.values.md}px)`,
                                 '--margin-width': (theme) => theme.spacing(2),
@@ -255,12 +287,12 @@ export const View = (
                                 }
                             })}
                         >
-                            <EditorRoot sx={{ gridColumn: 'content' }}>
+                            <EditorRoot localization={localization} sx={{ gridColumn: 'content' }}>
                                 <EditorTitleInput
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                     onKeyDown={handleTitleInputKeyDown}
-                                    placeholder="ここにタイトルを入力..."
+                                    placeholder={translations.web_page_editor_title_placeholder as string}
                                 />
                                 <Box component="aside" sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <EditorCategorySelectButton
@@ -297,3 +329,63 @@ export const View = (
         </Fragment>
     );
 };
+
+export const LoadingView = ({ localization: { translations } }: LocalizationProps) => (
+    <Dialog
+        open
+        fullScreen
+        sx={{
+            [`& .${dialogClasses.paper}`]: {
+                gap: 0,
+                overflow: 'hidden',
+                bgcolor: 'background.default',
+                backgroundImage: 'none'
+            }
+        }}
+    >
+        <DialogContent sx={{ display: 'flex', placeItems: 'center', placeContent: 'center' }}>
+            <CircularProgress />
+        </DialogContent>
+    </Dialog>
+);
+
+export const NotFoundView = ({ id, localization: { translations } }: LocalizationProps & { id: string; }) => (
+    <Dialog
+        open
+        fullScreen
+        sx={{
+            [`& .${dialogClasses.paper}`]: {
+                gap: 0,
+                overflow: 'hidden',
+                bgcolor: 'background.default',
+                backgroundImage: 'none'
+            }
+        }}
+    >
+        <DialogContent
+            sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                placeItems: 'center',
+                placeContent: 'center',
+                gap: 1
+            }}
+        >
+            <CloudOffIcon sx={{ fontSize: '10rem' }} />
+            <ErrorTitle>{translations.error_not_found_title}</ErrorTitle>
+            <ErrorDescription>{translations.error_not_found_description}</ErrorDescription>
+            <Button
+                component={NextLink}
+                href={`/dashboard/${id}/web/articles`}
+                prefetch={false}
+                disableElevation
+                variant="contained"
+                corners="extended"
+                size="large"
+                startIcon={<ArrowBackIcon />}
+            >
+                {translations.back}
+            </Button>
+        </DialogContent>
+    </Dialog>
+);

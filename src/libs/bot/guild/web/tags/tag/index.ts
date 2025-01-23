@@ -1,20 +1,32 @@
+import { database, Guild_Web_Page_Tags, Guild_Web_Tags } from '@/database';
 import { GuildWebTag } from '@/interfaces/bot';
-import prisma, { guild_web_tags } from '@/libs/prisma';
+import { fromSQLDate } from '@/utils/date';
+import { countDistinct, eq } from 'drizzle-orm';
 
-export const getGuildWebTag = async (tagOrId: guild_web_tags | string): Promise<GuildWebTag | undefined> => {
-    const guildWebTag = typeof tagOrId === 'string' ? await prisma.guild_web_tags.findUnique({ where: { id: tagOrId } }) : tagOrId;
+export const getGuildWebTag = async (tagOrId: typeof Guild_Web_Tags.$inferSelect | string): Promise<GuildWebTag | undefined> => {
+    const guildWebTag = typeof tagOrId === 'string' ? await database.query.Guild_Web_Tags.findFirst({
+        where: eq(Guild_Web_Tags.id, tagOrId)
+    }) : tagOrId;
     if (!guildWebTag)
         return undefined;
 
+    const pageCount = (
+        await database
+            .select({ value: countDistinct(Guild_Web_Page_Tags.pageId) })
+            .from(Guild_Web_Page_Tags)
+            .where(eq(Guild_Web_Page_Tags.tagId, guildWebTag.id))
+    ).at(0)?.value ?? 0;
+
     return {
         id: guildWebTag.id,
-        guildId: guildWebTag.guild_id.toString(),
-        slug: guildWebTag.slug || undefined,
+        guildId: guildWebTag.guildId.toString(),
+        slug: guildWebTag.slug || null,
         color: guildWebTag.color,
         name: guildWebTag.name,
         description: guildWebTag.description,
-        updatedAt: guildWebTag.updated_at,
-        createdAt: guildWebTag.created_at
+        pageCount,
+        updatedAt: fromSQLDate(guildWebTag.updatedAt).toMillis(),
+        createdAt: fromSQLDate(guildWebTag.createdAt).toMillis()
     };
 };
 

@@ -1,84 +1,77 @@
+import { database, User_Notifications } from '@/database';
 import { UserNotification } from '@/interfaces/bot';
-import prisma from '@/libs/prisma';
-import { fromBinaryUUID, toBinaryUUID } from '@lunaproject/web-core/dist/utils';
+import { fromSQLDate } from '@/utils/date';
+import { and, eq } from 'drizzle-orm';
 
 export const getUserNotifications = async (id: string): Promise<UserNotification[]> => {
-    const userNotifications = await prisma.user_notifications.findMany({
-        where: {
-            user_id: BigInt(id)
-        },
-        include: {
-            system_notifications: true
+    const userNotifications = await database.query.User_Notifications.findMany({
+        where: eq(User_Notifications.userId, BigInt(id)),
+        with: {
+            systemNotification: true
         }
     });
 
     const notifications: UserNotification[] = [];
     for (const userNotification of userNotifications) {
-        const notification = userNotification.system_notifications;
+        const notification = userNotification.systemNotification;
         notifications.push({
-            id: fromBinaryUUID(notification.id),
+            id: notification.id,
             type: notification.type,
             title: notification.title,
             description: notification.description,
-            read: userNotification.is_read,
-            updatedAt: notification.updated_at.getTime(),
-            createdAt: notification.created_at.getTime()
+            read: Boolean(userNotification.isRead),
+            updatedAt: fromSQLDate(notification.updatedAt).toMillis(),
+            createdAt: fromSQLDate(notification.createdAt).toMillis()
         });
     }
 
     return notifications;
 };
 
-export const getUserNotificationById = async (id: string, notificationId: string): Promise<UserNotification | undefined> => {
-    const userNotification = await prisma.user_notifications.findUnique({
-        where: {
-            user_id_notification_id: {
-                user_id: BigInt(id),
-                notification_id: toBinaryUUID(notificationId)
-            }
-        },
-        include: {
-            system_notifications: true
+export const getUserNotification = async (id: string, notificationId: string): Promise<UserNotification | undefined> => {
+    const userNotification = await database.query.User_Notifications.findFirst({
+        where: and(
+            eq(User_Notifications.userId, BigInt(id)),
+            eq(User_Notifications.notificationId, notificationId)
+        ),
+        with: {
+            systemNotification: true
         }
     });
-
     if (!userNotification)
         return undefined;
 
-    const notification = userNotification.system_notifications;
+    const notification = userNotification.systemNotification;
     return {
-        id: fromBinaryUUID(notification.id),
+        id: notification.id,
         type: notification.type,
         title: notification.title,
         description: notification.description,
-        read: userNotification.is_read,
-        updatedAt: notification.updated_at.getTime(),
-        createdAt: notification.created_at.getTime()
+        read: Boolean(userNotification.isRead),
+        updatedAt: fromSQLDate(notification.updatedAt).toMillis(),
+        createdAt: fromSQLDate(notification.createdAt).toMillis()
     };
 };
 
 export const setUserNotificationRead = async (id: string, notificationId: string, read: boolean) => {
-    const userNotification = await prisma.user_notifications.findUnique({
-        where: {
-            user_id_notification_id: {
-                user_id: BigInt(id),
-                notification_id: toBinaryUUID(notificationId)
-            }
-        }
+    const userNotification = await database.query.User_Notifications.findFirst({
+        where: and(
+            eq(User_Notifications.userId, BigInt(id)),
+            eq(User_Notifications.notificationId, notificationId)
+        )
     });
-
     if (!userNotification)
         return;
 
-    await prisma.user_notifications.update({
-        where: {
-            user_id_notification_id: {
-                user_id: BigInt(id),
-                notification_id: toBinaryUUID(notificationId)
-            }
-        },
-        data: {
-            is_read: read
-        }
-    });
+    await database
+        .update(User_Notifications)
+        .set({
+            isRead: read
+        })
+        .where(
+            and(
+                eq(User_Notifications.userId, BigInt(id)),
+                eq(User_Notifications.notificationId, notificationId)
+            )
+        );
 };

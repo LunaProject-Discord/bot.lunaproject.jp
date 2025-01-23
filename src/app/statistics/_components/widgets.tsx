@@ -5,19 +5,9 @@ import { getDate } from '@/app/statistics/utils';
 import { TodayIcon, TrendingDownIcon, TrendingFlatIcon, TrendingUpIcon } from '@/components/icons';
 import { Statistic, StatisticsPeriodType } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
-import { format } from '@lunaproject/web-core/dist/utils';
 import { SvgIconComponent } from '@mui/icons-material';
 import { Box, Grid2 as Grid, Paper, Typography } from '@mui/material';
-import { differenceInCalendarWeeks } from 'date-fns/differenceInCalendarWeeks';
-import { differenceInHours } from 'date-fns/differenceInHours';
-import { isSameDay } from 'date-fns/isSameDay';
-import { isSameHour } from 'date-fns/isSameHour';
-import { isSameMonth } from 'date-fns/isSameMonth';
-import { isSameWeek } from 'date-fns/isSameWeek';
-import { isSameYear } from 'date-fns/isSameYear';
-import { subDays } from 'date-fns/subDays';
-import { subMonths } from 'date-fns/subMonths';
-import { subWeeks } from 'date-fns/subWeeks';
+import { HasSameOptions } from 'luxon';
 import React, { ReactNode } from 'react';
 
 export interface StatisticWidgetDifference<T> {
@@ -63,35 +53,39 @@ const getDifferenceIcon = (percentage: number, { positive, negative, neutral }: 
 };
 
 export const getDefaultDifferenceLabel = (latest: Statistic, difference: Statistic, type: StatisticsPeriodType) => {
+    const latestDateTime = getDate(latest);
+    const differenceDateTime = getDate(difference);
+    const options: HasSameOptions = { useLocaleWeeks: true };
+
     switch (type) {
         case 'hours':
-            if (isSameHour(getDate(latest), getDate(difference)))
+            if (latestDateTime.hasSame(differenceDateTime, 'hour', options))
                 return '';
-            return `${differenceInHours(getDate(latest), getDate(difference))}時間前との差`;
+            return `${latestDateTime.diff(differenceDateTime, 'hours').hours}時間前との差`;
         case 'days':
-            if (isSameDay(getDate(latest), getDate(difference)))
+            if (latestDateTime.hasSame(differenceDateTime, 'day', options))
                 return '';
-            if (isSameDay(subDays(getDate(latest), 1), getDate(difference)))
+            if (latestDateTime.minus({ days: 1 }).hasSame(differenceDateTime, 'day', options))
                 return '昨日との差';
-            if (isSameMonth(getDate(latest), getDate(difference)))
-                return `${format(getDate(difference), 'd日')}との差`;
-            if (isSameYear(getDate(latest), getDate(difference)))
-                return `${format(getDate(difference), 'M月d日')}との差`;
-            return `${format(getDate(difference), 'y年M月d日')}との差`;
+            if (latestDateTime.hasSame(differenceDateTime, 'month', options))
+                return `${differenceDateTime.toFormat('d日')}との差`;
+            if (latestDateTime.hasSame(differenceDateTime, 'year', options))
+                return `${differenceDateTime.toFormat('M月d日')}との差`;
+            return `${differenceDateTime.toFormat('yyyy年M月d日')}との差`;
         case 'weeks':
-            if (isSameWeek(getDate(latest), getDate(difference)))
+            if (latestDateTime.hasSame(differenceDateTime, 'week', options))
                 return '';
-            if (isSameWeek(subWeeks(getDate(latest), 1), getDate(difference)))
+            if (latestDateTime.minus({ weeks: 1 }).hasSame(differenceDateTime, 'week', options))
                 return '先週との差';
-            return `${differenceInCalendarWeeks(getDate(latest), getDate(difference))}週間前との差`;
+            return `${latestDateTime.diff(differenceDateTime, 'weeks').weeks}週間前との差`;
         case 'months':
-            if (isSameMonth(getDate(latest), getDate(difference)))
+            if (latestDateTime.hasSame(differenceDateTime, 'month', options))
                 return '';
-            if (isSameMonth(subMonths(getDate(latest), 1), getDate(difference)))
+            if (latestDateTime.minus({ months: 1 }).hasSame(differenceDateTime, 'month', options))
                 return '先月との差';
-            if (isSameYear(getDate(latest), getDate(difference)))
-                return `${format(getDate(difference), 'M月')}との差`;
-            return `${format(getDate(difference), 'y年M月')}との差`;
+            if (latestDateTime.hasSame(differenceDateTime, 'year', options))
+                return `${differenceDateTime.toFormat('M月')}との差`;
+            return `${differenceDateTime.toFormat('yyyy年M月')}との差`;
     }
 };
 

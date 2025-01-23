@@ -10,14 +10,14 @@ SELECT `A`.`id`                                  AS `id`,
        `A`.`updated_at`                          AS `updated_at`,
        `A`.`created_at`                          AS `created_at`
 FROM (
-         `lunaproject_yudzuki`.`system_statistics` `A`
-             JOIN (SELECT max(`lunaproject_yudzuki`.`system_statistics`.`id`) AS `id`,
+         `LunaProject_Yudzuki`.`system_statistics` `A`
+             JOIN (SELECT max(`LunaProject_Yudzuki`.`system_statistics`.`id`) AS `id`,
                           max(
-                                  `lunaproject_yudzuki`.`system_statistics`.`created_at`
+                                  `LunaProject_Yudzuki`.`system_statistics`.`created_at`
                           )                                                   AS `created_at`
-                   FROM `lunaproject_yudzuki`.`system_statistics`
+                   FROM `LunaProject_Yudzuki`.`system_statistics`
                    GROUP BY date_format(
-                                    `lunaproject_yudzuki`.`system_statistics`.`created_at`,
+                                    `LunaProject_Yudzuki`.`system_statistics`.`created_at`,
                                     '%Y-%m-%d'
-                            )) `B` ON (`A`.`id` = `b`.`id`)
+                            )) `B` ON ((`A`.`id` = `B`.`id`))
          )

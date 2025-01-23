@@ -13,6 +13,7 @@ import { Section, SectionContent } from '@lunaproject/web-core/dist/components/S
 import { max, min } from '@lunaproject/web-core/dist/utils';
 import { CircularProgress, Grid2 as Grid } from '@mui/material';
 import { GridColDef, GridRowsProp, GridValidRowModel } from '@mui/x-data-grid';
+import { DateTime } from 'luxon';
 import React, { Fragment } from 'react';
 
 const getValue = (statistic: Statistic) => statistic.pings.total;
@@ -36,7 +37,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
             field: 'date',
             type: 'dateTime',
             headerName: String(translations.statistics_table_date),
-            valueFormatter: (value: Date) => formatDate(value, type, localization),
+            valueFormatter: (value: DateTime<true>) => formatDate(value, type, localization),
             width: 250
         },
         {

@@ -1,6 +1,6 @@
 'use client';
 
-import { editorClasses, editorDefaultExtensions, EditorRoot } from '@/components/editor';
+import { editorClasses, editorDefaultExtensions, EditorRoot, EditorThumbnail } from '@/components/editor';
 import { GuildWebPage } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
 import { Box, Divider, Grid2 as Grid, List, ListItemButton, ListItemText, Paper, Typography } from '@mui/material';
@@ -10,33 +10,23 @@ import {
     TableOfContents
 } from '@tiptap-pro/extension-table-of-contents';
 import { TextSelection } from '@tiptap/pm/state';
-import { EditorContent, JSONContent, useEditor } from '@tiptap/react';
+import { EditorContent, useEditor } from '@tiptap/react';
 import { DateTime } from 'luxon';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 interface ViewProps extends GuildViewProps {
-    page: GuildWebPage;
+    page: Omit<GuildWebPage, 'contentId' | 'content'> & {
+        contentId: NonNullable<GuildWebPage['contentId']>;
+        content: NonNullable<GuildWebPage['content']>;
+    };
 }
 
 export const View = ({ guild, page, localization }: ViewProps) => {
-    const pageContent = useMemo(() => {
-        const pageContents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
-        return pageContents[0];
+    const { translations, locale } = localization;
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    const pageContentTitle = pageContent?.title;
-    const pageContentContent: JSONContent = pageContent?.content ? JSON.parse(pageContent.content) : {
-        type: 'doc',
-        content: [
-            {
-                type: 'paragraph',
-                attrs: {
-                    textAlign: 'left'
-                }
-            }
-        ]
-    };
+    const pageContent = page.content;
+    const pageContentTitle = pageContent.title;
+    const pageContentContent = pageContent.content;
 
     const [tableOfContents, setTableOfContents] = useState<TableOfContentDataItem[]>([]);
 
@@ -79,11 +69,18 @@ export const View = ({ guild, page, localization }: ViewProps) => {
     return (
         <Grid container spacing={2}>
             <Grid size={{ xs: 12, lg: 9 }}>
-                <EditorRoot>
+                <EditorRoot localization={localization}>
+                    {pageContent.thumbnail && <EditorThumbnail src={pageContent.thumbnail} />}
                     <Box component="hgroup" sx={{ display: 'flex', flexDirection: 'column', gap: .5 }}>
                         <Typography variant="h1" className={editorClasses.title}>{pageContentTitle}</Typography>
                         <Typography color="text.secondary">
-                            {DateTime.fromJSDate(pageContent.createdAt).setLocale('ja').toFormat('yyyy/MM/dd (EEE) HH:mm')}
+                            {DateTime.fromMillis(
+                                pageContent.createdAt,
+                                {
+                                    zone: 'Asia/Tokyo',
+                                    locale
+                                }
+                            ).toFormat(translations.pattern_datetime_luxon as string)}
                         </Typography>
                     </Box>
                     <EditorContent editor={editor} />
@@ -108,7 +105,7 @@ export const View = ({ guild, page, localization }: ViewProps) => {
                             gap: 1
                         }}
                     >
-                        <Typography variant="h4" fontWeight={400}>目次</Typography>
+                        <Typography variant="h4" fontWeight={400}>{translations.table_of_contents}</Typography>
                         <Divider flexItem sx={{ mb: 1 }} />
                         <List sx={{ mx: -1.5, my: -1, p: 0, overflowY: 'auto' }}>
                             {tableOfContents.map((item) => (

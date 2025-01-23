@@ -197,8 +197,8 @@ export const SaveConfirmV2 = <T, >(
                         <LoadingButton
                             ref={saveButtonRef}
                             onClick={handleSaveButtonClick}
-                            disabled={!parseResult.success}
                             loading={loading || pending}
+                            disabled={!parseResult.success}
                             variant="contained"
                             corners="extended"
                             size="large"

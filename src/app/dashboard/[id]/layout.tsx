@@ -14,7 +14,7 @@ import { getLocalization } from '@/localizations/server';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions, sortGuilds } from '@/utils/discord';
 import { PageSidebarLayout, RootSidebarLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Alert, AlertTitle } from '@mui/material';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
@@ -23,8 +23,11 @@ import { ForbiddenView, NotFoundView } from './view';
 export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
     const { translations } = getLocalization();
 
-    const user = await getUser();
-    const guild = await getGuildById(id);
+    const userData = getUser();
+    const guildData = getGuildById(id);
+
+    const [user, guild] = await Promise.all([userData, guildData]);
+
     if (!user || !guild)
         return parent;
 

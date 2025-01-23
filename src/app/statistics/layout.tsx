@@ -3,7 +3,7 @@ import { UnauthorizedView } from '@/app/view';
 import { getUserFlags } from '@/libs/bot';
 import { getLocalization } from '@/localizations/server';
 import { PageSidebarLayout, RootSidebarLayout } from '@lunaproject/web-core/dist/components/Layout';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
 
@@ -47,6 +47,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
     const user = await getUser();
     const userFlags = user ? await getUserFlags(user.id) : undefined;
+
     if (!user || !userFlags || !userFlags.manager)
         return (<UnauthorizedView localization={localization} />);
 

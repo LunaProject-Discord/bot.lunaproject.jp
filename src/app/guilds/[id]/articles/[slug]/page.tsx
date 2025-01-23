@@ -1,11 +1,37 @@
 import { NotFoundView } from '@/app/guilds/[id]/view';
 import { ArticlePageParamsProps } from '@/interfaces/page';
-import { getGuildConfiguration, getGuildWebPage } from '@/libs/bot';
+import { getGuildWebPage } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
+import { ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import { View } from './view';
+
+export const generateMetadata = async ({ params: { id, slug } }: ArticlePageParamsProps, parent: ResolvingMetadata) => {
+    const guildData = getGuildById(id);
+    const guildWebPageData = getGuildWebPage(slug);
+
+    const [guild, guildWebPage] = await Promise.all([guildData, guildWebPageData]);
+
+    if (!guild || !guildWebPage || guildWebPage.guildId !== id || !guildWebPage.content)
+        return parent;
+
+    const title = guildWebPage.content.title;
+    const metadata = await parent;
+    return {
+        ...metadata,
+        title,
+        openGraph: {
+            ...metadata.openGraph,
+            title
+        },
+        twitter: {
+            ...metadata.twitter,
+            title
+        }
+    };
+};
 
 const Page = async ({ params: { id, slug } }: ArticlePageParamsProps) => {
     if (!/^\d+$/.test(id))
@@ -14,15 +40,20 @@ const Page = async ({ params: { id, slug } }: ArticlePageParamsProps) => {
     const localization = getLocalization();
 
     const guildData = getGuildById(id);
-    const guildConfigurationData = getGuildConfiguration(id);
     const guildWebPageData = getGuildWebPage(slug);
 
-    const [guild, guildConfiguration, guildWebPage] = await Promise.all([guildData, guildConfigurationData, guildWebPageData]);
+    const [guild, guildWebPage] = await Promise.all([guildData, guildWebPageData]);
 
-    if (!guild || !guildConfiguration || !guildWebPage)
+    if (!guild || !guildWebPage || guildWebPage.guildId !== id || !guildWebPage.content)
         return (<NotFoundView localization={localization} />);
 
-    return (<View guild={guild} page={guildWebPage} localization={localization} />);
+    return (
+        <View
+            guild={guild}
+            page={guildWebPage as Parameters<typeof View>[0]['page']}
+            localization={localization}
+        />
+    );
 };
 
 export default Page;

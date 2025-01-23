@@ -1,31 +1,37 @@
 import { StatisticsPageProps } from '@/app/statistics/interfaces';
 import { Statistic, StatisticsPeriodData, StatisticsPeriodType } from '@/interfaces/bot';
 import { Localization } from '@/interfaces/localization';
-import { getDateFnsLocaleByName } from '@/localizations';
-import { fromDBDate } from '@/utils/date';
-import { format, max } from '@lunaproject/web-core/dist/utils';
-import { endOfWeek } from 'date-fns/endOfWeek';
-import { format as formatDateFns } from 'date-fns/format';
-import { startOfWeek } from 'date-fns/startOfWeek';
+import { max } from '@lunaproject/web-core/dist/utils';
 import { DateTime } from 'luxon';
 
-export const getDate = (statistic: Statistic) => fromDBDate(new Date(statistic.createdAt));
+export const getDate = (statistic: Statistic) => {
+    const dateTime = DateTime.fromMillis(statistic.createdAt, { zone: 'Asia/Tokyo' });
+    return dateTime.isValid ? dateTime : DateTime.local({ zone: 'Asia/Tokyo' });
+};
 
-export const formatDate = (date: Date, period: StatisticsPeriodType, { locale, translations }: Localization) => {
-    const pattern = translations.pattern_date as string;
-    const options: Parameters<typeof formatDateFns>[2] = { locale: getDateFnsLocaleByName(locale) };
+export const formatDate = (
+    dateTime: DateTime<true>,
+    period: StatisticsPeriodType,
+    {
+        locale,
+        translations
+    }: Localization
+) => {
+    const localizedDateTime = dateTime.setLocale(locale);
+
+    const pattern = translations.pattern_date_luxon as string;
 
     switch (period) {
         case 'hours':
-            return format(date, locale === 'ja' ? `${pattern} H時` : `${pattern} h a`, options);
+            return localizedDateTime.toFormat(locale === 'ja' ? `${pattern} H時` : `${pattern} h a`);
         case 'days':
-            return format(date, pattern, options);
+            return localizedDateTime.toFormat(pattern);
         case 'weeks':
-            const start = startOfWeek(date);
-            const end = endOfWeek(date);
-            return `${format(start, pattern, options)} ~ ${format(end, pattern, options)}`;
+            const start = localizedDateTime.startOf('week', { useLocaleWeeks: true });
+            const end = localizedDateTime.endOf('week', { useLocaleWeeks: true });
+            return `${start.toFormat(pattern)} ~ ${end.toFormat(pattern)}`;
         case 'months':
-            return format(date, locale === 'ja' ? 'yyyy年M月' : 'MMMM yyyy', options);
+            return localizedDateTime.toFormat(locale === 'ja' ? 'yyyy年M月' : 'MMMM yyyy');
     }
 };
 

@@ -1,4 +1,3 @@
-import { getUser } from '@/app/utils';
 import { WithIdParamProps } from '@/interfaces/page';
 import { getGuildConfiguration } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
@@ -13,15 +12,10 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
 
     const localization = getLocalization();
 
-    const userData = getUser();
     const guildData = getGuildById(id);
     const guildConfigurationData = getGuildConfiguration(id);
 
-    const [user, guild, guildConfiguration] = await Promise.all([
-        userData,
-        guildData,
-        guildConfigurationData
-    ]);
+    const [guild, guildConfiguration] = await Promise.all([guildData, guildConfigurationData]);
 
     if (!guild || !guildConfiguration)
         return (<NotFoundView localization={localization} />);

@@ -1,16 +1,10 @@
 import { getUser } from '@/app/utils';
-import { GuildConfiguration } from '@/interfaces/bot';
 import { WithIdParamProps } from '@/interfaces/page';
-import { getGuildConfiguration, hasDashboardAccess } from '@/libs/bot';
-import prisma from '@/libs/prisma';
+import { getGuildConfiguration, hasDashboardAccess, setGuildConfiguration } from '@/libs/bot';
 import { getGuildById, updateGuildById } from '@/libs/redis';
 import { PartialGuildConfigurationSchema } from '@/schemas/bot';
 import { errorWithName } from '@lunaproject/web-core/dist/utils';
-import { Prisma } from '@prisma/client';
-import { addHours } from 'date-fns/addHours';
 import { NextRequest, NextResponse } from 'next/server';
-
-type valueOf<T> = T[keyof T];
 
 export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
     const user = await getUser();
@@ -49,34 +43,11 @@ export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamPro
     const configuration = result.data;
 
     try {
-        const guildId = BigInt(id);
-        const now = addHours(new Date(), 9);
-
-        if (Object.keys(configuration).length > 0) {
-            const inputs: {
-                [key: string]: valueOf<Prisma.XOR<Prisma.guild_configurationsUpdateInput, Prisma.guild_configurationsUncheckedUpdateInput>>
-            } = {};
-
-            const configurationSections: { [key: string]: valueOf<GuildConfiguration> } = configuration;
-            for (const sectionKey in configurationSections) {
-                const value = configurationSections[sectionKey];
-                inputs[sectionKey] = typeof value === 'object' ? JSON.stringify(value) : value;
-            }
-
-            await prisma.guild_configurations.update({
-                where: {
-                    guild_id: guildId
-                },
-                data: {
-                    ...inputs,
-                    updated_at: now
-                }
-            });
-        }
+        const data = await setGuildConfiguration(id, configuration);
 
         await updateGuildById(id);
 
-        return NextResponse.json(await getGuildConfiguration(id), { status: 200 });
+        return NextResponse.json(data, { status: 200 });
     } catch (e) {
         errorWithName(`(${req.method.toUpperCase()})${req.nextUrl.pathname}${req.nextUrl.search}${req.nextUrl.hash}`, e);
         return NextResponse.json({ message: 'Internal server error!' }, { status: 500 });

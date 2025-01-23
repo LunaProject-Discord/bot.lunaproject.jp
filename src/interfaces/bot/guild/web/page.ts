@@ -5,20 +5,22 @@ import {
     UpdateGuildWebPageContentSchema,
     UpdateGuildWebPageSchema
 } from '@/schemas/bot';
+import { JSONContent } from '@tiptap/react';
 import { z } from 'zod';
 
 export interface GuildWebPage {
     id: string;
     guildId: string;
-    slug?: string;
-    contentId?: string;
-    content?: GuildWebPageContent;
+    contentId: string | null;
+    content: GuildWebPageContent | null;
     contents: GuildWebPageContent[];
-    category?: GuildWebCategory;
+    slug: string | null;
+    category: GuildWebCategory | null;
     tags: GuildWebTag[];
-    deletedAt?: Date;
-    updatedAt: Date;
-    createdAt: Date;
+    published: boolean;
+    deletedAt: number | null;
+    updatedAt: number;
+    createdAt: number;
 }
 
 export type CreateGuildWebPage = z.infer<typeof CreateGuildWebPageSchema>;
@@ -28,15 +30,17 @@ export type UpdateGuildWebPage = z.infer<typeof UpdateGuildWebPageSchema>;
 export interface GuildWebPageContent {
     id: string;
     pageId: string;
-    guildId: string;
     userId: string;
-    icon?: string;
+    thumbnail: string | null;
+    icon: string | null;
     title: string;
-    content: string;
+    content: JSONContent;
     published: boolean;
-    deletedAt?: Date;
-    updatedAt: Date;
-    createdAt: Date;
+    autoSave: boolean;
+    comment: string;
+    deletedAt: number | null;
+    updatedAt: number;
+    createdAt: number;
 }
 
 export type CreateGuildWebPageContent = z.infer<typeof CreateGuildWebPageContentSchema>;

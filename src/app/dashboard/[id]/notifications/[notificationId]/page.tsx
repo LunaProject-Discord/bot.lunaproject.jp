@@ -1,9 +1,9 @@
 import { getUser } from '@/app/utils';
 import { WithIdParamProps } from '@/interfaces/page';
-import { getGuildNotificationById, hasDashboardAccess, setGuildNotificationRead } from '@/libs/bot';
+import { getGuildNotification, hasDashboardAccess, setGuildNotificationRead } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { NotFoundView } from '../../view';
 import { View } from './view';
@@ -18,7 +18,7 @@ interface Props extends WithIdParamProps {
 export const generateMetadata = async ({ params: { id, notificationId } }: Props, parent: ResolvingMetadata) => {
     const userData = getUser();
     const guildData = getGuildById(id);
-    const guildNotificationData = getGuildNotificationById(id, notificationId);
+    const guildNotificationData = getGuildNotification(id, notificationId);
 
     const [user, guild, guildNotification] = await Promise.all([userData, guildData, guildNotificationData]);
 
@@ -48,7 +48,7 @@ const Page = async ({ params: { id, notificationId } }: Props) => {
 
     const userData = getUser();
     const guildData = getGuildById(id);
-    const guildNotificationData = getGuildNotificationById(id, notificationId);
+    const guildNotificationData = getGuildNotification(id, notificationId);
 
     const [user, guild, guildNotification] = await Promise.all([
         userData,

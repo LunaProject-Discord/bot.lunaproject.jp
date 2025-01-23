@@ -39,6 +39,7 @@ import DockToLeftFill from '@material-symbols/svg-400/outlined/dock_to_left-fill
 import DockToLeft from '@material-symbols/svg-400/outlined/dock_to_left.svg';
 import DockToRightFill from '@material-symbols/svg-400/outlined/dock_to_right-fill.svg';
 import DockToRight from '@material-symbols/svg-400/outlined/dock_to_right.svg';
+import Docs from '@material-symbols/svg-400/outlined/docs.svg';
 import DragIndicator from '@material-symbols/svg-400/outlined/drag_indicator.svg';
 import Edit from '@material-symbols/svg-400/outlined/edit.svg';
 import EmojiEvents from '@material-symbols/svg-400/outlined/emoji_events.svg';
@@ -200,6 +201,8 @@ export const DescriptionIcon = createSvgIcon({ path: Description }, 'Description
 
 export const DirectionsRunIcon = createSvgIcon({ path: DirectionsRun }, 'DirectionsRunIcon');
 
+export const DnsIcon = createSvgIcon({ path: Dns }, 'DnsIcon');
+
 export const DockToLeftIcon = createSvgIcon({ path: DockToLeft }, 'DockToLeftIcon');
 
 export const DockToLeftFillIcon = createSvgIcon({ path: DockToLeftFill }, 'DockToLeftFillIcon');
@@ -208,7 +211,7 @@ export const DockToRightIcon = createSvgIcon({ path: DockToRight }, 'DockToRight
 
 export const DockToRightFillIcon = createSvgIcon({ path: DockToRightFill }, 'DockToRightFillIcon');
 
-export const DnsIcon = createSvgIcon({ path: Dns }, 'DnsIcon');
+export const DocsIcon = createSvgIcon({ path: Docs }, 'DocsIcon');
 
 export const DragIndicatorIcon = createSvgIcon({ path: DragIndicator }, 'DragIndicatorIcon');
 

@@ -13,6 +13,7 @@ import {
 import { GuildViewProps, UserViewProps } from '@/interfaces/view';
 import { editorAtom } from '@/states/editor';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
+import { getSlug } from '@/utils/web';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { YudzukiIcon } from '@lunaproject/web-core/dist/components/Icons';
 import { generateComponentClasses } from '@lunaproject/web-core/dist/utils';
@@ -41,6 +42,7 @@ import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import NextLink from 'next/link';
 import React, { Fragment } from 'react';
+import { isMacOs } from 'react-device-detect';
 
 export const editorHeaderClasses = generateComponentClasses(
     'EditorHeader',
@@ -78,6 +80,22 @@ export const EditorHeader = ({ user, guild, localization }: EditorHeaderProps) =
 
     const [{ save }, setEditorState] = useAtom(editorAtom);
 
+    const handleSaveButtonClick = () => {
+        if (!editor || !editor.isInitialized || editor.isDestroyed || save?.type === 'loading')
+            return;
+
+        window.dispatchEvent(
+            new KeyboardEvent(
+                'keydown',
+                {
+                    key: 's',
+                    ctrlKey: !isMacOs,
+                    metaKey: isMacOs
+                }
+            )
+        );
+    };
+
     const handlePreviewButtonClick = () => {
         if (!save || save.type !== 'success')
             return;
@@ -85,7 +103,14 @@ export const EditorHeader = ({ user, guild, localization }: EditorHeaderProps) =
         const page = save.data;
         const pageContents = page.contents.toSorted((a, b) => a.createdAt < b.createdAt ? 1 : -1);
 
-        window.open(`/guilds/${guild.id}/articles/${page.id.toLowerCase()}/revisions/${pageContents[0].id.toLowerCase()}`, '_blank');
+        window.open(`/guilds/${guild.id}/articles/${getSlug(page)}/revisions/${pageContents[0].id.toLowerCase()}`, '_blank');
+    };
+
+    const handlePublishButtonClick = () => {
+        setEditorState((prevState) => ({
+            ...prevState,
+            dialog: 'publish'
+        }));
     };
 
     if (!editor)
@@ -120,7 +145,10 @@ export const EditorHeader = ({ user, guild, localization }: EditorHeaderProps) =
                     <RibbonDivider sx={{ my: 2, ml: -1 }} />
                     <RibbonGroupRoot>
                         <Tooltip title={translations.save} placement="bottom">
-                            <IconButton>
+                            <IconButton
+                                onClick={handleSaveButtonClick}
+                                disabled={!editor.isInitialized || editor.isDestroyed}
+                            >
                                 {save?.type === 'success' && <CloudSyncIcon />}
                                 {save?.type === 'error' && <SyncProblemIcon />}
                                 {(!save || save.type === 'loading') && <SaveIcon />}
@@ -175,10 +203,7 @@ export const EditorHeader = ({ user, guild, localization }: EditorHeaderProps) =
                             プレビュー
                         </Button>
                         <Button
-                            onClick={() => setEditorState((prevState) => ({
-                                ...prevState,
-                                publish: !prevState.publish
-                            }))}
+                            onClick={handlePublishButtonClick}
                             disableElevation
                             variant="contained"
                             corners="extended"

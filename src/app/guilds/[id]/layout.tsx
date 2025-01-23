@@ -5,14 +5,12 @@ import { getGuildConfiguration, hasDashboardAccess, isLeaderboardAccessible } fr
 import { getGuildById, getMemberById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { PageLayout } from '@lunaproject/web-core/dist/components/Layout';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import React, { Fragment, ReactNode } from 'react';
 import { NotFoundView } from './view';
 
 export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
-
     const user = await getUser();
     const guild = await getGuildById(id);
     if (!user || !guild)
@@ -57,15 +55,10 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
     const localization = getLocalization();
 
     const userData = getUser();
-
     const guildData = getGuildById(id);
     const guildConfigurationData = getGuildConfiguration(id);
 
-    const [user, guild, guildConfiguration] = await Promise.all([
-        userData,
-        guildData,
-        guildConfigurationData
-    ]);
+    const [user, guild, guildConfiguration] = await Promise.all([userData, guildData, guildConfigurationData]);
 
     if (!guild || !guildConfiguration)
         return (<NotFoundView localization={localization} />);

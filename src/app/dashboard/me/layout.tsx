@@ -3,7 +3,7 @@ import { NotFoundView, UnauthorizedView } from '@/app/view';
 import { getUserConfiguration, getUserFlags } from '@/libs/bot';
 import { getLocalization } from '@/localizations/server';
 import { PageSidebarLayout, RootSidebarLayout } from '@lunaproject/web-core/dist/components/Layout';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
 

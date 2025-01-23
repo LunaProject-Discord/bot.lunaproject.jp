@@ -14,8 +14,9 @@ import { GuildViewProps } from '@/interfaces/view';
 import { ReplaceGuildWebCategoriesSchema } from '@/schemas/bot';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
+import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { hexToHsva, hsvaToHexa } from '@uiw/react-color';
-import React, { Fragment, useCallback, useMemo, useState } from 'react';
+import React, { Fragment, useCallback, useMemo } from 'react';
 
 const saveGuildWebCategories = (id: string, data: ReplaceGuildWebCategories) => fetch(
     `/api/guilds/${id}/web/categories`,
@@ -42,8 +43,7 @@ export const View = ({ guild, categories, localization }: ViewProps) => {
         parentId: category.parent?.id ?? null,
         deleted: false
     })).toSorted((a, b) => a.name.localeCompare(b.name)), [categories]);
-    const [values, setValues] = useState(initialValues);
-    const resetValues = () => setValues(initialValues);
+    const [values, setValues, resetValues] = useResettableState(initialValues);
 
     const toSourceObject = useCallback((): ReplaceGuildWebCategories => initialValues.map((initialValue) => {
         let category: ReplaceGuildWebCategoriesUpdate = {

@@ -1,10 +1,10 @@
 import { NotFoundView } from '@/app/dashboard/[id]/view';
 import { getUser } from '@/app/utils';
 import { WithIdParamProps } from '@/interfaces/page';
-import { getGuildWebPages, hasDashboardAccess } from '@/libs/bot';
+import { getGuildWebPagesByGuildId, hasDashboardAccess } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
-import { ResolvingMetadata } from 'next/dist/lib/metadata/types/metadata-interface';
+import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { View } from './view';
 
@@ -40,7 +40,7 @@ const Page = async ({ params: { id } }: WithIdParamProps) => {
     const localization = getLocalization();
 
     const guildData = getGuildById(id);
-    const pagesData = getGuildWebPages(id);
+    const pagesData = getGuildWebPagesByGuildId(id);
 
     const [guild, pages] = await Promise.all([guildData, pagesData]);
 
