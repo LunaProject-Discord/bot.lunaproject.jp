@@ -13,8 +13,10 @@ import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { NotFoundView, View } from './view';
 
-export const generateMetadata = async ({ params: { id, slug } }: ArticlePageParamsProps, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
+export const generateMetadata = async (props: ArticlePageParamsProps, parent: ResolvingMetadata) => {
+    const { id } = await props.params;
+
+    const { translations } = await getLocalization();
     const title = translations.web_pages;
 
     const user = await getUser();
@@ -41,8 +43,10 @@ export const generateMetadata = async ({ params: { id, slug } }: ArticlePagePara
     };
 };
 
-const Page = async ({ params: { id, slug } }: ArticlePageParamsProps) => {
-    const localization = getLocalization();
+const Page = async (props: ArticlePageParamsProps) => {
+    const { id, slug } = await props.params;
+
+    const localization = await getLocalization();
 
     const userData = getUser();
     const guildData = getGuildById(id);

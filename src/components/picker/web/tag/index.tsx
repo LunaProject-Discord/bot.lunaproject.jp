@@ -11,7 +11,7 @@ import {
 import { Tag } from '@/components/section_card';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { ListItemButton, useTheme } from '@mui/material';
-import deepmerge from 'deepmerge';
+import deepmerge from 'lodash/merge';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type TagPickerType = Tag & SectionCardDisabledProps;
@@ -74,7 +74,7 @@ export const TagPicker = (
             onClick={handleChoiceClick}
             filter={filterPredicate}
             slotProps={
-                deepmerge<TagPickerProps['slotProps']>(
+                deepmerge(
                     {
                         searchBox: {
                             placeholder: translations.search as string

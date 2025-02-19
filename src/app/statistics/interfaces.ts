@@ -1,11 +1,11 @@
 import { Statistics, StatisticsPeriodType } from '@/interfaces/bot';
 
 export interface StatisticsPageProps {
-    searchParams?: {
+    searchParams?: Promise<{
         period?: StatisticsPeriodType;
         start?: string;
         end?: string;
-    };
+    }>;
 }
 
 export interface StatisticsViewProps {

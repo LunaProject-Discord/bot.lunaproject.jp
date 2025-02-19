@@ -18,6 +18,7 @@ import { appearanceClasses } from '@/states/appearance';
 import { navigationAtom } from '@/states/navigation';
 import { popoverAtom } from '@/states/popover';
 import { getUserAvatar, getUserDisplayName } from '@/utils/discord';
+import { useLoginUrl } from '@/utils/hooks';
 import { RouteLink } from '@lunaproject/web-core/dist/components/Link';
 import {
     NavigationAppBar as RootNavigationAppBar,
@@ -39,6 +40,8 @@ import React, { Fragment, MouseEvent, useState } from 'react';
 export type RootNavigationProps = NavigationProps & RootNavigationDrawerProps;
 
 export const NavigationAppBar = ({ setOpen, user, flags, localization: { translations } }: RootNavigationProps) => {
+    const loginUrl = useLoginUrl();
+
     const trigger = useScrollTrigger({ disableHysteresis: true, threshold: 0 });
 
     const setPopoverState = useSetAtom(popoverAtom);
@@ -145,10 +148,7 @@ export const NavigationAppBar = ({ setOpen, user, flags, localization: { transla
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={translations.login} placement="bottom">
-                            <IconButton
-                                component={NextLink}
-                                href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
-                            >
+                            <IconButton component={NextLink} href={loginUrl}>
                                 <LoginIcon />
                             </IconButton>
                         </Tooltip>

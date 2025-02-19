@@ -6,20 +6,12 @@ import { getGuildWebPage, getGuildWebPageContent, hasDashboardAccess } from '@/l
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next';
-import { notFound } from 'next/navigation';
 import React from 'react';
 import { View } from './view';
 
-export const generateMetadata = async (
-    {
-        params: {
-            id,
-            slug,
-            revisionId
-        }
-    }: ArticleRevisionPageParamsProps,
-    parent: ResolvingMetadata
-) => {
+export const generateMetadata = async (props: ArticleRevisionPageParamsProps, parent: ResolvingMetadata) => {
+    const { id, slug, revisionId } = await props.params;
+
     const userData = getUser();
     const guildData = getGuildById(id);
     const guildWebPageData = getGuildWebPage(slug);
@@ -51,11 +43,10 @@ export const generateMetadata = async (
     };
 };
 
-const Page = async ({ params: { id, slug, revisionId } }: ArticleRevisionPageParamsProps) => {
-    if (!/^\d+$/.test(id))
-        return notFound();
+const Page = async (props: ArticleRevisionPageParamsProps) => {
+    const { id, slug, revisionId } = await props.params;
 
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
     const userData = getUser();
     const guildData = getGuildById(id);

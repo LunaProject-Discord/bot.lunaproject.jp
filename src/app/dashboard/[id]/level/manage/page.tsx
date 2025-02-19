@@ -1,5 +1,5 @@
 import { getUser } from '@/app/utils';
-import { WithIdParamProps } from '@/interfaces/page';
+import { GenericPageParamsProps } from '@/interfaces/page';
 import { getGuildConfiguration, getGuildLevels, hasDashboardAccess } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
@@ -8,8 +8,10 @@ import React from 'react';
 import { NotFoundView } from '../../view';
 import { View } from './view';
 
-export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
+export const generateMetadata = async (props: GenericPageParamsProps, parent: ResolvingMetadata) => {
+    const { id } = await props.params;
+
+    const { translations } = await getLocalization();
     const title = translations.level_manage;
 
     const user = await getUser();
@@ -36,8 +38,10 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     };
 };
 
-const Page = async ({ params: { id } }: WithIdParamProps) => {
-    const localization = getLocalization();
+const Page = async (props: GenericPageParamsProps) => {
+    const { id } = await props.params;
+
+    const localization = await getLocalization();
 
     const guildData = getGuildById(id);
     const guildLevelsData = getGuildLevels(id);

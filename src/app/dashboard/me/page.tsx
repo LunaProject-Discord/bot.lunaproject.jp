@@ -6,7 +6,7 @@ import React from 'react';
 import { View } from './view';
 
 const Page = async () => {
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
     const user = await getUser();
     if (!user)

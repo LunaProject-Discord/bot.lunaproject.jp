@@ -1,6 +1,6 @@
 import { getGuilds, getUser } from '@/app/utils';
 import { UnauthorizedView } from '@/app/view';
-import { WithIdParamProps } from '@/interfaces/page';
+import { GenericPageParamsProps } from '@/interfaces/page';
 import {
     getGuildConfiguration,
     getGuildFlags,
@@ -20,8 +20,10 @@ import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
 import { ForbiddenView, NotFoundView } from './view';
 
-export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
+export const generateMetadata = async (props: GenericPageParamsProps, parent: ResolvingMetadata) => {
+    const { id } = await props.params;
+
+    const { translations } = await getLocalization();
 
     const userData = getUser();
     const guildData = getGuildById(id);
@@ -63,11 +65,13 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     };
 };
 
-const Layout = async ({ children, params: { id } }: WithIdParamProps & { children: ReactNode; }) => {
+const Layout = async (props: GenericPageParamsProps & { children: ReactNode; }) => {
+    const { id } = await props.params;
+
     if (!/^\d+$/.test(id))
         return notFound();
 
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
     const userData = getUser();
     const guildsData = getGuilds();
@@ -130,7 +134,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
                     現在、あなたはサービスの運営としてこのサーバーのダッシュボードにアクセスしています。<br />
                     このサーバーの管理者よりサポートの要求が行われたなどの理由以外で、本来権限がないサーバーの設定を変更することは禁止されています。
                 </Alert>}
-                {children}
+                {props.children}
             </PageSidebarLayout>
         </RootSidebarLayout>
     );

@@ -10,7 +10,7 @@ import {
 } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useTheme } from '@mui/material';
 import clsx from 'clsx';
-import deepmerge from 'deepmerge';
+import deepmerge from 'lodash/merge';
 import React from 'react';
 
 export const sectionRoleSelectCardClasses = generateSectionControlCardClasses('RoleSelect');
@@ -64,7 +64,7 @@ export const SectionRoleSelectCard = (
                 multiple={multiple}
                 disabled={disabled}
                 slotProps={
-                    deepmerge<RoleSelectProps['slotProps']>(
+                    deepmerge(
                         {
                             input: {
                                 root: {

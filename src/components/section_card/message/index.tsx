@@ -4,9 +4,8 @@ import { EditIcon } from '@/components/icons';
 import { MessageBuilder, MessagePreviewContainer } from '@/components/message';
 import { LocalizationProps } from '@/interfaces/localization';
 import { DataMessage } from '@/interfaces/message';
-import { toMessage } from '@/libs/message';
-import { appearanceClasses } from '@/states/appearance';
-import { ThemeProvider } from '@emotion/react';
+import { toLPDMessage } from '@/libs/message_v2';
+import { appearanceAtom } from '@/states/appearance';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     merges,
@@ -17,11 +16,11 @@ import {
     SectionCardVariableProps
 } from '@lunaproject/web-core/dist/components/SectionCard';
 import { ConfigContext, generateComponentClasses, SomePartial } from '@lunaproject/web-core/dist/utils';
-import { MessageContainer, MessagePreview } from '@lunaproject/web-discord/dist/components/Message';
-import { buildDiscordTheme } from '@lunaproject/web-discord/dist/styles';
+import { Message, Messages, messagesClasses } from '@lunaproject/web-discord-components';
 import { Box, BoxProps, styled, Typography } from '@mui/material';
 import { BoxTypeMap } from '@mui/system';
 import clsx from 'clsx';
+import { useAtomValue } from 'jotai';
 import React, { ElementType, Fragment, useContext, useState } from 'react';
 
 export const sectionMessageCardClasses = generateComponentClasses(
@@ -141,6 +140,8 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
 ) => {
     const { translations } = localization;
 
+    const { isDarkMode } = useAtomValue(appearanceAtom);
+
     const { components } = useContext(ConfigContext);
     const {
         disabled: configDisabled,
@@ -198,44 +199,19 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
                 </SectionMessageCardQueryContainer>
                 <SectionMessageCardQueryContainer>
                     <SectionMessageCardGridContainer>
-                        <Box
-                            sx={(theme) => ({
-                                [`& .${appearanceClasses.root}`]: {
-                                    display: 'none',
-                                    ...theme.applyStyles('light', {
-                                        [`&.${appearanceClasses.light}`]: {
-                                            display: 'block'
-                                        }
-                                    }),
-                                    ...theme.applyStyles('dark', {
-                                        [`&.${appearanceClasses.dark}`]: {
-                                            display: 'block'
-                                        }
-                                    })
+                        <MessagePreviewContainer
+                            sx={{
+                                border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
+                                [`&, & .${messagesClasses.root}`]: {
+                                    height: '100%',
+                                    borderRadius: 1
                                 }
-                            })}
+                            }}
                         >
-                            <ThemeProvider theme={buildDiscordTheme({ color: 'light' })}>
-                                <MessagePreviewContainer
-                                    className={clsx(appearanceClasses.root, appearanceClasses.light)}
-                                    sx={{ height: '100%' }}
-                                >
-                                    <MessageContainer style={{ height: '100%' }}>
-                                        <MessagePreview message={toMessage(value)} />
-                                    </MessageContainer>
-                                </MessagePreviewContainer>
-                            </ThemeProvider>
-                            <ThemeProvider theme={buildDiscordTheme({ color: 'dark' })}>
-                                <MessagePreviewContainer
-                                    className={clsx(appearanceClasses.root, appearanceClasses.dark)}
-                                    sx={{ height: '100%' }}
-                                >
-                                    <MessageContainer style={{ height: '100%' }}>
-                                        <MessagePreview message={toMessage(value)} />
-                                    </MessageContainer>
-                                </MessagePreviewContainer>
-                            </ThemeProvider>
-                        </Box>
+                            <Messages appearance={{ color: isDarkMode ? 'dark' : 'light', display: 'cozy' }}>
+                                <Message message={toLPDMessage(value)} />
+                            </Messages>
+                        </MessagePreviewContainer>
                         <Box>
                             {children && <Typography
                                 component="div"

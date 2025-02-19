@@ -28,19 +28,19 @@ import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocal
 import { appearanceAtom, AppearanceType } from '@/states/appearance';
 import { RootLayout, RootStyles } from '@lunaproject/web-core/dist/components/Layout';
 import {
-    Config,
-    ConfigProvider,
+    Config as LPConfig,
+    ConfigProvider as LPConfigProvider,
     MuiColorSchemes,
     MuiComponents,
     MuiCssVariables,
     MuiTypography
 } from '@lunaproject/web-core/dist/utils';
+import { ConfigProvider as LPDConfigProvider } from '@lunaproject/web-discord-components';
 import { OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import { createTheme, GlobalStyles, ThemeOptions, ThemeProvider, useMediaQuery } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import { TypographyOptions } from '@mui/material/styles/createTypography';
-import deepmerge from 'deepmerge';
 import { useAtom } from 'jotai';
+import deepmerge from 'lodash/merge';
 import React, { ReactNode, useEffect, useMemo } from 'react';
 import { Navigation } from './_navigation';
 import { DefaultFontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from './theme';
@@ -76,7 +76,7 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
     const theme = useMemo(() => createTheme(
         {
             cssVariables: MuiCssVariables,
-            components: deepmerge<ThemeOptions['components']>(
+            components: deepmerge(
                 MuiComponents,
                 {
                     MuiAlert: {
@@ -107,10 +107,10 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
                             }
                         }
                     }
-                }
+                } as ThemeOptions['components']
             ),
             colorSchemes: MuiColorSchemes,
-            typography: deepmerge<TypographyOptions>(
+            typography: deepmerge(
                 MuiTypography,
                 {
                     fontFamily: DefaultFontFamily
@@ -122,7 +122,7 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
         getMuiGridLocalizationByName(locale)
     ), [locale]);
 
-    const config: Config = {
+    const lpConfig: LPConfig = {
         components: {
             SectionCard: {
                 variant: 'outlined'
@@ -195,14 +195,16 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
     return (
         <AppRouterCacheProvider>
             <ThemeProvider theme={theme} colorSchemeNode={null} disableTransitionOnChange>
-                <ConfigProvider value={config}>
-                    <RootStyles />
-                    {insertGlobalStyles}
-                    <Navigation user={user} flags={flags} localization={localization} />
-                    <RootLayout>
-                        {children}
-                    </RootLayout>
-                </ConfigProvider>
+                <LPConfigProvider value={lpConfig}>
+                    <LPDConfigProvider value={{ locale }}>
+                        <RootStyles />
+                        {insertGlobalStyles}
+                        <Navigation user={user} flags={flags} localization={localization} />
+                        <RootLayout>
+                            {children}
+                        </RootLayout>
+                    </LPDConfigProvider>
+                </LPConfigProvider>
             </ThemeProvider>
         </AppRouterCacheProvider>
     );

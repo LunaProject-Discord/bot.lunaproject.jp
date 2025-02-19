@@ -1,9 +1,9 @@
-/** @type {import('next').NextConfig} */
-module.exports = {
+import type { NextConfig } from 'next';
+
+const config: NextConfig = {
     reactStrictMode: true,
-    swcMinify: true,
     webpack: (config) => {
-        const fileLoaderRule = config.module.rules.find((rule) => rule.test?.test?.('.svg'));
+        const fileLoaderRule = config.module.rules.find((rule: any) => rule.test?.test?.('.svg'));
 
         config.module.rules.push(
             {
@@ -22,5 +22,17 @@ module.exports = {
         fileLoaderRule.exclude = /\.svg$/i;
 
         return config;
+    },
+    experimental: {
+        turbo: {
+            rules: {
+                '*.svg': {
+                    loaders: ['@svgr/webpack'],
+                    as: '*.js'
+                }
+            }
+        }
     }
 };
+
+export default config;

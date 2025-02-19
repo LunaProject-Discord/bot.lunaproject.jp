@@ -5,6 +5,7 @@ import { SessionStatus } from '@/interfaces/bot';
 import { Localization, LocalizationProps } from '@/interfaces/localization';
 import { RedisStatus } from '@/interfaces/redis';
 import { getGuildIcon } from '@/utils/cdn';
+import { useLoginUrl } from '@/utils/hooks';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     SectionAccordionCard,
@@ -351,6 +352,8 @@ export const SectionStatusCard = (
 ) => {
     const { translations } = localization;
 
+    const loginUrl = useLoginUrl();
+
     const config = useContext(ConfigContext);
     const {
         disabled: configRootDisabled,
@@ -460,7 +463,7 @@ export const SectionStatusCard = (
                         <Typography>{translations.status_mutual_guilds_not_logged_in}</Typography>
                         <Button
                             component={Link}
-                            href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+                            href={loginUrl}
                             disableElevation
                             variant="contained"
                             corners="extended"

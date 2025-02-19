@@ -16,6 +16,7 @@ import {
 import { FeaturedGuild } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { getGuildIcon } from '@/utils/discord';
+import { useLoginUrl } from '@/utils/hooks';
 import { fetchWithUser } from '@/utils/swr';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
@@ -88,6 +89,8 @@ interface Props extends LocalizationProps {
 export const View = ({ user, localization: { translations } }: Props) => {
     const cookies = parseCookies();
     const token = cookies['token'];
+
+    const loginUrl = useLoginUrl();
 
     const { data: guilds } = useSWRImmutable<FeaturedGuild[]>(
         token ? ['/api/users/me/home/guilds', token] : null,
@@ -191,7 +194,7 @@ export const View = ({ user, localization: { translations } }: Props) => {
                     </Box>
                     <Button
                         component={Link}
-                        href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
+                        href={loginUrl}
                         disableElevation
                         variant="contained"
                         color="inherit"
@@ -207,26 +210,30 @@ export const View = ({ user, localization: { translations } }: Props) => {
 };
 
 
-export const UnauthorizedView = ({ localization: { translations } }: LocalizationProps) => (
-    <PageCenteredLayout>
-        <ErrorRoot>
-            <PersonOffIcon sx={{ fontSize: '10rem' }} />
-            <ErrorTitle>{translations.error_unauthorized_title}</ErrorTitle>
-            <ErrorDescription>{translations.error_unauthorized_description}</ErrorDescription>
-            <Button
-                component={Link}
-                href={`https://account.lunaproject.jp/login${typeof window !== 'undefined' && window.location.href ? `?redirect=${encodeURIComponent(window.location.href)}` : ''}`}
-                disableElevation
-                variant="contained"
-                corners="extended"
-                size="large"
-                startIcon={<LoginIcon />}
-            >
-                {translations.login}
-            </Button>
-        </ErrorRoot>
-    </PageCenteredLayout>
-);
+export const UnauthorizedView = ({ localization: { translations } }: LocalizationProps) => {
+    const loginUrl = useLoginUrl();
+
+    return (
+        <PageCenteredLayout>
+            <ErrorRoot>
+                <PersonOffIcon sx={{ fontSize: '10rem' }} />
+                <ErrorTitle>{translations.error_unauthorized_title}</ErrorTitle>
+                <ErrorDescription>{translations.error_unauthorized_description}</ErrorDescription>
+                <Button
+                    component={Link}
+                    href={loginUrl}
+                    disableElevation
+                    variant="contained"
+                    corners="extended"
+                    size="large"
+                    startIcon={<LoginIcon />}
+                >
+                    {translations.login}
+                </Button>
+            </ErrorRoot>
+        </PageCenteredLayout>
+    );
+};
 
 export const ForbiddenView = ({ localization: { translations } }: LocalizationProps) => (
     <PageCenteredLayout>

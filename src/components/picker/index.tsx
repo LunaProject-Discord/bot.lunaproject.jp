@@ -14,7 +14,7 @@ import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard
 import { SomeRequired } from '@lunaproject/web-core/dist/utils';
 import { SlotComponentProps } from '@mui/base';
 import { ListItemIcon, ListItemText, listItemTextClasses, styled, useMediaQuery } from '@mui/material';
-import deepmerge from 'deepmerge';
+import deepmerge from 'lodash/merge';
 import React, { Dispatch, MouseEvent, ReactElement, SetStateAction } from 'react';
 
 export interface PickerBaseProps extends LocalizationProps {
@@ -92,7 +92,7 @@ export const Picker = <T, >(
                 slotProps={{
                     root: slotProps?.desktop?.root,
                     content: slotProps?.desktop?.content,
-                    searchBox: deepmerge<SlotComponentProps<typeof PickerSearchBox, SlotRootProps, {}>>(
+                    searchBox: deepmerge(
                         slotProps?.searchBox ?? {},
                         slotProps?.desktop?.searchBox ?? {}
                     )
@@ -106,7 +106,7 @@ export const Picker = <T, >(
                 slotProps={{
                     root: slotProps?.mobile?.root,
                     content: slotProps?.mobile?.content,
-                    searchBox: deepmerge<SlotComponentProps<typeof PickerSearchBox, SlotRootProps, {}>>(
+                    searchBox: deepmerge(
                         slotProps?.searchBox ?? {},
                         slotProps?.mobile?.searchBox ?? {}
                     )

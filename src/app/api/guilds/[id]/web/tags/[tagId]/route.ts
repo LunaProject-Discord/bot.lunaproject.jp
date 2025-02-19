@@ -1,18 +1,14 @@
 import { getUser } from '@/app/utils';
-import { WithIdParamProps } from '@/interfaces/page';
+import { TagPageParamsProps } from '@/interfaces/page';
 import { deleteGuildWebTag, getGuildWebTag, hasDashboardAccess, updateGuildWebTag } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { UpdateGuildWebTagSchema } from '@/schemas/bot';
 import { errorWithName } from '@lunaproject/web-core/dist/utils';
 import { NextRequest, NextResponse } from 'next/server';
 
-type RouteProps = WithIdParamProps & {
-    params: {
-        tagId: string;
-    }
-}
+export const GET = async (req: Request, props: TagPageParamsProps) => {
+    const { id, tagId } = await props.params;
 
-export const GET = async (req: Request, { params: { id, tagId } }: RouteProps) => {
     const user = await getUser();
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
@@ -32,7 +28,9 @@ export const GET = async (req: Request, { params: { id, tagId } }: RouteProps) =
     return NextResponse.json(tag, { status: 200 });
 };
 
-export const PATCH = async (req: NextRequest, { params: { id, tagId } }: RouteProps) => {
+export const PATCH = async (req: NextRequest, props: TagPageParamsProps) => {
+    const { id, tagId } = await props.params;
+
     const user = await getUser();
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
@@ -64,7 +62,9 @@ export const PATCH = async (req: NextRequest, { params: { id, tagId } }: RoutePr
     }
 };
 
-export const DELETE = async (req: NextRequest, { params: { id, tagId } }: RouteProps) => {
+export const DELETE = async (req: NextRequest, props: TagPageParamsProps) => {
+    const { id, tagId } = await props.params;
+
     const user = await getUser();
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });

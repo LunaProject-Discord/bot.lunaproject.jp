@@ -1,13 +1,15 @@
 import { getUser } from '@/app/utils';
 import { NotFoundView, UnauthorizedView } from '@/app/view';
-import { WithIdParamProps } from '@/interfaces/page';
+import { GenericPageParamsProps } from '@/interfaces/page';
 import { getUserNotification, setUserNotificationRead } from '@/libs/bot';
 import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next';
 import React from 'react';
 import { View } from './view';
 
-export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
+export const generateMetadata = async (props: GenericPageParamsProps, parent: ResolvingMetadata) => {
+    const { id } = await props.params;
+
     const user = await getUser();
     if (!user)
         return parent;
@@ -30,8 +32,10 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
         }
     };
 };
-const Page = async ({ params: { id } }: WithIdParamProps) => {
-    const localization = getLocalization();
+const Page = async (props: GenericPageParamsProps) => {
+    const { id } = await props.params;
+
+    const localization = await getLocalization();
 
     const user = await getUser();
     if (!user)

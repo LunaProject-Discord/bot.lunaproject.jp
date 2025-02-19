@@ -7,7 +7,7 @@ import React from 'react';
 import { NotFoundView, View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
+    const { translations } = await getLocalization();
     const title = translations.roles;
     const description = translations.statistics_description;
 
@@ -30,9 +30,9 @@ export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
 };
 
 const Page = async (props: StatisticsPageProps) => {
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
-    const { type, startedAt, endedAt } = getPeriod(props);
+    const { type, startedAt, endedAt } = await getPeriod(props);
 
     const statisticData = getLatestStatistic();
     const statisticsData = getPeriodStatistics(type, { start: startedAt, end: endedAt });

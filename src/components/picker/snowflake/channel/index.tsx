@@ -8,7 +8,6 @@ import {
     MobileChannelPicker,
     PickerItemIcon,
     PickerItemText,
-    PickerSearchBox,
     SnowflakePickerInternalProps,
     SnowflakePickerItemProps,
     SnowflakePickerProps,
@@ -16,11 +15,10 @@ import {
 } from '@/components/picker';
 import { RedisChannel } from '@/interfaces/redis';
 import { filterPredicateChannel, sortChannels } from '@/utils/discord';
-import { SectionCardDisabledProps, SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { APIGuildChannel } from '@lunaproject/web-discord/dist/interfaces';
-import { SlotComponentProps } from '@mui/base';
 import { Box, List, ListItemButton, ListSubheader as MuiListSubheader, styled, useMediaQuery } from '@mui/material';
-import deepmerge from 'deepmerge';
+import deepmerge from 'lodash/merge';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type ChannelPickerType = (APIGuildChannel | RedisChannel) & SectionCardDisabledProps;
@@ -138,7 +136,7 @@ export const ChannelPicker = (
     const isSmall = useMediaQuery((theme) => theme.breakpoints.up('sm'));
     const pickerProps = { categories, channels, onClick: handleChoiceClick, search, setSearch, ...props };
     const slotRootProps = {
-        searchBox: deepmerge<SlotComponentProps<typeof PickerSearchBox, SlotRootProps, {}>>(
+        searchBox: deepmerge(
             { placeholder: translations.search_channels as string },
             slotProps?.searchBox ?? {}
         )

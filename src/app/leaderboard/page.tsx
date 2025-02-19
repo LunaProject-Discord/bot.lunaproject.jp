@@ -10,7 +10,7 @@ import { getGuilds, getUser } from '../utils';
 import { View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
+    const { translations } = await getLocalization();
     const title = translations.leaderboard;
 
     const metadata = await parent;
@@ -29,7 +29,7 @@ export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
 };
 
 const Page = async () => {
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
     const user = await getUser();
     if (!user)

@@ -8,7 +8,7 @@ import { CheckIcon } from '@/components/icons';
 import { Key } from '@/components/text';
 import { LocalizationProps } from '@/interfaces/localization';
 import { editorAtom } from '@/states/editor';
-import { LoadingButton } from '@lunaproject/web-core/dist/components/Button';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, OutlinedInput, useMediaQuery } from '@mui/material';
 import { useCurrentEditor } from '@tiptap/react';
@@ -167,7 +167,7 @@ export const EditorPublishDialog = ({ localization: { translations } }: Localiza
                 <CancelButton onClick={handleDialogClose} variant="outlined" corners="extended">
                     {translations.cancel}
                 </CancelButton>
-                <LoadingButton
+                <Button
                     onClick={handlePublishButtonClick}
                     loading={save?.type === 'loading'}
                     loadingPosition="start"
@@ -182,7 +182,7 @@ export const EditorPublishDialog = ({ localization: { translations } }: Localiza
                         +
                         <Key>{isMacOs ? '⮐' : 'Enter'}</Key>
                     </Box>
-                </LoadingButton>
+                </Button>
             </EditorDialogActions>
         </EditorDialog>
     );

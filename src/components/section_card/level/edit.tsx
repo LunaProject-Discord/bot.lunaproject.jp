@@ -25,7 +25,7 @@ import { ConfigContext, generateComponentClasses, getStateActionValue } from '@l
 import { ButtonBaseProps, styled } from '@mui/material';
 import { BoxTypeMap } from '@mui/system';
 import clsx from 'clsx';
-import deepmerge from 'deepmerge';
+import deepmerge from 'lodash/merge';
 import React, { Dispatch, ElementType, SetStateAction, useCallback, useContext, useState } from 'react';
 
 export const sectionLevelEditCardClasses = generateComponentClasses(

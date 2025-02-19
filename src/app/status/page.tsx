@@ -7,7 +7,7 @@ import React from 'react';
 import { NotFoundView, View } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
+    const { translations } = await getLocalization();
     const title = translations.status;
     const description = translations.status_description;
 
@@ -30,7 +30,7 @@ export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
 };
 
 const Page = async () => {
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
     const userData = getUser();
     const guildsData = getGuilds();

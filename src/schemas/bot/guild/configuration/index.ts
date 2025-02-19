@@ -1,6 +1,5 @@
+import { ConfigurationRootSchema, ConfigurationTimeAndLanguageSchema } from '@/schemas/bot/configuration';
 import {
-    ConfigurationRootSchema,
-    ConfigurationTimeAndLanguageSchema,
     GuildConfigurationActivitySchema,
     GuildConfigurationCommandsSchema,
     GuildConfigurationGlobalBanSchema,
@@ -13,7 +12,7 @@ import {
     GuildConfigurationQuoteSchema,
     GuildConfigurationTranslateSchema,
     GuildConfigurationVoteSchema
-} from '@/schemas/bot';
+} from '@/schemas/bot/guild/configuration';
 import { SnowflakeSchema } from '@/schemas/snowflake';
 
 export const GuildConfigurationSchema = GuildConfigurationPrefixAndNicknameSchema.extend(ConfigurationTimeAndLanguageSchema.shape).extend({

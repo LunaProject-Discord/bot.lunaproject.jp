@@ -11,7 +11,7 @@ import {
     BottomSheetHeaderToggleButton,
     defaultSnapPoints
 } from '@lunaproject/web-core/dist/components/BottomSheet';
-import { LoadingButton } from '@lunaproject/web-core/dist/components/Button';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { isRenderableReactNode } from '@lunaproject/web-core/dist/utils';
 import { Box, IconButton, Tooltip, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';
@@ -194,7 +194,7 @@ export const SaveConfirmV2 = <T, >(
                                 <RefreshIcon sx={{ transform: 'scale(-1, 1)' }} />
                             </IconButton>
                         </Tooltip>
-                        <LoadingButton
+                        <Button
                             ref={saveButtonRef}
                             onClick={handleSaveButtonClick}
                             loading={loading || pending}
@@ -205,7 +205,7 @@ export const SaveConfirmV2 = <T, >(
                             startIcon={<SaveIcon />}
                         >
                             {translations.save}
-                        </LoadingButton>
+                        </Button>
                     </Box>
                 </Box>
             }

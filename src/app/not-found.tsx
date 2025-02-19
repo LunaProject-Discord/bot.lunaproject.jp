@@ -3,7 +3,7 @@ import { ResolvingMetadata } from 'next';
 import { NotFoundView } from './view';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
+    const { translations } = await getLocalization();
     const title = translations.error_not_found_title;
 
     const metadata = await parent;
@@ -13,8 +13,8 @@ export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
     };
 };
 
-const Page = () => {
-    const localization = getLocalization();
+const Page = async () => {
+    const localization = await getLocalization();
     return (<NotFoundView localization={localization} />);
 };
 

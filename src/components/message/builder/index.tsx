@@ -3,8 +3,9 @@
 import { CancelButton } from '@/components/buttons';
 import { DarkModeIcon, DeleteIcon, EditIcon, LightModeIcon, PreviewIcon, SaveIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
-import { DataMessage } from '@/interfaces/message';
+import { DataEmbed, DataMessage } from '@/interfaces/message';
 import { toDataMessage, toEmbed, toMessage } from '@/libs/message';
+import { toLPDMessage } from '@/libs/message_v2';
 import { appearanceAtom } from '@/states/appearance';
 import { ThemeProvider } from '@emotion/react';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
@@ -17,10 +18,9 @@ import {
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
-import { MessageContainer, MessagePreview } from '@lunaproject/web-discord/dist/components/Message';
-import { Message } from '@lunaproject/web-discord/dist/interfaces';
+import { Message, Messages, messagesClasses } from '@lunaproject/web-discord-components';
 import { buildDiscordTheme } from '@lunaproject/web-discord/dist/styles';
-import { Box, DialogProps as MuiDialogProps, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, DialogProps as MuiDialogProps, IconButton, Tooltip, useMediaQuery } from '@mui/material';
 import { GridTableRowsIcon, GridViewHeadlineIcon } from '@mui/x-data-grid';
 import deepEqual from 'deep-equal';
 import { useAtomValue } from 'jotai';
@@ -36,7 +36,6 @@ export type MessageBuilderProps = ModalProps & SectionCardVariableProps<{ value:
 export const MessageBuilder = ({ open, setOpen, value, setValue, localization }: MessageBuilderProps) => {
     const { translations } = localization;
 
-    const theme = useTheme();
     const isMobile = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
     const { isDarkMode } = useAtomValue(appearanceAtom);
@@ -51,7 +50,7 @@ export const MessageBuilder = ({ open, setOpen, value, setValue, localization }:
 
     const [viewType, setViewType] = useState<ViewType>('editor');
 
-    const [editableMessage, setEditableMessage] = useState<Message>(toMessage(value));
+    const [editableMessage, setEditableMessage] = useState(toMessage(value));
     const isChanged = !deepEqual(value, toDataMessage(editableMessage), { strict: true });
 
     const handleClose = () => setOpen(false);
@@ -161,10 +160,53 @@ export const MessageBuilder = ({ open, setOpen, value, setValue, localization }:
                                 />
                             </MessageEditorSection>
                             <MessageEditorSection active={viewType === 'preview'}>
-                                <MessagePreviewContainer sx={{ height: '100%' }}>
-                                    <MessageContainer style={{ border: `solid 1px ${theme.vars.palette.divider}` }}>
-                                        <MessagePreview message={editableMessage} />
-                                    </MessageContainer>
+                                <MessagePreviewContainer
+                                    sx={{
+                                        border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
+                                        [`&, & .${messagesClasses.root}`]: {
+                                            borderRadius: 1
+                                        }
+                                    }}
+                                >
+                                    <Messages
+                                        appearance={{
+                                            color: !lightTheme ? 'dark' : 'light',
+                                            display: !compactMode ? 'cozy' : 'compact'
+                                        }}
+                                    >
+                                        <Message
+                                            message={
+                                                toLPDMessage({
+                                                    content: editableMessage.content,
+                                                    embeds: editableMessage.embeds.map((embed): DataEmbed => ({
+                                                        title: embed.title ?? '',
+                                                        description: embed.description ?? '',
+                                                        url: embed.url ?? null,
+                                                        color: embed.color.hex(),
+                                                        timestamp: embed.timestamp?.getTime()?.toString() ?? null,
+                                                        author: embed.author?.name ? {
+                                                            name: embed.author.name,
+                                                            url: embed.author.url ?? null,
+                                                            iconUrl: embed.author.iconUrl ?? null
+                                                        } : null,
+                                                        footer: embed.footer?.text ? {
+                                                            text: embed.footer.text,
+                                                            iconUrl: embed.footer.iconUrl ?? null
+                                                        } : null,
+                                                        fields: (embed.fields ?? []).map((field) => ({
+                                                            name: field.name,
+                                                            value: field.value,
+                                                            inline: field.inline ?? null
+                                                        })),
+                                                        image: (embed.image.images.length > 0 || embed.image.thumbnail.length > 0) ? {
+                                                            images: embed.image.images.length > 0 ? embed.image.images.filter((image) => image.length > 0) : [],
+                                                            thumbnail: embed.image.thumbnail ?? null
+                                                        } : null
+                                                    }))
+                                                })
+                                            }
+                                        />
+                                    </Messages>
                                 </MessagePreviewContainer>
                             </MessageEditorSection>
                         </MessageEditorWrapper>

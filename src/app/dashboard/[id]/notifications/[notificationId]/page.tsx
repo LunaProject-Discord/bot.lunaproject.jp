@@ -1,5 +1,5 @@
 import { getUser } from '@/app/utils';
-import { WithIdParamProps } from '@/interfaces/page';
+import { NotificationPageParamsProps } from '@/interfaces/page';
 import { getGuildNotification, hasDashboardAccess, setGuildNotificationRead } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
@@ -8,14 +8,9 @@ import React from 'react';
 import { NotFoundView } from '../../view';
 import { View } from './view';
 
-interface Props extends WithIdParamProps {
-    params: {
-        id: string;
-        notificationId: string;
-    };
-}
+export const generateMetadata = async (props: NotificationPageParamsProps, parent: ResolvingMetadata) => {
+    const { id, notificationId } = await props.params;
 
-export const generateMetadata = async ({ params: { id, notificationId } }: Props, parent: ResolvingMetadata) => {
     const userData = getUser();
     const guildData = getGuildById(id);
     const guildNotificationData = getGuildNotification(id, notificationId);
@@ -43,8 +38,10 @@ export const generateMetadata = async ({ params: { id, notificationId } }: Props
         }
     };
 };
-const Page = async ({ params: { id, notificationId } }: Props) => {
-    const localization = getLocalization();
+const Page = async (props: NotificationPageParamsProps) => {
+    const { id, notificationId } = await props.params;
+
+    const localization = await getLocalization();
 
     const userData = getUser();
     const guildData = getGuildById(id);

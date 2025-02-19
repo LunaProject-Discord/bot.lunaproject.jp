@@ -4,7 +4,7 @@ import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { AddIcon, CloudOffIcon } from '@/components/icons';
 import { CreateGuildWebPage, GuildWebPage } from '@/interfaces/bot';
 import { GuildViewProps } from '@/interfaces/view';
-import { LoadingButton } from '@lunaproject/web-core/dist/components/Button';
+import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { SectionRouteLinkCard } from '@lunaproject/web-core/dist/components/SectionCard';
@@ -56,7 +56,7 @@ export const View = ({ guild, pages, localization }: ViewProps) => {
     return (
         <Fragment>
             <PageHeader primary={translations.web_pages} secondary={translations.web_pages_description}>
-                <LoadingButton
+                <Button
                     onClick={handleAddButtonClick}
                     loading={loading}
                     disableElevation
@@ -68,7 +68,7 @@ export const View = ({ guild, pages, localization }: ViewProps) => {
                     sx={{ ml: { md: 'auto' } }}
                 >
                     {translations.add}
-                </LoadingButton>
+                </Button>
             </PageHeader>
             {pages.length > 0 ? <Section>
                 <SectionContent>

@@ -8,7 +8,7 @@ import React, { ReactNode } from 'react';
 import { Navigation } from './navigation';
 
 export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
-    const { translations } = getLocalization();
+    const { translations } = await getLocalization();
 
     const user = await getUser();
     if (!user)
@@ -43,7 +43,7 @@ export const generateMetadata = async ({}, parent: ResolvingMetadata) => {
 };
 
 const Layout = async ({ children }: { children: ReactNode }) => {
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
     const user = await getUser();
     const userFlags = user ? await getUserFlags(user.id) : undefined;

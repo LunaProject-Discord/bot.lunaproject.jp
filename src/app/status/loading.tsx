@@ -1,8 +1,8 @@
 import { getLocalization } from '@/localizations/server';
 import { LoadingView } from './view';
 
-const Page = () => {
-    const localization = getLocalization();
+const Page = async () => {
+    const localization = await getLocalization();
     return (<LoadingView localization={localization} />);
 };
 

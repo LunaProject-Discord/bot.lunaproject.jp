@@ -11,8 +11,8 @@ import { RedisRole } from '@/interfaces/redis';
 import { filterPredicateRole, getRoleColor, sortRoles } from '@/utils/discord';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { Box, ListItemButton } from '@mui/material';
-import deepmerge from 'deepmerge';
 import { APIRole } from 'discord-api-types/v10';
+import deepmerge from 'lodash/merge';
 import { size } from 'polished';
 import React, { MouseEvent, useCallback } from 'react';
 
@@ -65,7 +65,7 @@ export const RolePicker = (
             onClick={handleChoiceClick}
             filter={filterPredicateRole}
             slotProps={
-                deepmerge<RolePickerProps['slotProps']>(
+                deepmerge(
                     {
                         searchBox: {
                             placeholder: translations.search_roles as string

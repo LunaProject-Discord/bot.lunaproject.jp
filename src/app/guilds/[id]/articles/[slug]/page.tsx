@@ -4,11 +4,12 @@ import { getGuildWebPage } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
 import { ResolvingMetadata } from 'next';
-import { notFound } from 'next/navigation';
 import React from 'react';
 import { View } from './view';
 
-export const generateMetadata = async ({ params: { id, slug } }: ArticlePageParamsProps, parent: ResolvingMetadata) => {
+export const generateMetadata = async (props: ArticlePageParamsProps, parent: ResolvingMetadata) => {
+    const { id, slug } = await props.params;
+
     const guildData = getGuildById(id);
     const guildWebPageData = getGuildWebPage(slug);
 
@@ -33,11 +34,10 @@ export const generateMetadata = async ({ params: { id, slug } }: ArticlePagePara
     };
 };
 
-const Page = async ({ params: { id, slug } }: ArticlePageParamsProps) => {
-    if (!/^\d+$/.test(id))
-        return notFound();
+const Page = async (props: ArticlePageParamsProps) => {
+    const { id, slug } = await props.params;
 
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
     const guildData = getGuildById(id);
     const guildWebPageData = getGuildWebPage(slug);

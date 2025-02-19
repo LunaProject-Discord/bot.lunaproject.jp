@@ -1,19 +1,14 @@
 import { getUser } from '@/app/utils';
-import { WithIdParamProps } from '@/interfaces/page';
-import { deleteGuildWebPageContent, getGuildWebPage, hasDashboardAccess, updateGuildWebPageContent } from '@/libs/bot';
+import { ArticlePageParamsProps } from '@/interfaces/page';
+import { deleteGuildWebPage, getGuildWebPage, hasDashboardAccess, updateGuildWebPage } from '@/libs/bot';
 import { getGuildById } from '@/libs/redis';
-import { UpdateGuildWebPageContentSchema } from '@/schemas/bot';
+import { UpdateGuildWebPageSchema } from '@/schemas/bot';
 import { errorWithName } from '@lunaproject/web-core/dist/utils';
 import { NextRequest, NextResponse } from 'next/server';
 
-type RouteProps = WithIdParamProps & {
-    params: {
-        pageId: string;
-        pageContentId: string;
-    }
-}
+export const GET = async (req: Request, props: ArticlePageParamsProps) => {
+    const { id, slug } = await props.params;
 
-export const GET = async (req: Request, { params: { id, pageId, pageContentId } }: RouteProps) => {
     const user = await getUser();
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
@@ -26,18 +21,16 @@ export const GET = async (req: Request, { params: { id, pageId, pageContentId } 
     if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    const page = await getGuildWebPage(pageId);
+    const page = await getGuildWebPage(slug);
     if (!page || page.guildId !== id)
         return NextResponse.json({ message: 'Page not found!' }, { status: 404 });
 
-    const pageContent = page.contents.find((content) => content.id === pageContentId);
-    if (!pageContent)
-        return NextResponse.json({ message: 'Content not found!' }, { status: 404 });
-
-    return NextResponse.json(pageContent, { status: 200 });
+    return NextResponse.json(page, { status: 200 });
 };
 
-export const PATCH = async (req: NextRequest, { params: { id, pageId, pageContentId } }: RouteProps) => {
+export const PATCH = async (req: NextRequest, props: ArticlePageParamsProps) => {
+    const { id, slug } = await props.params;
+
     const user = await getUser();
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
@@ -50,30 +43,28 @@ export const PATCH = async (req: NextRequest, { params: { id, pageId, pageConten
     if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    const page = await getGuildWebPage(pageId);
+    const page = await getGuildWebPage(slug);
     if (!page || page.guildId !== id)
         return NextResponse.json({ message: 'Page not found!' }, { status: 404 });
 
-    const pageContent = page.contents.find((content) => content.id === pageContentId);
-    if (!pageContent)
-        return NextResponse.json({ message: 'Content not found!' }, { status: 404 });
-
     const body = await req.json();
-    const result = UpdateGuildWebPageContentSchema.safeParse(body);
+    const result = UpdateGuildWebPageSchema.safeParse(body);
     if (!result.success)
         return NextResponse.json({ message: 'Invalid body!', issues: result.error.issues }, { status: 400 });
 
     const data = result.data;
 
     try {
-        return NextResponse.json(await updateGuildWebPageContent(pageContent.id, data), { status: 200 });
+        return NextResponse.json(await updateGuildWebPage(page.id, data), { status: 200 });
     } catch (e) {
         errorWithName(`(${req.method.toUpperCase()})${req.nextUrl.pathname}${req.nextUrl.search}${req.nextUrl.hash}`, e);
         return NextResponse.json({ message: 'Internal server error!' }, { status: 500 });
     }
 };
 
-export const DELETE = async (req: NextRequest, { params: { id, pageId, pageContentId } }: RouteProps) => {
+export const DELETE = async (req: NextRequest, props: ArticlePageParamsProps) => {
+    const { id, slug } = await props.params;
+
     const user = await getUser();
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
@@ -86,16 +77,12 @@ export const DELETE = async (req: NextRequest, { params: { id, pageId, pageConte
     if (!hasPermission)
         return NextResponse.json({ message: 'Permission denied!' }, { status: 403 });
 
-    const page = await getGuildWebPage(pageId);
+    const page = await getGuildWebPage(slug);
     if (!page || page.guildId !== id)
         return NextResponse.json({ message: 'Page not found!' }, { status: 404 });
 
-    const pageContent = page.contents.find((content) => content.id === pageContentId);
-    if (!pageContent)
-        return NextResponse.json({ message: 'Content not found!' }, { status: 404 });
-
     try {
-        await deleteGuildWebPageContent(pageContent.id);
+        await deleteGuildWebPage(page.id);
         return new NextResponse(null, { status: 204 });
     } catch (e) {
         errorWithName(`(${req.method.toUpperCase()})${req.nextUrl.pathname}${req.nextUrl.search}${req.nextUrl.hash}`, e);

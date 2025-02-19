@@ -18,8 +18,8 @@ export const viewport: Viewport = {
     themeColor: '#959ac0'
 };
 
-export const generateMetadata = (): Metadata => {
-    const locale = getLocale();
+export const generateMetadata = async (): Promise<Metadata> => {
+    const locale = await getLocale();
 
     const origin = process.env.NEXT_PUBLIC_SITE_ORIGIN as string;
 
@@ -56,10 +56,10 @@ export const generateMetadata = (): Metadata => {
 };
 
 const RootLayout = async ({ children }: { children: ReactNode }) => {
-    const localization = getLocalization();
+    const localization = await getLocalization();
     const { locale } = localization;
 
-    const nextCookies = cookies();
+    const nextCookies = await cookies();
     const appearance = nextCookies.get(COOKIE_APPEARANCE)?.value as AppearanceType | undefined ?? 'system';
 
     const user = await getUser();

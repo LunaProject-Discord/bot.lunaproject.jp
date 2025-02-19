@@ -1,6 +1,6 @@
 import { LayoutHeader, LayoutNavigation } from '@/app/guilds/[id]/components';
 import { getUser } from '@/app/utils';
-import { WithIdParamProps } from '@/interfaces/page';
+import { GenericPageParamsProps } from '@/interfaces/page';
 import { getGuildConfiguration, hasDashboardAccess, isLeaderboardAccessible } from '@/libs/bot';
 import { getGuildById, getMemberById } from '@/libs/redis';
 import { getLocalization } from '@/localizations/server';
@@ -10,7 +10,9 @@ import { notFound } from 'next/navigation';
 import React, { Fragment, ReactNode } from 'react';
 import { NotFoundView } from './view';
 
-export const generateMetadata = async ({ params: { id } }: WithIdParamProps, parent: ResolvingMetadata) => {
+export const generateMetadata = async (props: GenericPageParamsProps, parent: ResolvingMetadata) => {
+    const { id } = await props.params;
+
     const user = await getUser();
     const guild = await getGuildById(id);
     if (!user || !guild)
@@ -48,11 +50,13 @@ export const generateMetadata = async ({ params: { id } }: WithIdParamProps, par
     };
 };
 
-const Layout = async ({ children, params: { id } }: WithIdParamProps & { children: ReactNode; }) => {
+const Layout = async (props: GenericPageParamsProps & { children: ReactNode; }) => {
+    const { id } = await props.params;
+
     if (!/^\d+$/.test(id))
         return notFound();
 
-    const localization = getLocalization();
+    const localization = await getLocalization();
 
     const userData = getUser();
     const guildData = getGuildById(id);
@@ -77,7 +81,7 @@ const Layout = async ({ children, params: { id } }: WithIdParamProps & { childre
                 dashboardAccessible={allowDashboard}
                 localization={localization}
             />
-            <PageLayout>{children}</PageLayout>
+            <PageLayout>{props.children}</PageLayout>
         </Fragment>
     );
 };

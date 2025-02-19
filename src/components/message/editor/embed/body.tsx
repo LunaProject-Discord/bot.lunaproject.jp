@@ -4,7 +4,7 @@ import { LocalizationProps } from '@/interfaces/localization';
 import { isValidHexColor } from '@/utils/color';
 import { useTheme } from '@emotion/react';
 import { Box, ButtonBase, OutlinedInput, Popover } from '@mui/material';
-import Color from 'color';
+import Color, { ColorInstance } from 'color';
 import React, { MouseEvent, useState } from 'react';
 import { ChromePicker } from 'react-color';
 import { ItemDisabledProps, ItemVariableProps } from '../../../items';
@@ -13,7 +13,7 @@ import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
 export interface EmbedBody {
-    color: Color;
+    color: ColorInstance;
     title: string;
     description: string;
     url: string;
@@ -109,7 +109,7 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                                     sx={{
                                         width: '100%',
                                         height: '100%',
-                                        bgcolor: color || theme.background.tertiary,
+                                        bgcolor: color || theme.palette.background.tertiary,
                                         borderRadius: 1
                                     }}
                                 />

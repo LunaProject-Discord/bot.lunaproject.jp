@@ -1,5 +1,5 @@
 import { database, Guild_Levels } from '@/database';
-import { WithIdParamProps } from '@/interfaces/page';
+import { GenericPageParamsProps } from '@/interfaces/page';
 import { getGuildLevels } from '@/libs/bot';
 import { updateGuildById } from '@/libs/redis';
 import { PartialGuildLevelsSchema } from '@/schemas/bot';
@@ -10,8 +10,10 @@ import { and, eq } from 'drizzle-orm';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const GET = async (req: NextRequest, { params: { id } }: WithIdParamProps) => {
-    const nextCookies = cookies();
+export const GET = async (req: NextRequest, props: GenericPageParamsProps) => {
+    const { id } = await props.params;
+
+    const nextCookies = await cookies();
     const token = nextCookies.get(COOKIE_TOKEN)?.value;
     if (!token)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
@@ -28,8 +30,10 @@ export const GET = async (req: NextRequest, { params: { id } }: WithIdParamProps
     return NextResponse.json(await getGuildLevels(id), { status: 200 });
 };
 
-export const PATCH = async (req: NextRequest, { params: { id } }: WithIdParamProps) => {
-    const nextCookies = cookies();
+export const PATCH = async (req: NextRequest, props: GenericPageParamsProps) => {
+    const { id } = await props.params;
+
+    const nextCookies = await cookies();
     const token = nextCookies.get(COOKIE_TOKEN)?.value;
     if (!token)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });

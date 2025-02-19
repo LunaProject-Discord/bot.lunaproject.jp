@@ -9,8 +9,8 @@ import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
 import { SectionSwitchCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { ConfigContext, ConfigProvider, useResettableState } from '@lunaproject/web-core/dist/utils';
-import deepmerge from 'deepmerge';
 import { ChannelType } from 'discord-api-types/v10';
+import deepmerge from 'lodash/merge';
 import React, { Fragment, useContext } from 'react';
 import {
     Category,

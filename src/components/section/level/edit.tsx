@@ -50,7 +50,7 @@ export const SectionLevelEdit = (
         if (!ref.current)
             return;
 
-        if (fetchedCountRef.current >= count || ref.current.endIndex + 50 <= count || levels.length === count)
+        if (fetchedCountRef.current >= count || ref.current.findEndIndex() + 50 <= count || levels.length === count)
             return;
 
         fetchedCountRef.current = count;

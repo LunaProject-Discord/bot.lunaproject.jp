@@ -13,8 +13,8 @@ import { filterPredicateGuild, sortGuilds } from '@/utils/discord';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, ListItemButton } from '@mui/material';
-import deepmerge from 'deepmerge';
 import { APIGuild } from 'discord-api-types/v10';
+import deepmerge from 'lodash/merge';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type GuildPickerType = (OAuthGuild | APIGuild | RedisGuild | DataGuild) & SectionCardDisabledProps;
@@ -70,7 +70,7 @@ export const GuildPicker = (
             onClick={handleChoiceClick}
             filter={filterPredicateGuild}
             slotProps={
-                deepmerge<GuildPickerProps['slotProps']>(
+                deepmerge(
                     {
                         searchBox: {
                             placeholder: translations.search_guilds as string

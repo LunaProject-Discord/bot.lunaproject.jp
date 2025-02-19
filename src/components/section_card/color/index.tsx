@@ -14,7 +14,7 @@ import {
 import { useTheme } from '@mui/material';
 import { HsvaColor } from '@uiw/react-color';
 import clsx from 'clsx';
-import deepmerge from 'deepmerge';
+import deepmerge from 'lodash/merge';
 import React from 'react';
 
 export const sectionColorFieldCardClasses = generateSectionControlCardClasses('ColorField');
@@ -80,7 +80,7 @@ export const SectionColorFieldCard = (
                 disabled={disabled}
                 disableAlpha={disableAlpha}
                 slotProps={
-                    deepmerge<ColorFieldProps['slotProps']>(
+                    deepmerge(
                         {
                             input: {
                                 className: sectionColorFieldCardClasses.control,

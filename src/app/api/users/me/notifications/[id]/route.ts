@@ -1,9 +1,11 @@
 import { getUser } from '@/app/utils';
-import { WithIdParamProps } from '@/interfaces/page';
+import { GenericPageParamsProps } from '@/interfaces/page';
 import { getUserNotification } from '@/libs/bot';
 import { NextResponse } from 'next/server';
 
-export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
+export const GET = async (req: Request, props: GenericPageParamsProps) => {
+    const { id } = await props.params;
+
     const user = await getUser();
     if (!user)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });

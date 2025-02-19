@@ -90,7 +90,7 @@ export const EmbedEditor = (
     const footer: EmbedFooter = { timestamp: value.timestamp, ...value.footer };
 
     return (
-        <ContainerAccordion borderColor={embedColor || theme.background.tertiary}>
+        <ContainerAccordion borderColor={embedColor || theme.palette.background.tertiary}>
             <EmbedAccordionSummary
                 sx={{
                     height: 40,

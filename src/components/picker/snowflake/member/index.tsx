@@ -13,7 +13,7 @@ import { filterPredicateMember, getMemberDisplayName, sortMembers } from '@/util
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { GuildMember } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, ListItemButton } from '@mui/material';
-import deepmerge from 'deepmerge';
+import deepmerge from 'lodash/merge';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type MemberPickerType = (GuildMember | RedisMember) & SectionCardDisabledProps;
@@ -69,7 +69,7 @@ export const MemberPicker = (
             onClick={handleChoiceClick}
             filter={filterPredicateMember}
             slotProps={
-                deepmerge<MemberPickerProps['slotProps']>(
+                deepmerge(
                     {
                         searchBox: {
                             placeholder: translations.search_members as string

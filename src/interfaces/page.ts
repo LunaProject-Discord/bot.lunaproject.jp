@@ -1,11 +1,5 @@
-export interface WithIdParamProps {
-    params: {
-        id: string;
-    };
-}
-
 export type PageParamsProps<Properties extends {}> = {
-    params: Properties;
+    params: Promise<Properties>;
 };
 
 export type GenericPageParamsProps = PageParamsProps<{ id: string; }>;
@@ -15,3 +9,7 @@ export type NotificationPageParamsProps = GenericPageParamsProps & PageParamsPro
 export type ArticlePageParamsProps = GenericPageParamsProps & PageParamsProps<{ slug: string; }>;
 
 export type ArticleRevisionPageParamsProps = ArticlePageParamsProps & PageParamsProps<{ revisionId: string; }>;
+
+export type CategoryPageParamsProps = GenericPageParamsProps & PageParamsProps<{ categoryId: string; }>;
+
+export type TagPageParamsProps = GenericPageParamsProps & PageParamsProps<{ tagId: string; }>;

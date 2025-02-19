@@ -52,7 +52,7 @@ export const editorHeaderClasses = generateComponentClasses(
 );
 
 export const EditorHeaderRoot = styled(
-    ({ className, ...props }: BoxProps) => (
+    ({ className, ...props }: BoxProps<'header'>) => (
         <Box
             component="header"
             className={clsx(editorHeaderClasses.root, className)}

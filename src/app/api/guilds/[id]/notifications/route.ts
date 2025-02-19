@@ -1,4 +1,4 @@
-import { WithIdParamProps } from '@/interfaces/page';
+import { GenericPageParamsProps } from '@/interfaces/page';
 import { getGuildNotifications } from '@/libs/bot';
 import { COOKIE_TOKEN } from '@/utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@/utils/discord';
@@ -6,8 +6,10 @@ import { getGuildById } from '@lunaproject/web-discord/dist/libs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-export const GET = async (req: Request, { params: { id } }: WithIdParamProps) => {
-    const nextCookies = cookies();
+export const GET = async (req: Request, props: GenericPageParamsProps) => {
+    const { id } = await props.params;
+
+    const nextCookies = await cookies();
     const token = nextCookies.get(COOKIE_TOKEN)?.value;
     if (!token)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });

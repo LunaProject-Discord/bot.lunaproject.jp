@@ -6,7 +6,7 @@ export const DataEmbedFooterSchema = z.object({
 });
 
 export const DataEmbedImageSchema = z.object({
-    images: z.array(z.string().url()),
+    images: z.array(z.string().url()).max(4),
     thumbnail: z.string().url().nullable()
 });
 

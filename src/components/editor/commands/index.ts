@@ -1,9 +1,9 @@
 import { Localization } from '@/interfaces/localization';
 import { EditorAction, EditorCommand, EditorRibbonButton, EditorRibbonDropdownButton } from '@lunaproject/web-editor';
-import deepmerge from 'deepmerge';
+import deepmerge from 'lodash/merge';
 import { BundledLanguage } from 'shiki/bundle/full';
 
-export const asEditorCommand = (x: EditorCommand, y: Partial<EditorCommand>): EditorCommand => deepmerge<EditorCommand>(x, y);
+export const asEditorCommand = (x: EditorCommand, y: Partial<EditorCommand>): EditorCommand => deepmerge(x, y);
 
 export type LocalizedEditorCommandFactory = (localization: Localization) => EditorCommand;
 

@@ -54,7 +54,7 @@ export const SectionLevelView = ({ guild, levels, localization }: SectionLevelVi
         if (!ref.current)
             return;
 
-        if (fetchedCountRef.current >= count || ref.current.endIndex + 50 <= count || levels.length === count)
+        if (fetchedCountRef.current >= count || ref.current.findEndIndex() + 50 <= count || levels.length === count)
             return;
 
         fetchedCountRef.current = count;
@@ -80,7 +80,7 @@ export const SectionLevelView = ({ guild, levels, localization }: SectionLevelVi
                 }
             }}
         >
-            <WindowVirtualizer onScroll={handleScroll}>
+            <WindowVirtualizer ref={ref} onScroll={handleScroll}>
                 {items.map(({ user, member, rank, level, experience }) => (
                     <SectionLevelViewCard
                         key={user.id}

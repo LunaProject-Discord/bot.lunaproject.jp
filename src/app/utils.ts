@@ -4,14 +4,14 @@ import { cookies } from 'next/headers';
 import { getGuilds as getOriginalGuilds, getUser as getOriginalUser } from '../libs/discord';
 
 export const getUser = async (): Promise<OAuthUser | undefined> => {
-    const nextCookies = cookies();
+    const nextCookies = await cookies();
     const token = nextCookies.get(COOKIE_TOKEN)?.value;
 
     return getOriginalUser(token);
 };
 
 export const getGuilds = async (): Promise<OAuthGuild[]> => {
-    const nextCookies = cookies();
+    const nextCookies = await cookies();
     const token = nextCookies.get(COOKIE_TOKEN)?.value;
 
     return getOriginalGuilds(token);

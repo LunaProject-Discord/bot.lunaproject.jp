@@ -1,4 +1,4 @@
-import { WithIdParamProps } from '@/interfaces/page';
+import { NotificationPageParamsProps } from '@/interfaces/page';
 import { getGuildNotification } from '@/libs/bot';
 import { COOKIE_TOKEN } from '@/utils/cookie';
 import { ADMINISTRATOR_OR_MANAGE_GUILD, someCheckPermissions } from '@/utils/discord';
@@ -6,14 +6,10 @@ import { getGuildById } from '@lunaproject/web-discord/dist/libs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-type Props = WithIdParamProps & {
-    params: {
-        notificationId: string;
-    }
-}
+export const GET = async (req: Request, props: NotificationPageParamsProps) => {
+    const { id, notificationId } = await props.params;
 
-export const GET = async (req: Request, { params: { id, notificationId } }: Props) => {
-    const nextCookies = cookies();
+    const nextCookies = await cookies();
     const token = nextCookies.get(COOKIE_TOKEN)?.value;
     if (!token)
         return NextResponse.json({ message: 'Unauthorized!' }, { status: 401 });
