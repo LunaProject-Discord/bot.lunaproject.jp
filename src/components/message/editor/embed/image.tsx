@@ -1,41 +1,62 @@
 'use client';
 
+import { MessageBuilderAction, MessageBuilderActionType } from '@/components/message';
 import { LocalizationProps } from '@/interfaces/localization';
-import { EmbedImage } from '@lunaproject/web-discord/dist/interfaces';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { OutlinedInput } from '@mui/material';
-import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
-type Props = ItemDisabledProps & ItemVariableProps<EmbedImage> & LocalizationProps;
+export interface MessageEmbedImage {
+    image: string;
+    thumbnail: string;
+}
 
-export const EmbedImageEditor = ({ value, setValue, disabled, localization: { translations } }: Props) => (
+export interface EmbedImageEditorProps extends SectionCardDisabledProps, LocalizationProps {
+    embedIndex: number;
+    image: MessageEmbedImage;
+    dispatch: (action: MessageBuilderAction) => void;
+}
+
+export const EmbedImageEditor = (
+    {
+        embedIndex,
+        image: {
+            image,
+            thumbnail
+        },
+        dispatch,
+        disabled,
+        localization: { translations }
+    }: EmbedImageEditorProps
+) => (
     <EmbedAccordion>
         <EmbedAccordionSummary>{translations.embed_image}</EmbedAccordionSummary>
         <EmbedAccordionDetails>
             <EmbedFormContainer>
                 <EmbedFormItem label={translations.embed_image_image_url}>
-                    {(value.images.length > 0 ? value.images : ['']).map((image, i) => (
-                        <OutlinedInput
-                            key={i}
-                            value={image}
-                            onChange={(e) => {
-                                const images = [...value.images];
-                                images[i] = e.target.value;
-                                setValue({ ...value, images });
-                            }}
-                            type="url"
-                            disabled={disabled}
-                            size="small"
-                            margin="none"
-                            fullWidth
-                        />
-                    ))}
+                    <OutlinedInput
+                        value={image}
+                        onChange={(e) => dispatch({
+                            type: MessageBuilderActionType.SetEmbedImage,
+                            index: embedIndex,
+                            value: e.target.value
+                        })}
+                        type="url"
+                        disabled={disabled}
+                        size="small"
+                        margin="none"
+                        fullWidth
+                    />
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_image_thumbnail_url}>
                     <OutlinedInput
-                        value={value.thumbnail}
-                        onChange={(e) => setValue({ ...value, thumbnail: e.target.value })}
+                        value={thumbnail}
+                        onChange={(e) => dispatch({
+                            type: MessageBuilderActionType.SetEmbedThumbnail,
+                            index: embedIndex,
+                            value: e.target.value
+                        })}
                         type="url"
                         disabled={disabled}
                         size="small"

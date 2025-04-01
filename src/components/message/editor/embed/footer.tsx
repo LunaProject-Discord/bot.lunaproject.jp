@@ -1,30 +1,52 @@
 'use client';
 
+import { MessageBuilderAction, MessageBuilderActionType } from '@/components/message';
 import { LocalizationProps } from '@/interfaces/localization';
-import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
-import { Embed, EmbedFooter as OriginalEmbedFooter } from '@lunaproject/web-discord/dist/interfaces';
+import { MessageEmbedFooter, MessageTimestampData } from '@/interfaces/message';
+import { MessageEmbedFooterTextSchema } from '@/schemas/message';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { OutlinedInput } from '@mui/material';
 import React from 'react';
-import { DateTimeEditor } from '../../../date';
-import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
-export type EmbedFooter = { timestamp: Embed['timestamp'] } & OriginalEmbedFooter;
+export interface EmbedFooterEditorProps extends SectionCardDisabledProps, LocalizationProps {
+    embedIndex: number;
+    footer: MessageEmbedFooter & { timestamp: MessageTimestampData | null };
+    dispatch: (action: MessageBuilderAction) => void;
+}
 
-type Props = ItemDisabledProps & ItemVariableProps<EmbedFooter> & LocalizationProps;
-
-export const EmbedFooterEditor = ({ value, setValue, disabled, localization: { translations } }: Props) => (
+export const EmbedFooterEditor = (
+    {
+        embedIndex,
+        footer: {
+            text,
+            icon_url,
+            timestamp
+        },
+        dispatch,
+        disabled,
+        localization: { translations }
+    }: EmbedFooterEditorProps
+) => (
     <EmbedAccordion>
         <EmbedAccordionSummary>{translations.embed_footer}</EmbedAccordionSummary>
         <EmbedAccordionDetails>
             <EmbedFormContainer>
-                <EmbedFormItem label={translations.embed_footer_text} length={value.text.length} maxLength={2048}>
+                <EmbedFormItem
+                    label={translations.embed_footer_text}
+                    length={text.length}
+                    maxLength={MessageEmbedFooterTextSchema.maxLength!}
+                >
                     <OutlinedInput
-                        value={value.text}
-                        onChange={(e) => setValue({ ...value, text: e.target.value })}
+                        value={text}
+                        onChange={(e) => dispatch({
+                            type: MessageBuilderActionType.SetEmbedFooterText,
+                            index: embedIndex,
+                            value: e.target.value
+                        })}
                         type="text"
-                        inputProps={{ maxLength: 2048 }}
+                        inputProps={{ maxLength: MessageEmbedFooterTextSchema.maxLength }}
                         disabled={disabled}
                         size="small"
                         margin="none"
@@ -33,8 +55,12 @@ export const EmbedFooterEditor = ({ value, setValue, disabled, localization: { t
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_footer_icon_url} inline>
                     <OutlinedInput
-                        value={value.iconUrl}
-                        onChange={(e) => setValue({ ...value, iconUrl: e.target.value })}
+                        value={icon_url}
+                        onChange={(e) => dispatch({
+                            type: MessageBuilderActionType.SetEmbedFooterIconUrl,
+                            index: embedIndex,
+                            value: e.target.value
+                        })}
                         type="url"
                         disabled={disabled}
                         size="small"
@@ -43,13 +69,7 @@ export const EmbedFooterEditor = ({ value, setValue, disabled, localization: { t
                     />
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_footer_timestamp} inline sx={{ flexGrow: .5 }}>
-                    <DateTimeEditor
-                        value={value.timestamp}
-                        setValue={(action) => setValue({
-                            ...value,
-                            timestamp: getStateActionValue(action, value.timestamp)
-                        })}
-                    />
+
                 </EmbedFormItem>
             </EmbedFormContainer>
         </EmbedAccordionDetails>

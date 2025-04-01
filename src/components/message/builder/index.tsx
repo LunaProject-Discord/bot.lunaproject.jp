@@ -3,11 +3,9 @@
 import { CancelButton } from '@/components/buttons';
 import { DarkModeIcon, DeleteIcon, EditIcon, LightModeIcon, PreviewIcon, SaveIcon } from '@/components/icons';
 import { LocalizationProps } from '@/interfaces/localization';
-import { DataEmbed, DataMessage } from '@/interfaces/message';
-import { toDataMessage, toEmbed, toMessage } from '@/libs/message';
-import { toLPDMessage } from '@/libs/message_v2';
+import { MessageData } from '@/interfaces/message';
+import { toLPDMessage } from '@/libs/message';
 import { appearanceAtom } from '@/states/appearance';
-import { ThemeProvider } from '@emotion/react';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
     Dialog,
@@ -19,7 +17,6 @@ import {
 import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { Message, Messages, messagesClasses } from '@lunaproject/web-discord-components';
-import { buildDiscordTheme } from '@lunaproject/web-discord/dist/styles';
 import { Box, DialogProps as MuiDialogProps, IconButton, Tooltip, useMediaQuery } from '@mui/material';
 import { GridTableRowsIcon, GridViewHeadlineIcon } from '@mui/x-data-grid';
 import deepEqual from 'deep-equal';
@@ -27,11 +24,12 @@ import { useAtomValue } from 'jotai';
 import React, { Fragment, useEffect, useState } from 'react';
 import { MessageEditor } from '../editor';
 import { MessagePreviewContainer } from '../preview';
+import { MessageBuilderActionType, useMessageBuilder } from '../utils';
 import { MessageEditorContainer, MessageEditorSection, MessageEditorWrapper } from './components';
 
 type ViewType = 'editor' | 'preview';
 
-export type MessageBuilderProps = ModalProps & SectionCardVariableProps<{ value: DataMessage; }> & LocalizationProps;
+export type MessageBuilderProps = ModalProps & SectionCardVariableProps<{ value: MessageData; }> & LocalizationProps;
 
 export const MessageBuilder = ({ open, setOpen, value, setValue, localization }: MessageBuilderProps) => {
     const { translations } = localization;
@@ -43,45 +41,33 @@ export const MessageBuilder = ({ open, setOpen, value, setValue, localization }:
     const [lightTheme, setLightTheme] = useState(!isDarkMode);
     const [compactMode, setCompactMode] = useState(false);
 
-    const defaultTheme = buildDiscordTheme({
-        color: lightTheme ? 'light' : 'dark',
-        display: !compactMode ? 'cozy' : 'compact'
-    });
-
     const [viewType, setViewType] = useState<ViewType>('editor');
 
-    const [editableMessage, setEditableMessage] = useState(toMessage(value));
-    const isChanged = !deepEqual(value, toDataMessage(editableMessage), { strict: true });
+    const [message, dispatch] = useMessageBuilder(value);
+    const isChanged = !deepEqual(value, message, { strict: true });
 
     const handleClose = () => setOpen(false);
 
     const handleDialogClose: MuiDialogProps['onClose'] = (_, reason) => {
-        if (reason === 'backdropClick' && isChanged) return;
+        if (reason === 'backdropClick' && isChanged)
+            return;
+
         handleClose();
     };
 
     const handleSaveButtonClick = () => {
-        setValue(toDataMessage(editableMessage));
+        setValue(message);
         handleClose();
     };
 
-    const handleResetButtonClick = () => {
-        setEditableMessage((msg) => ({
-            ...msg,
-            content: '',
-            embeds: []
-        }));
-    };
+    const handleResetButtonClick = () => dispatch({ type: MessageBuilderActionType.Clear });
 
     useEffect(() => {
         if (open)
             setLightTheme(!isDarkMode);
 
-        setEditableMessage((msg) => ({
-            ...msg,
-            content: value?.content ?? '',
-            embeds: (value?.embeds ?? []).map((embed) => toEmbed(embed))
-        }));
+        dispatch({ type: MessageBuilderActionType.SetContent, value: value?.content ?? '' });
+        dispatch({ type: MessageBuilderActionType.SetEmbeds, value: value?.embeds ?? [] });
     }, [open]);
 
     return (
@@ -150,67 +136,34 @@ export const MessageBuilder = ({ open, setOpen, value, setValue, localization }:
                             }}
                         />
                     </Box>
-                    <ThemeProvider theme={defaultTheme}>
-                        <MessageEditorWrapper>
-                            <MessageEditorSection active={viewType === 'editor'}>
-                                <MessageEditor
-                                    value={editableMessage}
-                                    setValue={setEditableMessage}
-                                    localization={localization}
-                                />
-                            </MessageEditorSection>
-                            <MessageEditorSection active={viewType === 'preview'}>
-                                <MessagePreviewContainer
-                                    sx={{
-                                        border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
-                                        [`&, & .${messagesClasses.root}`]: {
-                                            borderRadius: 1
-                                        }
+                    <MessageEditorWrapper>
+                        <MessageEditorSection active={viewType === 'editor'}>
+                            <MessageEditor
+                                message={message}
+                                dispatch={dispatch}
+                                localization={localization}
+                            />
+                        </MessageEditorSection>
+                        <MessageEditorSection active={viewType === 'preview'}>
+                            <MessagePreviewContainer
+                                sx={{
+                                    border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
+                                    [`&, & .${messagesClasses.root}`]: {
+                                        borderRadius: 1
+                                    }
+                                }}
+                            >
+                                <Messages
+                                    appearance={{
+                                        color: !lightTheme ? 'dark' : 'light',
+                                        display: !compactMode ? 'cozy' : 'compact'
                                     }}
                                 >
-                                    <Messages
-                                        appearance={{
-                                            color: !lightTheme ? 'dark' : 'light',
-                                            display: !compactMode ? 'cozy' : 'compact'
-                                        }}
-                                    >
-                                        <Message
-                                            message={
-                                                toLPDMessage({
-                                                    content: editableMessage.content,
-                                                    embeds: editableMessage.embeds.map((embed): DataEmbed => ({
-                                                        title: embed.title ?? '',
-                                                        description: embed.description ?? '',
-                                                        url: embed.url ?? null,
-                                                        color: embed.color.hex(),
-                                                        timestamp: embed.timestamp?.getTime()?.toString() ?? null,
-                                                        author: embed.author?.name ? {
-                                                            name: embed.author.name,
-                                                            url: embed.author.url ?? null,
-                                                            iconUrl: embed.author.iconUrl ?? null
-                                                        } : null,
-                                                        footer: embed.footer?.text ? {
-                                                            text: embed.footer.text,
-                                                            iconUrl: embed.footer.iconUrl ?? null
-                                                        } : null,
-                                                        fields: (embed.fields ?? []).map((field) => ({
-                                                            name: field.name,
-                                                            value: field.value,
-                                                            inline: field.inline ?? null
-                                                        })),
-                                                        image: (embed.image.images.length > 0 || embed.image.thumbnail.length > 0) ? {
-                                                            images: embed.image.images.length > 0 ? embed.image.images.filter((image) => image.length > 0) : [],
-                                                            thumbnail: embed.image.thumbnail ?? null
-                                                        } : null
-                                                    }))
-                                                })
-                                            }
-                                        />
-                                    </Messages>
-                                </MessagePreviewContainer>
-                            </MessageEditorSection>
-                        </MessageEditorWrapper>
-                    </ThemeProvider>
+                                    <Message message={toLPDMessage(message)} />
+                                </Messages>
+                            </MessagePreviewContainer>
+                        </MessageEditorSection>
+                    </MessageEditorWrapper>
                 </MessageEditorContainer>
             </DialogContent>
             <DialogActions>

@@ -1,25 +1,51 @@
 'use client';
 
+import { MessageBuilderAction, MessageBuilderActionType } from '@/components/message';
 import { LocalizationProps } from '@/interfaces/localization';
-import { EmbedAuthor } from '@lunaproject/web-discord/dist/interfaces';
+import { MessageEmbedAuthor } from '@/interfaces/message';
+import { MessageEmbedAuthorNameSchema } from '@/schemas/message';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { OutlinedInput } from '@mui/material';
-import { ItemDisabledProps, ItemVariableProps } from '../../../items';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
-type Props = ItemDisabledProps & ItemVariableProps<EmbedAuthor> & LocalizationProps;
+export interface EmbedAuthorEditorProps extends SectionCardDisabledProps, LocalizationProps {
+    embedIndex: number;
+    author: MessageEmbedAuthor;
+    dispatch: (action: MessageBuilderAction) => void;
+}
 
-export const EmbedAuthorEditor = ({ value, setValue, disabled, localization: { translations } }: Props) => (
+export const EmbedAuthorEditor = (
+    {
+        embedIndex,
+        author: {
+            name,
+            url,
+            icon_url
+        },
+        dispatch,
+        disabled,
+        localization: { translations }
+    }: EmbedAuthorEditorProps
+) => (
     <EmbedAccordion>
         <EmbedAccordionSummary>{translations.embed_author}</EmbedAccordionSummary>
         <EmbedAccordionDetails>
             <EmbedFormContainer>
-                <EmbedFormItem label={translations.embed_author_name} length={value.name.length} maxLength={256}>
+                <EmbedFormItem
+                    label={translations.embed_author_name}
+                    length={name.length}
+                    maxLength={MessageEmbedAuthorNameSchema.maxLength!}
+                >
                     <OutlinedInput
-                        value={value.name}
-                        onChange={(e) => setValue({ ...value, name: e.target.value })}
+                        value={name}
+                        onChange={(e) => dispatch({
+                            type: MessageBuilderActionType.SetEmbedAuthorName,
+                            index: embedIndex,
+                            value: e.target.value
+                        })}
                         type="text"
-                        inputProps={{ maxLength: 256 }}
+                        inputProps={{ maxLength: MessageEmbedAuthorNameSchema.maxLength }}
                         disabled={disabled}
                         size="small"
                         margin="none"
@@ -28,8 +54,12 @@ export const EmbedAuthorEditor = ({ value, setValue, disabled, localization: { t
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_author_url} inline>
                     <OutlinedInput
-                        value={value.url}
-                        onChange={(e) => setValue({ ...value, url: e.target.value })}
+                        value={url}
+                        onChange={(e) => dispatch({
+                            type: MessageBuilderActionType.SetEmbedAuthorUrl,
+                            index: embedIndex,
+                            value: e.target.value
+                        })}
                         type="url"
                         disabled={disabled}
                         size="small"
@@ -39,8 +69,12 @@ export const EmbedAuthorEditor = ({ value, setValue, disabled, localization: { t
                 </EmbedFormItem>
                 <EmbedFormItem label={translations.embed_author_icon_url} inline>
                     <OutlinedInput
-                        value={value.iconUrl}
-                        onChange={(e) => setValue({ ...value, iconUrl: e.target.value })}
+                        value={icon_url}
+                        onChange={(e) => dispatch({
+                            type: MessageBuilderActionType.SetEmbedAuthorIconUrl,
+                            index: embedIndex,
+                            value: e.target.value
+                        })}
                         type="url"
                         disabled={disabled}
                         size="small"

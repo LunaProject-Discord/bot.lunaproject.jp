@@ -1,53 +1,71 @@
 'use client';
 
+import { ColorField } from '@/components/field';
+import { MessageBuilderAction, MessageBuilderActionType } from '@/components/message';
+import { sectionColorFieldCardClasses } from '@/components/section_card';
 import { LocalizationProps } from '@/interfaces/localization';
-import { isValidHexColor } from '@/utils/color';
+import { MessageEmbedDescriptionSchema, MessageEmbedTitleSchema } from '@/schemas/message';
 import { useTheme } from '@emotion/react';
-import { Box, ButtonBase, OutlinedInput, Popover } from '@mui/material';
-import Color, { ColorInstance } from 'color';
-import React, { MouseEvent, useState } from 'react';
-import { ChromePicker } from 'react-color';
-import { ItemDisabledProps, ItemVariableProps } from '../../../items';
+import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
+import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
+import { decimalToRgb, rgbToDecimal } from '@lunaproject/web-discord-components';
+import { OutlinedInput } from '@mui/material';
+import { hsvaToRgba, rgbaToHsva } from '@uiw/react-color';
+import React from 'react';
 import { TextArea } from '../../text_area';
 import { EmbedAccordion, EmbedAccordionDetails, EmbedAccordionSummary } from './accordion';
 import { EmbedFormContainer, EmbedFormItem } from './form';
 
-export interface EmbedBody {
-    color: ColorInstance;
+export interface MessageEmbedBody {
     title: string;
     description: string;
     url: string;
+    color: number | null;
 }
 
-type Props = ItemDisabledProps & ItemVariableProps<EmbedBody> & LocalizationProps;
+export interface EmbedBodyEditorProps extends SectionCardDisabledProps, LocalizationProps {
+    embedIndex: number;
+    body: MessageEmbedBody;
+    dispatch: (action: MessageBuilderAction) => void;
+}
 
-export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { translations } }: Props) => {
+export const EmbedBodyEditor = (
+    {
+        embedIndex,
+        body: {
+            title,
+            description,
+            url,
+            color
+        },
+        dispatch,
+        disabled,
+        localization
+    }: EmbedBodyEditorProps
+) => {
+    const { translations } = localization;
+
     const theme = useTheme();
-
-    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-    const open = Boolean(anchorEl);
-
-    const handleClick = (e: MouseEvent<HTMLButtonElement>) => setAnchorEl(e.currentTarget);
-    const handleClose = () => setAnchorEl(null);
-
-    const color = value.color.rgbNumber() === 0xffffff ? undefined : value.color.hex();
-
-    const setColor = (hex: string) => {
-        if (isValidHexColor(hex) || hex.length === 0)
-            setValue({ ...value, color: Color(hex) });
-    };
 
     return (
         <EmbedAccordion>
             <EmbedAccordionSummary>{translations.embed_body}</EmbedAccordionSummary>
             <EmbedAccordionDetails>
                 <EmbedFormContainer>
-                    <EmbedFormItem label={translations.embed_body_title} length={value.title.length} maxLength={256}>
+                    <EmbedFormItem
+                        label={translations.embed_body_title}
+                        length={title.length}
+                        maxLength={MessageEmbedTitleSchema.maxLength!}
+                    >
                         <OutlinedInput
-                            value={value.title}
-                            onChange={(e) => setValue({ ...value, title: e.target.value })}
+                            value={title}
+                            onChange={(e) => dispatch({
+                                type: MessageBuilderActionType.SetEmbedTitle,
+                                index: embedIndex,
+                                value: e.target.value
+                            })}
                             type="text"
-                            inputProps={{ maxLength: 256 }}
+                            inputProps={{ maxLength: MessageEmbedTitleSchema.maxLength }}
                             disabled={disabled}
                             size="small"
                             margin="none"
@@ -56,16 +74,24 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                     </EmbedFormItem>
                     <EmbedFormItem label={translations.embed_body_description}>
                         <TextArea
-                            value={value.description}
-                            setValue={(description) => setValue({ ...value, description })}
-                            limit={4096}
+                            value={description}
+                            setValue={(description) => dispatch({
+                                type: MessageBuilderActionType.SetEmbedDescription,
+                                index: embedIndex,
+                                value: description
+                            })}
+                            limit={MessageEmbedDescriptionSchema.maxLength!}
                             rows={5}
                         />
                     </EmbedFormItem>
                     <EmbedFormItem label={translations.embed_body_url} inline>
                         <OutlinedInput
-                            value={value.url}
-                            onChange={(e) => setValue({ ...value, url: e.target.value })}
+                            value={url}
+                            onChange={(e) => dispatch({
+                                type: MessageBuilderActionType.SetEmbedUrl,
+                                index: embedIndex,
+                                value: e.target.value
+                            })}
                             type="url"
                             disabled={disabled}
                             size="small"
@@ -74,55 +100,29 @@ export const EmbedBodyEditor = ({ value, setValue, disabled, localization: { tra
                         />
                     </EmbedFormItem>
                     <EmbedFormItem label={translations.embed_body_color} inline sx={{ flexGrow: 0 }}>
-                        <Popover
-                            open={open}
-                            anchorEl={anchorEl}
-                            onClose={handleClose}
-                            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                        <ColorField
+                            value={rgbaToHsva({ ...decimalToRgb(color ?? 0), a: 1 })}
+                            setValue={(action) => dispatch({
+                                type: MessageBuilderActionType.SetEmbedColor,
+                                index: embedIndex,
+                                value: rgbToDecimal(hsvaToRgba(getStateActionValue(action, rgbaToHsva({
+                                    ...decimalToRgb(color ?? 0),
+                                    a: 1
+                                }))))
+                            })}
+                            choices={[]}
+                            disabled={disabled}
+                            disableAlpha
                             slotProps={{
-                                paper: {
-                                    sx: (theme) => ({
-                                        border: `solid 1px ${theme.vars.palette.divider}`,
-                                        boxShadow: `0 ${theme.spacing(.5)} ${theme.spacing(1)} rgb(0 0 0 / .15)`
-                                    })
+                                input: {
+                                    className: sectionColorFieldCardClasses.control,
+                                    sx: {
+                                        width: '100%'
+                                    }
                                 }
                             }}
-                            sx={{ zIndex: 1600 }}
-                        >
-                            <ChromePicker
-                                color={value.color.hex()}
-                                onChange={(result) => setColor(result.hex)}
-                            />
-                        </Popover>
-                        <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', gap: 1 }}>
-                            <ButtonBase
-                                onClick={handleClick}
-                                sx={{
-                                    width: 40,
-                                    height: 40,
-                                    flexShrink: 0,
-                                    border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
-                                    borderRadius: 1
-                                }}
-                            >
-                                <Box
-                                    sx={{
-                                        width: '100%',
-                                        height: '100%',
-                                        bgcolor: color || theme.palette.background.tertiary,
-                                        borderRadius: 1
-                                    }}
-                                />
-                            </ButtonBase>
-                            <OutlinedInput
-                                value={value.color.hex()}
-                                onChange={(e) => setColor(e.target.value)}
-                                type="text"
-                                disabled={disabled}
-                                size="small"
-                                margin="none"
-                            />
-                        </Box>
+                            localization={localization}
+                        />
                     </EmbedFormItem>
                 </EmbedFormContainer>
             </EmbedAccordionDetails>
