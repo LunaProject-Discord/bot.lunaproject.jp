@@ -10,7 +10,7 @@ import {
     DialogTitle,
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
-import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import {
     Accordion as MuiAccordion,
@@ -73,7 +73,10 @@ const AccordionDetails = styled(MuiAccordionDetails)({
     flexDirection: 'column'
 });
 
-type ManageDisabledChannelsDialogProps = ModalProps & ItemVariableProps<string[]> & GuildChannelsViewProps;
+type ManageDisabledChannelsDialogProps =
+    ModalProps
+    & SectionCardVariableProps<{ value: string[]; }>
+    & GuildChannelsViewProps;
 
 export const ManageDisabledChannelsDialog = (
     {

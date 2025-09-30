@@ -7,6 +7,8 @@ import {
     ArrowDropUpIcon,
     ArrowForwardIcon,
     ArrowUpwardIcon,
+    CloudIcon,
+    CloudOffIcon,
     ErrorIcon,
     FirstPageIcon,
     InfoIcon,
@@ -16,6 +18,7 @@ import {
     KeyboardArrowUpIcon,
     LastPageIcon,
     OpenInNewIcon,
+    SearchIcon,
     TableRowsIcon,
     TaskAltIcon,
     ToggleOffIcon,
@@ -26,6 +29,7 @@ import { UserFlags } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { getMuiDateLocalizationByName, getMuiGridLocalizationByName, getMuiLocalizationByName } from '@/localizations';
 import { appearanceAtom, AppearanceType } from '@/states/appearance';
+import { bottomSheetClasses } from '@lunaproject/web-core/dist/components/BottomSheet';
 import { RootLayout, RootStyles } from '@lunaproject/web-core/dist/components/Layout';
 import {
     Config as LPConfig,
@@ -41,7 +45,7 @@ import { createTheme, GlobalStyles, ThemeOptions, ThemeProvider, useMediaQuery }
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { useAtom } from 'jotai';
 import deepmerge from 'lodash/merge';
-import React, { ReactNode, useEffect, useMemo } from 'react';
+import React, { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Navigation } from './_navigation';
 import { DefaultFontFamily, LINE_Seed_JP, M_Plus_Rounded_1c, Nunito } from './theme';
 
@@ -62,6 +66,43 @@ const insertGlobalStyles = (
         })}
     />
 );
+
+const BottomSheetStyles = () => {
+    const [scrollbarSize, setScrollbarSize] = useState('0px');
+
+    useEffect(() => {
+        const mutationObserver = new MutationObserver((records) => {
+            records.forEach((record) => {
+                const target = record.target as HTMLElement;
+                const paddingRight = target.style.paddingRight;
+                setScrollbarSize(paddingRight || '0px');
+            });
+        });
+
+        mutationObserver.observe(
+            document.body,
+            {
+                attributes: true,
+                attributeOldValue: false,
+                attributeFilter: ['class', 'style']
+            }
+        );
+
+        return () => mutationObserver.disconnect();
+    }, []);
+
+    return (
+        <GlobalStyles
+            styles={(theme) => ({
+                [theme.breakpoints.up('sm')]: {
+                    [`.${bottomSheetClasses.root}`]: {
+                        '--rsbs-mr': `calc(calc(3 * var(--mui-spacing)) + ${scrollbarSize}) !important`
+                    }
+                }
+            })}
+        />
+    );
+};
 
 interface LayoutProps extends LocalizationProps {
     user: OAuthUser | undefined;
@@ -122,7 +163,7 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
         getMuiGridLocalizationByName(locale)
     ), [locale]);
 
-    const lpConfig: LPConfig = {
+    const lpConfig = useMemo((): LPConfig => ({
         components: {
             SectionCard: {
                 variant: 'outlined'
@@ -131,8 +172,12 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
         icons: {
             ArrowBack: ArrowBackIcon,
             ArrowDownward: ArrowDownwardIcon,
+            ArrowDropDown: ArrowDropDownIcon,
+            ArrowDropUp: ArrowDropUpIcon,
             ArrowForward: ArrowForwardIcon,
             ArrowUpward: ArrowUpwardIcon,
+            Cloud: CloudIcon,
+            CloudOff: CloudOffIcon,
             Decrement: ArrowDropDownIcon,
             ExpandLess: KeyboardArrowUpIcon,
             ExpandMore: KeyboardArrowDownIcon,
@@ -143,14 +188,17 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
             KeyboardArrowUp: KeyboardArrowUpIcon,
             More: KeyboardArrowRightIcon,
             OpenInNew: OpenInNewIcon,
+            Search: SearchIcon,
             ToggleOff: ToggleOffIcon,
             ToggleOn: ToggleOnIcon
         },
         translations: {
             close: translations.close,
+            error_data_not_found_title: translations.error_data_not_found_title,
+            error_data_not_found_description: translations.error_data_not_found_description,
             open: translations.open
         }
-    };
+    }), [translations]);
 
     const [{ appearance }, setAppearance] = useAtom(appearanceAtom);
 
@@ -173,7 +221,6 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
 
     useEffect(() => {
         setAppearance({ appearance: initialAppearance, isDarkMode: isInitialDarkScheme });
-
         console.log(
             '%c警告',
             'font-size: 10rem; font-weight: 700; color: red; -webkit-text-stroke: 3px black; text-stroke: 3px black;'
@@ -199,6 +246,7 @@ export const LayoutView = ({ user, flags, appearance: initialAppearance, localiz
                     <LPDConfigProvider value={{ locale }}>
                         <RootStyles />
                         {insertGlobalStyles}
+                        <BottomSheetStyles />
                         <Navigation user={user} flags={flags} localization={localization} />
                         <RootLayout>
                             {children}

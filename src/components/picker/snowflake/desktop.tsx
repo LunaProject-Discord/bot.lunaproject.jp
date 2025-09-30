@@ -1,12 +1,7 @@
 'use client';
 
-import {
-    DesktopPicker,
-    DesktopPickerSlotProps,
-    getSnowflakeChoiceId,
-    SnowflakePickerInternalProps,
-    SnowflakePickerRootType
-} from '@/components/picker';
+import { getSnowflakeChoiceId, SnowflakePickerInternalProps, SnowflakePickerRootType } from '@/components/picker';
+import { DesktopPicker, DesktopPickerSlotProps } from '@lunaproject/web-core/dist/components/Picker';
 import React from 'react';
 
 export type DesktopSnowflakePickerProps<T extends SnowflakePickerRootType> =

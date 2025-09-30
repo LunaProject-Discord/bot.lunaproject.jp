@@ -1,6 +1,6 @@
 'use client';
 
-import { ErrorIcon, LoginIcon, TaskAltIcon, WarningIcon } from '@/components/icons';
+import { ErrorIcon, KeyboardArrowDownIcon, LoginIcon, TaskAltIcon, WarningIcon } from '@/components/icons';
 import { SessionStatus } from '@/interfaces/bot';
 import { Localization, LocalizationProps } from '@/interfaces/localization';
 import { RedisStatus } from '@/interfaces/redis';
@@ -365,7 +365,6 @@ export const SectionStatusCard = (
         readOnly: configReadOnly,
         variant: configVariant
     } = config.components?.SectionAccordionCard ?? {};
-    const ExpandMore = config.icons.ExpandMore;
 
     const defaultExpanded = _defaultExpanded ?? configDefaultExpanded;
     const disabled = _disabled ?? configDisabled ?? configRootDisabled;
@@ -395,7 +394,7 @@ export const SectionStatusCard = (
                     {isConnected && <SectionStatusCardPing>{ping.toLocaleString()}ms</SectionStatusCardPing>}
                     {user && <SectionStatusCardGuilds user={user} guilds={guilds} localization={localization} />}
                     <SectionAccordionCardHeaderIcon className={sectionStatusCardClasses.icon}>
-                        <ExpandMore color={!disabled ? 'action' : 'disabled'} />
+                        <KeyboardArrowDownIcon color={!disabled ? 'action' : 'disabled'} />
                     </SectionAccordionCardHeaderIcon>
                 </SectionStatusCardRoot>
             }

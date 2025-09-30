@@ -18,7 +18,7 @@ import {
     StatisticUsers,
     UserConfigurationTranslate
 } from '@/interfaces/bot';
-import { JSONContent } from '@tiptap/react';
+import { JSONContent } from '@tiptap/core';
 import {
     AnyMySqlColumn,
     bigint,

@@ -1,6 +1,5 @@
 import { LocalizationProps } from '@/interfaces/localization';
 import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
-import { BoxProps } from '@mui/material';
 
 export interface SelectRootProps<T> extends SectionCardDisabledProps, LocalizationProps {
     choices: T[];
@@ -17,13 +16,5 @@ export interface MultipleSelectProps<T> extends SelectRootProps<T>, SectionCardV
 
 export type SelectProps<T> = SingleSelectProps<T> | MultipleSelectProps<T>;
 
-export interface SelectInputRootProps {
-    open: boolean;
-    disabled: boolean;
-}
-
-export type SelectInputProps = BoxProps & Partial<SelectInputRootProps>;
-
-export * from './outlined';
 export * from './snowflake';
 export * from './web';

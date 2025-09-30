@@ -13,7 +13,8 @@ export const EditorToggleOrderedListCommand: LocalizedEditorCommandFactory = ({ 
         name: 'toggleOrderedList',
         icon: FormatListNumberedIcon,
         label: translations.ordered_list,
-        description: translations.web_page_editor_command_toggle_numbered_list_description
+        description: translations.web_page_editor_command_toggle_numbered_list_description,
+        disabled: false
     }
 );
 

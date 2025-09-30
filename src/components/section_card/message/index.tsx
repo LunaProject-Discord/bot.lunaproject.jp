@@ -1,10 +1,9 @@
 'use client';
 
 import { EditIcon } from '@/components/icons';
-import { MessageBuilder, MessagePreviewContainer } from '@/components/message';
+import { MessageBuilder, MessagePreview } from '@/components/message_v2';
 import { LocalizationProps } from '@/interfaces/localization';
-import { DataMessage } from '@/interfaces/message';
-import { toLPDMessage } from '@/libs/message_v2';
+import { MessageData } from '@/interfaces/message';
 import { appearanceAtom } from '@/states/appearance';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
 import {
@@ -15,13 +14,13 @@ import {
     SectionCardRoot,
     SectionCardVariableProps
 } from '@lunaproject/web-core/dist/components/SectionCard';
-import { ConfigContext, generateComponentClasses, SomePartial } from '@lunaproject/web-core/dist/utils';
-import { Message, Messages, messagesClasses } from '@lunaproject/web-discord-components';
+import { ConfigContext, generateComponentClasses } from '@lunaproject/web-core/dist/utils';
+import { messagesClasses } from '@lunaproject/web-discord-components';
 import { Box, BoxProps, styled, Typography } from '@mui/material';
 import { BoxTypeMap } from '@mui/system';
 import clsx from 'clsx';
 import { useAtomValue } from 'jotai';
-import React, { ElementType, Fragment, useContext, useState } from 'react';
+import React, { ElementType, Fragment, useContext } from 'react';
 
 export const sectionMessageCardClasses = generateComponentClasses(
     'SectionMessageCard',
@@ -108,9 +107,12 @@ export const SectionMessageCardGridContainer = styled(
     }
 }));
 
-export type SectionMessageCardRootProps =
-    SomePartial<SectionCardVariableProps<{ value: DataMessage; open: boolean; }>, 'open' | 'setOpen'>
-    & LocalizationProps;
+export interface SectionMessageCardRootProps extends SectionCardVariableProps<{
+    value: MessageData;
+    open: boolean;
+}>, LocalizationProps {
+    placeholders?: string[];
+}
 
 export type SectionMessageCardProps<C extends ElementType = BoxTypeMap['defaultComponent']> =
     SectionCardProps<C>
@@ -124,8 +126,9 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
         children,
         value,
         setValue,
-        open: _open,
-        setOpen: _setOpen,
+        placeholders,
+        open,
+        setOpen,
         disabled: _disabled,
         variant,
         slots: { display = {}, content } = {},
@@ -156,9 +159,25 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
         } = {}
     } = components?.SectionCard ?? {};
 
-    const [__open, __setOpen] = useState(false);
-    const open = _open ?? __open;
-    const setOpen = _setOpen ?? __setOpen;
+    const handleEditButtonClick = async () => {
+        setOpen(true);
+
+        const message = await MessageBuilder.call({
+            message: value,
+            author: {
+                name: '結月 -ゆづき-',
+                avatarUrl: '/avatars/yudzuki.webp',
+                tag: {
+                    type: 'application',
+                    verified: true
+                }
+            },
+            placeholders
+        });
+        setValue(message);
+
+        setOpen(false);
+    };
 
     const disabled = _disabled ?? configDisabled;
     return (
@@ -183,7 +202,7 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
                             {...merges(configContentProps, contentProps)}
                         >
                             <Button
-                                onClick={() => setOpen(true)}
+                                onClick={handleEditButtonClick}
                                 disabled={disabled}
                                 disableElevation
                                 variant="outlined"
@@ -199,7 +218,9 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
                 </SectionMessageCardQueryContainer>
                 <SectionMessageCardQueryContainer>
                     <SectionMessageCardGridContainer>
-                        <MessagePreviewContainer
+                        <MessagePreview
+                            message={value}
+                            appearance={{ color: isDarkMode ? 'dark' : 'light' }}
                             sx={{
                                 border: (theme) => `solid 1px ${theme.vars.palette.divider}`,
                                 [`&, & .${messagesClasses.root}`]: {
@@ -207,11 +228,7 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
                                     borderRadius: 1
                                 }
                             }}
-                        >
-                            <Messages appearance={{ color: isDarkMode ? 'dark' : 'light', display: 'cozy' }}>
-                                <Message message={toLPDMessage(value)} />
-                            </Messages>
-                        </MessagePreviewContainer>
+                        />
                         <Box>
                             {children && <Typography
                                 component="div"
@@ -224,13 +241,7 @@ export const SectionMessageCard = <C extends ElementType = BoxTypeMap['defaultCo
                 </SectionMessageCardQueryContainer>
             </SectionCardRoot>
 
-            <MessageBuilder
-                open={open}
-                setOpen={setOpen}
-                value={value}
-                setValue={setValue}
-                localization={localization}
-            />
+            <MessageBuilder.Root localization={localization} />
         </Fragment>
     );
 };

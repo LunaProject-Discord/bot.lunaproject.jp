@@ -1,8 +1,9 @@
 'use client';
 
 import { GuildPicker, GuildPickerProps, GuildPickerType } from '@/components/picker';
-import { SelectOutlinedInput, SelectOutlinedInputProps, SnowflakeSelectProps } from '@/components/select';
+import { SnowflakeSelectProps } from '@/components/select';
 import { getGuildIcon } from '@/utils/cdn';
+import { SelectOutlinedInput, SelectOutlinedInputProps } from '@lunaproject/web-core/dist/components/Select';
 import { Avatar, Typography } from '@mui/material';
 import xor from 'lodash/xor';
 import React, { Fragment, MouseEvent, useCallback, useState } from 'react';
@@ -31,7 +32,7 @@ export const GuildSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, guild: GuildPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, guild: GuildPickerType) => {
         if (multiple) {
             setValue((prevValue) => xor(prevValue, [guild.id]));
         } else {

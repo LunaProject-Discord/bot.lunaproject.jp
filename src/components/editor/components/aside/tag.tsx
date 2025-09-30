@@ -42,7 +42,7 @@ export const EditorTagSelectButton = (
         deleted: false
     })).toSorted((a, b) => a.name.localeCompare(b.name)), [tags]);
 
-    const handlePickerChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, tag: TagPickerType) => {
+    const handlePickerChoiceClick = useCallback((e: MouseEvent<HTMLElement>, tag: TagPickerType) => {
         setValue((prevValue) => xor(prevValue, [tag.id]));
 
         if (!e.shiftKey)

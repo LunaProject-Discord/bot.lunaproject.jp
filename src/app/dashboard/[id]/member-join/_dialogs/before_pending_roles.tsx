@@ -3,7 +3,7 @@
 import { CancelButton, SwitchButton } from '@/components/buttons';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { AddIcon, DeleteIcon, LabelOffIcon } from '@/components/icons';
-import { PickerChoiceClickHandler, RolePicker, RolePickerType } from '@/components/picker';
+import { RolePicker, RolePickerType } from '@/components/picker';
 import { RoleSelect } from '@/components/select';
 import {
     GuildConfigurationMemberJoinBeforePendingRole,
@@ -19,6 +19,7 @@ import {
     DialogTitle,
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
+import { PickerChoiceClickHandler } from '@lunaproject/web-core/dist/components/Picker';
 import {
     SectionCardContent,
     SectionCardDisabledProps,

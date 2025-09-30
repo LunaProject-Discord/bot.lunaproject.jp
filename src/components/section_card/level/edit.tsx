@@ -1,5 +1,6 @@
 'use client';
 
+import { KeyboardArrowDownIcon } from '@/components/icons';
 import {
     sectionLevelCardClasses,
     SectionLevelCardProfile,
@@ -103,7 +104,6 @@ export const SectionLevelEditCard = (
         readOnly: configReadOnly,
         variant: configVariant
     } = config.components?.SectionAccordionCard ?? {};
-    const ExpandMore = config.icons.ExpandMore;
 
     const defaultExpanded = _defaultExpanded ?? configDefaultExpanded;
     const disabled = _disabled ?? configDisabled ?? configRootDisabled;
@@ -135,7 +135,7 @@ export const SectionLevelEditCard = (
                     <SectionLevelCardProfile user={user} member={member} guild={guild} />
                     <SectionLevelCardStatus level={level} experience={experience} localization={localization} />
                     <SectionAccordionCardHeaderIcon className={sectionLevelEditCardClasses.icon}>
-                        <ExpandMore color={!disabled ? 'action' : 'disabled'} />
+                        <KeyboardArrowDownIcon color={!disabled ? 'action' : 'disabled'} />
                     </SectionAccordionCardHeaderIcon>
                 </SectionLevelEditCardRoot>
             }

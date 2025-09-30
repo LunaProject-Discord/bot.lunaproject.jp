@@ -1,20 +1,20 @@
+'use client';
+
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { CheckIcon, CloseIcon, CommandIcon, DeleteIcon } from '@/components/icons';
-import { ItemRoot, ItemRowContainer } from '@/components/items';
+import { ItemFormContainer, ItemRoot, ItemRowContainer } from '@/components/items';
 import { LocalizationProps } from '@/interfaces/localization';
 import { StyledProps } from '@/interfaces/mui';
-import {
-    ItemDisabledProps,
-    ItemFormContainer,
-    ItemVariableProps
-} from '@lunaproject/web-core/dist/components/SectionItems';
+import { SectionCardDisabledProps, SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { IconButton, ToggleButton, toggleButtonClasses, ToggleButtonGroup, Tooltip } from '@mui/material';
 import React, { Dispatch, ReactNode, SetStateAction } from 'react';
 
 type DefaultEditableValue = 'allow' | 'deny' | 'inherit';
 
-export type DefaultEditableSwitchProps = ItemVariableProps<boolean | null> & ItemDisabledProps;
+export type DefaultEditableSwitchProps =
+    SectionCardDisabledProps
+    & SectionCardVariableProps<{ value: boolean | null; }>;
 
 export const DefaultEditableSwitch = ({ value, setValue, disabled }: DefaultEditableSwitchProps) => (
     <ToggleButtonGroup
@@ -75,7 +75,7 @@ export const DefaultEditableSwitch = ({ value, setValue, disabled }: DefaultEdit
     </ToggleButtonGroup>
 );
 
-export type EditableSwitchProps = ItemVariableProps<boolean> & ItemDisabledProps;
+export type EditableSwitchProps = SectionCardDisabledProps & SectionCardVariableProps<{ value: boolean; }>;
 
 export const EditableSwitch = ({ value, setValue, disabled }: EditableSwitchProps) => (
     <ToggleButtonGroup
@@ -134,7 +134,7 @@ export const DefaultEditableItem = ({ value, setValue, disabled, sx, children }:
     </ItemRoot>
 );
 
-export interface EditableItemProps extends ItemDisabledProps, LocalizationProps, StyledProps {
+export interface EditableItemProps extends SectionCardDisabledProps, LocalizationProps, StyledProps {
     value: EditablePermissionOverride;
     setValue: Dispatch<SetStateAction<EditablePermissionOverride | undefined>>;
     children: ReactNode;
@@ -169,7 +169,7 @@ export const EditableItem = (
     </ItemRoot>
 );
 
-export type GroupProps = ItemVariableProps<EditablePermissionOverride[]> & LocalizationProps;
+export type GroupProps = SectionCardVariableProps<{ value: EditablePermissionOverride[]; }> & LocalizationProps;
 
 export interface OverrideGroupProps extends LocalizationProps {
     default: boolean | null;

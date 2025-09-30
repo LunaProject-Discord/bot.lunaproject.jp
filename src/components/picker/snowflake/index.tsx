@@ -1,6 +1,12 @@
 'use client';
 
-import { getSnowflakeChoiceId, Picker, PickerInternalProps, PickerItemProps, PickerProps } from '@/components/picker';
+import { getSnowflakeChoiceId } from '@/components/picker';
+import {
+    Picker,
+    PickerInternalProps,
+    PickerItemProps,
+    PickerProps
+} from '@lunaproject/web-core/dist/components/Picker';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import React from 'react';
 

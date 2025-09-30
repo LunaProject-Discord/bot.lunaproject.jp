@@ -5,11 +5,12 @@ import { EditableItem, Group, GroupTitle } from '@/app/dashboard/[id]/commands/_
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { getMemberDisplay } from '@/app/user';
 import { AddIcon } from '@/components/icons';
-import { MemberPicker, MemberPickerType, PickerChoiceClickHandler } from '@/components/picker';
+import { MemberPicker, MemberPickerType } from '@/components/picker';
 import { GuildMembersViewProps } from '@/interfaces/view';
 import { getMemberAvatar } from '@/utils/cdn';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
-import { ItemIcon, ItemTextBlock } from '@lunaproject/web-core/dist/components/SectionItems';
+import { PickerChoiceClickHandler } from '@lunaproject/web-core/dist/components/Picker';
+import { SectionCardDisplay } from '@lunaproject/web-core/dist/components/SectionCard';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Avatar } from '@mui/material';
 import { nanoid } from 'nanoid';
@@ -23,7 +24,7 @@ export const MemberItem = ({ value, setValue, members, disabled, localization }:
 
     return (
         <EditableItem value={value} setValue={setValue} disabled={disabled} localization={localization}>
-            <ItemIcon
+            <SectionCardDisplay
                 icon={
                     <Avatar
                         src={getMemberAvatar(member, member.guild_id)}
@@ -31,22 +32,22 @@ export const MemberItem = ({ value, setValue, members, disabled, localization }:
                         sx={{ pointerEvents: 'none' }}
                     />
                 }
-            />
-            <ItemTextBlock
                 primary={primary}
                 secondary={secondary}
-                primaryTypographyProps={{
-                    sx: {
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden'
-                    }
-                }}
-                secondaryTypographyProps={{
-                    sx: {
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                        overflow: 'hidden'
+                slotProps={{
+                    primary: {
+                        sx: {
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                            overflow: 'hidden'
+                        }
+                    },
+                    secondary: {
+                        sx: {
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                            overflow: 'hidden'
+                        }
                     }
                 }}
             />

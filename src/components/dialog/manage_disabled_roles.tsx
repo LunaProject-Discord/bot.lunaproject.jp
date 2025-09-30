@@ -11,14 +11,14 @@ import {
     DialogTitle,
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
-import { ItemVariableProps } from '@lunaproject/web-core/dist/components/SectionItems';
+import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
 import { Box, IconButton, InputBase, ListItemText, Switch, switchClasses, useMediaQuery } from '@mui/material';
 import { ellipsis, size } from 'polished';
 import React, { Fragment } from 'react';
 import { ListItemButton, ListItemIcon } from '../items';
 
-type ManageDisabledRolesDialogProps = ModalProps & ItemVariableProps<string[]> & GuildRolesViewProps;
+type ManageDisabledRolesDialogProps = ModalProps & SectionCardVariableProps<{ value: string[]; }> & GuildRolesViewProps;
 
 export const ManageDisabledRolesDialog = (
     {

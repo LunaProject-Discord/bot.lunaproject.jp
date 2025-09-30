@@ -1,11 +1,11 @@
 import { ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@/schemas/bot';
-import { DataMessageSchema } from '@/schemas/message';
+import { MessageDataSchema } from '@/schemas/message';
 import { SnowflakeSchema } from '@/schemas/snowflake';
 import { z } from 'zod';
 
 export const GuildConfigurationMemberJoinMessageSchema = ConfigurationRootSchema.extend({
     channel_id: ConfigurationSnowflakeSchema,
-    message: DataMessageSchema
+    message: MessageDataSchema
 });
 
 export const GuildConfigurationMemberJoinAfterPendingRoleSchema = ConfigurationRootSchema.extend({

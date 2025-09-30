@@ -1,8 +1,9 @@
 'use client';
 
 import { RolePicker, RolePickerProps, RolePickerType } from '@/components/picker';
-import { SelectOutlinedInput, SelectOutlinedInputProps, SnowflakeSelectProps } from '@/components/select';
+import { SnowflakeSelectProps } from '@/components/select';
 import { getRoleColor } from '@/utils/discord';
+import { SelectOutlinedInput, SelectOutlinedInputProps } from '@lunaproject/web-core/dist/components/Select';
 import { Box, Typography } from '@mui/material';
 import xor from 'lodash/xor';
 import { size } from 'polished';
@@ -32,7 +33,7 @@ export const RoleSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, role: RolePickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, role: RolePickerType) => {
         if (multiple) {
             setValue((prevValue) => xor(prevValue, [role.id]));
         } else {

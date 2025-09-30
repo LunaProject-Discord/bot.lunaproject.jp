@@ -4,6 +4,7 @@ import { Channels, Group, GroupTitle, Members, Roles } from '@/app/dashboard/[id
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { asCommandPermissionOverrides, asEditablePermissionOverrides } from '@/app/dashboard/[id]/commands/utils';
 import { CancelButton } from '@/components/buttons';
+import { ItemFormContainer } from '@/components/items';
 import { Code } from '@/components/text';
 import { GuildConfigurationCommand } from '@/interfaces/bot';
 import { TranslationKeys } from '@/interfaces/localization';
@@ -18,7 +19,6 @@ import {
     ModalProps
 } from '@lunaproject/web-core/dist/components/Dialog';
 import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
-import { ItemFormContainer } from '@lunaproject/web-core/dist/components/SectionItems';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Box, ButtonBase, Chip, Switch, switchClasses, Typography, useMediaQuery } from '@mui/material';
 import deepEqual from 'deep-equal';

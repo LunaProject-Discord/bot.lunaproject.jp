@@ -14,11 +14,11 @@ import {
 } from '@/interfaces/permissions';
 import { buttonActionStyled } from '@lunaproject/web-core/dist/components/ButtonBase';
 import {
-    ItemDisabledProps,
-    ItemTextBlock,
-    ItemVariableProps,
-    SwitchItemProps
-} from '@lunaproject/web-core/dist/components/SectionItems';
+    SectionCardDisabledProps,
+    SectionCardDisplay,
+    SectionCardVariableProps
+} from '@lunaproject/web-core/dist/components/SectionCard';
+import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import {
     Accordion as MuiAccordion,
     accordionClasses,
@@ -80,7 +80,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     flexDirection: 'column'
 }));
 
-export interface PermissionGroupProps extends ItemDisabledProps, LocalizationProps {
+export interface PermissionGroupProps extends SectionCardDisabledProps, LocalizationProps {
     label: ReactNode;
     permissions: [bigint, boolean][];
     setPermission: (permission: bigint, checked: boolean) => void;
@@ -115,7 +115,7 @@ const PermissionGroup = memo<PermissionGroupProps>((
                     key={permission.toString()}
                     permission={permission}
                     checked={enabled}
-                    setChecked={(checked) => setPermission(permission, checked)}
+                    setChecked={(checked) => setPermission(permission, getStateActionValue(checked, enabled))}
                     disabled={disabled}
                     localization={localization}
                 />
@@ -128,7 +128,10 @@ const PermissionGroup = memo<PermissionGroupProps>((
 ) => deepEqual(oldPermissions, newPermissions, { strict: true }) && oldDisabled === newDisabled);
 PermissionGroup.displayName = 'PermissionGroup';
 
-export interface PermissionItemProps extends SwitchItemProps, ItemDisabledProps, LocalizationProps {
+export interface PermissionItemProps extends SectionCardDisabledProps, SectionCardVariableProps<{
+    checked: boolean;
+}>, LocalizationProps {
+    defaultChecked?: boolean;
     permission: bigint;
 }
 
@@ -155,9 +158,10 @@ export const PermissionItem = (
     />
 );
 
-export interface PermissionsItemProps extends ItemVariableProps<Map<bigint, boolean>>, ItemDisabledProps, LocalizationProps {
-
-}
+export type PermissionsItemProps =
+    SectionCardDisabledProps
+    & SectionCardVariableProps<{ value: Map<bigint, boolean>; }>
+    & LocalizationProps;
 
 const PermissionsItem = memo<PermissionsItemProps>(({ value, setValue, disabled, localization }) => {
     const { translations } = localization;
@@ -179,7 +183,16 @@ const PermissionsItem = memo<PermissionsItemProps>(({ value, setValue, disabled,
     return (
         <Accordion>
             <AccordionSummary>
-                <ItemTextBlock primary={translations.role_permissions_select_roles} disabled={disabled} />
+                <SectionCardDisplay
+                    primary={translations.role_permissions_select_roles}
+                    slotProps={{
+                        primary: {
+                            sx: disabled ? {
+                                color: 'text.disabled'
+                            } : undefined
+                        }
+                    }}
+                />
             </AccordionSummary>
             <AccordionDetails>
                 <Grid container spacing={2} sx={{ py: 3 }}>

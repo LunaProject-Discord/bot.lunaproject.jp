@@ -1,24 +1,22 @@
 'use client';
 
-import {
-    PickerItemIcon,
-    PickerItemText,
-    SnowflakePicker,
-    SnowflakePickerItemProps,
-    SnowflakePickerProps
-} from '@/components/picker';
+import { SnowflakePicker, SnowflakePickerItemProps, SnowflakePickerProps } from '@/components/picker';
+import { LocalizationProps } from '@/interfaces/localization';
 import { RedisMember } from '@/interfaces/redis';
 import { getMemberAvatar, getUserAvatar } from '@/utils/cdn';
 import { filterPredicateMember, getMemberDisplayName, sortMembers } from '@/utils/discord';
+import { PickerItem, PickerItemIcon, PickerItemText } from '@lunaproject/web-core/dist/components/Picker';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { GuildMember } from '@lunaproject/web-discord/dist/interfaces';
-import { Avatar, ListItemButton } from '@mui/material';
+import { Avatar } from '@mui/material';
 import deepmerge from 'lodash/merge';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type MemberPickerType = (GuildMember | RedisMember) & SectionCardDisabledProps;
 
-export type MemberPickerProps = Omit<SnowflakePickerProps<MemberPickerType>, 'renderChoice' | 'filter'>;
+export type MemberPickerProps =
+    Omit<SnowflakePickerProps<MemberPickerType>, 'renderChoice' | 'filter'>
+    & LocalizationProps;
 
 export type MemberPickerItemProps = SnowflakePickerItemProps<MemberPickerType>;
 
@@ -33,7 +31,7 @@ export const MemberPickerItem = (
     const handleClick = (e: MouseEvent<HTMLDivElement>) => onClick?.(e, member, index);
 
     return (
-        <ListItemButton onClick={handleClick} selected={selected} disabled={member.disabled}>
+        <PickerItem onClick={handleClick} selected={selected} disabled={member.disabled}>
             <PickerItemIcon>
                 <Avatar
                     src={'guild_id' in member ? getMemberAvatar(member, member.guild_id) : getUserAvatar(member.user)}
@@ -42,7 +40,7 @@ export const MemberPickerItem = (
                 />
             </PickerItemIcon>
             <PickerItemText primary={getMemberDisplayName(member)} />
-        </ListItemButton>
+        </PickerItem>
     );
 };
 
@@ -51,14 +49,13 @@ export const MemberPicker = (
         choices: _choices,
         onClick,
         slotProps,
+        localization: { translations },
         ...props
     }: MemberPickerProps
 ) => {
-    const { translations } = props.localization;
-
     const choices = sortMembers(_choices);
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, member: MemberPickerType, index: number) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, member: MemberPickerType, index: number) => {
         onClick?.(e, member, index);
     }, [onClick]);
 

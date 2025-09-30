@@ -1,12 +1,11 @@
 'use client';
 
+import { DesktopColorPicker, MobileColorPicker } from '@/components/picker';
 import {
-    DesktopColorPicker,
     DesktopPickerSlotProps,
-    MobileColorPicker,
     MobilePickerSlotProps,
     PickerBaseProps
-} from '@/components/picker';
+} from '@lunaproject/web-core/dist/components/Picker';
 import { SectionCardVariableProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { Portal } from '@mui/base';
 import { Box, useMediaQuery, useTheme } from '@mui/material';

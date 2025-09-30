@@ -1,3 +1,5 @@
+'use client';
+
 import {
     DefaultEditableItem as OriginalDefaultEditableItem,
     DefaultEditableItemProps,

@@ -42,7 +42,7 @@ export const EditorCategorySelectButton = (
         deleted: false
     })).toSorted((a, b) => a.name.localeCompare(b.name)), [categories]);
 
-    const handlePickerChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, category: CategoryPickerType) => {
+    const handlePickerChoiceClick = useCallback((e: MouseEvent<HTMLElement>, category: CategoryPickerType) => {
         setValue((prevValue) => category.id !== prevValue ? category.id : undefined);
 
         if (!e.shiftKey)

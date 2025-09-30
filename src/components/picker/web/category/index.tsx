@@ -1,22 +1,26 @@
 'use client';
 
+import { ColorPickerPreview } from '@/components/picker';
+import { Category } from '@/components/section_card';
+import { LocalizationProps } from '@/interfaces/localization';
 import {
-    ColorPickerPreview,
     Picker,
+    PickerItem,
     PickerItemIcon,
     PickerItemProps,
     PickerItemText,
     PickerProps
-} from '@/components/picker';
-import { Category } from '@/components/section_card';
+} from '@lunaproject/web-core/dist/components/Picker';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
-import { ListItemButton, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import deepmerge from 'lodash/merge';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type CategoryPickerType = Category & SectionCardDisabledProps;
 
-export type CategoryPickerProps = Omit<PickerProps<CategoryPickerType>, 'renderChoice' | 'getChoiceId' | 'filter'>;
+export type CategoryPickerProps =
+    Omit<PickerProps<CategoryPickerType>, 'renderChoice' | 'getChoiceId' | 'filter'>
+    & LocalizationProps;
 
 export type CategoryPickerItemProps = PickerItemProps<CategoryPickerType>;
 
@@ -33,7 +37,7 @@ export const CategoryPickerItem = (
     const handleClick = (e: MouseEvent<HTMLDivElement>) => onClick?.(e, category, index);
 
     return (
-        <ListItemButton onClick={handleClick} selected={selected} disabled={category.disabled}>
+        <PickerItem onClick={handleClick} selected={selected} disabled={category.disabled}>
             <PickerItemIcon>
                 <ColorPickerPreview
                     hsva={category.color}
@@ -42,7 +46,7 @@ export const CategoryPickerItem = (
                 />
             </PickerItemIcon>
             <PickerItemText primary={category.name} />
-        </ListItemButton>
+        </PickerItem>
     );
 };
 
@@ -51,18 +55,17 @@ export const CategoryPicker = (
         choices: _choices,
         onClick,
         slotProps,
+        localization: { translations },
         ...props
     }: CategoryPickerProps
 ) => {
-    const { translations } = props.localization;
-
     const choices = _choices.toSorted((a, b) => a.name.localeCompare(b.name));
 
     const filterPredicate = useCallback((category: CategoryPickerType, keyword: string) => keyword.length < 1
         || category.id.includes(keyword)
         || category.name.toLowerCase().includes(keyword.toLowerCase()), []);
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, category: CategoryPickerType, index: number) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, category: CategoryPickerType, index: number) => {
         onClick?.(e, category, index);
     }, [onClick]);
 

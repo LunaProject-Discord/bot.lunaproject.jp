@@ -2,9 +2,8 @@
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon } from '@/components/icons';
+import { ChannelPickerGroup, ChannelPickerInternalProps } from '@/components/picker';
 import {
-    ChannelPickerGroup,
-    ChannelPickerInternalProps,
     getMobilePickerDefaultSnap,
     getMobilePickerSnapPoints,
     MobilePickerContent,
@@ -12,7 +11,7 @@ import {
     MobilePickerSlotProps,
     PickerSearchBox,
     useMobilePickerRef
-} from '@/components/picker';
+} from '@lunaproject/web-core/dist/components/Picker';
 import React from 'react';
 import { Virtualizer } from 'virtua';
 
@@ -28,6 +27,7 @@ export const MobileChannelPicker = (
         onClick,
         search,
         setSearch,
+        disableSearch,
         slotProps,
         localization: { translations }
     }: MobileChannelPickerProps
@@ -43,7 +43,7 @@ export const MobileChannelPicker = (
             snapPoints={getMobilePickerSnapPoints}
             initialFocusRef={false}
             header={
-                <PickerSearchBox
+                !disableSearch && <PickerSearchBox
                     value={search}
                     setValue={setSearch}
                     {...slotProps?.searchBox}
@@ -55,7 +55,7 @@ export const MobileChannelPicker = (
                 {channels.length > 0 ? <Virtualizer scrollRef={sheetScrollRef} overscan={2}>
                     {categories.map((category) => (
                         <ChannelPickerGroup
-                            key={category?.id}
+                            key={category?.id ?? 'uncategorized'}
                             category={category}
                             channels={channels.filter((channel) => channel.parent_id == category?.id)}
                             selected={selected}

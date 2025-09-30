@@ -13,7 +13,8 @@ export const EditorToggleBulletListCommand: LocalizedEditorCommandFactory = ({ t
         name: 'toggleBulletList',
         icon: FormatListBulletedIcon,
         label: translations.bullet_list,
-        description: translations.web_page_editor_command_toggle_bullet_list_description
+        description: translations.web_page_editor_command_toggle_bullet_list_description,
+        disabled: false
     }
 );
 

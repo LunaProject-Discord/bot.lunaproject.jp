@@ -3,11 +3,11 @@
 
 /*
 import '@mui/system';
-import { ElementType } from 'react';
+import { SxProps, Theme } from '@mui/material';
 
 declare module '@mui/system' {
     interface BoxOwnProps {
-        component?: ElementType;
+        sx?: SxProps<Theme>;
     }
 }
 */

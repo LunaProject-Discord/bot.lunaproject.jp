@@ -13,7 +13,8 @@ export const EditorToggleTaskListCommand: LocalizedEditorCommandFactory = ({ tra
         name: 'toggleTaskList',
         icon: ChecklistIcon,
         label: translations.task_list,
-        description: translations.web_page_editor_command_toggle_task_list_description
+        description: translations.web_page_editor_command_toggle_task_list_description,
+        disabled: false
     }
 );
 

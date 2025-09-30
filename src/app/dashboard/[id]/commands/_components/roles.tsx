@@ -8,10 +8,11 @@ import {
 } from '@/app/dashboard/[id]/commands/_components';
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { AddIcon } from '@/components/icons';
-import { PickerChoiceClickHandler, RolePicker, RolePickerType } from '@/components/picker';
+import { RolePicker, RolePickerType } from '@/components/picker';
 import { GuildRolesViewProps } from '@/interfaces/view';
 import { getRoleColor } from '@/utils/discord';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
+import { PickerChoiceClickHandler } from '@lunaproject/web-core/dist/components/Picker';
 import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Box, Typography } from '@mui/material';

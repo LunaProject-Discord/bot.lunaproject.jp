@@ -214,18 +214,22 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         value={notificationType}
                         setValue={setNotificationType}
                         choices={[
-                            { value: 'DISABLED', children: translations.level_notification_type_disabled },
+                            {
+                                value: 'DISABLED',
+                                primary: translations.level_notification_type_disabled
+                            },
+                            { type: 'divider' },
                             {
                                 value: 'DIRECT_MESSAGE',
-                                children: translations.level_notification_type_direct_message
+                                primary: translations.level_notification_type_direct_message
                             },
                             {
                                 value: 'CURRENT_CHANNEL',
-                                children: translations.level_notification_type_latest_channel
+                                primary: translations.level_notification_type_latest_channel
                             },
                             {
                                 value: 'CUSTOM_CHANNEL',
-                                children: translations.level_notification_type_custom_channel
+                                primary: translations.level_notification_type_custom_channel
                             }
                         ]}
                         disabled={!enabled}
@@ -243,6 +247,29 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         secondary={translations.level_notification_edit_description}
                         value={notificationMessage}
                         setValue={setNotificationMessage}
+                        placeholders={[
+                            '{guild:id}',
+                            '{guild:name}',
+                            '{user:id}',
+                            '{user:name}',
+                            '{user:discriminator}',
+                            '{user:display_name}',
+                            '{user:mention}',
+                            '{rank:old}',
+                            '{rank:new}',
+                            '{level:old}',
+                            '{level:new}',
+                            '{experience:old}',
+                            '{experience:new}',
+                            '{max_experience:old}',
+                            '{max_experience:new}',
+
+                            // 後方互換用
+                            '{xp:old}',
+                            '{xp:new}',
+                            '{max_xp:old}',
+                            '{max_xp:new}'
+                        ]}
                         open={openMessageBuilder}
                         setOpen={setOpenMessageBuilder}
                         disabled={!enabled || notificationType === 'DISABLED'}

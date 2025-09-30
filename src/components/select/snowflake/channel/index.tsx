@@ -2,7 +2,8 @@
 
 import { ChannelIcon } from '@/components/icons';
 import { ChannelPicker, ChannelPickerProps, ChannelPickerType } from '@/components/picker';
-import { SelectOutlinedInput, SelectOutlinedInputProps, SnowflakeSelectProps } from '@/components/select';
+import { SnowflakeSelectProps } from '@/components/select';
+import { SelectOutlinedInput, SelectOutlinedInputProps } from '@lunaproject/web-core/dist/components/Select';
 import { Typography } from '@mui/material';
 import xor from 'lodash/xor';
 import React, { Fragment, MouseEvent, useCallback, useState } from 'react';
@@ -31,7 +32,7 @@ export const ChannelSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, channel: ChannelPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, channel: ChannelPickerType) => {
         if (multiple) {
             setValue((prevValue) => xor(prevValue, [channel.id]));
         } else {

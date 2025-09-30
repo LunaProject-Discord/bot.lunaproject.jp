@@ -8,9 +8,10 @@ import {
 } from '@/app/dashboard/[id]/commands/_components';
 import { EditablePermissionOverride } from '@/app/dashboard/[id]/commands/interfaces';
 import { AddIcon, ChannelIcon } from '@/components/icons';
-import { ChannelPicker, ChannelPickerType, PickerChoiceClickHandler } from '@/components/picker';
+import { ChannelPicker, ChannelPickerType } from '@/components/picker';
 import { GuildChannelsViewProps } from '@/interfaces/view';
 import { Button } from '@lunaproject/web-core/dist/components/Button';
+import { PickerChoiceClickHandler } from '@lunaproject/web-core/dist/components/Picker';
 import { Section, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { getStateActionValue } from '@lunaproject/web-core/dist/utils';
 import { Typography } from '@mui/material';

@@ -140,7 +140,7 @@ export const SectionLevelCardRank = ({ rank, ...props }: SectionLevelCardRankPro
             sx={{
                 color: 'primary.main',
                 bgcolor: 'transparent',
-                border: (theme) => `solid 1px ${theme.vars.palette.primary.main}`
+                border: (theme: Theme) => `solid 1px ${theme.vars.palette.primary.main}`
             }}
             {...props}
         >

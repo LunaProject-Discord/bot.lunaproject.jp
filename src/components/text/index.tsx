@@ -44,6 +44,9 @@ export const keyStyled = (theme: Theme): SystemStyleObject<Theme> => ({
     }),
     '@media (any-hover: none)': {
         display: 'none'
+    },
+    ':disabled &, .Mui-disabled &': {
+        color: theme.vars.palette.action.disabled
     }
 });
 

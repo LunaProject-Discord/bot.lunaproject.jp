@@ -1,7 +1,8 @@
 'use client';
 
 import { ColorPickerPreview, TagPicker, TagPickerProps, TagPickerType } from '@/components/picker';
-import { SelectOutlinedInput, SelectOutlinedInputProps, SelectProps } from '@/components/select';
+import { SelectProps } from '@/components/select';
+import { SelectOutlinedInput, SelectOutlinedInputProps } from '@lunaproject/web-core/dist/components/Select';
 import { Typography, useTheme } from '@mui/material';
 import xor from 'lodash/xor';
 import React, { Fragment, MouseEvent, useCallback, useState } from 'react';
@@ -32,7 +33,7 @@ export const TagSelect = (
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, tag: TagPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, tag: TagPickerType) => {
         if (multiple) {
             setValue((prevValue) => xor(prevValue, [tag.id]));
         } else {

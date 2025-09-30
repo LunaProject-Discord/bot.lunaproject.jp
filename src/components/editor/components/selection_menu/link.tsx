@@ -5,7 +5,8 @@ import { EditorSelectionMenuButton, EditorSelectionMenuIconButton, EditorSelecti
 import { CheckIcon, CloseIcon, EditIcon, LinkOffIcon, OpenInNewIcon } from '@/components/icons';
 import { REGEX_URL } from '@/utils/regex';
 import { InputBase, inputBaseClasses, Tooltip } from '@mui/material';
-import { BubbleMenu, EditorEvents, useCurrentEditor } from '@tiptap/react';
+import { EditorEvents } from '@tiptap/core';
+import { BubbleMenu, useCurrentEditor } from '@tiptap/react';
 import React, { useEffect, useState } from 'react';
 
 export const EditorLinkSelectionMenu = () => {

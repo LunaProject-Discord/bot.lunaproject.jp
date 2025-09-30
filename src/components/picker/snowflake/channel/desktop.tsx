@@ -2,14 +2,13 @@
 
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon } from '@/components/icons';
+import { ChannelPickerGroup, ChannelPickerInternalProps } from '@/components/picker';
 import {
-    ChannelPickerGroup,
-    ChannelPickerInternalProps,
     DesktopPickerContent,
     DesktopPickerRoot,
     DesktopPickerSlotProps,
     PickerSearchBox
-} from '@/components/picker';
+} from '@lunaproject/web-core/dist/components/Picker';
 import React, { useCallback } from 'react';
 import { VList } from 'virtua';
 
@@ -25,6 +24,7 @@ export const DesktopChannelPicker = (
         onClick,
         search,
         setSearch,
+        disableSearch,
         slotProps,
         localization: { translations }
     }: DesktopChannelPickerProps
@@ -43,17 +43,17 @@ export const DesktopChannelPicker = (
             transformOrigin={{ vertical: 'top', horizontal: 'center' }}
             {...slotProps?.root}
         >
-            <PickerSearchBox
+            {!disableSearch && <PickerSearchBox
                 ref={focusInput}
                 value={search}
                 setValue={setSearch}
                 {...slotProps?.searchBox}
-            />
+            />}
             <DesktopPickerContent {...slotProps?.content}>
-                {channels.length > 0 ? <VList style={{ padding: 8, paddingTop: 0 }}>
+                {channels.length > 0 ? <VList style={{ paddingBottom: 8 }}>
                     {categories.map((category) => (
                         <ChannelPickerGroup
-                            key={category?.id}
+                            key={category?.id ?? 'uncategorized'}
                             category={category}
                             channels={channels.filter((channel) => channel.parent_id == category?.id)}
                             selected={selected}

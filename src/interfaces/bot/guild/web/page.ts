@@ -5,7 +5,7 @@ import {
     UpdateGuildWebPageContentSchema,
     UpdateGuildWebPageSchema
 } from '@/schemas/bot';
-import { JSONContent } from '@tiptap/react';
+import { JSONContent } from '@tiptap/core';
 import { z } from 'zod';
 
 export interface GuildWebPage {

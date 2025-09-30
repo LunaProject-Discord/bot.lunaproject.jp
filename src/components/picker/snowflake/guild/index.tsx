@@ -1,25 +1,23 @@
 'use client';
 
-import {
-    PickerItemIcon,
-    PickerItemText,
-    SnowflakePicker,
-    SnowflakePickerItemProps,
-    SnowflakePickerProps
-} from '@/components/picker';
+import { SnowflakePicker, SnowflakePickerItemProps, SnowflakePickerProps } from '@/components/picker';
+import { LocalizationProps } from '@/interfaces/localization';
 import { DataGuild, RedisGuild } from '@/interfaces/redis';
 import { getGuildIcon } from '@/utils/cdn';
 import { filterPredicateGuild, sortGuilds } from '@/utils/discord';
+import { PickerItem, PickerItemIcon, PickerItemText } from '@lunaproject/web-core/dist/components/Picker';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
-import { Avatar, ListItemButton } from '@mui/material';
+import { Avatar } from '@mui/material';
 import { APIGuild } from 'discord-api-types/v10';
 import deepmerge from 'lodash/merge';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type GuildPickerType = (OAuthGuild | APIGuild | RedisGuild | DataGuild) & SectionCardDisabledProps;
 
-export type GuildPickerProps = Omit<SnowflakePickerProps<GuildPickerType>, 'renderChoice' | 'filter'>;
+export type GuildPickerProps =
+    Omit<SnowflakePickerProps<GuildPickerType>, 'renderChoice' | 'filter'>
+    & LocalizationProps;
 
 export type GuildPickerItemProps = SnowflakePickerItemProps<GuildPickerType>;
 
@@ -34,7 +32,7 @@ export const GuildPickerItem = (
     const handleClick = (e: MouseEvent<HTMLDivElement>) => onClick?.(e, guild, index);
 
     return (
-        <ListItemButton onClick={handleClick} selected={selected} disabled={guild.disabled}>
+        <PickerItem onClick={handleClick} selected={selected} disabled={guild.disabled}>
             <PickerItemIcon>
                 <Avatar
                     src={getGuildIcon(guild)}
@@ -43,7 +41,7 @@ export const GuildPickerItem = (
                 />
             </PickerItemIcon>
             <PickerItemText primary={guild.name} />
-        </ListItemButton>
+        </PickerItem>
     );
 };
 
@@ -52,14 +50,13 @@ export const GuildPicker = (
         choices: _choices,
         onClick,
         slotProps,
+        localization: { translations },
         ...props
     }: GuildPickerProps
 ) => {
-    const { translations } = props.localization;
-
     const choices = sortGuilds(_choices);
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, guild: GuildPickerType, index: number) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, guild: GuildPickerType, index: number) => {
         onClick?.(e, guild, index);
     }, [onClick]);
 

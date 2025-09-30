@@ -6,26 +6,32 @@ import {
     DesktopChannelPicker,
     getSnowflakeChoiceId,
     MobileChannelPicker,
-    PickerItemIcon,
-    PickerItemText,
     SnowflakePickerInternalProps,
     SnowflakePickerItemProps,
-    SnowflakePickerProps,
-    usePickerSearch
+    SnowflakePickerProps
 } from '@/components/picker';
+import { LocalizationProps } from '@/interfaces/localization';
 import { RedisChannel } from '@/interfaces/redis';
 import { filterPredicateChannel, sortChannels } from '@/utils/discord';
+import {
+    PickerItem,
+    PickerItemIcon,
+    PickerItemText,
+    usePickerSearch
+} from '@lunaproject/web-core/dist/components/Picker';
 import { SectionCardDisabledProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { APIGuildChannel } from '@lunaproject/web-discord/dist/interfaces';
-import { Box, List, ListItemButton, ListSubheader as MuiListSubheader, styled, useMediaQuery } from '@mui/material';
+import { Box, List, ListSubheader as MuiListSubheader, styled, useMediaQuery } from '@mui/material';
 import deepmerge from 'lodash/merge';
 import React, { MouseEvent, useCallback } from 'react';
 
 export type ChannelPickerType = (APIGuildChannel | RedisChannel) & SectionCardDisabledProps;
 
-export type ChannelPickerProps = Omit<SnowflakePickerProps<ChannelPickerType>, 'renderChoice' | 'filter'>;
+export type ChannelPickerProps =
+    Omit<SnowflakePickerProps<ChannelPickerType>, 'renderChoice' | 'filter'>
+    & LocalizationProps;
 
-export interface ChannelPickerInternalProps extends Omit<SnowflakePickerInternalProps<ChannelPickerType>, 'renderChoice' | 'choices' | 'filter'> {
+export interface ChannelPickerInternalProps extends Omit<SnowflakePickerInternalProps<ChannelPickerType>, 'renderChoice' | 'choices' | 'filter'>, LocalizationProps {
     categories: (ChannelPickerType | undefined)[];
     channels: ChannelPickerType[];
 }
@@ -76,18 +82,18 @@ export const ChannelPickerGroup = (
 };
 
 export const ChannelPickerGroupSubheader = styled(MuiListSubheader)(({ theme }) => ({
-    padding: theme.spacing(1, 1, .5),
+    padding: theme.spacing(1, 2, .5),
     lineHeight: 'unset',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     backgroundImage: 'none',
+    [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(1, 1.5, .5)
+    },
     ...theme.applyStyles('dark', {
         backgroundImage: theme.vars.overlays[8]
-    }),
-    [theme.breakpoints.down('sm')]: {
-        padding: theme.spacing(1, 1.5, .5)
-    }
+    })
 }));
 
 export const ChannelPickerItem = (
@@ -101,12 +107,12 @@ export const ChannelPickerItem = (
     const handleClick = (e: MouseEvent<HTMLDivElement>) => onClick?.(e, channel, index);
 
     return (
-        <ListItemButton onClick={handleClick} selected={selected} disabled={channel.disabled}>
+        <PickerItem onClick={handleClick} selected={selected} disabled={channel.disabled}>
             <PickerItemIcon>
                 <ChannelIcon channel={channel} />
             </PickerItemIcon>
             <PickerItemText primary={channel.name} />
-        </ListItemButton>
+        </PickerItem>
     );
 };
 
@@ -129,7 +135,7 @@ export const ChannelPicker = (
         ...channels.filter((category) => ChannelSortOrders.Category === category.type)
     ].filter((category) => channels.some((channel) => channel.parent_id == category?.id));
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, guild: ChannelPickerType, index: number) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, guild: ChannelPickerType, index: number) => {
         onClick?.(e, guild, index);
     }, [onClick]);
 

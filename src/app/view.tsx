@@ -22,7 +22,7 @@ import { Button } from '@lunaproject/web-core/dist/components/Button';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { PageCenteredLayout, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent } from '@lunaproject/web-core/dist/components/Section';
-import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
+import { SectionRouteLinkCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SegmentedControl } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild, OAuthUser } from '@lunaproject/web-discord/dist/interfaces';
 import {
@@ -70,7 +70,7 @@ const GuildsGallery = ({ guilds }: GuildsProps) => (
 const GuildsTable = ({ guilds }: GuildsProps) => (
     <Fragment>
         {guilds.map((guild) => (
-            <RouteLinkItem
+            <SectionRouteLinkCard
                 key={guild.id}
                 icon={<Avatar src={getGuildIcon(guild)} alt={guild.name} />}
                 primary={guild.name}

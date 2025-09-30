@@ -11,7 +11,7 @@ import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { SectionSelectCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { useResettableState } from '@lunaproject/web-core/dist/utils';
-import React, { Fragment, ReactNode } from 'react';
+import React, { Fragment } from 'react';
 import spacetime from 'spacetime';
 
 export const View = ({ guild, configuration, localization }: GuildConfigurationViewProps) => {
@@ -48,11 +48,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         secondary={translations.timezone_description}
                         value={timezone}
                         setValue={setTimezone}
-                        choices={Object.entries(TimeZones).map(([id, label]): {
-                            value: TimeZone;
-                            children?: ReactNode;
-                            offset: number;
-                        } => {
+                        choices={Object.entries(TimeZones).map(([id, label]) => {
                             const now = spacetime.now(id);
                             const tz = now.timezone();
 
@@ -61,7 +57,7 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
 
                             return {
                                 value: id as TimeZone,
-                                children: `(GMT${hr.includes('-') ? hr : `+${hr}`}) ${label}`,
+                                primary: `(GMT${hr.includes('-') ? hr : `+${hr}`}) ${label}`,
                                 offset: tz.current.offset
                             };
                         }).sort((a, b) => a.offset - b.offset)}
@@ -78,8 +74,14 @@ export const View = ({ guild, configuration, localization }: GuildConfigurationV
                         value={language}
                         setValue={setLanguage}
                         choices={[
-                            { value: 'ja-JP', children: translations.japanese },
-                            { value: 'en-US', children: translations.english }
+                            {
+                                value: 'ja-JP',
+                                primary: translations.japanese
+                            },
+                            {
+                                value: 'en-US',
+                                primary: translations.english
+                            }
                         ]}
                     />
                 </SectionContent>

@@ -310,9 +310,7 @@ export const View = (
                                 </Box>
                                 <EditorContext.Consumer>
                                     {({ editor: currentEditor }) => (
-                                        <Fragment>
-                                            <EditorContent editor={currentEditor} />
-                                        </Fragment>
+                                        <EditorContent editor={currentEditor} />
                                     )}
                                 </EditorContext.Consumer>
                             </EditorRoot>

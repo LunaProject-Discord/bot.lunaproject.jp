@@ -1,9 +1,10 @@
 'use client';
 
 import { MemberPicker, MemberPickerProps, MemberPickerType } from '@/components/picker';
-import { SelectOutlinedInput, SelectOutlinedInputProps, SnowflakeSelectProps } from '@/components/select';
+import { SnowflakeSelectProps } from '@/components/select';
 import { getMemberAvatar, getUserAvatar } from '@/utils/cdn';
 import { getMemberDisplayName } from '@/utils/discord';
+import { SelectOutlinedInput, SelectOutlinedInputProps } from '@lunaproject/web-core/dist/components/Select';
 import { Avatar, Typography } from '@mui/material';
 import xor from 'lodash/xor';
 import React, { Fragment, MouseEvent, useCallback, useState } from 'react';
@@ -32,7 +33,7 @@ export const MemberSelect = (
 ) => {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | undefined>(undefined);
 
-    const handleChoiceClick = useCallback((e: MouseEvent<HTMLDivElement>, member: MemberPickerType) => {
+    const handleChoiceClick = useCallback((e: MouseEvent<HTMLElement>, member: MemberPickerType) => {
         if (multiple) {
             setValue((prevValue) => xor(prevValue, [member.user.id]));
         } else {

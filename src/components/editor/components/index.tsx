@@ -20,14 +20,14 @@ export const editorClasses = generateComponentClasses(
     ]
 );
 
-export const editorProseMirrorClasses = generateComponentClasses(
-    'ProseMirror',
-    [
-        'focused',
-        'selectednode',
-        'gapcursor'
-    ]
-);
+export const editorProseMirrorClasses = {
+    focused: 'ProseMirror-focused',
+    selection: 'ProseMirror-selection',
+    selectedNode: 'ProseMirror-selectednode',
+    dropCursorInline: 'prosemirror-dropcursor-inline',
+    dropCursorBlock: 'prosemirror-dropcursor-block',
+    gapCursor: 'ProseMirror-gapcursor'
+} as const;
 
 const editorRootPlaceholderStyled = (theme: Theme) => (placeholder: string): CSSObject => ({
     '&:not(&:where(tr *))': {
@@ -78,6 +78,9 @@ export const EditorRoot = styled(
                 borderRadius: theme.shape.borderRadius
             }
         },
+        [`& .${editorProseMirrorClasses.dropCursorBlock}, & .${editorProseMirrorClasses.dropCursorInline}`]: {
+            backgroundColor: theme.vars.palette.text.primary
+        },
         [`& .${editorClasses.content}`]: {
             [`&.ProseMirror, &.${editorProseMirrorClasses.focused}`]: {
                 outline: 'none',
@@ -85,7 +88,11 @@ export const EditorRoot = styled(
                     cursor: ['ew-resize', 'col-resize']
                 }
             },
-            [`& .${editorProseMirrorClasses.gapcursor}::after`]: {
+            [`& .${editorProseMirrorClasses.selection}`]: {
+                textShadow: 'none',
+                backgroundColor: theme.palette.selection.main
+            },
+            [`& .${editorProseMirrorClasses.gapCursor}::after`]: {
                 borderTopColor: theme.vars.palette.text.primary
             },
 
@@ -293,7 +300,7 @@ export const EditorRoot = styled(
                 '&:not(:last-child)': {
                     marginBottom: '.35em'
                 },
-                [`&.${editorProseMirrorClasses.selectednode}, .${editorProseMirrorClasses.selectednode} > &`]: {
+                [`&.${editorProseMirrorClasses.selectedNode}, .${editorProseMirrorClasses.selectedNode} > &`]: {
                     outline: `solid ${theme.spacing(.5)} ${theme.vars.palette.selection.main}`
                 }
             },

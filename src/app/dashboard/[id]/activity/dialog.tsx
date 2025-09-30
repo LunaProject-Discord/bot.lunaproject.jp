@@ -12,7 +12,7 @@ import {
     TagIcon,
     VideocamIcon
 } from '@/components/icons';
-import { RoleSelect, SelectOutlinedInput } from '@/components/select';
+import { RoleSelect } from '@/components/select';
 import { translatableTypographyStyled } from '@/components/text';
 import { GuildConfigurationActivityRole, GuildConfigurationActivityRoleType } from '@/interfaces/bot';
 import { LocalizationProps, TranslationKeys } from '@/interfaces/localization';
@@ -35,6 +35,7 @@ import {
     SectionCardRoot,
     SectionCardVariableProps
 } from '@lunaproject/web-core/dist/components/SectionCard';
+import { SelectOutlinedInput } from '@lunaproject/web-core/dist/components/Select';
 import { getStateActionValue, UniqueId, updateArrayState } from '@lunaproject/web-core/dist/utils';
 import {
     Box,

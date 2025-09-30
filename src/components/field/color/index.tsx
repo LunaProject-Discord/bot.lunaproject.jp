@@ -124,7 +124,6 @@ export const ColorField = (
                     choices={choices}
                     disableAlpha={disableAlpha}
                     slotProps={pickerProps}
-                    localization={localization}
                 />
             </Box>
         </ClickAwayListener>

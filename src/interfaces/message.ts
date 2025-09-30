@@ -1,21 +1,21 @@
 import {
-    DataEmbedAuthorSchema,
-    DataEmbedFieldSchema,
-    DataEmbedFooterSchema,
-    DataEmbedImageSchema,
-    DataEmbedSchema,
-    DataMessageSchema
+    MessageDataSchema,
+    MessageEmbedAuthorSchema,
+    MessageEmbedDataSchema,
+    MessageEmbedFieldSchema,
+    MessageEmbedFooterSchema,
+    MessageTimestampDataSchema
 } from '@/schemas/message';
 import { z } from 'zod';
 
-export type DataMessage = z.infer<typeof DataMessageSchema>;
+export type MessageData = z.infer<typeof MessageDataSchema>;
 
-export type DataEmbed = z.infer<typeof DataEmbedSchema>;
+export type MessageEmbedData = z.infer<typeof MessageEmbedDataSchema>;
 
-export type DataEmbedAuthor = z.infer<typeof DataEmbedAuthorSchema>;
+export type MessageEmbedAuthor = z.infer<typeof MessageEmbedAuthorSchema>;
 
-export type DataEmbedField = z.infer<typeof DataEmbedFieldSchema>;
+export type MessageEmbedFooter = z.infer<typeof MessageEmbedFooterSchema>;
 
-export type DataEmbedImage = z.infer<typeof DataEmbedImageSchema>;
+export type MessageEmbedField = z.infer<typeof MessageEmbedFieldSchema>;
 
-export type DataEmbedFooter = z.infer<typeof DataEmbedFooterSchema>;
+export type MessageTimestampData = z.infer<typeof MessageTimestampDataSchema>;

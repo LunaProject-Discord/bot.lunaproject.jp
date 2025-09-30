@@ -1,6 +1,6 @@
 import { ConfigurationAccessControlSchema, ConfigurationRootSchema, ConfigurationSnowflakeSchema } from '@/schemas/bot';
 import { LevelAndExperienceSchema } from '@/schemas/bot/guild/level';
-import { DataMessageSchema } from '@/schemas/message';
+import { MessageDataSchema } from '@/schemas/message';
 import { SnowflakeSchema } from '@/schemas/snowflake';
 import { z } from 'zod';
 
@@ -22,7 +22,7 @@ export const GuildConfigurationLevelNotificationTypeSchema = z.union([
 export const GuildConfigurationLevelNotificationSchema = z.object({
     type: GuildConfigurationLevelNotificationTypeSchema,
     channel_id: ConfigurationSnowflakeSchema,
-    message: DataMessageSchema
+    message: MessageDataSchema
 });
 
 export const GuildConfigurationLevelRewardRoleSchema = ConfigurationRootSchema.extend({

@@ -29,7 +29,8 @@ import {
     ToggleButtonProps,
     Tooltip
 } from '@mui/material';
-import { BubbleMenu, isTextSelection, useCurrentEditor } from '@tiptap/react';
+import { isTextSelection } from '@tiptap/core';
+import { BubbleMenu, useCurrentEditor } from '@tiptap/react';
 import clsx from 'clsx';
 import React, { forwardRef, useState } from 'react';
 
@@ -128,7 +129,7 @@ export const EditorSelectionMenu = () => {
             return;
 
         if (editor.isActive('link')) {
-            editor.chain().focus().setTextSelection(editor.view.state.selection.from).run();
+            editor.chain().focus().setTextSelection(editor.state.selection.from).run();
             return;
         }
 

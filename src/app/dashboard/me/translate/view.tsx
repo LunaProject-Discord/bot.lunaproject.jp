@@ -50,14 +50,15 @@ export const View = ({ user, configuration, localization }: UserConfigurationVie
                         choices={[
                             {
                                 value: 'inherit',
-                                children: translations.user_translate_target_language_override_inherit
+                                primary: translations.user_translate_target_language_override_inherit
                             },
+                            { type: 'divider' },
                             ...(UserConfigurationTranslateLanguageArray.map((language) => ({
                                 value: language,
-                                children: getTranslateLanguageName(intlLocale, language)
+                                primary: getTranslateLanguageName(intlLocale, language)
                             })).sort((a, b) => intlCollator.compare(
-                                a.children ?? '',
-                                b.children ?? ''
+                                a.primary ?? '',
+                                b.primary ?? ''
                             )))
                         ]}
                     />

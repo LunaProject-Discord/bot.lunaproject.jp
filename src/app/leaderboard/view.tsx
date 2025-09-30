@@ -6,7 +6,7 @@ import { getGuildIcon } from '@/utils/discord';
 import { Gallery, GalleryItem, GalleryItemIcon, GalleryItemText } from '@lunaproject/web-core/dist/components/Gallery';
 import { PageHeader, PageLayout } from '@lunaproject/web-core/dist/components/Layout';
 import { Section } from '@lunaproject/web-core/dist/components/Section';
-import { RouteLinkItem } from '@lunaproject/web-core/dist/components/SectionItems';
+import { SectionRouteLinkCard } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SegmentedControl, segmentedControlClasses } from '@lunaproject/web-core/dist/components/SegmentedControl';
 import { OAuthGuild } from '@lunaproject/web-discord/dist/interfaces';
 import { Avatar, ButtonBase, CircularProgress } from '@mui/material';
@@ -39,7 +39,7 @@ const GuildsGallery = ({ guilds }: GuildsProps) => (
 const GuildsTable = ({ guilds }: GuildsProps) => (
     <Fragment>
         {guilds.map((guild) => (
-            <RouteLinkItem
+            <SectionRouteLinkCard
                 key={guild.id}
                 icon={<Avatar src={getGuildIcon(guild)} alt={guild.name} />}
                 primary={guild.name}

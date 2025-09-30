@@ -20,10 +20,14 @@ import CalendarViewDayFill from '@material-symbols/svg-400/outlined/calendar_vie
 import CallMerge from '@material-symbols/svg-400/outlined/call_merge.svg';
 import CallSplit from '@material-symbols/svg-400/outlined/call_split.svg';
 import Category from '@material-symbols/svg-400/outlined/category.svg';
+import Chat from '@material-symbols/svg-400/outlined/chat.svg';
 import Check from '@material-symbols/svg-400/outlined/check.svg';
+import CheckBox from '@material-symbols/svg-400/outlined/check_box.svg';
+import CheckBoxOutlinedBlack from '@material-symbols/svg-400/outlined/check_box_outline_blank.svg';
 import Checklist from '@material-symbols/svg-400/outlined/checklist.svg';
 import ClearAll from '@material-symbols/svg-400/outlined/clear_all.svg';
 import Close from '@material-symbols/svg-400/outlined/close.svg';
+import Cloud from '@material-symbols/svg-400/outlined/cloud.svg';
 import CloudOff from '@material-symbols/svg-400/outlined/cloud_off.svg';
 import CloudSync from '@material-symbols/svg-400/outlined/cloud_sync.svg';
 import Code from '@material-symbols/svg-400/outlined/code.svg';
@@ -63,6 +67,7 @@ import GridView from '@material-symbols/svg-400/outlined/grid_view.svg';
 import Group from '@material-symbols/svg-400/outlined/group.svg';
 import Home from '@material-symbols/svg-400/outlined/home.svg';
 import Image from '@material-symbols/svg-400/outlined/image.svg';
+import IndeterminateCheckBox from '@material-symbols/svg-400/outlined/indeterminate_check_box.svg';
 import Info from '@material-symbols/svg-400/outlined/info.svg';
 import KeyboardArrowDown from '@material-symbols/svg-400/outlined/keyboard_arrow_down.svg';
 import KeyboardArrowLeft from '@material-symbols/svg-400/outlined/keyboard_arrow_left.svg';
@@ -89,10 +94,14 @@ import MusicNote from '@material-symbols/svg-400/outlined/music_note.svg';
 import Nightlight from '@material-symbols/svg-400/outlined/nightlight.svg';
 import Notifications from '@material-symbols/svg-400/outlined/notifications.svg';
 import OpenInNew from '@material-symbols/svg-400/outlined/open_in_new.svg';
+import PageFooter from '@material-symbols/svg-400/outlined/page_footer.svg';
+import PageHeader from '@material-symbols/svg-400/outlined/page_header.svg';
 import Palette from '@material-symbols/svg-400/outlined/palette.svg';
+import Person from '@material-symbols/svg-400/outlined/person.svg';
 import PersonAdd from '@material-symbols/svg-400/outlined/person_add.svg';
 import PersonOff from '@material-symbols/svg-400/outlined/person_off.svg';
 import PersonRemove from '@material-symbols/svg-400/outlined/person_remove.svg';
+import PictureInPicture from '@material-symbols/svg-400/outlined/picture_in_picture.svg';
 import Preview from '@material-symbols/svg-400/outlined/preview.svg';
 import RecordVoiceOver from '@material-symbols/svg-400/outlined/record_voice_over.svg';
 import Redo from '@material-symbols/svg-400/outlined/redo.svg';
@@ -102,6 +111,7 @@ import Save from '@material-symbols/svg-400/outlined/save.svg';
 import Schedule from '@material-symbols/svg-400/outlined/schedule.svg';
 import Search from '@material-symbols/svg-400/outlined/search.svg';
 import Security from '@material-symbols/svg-400/outlined/security.svg';
+import Segment from '@material-symbols/svg-400/outlined/segment.svg';
 import SelectAll from '@material-symbols/svg-400/outlined/select_all.svg';
 import Sell from '@material-symbols/svg-400/outlined/sell.svg';
 import Settings from '@material-symbols/svg-400/outlined/settings.svg';
@@ -118,6 +128,7 @@ import TableRows from '@material-symbols/svg-400/outlined/table_rows.svg';
 import Tag from '@material-symbols/svg-400/outlined/tag.svg';
 import TaskAlt from '@material-symbols/svg-400/outlined/task_alt.svg';
 import TextSnippet from '@material-symbols/svg-400/outlined/text_snippet.svg';
+import Title from '@material-symbols/svg-400/outlined/title.svg';
 import Today from '@material-symbols/svg-400/outlined/today.svg';
 import ToggleOff from '@material-symbols/svg-400/outlined/toggle_off.svg';
 import ToggleOn from '@material-symbols/svg-400/outlined/toggle_on-fill.svg';
@@ -173,13 +184,21 @@ export const CallSplitIcon = createSvgIcon({ path: CallSplit }, 'CallSplitIcon')
 
 export const CategoryIcon = createSvgIcon({ path: Category }, 'CategoryIcon');
 
+export const ChatIcon = createSvgIcon({ path: Chat }, 'ChatIcon');
+
 export const CheckIcon = createSvgIcon({ path: Check }, 'CheckIcon');
+
+export const CheckBoxIcon = createSvgIcon({ path: CheckBox }, 'CheckBoxIcon');
+
+export const CheckBoxOutlinedBlackIcon = createSvgIcon({ path: CheckBoxOutlinedBlack }, 'CheckBoxOutlinedBlackIcon');
 
 export const ChecklistIcon = createSvgIcon({ path: Checklist }, 'ChecklistIcon');
 
 export const ClearAllIcon = createSvgIcon({ path: ClearAll }, 'ClearAllIcon');
 
 export const CloseIcon = createSvgIcon({ path: Close }, 'CloseIcon');
+
+export const CloudIcon = createSvgIcon({ path: Cloud }, 'CloudIcon');
 
 export const CloudOffIcon = createSvgIcon({ path: CloudOff }, 'CloudOffIcon');
 
@@ -259,6 +278,8 @@ export const HomeIcon = createSvgIcon({ path: Home }, 'HomeIcon');
 
 export const ImageIcon = createSvgIcon({ path: Image }, 'ImageIcon');
 
+export const IndeterminateCheckBoxIcon = createSvgIcon({ path: IndeterminateCheckBox }, 'IndeterminateCheckBoxIcon');
+
 export const InfoIcon = createSvgIcon({ path: Info }, 'InfoIcon');
 
 export const KeyboardArrowDownIcon = createSvgIcon({ path: KeyboardArrowDown }, 'KeyboardArrowDownIcon');
@@ -311,13 +332,21 @@ export const NotificationsIcon = createSvgIcon({ path: Notifications }, 'Notific
 
 export const OpenInNewIcon = createSvgIcon({ path: OpenInNew }, 'OpenInNewIcon');
 
+export const PageFooterIcon = createSvgIcon({ path: PageFooter }, 'PageFooterIcon');
+
+export const PageHeaderIcon = createSvgIcon({ path: PageHeader }, 'PageHeaderIcon');
+
 export const PaletteIcon = createSvgIcon({ path: Palette }, 'PaletteIcon');
+
+export const PersonIcon = createSvgIcon({ path: Person }, 'PersonIcon');
 
 export const PersonAddIcon = createSvgIcon({ path: PersonAdd }, 'PersonAddIcon');
 
 export const PersonOffIcon = createSvgIcon({ path: PersonOff }, 'PersonOffIcon');
 
 export const PersonRemoveIcon = createSvgIcon({ path: PersonRemove }, 'PersonRemoveIcon');
+
+export const PictureInPictureIcon = createSvgIcon({ path: PictureInPicture }, 'PictureInPictureIcon');
 
 export const PreviewIcon = createSvgIcon({ path: Preview }, 'PreviewIcon');
 
@@ -336,6 +365,8 @@ export const ScheduleIcon = createSvgIcon({ path: Schedule }, 'ScheduleIcon');
 export const SearchIcon = createSvgIcon({ path: Search }, 'SearchIcon');
 
 export const SecurityIcon = createSvgIcon({ path: Security }, 'SecurityIcon');
+
+export const SegmentIcon = createSvgIcon({ path: Segment }, 'SegmentIcon');
 
 export const SelectAllIcon = createSvgIcon({ path: SelectAll }, 'SelectAllIcon');
 
@@ -368,6 +399,8 @@ export const TagIcon = createSvgIcon({ path: Tag }, 'TagIcon');
 export const TaskAltIcon = createSvgIcon({ path: TaskAlt }, 'TaskAltIcon');
 
 export const TextSnippetIcon = createSvgIcon({ path: TextSnippet }, 'TextSnippetIcon');
+
+export const TitleIcon = createSvgIcon({ path: Title }, 'TitleIcon');
 
 export const TodayIcon = createSvgIcon({ path: Today }, 'TodayIcon');
 

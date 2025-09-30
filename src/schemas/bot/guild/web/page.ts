@@ -1,4 +1,4 @@
-import { JSONContent } from '@tiptap/react';
+import { JSONContent } from '@tiptap/core';
 import { z } from 'zod';
 import { GuildWebCategoryIdSchema } from './category';
 import { GuildWebTagIdSchema } from './tag';

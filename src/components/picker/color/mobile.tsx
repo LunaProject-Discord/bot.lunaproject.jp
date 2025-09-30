@@ -1,12 +1,8 @@
 'use client';
 
-import {
-    ColorPickerInternalProps,
-    ColorPickerPointer,
-    ColorPickerPreview,
-    MobilePickerRoot
-} from '@/components/picker';
+import { ColorPickerInternalProps, ColorPickerPointer, ColorPickerPreview } from '@/components/picker';
 import { BottomSheet, BottomSheetContent } from '@lunaproject/web-core/dist/components/BottomSheet';
+import { MobilePickerRoot } from '@lunaproject/web-core/dist/components/Picker';
 import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { SlotComponentProps } from '@mui/base';
 import { Box, BoxProps, OutlinedInput, Tab, Tabs, tabsClasses, useTheme } from '@mui/material';

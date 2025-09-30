@@ -4,7 +4,7 @@ import { ColorPickerInternalProps, ColorPickerPointer, ColorPickerPreview } from
 import { SlotRootProps } from '@lunaproject/web-core/dist/components/SectionCard';
 import { borderAndBoxShadow } from '@lunaproject/web-core/dist/utils';
 import { SlotComponentProps } from '@mui/base';
-import { Box, Grow, Popper, styled, Tab, Tabs, tabsClasses, useTheme } from '@mui/material';
+import { Box, Grow, Popper, styled, Tab, Tabs, tabsClasses, Theme, useTheme } from '@mui/material';
 import { Alpha, hsvaToHex, hsvaToRgbaString, Hue, Saturation } from '@uiw/react-color';
 import React, { Fragment } from 'react';
 
@@ -55,11 +55,11 @@ export const DesktopColorPicker = (
             {({ TransitionProps }) => (
                 <Grow {...TransitionProps}>
                     <Box
-                        sx={(theme) => ({
+                        sx={(theme: Theme) => ({
                             width: 300,
                             overflow: 'hidden',
                             transformOrigin: 'top center',
-                            bgcolor: theme.palette.background.paper,
+                            bgcolor: theme.vars.palette.background.paper,
                             backgroundImage: 'none',
                             borderRadius: 1,
                             ...borderAndBoxShadow(theme),
