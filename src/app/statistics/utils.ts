@@ -35,6 +35,8 @@ export const formatDate = (
     }
 };
 
+
+
 export const getPeriod = async (props: StatisticsPageProps): Promise<StatisticsPeriodData> => {
     const searchParams = await props.searchParams;
     const start = searchParams?.start ? DateTime.fromSQL(searchParams.start) : undefined;

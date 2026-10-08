@@ -14,7 +14,7 @@ import { max, min } from '@lunaproject/web-core/dist/utils';
 import { CircularProgress, Grid2 as Grid } from '@mui/material';
 import { GridColDef, GridRowsProp, GridValidRowModel } from '@mui/x-data-grid';
 import { DateTime } from 'luxon';
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback, useMemo } from 'react';
 
 const getValue = (statistic: Statistic) => statistic.channels.total;
 const formatValue = (value: number) => value.toLocaleString();
@@ -26,13 +26,13 @@ interface Props extends StatisticsViewProps, LocalizationProps {
 export const View = ({ statistic, statistics: { period: { type }, statistics }, localization }: Props) => {
     const { translations } = localization;
 
-    const latestStatistic = statistics[statistics.length - 1];
-    const minStatistic = min(statistics, getValue);
-    const maxStatistic = max(statistics, getValue);
+    const latestStatistic = useMemo(() => statistics[statistics.length - 1], [statistics]);
+    const minStatistic = useMemo(() => min(statistics, getValue), [statistics]);
+    const maxStatistic = useMemo(() => max(statistics, getValue), [statistics]);
 
-    const shards = getMaxShards(statistics, (statistic) => statistic.channels.shards);
+    const shards = useMemo(() => getMaxShards(statistics, (statistic) => statistic.channels.shards), [statistics]);
 
-    const gridColumns: GridColDef[] = [
+    const gridColumns = useMemo<GridColDef[]>(() => [
         {
             field: 'date',
             type: 'dateTime',
@@ -54,17 +54,23 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
             valueFormatter: (value: number | undefined) => value ? formatValue(value) : 'N/A',
             width: 120
         }))
-    ];
-    const gridRows: GridRowsProp = statistics.map((statistic) => ({
+    ], [localization, shards, translations, type]);
+    const gridRows = useMemo<GridRowsProp>(() => statistics.map((statistic) => ({
         id: statistic.id,
         date: getDate(statistic),
         total: getValue(statistic),
-        ...Object.entries(statistic.channels.shards).reduce((acc, [key, value]) => ({
-            ...acc,
-            [`shard_${key}`]: value.total
-        }), {})
-    }));
+        ...Object.fromEntries(
+            Object.entries(statistic.channels.shards).map(([key, value]) => ([
+                `shard_${key}`,
+                value.total
+            ]))
+        )
+    })), [statistics]);
 
+    const formatDateTime = useCallback(
+        (date: DateTime<true>) => formatDate(date, type, localization),
+        [localization, type]
+    );
 
     return (
         <Fragment>
@@ -83,7 +89,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
                         statistic={minStatistic}
                         getDate={getDate}
                         getValue={getValue}
-                        formatDate={(date) => formatDate(date, type, localization)}
+                        formatDate={formatDateTime}
                         formatValue={formatValue}
                         localization={localization}
                     />}
@@ -91,7 +97,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
                         statistic={maxStatistic}
                         getDate={getDate}
                         getValue={getValue}
-                        formatDate={(date) => formatDate(date, type, localization)}
+                        formatDate={formatDateTime}
                         formatValue={formatValue}
                         localization={localization}
                     />}
@@ -104,7 +110,7 @@ export const View = ({ statistic, statistics: { period: { type }, statistics }, 
                         label={translations.channel as string}
                         getDate={getDate}
                         getValue={getValue}
-                        formatDate={(date) => formatDate(date, type, localization)}
+                        formatDate={formatDateTime}
                         formatValue={formatValue}
                     />
                 </SectionContent>

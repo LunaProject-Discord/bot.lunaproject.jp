@@ -24,19 +24,21 @@ export const getStatistic = async (statisticOrId: typeof System_Statistics.$infe
     const channels = systemStatistic.channels;
     const channelsShards = channels.shards;
 
-    const channelsShardsRecord: Record<number, StatisticChannelsData> = {};
-    for (const [key, value] of Object.entries(channelsShards)) {
-        channelsShardsRecord[Number(key)] = {
-            total: value.total,
-            categories: value.categories,
-            textChannels: value.text_channels,
-            voiceChannels: value.voice_channels,
-            announcementChannels: value.announcement_channels,
-            stageChannels: value.stage_channels,
-            forumChannels: value.forum_channels,
-            threads: value.threads
-        };
-    }
+    const channelsShardsRecord: Record<number, StatisticChannelsData> = Object.fromEntries(
+        Object.entries(channelsShards).map(([key, value]) => [
+            Number(key),
+            {
+                total: value.total,
+                categories: value.categories,
+                textChannels: value.text_channels,
+                voiceChannels: value.voice_channels,
+                announcementChannels: value.announcement_channels,
+                stageChannels: value.stage_channels,
+                forumChannels: value.forum_channels,
+                threads: value.threads
+            }
+        ])
+    );
 
     return {
         id: systemStatistic.id,
@@ -77,14 +79,8 @@ export const getStatistics = async (): Promise<Statistic[]> => {
     if (!systemStatistics)
         return [];
 
-    const lists: Statistic[] = [];
-    for (const systemStatistic of systemStatistics) {
-        const list = await getStatistic(systemStatistic);
-        if (list)
-            lists.push(list);
-    }
-
-    return lists;
+    return (await Promise.all(systemStatistics.map(getStatistic)))
+        .filter((statistic) => statistic !== undefined);
 };
 
 
@@ -110,12 +106,8 @@ export const getHoursStatistics = async (period?: DatePeriod): Promise<Statistic
     if (!systemStatistics || systemStatistics.length < 1)
         return undefined;
 
-    const statistics: Statistic[] = [];
-    for (const systemStatistic of systemStatistics) {
-        const statistic = await getStatistic(systemStatistic);
-        if (statistic)
-            statistics.push(statistic);
-    }
+    const statistics = (await Promise.all(systemStatistics.map(getStatistic)))
+        .filter((statistic) => statistic !== undefined);
 
     return {
         total: statistics.length,
@@ -145,12 +137,8 @@ export const getDaysStatistics = async (period?: DatePeriod): Promise<Statistics
     if (!systemStatistics || systemStatistics.length < 1)
         return undefined;
 
-    const statistics: Statistic[] = [];
-    for (const systemStatistic of systemStatistics) {
-        const statistic = await getStatistic(systemStatistic);
-        if (statistic)
-            statistics.push(statistic);
-    }
+    const statistics = (await Promise.all(systemStatistics.map(getStatistic)))
+        .filter((statistic) => statistic !== undefined);
 
     return {
         total: statistics.length,
@@ -180,12 +168,8 @@ export const getWeeksStatistics = async (period?: DatePeriod): Promise<Statistic
     if (!systemStatistics || systemStatistics.length < 1)
         return undefined;
 
-    const statistics: Statistic[] = [];
-    for (const systemStatistic of systemStatistics) {
-        const statistic = await getStatistic(systemStatistic);
-        if (statistic)
-            statistics.push(statistic);
-    }
+    const statistics = (await Promise.all(systemStatistics.map(getStatistic)))
+        .filter((statistic) => statistic !== undefined);
 
     return {
         total: statistics.length,
@@ -215,12 +199,8 @@ export const getMonthsStatistics = async (period?: DatePeriod): Promise<Statisti
     if (!systemStatistics || systemStatistics.length < 1)
         return undefined;
 
-    const statistics: Statistic[] = [];
-    for (const systemStatistic of systemStatistics) {
-        const statistic = await getStatistic(systemStatistic);
-        if (statistic)
-            statistics.push(statistic);
-    }
+    const statistics = (await Promise.all(systemStatistics.map(getStatistic)))
+        .filter((statistic) => statistic !== undefined);
 
     return {
         total: statistics.length,

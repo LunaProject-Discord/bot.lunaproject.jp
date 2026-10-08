@@ -4,7 +4,7 @@ import { StatisticResponseProps } from '@/app/statistics/_components/interfaces'
 import { Statistic } from '@/interfaces/bot';
 import { useMediaQuery } from '@mui/material';
 import { AreaChart as TremorAreaChart, AreaChartProps as TremorAreaChartProps } from '@tremor/react';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 export interface AreaChartProps extends StatisticResponseProps, Omit<TremorAreaChartProps, 'categories' | 'data' | 'index' | 'valueFormatter'> {
     statistics: Statistic[];
@@ -24,15 +24,17 @@ export const AreaChart = (
 ) => {
     const isDesktop = useMediaQuery((theme) => theme.breakpoints.up('md'));
 
+    const data = useMemo(() => statistics.map((statistic) => ({
+        date: formatDate(getDate(statistic)),
+        [label]: getValue(statistic)
+    })), [formatDate, getDate, getValue, label, statistics]);
+
     return (
         <TremorAreaChart
             autoMinValue
             categories={[label]}
             className="mt-2"
-            data={statistics.map((statistic) => ({
-                date: formatDate(getDate(statistic)),
-                [label]: getValue(statistic)
-            }))}
+            data={data}
             index="date"
             showGradient={isDesktop}
             showLegend={false}

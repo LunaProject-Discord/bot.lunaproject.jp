@@ -4,7 +4,7 @@ import * as relations from './relations';
 import * as schema from './schema';
 
 const poolConnection = mysql.createPool({
-    uri: process.env.DATABASE_URI!,
+    uri: process.env.DATABASE_URL!,
     supportBigNumbers: true,
     bigNumberStrings: true
 });

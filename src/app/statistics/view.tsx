@@ -5,16 +5,32 @@ import { StatisticsViewProps } from '@/app/statistics/interfaces';
 import { formatDate, getDate } from '@/app/statistics/utils';
 import { ErrorDescription, ErrorRoot, ErrorTitle } from '@/components/error';
 import { CloudOffIcon } from '@/components/icons';
+import { Statistic } from '@/interfaces/bot';
 import { LocalizationProps } from '@/interfaces/localization';
 import { PageHeader } from '@lunaproject/web-core/dist/components/Layout';
 import { Section, SectionContent, SectionTitle } from '@lunaproject/web-core/dist/components/Section';
 import { CircularProgress } from '@mui/material';
-import React, { Fragment } from 'react';
+import { DateTime } from 'luxon';
+import React, { Fragment, useCallback, useMemo } from 'react';
+
+const getPingValue = (statistic: Statistic) => statistic.pings.total;
+const getGuildsValue = (statistic: Statistic) => statistic.guilds.total;
+const getChannelsValue = (statistic: Statistic) => statistic.channels.total;
+const getRolesValue = (statistic: Statistic) => statistic.roles.total;
+const getEmojisValue = (statistic: Statistic) => statistic.emojis.total;
+const getUsersValue = (statistic: Statistic) => statistic.users.total;
+const formatPingValue = (value: number) => `${value.toLocaleString()}ms`;
+const formatCountValue = (value: number) => value.toLocaleString();
 
 type Props = StatisticsViewProps & LocalizationProps;
 
 export const View = ({ statistics: { period: { type }, statistics }, localization }: Props) => {
     const { translations } = localization;
+
+    const formatDateTime = useCallback(
+        (date: DateTime<true>) => formatDate(date, type, localization),
+        [localization, type]
+    );
 
     return (
         <Fragment>
@@ -26,9 +42,9 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
                         statistics={statistics}
                         label={translations.ping as string}
                         getDate={getDate}
-                        getValue={(statistic) => statistic.pings.total}
-                        formatDate={(date) => formatDate(date, type, localization)}
-                        formatValue={(value) => `${value.toLocaleString()}ms`}
+                        getValue={getPingValue}
+                        formatDate={formatDateTime}
+                        formatValue={formatPingValue}
                     />
                 </SectionContent>
             </Section>
@@ -39,9 +55,9 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
                         statistics={statistics}
                         label={translations.guild as string}
                         getDate={getDate}
-                        getValue={(statistic) => statistic.guilds.total}
-                        formatDate={(date) => formatDate(date, type, localization)}
-                        formatValue={(value) => value.toLocaleString()}
+                        getValue={getGuildsValue}
+                        formatDate={formatDateTime}
+                        formatValue={formatCountValue}
                     />
                 </SectionContent>
             </Section>
@@ -52,9 +68,9 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
                         statistics={statistics}
                         label={translations.channel as string}
                         getDate={getDate}
-                        getValue={(statistic) => statistic.channels.total}
-                        formatDate={(date) => formatDate(date, type, localization)}
-                        formatValue={(value) => value.toLocaleString()}
+                        getValue={getChannelsValue}
+                        formatDate={formatDateTime}
+                        formatValue={formatCountValue}
                     />
                 </SectionContent>
             </Section>
@@ -65,9 +81,9 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
                         statistics={statistics}
                         label={translations.role as string}
                         getDate={getDate}
-                        getValue={(statistic) => statistic.roles.total}
-                        formatDate={(date) => formatDate(date, type, localization)}
-                        formatValue={(value) => value.toLocaleString()}
+                        getValue={getRolesValue}
+                        formatDate={formatDateTime}
+                        formatValue={formatCountValue}
                     />
                 </SectionContent>
             </Section>
@@ -78,9 +94,9 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
                         statistics={statistics}
                         label={translations.emoji as string}
                         getDate={getDate}
-                        getValue={(statistic) => statistic.emojis.total}
-                        formatDate={(date) => formatDate(date, type, localization)}
-                        formatValue={(value) => value.toLocaleString()}
+                        getValue={getEmojisValue}
+                        formatDate={formatDateTime}
+                        formatValue={formatCountValue}
                     />
                 </SectionContent>
             </Section>
@@ -91,9 +107,9 @@ export const View = ({ statistics: { period: { type }, statistics }, localizatio
                         statistics={statistics}
                         label={translations.user as string}
                         getDate={getDate}
-                        getValue={(statistic) => statistic.users.total}
-                        formatDate={(date) => formatDate(date, type, localization)}
-                        formatValue={(value) => value.toLocaleString()}
+                        getValue={getUsersValue}
+                        formatDate={formatDateTime}
+                        formatValue={formatCountValue}
                     />
                 </SectionContent>
             </Section>
